@@ -88,12 +88,12 @@ void MainWindow::closeEvent(QCloseEvent* event)
 
 void MainWindow::on_actionTechnical_Support_triggered()
 {
-    QDesktopServices::openUrl(QUrl(TECHNICAL_SUPPORT_URL));
+    QDesktopServices::openUrl(QUrl(geometrize::constants::TECHNICAL_SUPPORT_URL));
 }
 
 void MainWindow::on_actionOnline_Tutorials_triggered()
 {
-    QDesktopServices::openUrl(QUrl(VIDEO_TUTORIAL_URL));
+    QDesktopServices::openUrl(QUrl(geometrize::constants::VIDEO_TUTORIAL_URL));
 }
 
 void MainWindow::on_actionOpen_New_Image_triggered()
@@ -111,6 +111,7 @@ void MainWindow::on_actionOpen_New_Image_triggered()
         QMessageBox::critical(this, tr("Image Loading Error"), tr("The image file could not be loaded."));
         return;
     }
+    image = image.convertToFormat(QImage::Format_RGBA8888);
 
     QPixmap pixmap = QPixmap::fromImage(image);
     if(!isPixmapValid(pixmap)) {
@@ -123,7 +124,9 @@ void MainWindow::on_actionOpen_New_Image_triggered()
         ui->graphicsView->setScene(new QGraphicsScene());
     }
     QGraphicsPixmapItem* pixmapItem{ui->graphicsView->scene()->addPixmap(pixmap)};
-    pixmapItem->setPos(QPointF(150, 150)); // TODO center in scene
+    pixmapItem->setPos(QPointF(150, 150)); // TODO center in scene?
+
+    // TODO create a new image job context, add a new tab for the image, add the image background initially
 }
 
 void MainWindow::on_actionSave_Geometrized_Image_triggered()

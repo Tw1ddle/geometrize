@@ -4,6 +4,9 @@
 #include <cstdint>
 #include <vector>
 
+namespace geometrize
+{
+
 /**
  * Helper class for working with bitmap data.
  * @author Sam Twidale (http://samcodes.co.uk/)
@@ -11,10 +14,20 @@
 class BitmapData
 {
 public:
-    inline BitmapData(std::size_t width, std::size_t height) : m_width{width}, m_height{height}, m_data{width * height}
-    {
+    /**
+     * @brief BitmapData Creates a new bitmap.
+     * @param width The width of the bitmap.
+     * @param height The height of the bitmap.
+     */
+    inline BitmapData(const std::size_t width, const std::size_t height) : m_width{width}, m_height{height}, m_data(width * height) {}
 
-    }
+    /**
+     * @brief BitmapData Creates a new bitmap from the supplied byte data.
+     * @param width The width of the bitmap.
+     * @param height The height of the bitmap.
+     * @param data The byte data to fill the bitmap with, must be width * height * depth (4) long.
+     */
+    inline BitmapData(const std::size_t width, const std::size_t height, const std::vector<unsigned char>& data) : m_width{width}, m_height{height}, m_data{data} {}
 
     ~BitmapData() = default;
     BitmapData& operator=(const BitmapData&) = delete;
@@ -23,7 +36,7 @@ public:
     /**
      * @brief getWidth Gets the width of the bitmap.
      */
-    inline auto getWidth() -> decltype(m_width)
+    inline std::size_t getWidth() const
     {
         return m_width;
     }
@@ -31,15 +44,48 @@ public:
     /**
      * @brief getHeight Gets the height of the bitmap.
      */
-    inline auto getHeight() -> decltype(m_height)
+    inline std::size_t getHeight() const
     {
         return m_height;
     }
 
+    /**
+     * @brief copyData Gets a copy of the raw bitmap data.
+     * @return	The bitmap data.
+     */
+    inline std::vector<unsigned char> copyData() const
+    {
+        return m_data;
+    }
+
+    /**
+     * @brief getDataRef Gets a reference to the raw bitmap data.
+     * @return  The bitmap data.
+     */
+    inline const std::vector<unsigned char>& getDataRef()
+    {
+        return m_data;
+    }
+
+    // TODO get the rgb components, or work on the data directly?
+    inline unsigned char getPixel(const int x, const int y) const
+    {
+        const std::size_t index{m_width * y + x};
+        return m_data[index];
+    }
+
+    inline void setPixel(const int x, const int y, const unsigned char color)
+    {
+        const std::size_t index{m_width * y + x};
+        m_data[index] = color;
+    }
+
 private:
-    std::size_t m_width; ///< The width of the bitmap.
-    std::size_t m_height; ///< The height of the bitmap.
-    std::vector<std::uint8_t> m_data; ///< The bitmap data.
+    const std::size_t m_width; ///< The width of the bitmap.
+    const std::size_t m_height; ///< The height of the bitmap.
+    std::vector<unsigned char> m_data; ///< The bitmap data.
 };
+
+}
 
 #endif // BITMAPDATA_H

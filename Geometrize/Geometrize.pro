@@ -20,8 +20,6 @@ SOURCES += main.cpp\
     imagejobcontext.cpp \
     preferences.cpp \
     imagejobpreferences.cpp \
-    lib/geometrizer/geometrizer/bitmap/pixelformat.cpp \
-    lib/geometrizer/geometrizer/bitmap/rgba.cpp \
     lib/geometrizer/geometrizer/exporters/shapearrayexporter.cpp \
     lib/geometrizer/geometrizer/exporters/shapejsonexporter.cpp \
     lib/geometrizer/geometrizer/runner/imagerunner.cpp \
@@ -36,7 +34,6 @@ SOURCES += main.cpp\
     lib/geometrizer/geometrizer/model.cpp \
     lib/geometrizer/geometrizer/scanline.cpp \
     lib/geometrizer/geometrizer/state.cpp \
-    lib/geometrizer/geometrizer/util.cpp \
     forms/aboutdialog.cpp \
     forms/mainwindow.cpp \
     forms/quitdialog.cpp
@@ -46,9 +43,8 @@ HEADERS  += versioninfo.h \
     preferences.h \
     imagejobpreferences.h \
     constants.h \
+    winversioninfo.h \
     lib/geometrizer/geometrizer/bitmap/bitmapdata.h \
-    lib/geometrizer/geometrizer/bitmap/pixelformat.h \
-    lib/geometrizer/geometrizer/bitmap/rgba.h \
     lib/geometrizer/geometrizer/exporters/shapearrayexporter.h \
     lib/geometrizer/geometrizer/exporters/shapejsonexporter.h \
     lib/geometrizer/geometrizer/runner/imagerunner.h \
@@ -65,10 +61,10 @@ HEADERS  += versioninfo.h \
     lib/geometrizer/geometrizer/model.h \
     lib/geometrizer/geometrizer/scanline.h \
     lib/geometrizer/geometrizer/state.h \
-    lib/geometrizer/geometrizer/util.h \
     forms/aboutdialog.h \
     forms/mainwindow.h \
     forms/quitdialog.h \
+    lib/geometrizer/geometrizer/util.h \
 
 FORMS    += forms/mainwindow.ui \
     forms/aboutdialog.ui \

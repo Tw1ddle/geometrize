@@ -1,7 +1,6 @@
 #ifndef IMAGEJOBPREFERENCES_H
 #define IMAGEJOBPREFERENCES_H
 
-
 class ImageJobPreferences
 {
 public:
