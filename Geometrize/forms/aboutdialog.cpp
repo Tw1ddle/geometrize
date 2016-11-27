@@ -5,6 +5,8 @@
 #include <QPixmap>
 
 #include "constants.h"
+#include "creditsdialog.h"
+#include "licensedialog.h"
 #include "versioninfo.h"
 
 AboutDialog::AboutDialog(QWidget *parent) :
@@ -37,4 +39,21 @@ AboutDialog::AboutDialog(QWidget *parent) :
 AboutDialog::~AboutDialog()
 {
     delete ui;
+}
+
+void AboutDialog::on_closeButton_released()
+{
+    close();
+}
+
+void AboutDialog::on_licenseButton_released()
+{
+    LicenseDialog dialog(this);
+    dialog.exec();
+}
+
+void AboutDialog::on_creditsButton_released()
+{
+    CreditsDialog dialog(this);
+    dialog.exec();
 }

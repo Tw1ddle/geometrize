@@ -36,7 +36,9 @@ SOURCES += main.cpp\
     lib/geometrizer/geometrizer/state.cpp \
     forms/aboutdialog.cpp \
     forms/mainwindow.cpp \
-    forms/quitdialog.cpp
+    forms/quitdialog.cpp \
+    forms/licensedialog.cpp \
+    forms/creditsdialog.cpp
 
 HEADERS  += versioninfo.h \
     imagejobcontext.h \
@@ -61,12 +63,16 @@ HEADERS  += versioninfo.h \
     lib/geometrizer/geometrizer/model.h \
     lib/geometrizer/geometrizer/scanline.h \
     lib/geometrizer/geometrizer/state.h \
+    lib/geometrizer/geometrizer/util.h \
     forms/aboutdialog.h \
     forms/mainwindow.h \
     forms/quitdialog.h \
-    lib/geometrizer/geometrizer/util.h \
+    forms/licensedialog.h \
+    forms/creditsdialog.h
 
 FORMS    += forms/mainwindow.ui \
     forms/aboutdialog.ui \
     forms/quitdialog.ui \
-    forms/globalpreferencesdialog.ui
+    forms/globalpreferencesdialog.ui \
+    forms/licensedialog.ui \
+    forms/creditsdialog.ui

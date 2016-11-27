@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+#include "forms/mainwindow.h"
 
 #include <QApplication>
 #include <QSplashScreen>
