@@ -13,6 +13,12 @@
     <height>500</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>400</width>
+    <height>400</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>License Information</string>
   </property>
@@ -21,7 +27,14 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QTextBrowser" name="licenseTextBrowser"/>
+    <widget class="QTextBrowser" name="licenseTextBrowser">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">

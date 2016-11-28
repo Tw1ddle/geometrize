@@ -20,25 +20,12 @@ SOURCES += main.cpp\
     imagejobcontext.cpp \
     preferences.cpp \
     imagejobpreferences.cpp \
-    lib/geometrizer/geometrizer/exporters/shapearrayexporter.cpp \
-    lib/geometrizer/geometrizer/exporters/shapejsonexporter.cpp \
-    lib/geometrizer/geometrizer/runner/imagerunner.cpp \
-    lib/geometrizer/geometrizer/shape/circle.cpp \
-    lib/geometrizer/geometrizer/shape/ellipse.cpp \
-    lib/geometrizer/geometrizer/shape/rectangle.cpp \
-    lib/geometrizer/geometrizer/shape/rotatedellipse.cpp \
-    lib/geometrizer/geometrizer/shape/rotatedrectangle.cpp \
-    lib/geometrizer/geometrizer/shape/shapefactory.cpp \
-    lib/geometrizer/geometrizer/shape/triangle.cpp \
-    lib/geometrizer/geometrizer/geometrize.cpp \
-    lib/geometrizer/geometrizer/model.cpp \
-    lib/geometrizer/geometrizer/scanline.cpp \
-    lib/geometrizer/geometrizer/state.cpp \
     forms/aboutdialog.cpp \
     forms/mainwindow.cpp \
     forms/quitdialog.cpp \
     forms/licensedialog.cpp \
-    forms/creditsdialog.cpp
+    forms/creditsdialog.cpp \
+    forms/preferencestabdialog.cpp
 
 HEADERS  += versioninfo.h \
     imagejobcontext.h \
@@ -57,7 +44,7 @@ HEADERS  += versioninfo.h \
     lib/geometrizer/geometrizer/shape/rotatedrectangle.h \
     lib/geometrizer/geometrizer/shape/shape.h \
     lib/geometrizer/geometrizer/shape/shapefactory.h \
-    lib/geometrizer/geometrizer/shape/shapetype.h \
+    lib/geometrizer/geometrizer/shape/shapetypes.h \
     lib/geometrizer/geometrizer/shape/triangle.h \
     lib/geometrizer/geometrizer/geometrize.h \
     lib/geometrizer/geometrizer/model.h \
@@ -68,11 +55,14 @@ HEADERS  += versioninfo.h \
     forms/mainwindow.h \
     forms/quitdialog.h \
     forms/licensedialog.h \
-    forms/creditsdialog.h
+    forms/creditsdialog.h \
+    forms/preferencestabdialog.h \
+    lib/geometrizer/geometrizer/bitmap/rgba.h
 
 FORMS    += forms/mainwindow.ui \
     forms/aboutdialog.ui \
     forms/quitdialog.ui \
     forms/globalpreferencesdialog.ui \
     forms/licensedialog.ui \
-    forms/creditsdialog.ui
+    forms/creditsdialog.ui \
+    forms/preferencestabdialog.ui

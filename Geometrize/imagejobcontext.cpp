@@ -2,14 +2,18 @@
 
 #include <QObject>
 
-#include "lib/geometrizer/geometrizer/model.h"
-
 #include "imagejobpreferences.h"
+
+#include "lib/geometrizer/geometrizer/bitmap/bitmapdata.h"
+#include "lib/geometrizer/geometrizer/runner/imagerunner.h"
+
+namespace geometrize
+{
 
 class ImageJobContextPrivate : public QObject
 {
 public:
-    ImageJobContextPrivate()
+    ImageJobContextPrivate(BitmapData& bitmap) : m_paused{true}, m_preferences{}, m_runner{bitmap}
     {
     }
 
@@ -19,9 +23,12 @@ public:
 private:
     bool m_paused; ///> Whether the job is running or paused.
     ImageJobPreferences m_preferences; ///> Runtime configuration parameters for the runner.
+    ImageRunner m_runner;
 };
 
-ImageJobContext::ImageJobContext()
+ImageJobContext::ImageJobContext(BitmapData& bitmap) : d{std::make_unique<ImageJobContextPrivate>(bitmap)}
 {
+
+}
 
 }

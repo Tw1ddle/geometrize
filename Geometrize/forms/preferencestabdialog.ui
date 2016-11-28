@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CreditsDialog</class>
- <widget class="QDialog" name="CreditsDialog">
+ <class>PreferencesTabDialog</class>
+ <widget class="QDialog" name="PreferencesTabDialog">
   <property name="windowModality">
    <enum>Qt::ApplicationModal</enum>
   </property>
@@ -10,72 +10,52 @@
     <x>0</x>
     <y>0</y>
     <width>600</width>
-    <height>500</height>
+    <height>400</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>400</width>
-    <height>500</height>
+    <width>600</width>
+    <height>400</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>600</width>
+    <height>400</height>
    </size>
   </property>
   <property name="windowTitle">
-   <string>Credits</string>
+   <string>Preferences</string>
   </property>
   <property name="modal">
    <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QTabWidget" name="tabWidget">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
-     <property name="layoutDirection">
-      <enum>Qt::LeftToRight</enum>
-     </property>
+    <widget class="QTabWidget" name="preferenceTabWidget">
      <property name="currentIndex">
       <number>0</number>
      </property>
-     <widget class="QWidget" name="Developers">
+     <widget class="QWidget" name="general">
       <attribute name="title">
-       <string>Developers</string>
+       <string>General</string>
       </attribute>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="QTextBrowser" name="developerText"/>
-       </item>
-      </layout>
      </widget>
-     <widget class="QWidget" name="Translators">
+     <widget class="QWidget" name="display">
       <attribute name="title">
-       <string>Translators</string>
+       <string>Display</string>
       </attribute>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <item>
-        <widget class="QTextBrowser" name="translatorText"/>
-       </item>
-      </layout>
      </widget>
-     <widget class="QWidget" name="Artwork">
+     <widget class="QWidget" name="userInterface">
       <attribute name="title">
-       <string>Artists</string>
+       <string>User Interface</string>
       </attribute>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <item>
-        <widget class="QTextBrowser" name="artistText"/>
-       </item>
-      </layout>
      </widget>
-     <widget class="QWidget" name="Acknowledgements">
+     <widget class="QWidget" name="performance">
       <attribute name="title">
-       <string>Acknowledgements</string>
+       <string>Performance</string>
       </attribute>
-      <layout class="QHBoxLayout" name="horizontalLayout_4">
-       <item>
-        <widget class="QTextBrowser" name="acknowledgementText"/>
-       </item>
-      </layout>
      </widget>
     </widget>
    </item>
@@ -96,7 +76,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>CreditsDialog</receiver>
+   <receiver>PreferencesTabDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -112,7 +92,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>CreditsDialog</receiver>
+   <receiver>PreferencesTabDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

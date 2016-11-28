@@ -13,3 +13,18 @@ QuitDialog::~QuitDialog()
 {
     delete ui;
 }
+
+void QuitDialog::on_saveButton_clicked()
+{
+    // TODO get the first unsaved/dirty job, open save dialog for it, then close the dialog. make user repeat until all are saved
+}
+
+void QuitDialog::on_dontSaveButton_clicked()
+{
+    QApplication::quit();
+}
+
+void QuitDialog::on_cancelButton_clicked()
+{
+    close();
+}

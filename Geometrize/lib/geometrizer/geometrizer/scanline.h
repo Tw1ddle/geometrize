@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "bitmap/bitmapdata.h"
+#include "shape/shapetypes.h"
 #include "util.h"
 
 namespace geometrize
@@ -59,22 +60,10 @@ public:
     }
 
 private:
-    /**
-     * @brief y The y-coordinate of the scanline.
-     */
-    const int y;
-    /**
-     * @brief x1 The leftmost x-coordinate of the scanline.
-     */
-    int x1;
-    /**
-     * @brief x2 The rightmost x-coordinate of the scanline.
-     */
-    int x2;
-    /**
-     * @brief alpha The alpha/opacity of the scanline.
-     */
-    const int alpha;
+    const int y; ///< The y-coordinate of the scanline.
+    int x1; ///< The leftmost x-coordinate of the scanline.
+    int x2; ///< The rightmost x-coordinate of the scanline.
+    const int alpha; ///< The alpha/opacity of the scanline.
 };
 
 }

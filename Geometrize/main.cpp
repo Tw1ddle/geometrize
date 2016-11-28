@@ -7,6 +7,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
+    // TODO
     QPixmap splashPixmap{":/splash.png"};
     QSplashScreen splash(splashPixmap);
     splash.show();

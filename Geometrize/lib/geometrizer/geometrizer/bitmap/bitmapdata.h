@@ -4,6 +4,8 @@
 #include <cstdint>
 #include <vector>
 
+#include "rgba.h"
+
 namespace geometrize
 {
 
@@ -18,8 +20,21 @@ public:
      * @brief BitmapData Creates a new bitmap.
      * @param width The width of the bitmap.
      * @param height The height of the bitmap.
+     * @param color The starting color of the bitmap (RGBA format).
      */
-    inline BitmapData(const std::size_t width, const std::size_t height) : m_width{width}, m_height{height}, m_data(width * height) {}
+    inline BitmapData(const std::size_t width, const std::size_t height, const rgba color) : m_width{width}, m_height{height}, m_data(width * height * 4)
+    {
+        if(color.r == 0 && color.g == 0 && color.b == 0 && color.a == 0) {
+            return;
+        }
+
+        for(int i = 0; i < m_data.size(); i+=4) {
+            m_data[i] = color.r;
+            m_data[i + 1] = color.g;
+            m_data[i + 2] = color.b;
+            m_data[i + 3] = color.a;
+        }
+    }
 
     /**
      * @brief BitmapData Creates a new bitmap from the supplied byte data.
@@ -30,8 +45,8 @@ public:
     inline BitmapData(const std::size_t width, const std::size_t height, const std::vector<unsigned char>& data) : m_width{width}, m_height{height}, m_data{data} {}
 
     ~BitmapData() = default;
-    BitmapData& operator=(const BitmapData&) = delete;
-    BitmapData(const BitmapData&) = delete;
+    BitmapData& operator=(const BitmapData&) = default;
+    BitmapData(const BitmapData&) = default;
 
     /**
      * @brief getWidth Gets the width of the bitmap.
@@ -67,17 +82,31 @@ public:
         return m_data;
     }
 
-    // TODO get the rgb components, or work on the data directly?
-    inline unsigned char getPixel(const int x, const int y) const
+    /**
+     * @brief getPixel Gets a pixel color value.
+     * @param x The x-coordinate of the pixel.
+     * @param y The y-coordinate of the pixel.
+     * @return The pixel RGBA color value.
+     */
+    inline rgba getPixel(const int x, const int y) const
     {
         const std::size_t index{m_width * y + x};
-        return m_data[index];
+        return rgba{m_data[index], m_data[index + 1], m_data[index + 2], m_data[index + 3]};
     }
 
-    inline void setPixel(const int x, const int y, const unsigned char color)
+    /**
+     * @brief setPixel Sets a pixel color value.
+     * @param x The x-coordinate of the pixel.
+     * @param y The y-coordinate of the pixel.
+     * @param color The pixel RGBA color value.
+     */
+    inline void setPixel(const int x, const int y, const rgba color)
     {
         const std::size_t index{m_width * y + x};
-        m_data[index] = color;
+        m_data[index] = color.r;
+        m_data[index + 1] = color.g;
+        m_data[index + 2] = color.b;
+        m_data[index + 3] = color.a;
     }
 
 private:

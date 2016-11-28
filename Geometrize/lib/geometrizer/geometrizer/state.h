@@ -2,6 +2,7 @@
 #define STATE_H
 
 #include "bitmap/bitmapdata.h"
+#include "geometrize.h"
 #include "shape/shape.h"
 
 namespace geometrize
@@ -21,7 +22,7 @@ public:
      * @param current The current bitmap.
      * @param buffer The buffer bitmap.
      */
-    State(const Shape& shape, const int alpha, const BitmapData& target, const BitmapData& current, const BitmapData& buffer) :
+    State(Shape& shape, const int alpha, const BitmapData& target, const BitmapData& current, const BitmapData& buffer) :
         m_shape{shape}, m_score{-1}, m_alpha{alpha}, m_target{target}, m_current{current}, m_buffer{buffer} {}
     ~State() = default;
     State& operator=(const State&) = default;
@@ -32,12 +33,12 @@ public:
      * The lower the energy, the better. The score is cached, set it to < 0 to recalculate it.
      * @return The energy measure.
      */
-    inline float energy() const
+    inline float energy()
     {
-        if(score < 0) {
-            score = Geometrize.energy(shape, alpha, target, current, buffer, score);
+        if(m_score < 0) {
+            m_score = geometrize::energy(m_shape, m_alpha, m_target, m_current, m_buffer, m_score);
         }
-        return score;
+        return m_score;
     }
 
     /**
@@ -46,19 +47,19 @@ public:
      */
     inline State mutate()
     {
-        State oldState(this);
+        State oldState{*this};
         m_shape.mutate();
         return oldState;
     }
 
 private:
-    Shape m_shape; ///< The geometric primitive owned by the state.
+    Shape& m_shape; ///< The geometric primitive owned by the state.
     float m_score; ///< The score of the state, a measure of the improvement applying the state to the current bitmap will have.
     int m_alpha; ///< The alpha of the shape.
 
-    BitmapData& m_target;
-    BitmapData& m_current;
-    BitmapData& m_buffer;
+    const BitmapData& m_target;
+    const BitmapData& m_current;
+    const BitmapData& m_buffer;
 };
 
 }

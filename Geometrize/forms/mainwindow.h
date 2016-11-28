@@ -30,6 +30,10 @@ private slots:
 
     void on_actionSave_Geometrized_Image_triggered();
 
+    void on_actionOpenPreferences_triggered();
+
+    void on_runStopButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 

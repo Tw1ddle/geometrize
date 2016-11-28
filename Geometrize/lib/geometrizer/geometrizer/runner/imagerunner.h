@@ -3,8 +3,9 @@
 
 #include <array>
 
+#include "../bitmap/bitmapdata.h"
 #include "../model.h"
-#include "../shape/shapetype.h"
+#include "../shape/shapetypes.h"
 
 namespace geometrize
 {
@@ -15,8 +16,8 @@ namespace geometrize
  */
 struct RunParams
 {
-    int primitiveCount = 0;
-    std::array<ShapeType> = [];
+    int primitiveCount = 50;
+    ShapeTypes shapeTypes = ShapeTypes::RECTANGLE;
 };
 
 /**
@@ -26,10 +27,10 @@ struct RunParams
 class ImageRunner
 {
 public:
-    ImageRunner(Bitmap& bitmap) : m_model{bitmap} {}
+    ImageRunner(BitmapData& bitmap) :  m_model{bitmap, geometrize::getAverageImageColor(bitmap)} {} // TODO set the starting color optionally
     ~ImageRunner() = default;
     ImageRunner& operator=(const ImageRunner&) = delete;
-    ImageRunner(const ImageRunnera&) = delete;
+    ImageRunner(const ImageRunner&) = delete;
 
     /**
      * @brief Updates runner until the number of primitives specified in the runner options are added.
@@ -37,10 +38,9 @@ public:
      */
     std::vector<ShapeResult> run()
     {
-        std::vector<ShapeResult> results(options.primitiveCount);
-        while(results.length <= options.primitiveCount)
-        {
-            std::vector<ShapeResult> shapes{m_model.step(options.shapeTypes, 128, 0)}; // TODO alpha, repeat etc
+        std::vector<ShapeResult> results(m_options.primitiveCount);
+        while(results.size() <= m_options.primitiveCount) {
+            std::vector<ShapeResult> shapes{m_model.step(m_options.shapeTypes, 128, 0)}; // TODO alpha, repeat etc
             std::move(shapes.begin(), shapes.end(), std::back_inserter(results));
         }
         return results;
@@ -52,29 +52,30 @@ public:
      */
     std::vector<ShapeResult> step()
     {
-        return model.step(options.shapeTypes, 128, 0); // TODO alpha, repeat params from config etc
+        return m_model.step(m_options.shapeTypes, 128, 0); // TODO alpha, repeat params from config etc
     }
 
     /**
      * @brief Gets the current bitmap with the primitives drawn on it.
      * @return The current bitmap.
      */
-    BitmapData& getImageData()
+    const BitmapData& getImageData()
     {
-        return model.current;
+        return m_model.getCurrent();
     }
 
     /**
      * @brief Gets data about the shapes added to the model so far.
      * @return The shape results.
      */
-    std::vector<ShapeResult> getShapeResults()
+    std::vector<ShapeResult>& getShapeResults()
     {
-        return model.shapeResults;
+        return m_model.getShapeResults();
     }
 
 private:
     Model m_model; ///< The model for the primitive optimization/fitting algorithm.
+    RunParams m_options; ///< The runtime configuration parameters for the runner.
 };
 
 }

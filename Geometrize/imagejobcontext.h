@@ -3,17 +3,23 @@
 
 #include <memory>
 
+namespace geometrize
+{
+
 class ImageJobContextPrivate;
+class BitmapData;
 
 class ImageJobContext
 {
 public:
-    ImageJobContext();
+    ImageJobContext(BitmapData& bitmap);
     ImageJobContext& operator=(const ImageJobContext&) = delete;
     ImageJobContext(const ImageJobContext&) = delete;
 
 private:
     std::unique_ptr<ImageJobContextPrivate> d;
 };
+
+}
 
 #endif // IMAGEJOBCONTEXT_H

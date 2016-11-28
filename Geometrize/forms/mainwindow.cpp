@@ -10,6 +10,7 @@
 
 #include "constants.h"
 #include "forms/aboutdialog.h"
+#include "forms/preferencestabdialog.h"
 #include "forms/quitdialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -138,4 +139,16 @@ void MainWindow::on_actionSave_Geometrized_Image_triggered()
     }
 
     // TODO save the file
+}
+
+void MainWindow::on_actionOpenPreferences_triggered()
+{
+    PreferencesTabDialog preferencesTabDialog(this);
+    preferencesTabDialog.exec();
+}
+
+void MainWindow::on_runStopButton_clicked()
+{
+    // TODO check settings are valid
+
 }
