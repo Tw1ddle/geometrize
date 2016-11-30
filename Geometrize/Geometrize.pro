@@ -34,6 +34,7 @@ HEADERS  += versioninfo.h \
     constants.h \
     winversioninfo.h \
     lib/geometrizer/geometrizer/bitmap/bitmapdata.h \
+    lib/geometrizer/geometrizer/bitmap/rgba.h \
     lib/geometrizer/geometrizer/exporters/shapearrayexporter.h \
     lib/geometrizer/geometrizer/exporters/shapejsonexporter.h \
     lib/geometrizer/geometrizer/runner/imagerunner.h \
@@ -56,8 +57,7 @@ HEADERS  += versioninfo.h \
     forms/quitdialog.h \
     forms/licensedialog.h \
     forms/creditsdialog.h \
-    forms/preferencestabdialog.h \
-    lib/geometrizer/geometrizer/bitmap/rgba.h
+    forms/preferencestabdialog.h
 
 FORMS    += forms/mainwindow.ui \
     forms/aboutdialog.ui \

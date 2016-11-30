@@ -77,7 +77,7 @@ public:
      * @brief getDataRef Gets a reference to the raw bitmap data.
      * @return  The bitmap data.
      */
-    inline const std::vector<unsigned char>& getDataRef()
+    inline const std::vector<unsigned char>& getDataRef() const
     {
         return m_data;
     }

@@ -2,6 +2,7 @@
 #define MODEL_H
 
 #include "model.h"
+#include "bitmap/rgba.h"
 #include "shape/shape.h"
 #include "state.h"
 

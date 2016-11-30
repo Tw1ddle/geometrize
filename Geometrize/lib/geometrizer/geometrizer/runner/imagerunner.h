@@ -4,6 +4,7 @@
 #include <array>
 
 #include "../bitmap/bitmapdata.h"
+#include "../geometrize.h"
 #include "../model.h"
 #include "../shape/shapetypes.h"
 
@@ -27,7 +28,7 @@ struct RunParams
 class ImageRunner
 {
 public:
-    ImageRunner(BitmapData& bitmap) :  m_model{bitmap, geometrize::getAverageImageColor(bitmap)} {} // TODO set the starting color optionally
+    ImageRunner(BitmapData& bitmap) : m_model{bitmap, geometrize::core::getAverageImageColor(bitmap)} {} // TODO set the starting color optionally
     ~ImageRunner() = default;
     ImageRunner& operator=(const ImageRunner&) = delete;
     ImageRunner(const ImageRunner&) = delete;

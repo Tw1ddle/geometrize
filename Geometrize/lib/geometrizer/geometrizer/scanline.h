@@ -59,7 +59,6 @@ public:
         return trimmedScanlines;
     }
 
-private:
     const int y; ///< The y-coordinate of the scanline.
     int x1; ///< The leftmost x-coordinate of the scanline.
     int x2; ///< The rightmost x-coordinate of the scanline.

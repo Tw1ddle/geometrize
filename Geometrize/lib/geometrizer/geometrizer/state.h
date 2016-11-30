@@ -22,7 +22,7 @@ public:
      * @param current The current bitmap.
      * @param buffer The buffer bitmap.
      */
-    State(Shape& shape, const int alpha, const BitmapData& target, const BitmapData& current, const BitmapData& buffer) :
+    State(Shape& shape, const int alpha, const BitmapData& target, const BitmapData& current, BitmapData& buffer) :
         m_shape{shape}, m_score{-1}, m_alpha{alpha}, m_target{target}, m_current{current}, m_buffer{buffer} {}
     ~State() = default;
     State& operator=(const State&) = default;
@@ -36,7 +36,7 @@ public:
     inline float energy()
     {
         if(m_score < 0) {
-            m_score = geometrize::energy(m_shape, m_alpha, m_target, m_current, m_buffer, m_score);
+            m_score = geometrize::core::energy(m_shape, m_alpha, m_target, m_current, m_buffer, m_score);
         }
         return m_score;
     }
@@ -59,7 +59,7 @@ private:
 
     const BitmapData& m_target;
     const BitmapData& m_current;
-    const BitmapData& m_buffer;
+    BitmapData& m_buffer;
 };
 
 }
