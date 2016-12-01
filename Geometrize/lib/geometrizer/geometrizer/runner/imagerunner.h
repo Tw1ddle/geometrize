@@ -18,7 +18,7 @@ namespace geometrize
 struct RunParams
 {
     int primitiveCount = 50;
-    ShapeTypes shapeTypes = ShapeTypes::RECTANGLE;
+    shapes::ShapeTypes shapeTypes = shapes::ShapeTypes::RECTANGLE;
 };
 
 /**

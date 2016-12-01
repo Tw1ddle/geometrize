@@ -21,8 +21,8 @@ public:
      */
     Rectangle(const int xBound, const int yBound) : m_xBound(xBound), m_yBound(yBound)
     {
-        m_x1 = util::Random::randomRange(0, xBound);
-        m_y1 = util::Random::randomRange(0, yBound);
+        m_x1 = util::Random::randomRange(0, m_xBound);
+        m_y1 = util::Random::randomRange(0, m_yBound);
         m_x2 = util::clamp(m_x1 + util::Random::randomRange(0, util::Random::randomRange(0, 32) + 1), 0, m_xBound);
         m_y2 = util::clamp(m_y1 + util::Random::randomRange(0, util::Random::randomRange(0, 32) + 1), 0, m_yBound);
     }
@@ -30,8 +30,8 @@ public:
     virtual std::vector<Scanline> rasterize() const override
     {
         std::vector<Scanline> lines;
-        for(int y = m_y1; i < m_y2; y++) {
-            if(x1 != x2) {
+        for(int y = m_y1; y < m_y2; y++) {
+            if(m_x1 != m_x2) {
                 lines.push_back(Scanline(y, std::min(m_x1, m_x2), std::max(m_x1, m_x2), 0xFFFF));
             }
         }

@@ -15,6 +15,7 @@ namespace util
  * @author Sam Twidale (http://samcodes.co.uk/)
  */
 class Random {
+public:
     /**
      * @brief seed Seeds the random number generator.
      * @param seed The seed.

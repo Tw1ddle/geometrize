@@ -80,7 +80,7 @@ public:
      * @param repeats How many times to repeat the stepping process with reduced search (per step), adding additional shapes.
      * @return A vector containing data about the shapes added to the model in this step.
      */
-    std::vector<ShapeResult> step(const geometrize::ShapeTypes shapeTypes, const uint16_t, const std::size_t repeats)
+    std::vector<ShapeResult> step(const geometrize::shapes::ShapeTypes shapeTypes, const uint16_t, const std::size_t repeats)
     {
         // TODO
         //State state;

@@ -1,12 +1,13 @@
 #ifndef GEOMETRIZE_H
 #define GEOMETRIZE_H
 
+#include <vector>
+
 #include "state.h"
 #include "bitmap/bitmapdata.h"
 #include "bitmap/rgba.h"
-#include "shape/shape.h"
+#include "scanline.h"
 #include "shape/shapetypes.h"
-#include "shape/shapefactory.h"
 
 namespace geometrize
 {
@@ -206,13 +207,13 @@ float differencePartial(const BitmapData& target, const BitmapData& before, cons
  * @param buffer The buffer bitmap.
  * @return The best random state i.e. the one with the lowest energy.
  */
-State bestRandomState(const ShapeTypes shapeTypes, const int alpha, const int n, const BitmapData& target, const BitmapData& current, BitmapData& buffer)
+State bestRandomState(const shapes::ShapeTypes shapeTypes, const int alpha, const int n, const BitmapData& target, const BitmapData& current, BitmapData& buffer)
 {
     float bestEnergy{0.0f};
-    State bestState(ShapeFactory::randomShapeOf(shapeTypes, current.getWidth(), current.getHeight()), alpha, target, current, buffer); // TODO?
+    State bestState(shapeTypes, alpha, target, current, buffer); // TODO?
     for(int i = 0; i <= n; i++) {
-        State state(ShapeFactory::randomShapeOf(shapeTypes, current.getWidth(), current.getHeight()), alpha, target, current, buffer);
-        const float energy{state.energy()};
+        State state(shapeTypes, alpha, target, current, buffer);
+        const float energy{state.calculateEnergy()};
         if(i == 0 || energy < bestEnergy) {
             bestEnergy = energy;
             bestState = state;
@@ -232,12 +233,12 @@ State hillClimb(const State& state, const unsigned int maxAge)
 {
     State s(state); // TODO?
     State bestState(state);
-    float bestEnergy{s.energy()};
+    float bestEnergy{s.calculateEnergy()};
 
     unsigned int age{0};
     while(age < maxAge) {
         const State undo{s.mutate()};
-        const float energy{s.energy()};
+        const float energy{s.calculateEnergy()};
         if(energy >= bestEnergy) {
             s = undo;
         } else {
@@ -263,16 +264,16 @@ State hillClimb(const State& state, const unsigned int maxAge)
  * @param buffer The buffer bitmap.
  * @return The best state acquired from hill climbing i.e. the one with the lowest energy.
  */
-State bestHillClimbState(const ShapeTypes shapeTypes, const int alpha, const int n, const int age, const int m, const BitmapData& target, const BitmapData& current, BitmapData& buffer)
+State bestHillClimbState(const shapes::ShapeTypes shapeTypes, const int alpha, const int n, const int age, const int m, const BitmapData& target, const BitmapData& current, BitmapData& buffer)
 {
     float bestEnergy{0.0f};
 
     State bestState{bestRandomState(shapeTypes, alpha, n, target, current, buffer)}; // TODO
     for(int i = 0; i < m; i++) {
         State state = bestRandomState(shapeTypes, alpha, n, target, current, buffer);
-        const float before{state.energy()};
+        const float before{state.calculateEnergy()};
         state = hillClimb(state, age);
-        const float energy{state.energy()};
+        const float energy{state.calculateEnergy()};
         if(i == 0 || energy < bestEnergy) {
             bestEnergy = energy;
             bestState = state;
@@ -304,19 +305,17 @@ rgba getAverageImageColor(const BitmapData& image)
 }
 
 /**
- * @brief energy Calculates a measure of the improvement adding the shape provides - lower energy is better.
- * @param shape The shape to check.
- * @param alpha The alpha of the shape.
+ * @brief energy Calculates a measure of the improvement adding the scanlines of a shape provides - lower energy is better.
+ * @param lines The scanlines of the shape.
+ * @param alpha The alpha of the scanlines.
  * @param target The target bitmap.
  * @param current The current bitmap.
  * @param buffer The buffer bitmap.
  * @param score The score.
  * @return The energy measure.
  */
-float energy(const Shape& shape, const int alpha, const BitmapData& target, const BitmapData& current, BitmapData& buffer, const float score)
+float energy(const std::vector<Scanline>& lines, const int alpha, const BitmapData& target, const BitmapData& current, BitmapData& buffer, const float score)
 {
-    // Gets the set of scanlines that describe the pixels covered by the shape
-    const std::vector<Scanline> lines{shape.rasterize()};
     // Calculates the best color for the area covered by the scanlines
     const rgba color{computeColor(target, current, lines, alpha)};
     // Copies the area covered by the scanlines to the buffer bitmap
