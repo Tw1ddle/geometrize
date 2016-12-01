@@ -7,6 +7,10 @@
 namespace geometrize
 {
 
+/**
+ * @brief The Rectangle class represents a rectangle.
+ * @author Sam Twidale (http://samcodes.co.uk/)
+ */
 class Rectangle : public Shape
 {
 public:
@@ -45,7 +49,6 @@ public:
         case 1:
             m_x2 = util::clamp(m_x2 + util::Random::randomRange(-16, 16), 0, m_xBound - 1);
             m_y2 = util::clamp(m_y2 + util::Random::randomRange(-16, 16), 0, m_yBound - 1);
-
         }
     }
 

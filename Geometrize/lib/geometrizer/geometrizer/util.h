@@ -10,6 +10,10 @@ namespace geometrize
 namespace util
 {
 
+/**
+ * @brief The Random class is a little utility for generating random numbers.
+ * @author Sam Twidale (http://samcodes.co.uk/)
+ */
 class Random {
     /**
      * @brief seed Seeds the random number generator.
