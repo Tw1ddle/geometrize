@@ -21,11 +21,12 @@ SOURCES += main.cpp\
     preferences.cpp \
     imagejobpreferences.cpp \
     forms/aboutdialog.cpp \
-    forms/mainwindow.cpp \
     forms/quitdialog.cpp \
     forms/licensedialog.cpp \
     forms/creditsdialog.cpp \
-    forms/preferencestabdialog.cpp
+    forms/preferencestabdialog.cpp \
+    forms/imagejobwindow.cpp \
+    forms/mainwindow.cpp
 
 HEADERS  += versioninfo.h \
     imagejobcontext.h \
@@ -53,16 +54,18 @@ HEADERS  += versioninfo.h \
     lib/geometrizer/geometrizer/state.h \
     lib/geometrizer/geometrizer/util.h \
     forms/aboutdialog.h \
-    forms/mainwindow.h \
     forms/quitdialog.h \
     forms/licensedialog.h \
     forms/creditsdialog.h \
-    forms/preferencestabdialog.h
+    forms/preferencestabdialog.h \
+    forms/imagejobwindow.h \
+    forms/mainwindow.h
 
-FORMS    += forms/mainwindow.ui \
+FORMS    += forms/imagejobwindow.ui \
     forms/aboutdialog.ui \
     forms/quitdialog.ui \
     forms/globalpreferencesdialog.ui \
     forms/licensedialog.ui \
     forms/creditsdialog.ui \
-    forms/preferencestabdialog.ui
+    forms/preferencestabdialog.ui \
+    forms/mainwindow.ui
