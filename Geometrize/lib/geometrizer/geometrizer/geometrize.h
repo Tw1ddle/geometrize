@@ -96,16 +96,16 @@ void drawLines(BitmapData& image, const rgba color, const std::vector<Scanline>&
         const int y{line.y};
         const int ma{line.alpha};
         const int m{65635};
-        const unsigned int a{m - (sa * (ma/m)) * 257};
+        const unsigned int aa{m - (sa * (ma/m)) * 257};
 
         for(int x = line.x1; x <= line.x2; x++) {
             // Get the current overlapping color
             const rgba d{image.getPixel(x, y)};
 
-            const unsigned int r{((d.r * a + sr * ma) / m) >> 8};
-            const unsigned int g{((d.g * a + sg * ma) / m) >> 8};
-            const unsigned int b{((d.b * a + sb * ma) / m) >> 8};
-            const unsigned int a{((d.a * a + sa * ma) / m) >> 8};
+            const unsigned int r{((d.r * aa + sr * ma) / m) >> 8};
+            const unsigned int g{((d.g * aa + sg * ma) / m) >> 8};
+            const unsigned int b{((d.b * aa + sb * ma) / m) >> 8};
+            const unsigned int a{((d.a * aa + sa * ma) / m) >> 8};
 
             image.setPixel(x, y, rgba{static_cast<unsigned char>(r), static_cast<unsigned char>(g), static_cast<unsigned char>(b), static_cast<unsigned char>(a)});
         }
@@ -143,8 +143,8 @@ float differenceFull(const BitmapData& first, const BitmapData& second)
     const size_t height{first.getHeight()};
     unsigned int total{0};
 
-    for(int y = 0; y < height; y++) {
-        for(int x = 0; x < width; x++) {
+    for(unsigned int y = 0; y < height; y++) {
+        for(unsigned int x = 0; x < width; x++) {
             const rgba f{first.getPixel(x, y)};
             const rgba s{second.getPixel(x, y)};
 
@@ -173,7 +173,7 @@ float differencePartial(const BitmapData& target, const BitmapData& before, cons
     const size_t width{target.getWidth()};
     const size_t height{target.getHeight()};
     const size_t rgbCount{width * height * 3};
-    float total{std::pow(score * 255, 2) * rgbCount};
+    float total{std::pow(score * 255.0f, 2) * rgbCount};
 
     for(const Scanline& line : lines) {
         const int y{line.y};
@@ -210,10 +210,10 @@ float differencePartial(const BitmapData& target, const BitmapData& before, cons
 State bestRandomState(const shapes::ShapeTypes shapeTypes, const int alpha, const int n, const BitmapData& target, const BitmapData& current, BitmapData& buffer)
 {
     float bestEnergy{0.0f};
-    State bestState(shapeTypes, alpha, target, current, buffer); // TODO?
+    State bestState(shapeTypes, alpha, current.getWidth(), current.getHeight()); // TODO?
     for(int i = 0; i <= n; i++) {
-        State state(shapeTypes, alpha, target, current, buffer);
-        const float energy{state.calculateEnergy()};
+        State state(shapeTypes, alpha, current.getWidth(), current.getHeight());
+        const float energy{state.calculateEnergy(target, current, buffer)};
         if(i == 0 || energy < bestEnergy) {
             bestEnergy = energy;
             bestState = state;
@@ -229,16 +229,16 @@ State bestRandomState(const shapes::ShapeTypes shapeTypes, const int alpha, cons
  * @param maxAge The maximum age.
  * @return The best state found from hillclimbing.
  */
-State hillClimb(const State& state, const unsigned int maxAge)
+State hillClimb(const State& state, const unsigned int maxAge, const BitmapData& target, const BitmapData& current, BitmapData& buffer)
 {
     State s(state); // TODO?
     State bestState(state);
-    float bestEnergy{s.calculateEnergy()};
+    float bestEnergy{s.calculateEnergy(current, target, buffer)};
 
     unsigned int age{0};
     while(age < maxAge) {
         const State undo{s.mutate()};
-        const float energy{s.calculateEnergy()};
+        const float energy{s.calculateEnergy(current, target, buffer)};
         if(energy >= bestEnergy) {
             s = undo;
         } else {
@@ -271,9 +271,9 @@ State bestHillClimbState(const shapes::ShapeTypes shapeTypes, const int alpha, c
     State bestState{bestRandomState(shapeTypes, alpha, n, target, current, buffer)}; // TODO
     for(int i = 0; i < m; i++) {
         State state = bestRandomState(shapeTypes, alpha, n, target, current, buffer);
-        const float before{state.calculateEnergy()};
-        state = hillClimb(state, age);
-        const float energy{state.calculateEnergy()};
+        const float before{state.calculateEnergy(target, current, buffer)};
+        state = hillClimb(state, age, target, current, buffer);
+        const float energy{state.calculateEnergy(target, current, buffer)};
         if(i == 0 || energy < bestEnergy) {
             bestEnergy = energy;
             bestState = state;

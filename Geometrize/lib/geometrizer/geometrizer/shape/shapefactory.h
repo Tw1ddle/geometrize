@@ -27,24 +27,27 @@ public:
      * @param yBound The y-bound of the whole canvas.
      * @return The new shape.
      */
-    static std::unique_ptr<Shape> create(shapes::ShapeTypes t, const int xBound, const int yBound)
+    static Shape* create(shapes::ShapeTypes t, const int xBound, const int yBound)
     {
         switch(t) {
             case shapes::ShapeTypes::CIRCLE:
-                return std::make_unique<Circle>(xBound, yBound);
+                return new Circle(xBound, yBound);
             case shapes::ShapeTypes::ELLIPSE:
-                return std::make_unique<Ellipse>(xBound, yBound);
+                return new Ellipse(xBound, yBound);
             case shapes::ShapeTypes::ROTATED_ELLIPSE:
-                return std::make_unique<RotatedEllipse>(xBound, yBound);
+                return new RotatedEllipse(xBound, yBound);
             case shapes::ShapeTypes::ROTATED_RECTANGLE:
-                return std::make_unique<RotatedRectangle>(xBound, yBound);
+                return new RotatedRectangle(xBound, yBound);
             case shapes::ShapeTypes::TRIANGLE:
-                return std::make_unique<Triangle>(xBound, yBound);
+                return new Triangle(xBound, yBound);
             case shapes::ShapeTypes::RECTANGLE:
-                return std::make_unique<Rectangle>(xBound, yBound);
+                return new Rectangle(xBound, yBound);
+            case shapes::ShapeTypes::SHAPE_COUNT:
+             assert(0 && "Bad shape value");
         };
 
         assert(0 && "Unhandled shape type encountered");
+        return new Rectangle(xBound, yBound);
     }
 
     /**
@@ -53,7 +56,7 @@ public:
      * @param yBound The y-bound of the whole canvas.
      * @return The new shape.
      */
-    static std::unique_ptr<Shape> randomShape(const int xBound, const int yBound)
+    static Shape* randomShape(const int xBound, const int yBound)
     {
         return create(shapes::allShapes[util::Random::randomRange(0, static_cast<int>(shapes::allShapes.size()) - 1)], xBound, yBound);
     }
@@ -65,11 +68,11 @@ public:
      * @param yBound The y-bound of the whole canvas.
      * @return The new shape.
      */
-    static std::unique_ptr<Shape> randomShapeOf(const shapes::ShapeTypes t, const int xBound, const int yBound)
+    static Shape* randomShapeOf(const shapes::ShapeTypes t, const int xBound, const int yBound)
     {
         const std::bitset<32> b(t);
         std::vector<int> bits;
-        for(int bit = 0; bit < b.count(); bit++) {
+        for(unsigned int bit = 0; bit < b.count(); bit++) {
             if(bit) {
                 bits.push_back(1 << bit);
             }

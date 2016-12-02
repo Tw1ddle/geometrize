@@ -28,7 +28,7 @@ public:
             return;
         }
 
-        for(int i = 0; i < m_data.size(); i+=4) {
+        for(unsigned int i = 0; i < m_data.size(); i+=4) {
             m_data[i] = color.r;
             m_data[i + 1] = color.g;
             m_data[i + 2] = color.b;

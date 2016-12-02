@@ -26,6 +26,12 @@ public:
      * Used to improve the shape's fit in a bitmap (trial-and-error style).
      */
     virtual void mutate() = 0;
+
+    /**
+     * @brief getType Gets the ShapeType of the shape.
+     * @return The ShapeType of the shape.
+     */
+    virtual shapes::ShapeTypes getType() const = 0;
 };
 
 }

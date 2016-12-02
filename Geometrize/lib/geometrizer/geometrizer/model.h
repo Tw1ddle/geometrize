@@ -10,21 +10,14 @@ namespace geometrize
 {
 
 /**
- * @brief The ShapeResult class is a container for info about a shape added to the model.
+ * @brief The ShapeResult struct is a container for info about a shape added to the model.
  * @author Sam Twidale (http://samcodes.co.uk/)
  */
-class ShapeResult
+struct ShapeResult
 {
-public:
-    ShapeResult() : score{0.0f}, color{0}, shape{nullptr} {}
-    ShapeResult(const float score, const int color, Shape* shape) : score{score}, color{color}, shape{shape} {}
-    ~ShapeResult() = default;
-    ShapeResult& operator=(const ShapeResult&) = default;
-    ShapeResult(const ShapeResult&) = default;
-
-    const float score;
-    const int color;
-    const Shape* const shape;
+    float score;
+    rgba color;
+    Shape* shape;
 };
 
 /**
@@ -37,7 +30,9 @@ public:
     Model(const BitmapData& target, const rgba backgroundColor) :
         m_target(target),
         m_current(target.getWidth(), target.getHeight(), backgroundColor),
-        m_buffer(target.getWidth(), target.getHeight(), backgroundColor) {}
+        m_buffer(target.getWidth(), target.getHeight(), backgroundColor),
+        m_score{geometrize::core::differenceFull(m_target, m_current)}
+    {}
 
     Model() = delete;
     ~Model() = default;
@@ -77,14 +72,26 @@ public:
     /**
      * @brief step Steps the primitive optimization/fitting algorithm.
      * @param shapeTypes The types of shape to use.
+     * @param alpha The alpha of the shape.
      * @param repeats How many times to repeat the stepping process with reduced search (per step), adding additional shapes.
      * @return A vector containing data about the shapes added to the model in this step.
      */
-    std::vector<ShapeResult> step(const geometrize::shapes::ShapeTypes shapeTypes, const uint16_t, const std::size_t repeats)
+    std::vector<ShapeResult> step(const geometrize::shapes::ShapeTypes shapeTypes, const uint16_t alpha, const int repeats)
     {
-        // TODO
-        //State state;
+        State state{geometrize::core::bestHillClimbState(shapeTypes, alpha, 1000, 100, 16, m_target, m_current, m_buffer)}; // TODO
         std::vector<ShapeResult> results;
+        results.push_back(addShape(state.m_shape, alpha));
+
+        for(int i = 0; i <= repeats; i++) {
+            const float before{state.calculateEnergy(m_target, m_current, m_buffer)};
+            state = geometrize::core::hillClimb(state, 100, m_target, m_current, m_buffer);
+            const float after{state.calculateEnergy(m_target, m_current, m_buffer)};
+            if(before == after) {
+                break;
+            }
+            results.push_back(addShape(state.m_shape, state.m_alpha));
+        }
+        return results;
     }
 
     /**
@@ -93,15 +100,19 @@ public:
      * @param alpha The alpha/opacity of the shape.
      * @return Data about the shape added to the model.
      */
-    ShapeResult addShape(Shape& shape, const uint16_t alpha)
+    ShapeResult addShape(Shape* shape, const uint16_t alpha)
     {
-        //BitmapData before = m_current.copyData();
-        //std::vector<Scanline> scanlines = shape.rasterize();
-        // TODO
+        const BitmapData before{m_current};
+        const std::vector<Scanline> lines{shape->rasterize()};
+        const rgba color{geometrize::core::computeColor(m_target, m_current, lines, alpha)};
+        geometrize::core::drawLines(m_current, color, lines);
 
-        ShapeResult s(0, 0, &shape);
+        m_score = geometrize::core::differencePartial(m_target, before, m_current, m_score, lines);
 
-        return s;
+        ShapeResult result{m_score, color, shape};
+        m_shapeResults.push_back(result);
+
+        return result;
     }
 
     /**
@@ -126,7 +137,7 @@ private:
     BitmapData m_target; ///< The target bitmap, the bitmap we aim to approximate.
     BitmapData m_current; ///< The current bitmap.
     BitmapData m_buffer; ///< Buffer bitmap.
-
+    float m_score; ///< Score derived from calculating the difference between bitmaps.
     std::vector<ShapeResult> m_shapeResults; ///< The results data with info about the shapes added to the model so far.
 };
 

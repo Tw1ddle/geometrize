@@ -33,23 +33,23 @@ public:
      * @param current The current bitmap.
      * @param buffer The buffer bitmap.
      */
-    State(const shapes::ShapeTypes shapeTypes, const int alpha, const BitmapData& target, const BitmapData& current, BitmapData& buffer) :
-        m_score{-1.0f}, m_alpha{alpha}, m_target{target}, m_current{current}, m_buffer{buffer}, m_shape{ShapeFactory::randomShapeOf(shapeTypes, static_cast<int>(current.getWidth()), static_cast<int>(current.getHeight()))}
+    State(const shapes::ShapeTypes shapeTypes, const int alpha, const int width, const int height) :
+        m_score{-1.0f}, m_alpha{alpha}, m_shape{ShapeFactory::randomShapeOf(shapeTypes, width, height)}
     {}
 
     ~State() = default;
-    State& operator=(const State&) = default;
-    State(const State&) = default;
+    State& operator=(const State& other) = default;
+    State(const State& other) = default;
 
     /**
      * @brief Calculates a measure of the improvement drawing the primitive to the current bitmap will have.
      * The lower the energy, the better. The score is cached, set it to < 0 to recalculate it.
      * @return The energy measure.
      */
-    inline float calculateEnergy()
+    inline float calculateEnergy(const BitmapData& target, const BitmapData& current, BitmapData& buffer)
     {
         if(m_score < 0) {
-            m_score = geometrize::core::energy(m_shape->rasterize(), m_alpha, m_target, m_current, m_buffer, m_score); // TODO
+            m_score = geometrize::core::energy(m_shape->rasterize(), m_alpha, target, current, buffer, m_score); // TODO
         }
         return m_score;
     }
@@ -65,14 +65,9 @@ public:
         return oldState;
     }
 
-private:
-    std::unique_ptr<Shape> m_shape; ///< The geometric primitive owned by the state.
+    Shape* m_shape; ///< The geometric primitive owned by the state.
     float m_score; ///< The score of the state, a measure of the improvement applying the state to the current bitmap will have.
     int m_alpha; ///< The alpha of the shape.
-
-    const BitmapData& m_target;
-    const BitmapData& m_current;
-    BitmapData& m_buffer;
 };
 
 }

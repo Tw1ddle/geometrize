@@ -52,6 +52,11 @@ public:
         }
     }
 
+    virtual shapes::ShapeTypes getType() const override
+    {
+        return shapes::ShapeTypes::RECTANGLE;
+    }
+
 private:
     const int m_xBound; ///< The x-bound of the whole canvas.
     const int m_yBound; ///< The y-bound of the whole canvas.

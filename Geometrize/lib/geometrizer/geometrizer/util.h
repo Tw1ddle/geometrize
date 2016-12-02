@@ -51,6 +51,8 @@ private:
     static unsigned int m_seed; ///< Random seed
 };
 
+unsigned int Random::m_seed = 0;
+
 /**
  * Clamps a value within a range.
  * @param value The value to clamp.
