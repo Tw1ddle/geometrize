@@ -2,6 +2,7 @@
 
 #include <QApplication>
 #include <QDesktopServices>
+#include <QException>
 #include <QFileDialog>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsView>
@@ -21,6 +22,7 @@
 #include "dialog/preferencestabdialog.h"
 #include "dialog/quitdialog.h"
 #include "imagejobcontext.h"
+#include "recentfiles.h"
 
 namespace geometrize
 {
@@ -55,13 +57,6 @@ public:
         return dialog.result();
     }
 
-    static ImageJobContext* createImageJob(QWidget* parent)
-    {
-        dialog::ImageJobWindow* imageJobWindow = new dialog::ImageJobWindow(parent);
-        imageJobWindow->show(); // TODO cleanup
-        return new ImageJobContext(BitmapData(10, 10, rgba{0, 0, 0, 0})); // TODO
-    }
-
     static void openTechnicalSupport()
     {
         QDesktopServices::openUrl(QUrl(geometrize::constants::TECHNICAL_SUPPORT_URL));
@@ -72,32 +67,42 @@ public:
         QDesktopServices::openUrl(QUrl(geometrize::constants::VIDEO_TUTORIAL_URL));
     }
 
-    static void openImage(QGraphicsScene* scene, QWidget* parent)
+    static ImageJobContext* createImageJob(QWidget* parent, const QPixmap& pixmap)
     {
-        QString imagePath{QFileDialog::getOpenFileName(parent, tr("Open Image"), "", tr("Image Files (*.jpg *.jpeg *.png *.bmp)"))};
-        if(imagePath.length() == 0) {
-            return; // User did not select an item
+        dialog::ImageJobWindow* imageJobWindow = new dialog::ImageJobWindow(parent);
+        imageJobWindow->show(); // TODO cleanup
+
+        // TODO QImage instead?
+        //BitmapData data(pixmap.data_ptr().);
+
+        return new ImageJobContext(BitmapData(10, 10, rgba{0, 0, 0, 0})); // TODO
+    }
+
+    static QString getImagePath(QWidget* parent)
+    {
+        return QFileDialog::getOpenFileName(parent, tr("Open Image"), "", tr("Image Files (*.jpg *.jpeg *.png *.bmp)"));
+    }
+
+    static QPixmap openPixmap(QWidget* parent, const QString& imagePath)
+    {
+        QImage image(imagePath);
+        if(!isImageValid(image)) {
+            QMessageBox::critical(parent, tr("Image Loading Error"), tr("The image file could not be loaded."));
+            return QPixmap();
         }
+
+        image = image.convertToFormat(QImage::Format_RGBA8888);
+
+        const QPixmap pixmap{QPixmap::fromImage(image)};
+        if(!isPixmapValid(pixmap)) {
+            QMessageBox::critical(parent, tr("Image Loading Error"), tr("Failed to convert image file."));
+            return QPixmap();
+        }
+
+        return pixmap;
 
         // TODO open svg, need to specify size after the fact
         // TODO separate this logic from the error boxes and this code path with signals
-
-        QImage image{imageForImagePath(imagePath)};
-        if(!isImageValid(image)) {
-            QMessageBox::critical(parent, tr("Image Loading Error"), tr("The image file could not be loaded."));
-            return;
-        }
-        image = image.convertToFormat(QImage::Format_RGBA8888);
-
-        QPixmap pixmap = QPixmap::fromImage(image);
-        if(!isPixmapValid(pixmap)) {
-            QMessageBox::critical(parent, tr("Image Loading Error"), tr("Failed to convert image file."));
-            return;
-        }
-
-        QGraphicsPixmapItem* pixmapItem{scene->addPixmap(pixmap)};
-        pixmapItem->setPos(QPointF(150, 150)); // TODO center in scene?
-
         // TODO create a new image job context, add a new tab for the image, add the image background initially
     }
 
@@ -110,10 +115,26 @@ public:
         }
 
         // TODO save the file
+
+    }
+
+    void addRecentFile(const QString& filePath)
+    {
+        m_recentFiles.add(filePath);
+    }
+
+    void removeRecentFile(const QString& filePath)
+    {
+        m_recentFiles.remove(filePath);
+    }
+
+    void clearRecentFiles()
+    {
+        m_recentFiles.clear();
     }
 
 private:
-    static QImage imageForImagePath(const QString imagePath)
+    static QImage imageForImagePath(const QString& imagePath)
     {
         return QImage(imagePath);
     }
@@ -127,15 +148,17 @@ private:
     {
         return !pixmap.isNull() && pixmap.width() > 0 && pixmap.height() > 0;
     }
+
+    RecentFiles m_recentFiles;
 };
 
 Q_GLOBAL_STATIC(SharedApp, app)
 SharedApp::SharedApp() : d{std::make_unique<SharedAppImpl>()} {}
 SharedApp::~SharedApp() {}
 
-void SharedApp::createImageJob(QWidget* parent) const
+void SharedApp::createImageJob(QWidget* parent, const QPixmap& pixmap) const
 {
-    SharedAppImpl::createImageJob(parent);
+    SharedAppImpl::createImageJob(parent, pixmap);
 }
 
 void SharedApp::openAboutPage(QWidget* parent) const
@@ -163,14 +186,34 @@ void SharedApp::openOnlineTutorials() const
     SharedAppImpl::openOnlineTutorials();
 }
 
-void SharedApp::openImage(QGraphicsScene* scene, QWidget* parent) const
+QPixmap SharedApp::openPixmap(QWidget* parent, const QString& imagePath) const
 {
-    SharedAppImpl::openImage(scene, parent);
+    return SharedAppImpl::openPixmap(parent, imagePath);
 }
 
 void SharedApp::saveImage(QWidget* parent) const
 {
     SharedAppImpl::saveImage(parent);
+}
+
+QString SharedApp::getImagePath(QWidget *parent) const
+{
+    return SharedAppImpl::getImagePath(parent);
+}
+
+void SharedApp::addRecentFile(const QString& filePath) const
+{
+    d->addRecentFile(filePath);
+}
+
+void SharedApp::removeRecentFile(const QString& filePath) const
+{
+    d->removeRecentFile(filePath);
+}
+
+void SharedApp::clearRecentFiles() const
+{
+    d->clearRecentFiles();
 }
 
 }

@@ -32,7 +32,7 @@
       <item>
        <layout class="QVBoxLayout" name="recentsLayout">
         <item>
-         <widget class="QLabel" name="recentListTitle">
+         <widget class="QLabel" name="geometrizeTitle">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -72,10 +72,32 @@
          </spacer>
         </item>
         <item>
-         <layout class="QVBoxLayout" name="verticalLayout"/>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <widget class="QPushButton" name="openImageButton">
+            <property name="text">
+             <string>Open Image</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="openImageSetButton">
+            <property name="text">
+             <string>Open Image Set</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="openShapeDataButton">
+            <property name="text">
+             <string>Open Shape Data</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
         <item>
-         <widget class="QLabel" name="recentListSub">
+         <widget class="QLabel" name="recentListTitle">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>

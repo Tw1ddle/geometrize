@@ -25,13 +25,13 @@ public:
     ~LaunchWindow();
 
 private slots:
-    void on_emptyImage_Opened();
     void on_actionPreferences_triggered();
     void on_actionClear_Recents_triggered();
     void on_actionExit_triggered();
     void on_actionTutorials_triggered();
     void on_actionSupport_triggered();
     void on_actionAbout_triggered();
+    void on_openImageButton_clicked();
 
 private:
     void closeEvent(QCloseEvent *bar) override;

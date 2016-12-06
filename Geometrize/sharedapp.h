@@ -4,6 +4,8 @@
 #include <memory>
 
 class QGraphicsScene;
+class QPixmap;
+class QString;
 class QWidget;
 
 namespace geometrize
@@ -22,7 +24,7 @@ public:
     SharedApp(const SharedApp&) = delete;
     ~SharedApp();
 
-   void createImageJob(QWidget* parent) const;
+   void createImageJob(QWidget* parent, const QPixmap& pixmap) const;
 
    void openAboutPage(QWidget* parent) const;
    void openPreferences(QWidget* parent) const;
@@ -31,8 +33,14 @@ public:
    void openTechnicalSupport() const;
    void openOnlineTutorials() const;
 
-   void openImage(QGraphicsScene* scene, QWidget* parent) const;
+   QPixmap openPixmap(QWidget* parent, const QString& imagePath) const;
    void saveImage(QWidget* parent) const;
+
+   QString getImagePath(QWidget* parent) const;
+
+   void addRecentFile(const QString& filePath) const;
+   void removeRecentFile(const QString& filePath) const;
+   void clearRecentFiles() const;
 
 private:
     std::unique_ptr<SharedAppImpl> d;

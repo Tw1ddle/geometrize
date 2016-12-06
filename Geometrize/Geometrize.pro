@@ -21,6 +21,7 @@ SOURCES += main.cpp \
     preferences.cpp \
     imagejobpreferences.cpp \
     sharedapp.cpp \
+    recentfiles.cpp \
     dialog/aboutdialog.cpp \
     dialog/quitdialog.cpp \
     dialog/licensedialog.cpp \
@@ -36,6 +37,7 @@ HEADERS  += versioninfo.h \
     imagejobpreferences.h \
     constants.h \
     sharedapp.h \
+    recentfiles.h \
     lib/geometrizer/geometrizer/bitmap/bitmapdata.h \
     lib/geometrizer/geometrizer/bitmap/rgba.h \
     lib/geometrizer/geometrizer/exporters/shapearrayexporter.h \
