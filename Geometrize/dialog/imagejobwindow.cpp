@@ -25,6 +25,8 @@ ImageJobWindow::ImageJobWindow(QWidget *parent) :
     ui(new Ui::ImageJobWindow)
 {
     ui->setupUi(this);
+
+    // TODO set title to name of image loaded?
 }
 
 ImageJobWindow::~ImageJobWindow()
@@ -71,22 +73,6 @@ void ImageJobWindow::on_actionTechnical_Support_triggered()
 void ImageJobWindow::on_actionOnline_Tutorials_triggered()
 {
     SharedApp().openOnlineTutorials();
-}
-
-void ImageJobWindow::on_actionOpen_New_Image_triggered()
-{
-    SharedApp().openImage(ui->imageView->scene(), this);
-}
-
-void ImageJobWindow::on_actionSave_Geometrized_Image_triggered()
-{
-    // TODO save svg?
-    QString imagePath{QFileDialog::getSaveFileName(this, tr("Save Image"), "", tr("JPEG Image (*.jpg *.jpeg);;PNG Image(*.png);;BMP Image(*.bmp)"))};
-    if(imagePath.length() == 0) {
-        return;
-    }
-
-    SharedApp().saveImage(this); // TODO actually save it
 }
 
 void ImageJobWindow::on_actionOpenPreferences_triggered()

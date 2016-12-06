@@ -279,6 +279,27 @@
              </property>
             </widget>
            </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_8">
+             <property name="text">
+              <string>Export Canvas Animation</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_6">
+             <property name="text">
+              <string>Export GIF Animation</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_7">
+             <property name="text">
+              <string>Export Geometry Data</string>
+             </property>
+            </widget>
+           </item>
           </layout>
          </item>
         </layout>
@@ -323,22 +344,7 @@
     <property name="title">
      <string>File</string>
     </property>
-    <widget class="QMenu" name="menuExport_Animation">
-     <property name="title">
-      <string>Export</string>
-     </property>
-     <addaction name="actionAnimation"/>
-     <addaction name="actionGIF_Animation"/>
-     <addaction name="actionShape_Data"/>
-    </widget>
-    <widget class="QMenu" name="menuImport">
-     <property name="title">
-      <string>Import</string>
-     </property>
-     <addaction name="actionShape_Data_2"/>
-    </widget>
-    <addaction name="menuImport"/>
-    <addaction name="menuExport_Animation"/>
+    <addaction name="actionSave_Settings_Template"/>
     <addaction name="actionOpenPreferences"/>
     <addaction name="actionExit"/>
    </widget>
@@ -442,6 +448,11 @@
   <action name="actionGIF_Animation">
    <property name="text">
     <string>GIF Animation</string>
+   </property>
+  </action>
+  <action name="actionSave_Settings_Template">
+   <property name="text">
+    <string>Save Settings Template</string>
    </property>
   </action>
  </widget>

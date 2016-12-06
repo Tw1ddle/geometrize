@@ -31,8 +31,6 @@ private slots:
     void on_actionExit_triggered();
     void on_actionTechnical_Support_triggered();
     void on_actionOnline_Tutorials_triggered();
-    void on_actionOpen_New_Image_triggered();
-    void on_actionSave_Geometrized_Image_triggered();
     void on_actionOpenPreferences_triggered();
     void on_runStopButton_clicked();
 

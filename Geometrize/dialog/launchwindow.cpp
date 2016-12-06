@@ -1,6 +1,8 @@
 #include "launchwindow.h"
 #include "ui_launchwindow.h"
 
+#include <QCloseEvent>
+#include <QDialog>
 #include <QPushButton> // TODO replace with selectable recents
 
 #include "sharedapp.h"
@@ -27,13 +29,23 @@ LaunchWindow::~LaunchWindow()
     delete ui;
 }
 
-void LaunchWindow::on_emptyImage_Opened()
+void LaunchWindow::closeEvent(QCloseEvent* event)
 {
-    SharedApp().createImageJob(nullptr);
+    const int dialogResult{SharedApp().openQuitDialog(this)}; // TODO unsaved changes check
+    if(dialogResult == QDialog::Accepted) {
+        event->accept();
+    } else {
+        event->ignore();
+    }
 }
 
-void LaunchWindow::on_actionImage_triggered()
+// TODO add option to open an image from geometry data (draws it to a new canvas and then opens it as an image?)
+
+void LaunchWindow::on_emptyImage_Opened()
 {
+    // TODO open an actual image using image opening dialog
+    //SharedApp().openImage(ui->imageView->scene(), this);
+
     SharedApp().createImageJob(nullptr);
 }
 
@@ -50,6 +62,12 @@ void LaunchWindow::on_actionClear_Recents_triggered()
 void LaunchWindow::on_actionExit_triggered()
 {
     // TODO
+    const int dialogResult{SharedApp().openQuitDialog(this)};
+    switch(dialogResult) {
+        case QDialog::Accepted:
+            // TODO save any outstanding stuff(?) separate method needed
+            QApplication::quit();
+    }
 }
 
 void LaunchWindow::on_actionTutorials_triggered()

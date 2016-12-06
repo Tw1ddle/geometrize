@@ -26,22 +26,16 @@ public:
 
 private slots:
     void on_emptyImage_Opened();
-
     void on_actionPreferences_triggered();
-
     void on_actionClear_Recents_triggered();
-
     void on_actionExit_triggered();
-
     void on_actionTutorials_triggered();
-
     void on_actionSupport_triggered();
-
     void on_actionAbout_triggered();
 
-    void on_actionImage_triggered();
-
 private:
+    void closeEvent(QCloseEvent *bar) override;
+
     Ui::LaunchWindow *ui;
 };
 
