@@ -1,6 +1,12 @@
 #include "creditsdialog.h"
 #include "ui_creditsdialog.h"
 
+namespace geometrize
+{
+
+namespace dialog
+{
+
 CreditsDialog::CreditsDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CreditsDialog)
@@ -20,4 +26,8 @@ CreditsDialog::CreditsDialog(QWidget *parent) :
 CreditsDialog::~CreditsDialog()
 {
     delete ui;
+}
+
+}
+
 }

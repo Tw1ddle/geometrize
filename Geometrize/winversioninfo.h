@@ -1,8 +1,6 @@
 #ifndef WINVERSIONINFO_H
 #define WINVERSIONINFO_H
 
-#ifdef Q_WS_WIN
-
 // Windows-specific version defines
 #define VER_FILEVERSION             1,0,0,0
 #define VER_FILEVERSION_STR         "1.0.0.0\0"
@@ -17,7 +15,5 @@
 #define VER_ORIGINALFILENAME_STR    "Geometrize.exe"
 #define VER_PRODUCTNAME_STR         "Geometrize"
 #define VER_COMPANYDOMAIN_STR       "samcodes.co.uk"
-
-#endif
 
 #endif // WINVERSIONINFO_H

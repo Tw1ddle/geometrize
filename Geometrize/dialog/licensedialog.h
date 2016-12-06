@@ -7,6 +7,15 @@ namespace Ui {
 class LicenseDialog;
 }
 
+namespace geometrize
+{
+
+namespace dialog
+{
+
+/**
+ * @brief The LicenseDialog class models the UI for the software license text and notices.
+ */
 class LicenseDialog : public QDialog
 {
     Q_OBJECT
@@ -18,5 +27,9 @@ public:
 private:
     Ui::LicenseDialog *ui;
 };
+
+}
+
+}
 
 #endif // LICENSEDIALOG_H

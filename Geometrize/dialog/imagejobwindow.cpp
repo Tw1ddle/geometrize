@@ -9,9 +9,15 @@
 #include <QPixmap>
 
 #include "constants.h"
-#include "forms/aboutdialog.h"
-#include "forms/preferencestabdialog.h"
-#include "forms/quitdialog.h"
+#include "dialog/aboutdialog.h"
+#include "dialog/preferencestabdialog.h"
+#include "dialog/quitdialog.h"
+
+namespace geometrize
+{
+
+namespace dialog
+{
 
 ImageJobWindow::ImageJobWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -150,5 +156,9 @@ void ImageJobWindow::on_actionOpenPreferences_triggered()
 void ImageJobWindow::on_runStopButton_clicked()
 {
     // TODO check settings are valid
+
+}
+
+}
 
 }

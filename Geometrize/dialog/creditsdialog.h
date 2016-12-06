@@ -7,6 +7,15 @@ namespace Ui {
 class CreditsDialog;
 }
 
+namespace geometrize
+{
+
+namespace dialog
+{
+
+/**
+ * @brief The CreditsDialog class models the UI for the developer, artwork etc credits pages.
+ */
 class CreditsDialog : public QDialog
 {
     Q_OBJECT
@@ -18,5 +27,9 @@ public:
 private:
     Ui::CreditsDialog *ui;
 };
+
+}
+
+}
 
 #endif // CREDITSDIALOG_H

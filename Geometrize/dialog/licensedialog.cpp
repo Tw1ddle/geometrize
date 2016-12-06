@@ -1,6 +1,12 @@
 #include "licensedialog.h"
 #include "ui_licensedialog.h"
 
+namespace geometrize
+{
+
+namespace dialog
+{
+
 LicenseDialog::LicenseDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::LicenseDialog)
@@ -20,4 +26,8 @@ LicenseDialog::LicenseDialog(QWidget *parent) :
 LicenseDialog::~LicenseDialog()
 {
     delete ui;
+}
+
+}
+
 }

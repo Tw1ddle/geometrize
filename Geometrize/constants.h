@@ -9,6 +9,9 @@ namespace geometrize
 namespace constants
 {
 
+/**
+ * @brief The Strings class contains methods for getting miscelleanous translatable strings.
+ */
 class Strings : public QObject
 {
 public:
@@ -44,9 +47,9 @@ public:
     }
 };
 
-const QString DEVELOPER_WEBSITE_URL{"http://www.samcodes.co.uk"};
-const QString TECHNICAL_SUPPORT_URL{"http://www.samcodes.co.uk/contact"};
-const QString VIDEO_TUTORIAL_URL{"https://www.youtube.com/playlist?list=PLe9ogi_J4cFgcqLdpmPC7GdFV5ohJPEzN"};
+const QString DEVELOPER_WEBSITE_URL{"http://www.samcodes.co.uk"}; ///< The core developer's personal website URL.
+const QString TECHNICAL_SUPPORT_URL{"http://www.samcodes.co.uk/contact"}; ///< The technical support webpage URL for the software.
+const QString VIDEO_TUTORIAL_URL{"https://www.youtube.com/playlist?list=PLe9ogi_J4cFgcqLdpmPC7GdFV5ohJPEzN"}; ///< The video tutorial webpage URL for the software.
 
 }
 

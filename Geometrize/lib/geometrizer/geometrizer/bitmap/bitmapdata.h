@@ -22,7 +22,7 @@ public:
      * @param height The height of the bitmap.
      * @param color The starting color of the bitmap (RGBA format).
      */
-    inline BitmapData(const std::size_t width, const std::size_t height, const rgba color) : m_width{width}, m_height{height}, m_data(width * height * 4)
+    inline BitmapData(const unsigned int width, const unsigned int height, const rgba color) : m_width{width}, m_height{height}, m_data(width * height * 4)
     {
         if(color.r == 0 && color.g == 0 && color.b == 0 && color.a == 0) {
             return;
@@ -42,7 +42,7 @@ public:
      * @param height The height of the bitmap.
      * @param data The byte data to fill the bitmap with, must be width * height * depth (4) long.
      */
-    inline BitmapData(const std::size_t width, const std::size_t height, const std::vector<unsigned char>& data) : m_width{width}, m_height{height}, m_data{data} {}
+    inline BitmapData(const unsigned int width, const unsigned int height, const std::vector<unsigned char>& data) : m_width{width}, m_height{height}, m_data{data} {}
 
     ~BitmapData() = default;
     BitmapData& operator=(const BitmapData&) = default;
@@ -51,7 +51,7 @@ public:
     /**
      * @brief getWidth Gets the width of the bitmap.
      */
-    inline std::size_t getWidth() const
+    inline unsigned int getWidth() const
     {
         return m_width;
     }
@@ -59,7 +59,7 @@ public:
     /**
      * @brief getHeight Gets the height of the bitmap.
      */
-    inline std::size_t getHeight() const
+    inline unsigned int getHeight() const
     {
         return m_height;
     }
@@ -110,8 +110,8 @@ public:
     }
 
 private:
-    const std::size_t m_width; ///< The width of the bitmap.
-    const std::size_t m_height; ///< The height of the bitmap.
+    const unsigned int m_width; ///< The width of the bitmap.
+    const unsigned int m_height; ///< The height of the bitmap.
     std::vector<unsigned char> m_data; ///< The bitmap data.
 };
 

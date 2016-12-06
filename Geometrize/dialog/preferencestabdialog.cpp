@@ -1,6 +1,12 @@
 #include "preferencestabdialog.h"
 #include "ui_preferencestabdialog.h"
 
+namespace geometrize
+{
+
+namespace dialog
+{
+
 PreferencesTabDialog::PreferencesTabDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::PreferencesTabDialog)
@@ -12,4 +18,8 @@ PreferencesTabDialog::PreferencesTabDialog(QWidget *parent) :
 PreferencesTabDialog::~PreferencesTabDialog()
 {
     delete ui;
+}
+
+}
+
 }

@@ -1,6 +1,12 @@
 #include "quitdialog.h"
 #include "ui_quitdialog.h"
 
+namespace geometrize
+{
+
+namespace dialog
+{
+
 QuitDialog::QuitDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::QuitDialog)
@@ -27,4 +33,8 @@ void QuitDialog::on_dontSaveButton_clicked()
 void QuitDialog::on_cancelButton_clicked()
 {
     close();
+}
+
+}
+
 }

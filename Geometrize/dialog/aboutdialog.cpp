@@ -9,6 +9,12 @@
 #include "licensedialog.h"
 #include "versioninfo.h"
 
+namespace geometrize
+{
+
+namespace dialog
+{
+
 AboutDialog::AboutDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AboutDialog)
@@ -56,4 +62,8 @@ void AboutDialog::on_creditsButton_released()
 {
     CreditsDialog dialog(this);
     dialog.exec();
+}
+
+}
+
 }

@@ -7,6 +7,15 @@ namespace Ui {
 class AboutDialog;
 }
 
+namespace geometrize
+{
+
+namespace dialog
+{
+
+/**
+ * @brief The AboutDialog class models the UI for the vendor info, license details, credits etc.
+ */
 class AboutDialog : public QDialog
 {
     Q_OBJECT
@@ -17,13 +26,15 @@ public:
 
 public slots:
     void on_closeButton_released();
-
     void on_licenseButton_released();
-
     void on_creditsButton_released();
 
 private:
     Ui::AboutDialog *ui;
 };
+
+}
+
+}
 
 #endif // ABOUTDIALOG_H

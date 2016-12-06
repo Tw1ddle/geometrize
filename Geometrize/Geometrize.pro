@@ -15,25 +15,26 @@ RC_ICONS = icon.ico
 RC_FILE = winicon.rc
 RESOURCES = resources/application_resources.qrc
 
-SOURCES += main.cpp\
+SOURCES += main.cpp \
     versioninfo.cpp \
     imagejobcontext.cpp \
     preferences.cpp \
     imagejobpreferences.cpp \
-    forms/aboutdialog.cpp \
-    forms/quitdialog.cpp \
-    forms/licensedialog.cpp \
-    forms/creditsdialog.cpp \
-    forms/preferencestabdialog.cpp \
-    forms/imagejobwindow.cpp \
-    forms/mainwindow.cpp
+    dialog/aboutdialog.cpp \
+    dialog/quitdialog.cpp \
+    dialog/licensedialog.cpp \
+    dialog/creditsdialog.cpp \
+    dialog/preferencestabdialog.cpp \
+    dialog/imagejobwindow.cpp \
+    dialog/mainwindow.cpp \
+    sharedapp.cpp
 
 HEADERS  += versioninfo.h \
+    winversioninfo.h \
     imagejobcontext.h \
     preferences.h \
     imagejobpreferences.h \
     constants.h \
-    winversioninfo.h \
     lib/geometrizer/geometrizer/bitmap/bitmapdata.h \
     lib/geometrizer/geometrizer/bitmap/rgba.h \
     lib/geometrizer/geometrizer/exporters/shapearrayexporter.h \
@@ -53,19 +54,20 @@ HEADERS  += versioninfo.h \
     lib/geometrizer/geometrizer/scanline.h \
     lib/geometrizer/geometrizer/state.h \
     lib/geometrizer/geometrizer/util.h \
-    forms/aboutdialog.h \
-    forms/quitdialog.h \
-    forms/licensedialog.h \
-    forms/creditsdialog.h \
-    forms/preferencestabdialog.h \
-    forms/imagejobwindow.h \
-    forms/mainwindow.h
+    dialog/aboutdialog.h \
+    dialog/quitdialog.h \
+    dialog/licensedialog.h \
+    dialog/creditsdialog.h \
+    dialog/preferencestabdialog.h \
+    dialog/imagejobwindow.h \
+    dialog/mainwindow.h \
+    sharedapp.h
 
-FORMS    += forms/imagejobwindow.ui \
-    forms/aboutdialog.ui \
-    forms/quitdialog.ui \
-    forms/globalpreferencesdialog.ui \
-    forms/licensedialog.ui \
-    forms/creditsdialog.ui \
-    forms/preferencestabdialog.ui \
-    forms/mainwindow.ui
+FORMS    += dialog/imagejobwindow.ui \
+    dialog/aboutdialog.ui \
+    dialog/quitdialog.ui \
+    dialog/globalpreferencesdialog.ui \
+    dialog/licensedialog.ui \
+    dialog/creditsdialog.ui \
+    dialog/preferencestabdialog.ui \
+    dialog/mainwindow.ui
