@@ -20,14 +20,14 @@ SOURCES += main.cpp \
     imagejobcontext.cpp \
     preferences.cpp \
     imagejobpreferences.cpp \
+    sharedapp.cpp \
     dialog/aboutdialog.cpp \
     dialog/quitdialog.cpp \
     dialog/licensedialog.cpp \
     dialog/creditsdialog.cpp \
     dialog/preferencestabdialog.cpp \
     dialog/imagejobwindow.cpp \
-    dialog/mainwindow.cpp \
-    sharedapp.cpp
+    dialog/launchwindow.cpp
 
 HEADERS  += versioninfo.h \
     winversioninfo.h \
@@ -35,6 +35,7 @@ HEADERS  += versioninfo.h \
     preferences.h \
     imagejobpreferences.h \
     constants.h \
+    sharedapp.h \
     lib/geometrizer/geometrizer/bitmap/bitmapdata.h \
     lib/geometrizer/geometrizer/bitmap/rgba.h \
     lib/geometrizer/geometrizer/exporters/shapearrayexporter.h \
@@ -60,8 +61,7 @@ HEADERS  += versioninfo.h \
     dialog/creditsdialog.h \
     dialog/preferencestabdialog.h \
     dialog/imagejobwindow.h \
-    dialog/mainwindow.h \
-    sharedapp.h
+    dialog/launchwindow.h
 
 FORMS    += dialog/imagejobwindow.ui \
     dialog/aboutdialog.ui \
@@ -70,4 +70,4 @@ FORMS    += dialog/imagejobwindow.ui \
     dialog/licensedialog.ui \
     dialog/creditsdialog.ui \
     dialog/preferencestabdialog.ui \
-    dialog/mainwindow.ui
+    dialog/launchwindow.ui

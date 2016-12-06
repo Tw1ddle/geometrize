@@ -7,6 +7,8 @@ namespace geometrize
 namespace dialog
 {
 
+// TODO create multiple versions of this - ones for closing different types of jobs, and one for closing the main application (with a different message!)
+
 QuitDialog::QuitDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::QuitDialog)

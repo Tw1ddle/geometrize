@@ -43,7 +43,7 @@
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>Save your open files? If you press &quot;Close&quot; unsaved changes will be lost.</string>
+        <string>Save your current file? If you press &quot;Close&quot; unsaved changes will be lost.</string>
        </property>
        <property name="wordWrap">
         <bool>true</bool>

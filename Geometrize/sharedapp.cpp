@@ -17,7 +17,7 @@
 #include "constants.h"
 #include "dialog/aboutdialog.h"
 #include "dialog/imagejobwindow.h"
-#include "dialog/mainwindow.h"
+#include "dialog/launchwindow.h"
 #include "dialog/preferencestabdialog.h"
 #include "dialog/quitdialog.h"
 #include "imagejobcontext.h"
@@ -25,6 +25,9 @@
 namespace geometrize
 {
 
+/**
+ * @brief The SharedAppImpl class contains the concrete implementation of the SharedApp class.
+ */
 class SharedAppImpl : public QObject
 {
 public:
@@ -33,53 +36,30 @@ public:
     SharedAppImpl(const SharedAppImpl&) = delete;
     ~SharedAppImpl() = default;
 
-    static QImage imageForImagePath(const QString imagePath)
-    {
-        return QImage(imagePath);
-    }
-
-    static bool isImageValid(const QImage& image)
-    {
-        return !image.isNull() && image.width() > 0 && image.height() > 0;
-    }
-
-    static bool isPixmapValid(const QPixmap& pixmap)
-    {
-        return !pixmap.isNull() && pixmap.width() > 0 && pixmap.height() > 0;
-    }
-
-    static void openAboutPage(QWidget* parent = nullptr)
+    static void openAboutPage(QWidget* parent)
     {
         dialog::AboutDialog dialog(parent);
         dialog.exec();
     }
 
-    static void openPreferences(QWidget* parent = nullptr)
+    static void openPreferences(QWidget* parent)
     {
         dialog::PreferencesTabDialog preferencesTabDialog(parent);
         preferencesTabDialog.exec();
     }
 
-    static ImageJobContext* createImageJob(QWidget* parent = nullptr)
+    static int openQuitDialog(QWidget* parent)
+    {
+        dialog::QuitDialog dialog(parent);
+        dialog.exec();
+        return dialog.result();
+    }
+
+    static ImageJobContext* createImageJob(QWidget* parent)
     {
         dialog::ImageJobWindow* imageJobWindow = new dialog::ImageJobWindow(parent);
         imageJobWindow->show(); // TODO cleanup
         return new ImageJobContext(BitmapData(10, 10, rgba{0, 0, 0, 0})); // TODO
-    }
-
-    static int exitApplication(QWidget* parent = nullptr)
-    {
-        dialog::QuitDialog dialog(parent);
-        dialog.exec();
-
-        const int dialogResult = dialog.result();
-        switch(dialogResult) {
-            case QDialog::Accepted:
-                // TODO save any outstanding stuff
-                QApplication::quit();
-        }
-
-        return dialogResult;
     }
 
     static void openTechnicalSupport()
@@ -92,7 +72,7 @@ public:
         QDesktopServices::openUrl(QUrl(geometrize::constants::VIDEO_TUTORIAL_URL));
     }
 
-    static void openImage(QGraphicsScene* scene, QWidget* parent = nullptr)
+    static void openImage(QGraphicsScene* scene, QWidget* parent)
     {
         QString imagePath{QFileDialog::getOpenFileName(parent, tr("Open Image"), "", tr("Image Files (*.jpg *.jpeg *.png *.bmp)"))};
         if(imagePath.length() == 0) {
@@ -121,7 +101,7 @@ public:
         // TODO create a new image job context, add a new tab for the image, add the image background initially
     }
 
-    static void saveImage(QWidget* parent = nullptr)
+    static void saveImage(QWidget* parent)
     {
         // TODO save svg
         QString imagePath{QFileDialog::getSaveFileName(parent, tr("Save Image"), "", tr("JPEG Image (*.jpg *.jpeg);;PNG Image(*.png);;BMP Image(*.bmp)"))};
@@ -131,15 +111,66 @@ public:
 
         // TODO save the file
     }
+
+private:
+    static QImage imageForImagePath(const QString imagePath)
+    {
+        return QImage(imagePath);
+    }
+
+    static bool isImageValid(const QImage& image)
+    {
+        return !image.isNull() && image.width() > 0 && image.height() > 0;
+    }
+
+    static bool isPixmapValid(const QPixmap& pixmap)
+    {
+        return !pixmap.isNull() && pixmap.width() > 0 && pixmap.height() > 0;
+    }
 };
 
 Q_GLOBAL_STATIC(SharedApp, app)
 SharedApp::SharedApp() : d{std::make_unique<SharedAppImpl>()} {}
 SharedApp::~SharedApp() {}
 
-void SharedApp::createImageJob(QWidget* parent)
+void SharedApp::createImageJob(QWidget* parent) const
 {
     SharedAppImpl::createImageJob(parent);
+}
+
+void SharedApp::openAboutPage(QWidget* parent) const
+{
+    SharedAppImpl::openAboutPage(parent);
+}
+
+void SharedApp::openPreferences(QWidget* parent) const
+{
+    SharedAppImpl::openPreferences(parent);
+}
+
+int SharedApp::openQuitDialog(QWidget* parent) const
+{
+    return SharedAppImpl::openQuitDialog(parent);
+}
+
+void SharedApp::openTechnicalSupport() const
+{
+    SharedAppImpl::openTechnicalSupport();
+}
+
+void SharedApp::openOnlineTutorials() const
+{
+    SharedAppImpl::openOnlineTutorials();
+}
+
+void SharedApp::openImage(QGraphicsScene* scene, QWidget* parent) const
+{
+    SharedAppImpl::openImage(scene, parent);
+}
+
+void SharedApp::saveImage(QWidget* parent) const
+{
+    SharedAppImpl::saveImage(parent);
 }
 
 }

@@ -1,4 +1,4 @@
-#include "dialog/mainwindow.h"
+#include "dialog/launchwindow.h"
 
 #include <QApplication>
 
@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 
     a.processEvents();
 
-    geometrize::dialog::MainWindow w;
+    geometrize::dialog::LaunchWindow w;
     w.show();
 
     return a.exec();

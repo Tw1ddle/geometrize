@@ -95,10 +95,54 @@
               <x>0</x>
               <y>0</y>
               <width>416</width>
-              <height>714</height>
+              <height>735</height>
              </rect>
             </property>
             <layout class="QGridLayout" name="gridLayout_2">
+             <item row="3" column="0">
+              <layout class="QHBoxLayout" name="bottomButtons">
+               <item>
+                <widget class="QPushButton" name="runStopButton">
+                 <property name="text">
+                  <string>Run</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="resetButton">
+                 <property name="text">
+                  <string>Reset To Defaults</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item row="2" column="0">
+              <widget class="QGroupBox" name="runnerSettingsBox">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="title">
+                <string>Runner Settings</string>
+               </property>
+               <widget class="QGroupBox" name="groupBox_6">
+                <property name="geometry">
+                 <rect>
+                  <x>10</x>
+                  <y>20</y>
+                  <width>120</width>
+                  <height>101</height>
+                 </rect>
+                </property>
+                <property name="title">
+                 <string>Stop Conditions</string>
+                </property>
+               </widget>
+              </widget>
+             </item>
              <item row="1" column="0">
               <widget class="QGroupBox" name="geometrySettingsBox">
                <property name="sizePolicy">
@@ -215,53 +259,27 @@
                </layout>
               </widget>
              </item>
-             <item row="2" column="0">
-              <widget class="QGroupBox" name="runnerSettingsBox">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="title">
-                <string>Runner Settings</string>
-               </property>
-               <widget class="QGroupBox" name="groupBox_6">
-                <property name="geometry">
-                 <rect>
-                  <x>10</x>
-                  <y>20</y>
-                  <width>120</width>
-                  <height>101</height>
-                 </rect>
-                </property>
-                <property name="title">
-                 <string>Stop Conditions</string>
-                </property>
-               </widget>
-              </widget>
-             </item>
-             <item row="3" column="0">
-              <layout class="QHBoxLayout" name="bottomButtons">
-               <item>
-                <widget class="QPushButton" name="runStopButton">
-                 <property name="text">
-                  <string>Run</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="resetButton">
-                 <property name="text">
-                  <string>Reset To Defaults</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
             </layout>
            </widget>
           </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="tab">
+        <attribute name="title">
+         <string>Exporter</string>
+        </attribute>
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_5">
+           <item>
+            <widget class="QPushButton" name="pushButton_5">
+             <property name="text">
+              <string>Save Image</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
         </layout>
        </widget>
@@ -292,16 +310,6 @@
     </item>
    </layout>
   </widget>
-  <widget class="QToolBar" name="mainToolBar">
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-   <addaction name="actionOpen_New_Image"/>
-   <addaction name="actionSave_Geometrized_Image"/>
-  </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
@@ -329,8 +337,6 @@
      </property>
      <addaction name="actionShape_Data_2"/>
     </widget>
-    <addaction name="actionOpen_New_Image_2"/>
-    <addaction name="actionSave_Geometrized_Image_2"/>
     <addaction name="menuImport"/>
     <addaction name="menuExport_Animation"/>
     <addaction name="actionOpenPreferences"/>
