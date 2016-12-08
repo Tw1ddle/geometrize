@@ -3,7 +3,10 @@
 
 #include <QCloseEvent>
 #include <QDialog>
+#include <QMap>
 
+#include "dialog/recentitembutton.h"
+#include "recentitems.h"
 #include "sharedapp.h"
 
 namespace geometrize
@@ -12,8 +15,24 @@ namespace geometrize
 namespace dialog
 {
 
+class LaunchWindow::LaunchWindowImpl
+{
+public:
+    LaunchWindowImpl()
+    {
+    }
+
+    LaunchWindowImpl operator=(const LaunchWindowImpl&) = delete;
+    LaunchWindowImpl(const LaunchWindowImpl&) = delete;
+    ~LaunchWindowImpl() = default;
+
+private:
+
+};
+
 LaunchWindow::LaunchWindow(QWidget *parent) :
     QMainWindow(parent),
+    d{std::make_unique<LaunchWindow::LaunchWindowImpl>()},
     ui(new Ui::LaunchWindow)
 {
     ui->setupUi(this);
@@ -24,9 +43,19 @@ LaunchWindow::~LaunchWindow()
     delete ui;
 }
 
+void LaunchWindow::dragEnterEvent(QDragEnterEvent* event)
+{
+    // TODO
+}
+
+void LaunchWindow::dropEvent(QDropEvent* event)
+{
+    // TODO
+}
+
 void LaunchWindow::closeEvent(QCloseEvent* event)
 {
-    const int dialogResult{SharedApp().openQuitDialog(this)}; // TODO unsaved changes check
+    const int dialogResult{SharedApp::get().openQuitDialog(this)}; // TODO unsaved changes check
     if(dialogResult == QDialog::Accepted) {
         event->accept();
     } else {
@@ -36,18 +65,18 @@ void LaunchWindow::closeEvent(QCloseEvent* event)
 
 void LaunchWindow::on_actionPreferences_triggered()
 {
-    SharedApp().openPreferences(this);
+    SharedApp::get().openPreferences(this);
 }
 
 void LaunchWindow::on_actionClear_Recents_triggered()
 {
-    // TODO
+    SharedApp::get().getRecentFiles().clear();
 }
 
 void LaunchWindow::on_actionExit_triggered()
 {
     // TODO
-    const int dialogResult{SharedApp().openQuitDialog(this)};
+    const int dialogResult{SharedApp::get().openQuitDialog(this)};
     switch(dialogResult) {
         case QDialog::Accepted:
             // TODO save any outstanding stuff(?) separate method needed
@@ -57,28 +86,28 @@ void LaunchWindow::on_actionExit_triggered()
 
 void LaunchWindow::on_openImageButton_clicked()
 {
-    const QString imagePath{SharedApp().getImagePath(this)};
+    const QString imagePath{SharedApp::get().getImagePath(this)};
     if(imagePath.length() == 0) {
         return;
     }
 
-    const QPixmap pixmap{SharedApp().openPixmap(this, imagePath)};
-    SharedApp().createImageJob(nullptr, pixmap);
+    const QPixmap pixmap{SharedApp::get().openPixmap(this, imagePath)};
+    SharedApp::get().createImageJob(nullptr, pixmap);
 }
 
 void LaunchWindow::on_actionTutorials_triggered()
 {
-    SharedApp().openOnlineTutorials();
+    SharedApp::get().openOnlineTutorials();
 }
 
 void LaunchWindow::on_actionSupport_triggered()
 {
-    SharedApp().openTechnicalSupport();
+    SharedApp::get().openTechnicalSupport();
 }
 
 void LaunchWindow::on_actionAbout_triggered()
 {
-    SharedApp().openAboutPage(this);
+    SharedApp::get().openAboutPage(this);
 }
 
 }

@@ -1,6 +1,8 @@
 #ifndef LAUNCHWINDOW_H
 #define LAUNCHWINDOW_H
 
+#include <memory>
+
 #include <QMainWindow>
 
 namespace Ui {
@@ -24,6 +26,9 @@ public:
     explicit LaunchWindow(QWidget *parent = 0);
     ~LaunchWindow();
 
+    virtual void dragEnterEvent(QDragEnterEvent *event) override;
+    virtual void dropEvent(QDropEvent *event) override;
+
 private slots:
     void on_actionPreferences_triggered();
     void on_actionClear_Recents_triggered();
@@ -37,6 +42,9 @@ private:
     void closeEvent(QCloseEvent *bar) override;
 
     Ui::LaunchWindow *ui;
+
+    class LaunchWindowImpl;
+    std::unique_ptr<LaunchWindowImpl> d;
 };
 
 }

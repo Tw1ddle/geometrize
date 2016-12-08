@@ -22,7 +22,7 @@
 #include "dialog/preferencestabdialog.h"
 #include "dialog/quitdialog.h"
 #include "imagejobcontext.h"
-#include "recentfiles.h"
+#include "recentitems.h"
 
 namespace geometrize
 {
@@ -30,10 +30,13 @@ namespace geometrize
 /**
  * @brief The SharedAppImpl class contains the concrete implementation of the SharedApp class.
  */
-class SharedAppImpl : public QObject
+class SharedApp::SharedAppImpl : public QObject
 {
 public:
-    SharedAppImpl() = default;
+    SharedAppImpl() : m_recentFiles{RecentItems::RECENT_FILES_SETTINGS_GROUP}
+    {
+    }
+
     SharedAppImpl& operator=(const SharedAppImpl&) = delete;
     SharedAppImpl(const SharedAppImpl&) = delete;
     ~SharedAppImpl() = default;
@@ -118,19 +121,9 @@ public:
 
     }
 
-    void addRecentFile(const QString& filePath)
+    RecentItems& getRecentFiles()
     {
-        m_recentFiles.add(filePath);
-    }
-
-    void removeRecentFile(const QString& filePath)
-    {
-        m_recentFiles.remove(filePath);
-    }
-
-    void clearRecentFiles()
-    {
-        m_recentFiles.clear();
+        return m_recentFiles;
     }
 
 private:
@@ -149,12 +142,16 @@ private:
         return !pixmap.isNull() && pixmap.width() > 0 && pixmap.height() > 0;
     }
 
-    RecentFiles m_recentFiles;
+    RecentItems m_recentFiles;
 };
 
-Q_GLOBAL_STATIC(SharedApp, app)
-SharedApp::SharedApp() : d{std::make_unique<SharedAppImpl>()} {}
+SharedApp::SharedApp() : d{std::make_unique<geometrize::SharedApp::SharedAppImpl>()} {}
 SharedApp::~SharedApp() {}
+
+SharedApp& SharedApp::get() {
+    static SharedApp _instance;
+    return _instance;
+}
 
 void SharedApp::createImageJob(QWidget* parent, const QPixmap& pixmap) const
 {
@@ -188,7 +185,15 @@ void SharedApp::openOnlineTutorials() const
 
 QPixmap SharedApp::openPixmap(QWidget* parent, const QString& imagePath) const
 {
-    return SharedAppImpl::openPixmap(parent, imagePath);
+    const QPixmap pixmap{SharedAppImpl::openPixmap(parent, imagePath)};
+
+    if(!pixmap.isNull()) {
+        d->getRecentFiles().add(imagePath); // TODO connect?
+
+        emit signal_imageOpened(imagePath);
+    }
+
+    return pixmap;
 }
 
 void SharedApp::saveImage(QWidget* parent) const
@@ -201,19 +206,9 @@ QString SharedApp::getImagePath(QWidget *parent) const
     return SharedAppImpl::getImagePath(parent);
 }
 
-void SharedApp::addRecentFile(const QString& filePath) const
+RecentItems& SharedApp::getRecentFiles()
 {
-    d->addRecentFile(filePath);
-}
-
-void SharedApp::removeRecentFile(const QString& filePath) const
-{
-    d->removeRecentFile(filePath);
-}
-
-void SharedApp::clearRecentFiles() const
-{
-    d->clearRecentFiles();
+    return d->getRecentFiles();
 }
 
 }

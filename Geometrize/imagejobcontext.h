@@ -7,7 +7,6 @@ namespace geometrize
 {
 
 class BitmapData;
-class ImageJobContextPrivate;
 
 /**
  * @brief The ImageJobContext class contains the data worked on by an image job.
@@ -21,7 +20,8 @@ public:
     ~ImageJobContext() = default;
 
 private:
-    std::unique_ptr<ImageJobContextPrivate> d;
+    class ImageJobContextImpl;
+    std::unique_ptr<ImageJobContextImpl> d;
 };
 
 }

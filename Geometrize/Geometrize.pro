@@ -21,14 +21,15 @@ SOURCES += main.cpp \
     preferences.cpp \
     imagejobpreferences.cpp \
     sharedapp.cpp \
-    recentfiles.cpp \
+    recentitems.cpp \
     dialog/aboutdialog.cpp \
     dialog/quitdialog.cpp \
     dialog/licensedialog.cpp \
     dialog/creditsdialog.cpp \
     dialog/preferencestabdialog.cpp \
     dialog/imagejobwindow.cpp \
-    dialog/launchwindow.cpp
+    dialog/launchwindow.cpp \
+    dialog/recentitembutton.cpp
 
 HEADERS  += versioninfo.h \
     winversioninfo.h \
@@ -37,7 +38,7 @@ HEADERS  += versioninfo.h \
     imagejobpreferences.h \
     constants.h \
     sharedapp.h \
-    recentfiles.h \
+    recentitems.h \
     lib/geometrizer/geometrizer/bitmap/bitmapdata.h \
     lib/geometrizer/geometrizer/bitmap/rgba.h \
     lib/geometrizer/geometrizer/exporters/shapearrayexporter.h \
@@ -63,7 +64,9 @@ HEADERS  += versioninfo.h \
     dialog/creditsdialog.h \
     dialog/preferencestabdialog.h \
     dialog/imagejobwindow.h \
-    dialog/launchwindow.h
+    dialog/launchwindow.h \
+    dialog/recentitembutton.h \
+    filetypes.h
 
 FORMS    += dialog/imagejobwindow.ui \
     dialog/aboutdialog.ui \
@@ -72,4 +75,5 @@ FORMS    += dialog/imagejobwindow.ui \
     dialog/licensedialog.ui \
     dialog/creditsdialog.ui \
     dialog/preferencestabdialog.ui \
-    dialog/launchwindow.ui
+    dialog/launchwindow.ui \
+    dialog/recentitembutton.ui

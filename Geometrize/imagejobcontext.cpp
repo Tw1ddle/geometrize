@@ -10,15 +10,15 @@
 namespace geometrize
 {
 
-class ImageJobContextPrivate : public QObject
+class ImageJobContext::ImageJobContextImpl : public QObject
 {
 public:
-    ImageJobContextPrivate(BitmapData& bitmap) : m_paused{true}, m_preferences{}, m_runner{bitmap}
+    ImageJobContextImpl(BitmapData& bitmap) : m_paused{true}, m_preferences{}, m_runner{bitmap}
     {
     }
 
-    ImageJobContextPrivate& operator=(const ImageJobContextPrivate&) = delete;
-    ImageJobContextPrivate(const ImageJobContextPrivate&) = delete;
+    ImageJobContextImpl& operator=(const ImageJobContextImpl&) = delete;
+    ImageJobContextImpl(const ImageJobContextImpl&) = delete;
 
 private:
     bool m_paused; ///> Whether the job is running or paused.
@@ -26,7 +26,7 @@ private:
     ImageRunner m_runner;
 };
 
-ImageJobContext::ImageJobContext(BitmapData& bitmap) : d{std::make_unique<ImageJobContextPrivate>(bitmap)}
+ImageJobContext::ImageJobContext(BitmapData& bitmap) : d{std::make_unique<ImageJobContext::ImageJobContextImpl>(bitmap)}
 {
 
 }

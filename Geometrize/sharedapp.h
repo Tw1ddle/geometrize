@@ -3,6 +3,8 @@
 
 #include <memory>
 
+#include <QObject>
+
 class QGraphicsScene;
 class QPixmap;
 class QString;
@@ -11,39 +13,46 @@ class QWidget;
 namespace geometrize
 {
 
-class SharedAppImpl;
+class RecentItems;
 
 /**
- * @brief The SharedApp class is a singleton that contains common core functionality e.g. implementations of UI actions that can be triggered from multiple places.
+ * @brief The SharedApp class is a lazy singleton that contains common core functionality e.g. implementations of UI actions that can be triggered from multiple places.
  */
-class SharedApp
+class SharedApp : public QObject
 {
+    Q_OBJECT
 public:
-    SharedApp();
+    static SharedApp& get();
+
     SharedApp& operator=(const SharedApp&) = delete;
     SharedApp(const SharedApp&) = delete;
-    ~SharedApp();
 
-   void createImageJob(QWidget* parent, const QPixmap& pixmap) const;
+    void createImageJob(QWidget* parent, const QPixmap& pixmap) const;
 
-   void openAboutPage(QWidget* parent) const;
-   void openPreferences(QWidget* parent) const;
-   int openQuitDialog(QWidget* parent) const;
+    // Common UI actions
+    void openAboutPage(QWidget* parent) const;
+    void openPreferences(QWidget* parent) const;
+    int openQuitDialog(QWidget* parent) const;
+    void openTechnicalSupport() const;
+    void openOnlineTutorials() const;
 
-   void openTechnicalSupport() const;
-   void openOnlineTutorials() const;
+    // File picking actions
+    QPixmap openPixmap(QWidget* parent, const QString& imagePath) const;
+    void saveImage(QWidget* parent) const;
+    QString getImagePath(QWidget* parent) const;
 
-   QPixmap openPixmap(QWidget* parent, const QString& imagePath) const;
-   void saveImage(QWidget* parent) const;
+    // Recent files
+    RecentItems& getRecentFiles();
 
-   QString getImagePath(QWidget* parent) const;
-
-   void addRecentFile(const QString& filePath) const;
-   void removeRecentFile(const QString& filePath) const;
-   void clearRecentFiles() const;
+signals:
+    void signal_imageOpened(const QString& imagePath) const;
 
 private:
+    class SharedAppImpl;
     std::unique_ptr<SharedAppImpl> d;
+
+    SharedApp();
+    ~SharedApp();
 };
 
 }
