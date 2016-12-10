@@ -1,5 +1,5 @@
-#include "recentitembutton.h"
-#include "ui_recentitembutton.h"
+#include "itembutton.h"
+#include "ui_itembutton.h"
 
 namespace geometrize
 {
@@ -7,8 +7,8 @@ namespace geometrize
 namespace dialog
 {
 
-RecentItemButton::RecentItemButton(const QString& item) :
-    ui(new Ui::RecentItemButton),
+ItemButton::ItemButton(const QString& item) :
+    ui(new Ui::ItemButton),
     m_item{item}
 {
     ui->setupUi(this);
@@ -17,7 +17,7 @@ RecentItemButton::RecentItemButton(const QString& item) :
     // TODO setup appropriate click action based on item type
 }
 
-RecentItemButton::~RecentItemButton()
+ItemButton::~ItemButton()
 {
     delete ui;
 }

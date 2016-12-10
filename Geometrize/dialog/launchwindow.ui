@@ -16,6 +16,9 @@
     <height>640</height>
    </size>
   </property>
+  <property name="acceptDrops">
+   <bool>true</bool>
+  </property>
   <property name="windowTitle">
    <string>Geometrize Launcher</string>
   </property>
@@ -131,7 +134,11 @@
          </spacer>
         </item>
         <item>
-         <layout class="QGridLayout" name="recentsGrid"/>
+         <widget class="geometrize::dialog::RecentJobsList" name="recentsList">
+          <property name="sortingEnabled">
+           <bool>true</bool>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
@@ -268,6 +275,13 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>geometrize::dialog::RecentJobsList</class>
+   <extends>QListWidget</extends>
+   <header>dialog/recentjobslist.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

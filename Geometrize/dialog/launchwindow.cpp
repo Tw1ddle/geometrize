@@ -2,10 +2,11 @@
 #include "ui_launchwindow.h"
 
 #include <QCloseEvent>
+#include <QDebug>
 #include <QDialog>
 #include <QMap>
 
-#include "dialog/recentitembutton.h"
+#include "dialog/itembutton.h"
 #include "recentitems.h"
 #include "sharedapp.h"
 
@@ -15,11 +16,26 @@ namespace geometrize
 namespace dialog
 {
 
+void createImageJob(QWidget* parent, const QString& imagePath)
+{
+    SharedApp::get().createImageJob(parent, QPixmap(imagePath));
+}
+
 class LaunchWindow::LaunchWindowImpl
 {
 public:
-    LaunchWindowImpl()
+    LaunchWindowImpl(LaunchWindow* pQ, Ui::LaunchWindow* pUi) : q{pQ}, ui{pUi}
     {
+        ui->setupUi(q);
+
+        connect(ui->recentsList, &RecentJobsList::itemActivated, [this](QListWidgetItem* item) {
+            qDebug() << "Item activated " << item->text();
+
+            // TODO deal with bad paths, use data not text
+            createImageJob(q, item->text());
+        });
+
+        ui->recentsList->setRecentItems(&SharedApp::get().getRecentFiles());
     }
 
     LaunchWindowImpl operator=(const LaunchWindowImpl&) = delete;
@@ -27,15 +43,16 @@ public:
     ~LaunchWindowImpl() = default;
 
 private:
-
+    LaunchWindow* q;
+    Ui::LaunchWindow* ui;
 };
 
 LaunchWindow::LaunchWindow(QWidget *parent) :
     QMainWindow(parent),
-    d{std::make_unique<LaunchWindow::LaunchWindowImpl>()},
-    ui(new Ui::LaunchWindow)
+    ui(new Ui::LaunchWindow),
+    d{std::make_unique<LaunchWindow::LaunchWindowImpl>(this, ui)}
 {
-    ui->setupUi(this);
+
 }
 
 LaunchWindow::~LaunchWindow()
@@ -90,9 +107,7 @@ void LaunchWindow::on_openImageButton_clicked()
     if(imagePath.length() == 0) {
         return;
     }
-
-    const QPixmap pixmap{SharedApp::get().openPixmap(this, imagePath)};
-    SharedApp::get().createImageJob(nullptr, pixmap);
+    createImageJob(this, imagePath);
 }
 
 void LaunchWindow::on_actionTutorials_triggered()

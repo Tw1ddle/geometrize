@@ -29,7 +29,8 @@ SOURCES += main.cpp \
     dialog/preferencestabdialog.cpp \
     dialog/imagejobwindow.cpp \
     dialog/launchwindow.cpp \
-    dialog/recentitembutton.cpp
+    dialog/recentjobslist.cpp \
+    dialog/itembutton.cpp
 
 HEADERS  += versioninfo.h \
     winversioninfo.h \
@@ -39,6 +40,7 @@ HEADERS  += versioninfo.h \
     constants.h \
     sharedapp.h \
     recentitems.h \
+    filetypes.h \
     lib/geometrizer/geometrizer/bitmap/bitmapdata.h \
     lib/geometrizer/geometrizer/bitmap/rgba.h \
     lib/geometrizer/geometrizer/exporters/shapearrayexporter.h \
@@ -65,8 +67,8 @@ HEADERS  += versioninfo.h \
     dialog/preferencestabdialog.h \
     dialog/imagejobwindow.h \
     dialog/launchwindow.h \
-    dialog/recentitembutton.h \
-    filetypes.h
+    dialog/recentjobslist.h \
+    dialog/itembutton.h
 
 FORMS    += dialog/imagejobwindow.ui \
     dialog/aboutdialog.ui \
@@ -76,4 +78,4 @@ FORMS    += dialog/imagejobwindow.ui \
     dialog/creditsdialog.ui \
     dialog/preferencestabdialog.ui \
     dialog/launchwindow.ui \
-    dialog/recentitembutton.ui
+    dialog/itembutton.ui

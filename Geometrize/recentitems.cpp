@@ -30,8 +30,31 @@ public:
     }
 
     ~RecentItemsImpl() = default;
-    RecentItemsImpl& operator=(const RecentItemsImpl&) = delete;
-    RecentItemsImpl(const RecentItemsImpl&) = delete;
+    RecentItemsImpl& operator=(const RecentItemsImpl&) = default;
+    RecentItemsImpl(const RecentItemsImpl&) = default;
+
+    QList<QPair<qint64, QString>> getItems() const
+    {
+        // Construct list of items
+        QSettings settings;
+        settings.beginGroup(m_group);
+        const QStringList keys{settings.childKeys()};
+        QList<QPair<qint64, QString>> pairs;
+        for(const QString& key : keys) {
+            const QStringList items{key.split("_")};
+            assert(items.length() == 2);
+            const QString item{items.at(1)};
+
+            bool success = false;
+            qint64 time{item.toLongLong(&success)};
+            assert(success);
+
+            pairs.push_back(qMakePair(time, settings.value(key, "").toString()));
+        }
+        settings.endGroup();
+
+        return pairs;
+    }
 
     bool contains(const QString& value)
     {
@@ -114,13 +137,39 @@ private:
     const QString m_group; ///< The base path group for storing the recent items in settings e.g. "recent_image_paths", "recent_video_names" etc.
 };
 
+void swap(RecentItems& first, RecentItems& second)
+{
+    using std::swap;
+    swap(first.d, second.d);
+}
+
 RecentItems::RecentItems(const QString& group) : d{std::make_unique<RecentItemsImpl>(group)}
 {
-    emit signal_created();
 }
 
 RecentItems::~RecentItems()
 {
+}
+
+RecentItems& RecentItems::operator=(RecentItems& other)
+{
+    swap(*this, other);
+    return *this;
+}
+
+RecentItems::RecentItems(RecentItems& other)
+{
+    swap(*this, other);
+}
+
+RecentItems::RecentItems(RecentItems&& other)
+{
+    swap(*this, other);
+}
+
+QList<QPair<qint64, QString>> RecentItems::getItems() const
+{
+    return d->getItems();
 }
 
 void RecentItems::add(const QString& itemId)

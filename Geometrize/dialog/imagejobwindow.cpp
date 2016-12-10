@@ -41,16 +41,16 @@ void ImageJobWindow::on_actionAbout_triggered()
 
 void ImageJobWindow::on_actionExit_triggered()
 {
-    exitApplication();
+    closeWindow();
 }
 
-int ImageJobWindow::exitApplication()
+int ImageJobWindow::closeWindow()
 {
     const int dialogResult{SharedApp::get().openQuitDialog(this)};
     switch(dialogResult) {
         case QDialog::Accepted:
             // TODO save any outstanding stuff(?) separate method needed
-            QApplication::quit();
+            close();
     }
     return dialogResult;
 }
@@ -59,10 +59,10 @@ void ImageJobWindow::closeEvent(QCloseEvent* event)
 {
     const int dialogResult{SharedApp::get().openQuitDialog(this)};
     if(dialogResult == QDialog::Accepted) {
-        event->accept();
-    } else {
-        event->ignore();
+        return;
     }
+
+    QMainWindow::closeEvent(event);
 }
 
 void ImageJobWindow::on_actionTechnical_Support_triggered()

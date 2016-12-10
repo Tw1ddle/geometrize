@@ -24,9 +24,16 @@ public:
      */
     RecentItems(const QString& group);
 
-    RecentItems& operator=(const RecentItems&) = delete;
-    RecentItems(const RecentItems&) = delete;
+    RecentItems& operator=(RecentItems&);
+    RecentItems(RecentItems&);
+    RecentItems(RecentItems&&);
     ~RecentItems();
+
+    /**
+     * @brief getItems Gets the recent item times and names.
+     * @return A list of the times and names of all of the current recent items. Note these are not sorted in any way.
+     */
+    QList<QPair<qint64, QString>> getItems() const;
 
     /**
      * @brief add Adds an item to the recent items.
@@ -47,11 +54,6 @@ public:
 
 signals:
     /**
-     * @brief signal_created is emitted after the RecentItems instance is created for the first time.
-     */
-    void signal_created();
-
-    /**
      * @brief signal_added is emitted after an item is added.
      * @param itemId The unique id for the item.
      * @param preexisting Whether the item already existed in the recent items.
@@ -70,6 +72,8 @@ signals:
     void signal_cleared();
 
 private:
+    friend void swap(RecentItems& first, RecentItems& second);
+
     class RecentItemsImpl;
     std::unique_ptr<RecentItemsImpl> d;
 };

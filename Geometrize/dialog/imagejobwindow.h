@@ -37,7 +37,7 @@ private slots:
 private:
     Ui::ImageJobWindow *ui;
 
-    int exitApplication();
+    int closeWindow();
 
     void closeEvent(QCloseEvent *bar) override;
 };
