@@ -1,5 +1,4 @@
-#ifndef CREDITSDIALOG_H
-#define CREDITSDIALOG_H
+#pragma once
 
 #include <QDialog>
 
@@ -31,5 +30,3 @@ private:
 }
 
 }
-
-#endif // CREDITSDIALOG_H

@@ -1,5 +1,4 @@
-#ifndef SHAPETYPE_H
-#define SHAPETYPE_H
+#pragma once
 
 #include <array>
 
@@ -29,5 +28,3 @@ static const std::array<ShapeTypes, ShapeTypes::SHAPE_COUNT> allShapes = { RECTA
 }
 
 }
-
-#endif // SHAPETYPE_H

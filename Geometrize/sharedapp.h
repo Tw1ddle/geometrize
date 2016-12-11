@@ -1,5 +1,4 @@
-#ifndef SHAREDAPP_H
-#define SHAREDAPP_H
+#pragma once
 
 #include <memory>
 
@@ -27,25 +26,24 @@ public:
     SharedApp& operator=(const SharedApp&) = delete;
     SharedApp(const SharedApp&) = delete;
 
-    void createImageJob(QWidget* parent, const QPixmap& pixmap) const;
-
     // Common UI actions
-    void openAboutPage(QWidget* parent) const;
-    void openPreferences(QWidget* parent) const;
-    int openQuitDialog(QWidget* parent) const;
-    void openTechnicalSupport() const;
-    void openOnlineTutorials() const;
+    static void openAboutPage(QWidget* parent);
+    static void openPreferences(QWidget* parent);
+    static int openQuitDialog(QWidget* parent);
+    static void openTechnicalSupport();
+    static void openOnlineTutorials();
 
-    // File picking actions
-    QPixmap openPixmap(QWidget* parent, const QString& imagePath) const;
-    void saveImage(QWidget* parent) const;
-    QString getImagePath(QWidget* parent) const;
+    void createImageJob(QWidget* parent, const QPixmap& pixmap);
 
     // Recent files
     RecentItems& getRecentFiles();
 
+    // File picking actions
+    QPixmap openPixmap(QWidget* parent, const QString& imagePath);
+    void saveImage(QWidget* parent);
+    static QString getImagePath(QWidget* parent);
+
 signals:
-    void signal_imageOpened(const QString& imagePath) const;
 
 private:
     class SharedAppImpl;
@@ -56,5 +54,3 @@ private:
 };
 
 }
-
-#endif // SHAREDAPP_H

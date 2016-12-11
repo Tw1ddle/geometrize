@@ -1,5 +1,4 @@
-#ifndef RECENTITEMS_H
-#define RECENTITEMS_H
+#pragma once
 
 #include <memory>
 
@@ -79,5 +78,3 @@ private:
 };
 
 }
-
-#endif // RECENTITEMS_H

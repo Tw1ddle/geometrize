@@ -1,5 +1,4 @@
-#ifndef BITMAPDATA_H
-#define BITMAPDATA_H
+#pragma once
 
 #include <cstdint>
 #include <vector>
@@ -116,5 +115,3 @@ private:
 };
 
 }
-
-#endif // BITMAPDATA_H

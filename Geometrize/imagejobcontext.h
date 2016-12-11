@@ -1,5 +1,4 @@
-#ifndef IMAGEJOBCONTEXT_H
-#define IMAGEJOBCONTEXT_H
+#pragma once
 
 #include <memory>
 
@@ -25,5 +24,3 @@ private:
 };
 
 }
-
-#endif // IMAGEJOBCONTEXT_H

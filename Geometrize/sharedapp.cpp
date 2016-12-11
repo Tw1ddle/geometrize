@@ -1,5 +1,6 @@
 #include "sharedapp.h"
 
+#include <assert.h>
 #include <QApplication>
 #include <QDesktopServices>
 #include <QException>
@@ -153,55 +154,54 @@ SharedApp& SharedApp::get() {
     return _instance;
 }
 
-void SharedApp::createImageJob(QWidget* parent, const QPixmap& pixmap) const
+void SharedApp::createImageJob(QWidget* parent, const QPixmap& pixmap)
 {
     SharedAppImpl::createImageJob(parent, pixmap);
 }
 
-void SharedApp::openAboutPage(QWidget* parent) const
+void SharedApp::openAboutPage(QWidget* parent)
 {
     SharedAppImpl::openAboutPage(parent);
 }
 
-void SharedApp::openPreferences(QWidget* parent) const
+void SharedApp::openPreferences(QWidget* parent)
 {
     SharedAppImpl::openPreferences(parent);
 }
 
-int SharedApp::openQuitDialog(QWidget* parent) const
+int SharedApp::openQuitDialog(QWidget* parent)
 {
     return SharedAppImpl::openQuitDialog(parent);
 }
 
-void SharedApp::openTechnicalSupport() const
+void SharedApp::openTechnicalSupport()
 {
     SharedAppImpl::openTechnicalSupport();
 }
 
-void SharedApp::openOnlineTutorials() const
+void SharedApp::openOnlineTutorials()
 {
     SharedAppImpl::openOnlineTutorials();
 }
 
-QPixmap SharedApp::openPixmap(QWidget* parent, const QString& imagePath) const
+QPixmap SharedApp::openPixmap(QWidget* parent, const QString& imagePath)
 {
     const QPixmap pixmap{SharedAppImpl::openPixmap(parent, imagePath)};
 
+    assert(!pixmap.isNull());
     if(!pixmap.isNull()) {
-        d->getRecentFiles().add(imagePath); // TODO connect?
-
-        emit signal_imageOpened(imagePath);
+        d->getRecentFiles().add(imagePath);
     }
 
     return pixmap;
 }
 
-void SharedApp::saveImage(QWidget* parent) const
+void SharedApp::saveImage(QWidget* parent)
 {
     SharedAppImpl::saveImage(parent);
 }
 
-QString SharedApp::getImagePath(QWidget *parent) const
+QString SharedApp::getImagePath(QWidget *parent)
 {
     return SharedAppImpl::getImagePath(parent);
 }

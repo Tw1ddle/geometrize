@@ -1,5 +1,4 @@
-#ifndef UTIL_H
-#define UTIL_H
+#pragma once
 
 #include <algorithm>
 #include <assert.h>
@@ -68,5 +67,3 @@ template<typename T> T clamp(const T& value, const T& lower, const T& upper)
 }
 
 }
-
-#endif // UTIL_H

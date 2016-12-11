@@ -20,13 +20,6 @@ public:
         assert(m_group.length() > 0 && "Base group cannot be empty");
         assert(!m_group.contains('/') && "Base group must not contain forward slashes");
         assert(!m_group.contains('\\') && "Base group must not contain backslashes");
-
-        #ifdef QT_DEBUG
-        QSettings settings;
-        settings.beginGroup(m_group);
-        qDebug() << "Saved recent files keys: " << settings.allKeys();
-        settings.endGroup();
-        #endif
     }
 
     ~RecentItemsImpl() = default;
@@ -64,8 +57,9 @@ public:
         const QStringList keys{settings.childKeys()};
         settings.endGroup();
 
+        const QString valueHash{qHash(value.split("_")[0])}; // TODO incorrect
         for(const QString& key : keys) {
-            if(key.startsWith(QString(qHash(value)))) {
+            if(key.startsWith(valueHash)) {
                 return true;
             }
         }
@@ -135,7 +129,10 @@ private:
     }
 
     const QString m_group; ///< The base path group for storing the recent items in settings e.g. "recent_image_paths", "recent_video_names" etc.
+    static const QString TIME_STAMP_KEY; ///< Constant string appended to the hash of the item string to get the timestamp.
 };
+
+const QString RecentItems::RecentItemsImpl::TIME_STAMP_KEY = "_time";
 
 void swap(RecentItems& first, RecentItems& second)
 {

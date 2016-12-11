@@ -1,5 +1,4 @@
-#ifndef GEOMETRIZE_H
-#define GEOMETRIZE_H
+#pragma once
 
 #include <vector>
 
@@ -329,5 +328,3 @@ float energy(const std::vector<Scanline>& lines, const int alpha, const BitmapDa
 }
 
 }
-
-#endif // GEOMETRIZE_H

@@ -1,5 +1,4 @@
-#ifndef RGBA_H
-#define RGBA_H
+#pragma once
 
 namespace geometrize
 {
@@ -16,5 +15,3 @@ struct rgba
 };
 
 }
-
-#endif // RGBA_H

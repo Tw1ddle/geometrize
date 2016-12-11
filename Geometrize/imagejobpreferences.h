@@ -1,5 +1,4 @@
-#ifndef IMAGEJOBPREFERENCES_H
-#define IMAGEJOBPREFERENCES_H
+#pragma once
 
 namespace geometrize
 {
@@ -14,5 +13,3 @@ public:
 };
 
 }
-
-#endif // IMAGEJOBPREFERENCES_H

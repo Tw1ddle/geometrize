@@ -1,5 +1,4 @@
-#ifndef ABOUTDIALOG_H
-#define ABOUTDIALOG_H
+#pragma once
 
 #include <QDialog>
 
@@ -36,5 +35,3 @@ private:
 }
 
 }
-
-#endif // ABOUTDIALOG_H

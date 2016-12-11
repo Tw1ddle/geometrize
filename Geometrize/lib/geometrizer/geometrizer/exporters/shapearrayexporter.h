@@ -1,5 +1,4 @@
-#ifndef SHAPEARRAYEXPORTER_H
-#define SHAPEARRAYEXPORTER_H
+#pragma once
 
 #include <string>
 
@@ -24,5 +23,3 @@ std::string exportShapeArray(const std::vector<ShapeResult>& data)
 }
 
 }
-
-#endif // SHAPEARRAYEXPORTER_H

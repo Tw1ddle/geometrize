@@ -1,5 +1,4 @@
-#ifndef WINVERSIONINFO_H
-#define WINVERSIONINFO_H
+#pragma once
 
 // Windows-specific version defines
 #define VER_FILEVERSION             1,0,0,0
@@ -15,5 +14,3 @@
 #define VER_ORIGINALFILENAME_STR    "Geometrize.exe"
 #define VER_PRODUCTNAME_STR         "Geometrize"
 #define VER_COMPANYDOMAIN_STR       "samcodes.co.uk"
-
-#endif // WINVERSIONINFO_H

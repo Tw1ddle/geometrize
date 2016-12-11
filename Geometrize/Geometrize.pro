@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -30,7 +30,8 @@ SOURCES += main.cpp \
     dialog/imagejobwindow.cpp \
     dialog/launchwindow.cpp \
     dialog/recentjobslist.cpp \
-    dialog/itembutton.cpp
+    dialog/itembutton.cpp \
+    network/downloader.cpp
 
 HEADERS  += versioninfo.h \
     winversioninfo.h \
@@ -40,7 +41,7 @@ HEADERS  += versioninfo.h \
     constants.h \
     sharedapp.h \
     recentitems.h \
-    filetypes.h \
+    formatsupport.h \
     lib/geometrizer/geometrizer/bitmap/bitmapdata.h \
     lib/geometrizer/geometrizer/bitmap/rgba.h \
     lib/geometrizer/geometrizer/exporters/shapearrayexporter.h \
@@ -68,7 +69,8 @@ HEADERS  += versioninfo.h \
     dialog/imagejobwindow.h \
     dialog/launchwindow.h \
     dialog/recentjobslist.h \
-    dialog/itembutton.h
+    dialog/itembutton.h \
+    network/downloader.h
 
 FORMS    += dialog/imagejobwindow.ui \
     dialog/aboutdialog.ui \

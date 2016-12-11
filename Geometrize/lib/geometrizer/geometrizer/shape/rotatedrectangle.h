@@ -1,5 +1,4 @@
-#ifndef ROTATEDRECTANGLE_H
-#define ROTATEDRECTANGLE_H
+#pragma once
 
 #include "shape.h"
 #include "../util.h"
@@ -46,5 +45,3 @@ private:
 };
 
 }
-
-#endif // ROTATEDRECTANGLE_H

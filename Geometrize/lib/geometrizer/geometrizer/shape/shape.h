@@ -1,5 +1,4 @@
-#ifndef SHAPE_H
-#define SHAPE_H
+#pragma once
 
 #include <vector>
 
@@ -35,5 +34,3 @@ public:
 };
 
 }
-
-#endif // SHAPE_H

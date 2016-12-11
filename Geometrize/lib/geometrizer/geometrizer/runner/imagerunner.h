@@ -1,5 +1,4 @@
-#ifndef IMAGERUNNER_H
-#define IMAGERUNNER_H
+#pragma once
 
 #include <array>
 
@@ -80,5 +79,3 @@ private:
 };
 
 }
-
-#endif // IMAGERUNNER_H

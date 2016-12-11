@@ -1,5 +1,4 @@
-#ifndef IMAGEJOBWINDOW_H
-#define IMAGEJOBWINDOW_H
+#pragma once
 
 #include <QMainWindow>
 
@@ -45,5 +44,3 @@ private:
 }
 
 }
-
-#endif // IMAGEJOBWINDOW_H

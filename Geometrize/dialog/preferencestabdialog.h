@@ -1,5 +1,4 @@
-#ifndef PREFERENCESTABDIALOG_H
-#define PREFERENCESTABDIALOG_H
+#pragma once
 
 #include <QDialog>
 
@@ -32,5 +31,3 @@ private:
 }
 
 }
-
-#endif // PREFERENCESTABDIALOG_H

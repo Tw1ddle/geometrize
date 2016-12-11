@@ -1,5 +1,4 @@
-#ifndef RECENTJOBSLIST_H
-#define RECENTJOBSLIST_H
+#pragma once
 
 #include <QListWidget>
 
@@ -29,5 +28,3 @@ private:
 }
 
 }
-
-#endif // RECENTJOBSLIST_H

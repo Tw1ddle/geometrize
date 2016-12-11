@@ -1,5 +1,4 @@
-#ifndef SCANLINE_H
-#define SCANLINE_H
+#pragma once
 
 #include <algorithm>
 #include <vector>
@@ -66,5 +65,3 @@ public:
 };
 
 }
-
-#endif // SCANLINE_H

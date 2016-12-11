@@ -1,5 +1,4 @@
-#ifndef ITEMBUTTON_H
-#define ITEMBUTTON_H
+#pragma once
 
 #include <QWidget>
 
@@ -33,5 +32,3 @@ private:
 }
 
 }
-
-#endif // ITEMBUTTON_H

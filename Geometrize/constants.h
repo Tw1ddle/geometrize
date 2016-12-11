@@ -1,5 +1,4 @@
-#ifndef CONSTANTS_H
-#define CONSTANTS_H
+#pragma once
 
 #include <QObject>
 
@@ -54,5 +53,3 @@ const QString VIDEO_TUTORIAL_URL{"https://www.youtube.com/playlist?list=PLe9ogi_
 }
 
 }
-
-#endif // CONSTANTS_H

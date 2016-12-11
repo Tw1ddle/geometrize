@@ -1,5 +1,4 @@
-#ifndef VERSIONINFO_H
-#define VERSIONINFO_H
+#pragma once
 
 #include <QString>
 
@@ -78,5 +77,3 @@ QString getBuildQtLicenseName();
 }
 
 }
-
-#endif // VERSIONINFO_H

@@ -1,5 +1,4 @@
-#ifndef SHAPEFACTORY_H
-#define SHAPEFACTORY_H
+#pragma once
 
 #include <bitset>
 #include <memory>
@@ -82,5 +81,3 @@ public:
 };
 
 }
-
-#endif // SHAPEFACTORY_H

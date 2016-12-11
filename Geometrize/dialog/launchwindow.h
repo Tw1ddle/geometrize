@@ -1,5 +1,4 @@
-#ifndef LAUNCHWINDOW_H
-#define LAUNCHWINDOW_H
+#pragma once
 
 #include <memory>
 
@@ -50,5 +49,3 @@ private:
 }
 
 }
-
-#endif // LAUNCHWINDOW_H

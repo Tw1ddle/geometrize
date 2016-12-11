@@ -1,5 +1,4 @@
-#ifndef ELLIPSE_H
-#define ELLIPSE_H
+#pragma once
 
 #include "shape.h"
 #include "../util.h"
@@ -46,5 +45,3 @@ private:
 };
 
 }
-
-#endif // ELLIPSE_H

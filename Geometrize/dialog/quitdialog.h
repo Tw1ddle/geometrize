@@ -1,5 +1,4 @@
-#ifndef QUITDIALOG_H
-#define QUITDIALOG_H
+#pragma once
 
 #include <QDialog>
 
@@ -36,5 +35,3 @@ private:
 }
 
 }
-
-#endif // QUITDIALOG_H

@@ -6,6 +6,8 @@
 #include <QDialog>
 #include <QMap>
 
+#include "network/downloader.h"
+#include "formatsupport.h"
 #include "dialog/itembutton.h"
 #include "recentitems.h"
 #include "sharedapp.h"
@@ -18,7 +20,14 @@ namespace dialog
 
 void createImageJob(QWidget* parent, const QString& imagePath)
 {
-    SharedApp::get().createImageJob(parent, QPixmap(imagePath));
+    QPixmap pixmap(imagePath);
+    if(pixmap.isNull()) {
+        // TODO error message and exit out
+        return;
+    }
+
+    SharedApp::get().getRecentFiles().add(imagePath);
+    SharedApp::get().createImageJob(parent, pixmap);
 }
 
 class LaunchWindow::LaunchWindowImpl
@@ -37,10 +46,26 @@ public:
 
         ui->recentsList->setRecentItems(&SharedApp::get().getRecentFiles());
     }
-
     LaunchWindowImpl operator=(const LaunchWindowImpl&) = delete;
     LaunchWindowImpl(const LaunchWindowImpl&) = delete;
     ~LaunchWindowImpl() = default;
+
+    void downloadImage(QUrl url)
+    {
+        new network::Downloader(url, &LaunchWindowImpl::onImageDownloadComplete);
+    }
+
+    static void onImageDownloadComplete(network::Downloader* self, QNetworkReply::NetworkError error) {
+        QPixmap image;
+        image.loadFromData(self->downloadedData());
+        SharedApp::get().getRecentFiles().add(self->getUrl().toString());
+        SharedApp::get().createImageJob(nullptr, image);
+        qDebug() << "FINISHED DOWNLOADING WITH ERROR" << error;
+
+        // TODO remove from list so it self-destructs
+        //m_imageDownloaders
+        delete self;
+    }
 
 private:
     LaunchWindow* q;
@@ -62,12 +87,33 @@ LaunchWindow::~LaunchWindow()
 
 void LaunchWindow::dragEnterEvent(QDragEnterEvent* event)
 {
-    // TODO
+    event->acceptProposedAction();
 }
 
 void LaunchWindow::dropEvent(QDropEvent* event)
 {
-    // TODO
+    const QStringList files{geometrize::file::getLocalFiles(event->mimeData())};
+    const QList<QUrl> urls{geometrize::file::getRemoteUrls(event->mimeData())};
+    if(files.empty() && urls.empty()) {
+        // TODO validate and show unsupported message?
+        return;
+    }
+
+    if(!files.empty()) {
+        for(const QString& file : files) {
+            createImageJob(nullptr, file);
+        }
+        return;
+    }
+
+    if(!urls.empty()) {
+        for(const QUrl& url : urls) {
+            if(url.toString().endsWith(".png")) { // TODO need list of supported formats
+                d->downloadImage(url);
+            }
+        }
+        return;
+    }
 }
 
 void LaunchWindow::closeEvent(QCloseEvent* event)

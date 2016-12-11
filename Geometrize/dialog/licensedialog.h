@@ -1,5 +1,4 @@
-#ifndef LICENSEDIALOG_H
-#define LICENSEDIALOG_H
+#pragma once
 
 #include <QDialog>
 
@@ -31,5 +30,3 @@ private:
 }
 
 }
-
-#endif // LICENSEDIALOG_H

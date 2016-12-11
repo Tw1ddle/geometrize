@@ -1,5 +1,4 @@
-#ifndef MODEL_H
-#define MODEL_H
+#pragma once
 
 #include "model.h"
 #include "bitmap/rgba.h"
@@ -142,5 +141,3 @@ private:
 };
 
 }
-
-#endif // MODEL_H

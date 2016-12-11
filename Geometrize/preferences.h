@@ -1,5 +1,4 @@
-#ifndef PREFERENCES_H
-#define PREFERENCES_H
+#pragma once
 
 namespace geometrize
 {
@@ -20,5 +19,3 @@ public:
 }
 
 }
-
-#endif // PREFERENCES_H

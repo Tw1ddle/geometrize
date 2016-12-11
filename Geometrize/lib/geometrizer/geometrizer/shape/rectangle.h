@@ -1,5 +1,4 @@
-#ifndef RECTANGLE_H
-#define RECTANGLE_H
+#pragma once
 
 #include "shape.h"
 #include "../util.h"
@@ -68,5 +67,3 @@ private:
 };
 
 }
-
-#endif // RECTANGLE_H

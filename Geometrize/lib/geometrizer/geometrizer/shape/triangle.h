@@ -1,5 +1,4 @@
-#ifndef TRIANGLE_H
-#define TRIANGLE_H
+#pragma once
 
 #include "shape.h"
 #include "../util.h"
@@ -46,5 +45,3 @@ private:
 };
 
 }
-
-#endif // TRIANGLE_H

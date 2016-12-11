@@ -1,5 +1,4 @@
-#ifndef ROTATEDELLIPSE_H
-#define ROTATEDELLIPSE_H
+#pragma once
 
 #include "shape.h"
 #include "../util.h"
@@ -46,5 +45,3 @@ private:
 };
 
 }
-
-#endif // ROTATEDELLIPSE_H

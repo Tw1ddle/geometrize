@@ -1,5 +1,4 @@
-#ifndef SHAPEJSONEXPORTER_H
-#define SHAPEJSONEXPORTER_H
+#pragma once
 
 #include <string>
 
@@ -24,5 +23,3 @@ std::string exportShapeJson(const std::vector<ShapeResult>& data)
 }
 
 }
-
-#endif // SHAPEJSONEXPORTER_H
