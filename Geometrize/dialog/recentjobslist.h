@@ -10,6 +10,9 @@ namespace geometrize
 namespace dialog
 {
 
+/**
+ * @brief The RecentJobsList class models the UI for a list of recently opened jobs/files.
+ */
 class RecentJobsList : public QListWidget
 {
 public:
@@ -21,7 +24,12 @@ public:
      */
     void setRecentItems(RecentItems* items);
 
+signals:
+    void signal_contextMenuRequested(QPoint* pos);
+
 private:
+    virtual void contextMenuEvent(QContextMenuEvent* e) override;
+
     RecentItems* m_recents;
 };
 

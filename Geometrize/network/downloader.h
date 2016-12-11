@@ -44,6 +44,11 @@ public:
     QUrl getUrl() const;
 
 signals:
+    /**
+     * @brief signal_downloaded Dispatched after a download completes.
+     * @param downloader A reference to the downloader object. Remember to delete the downloader if necessary.
+     * @param error The network error (if any).
+     */
     void signal_downloaded(Downloader* downloader, QNetworkReply::NetworkError error);
 
 private slots:

@@ -71,7 +71,7 @@ public:
         QDesktopServices::openUrl(QUrl(geometrize::constants::VIDEO_TUTORIAL_URL));
     }
 
-    static ImageJobContext* createImageJob(QWidget* parent, const QPixmap& pixmap)
+    static ImageJobContext* createImageJob(QWidget* parent, const QString& displayName, const QPixmap& pixmap)
     {
         dialog::ImageJobWindow* imageJobWindow = new dialog::ImageJobWindow(parent);
         imageJobWindow->show(); // TODO cleanup
@@ -79,7 +79,7 @@ public:
         // TODO QImage instead?
         //BitmapData data(pixmap.data_ptr().);
 
-        return new ImageJobContext(BitmapData(10, 10, rgba{0, 0, 0, 0})); // TODO
+        return new ImageJobContext(displayName, BitmapData(10, 10, rgba{0, 0, 0, 0})); // TODO
     }
 
     static QString getImagePath(QWidget* parent)
@@ -154,9 +154,9 @@ SharedApp& SharedApp::get() {
     return _instance;
 }
 
-void SharedApp::createImageJob(QWidget* parent, const QPixmap& pixmap)
+void SharedApp::createImageJob(QWidget* parent, const QString& displayName, const QPixmap& pixmap)
 {
-    SharedAppImpl::createImageJob(parent, pixmap);
+    SharedAppImpl::createImageJob(parent, displayName, pixmap);
 }
 
 void SharedApp::openAboutPage(QWidget* parent)

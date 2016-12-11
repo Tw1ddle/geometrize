@@ -22,6 +22,32 @@ QStringList getSupportedImageFileExtensions(const bool includeDotPrefix)
 }
 
 /**
+ * @brief stringEndsWithAnyOf Returns true if the string ends with any of the given endings.
+ * @param string The string whose end to check.
+ * @param endings The endings to check the string against.
+ * @return True if the string ends with any of the given endings, false otherwise.
+ */
+bool stringEndsWithAnyOf(const QString& string, const QStringList& endings)
+{
+    for(const QString& ending : endings) {
+        if(string.endsWith(ending)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+ * @brief getUrls Gets a list of URLs from a Qt MimeData item.
+ * @param data The Mime data.
+ * @return List of URLs.
+ */
+QList<QUrl> getUrls(const QMimeData* const data)
+{
+    return data->urls();
+}
+
+/**
  * @brief getLocalFiles Gets a list of local file paths from a Qt MimeData item.
  * @param data The Mime data.
  * @return List of local file paths.

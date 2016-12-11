@@ -33,7 +33,7 @@ public:
     static void openTechnicalSupport();
     static void openOnlineTutorials();
 
-    void createImageJob(QWidget* parent, const QPixmap& pixmap);
+    void createImageJob(QWidget* parent, const QString& displayName, const QPixmap& pixmap);
 
     // Recent files
     RecentItems& getRecentFiles();

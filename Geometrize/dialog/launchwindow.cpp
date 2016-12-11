@@ -18,16 +18,16 @@ namespace geometrize
 namespace dialog
 {
 
-void createImageJob(QWidget* parent, const QString& imagePath)
+void createImageJob(QWidget* parent, const QUrl& imagePath)
 {
-    QPixmap pixmap(imagePath);
+    QPixmap pixmap(imagePath.toString());
     if(pixmap.isNull()) {
         // TODO error message and exit out
         return;
     }
 
-    SharedApp::get().getRecentFiles().add(imagePath);
-    SharedApp::get().createImageJob(parent, pixmap);
+    SharedApp::get().getRecentFiles().add(imagePath.toString());
+    SharedApp::get().createImageJob(parent, imagePath.toString(), pixmap);
 }
 
 class LaunchWindow::LaunchWindowImpl
@@ -41,7 +41,8 @@ public:
             qDebug() << "Item activated " << item->text();
 
             // TODO deal with bad paths, use data not text
-            createImageJob(q, item->text());
+            const QList<QUrl> files{item->text()};
+            openJobs(files);
         });
 
         ui->recentsList->setRecentItems(&SharedApp::get().getRecentFiles());
@@ -50,21 +51,85 @@ public:
     LaunchWindowImpl(const LaunchWindowImpl&) = delete;
     ~LaunchWindowImpl() = default;
 
-    void downloadImage(QUrl url)
+    static void downloadImage(QUrl url)
     {
         new network::Downloader(url, &LaunchWindowImpl::onImageDownloadComplete);
     }
 
-    static void onImageDownloadComplete(network::Downloader* self, QNetworkReply::NetworkError error) {
+    static void downloadWebpage(QUrl url)
+    {
+        new network::Downloader(url, &LaunchWindowImpl::onWebpageDownloadComplete);
+    }
+
+    static void onImageDownloadComplete(network::Downloader* self, QNetworkReply::NetworkError error)
+    {
+        qDebug() << "FINISHED DOWNLOADING WITH ERROR" << error; // TODO error checks
+
         QPixmap image;
         image.loadFromData(self->downloadedData());
         SharedApp::get().getRecentFiles().add(self->getUrl().toString());
-        SharedApp::get().createImageJob(nullptr, image);
-        qDebug() << "FINISHED DOWNLOADING WITH ERROR" << error;
+        SharedApp::get().createImageJob(nullptr, self->getUrl().toString(), image);
 
-        // TODO remove from list so it self-destructs
-        //m_imageDownloaders
         delete self;
+    }
+
+    static void onWebpageDownloadComplete(network::Downloader* self, QNetworkReply::NetworkError error)
+    {
+        qDebug() << "FINISHED DOWNLOADING WITH ERROR" << error; // TODO error checks
+
+        const QString document(self->downloadedData());
+
+        QRegExp imageTagRegex("\\<img[^\\>]*src\\s*=\\s*\"([^\"]*)\"[^\\>]*\\>", Qt::CaseInsensitive);
+        imageTagRegex.setMinimal(true);
+
+        QStringList imageMatches;
+        QStringList urlMatches;
+
+        int offset{0};
+        while((offset = imageTagRegex.indexIn(document, offset)) != -1) {
+            offset += imageTagRegex.matchedLength();
+            imageMatches.append(imageTagRegex.cap(0)); // Should hold complete img tag
+            urlMatches.append(imageTagRegex.cap(1)); // Should hold only src property
+        }
+
+        qDebug() << imageMatches;
+        qDebug() << urlMatches;
+
+        QList<QUrl> imageUrls;
+        for(const QString& url : urlMatches) {
+            imageUrls.push_back(QUrl(url));
+        }
+
+        const QString baseUrl{self->getUrl().adjusted(QUrl::RemoveFilename | QUrl::StripTrailingSlash).toString()};
+        for(QUrl& url : imageUrls) {
+            if(url.isRelative()) {
+                url = QUrl(baseUrl + url.toString());
+            }
+            downloadImage(url);
+        }
+
+        delete self;
+    }
+
+    void openJobs(const QList<QUrl>& urls)
+    {
+        if(urls.empty()) {
+            // TODO validate and show unsupported message?
+            return;
+        }
+
+        if(!urls.empty()) {
+            for(const QUrl& url : urls) {
+                if(url.isLocalFile()) {
+                    createImageJob(nullptr, url);
+                } else if(url.toString().endsWith(".png")) { // TODO need list of supported formats
+                    downloadImage(url);
+                } else {
+                    downloadWebpage(url);
+                }
+            }
+            return;
+        }
     }
 
 private:
@@ -92,28 +157,7 @@ void LaunchWindow::dragEnterEvent(QDragEnterEvent* event)
 
 void LaunchWindow::dropEvent(QDropEvent* event)
 {
-    const QStringList files{geometrize::file::getLocalFiles(event->mimeData())};
-    const QList<QUrl> urls{geometrize::file::getRemoteUrls(event->mimeData())};
-    if(files.empty() && urls.empty()) {
-        // TODO validate and show unsupported message?
-        return;
-    }
-
-    if(!files.empty()) {
-        for(const QString& file : files) {
-            createImageJob(nullptr, file);
-        }
-        return;
-    }
-
-    if(!urls.empty()) {
-        for(const QUrl& url : urls) {
-            if(url.toString().endsWith(".png")) { // TODO need list of supported formats
-                d->downloadImage(url);
-            }
-        }
-        return;
-    }
+    d->openJobs(geometrize::file::getUrls(event->mimeData()));
 }
 
 void LaunchWindow::closeEvent(QCloseEvent* event)

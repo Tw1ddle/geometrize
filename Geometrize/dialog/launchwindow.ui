@@ -83,20 +83,6 @@
             </property>
            </widget>
           </item>
-          <item>
-           <widget class="QPushButton" name="openImageSetButton">
-            <property name="text">
-             <string>Open Image Set</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="openShapeDataButton">
-            <property name="text">
-             <string>Open Shape Data</string>
-            </property>
-           </widget>
-          </item>
          </layout>
         </item>
         <item>

@@ -3,6 +3,7 @@
 #include "assert.h"
 
 #include <QDebug>
+#include <QContextMenuEvent>
 
 namespace geometrize
 {
@@ -50,6 +51,24 @@ void RecentJobsList::setRecentItems(RecentItems* recents)
             }
         });
     }
+}
+
+void RecentJobsList::contextMenuEvent(QContextMenuEvent* e)
+{
+    // TODO
+
+    // if you only want the mouse context events (like right click)
+    if(e->reason() != QContextMenuEvent::Mouse) return;
+
+    // get the item unter the mouse cursor
+    QListWidgetItem * clickedItem = itemAt(e->pos());
+
+    // do what you like here
+    // e.g. show a dialog to ask whether the item should be deleted
+    // or show a widget with delete button (you can position it freely with setGeometry(...))
+    // etc.
+
+   // emit signal_contextMenuRequested(nullptr); // TODO
 }
 
 }
