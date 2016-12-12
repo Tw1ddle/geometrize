@@ -15,6 +15,7 @@ namespace dialog
  */
 class RecentJobsList : public QListWidget
 {
+    Q_OBJECT
 public:
     explicit RecentJobsList(QWidget *parent = 0);
 
@@ -24,11 +25,18 @@ public:
      */
     void setRecentItems(RecentItems* items);
 
+    /**
+     * @brief getRecentItems Gets the recent items object that the recent jobs list currently reflects.
+     * @return The recent items object.
+     */
+    RecentItems* getRecentItems();
+
 signals:
-    void signal_contextMenuRequested(QPoint* pos);
+    void signal_contextMenuRequested(QListWidgetItem* item, QPoint pos);
 
 private:
     virtual void contextMenuEvent(QContextMenuEvent* e) override;
+    virtual void keyPressEvent(QKeyEvent* e) override;
 
     RecentItems* m_recents;
 };

@@ -31,7 +31,8 @@ SOURCES += main.cpp \
     dialog/launchwindow.cpp \
     dialog/recentjobslist.cpp \
     dialog/itembutton.cpp \
-    network/downloader.cpp
+    network/downloader.cpp \
+    dialog/openurldialog.cpp
 
 HEADERS  += versioninfo.h \
     winversioninfo.h \
@@ -70,7 +71,8 @@ HEADERS  += versioninfo.h \
     dialog/launchwindow.h \
     dialog/recentjobslist.h \
     dialog/itembutton.h \
-    network/downloader.h
+    network/downloader.h \
+    dialog/openurldialog.h
 
 FORMS    += dialog/imagejobwindow.ui \
     dialog/aboutdialog.ui \
@@ -80,4 +82,5 @@ FORMS    += dialog/imagejobwindow.ui \
     dialog/creditsdialog.ui \
     dialog/preferencestabdialog.ui \
     dialog/launchwindow.ui \
-    dialog/itembutton.ui
+    dialog/itembutton.ui \
+    dialog/openurldialog.ui

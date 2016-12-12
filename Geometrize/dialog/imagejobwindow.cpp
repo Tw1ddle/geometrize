@@ -20,12 +20,27 @@ namespace geometrize
 namespace dialog
 {
 
+class ImageJobWindow::ImageJobWindowImpl
+{
+public:
+    ImageJobWindowImpl(ImageJobWindow* pQ, Ui::ImageJobWindow* pUi) : q{pQ}, ui{pUi}
+    {
+        ui->setupUi(q);
+    }
+    ImageJobWindowImpl operator=(const ImageJobWindowImpl&) = delete;
+    ImageJobWindowImpl(const ImageJobWindowImpl&) = delete;
+    ~ImageJobWindowImpl() = default;
+
+private:
+    ImageJobWindow* q;
+    Ui::ImageJobWindow* ui;
+};
+
 ImageJobWindow::ImageJobWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::ImageJobWindow)
+    ui(new Ui::ImageJobWindow),
+    d{std::make_unique<ImageJobWindowImpl>(this, ui)}
 {
-    ui->setupUi(this);
-
     // TODO set title to name of image loaded?
 }
 
@@ -67,17 +82,17 @@ void ImageJobWindow::closeEvent(QCloseEvent* event)
 
 void ImageJobWindow::on_actionTechnical_Support_triggered()
 {
-    SharedApp::get().openTechnicalSupport();
+    SharedApp::openTechnicalSupport();
 }
 
 void ImageJobWindow::on_actionOnline_Tutorials_triggered()
 {
-    SharedApp::get().openOnlineTutorials();
+    SharedApp::openOnlineTutorials();
 }
 
 void ImageJobWindow::on_actionOpenPreferences_triggered()
 {
-    SharedApp::get().openPreferences(this);
+    SharedApp::openPreferences(this);
 }
 
 void ImageJobWindow::on_imageJob_updated()

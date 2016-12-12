@@ -15,7 +15,7 @@ namespace file
  */
 QStringList getSupportedImageFileExtensions(const bool includeDotPrefix)
 {
-    const static QStringList extensions = {"jpg", "png"};
+    const static QStringList extensions = {"jpg", "png"}; // TODO case sensitivity?
     // TODO
 
     return extensions;

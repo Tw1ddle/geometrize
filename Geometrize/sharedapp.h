@@ -30,6 +30,7 @@ public:
     static void openAboutPage(QWidget* parent);
     static void openPreferences(QWidget* parent);
     static int openQuitDialog(QWidget* parent);
+    static QUrl openGetUrlDialog(QWidget* parent);
     static void openTechnicalSupport();
     static void openOnlineTutorials();
 

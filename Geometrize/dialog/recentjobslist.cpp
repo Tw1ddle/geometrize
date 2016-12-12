@@ -2,8 +2,11 @@
 
 #include "assert.h"
 
+#include <QApplication>
+#include <QClipboard>
 #include <QDebug>
 #include <QContextMenuEvent>
+#include <QPoint>
 
 namespace geometrize
 {
@@ -53,22 +56,33 @@ void RecentJobsList::setRecentItems(RecentItems* recents)
     }
 }
 
+RecentItems* RecentJobsList::getRecentItems()
+{
+    return m_recents;
+}
+
 void RecentJobsList::contextMenuEvent(QContextMenuEvent* e)
 {
-    // TODO
+    if(e->reason() != QContextMenuEvent::Mouse) {
+        return;
+    }
+    emit signal_contextMenuRequested(itemAt(e->pos()), mapToGlobal(e->pos()));
+}
 
-    // if you only want the mouse context events (like right click)
-    if(e->reason() != QContextMenuEvent::Mouse) return;
+void RecentJobsList::keyPressEvent(QKeyEvent* e)
+{
+    QListWidget::keyPressEvent(e);
 
-    // get the item unter the mouse cursor
-    QListWidgetItem * clickedItem = itemAt(e->pos());
-
-    // do what you like here
-    // e.g. show a dialog to ask whether the item should be deleted
-    // or show a widget with delete button (you can position it freely with setGeometry(...))
-    // etc.
-
-   // emit signal_contextMenuRequested(nullptr); // TODO
+    if(e->matches(QKeySequence::Copy)) {
+        const QList<QListWidgetItem*> items{selectedItems()};
+        QStringList strings;
+        for(const QListWidgetItem* item : items) {
+            strings.push_back(item->text());
+        }
+        QApplication::clipboard()->setText(strings.join("\n"));
+    } else if(e->key() == Qt::Key_Delete || e->key() == Qt::Key_Backspace) {
+        qDebug() << "TODO remove item";
+    }
 }
 
 }

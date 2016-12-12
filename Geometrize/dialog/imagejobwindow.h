@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include <QMainWindow>
 
 namespace Ui {
@@ -39,6 +41,9 @@ private:
     int closeWindow();
 
     void closeEvent(QCloseEvent *bar) override;
+
+    class ImageJobWindowImpl;
+    std::unique_ptr<ImageJobWindowImpl> d;
 };
 
 }

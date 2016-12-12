@@ -1,10 +1,12 @@
 #include "launchwindow.h"
 #include "ui_launchwindow.h"
 
+#include <QAction>
 #include <QCloseEvent>
 #include <QDebug>
 #include <QDialog>
 #include <QMap>
+#include <QMenu>
 
 #include "network/downloader.h"
 #include "formatsupport.h"
@@ -43,6 +45,23 @@ public:
             // TODO deal with bad paths, use data not text
             const QList<QUrl> files{item->text()};
             openJobs(files);
+        });
+
+        connect(ui->recentsList, &RecentJobsList::signal_contextMenuRequested, [](QListWidgetItem* item, QPoint position) {
+            // TODO
+
+            QMenu itemContextMenu;
+            QAction openAction(tr("Open"));
+            itemContextMenu.addAction(&openAction);
+            QAction copyToClipboard(tr("Copy path to clipboard"));
+            itemContextMenu.addAction(&copyToClipboard);
+            QAction removalAction(tr("Remove from list"));
+            //connect(&removalAction, &QAction::triggered, [this, &item]() {
+                //ui->recentsList->getRecentItems()->remove(item->text()); // TODO
+            //});
+            itemContextMenu.addAction(&removalAction);
+
+            itemContextMenu.exec(position);
         });
 
         ui->recentsList->setRecentItems(&SharedApp::get().getRecentFiles());
@@ -121,7 +140,7 @@ public:
         if(!urls.empty()) {
             for(const QUrl& url : urls) {
                 if(url.isLocalFile()) {
-                    createImageJob(nullptr, url);
+                    createImageJob(nullptr, url.toLocalFile());
                 } else if(url.toString().endsWith(".png")) { // TODO need list of supported formats
                     downloadImage(url);
                 } else {
@@ -131,6 +150,9 @@ public:
             return;
         }
     }
+
+private slots:
+    void on_openWebpageButton_clicked();
 
 private:
     LaunchWindow* q;
@@ -198,6 +220,15 @@ void LaunchWindow::on_openImageButton_clicked()
         return;
     }
     createImageJob(this, imagePath);
+}
+
+void LaunchWindow::on_openWebpageButton_clicked()
+{
+    const QUrl url{SharedApp::get().openGetUrlDialog(this)};
+
+    if(url.isValid()) {
+        createImageJob(this, url);
+    }
 }
 
 void LaunchWindow::on_actionTutorials_triggered()

@@ -20,6 +20,7 @@
 #include "dialog/aboutdialog.h"
 #include "dialog/imagejobwindow.h"
 #include "dialog/launchwindow.h"
+#include "dialog/openurldialog.h"
 #include "dialog/preferencestabdialog.h"
 #include "dialog/quitdialog.h"
 #include "imagejobcontext.h"
@@ -61,6 +62,13 @@ public:
         return dialog.result();
     }
 
+    static QUrl openGetUrlDialog(QWidget* parent)
+    {
+        dialog::OpenUrlDialog dialog(parent);
+        dialog.show();
+        return dialog.getUrl();
+    }
+
     static void openTechnicalSupport()
     {
         QDesktopServices::openUrl(QUrl(geometrize::constants::TECHNICAL_SUPPORT_URL));
@@ -75,11 +83,13 @@ public:
     {
         dialog::ImageJobWindow* imageJobWindow = new dialog::ImageJobWindow(parent);
         imageJobWindow->show(); // TODO cleanup
+        imageJobWindow->setWindowTitle(displayName);
 
         // TODO QImage instead?
         //BitmapData data(pixmap.data_ptr().);
 
-        return new ImageJobContext(displayName, BitmapData(10, 10, rgba{0, 0, 0, 0})); // TODO
+        ImageJobContext* context = new ImageJobContext(displayName, BitmapData(10, 10, rgba{0, 0, 0, 0})); // TODO
+        return context;
     }
 
     static QString getImagePath(QWidget* parent)
@@ -204,6 +214,11 @@ void SharedApp::saveImage(QWidget* parent)
 QString SharedApp::getImagePath(QWidget *parent)
 {
     return SharedAppImpl::getImagePath(parent);
+}
+
+QUrl SharedApp::openGetUrlDialog(QWidget* parent)
+{
+    return SharedAppImpl::openGetUrlDialog(parent);
 }
 
 RecentItems& SharedApp::getRecentFiles()

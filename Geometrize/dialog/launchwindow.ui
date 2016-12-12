@@ -79,11 +79,18 @@
           <item>
            <widget class="QPushButton" name="openImageButton">
             <property name="text">
-             <string>Open Image</string>
+             <string>Open File</string>
             </property>
            </widget>
           </item>
          </layout>
+        </item>
+        <item>
+         <widget class="QPushButton" name="openWebpageButton">
+          <property name="text">
+           <string>Open Webpage</string>
+          </property>
+         </widget>
         </item>
         <item>
          <widget class="QLabel" name="recentListTitle">
