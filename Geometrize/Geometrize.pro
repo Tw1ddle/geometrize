@@ -15,6 +15,8 @@ RC_ICONS = icon.ico
 RC_FILE = winicon.rc
 RESOURCES = resources/application_resources.qrc
 
+QMAKE_CXXFLAGS += -bigobj
+
 SOURCES += main.cpp \
     versioninfo.cpp \
     imagejobcontext.cpp \
@@ -31,8 +33,8 @@ SOURCES += main.cpp \
     dialog/launchwindow.cpp \
     dialog/recentjobslist.cpp \
     dialog/itembutton.cpp \
-    network/downloader.cpp \
-    dialog/openurldialog.cpp
+    dialog/openurldialog.cpp \
+    network/downloader.cpp
 
 HEADERS  += versioninfo.h \
     winversioninfo.h \
@@ -71,8 +73,9 @@ HEADERS  += versioninfo.h \
     dialog/launchwindow.h \
     dialog/recentjobslist.h \
     dialog/itembutton.h \
+    dialog/openurldialog.h \
     network/downloader.h \
-    dialog/openurldialog.h
+    chaiscript/chaiscript.hpp
 
 FORMS    += dialog/imagejobwindow.ui \
     dialog/aboutdialog.ui \
