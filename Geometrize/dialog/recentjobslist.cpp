@@ -8,6 +8,8 @@
 #include <QContextMenuEvent>
 #include <QPoint>
 
+#include "recentitems.h"
+
 namespace geometrize
 {
 

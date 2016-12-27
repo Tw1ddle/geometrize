@@ -2,10 +2,10 @@
 
 #include <QListWidget>
 
-#include "recentitems.h"
-
 namespace geometrize
 {
+
+class RecentItems;
 
 namespace dialog
 {

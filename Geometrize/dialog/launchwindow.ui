@@ -195,7 +195,9 @@
          </spacer>
         </item>
         <item>
-         <layout class="QGridLayout" name="templatesGrid"/>
+         <widget class="geometrize::dialog::TemplateGrid" name="templateGrid" native="true">
+          <layout class="QGridLayout" name="templatesGrid"/>
+         </widget>
         </item>
        </layout>
       </item>
@@ -273,6 +275,12 @@
    <class>geometrize::dialog::RecentJobsList</class>
    <extends>QListWidget</extends>
    <header>dialog/recentjobslist.h</header>
+  </customwidget>
+  <customwidget>
+   <class>geometrize::dialog::TemplateGrid</class>
+   <extends>QWidget</extends>
+   <header>dialog/templategrid.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

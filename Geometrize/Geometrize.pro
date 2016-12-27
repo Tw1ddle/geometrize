@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui network
+QT += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -18,12 +18,15 @@ RESOURCES = resources/application_resources.qrc
 QMAKE_CXXFLAGS += -bigobj
 
 SOURCES += main.cpp \
-    versioninfo.cpp \
     imagejobcontext.cpp \
-    preferences.cpp \
     imagejobpreferences.cpp \
+    preferences.cpp \
+    searchpaths.cpp \
     sharedapp.cpp \
     recentitems.cpp \
+    versioninfo.cpp \
+    util.cpp \
+    bindings/bindings.cpp \
     dialog/aboutdialog.cpp \
     dialog/quitdialog.cpp \
     dialog/licensedialog.cpp \
@@ -34,17 +37,21 @@ SOURCES += main.cpp \
     dialog/recentjobslist.cpp \
     dialog/itembutton.cpp \
     dialog/openurldialog.cpp \
+    dialog/templategrid.cpp \
     network/downloader.cpp
 
-HEADERS  += versioninfo.h \
-    winversioninfo.h \
-    imagejobcontext.h \
-    preferences.h \
-    imagejobpreferences.h \
+HEADERS += chaiscript/chaiscript.hpp \
     constants.h \
-    sharedapp.h \
-    recentitems.h \
     formatsupport.h \
+    imagejobcontext.h \
+    imagejobpreferences.h \
+    preferences.h \
+    recentitems.h \
+    searchpaths.h \
+    sharedapp.h \
+    util.h \
+    versioninfo.h \
+    winversioninfo.h \
     lib/geometrizer/geometrizer/bitmap/bitmapdata.h \
     lib/geometrizer/geometrizer/bitmap/rgba.h \
     lib/geometrizer/geometrizer/exporters/shapearrayexporter.h \
@@ -64,6 +71,7 @@ HEADERS  += versioninfo.h \
     lib/geometrizer/geometrizer/scanline.h \
     lib/geometrizer/geometrizer/state.h \
     lib/geometrizer/geometrizer/util.h \
+    bindings/bindings.h \
     dialog/aboutdialog.h \
     dialog/quitdialog.h \
     dialog/licensedialog.h \
@@ -74,10 +82,10 @@ HEADERS  += versioninfo.h \
     dialog/recentjobslist.h \
     dialog/itembutton.h \
     dialog/openurldialog.h \
-    network/downloader.h \
-    chaiscript/chaiscript.hpp
+    dialog/templategrid.h \
+    network/downloader.h
 
-FORMS    += dialog/imagejobwindow.ui \
+FORMS += dialog/imagejobwindow.ui \
     dialog/aboutdialog.ui \
     dialog/quitdialog.ui \
     dialog/globalpreferencesdialog.ui \
