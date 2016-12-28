@@ -8,19 +8,19 @@ namespace geometrize
 namespace searchpaths
 {
 
-QString getApplicationDirectoryPath()
+std::string getApplicationDirectoryPath()
 {
-    return QCoreApplication::applicationDirPath();
+    return QCoreApplication::applicationDirPath().toStdString();
 }
 
-QStringList getScriptSearchPaths()
+std::vector<std::string> getScriptSearchPaths()
 {
     // TODO some paths for debug builds, some for final release?
 
     return { "/../../scripts", "/scripts" };
 }
 
-QStringList getTemplateSearchpaths()
+std::vector<std::string> getTemplateSearchPaths()
 {
     return { "/../../templates", "/templates" };
 }

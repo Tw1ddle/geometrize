@@ -51,7 +51,7 @@ ImageJobWindow::~ImageJobWindow()
 
 void ImageJobWindow::on_actionAbout_triggered()
 {
-    SharedApp::get().openAboutPage(this);
+    app::openAboutPage(this);
 }
 
 void ImageJobWindow::on_actionExit_triggered()
@@ -61,7 +61,7 @@ void ImageJobWindow::on_actionExit_triggered()
 
 int ImageJobWindow::closeWindow()
 {
-    const int dialogResult{SharedApp::get().openQuitDialog(this)};
+    const int dialogResult{app::openQuitDialog(this)};
     switch(dialogResult) {
         case QDialog::Accepted:
             // TODO save any outstanding stuff(?) separate method needed
@@ -72,7 +72,7 @@ int ImageJobWindow::closeWindow()
 
 void ImageJobWindow::closeEvent(QCloseEvent* event)
 {
-    const int dialogResult{SharedApp::get().openQuitDialog(this)};
+    const int dialogResult{app::openQuitDialog(this)};
     if(dialogResult == QDialog::Accepted) {
         return;
     }
@@ -82,17 +82,17 @@ void ImageJobWindow::closeEvent(QCloseEvent* event)
 
 void ImageJobWindow::on_actionTechnical_Support_triggered()
 {
-    SharedApp::openTechnicalSupport();
+    app::openTechnicalSupport();
 }
 
 void ImageJobWindow::on_actionOnline_Tutorials_triggered()
 {
-    SharedApp::openOnlineTutorials();
+    app::openOnlineTutorials();
 }
 
 void ImageJobWindow::on_actionOpenPreferences_triggered()
 {
-    SharedApp::openPreferences(this);
+    app::openPreferences(this);
 }
 
 void ImageJobWindow::on_imageJob_updated()

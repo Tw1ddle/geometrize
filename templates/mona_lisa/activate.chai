@@ -1,0 +1,39 @@
+print("foo");
+
+// ChaiScript supports the normal kind of control blocks you've come to expect from 
+// C++ and JavaScript
+
+
+if (5 > 2) {
+print("Yup, 5 > 2");
+} else if (2 > 5) {
+// never gonna happen
+} else {
+// really not going to happen
+}
+
+for (var i = 1; i < 10; ++i)
+{
+print(i); // prints 1 through 9
+}
+
+if(directoryExists("C:\\Users\\admin"))
+{
+print("dir exists!");
+} else {
+print("dir does not exist!");
+}
+
+if(directoryExists(getApplicationDirectoryPath()))
+{
+print(getApplicationDirectoryPath());
+} else {
+print("it doesnt exist?? " + getApplicationDirectoryPath());
+}
+
+var v = getFilePathsForDirectory(getApplicationDirectoryPath());
+var x = v.size();
+print(x);
+for(var i = 0; i < v.size(); ++i) {
+	print(v[i]);
+}

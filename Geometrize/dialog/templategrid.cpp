@@ -11,8 +11,8 @@
 #include <QPushButton>
 #include <QStyle>
 
+#include "script/chaiscriptcreator.h"
 #include "chaiscript/chaiscript.hpp"
-#include "chaiscript/chaiscript_stdlib.hpp"
 #include "searchpaths.h"
 #include "util.h"
 
@@ -21,22 +21,6 @@ namespace geometrize
 
 namespace dialog
 {
-
-QStringList getTemplatesForPath(const QString& path)
-{
-    QStringList templates;
-
-    if(!util::directoryExists(path)) {
-        return templates;
-    }
-
-    QDirIterator it(path, { "*.chai" }, QDir::Files, QDirIterator::Subdirectories);
-    while (it.hasNext()) {
-        templates.push_back(it.next());
-    }
-
-    return templates;
-}
 
 class FlowLayout : public QLayout
 {
@@ -195,7 +179,13 @@ public:
     {
         connect(this, &TemplateItem::clicked, [this]() {
             try {
-                m_templateLoader->eval(util::readFileAsString(m_scriptPath));
+                const std::string script{util::readFileAsString(m_scriptPath.toStdString())};
+                m_templateLoader->eval(script);
+            } catch (const std::string& s) {
+                QMessageBox::warning(nullptr, QString::fromStdString(s), QString::fromStdString(s));
+            } catch (const std::exception& e) {
+              // This is the one what will be called in the specific throw() above
+                 QMessageBox::warning(nullptr, QString(e.what()), QString(e.what()));
             } catch (...) {
                 assert(0 && "Failed to evaluate template script");
             }
@@ -210,21 +200,21 @@ private:
 class TemplateGrid::TemplateGridImpl
 {
 public:
-    TemplateGridImpl(TemplateGrid* pQ) : q{pQ}, m_layout{new FlowLayout(40, 32, 32)}, m_templateLoader{std::make_unique<chaiscript::ChaiScript>(chaiscript::Std_Lib::library())}
+    TemplateGridImpl(TemplateGrid* pQ) : q{pQ}, m_layout{new FlowLayout(40, 32, 32)}, m_templateLoader{geometrize::script::createChaiScript()}
     {
         q->setLayout(m_layout);
 
-        const QString basePath{geometrize::searchpaths::getApplicationDirectoryPath()};
-        const QStringList paths{geometrize::searchpaths::getTemplateSearchpaths()};
-        for(const QString& path : paths) {
-            const QString fullPath{basePath + path};
+        const std::string basePath{geometrize::searchpaths::getApplicationDirectoryPath()};
+        const std::vector<std::string> paths{geometrize::searchpaths::getTemplateSearchPaths()};
+        for(const std::string& path : paths) {
+            const QString fullPath{QString::fromStdString(basePath + path)};
             m_fileWatch.addPath(fullPath);
 
-            const QStringList templates{getTemplatesForPath(fullPath)};
+            const std::vector<std::string> templates{util::getScriptsForPath(fullPath.toStdString())};
 
-            for(const QString& t : templates) {
-                const bool result{addTemplateItem(t)};
-                emit q->signal_templateLoaded(t, result);
+            for(const std::string& t : templates) {
+                const bool result{addTemplateItem(QString::fromStdString(t))};
+                emit q->signal_templateLoaded(QString::fromStdString(t), result);
             }
         }
     }

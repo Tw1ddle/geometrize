@@ -26,7 +26,6 @@ SOURCES += main.cpp \
     recentitems.cpp \
     versioninfo.cpp \
     util.cpp \
-    bindings/bindings.cpp \
     dialog/aboutdialog.cpp \
     dialog/quitdialog.cpp \
     dialog/licensedialog.cpp \
@@ -38,7 +37,12 @@ SOURCES += main.cpp \
     dialog/itembutton.cpp \
     dialog/openurldialog.cpp \
     dialog/templategrid.cpp \
-    network/downloader.cpp
+    network/completionhandlers.cpp \
+    network/downloader.cpp \
+    network/networkactions.cpp \
+    script/bindingscreator.cpp \
+    script/bindingswrapper.cpp \
+    script/chaiscriptcreator.cpp
 
 HEADERS += chaiscript/chaiscript.hpp \
     constants.h \
@@ -71,7 +75,6 @@ HEADERS += chaiscript/chaiscript.hpp \
     lib/geometrizer/geometrizer/scanline.h \
     lib/geometrizer/geometrizer/state.h \
     lib/geometrizer/geometrizer/util.h \
-    bindings/bindings.h \
     dialog/aboutdialog.h \
     dialog/quitdialog.h \
     dialog/licensedialog.h \
@@ -83,7 +86,12 @@ HEADERS += chaiscript/chaiscript.hpp \
     dialog/itembutton.h \
     dialog/openurldialog.h \
     dialog/templategrid.h \
-    network/downloader.h
+    network/completionhandlers.h \
+    network/downloader.h \
+    network/networkactions.h \
+    script/bindingscreator.h \
+    script/bindingswrapper.h \
+    script/chaiscriptcreator.h
 
 FORMS += dialog/imagejobwindow.ui \
     dialog/aboutdialog.ui \

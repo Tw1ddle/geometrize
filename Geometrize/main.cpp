@@ -3,26 +3,14 @@
 #include <QApplication>
 #include <QDebug>
 
-#include <chaiscript/chaiscript.hpp>
-#include <chaiscript/chaiscript_stdlib.hpp>
+#include "chaiscript/chaiscript.hpp"
 
+#include "script/chaiscriptcreator.h"
 #include "constants.h"
 #include "searchpaths.h"
 #include "sharedapp.h"
 #include "recentitems.h"
 #include "util.h"
-
-/// ChaiScript function for printing to console
-void printOutput(const std::string &t_str)
-{
-    qDebug(t_str.c_str());
-}
-
-/// ChaiScript test function
-std::string helloWorld(const std::string& t_name)
-{
-    return "Hello " + t_name + "!";
-}
 
 int main(int argc, char *argv[])
 {
@@ -36,20 +24,15 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationDomain(ORGANIZATION_DOMAIN);
     QCoreApplication::setApplicationName(APPLICATION_NAME);
 
-    chaiscript::ChaiScript chai(chaiscript::Std_Lib::library());
-    chai.add(chaiscript::fun(&printOutput), "printOutput");
-    chai.add(chaiscript::fun(&helloWorld), "helloWorld");
-    chai.add(chaiscript::fun(&geometrize::util::directoryExists), "directoryExists");
-    chai.add(chaiscript::fun(&geometrize::util::directoryContainsFile), "directoryContainsFile");
+    geometrize::script::createChaiScript();
 
-    chai.eval("use(\"../scripts/hello_world.chai\") \n printOutput(\"Hello World\")"); // TODO use search paths so it's gonna work when distributed, not just in debug/release mode
-
-    qDebug() << geometrize::searchpaths::getApplicationDirectoryPath();
+    qDebug() << QString::fromStdString(geometrize::searchpaths::getApplicationDirectoryPath());
 
     a.processEvents();
 
+    // TODO remove? split into recent files etc...
     // Note first-time initialization of shared app singleton
-    geometrize::SharedApp& app{geometrize::SharedApp::get()};
+    geometrize::app::SharedApp& app{geometrize::app::SharedApp::get()};
 
     geometrize::dialog::LaunchWindow w;
 
