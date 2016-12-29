@@ -2,7 +2,8 @@
 
 #include <QWidget>
 
-namespace Ui {
+namespace Ui
+{
 class OpenUrlDialog;
 }
 
@@ -20,7 +21,7 @@ class OpenUrlDialog : public QWidget
     Q_OBJECT
 
 public:
-    explicit OpenUrlDialog(QWidget *parent = 0);
+    explicit OpenUrlDialog(QWidget* parent = 0);
     ~OpenUrlDialog();
 
     /**
@@ -30,7 +31,7 @@ public:
     QUrl getUrl() const;
 
 private:
-    Ui::OpenUrlDialog *ui;
+    Ui::OpenUrlDialog* ui;
 };
 
 }

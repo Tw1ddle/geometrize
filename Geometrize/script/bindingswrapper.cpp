@@ -1,8 +1,10 @@
 #include "bindingswrapper.h"
 
 #include <assert.h>
+
 #include <QList>
 
+#include "formatsupport.h"
 #include "searchpaths.h"
 #include "sharedapp.h"
 #include "util.h"
@@ -56,6 +58,31 @@ std::vector<std::string> getTemplateSearchPaths()
 std::string getFirstFileWithExtension(const std::string& dirPath, const std::string& extension)
 {
     return geometrize::util::getFirstFileWithExtension(dirPath, extension);
+}
+
+std::string getFirstFileWithExtensions(const std::string& dirPath, const std::vector<std::string>& extensions)
+{
+    return geometrize::util::getFirstFileWithExtensions(dirPath, extensions);
+}
+
+std::vector<std::string> getFilesWithExtensions(const std::string& dirPath, const std::vector<std::string>& extensions)
+{
+    std::vector<std::string> files;
+
+    for(const std::string& extension : extensions) {
+    }
+
+    return files;
+}
+
+std::vector<std::string> getFilesWithExtension(const std::string& dirPath, const std::string& extension)
+{
+    return getFilesWithExtensions(dirPath, { extension });
+}
+
+std::vector<std::string> getSupportedImageFileExtensions()
+{
+    return geometrize::format::getSupportedImageFileExtensions(false); // TODO?
 }
 
 std::vector<std::string> getScriptsForPath(const std::string& path)

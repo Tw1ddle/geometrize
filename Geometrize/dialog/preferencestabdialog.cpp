@@ -7,7 +7,7 @@ namespace geometrize
 namespace dialog
 {
 
-PreferencesTabDialog::PreferencesTabDialog(QWidget *parent) :
+PreferencesTabDialog::PreferencesTabDialog(QWidget* parent) :
     QDialog(parent),
     ui(new Ui::PreferencesTabDialog)
 {

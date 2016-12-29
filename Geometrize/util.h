@@ -43,12 +43,28 @@ std::string readFileAsString(const std::string& filePath);
 std::vector<std::string> getFilePathsForDirectory(const std::string& dirPath);
 
 /**
+ * @brief getFilesWithExtension Gets the absolute file paths to the files with the given extension in the given directory.
+ * @param dirPath The directory to search.
+ * @param extension The file extension to match.
+ * @return The file paths to the files encountered, empty vector if there are no matching files. The order of the file paths is implementation-dependent.
+ */
+std::vector<std::string> getFilesWithExtension(const std::string& dirPath, const std::string& extension);
+
+/**
  * @brief getFirstFileWithExtension Gets the absolute file path to the first file with the given extension in the given directory.
  * @param dirPath The directory to search.
  * @param extension The file extension to match.
- * @return The file path to the first file encountered, empty string if there are no matching files. The 'first' file is implementation-dependent.
+ * @return The file path to the first matching file encountered, empty string if there are no matching files. The 'first' file is implementation-dependent.
  */
 std::string getFirstFileWithExtension(const std::string& dirPath, const std::string& extension);
+
+/**
+ * @brief getFirstFileWithExtensions Gets the absolute file path to the first file with one of the given extensions in the given directory.
+ * @param dirPath The directory to search.
+ * @param extensions The file extension to match.
+ * @return The file path to the first matching file encountered, empty string if there are no matching files. The 'first' file is implementation-dependent.
+ */
+std::string getFirstFileWithExtensions(const std::string& dirPath, const std::vector<std::string>& extensions);
 
 /**
  * @brief getScriptsForPath Gets the absolute file paths to the script files (*.chai) for the given directory, using recursive search.
@@ -56,6 +72,20 @@ std::string getFirstFileWithExtension(const std::string& dirPath, const std::str
  * @return The absolute file paths to the script files for the given directory.
  */
 std::vector<std::string> getScriptsForPath(const std::string& path);
+
+/**
+ * @brief getTemplateFoldersForPath Gets the absolute directory paths to the folders containing script files (*.chai) for the given directory, using recursive search.
+ * @param dirPath The directory to search.
+ * @return The absolute directory paths to the script files for the given directory.
+ */
+std::vector<std::string> getTemplateFoldersForPath(const std::string& dirPath);
+
+/**
+ * @brief getDirectoryForFilePath Gets the directory path from the given local file path.
+ * @param filePath The filepath to chop.
+ * @return The directory path i.e. the file path with the file name and any trailing slashes removed.
+ */
+std::string getDirectoryForFilePath(const std::string& filePath);
 
 }
 

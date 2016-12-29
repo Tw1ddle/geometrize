@@ -22,7 +22,7 @@ namespace completionhandlers
 
 void onImageDownloadComplete(network::Downloader* self, QNetworkReply::NetworkError error)
 {
-    qDebug() << "FINISHED DOWNLOADING WITH ERROR" << error; // TODO error checks
+    qDebug() << "FINISHED DOWNLOADING IMAGE WITH ERROR" << error; // TODO error checks
 
     QPixmap image;
     image.loadFromData(self->downloadedData());
@@ -34,7 +34,7 @@ void onImageDownloadComplete(network::Downloader* self, QNetworkReply::NetworkEr
 
 void onWebpageDownloadComplete(network::Downloader* self, QNetworkReply::NetworkError error)
 {
-    qDebug() << "FINISHED DOWNLOADING WITH ERROR" << error; // TODO error checks
+    qDebug() << "FINISHED DOWNLOADING WEBPAGE WITH ERROR" << error; // TODO error checks
 
     const QString document(self->downloadedData());
 

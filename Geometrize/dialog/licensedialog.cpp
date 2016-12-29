@@ -7,7 +7,7 @@ namespace geometrize
 namespace dialog
 {
 
-LicenseDialog::LicenseDialog(QWidget *parent) :
+LicenseDialog::LicenseDialog(QWidget* parent) :
     QDialog(parent),
     ui(new Ui::LicenseDialog)
 {

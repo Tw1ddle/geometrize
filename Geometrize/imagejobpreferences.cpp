@@ -3,8 +3,13 @@
 namespace geometrize
 {
 
+namespace preferences
+{
+
 ImageJobPreferences::ImageJobPreferences()
 {
+
+}
 
 }
 

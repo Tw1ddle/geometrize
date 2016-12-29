@@ -4,7 +4,8 @@
 
 #include <QMainWindow>
 
-namespace Ui {
+namespace Ui
+{
 class LaunchWindow;
 }
 
@@ -22,7 +23,7 @@ class LaunchWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit LaunchWindow(QWidget *parent = 0);
+    explicit LaunchWindow(QWidget* parent = 0);
     ~LaunchWindow();
 
     virtual void dragEnterEvent(QDragEnterEvent *event) override;
@@ -41,7 +42,7 @@ private slots:
 private:
     void closeEvent(QCloseEvent *bar) override;
 
-    Ui::LaunchWindow *ui;
+    Ui::LaunchWindow* ui;
 
     class LaunchWindowImpl;
     std::unique_ptr<LaunchWindowImpl> d;

@@ -27,7 +27,7 @@ public:
 
 private:
     bool m_paused; ///> Whether the job is running or paused.
-    ImageJobPreferences m_preferences; ///> Runtime configuration parameters for the runner.
+    preferences::ImageJobPreferences m_preferences; ///> Runtime configuration parameters for the runner.
     QString m_displayName; ///> The display name of the image job.
     ImageRunner m_runner;
 };
@@ -35,6 +35,11 @@ private:
 ImageJobContext::ImageJobContext(const QString& displayName, BitmapData& bitmap) : d{std::make_unique<ImageJobContext::ImageJobContextImpl>(displayName, bitmap)}
 {
 
+}
+
+QString ImageJobContext::getDisplayName() const
+{
+    return d->getDisplayName();
 }
 
 }

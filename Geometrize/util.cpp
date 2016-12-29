@@ -1,5 +1,7 @@
 #include "util.h"
 
+#include <assert.h>
+
 #include <QDebug>
 #include <QDir>
 #include <QDirIterator>
@@ -61,26 +63,46 @@ std::vector<std::string> getFilePathsForDirectory(const std::string& dirPath)
     return files;
 }
 
-inline bool endsWith(std::string const& value, std::string const& ending)
+inline bool endsWith(const std::string& value, const std::string& ending)
 {
-    if (ending.size() > value.size()) {
+    if (value.length() >= ending.length()) {
+        return (0 == value.compare (value.length() - ending.length(), ending.length(), ending));
+    } else {
         return false;
     }
-    return std::equal(ending.rbegin(), ending.rend(), value.rbegin());
 }
 
-std::string getFirstFileWithExtension(const std::string& dirPath, const std::string& extension)
+std::vector<std::string> getFilesWithExtension(const std::string& dirPath, const std::string& extension)
 {
     std::vector<std::string> files{getFilePathsForDirectory(dirPath)};
 
     files.erase(std::remove_if(files.begin(), files.end(), [&extension](const std::string& s) {
         return !endsWith(s, extension);
-    }));
+    }), files.end());
+
+    return files;
+}
+
+std::string getFirstFileWithExtension(const std::string& dirPath, const std::string& extension)
+{
+    const std::vector<std::string> files{getFilesWithExtension(dirPath, extension)};
 
     if(files.empty()) {
         return "";
     }
     return files.front();
+}
+
+std::string getFirstFileWithExtensions(const std::string& dirPath, const std::vector<std::string>& extensions)
+{
+    for(const std::string& ext : extensions) {
+        const std::string s{getFirstFileWithExtension(dirPath, ext)};
+        if(!s.empty()) {
+            return s;
+        }
+    }
+
+    return "";
 }
 
 std::vector<std::string> getScriptsForPath(const std::string& dirPath)
@@ -96,6 +118,33 @@ std::vector<std::string> getScriptsForPath(const std::string& dirPath)
     }
 
     return scripts;
+}
+
+std::vector<std::string> getTemplateFoldersForPath(const std::string& dirPath)
+{
+    const std::vector<std::string> scripts{getScriptsForPath(dirPath)};
+    std::vector<std::string> templateFolders;
+
+    for(const std::string& script : scripts) {
+        QFileInfo scriptInfo(QString::fromStdString(script));
+        templateFolders.push_back(scriptInfo.absoluteDir().absolutePath().toStdString());
+    }
+
+    std::sort(templateFolders.begin(), templateFolders.end());
+    templateFolders.erase(std::unique(templateFolders.begin(), templateFolders.end()), templateFolders.end());
+
+    return templateFolders;
+}
+
+std::string getDirectoryForFilePath(const std::string& filePath)
+{
+    const QFileInfo fileInfo{QString::fromStdString(filePath)};
+
+    if(!fileInfo.exists()) {
+        assert(0 && "File does not exist");
+    }
+
+    return fileInfo.absoluteDir().absolutePath().toStdString();
 }
 
 }

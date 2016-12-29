@@ -2,7 +2,8 @@
 
 #include <QDialog>
 
-namespace Ui {
+namespace Ui
+{
 class QuitDialog;
 }
 
@@ -20,7 +21,7 @@ class QuitDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit QuitDialog(QWidget *parent = 0);
+    explicit QuitDialog(QWidget* parent = 0);
     ~QuitDialog();
 
 private slots:
@@ -29,7 +30,7 @@ private slots:
     void on_cancelButton_clicked();
 
 private:
-    Ui::QuitDialog *ui;
+    Ui::QuitDialog* ui;
 };
 
 }

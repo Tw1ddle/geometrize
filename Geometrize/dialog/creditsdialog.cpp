@@ -7,7 +7,7 @@ namespace geometrize
 namespace dialog
 {
 
-CreditsDialog::CreditsDialog(QWidget *parent) :
+CreditsDialog::CreditsDialog(QWidget* parent) :
     QDialog(parent),
     ui(new Ui::CreditsDialog)
 {

@@ -3,9 +3,10 @@
 #include <functional>
 
 #include <QNetworkReply>
-#include <QUrl>
 
 #include "network/downloader.h"
+
+class QUrl;
 
 namespace geometrize
 {

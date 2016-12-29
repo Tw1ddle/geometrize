@@ -9,7 +9,7 @@ namespace geometrize
 namespace dialog
 {
 
-OpenUrlDialog::OpenUrlDialog(QWidget *parent) :
+OpenUrlDialog::OpenUrlDialog(QWidget* parent) :
     QWidget(parent),
     ui(new Ui::OpenUrlDialog)
 {

@@ -18,6 +18,7 @@ RESOURCES = resources/application_resources.qrc
 QMAKE_CXXFLAGS += -bigobj
 
 SOURCES += main.cpp \
+    formatsupport.cpp \
     imagejobcontext.cpp \
     imagejobpreferences.cpp \
     preferences.cpp \
@@ -36,7 +37,9 @@ SOURCES += main.cpp \
     dialog/recentjobslist.cpp \
     dialog/itembutton.cpp \
     dialog/openurldialog.cpp \
+    dialog/templatebutton.cpp \
     dialog/templategrid.cpp \
+    layout/flowlayout.cpp \
     network/completionhandlers.cpp \
     network/downloader.cpp \
     network/networkactions.cpp \
@@ -85,7 +88,9 @@ HEADERS += chaiscript/chaiscript.hpp \
     dialog/recentjobslist.h \
     dialog/itembutton.h \
     dialog/openurldialog.h \
+    dialog/templatebutton.h \
     dialog/templategrid.h \
+    layout/flowlayout.h \
     network/completionhandlers.h \
     network/downloader.h \
     network/networkactions.h \
@@ -102,4 +107,5 @@ FORMS += dialog/imagejobwindow.ui \
     dialog/preferencestabdialog.ui \
     dialog/launchwindow.ui \
     dialog/itembutton.ui \
-    dialog/openurldialog.ui
+    dialog/openurldialog.ui \
+    dialog/templatebutton.ui

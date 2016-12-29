@@ -36,7 +36,7 @@ private:
     Ui::ImageJobWindow* ui;
 };
 
-ImageJobWindow::ImageJobWindow(QWidget *parent) :
+ImageJobWindow::ImageJobWindow(QWidget* parent) :
     QMainWindow(parent),
     ui(new Ui::ImageJobWindow),
     d{std::make_unique<ImageJobWindowImpl>(this, ui)}

@@ -1,6 +1,7 @@
 #include "sharedapp.h"
 
 #include <assert.h>
+
 #include <QApplication>
 #include <QDesktopServices>
 #include <QException>

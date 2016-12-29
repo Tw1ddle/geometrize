@@ -28,6 +28,8 @@ public:
     {
         ui->setupUi(q);
 
+        ui->recentsList->setRecentItems(&app::SharedApp::get().getRecentFiles());
+
         connect(ui->recentsList, &RecentJobsList::itemActivated, [this](QListWidgetItem* item) {
             qDebug() << "Item activated " << item->text();
 
@@ -52,8 +54,6 @@ public:
 
             itemContextMenu.exec(position);
         });
-
-        ui->recentsList->setRecentItems(&app::SharedApp::get().getRecentFiles());
     }
     LaunchWindowImpl operator=(const LaunchWindowImpl&) = delete;
     LaunchWindowImpl(const LaunchWindowImpl&) = delete;
@@ -72,7 +72,7 @@ private:
     Ui::LaunchWindow* ui;
 };
 
-LaunchWindow::LaunchWindow(QWidget *parent) :
+LaunchWindow::LaunchWindow(QWidget* parent) :
     QMainWindow(parent),
     ui(new Ui::LaunchWindow),
     d{std::make_unique<LaunchWindow::LaunchWindowImpl>(this, ui)}
@@ -92,7 +92,7 @@ void LaunchWindow::dragEnterEvent(QDragEnterEvent* event)
 
 void LaunchWindow::dropEvent(QDropEvent* event)
 {
-    d->openJobs(geometrize::file::getUrls(event->mimeData()));
+    d->openJobs(geometrize::format::getUrls(event->mimeData()));
 }
 
 void LaunchWindow::closeEvent(QCloseEvent* event)

@@ -4,7 +4,8 @@
 
 #include <QMainWindow>
 
-namespace Ui {
+namespace Ui
+{
 class ImageJobWindow;
 }
 
@@ -23,7 +24,7 @@ class ImageJobWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit ImageJobWindow(QWidget *parent = 0);
+    explicit ImageJobWindow(QWidget* parent = 0);
     ~ImageJobWindow();
 
 private slots:
@@ -40,7 +41,7 @@ private:
 
     int closeWindow();
 
-    void closeEvent(QCloseEvent *bar) override;
+    void closeEvent(QCloseEvent* bar) override;
 
     class ImageJobWindowImpl;
     std::unique_ptr<ImageJobWindowImpl> d;

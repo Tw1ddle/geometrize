@@ -1,5 +1,7 @@
 #include "networkactions.h"
 
+#include <QUrl>
+
 #include "network/downloader.h"
 
 namespace geometrize

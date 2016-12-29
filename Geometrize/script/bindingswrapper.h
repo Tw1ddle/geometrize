@@ -27,6 +27,14 @@ std::vector<std::string> getTemplateSearchPaths();
 
 std::string getFirstFileWithExtension(const std::string& dirPath, const std::string& extension);
 
+std::string getFirstFileWithExtensions(const std::string& dirPath, const std::vector<std::string>& extensions);
+
+std::vector<std::string> getFilesWithExtension(const std::string& dirPath, const std::string& extension);
+
+std::vector<std::string> getFilesWithExtensions(const std::string& dirPath, const std::vector<std::string>& extensions);
+
+std::vector<std::string> getSupportedImageFileExtensions();
+
 std::vector<std::string> getScriptsForPath(const std::string& path);
 
 void openJob(const std::string& url);

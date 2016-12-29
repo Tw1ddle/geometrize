@@ -195,8 +195,29 @@
          </spacer>
         </item>
         <item>
-         <widget class="geometrize::dialog::TemplateGrid" name="templateGrid" native="true">
-          <layout class="QGridLayout" name="templatesGrid"/>
+         <widget class="QScrollArea" name="scrollArea">
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="lineWidth">
+           <number>0</number>
+          </property>
+          <property name="widgetResizable">
+           <bool>true</bool>
+          </property>
+          <widget class="geometrize::dialog::TemplateGrid" name="templateGrid">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>382</width>
+             <height>521</height>
+            </rect>
+           </property>
+          </widget>
          </widget>
         </item>
        </layout>

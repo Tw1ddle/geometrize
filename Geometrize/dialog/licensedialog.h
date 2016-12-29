@@ -2,7 +2,8 @@
 
 #include <QDialog>
 
-namespace Ui {
+namespace Ui
+{
 class LicenseDialog;
 }
 
@@ -20,11 +21,11 @@ class LicenseDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit LicenseDialog(QWidget *parent = 0);
+    explicit LicenseDialog(QWidget* parent = 0);
     ~LicenseDialog();
 
 private:
-    Ui::LicenseDialog *ui;
+    Ui::LicenseDialog* ui;
 };
 
 }

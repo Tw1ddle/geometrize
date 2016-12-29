@@ -1,11 +1,16 @@
 #pragma once
 
+#include <memory>
+
 #include <QListWidget>
 
 namespace geometrize
 {
-
 class RecentItems;
+}
+
+namespace geometrize
+{
 
 namespace dialog
 {
@@ -17,7 +22,7 @@ class RecentJobsList : public QListWidget
 {
     Q_OBJECT
 public:
-    explicit RecentJobsList(QWidget *parent = 0);
+    explicit RecentJobsList(QWidget* parent = 0);
 
     /**
      * @brief setRecentItems Sets the items that the list will keep track of.
@@ -38,7 +43,8 @@ private:
     virtual void contextMenuEvent(QContextMenuEvent* e) override;
     virtual void keyPressEvent(QKeyEvent* e) override;
 
-    RecentItems* m_recents;
+    class RecentJobsListImpl;
+    std::unique_ptr<RecentJobsListImpl> d;
 };
 
 }

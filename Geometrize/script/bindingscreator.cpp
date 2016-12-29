@@ -29,8 +29,13 @@ std::shared_ptr<chaiscript::Module> createBindings()
 
     ADD_FREE_FUN(getApplicationDirectoryPath);
 
+    ADD_FREE_FUN(getFilesWithExtension);
+    ADD_FREE_FUN(getFilesWithExtensions);
     ADD_FREE_FUN(getFirstFileWithExtension);
+    ADD_FREE_FUN(getFirstFileWithExtensions);
     ADD_FREE_FUN(getScriptsForPath);
+
+    ADD_FREE_FUN(getSupportedImageFileExtensions);
 
     ADD_FREE_FUN(openJob);
 

@@ -2,7 +2,8 @@
 
 #include <QWidget>
 
-namespace Ui {
+namespace Ui
+{
 class ItemButton;
 }
 
@@ -13,7 +14,7 @@ namespace dialog
 {
 
 /**
- * @brief The ItemButton class is a button that represents an item, like a recently opened job.
+ * @brief The ItemButton class is a button that opens a recent job when pressed, like a recently opened image.
  */
 class ItemButton : public QWidget
 {
@@ -24,8 +25,7 @@ public:
     ~ItemButton();
 
 private:
-    Ui::ItemButton *ui;
-
+    Ui::ItemButton* ui;
     const QString m_item;
 };
 
