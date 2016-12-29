@@ -95,6 +95,7 @@ ImageJobContext* createImageJobAndUpdateRecents(QWidget* parent, const QUrl& url
     return app::createImageJob(parent, url.toString(), pixmap);
 }
 
+// TODO need to just use qstrings and be tolerant, tell difference between url and local file path?
 void openJobs(const QList<QUrl>& urls)
 {
     if(urls.empty()) {
