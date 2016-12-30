@@ -38,7 +38,7 @@ void saveImage(QWidget* parent);
 QString getImagePath(QWidget* parent);
 
 // Image job creation/opening
-void openJobs(const QList<QUrl>& urls);
+void openJobs(const QStringList& urls);
 ImageJobContext* createImageJob(QWidget* parent, const QString& displayName, const QPixmap& pixmap);
 ImageJobContext* createImageJobAndUpdateRecents(QWidget* parent, const QUrl& url);
 

@@ -1,6 +1,11 @@
 #include "licensedialog.h"
 #include "ui_licensedialog.h"
 
+#include <assert.h>
+
+#include <QByteArray>
+#include <QFile>
+
 namespace geometrize
 {
 
@@ -14,13 +19,38 @@ LicenseDialog::LicenseDialog(QWidget* parent) :
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint); // Remove question mark from title bar
     ui->setupUi(this);
 
-    ui->licenseTextBrowser->setText("Copyright (C) 2016 Sam Twidale. All rights reserved.");
-    ui->licenseTextBrowser->append("");
-    ui->licenseTextBrowser->append("This is proprietary software, provided 'as is' and 'as available', without warranty of any kind. The application provider disclaims all warranties and conditions with respect to the application.");
-    ui->licenseTextBrowser->append("");
-    ui->licenseTextBrowser->append("End users must not rent, lease, lend, sell, redistribute or sublicense this application.");
-    ui->licenseTextBrowser->append("");
-    ui->licenseTextBrowser->append("You may not copy, reverse engineer, modify or create derivative works of this application.");
+    const auto readLicenseFile = [](const QString& resourcePath) -> QString {
+        QFile file{resourcePath};
+        if(!file.exists()) {
+            assert(0 && "Bad license file path");
+            return "";
+        }
+
+        if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            assert(0 && "Failed to open license file for reading");
+            return "";
+        }
+
+        const QByteArray data{file.readAll()};
+
+        if(file.error()) {
+            assert(0 && "Failed to read license file");
+            return "";
+        }
+
+        QString text{QString::fromUtf8(data)};
+        if(text.toUtf8() != data) {
+            assert(0 && "Possible conversion failure reading license file");
+            return "";
+        }
+
+        return text;
+    };
+
+    ui->geometrizeLicense->setText(readLicenseFile(":/license/geometrize_license.txt"));
+    ui->qtLicense->setText(readLicenseFile(":/license/qt_license.txt"));
+    ui->chaiScriptLicense->setText(readLicenseFile(":/license/chaiscript_license.txt"));
+    ui->flowLayoutLicense->setText(readLicenseFile(":/license/flowlayout_license.txt"));
 }
 
 LicenseDialog::~LicenseDialog()

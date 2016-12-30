@@ -27,13 +27,57 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QTextBrowser" name="licenseTextBrowser">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>0</height>
-      </size>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>1</number>
      </property>
+     <widget class="QWidget" name="Geometrize">
+      <attribute name="title">
+       <string>Geometrize</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <widget class="QTextBrowser" name="geometrizeLicense">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="Qt">
+      <attribute name="title">
+       <string>Qt</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+       <item>
+        <widget class="QTextBrowser" name="qtLicense"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="ChaiScript">
+      <attribute name="title">
+       <string>ChaiScript</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QTextBrowser" name="chaiScriptLicense"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="FlowLayout">
+      <attribute name="title">
+       <string>FlowLayout</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QTextBrowser" name="flowLayoutLicense"/>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
    <item>

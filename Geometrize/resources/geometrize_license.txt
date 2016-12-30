@@ -1,0 +1,8 @@
+Copyright (C) 2016 Sam Twidale. All rights reserved.
+Contact: http://samcodes.co.uk/contact/
+
+This is proprietary software, provided 'as is' and 'as available', without warranty of any kind. The application provider disclaims all warranties and conditions with respect to the application.
+
+End users must not rent, lease, lend, sell, redistribute or sublicense this application.
+
+You may not copy, reverse engineer, modify or create derivative works of this application.

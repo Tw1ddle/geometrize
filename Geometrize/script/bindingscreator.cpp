@@ -39,6 +39,8 @@ std::shared_ptr<chaiscript::Module> createBindings()
 
     ADD_FREE_FUN(openJob);
 
+    ADD_FREE_FUN(openDirectoryInDefaultExplorer);
+
     return module;
 }
 

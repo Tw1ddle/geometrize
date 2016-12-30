@@ -3,9 +3,11 @@
 #include <assert.h>
 
 #include <QDebug>
+#include <QDesktopServices>
 #include <QDir>
 #include <QDirIterator>
 #include <QFileInfo>
+#include <QUrl>
 
 namespace geometrize
 {
@@ -145,6 +147,15 @@ std::string getDirectoryForFilePath(const std::string& filePath)
     }
 
     return fileInfo.absoluteDir().absolutePath().toStdString();
+}
+
+bool openDirectoryInDefaultExplorer(const std::string& dirPath)
+{
+    const QDir dir{QDir::toNativeSeparators(QString::fromStdString(dirPath))};
+    if(!dir.exists()) {
+        return false;
+    }
+    return QDesktopServices::openUrl(QUrl::fromLocalFile(dir.absolutePath()));
 }
 
 }

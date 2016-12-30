@@ -35,9 +35,11 @@ std::vector<std::string> getFilesWithExtensions(const std::string& dirPath, cons
 
 std::vector<std::string> getSupportedImageFileExtensions();
 
-std::vector<std::string> getScriptsForPath(const std::string& path);
+std::vector<std::string> getScriptsForPath(const std::string& dirPath);
 
 void openJob(const std::string& url);
+
+bool openDirectoryInDefaultExplorer(const std::string& dirPath);
 
 }
 

@@ -3,4 +3,10 @@
         <file>logo.png</file>
         <file>logo_small.png</file>
     </qresource>
+    <qresource prefix="/license">
+        <file>chaiscript_license.txt</file>
+        <file>flowlayout_license.txt</file>
+        <file>geometrize_license.txt</file>
+        <file>qt_license.txt</file>
+    </qresource>
 </RCC>

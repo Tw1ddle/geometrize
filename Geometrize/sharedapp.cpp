@@ -95,14 +95,14 @@ ImageJobContext* createImageJobAndUpdateRecents(QWidget* parent, const QUrl& url
     return app::createImageJob(parent, url.toString(), pixmap);
 }
 
-// TODO need to just use qstrings and be tolerant, tell difference between url and local file path?
-void openJobs(const QList<QUrl>& urls)
+void openJobs(const QStringList& urls)
 {
     if(urls.empty()) {
         return;
     }
 
-    for(const QUrl& url : urls) {
+    for(const QString& s : urls) {
+        const QUrl url{QUrl::fromUserInput(s)};
         if(url.isLocalFile()) {
             createImageJob(nullptr, url.toString(), url.toLocalFile());
         } else if(url.toString().endsWith(".png")) { // TODO need list of supported formats

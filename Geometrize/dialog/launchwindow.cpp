@@ -34,7 +34,7 @@ public:
             qDebug() << "Item activated " << item->text();
 
             // TODO deal with bad paths, use data not text
-            const QList<QUrl> files{item->text()};
+            const QStringList files{item->text()};
             openJobs(files);
         });
 
@@ -59,7 +59,7 @@ public:
     LaunchWindowImpl(const LaunchWindowImpl&) = delete;
     ~LaunchWindowImpl() = default;
 
-    void openJobs(const QList<QUrl>& urls)
+    void openJobs(const QStringList& urls)
     {
         app::openJobs(urls);
     }
@@ -92,7 +92,8 @@ void LaunchWindow::dragEnterEvent(QDragEnterEvent* event)
 
 void LaunchWindow::dropEvent(QDropEvent* event)
 {
-    d->openJobs(geometrize::format::getUrls(event->mimeData()));
+    // TODO
+    //d->openJobs(geometrize::format::getUrls(event->mimeData()));
 }
 
 void LaunchWindow::closeEvent(QCloseEvent* event)

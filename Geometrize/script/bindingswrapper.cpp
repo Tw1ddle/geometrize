@@ -85,9 +85,9 @@ std::vector<std::string> getSupportedImageFileExtensions()
     return geometrize::format::getSupportedImageFileExtensions(false); // TODO?
 }
 
-std::vector<std::string> getScriptsForPath(const std::string& path)
+std::vector<std::string> getScriptsForPath(const std::string& dirPath)
 {
-    return geometrize::util::getScriptsForPath(path);
+    return geometrize::util::getScriptsForPath(dirPath);
 }
 
 void openJob(const std::string& url)
@@ -98,7 +98,12 @@ void openJob(const std::string& url)
         return;
     }
 
-    geometrize::app::openJobs(QList<QUrl>{qUrl});
+    geometrize::app::openJobs(QStringList(QString::fromStdString(url)));
+}
+
+bool openDirectoryInDefaultExplorer(const std::string& dirPath)
+{
+    return geometrize::util::openDirectoryInDefaultExplorer(dirPath);
 }
 
 }

@@ -87,6 +87,13 @@ std::vector<std::string> getTemplateFoldersForPath(const std::string& dirPath);
  */
 std::string getDirectoryForFilePath(const std::string& filePath);
 
+/**
+ * @brief openDirectoryInDefaultExplorer Opens the given directory in the default file explorer.
+ * @param dirPath The directory to open.
+ * @return True if the directory exists and should open, else false.
+ */
+bool openDirectoryInDefaultExplorer(const std::string& dirPath);
+
 }
 
 }
