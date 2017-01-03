@@ -16,6 +16,11 @@ namespace util
 void printToConsole(const std::string& str);
 
 /**
+ * @brief debugBreak Forces the debugger to break/halt the application when this is called.
+ */
+void debugBreak();
+
+/**
  * @brief directoryExists Checks if a directory exists, returns true if it does.
  * @param dirPath The directory path.
  * @return True if the directory exists, false if it does not.

@@ -13,6 +13,8 @@ std::string getApplicationDirectoryPath();
 
 void printToConsole(const std::string& str);
 
+void debugBreak();
+
 bool directoryExists(const std::string& dirPath);
 
 bool directoryContainsFile(const std::string& dirPath, const std::string& fileName);

@@ -9,11 +9,24 @@
 #include <QFileInfo>
 #include <QUrl>
 
+#ifdef _MSC_VER
+#include <intrin.h> // For debugbreak
+#endif
+
 namespace geometrize
 {
 
 namespace util
 {
+
+void debugBreak()
+{
+#ifdef _MSC_VER
+    __debugbreak();
+#else
+    raise(SIGTRAP);
+#endif
+}
 
 void printToConsole(const std::string& str)
 {

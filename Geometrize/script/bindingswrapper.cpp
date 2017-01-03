@@ -25,6 +25,11 @@ void printToConsole(const std::string& str)
     geometrize::util::printToConsole(str);
 }
 
+void debugBreak()
+{
+    geometrize::util::debugBreak();
+}
+
 bool directoryExists(const std::string& dirPath)
 {
     return geometrize::util::directoryExists(dirPath);

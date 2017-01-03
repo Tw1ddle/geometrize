@@ -18,7 +18,9 @@ std::shared_ptr<chaiscript::Module> createBindings()
     auto module{std::make_shared<chaiscript::Module>()};
 
     // Setup bindings
+    ADD_FREE_FUN(debugBreak);
     ADD_FREE_FUN(printToConsole);
+
     ADD_FREE_FUN(directoryContainsFile);
     ADD_FREE_FUN(directoryExists);
     ADD_FREE_FUN(readFileAsString);
