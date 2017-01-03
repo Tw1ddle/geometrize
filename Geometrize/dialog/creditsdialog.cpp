@@ -15,10 +15,10 @@ CreditsDialog::CreditsDialog(QWidget* parent) :
     ui->setupUi(this);
 
     ui->developerText->setText("Sam Twidale");
-    ui->artistText->setText(tr("Nothing here yet!"));
-    ui->translatorText->setText(tr("Nothing here yet!"));
+    ui->artistText->setText(tr("Nobody here yet!"));
+    ui->translatorText->setText(tr("Nobody here yet!"));
 
-    ui->acknowledgementText->setText(tr("Special thanks to: \n", "A list of people whose effort helped in some way follows"));
+    ui->acknowledgementText->setText(tr("Special thanks to: \n", "A list of names of people who contributed to the project follows"));
     ui->acknowledgementText->append("Michael Fogleman");
     ui->acknowledgementText->append("Harish Persad");
 }

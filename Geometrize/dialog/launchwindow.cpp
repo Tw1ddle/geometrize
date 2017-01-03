@@ -64,9 +64,6 @@ public:
         app::openJobs(urls);
     }
 
-private slots:
-    void on_openWebpageButton_clicked();
-
 private:
     LaunchWindow* q;
     Ui::LaunchWindow* ui;
@@ -129,19 +126,15 @@ void LaunchWindow::on_actionExit_triggered()
 
 void LaunchWindow::on_openImageButton_clicked()
 {
-    const QString imagePath{app::getImagePath(this)};
-    if(imagePath.length() == 0) {
-        return;
-    }
-    app::createImageJobAndUpdateRecents(this, imagePath);
+    // TODO support other file types?
+    app::createImageJobAndUpdateRecents(this, app::getImagePath(this));
 }
 
 void LaunchWindow::on_openWebpageButton_clicked()
 {
     const QUrl url{app::openGetUrlDialog(this)};
-
     if(url.isValid()) {
-        app::createImageJobAndUpdateRecents(this, url);
+        app::openJobs({ url.toString() });
     }
 }
 

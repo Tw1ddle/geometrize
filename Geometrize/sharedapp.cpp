@@ -57,7 +57,7 @@ int openQuitDialog(QWidget* parent)
 QUrl openGetUrlDialog(QWidget* parent)
 {
     dialog::OpenUrlDialog dialog(parent);
-    dialog.show();
+    dialog.exec();
     return dialog.getUrl();
 }
 
@@ -86,9 +86,14 @@ ImageJobContext* createImageJob(QWidget* parent, const QString& displayName, con
 
 ImageJobContext* createImageJobAndUpdateRecents(QWidget* parent, const QUrl& url)
 {
-    QPixmap pixmap(url.toString());
+    // TODO error message and exit out
+
+    if(url.isEmpty() || !url.isValid()) {
+        return nullptr;
+    }
+
+    const QPixmap pixmap(url.toString());
     if(pixmap.isNull()) {
-        // TODO error message and exit out
         return nullptr;
     }
     app::SharedApp::get().getRecentFiles().add(url.toString());

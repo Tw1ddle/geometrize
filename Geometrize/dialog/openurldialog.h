@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QWidget>
+#include <QDialog>
 
 namespace Ui
 {
@@ -16,7 +16,7 @@ namespace dialog
 /**
  * @brief The OpenUrlDialog class models the UI for the dialog box users can enter URLs into to open remote images or webpages.
  */
-class OpenUrlDialog : public QWidget
+class OpenUrlDialog : public QDialog
 {
     Q_OBJECT
 
@@ -29,6 +29,11 @@ public:
      * @return The URL the user entered into the dialog.
      */
     QUrl getUrl() const;
+
+private slots:
+    void on_buttonBox_accepted();
+
+    void on_buttonBox_rejected();
 
 private:
     Ui::OpenUrlDialog* ui;
