@@ -1,22 +1,18 @@
 #include "dialog/launchwindow.h"
 
 #include <QApplication>
-#include <QDebug>
+#include <QCommandLineParser>
 
 #include "chaiscript/chaiscript.hpp"
 
 #include "script/chaiscriptcreator.h"
 #include "constants.h"
-#include "searchpaths.h"
-#include "sharedapp.h"
-#include "recentitems.h"
 #include "util.h"
+#include "versioninfo.h"
 
-int main(int argc, char *argv[])
+void setupSettingsFields()
 {
-    QApplication a(argc, argv);
-
-    // Setup QSettings default fields (do not modify these)
+    // Do not modify these
     const QString ORGANIZATION_NAME{"Sam Twidale"}; // The development organization's name.
     const QString ORGANIZATION_DOMAIN{"samcodes.co.uk"}; // The development organization's website domain.
     const QString APPLICATION_NAME{"Geometrize"}; // The application name.
@@ -24,21 +20,43 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationDomain(ORGANIZATION_DOMAIN);
     QCoreApplication::setApplicationName(APPLICATION_NAME);
 
-    geometrize::script::createChaiScript();
+    // These can change
+    QCoreApplication::setApplicationVersion(geometrize::version::getApplicationVersionString());
+}
 
-    qDebug() << QString::fromStdString(geometrize::searchpaths::getApplicationDirectoryPath());
+void setupCommandLineParser(QCommandLineParser& parser, const QStringList& arguments)
+{
+    parser.setApplicationDescription(geometrize::constants::Strings::getApplicationDescription());
+    parser.addHelpOption();
+    parser.addVersionOption();
 
-    a.processEvents();
+    parser.addOptions({
+        {{"s", "script"}, QCoreApplication::translate("main", "Path to ChaiScript script file")}
+    });
 
-    // TODO remove? split into recent files etc...
-    // Note first-time initialization of shared app singleton
-    geometrize::app::SharedApp& app{geometrize::app::SharedApp::get()};
+    parser.process(arguments);
+}
+
+int main(int argc, char *argv[])
+{
+    QApplication app(argc, argv);
+
+    setupSettingsFields();
+
+    QCommandLineParser parser;
+    setupCommandLineParser(parser, app.arguments());
+
+    // TODO add open-with support for files, scripts, urls etc
 
     geometrize::dialog::LaunchWindow w;
 
-    // TODO connect recent files to list widget signals
+    // If widget is larger than the main display, resize so it fits
+    //const QRect mainScreenSize{QApplication::desktop()->availableGeometry()};
+    //if(w.width() > mainScreenSize.width() || w.height() > mainScreenSize.height()) {
+    //    w.resize(mainScreenSize.width(), mainScreenSize.height());
+    //}
 
     w.show();
 
-    return a.exec();
+    return app.exec();
 }

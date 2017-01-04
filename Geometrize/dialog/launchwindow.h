@@ -23,7 +23,7 @@ class LaunchWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit LaunchWindow(QWidget* parent = 0);
+    explicit LaunchWindow();
     ~LaunchWindow();
 
     virtual void dragEnterEvent(QDragEnterEvent *event) override;

@@ -69,12 +69,11 @@ private:
     Ui::LaunchWindow* ui;
 };
 
-LaunchWindow::LaunchWindow(QWidget* parent) :
-    QMainWindow(parent),
+LaunchWindow::LaunchWindow() :
+    QMainWindow(nullptr),
     ui(new Ui::LaunchWindow),
     d{std::make_unique<LaunchWindow::LaunchWindowImpl>(this, ui)}
 {
-
 }
 
 LaunchWindow::~LaunchWindow()

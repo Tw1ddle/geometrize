@@ -14,7 +14,7 @@ namespace dialog
 {
 
 /**
- * @brief The CreditsDialog class models the UI for the developer, artwork etc credits pages.
+ * @brief The CreditsDialog class models the UI for the developer, artwork, localization etc credits pages.
  */
 class CreditsDialog : public QDialog
 {
