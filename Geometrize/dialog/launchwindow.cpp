@@ -8,6 +8,7 @@
 #include <QMap>
 #include <QMenu>
 
+#include "constants.h"
 #include "common/sharedapp.h"
 #include "common/uiactions.h"
 #include "network/downloader.h"
@@ -28,6 +29,12 @@ public:
     LaunchWindowImpl(LaunchWindow* pQ, Ui::LaunchWindow* pUi) : q{pQ}, ui{pUi}
     {
         ui->setupUi(q);
+
+        const QString moreResourcesLabel{tr("Get more templates online")};
+        ui->moreResourcesLink->setText(R"(<a href=")" + constants::MORE_RESOURCES_URL + R"(" style="text-decoration:none;">)" + moreResourcesLabel + R"(</a>)");
+
+        const QString tutorialsLabel{tr("Video tutorials")};
+        ui->tutorialsLink->setText(R"(<a href=")" + constants::VIDEO_TUTORIAL_URL + R"(" style="text-decoration:none;">)" + tutorialsLabel + R"(</a>)");
 
         ui->recentsList->setRecentItems(&common::app::SharedApp::get().getRecentFiles());
 

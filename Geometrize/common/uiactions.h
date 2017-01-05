@@ -33,6 +33,7 @@ QString openSelectScriptDialog(QWidget* parent);
 void openTechnicalSupport();
 void openOnlineTutorials();
 void openTechnicalSupport();
+void openMoreResourcesPage();
 
 // File picker
 QPixmap openPixmap(QWidget* parent, const QString& imagePath);

@@ -83,6 +83,11 @@ void openOnlineTutorials()
     QDesktopServices::openUrl(QUrl(geometrize::constants::VIDEO_TUTORIAL_URL));
 }
 
+void openMoreResourcesPage()
+{
+    QDesktopServices::openUrl(QUrl(geometrize::constants::MORE_RESOURCES_URL));
+}
+
 ImageJobContext* createImageJob(QWidget* parent, const QString& displayName, const QPixmap& pixmap)
 {
     dialog::ImageJobWindow* imageJobWindow = new dialog::ImageJobWindow(parent);
