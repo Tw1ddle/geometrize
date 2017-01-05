@@ -8,12 +8,13 @@
 #include <QMap>
 #include <QMenu>
 
+#include "common/sharedapp.h"
+#include "common/uiactions.h"
 #include "network/downloader.h"
 #include "network/networkactions.h"
 #include "formatsupport.h"
 #include "dialog/itembutton.h"
 #include "recentitems.h"
-#include "sharedapp.h"
 
 namespace geometrize
 {
@@ -28,7 +29,7 @@ public:
     {
         ui->setupUi(q);
 
-        ui->recentsList->setRecentItems(&app::SharedApp::get().getRecentFiles());
+        ui->recentsList->setRecentItems(&common::app::SharedApp::get().getRecentFiles());
 
         connect(ui->recentsList, &RecentJobsList::itemActivated, [this](QListWidgetItem* item) {
             qDebug() << "Item activated " << item->text();
@@ -61,7 +62,7 @@ public:
 
     void openJobs(const QStringList& urls)
     {
-        app::openJobs(urls);
+        common::ui::openJobs(urls);
     }
 
 private:
@@ -94,7 +95,7 @@ void LaunchWindow::dropEvent(QDropEvent* event)
 
 void LaunchWindow::closeEvent(QCloseEvent* event)
 {
-    const int dialogResult{app::openQuitDialog(this)}; // TODO unsaved changes check
+    const int dialogResult{common::ui::openQuitDialog(this)}; // TODO unsaved changes check
     if(dialogResult == QDialog::Accepted) {
         event->accept();
     } else {
@@ -104,18 +105,18 @@ void LaunchWindow::closeEvent(QCloseEvent* event)
 
 void LaunchWindow::on_actionPreferences_triggered()
 {
-    app::openPreferences(this);
+    common::ui::openPreferences(this);
 }
 
 void LaunchWindow::on_actionClear_Recents_triggered()
 {
-    app::SharedApp::get().getRecentFiles().clear();
+    common::app::SharedApp::get().getRecentFiles().clear();
 }
 
 void LaunchWindow::on_actionExit_triggered()
 {
     // TODO
-    const int dialogResult{app::openQuitDialog(this)};
+    const int dialogResult{common::ui::openQuitDialog(this)};
     switch(dialogResult) {
         case QDialog::Accepted:
             // TODO save any outstanding stuff(?) separate method needed
@@ -126,30 +127,38 @@ void LaunchWindow::on_actionExit_triggered()
 void LaunchWindow::on_openImageButton_clicked()
 {
     // TODO support other file types?
-    app::createImageJobAndUpdateRecents(this, app::getImagePath(this));
+    common::ui::createImageJobAndUpdateRecents(this, common::ui::getImagePath(this));
 }
 
 void LaunchWindow::on_openWebpageButton_clicked()
 {
-    const QUrl url{app::openGetUrlDialog(this)};
+    const QUrl url{common::ui::openGetUrlDialog(this)};
     if(url.isValid()) {
-        app::openJobs({ url.toString() });
+        common::ui::openJobs({ url.toString() });
     }
+}
+
+void LaunchWindow::on_runScriptButton_clicked()
+{
+    common::ui::openGetScriptDialog(this);
+
+    // TODO get path and args and run
+    //app::runScript(scriptPath, arguments);
 }
 
 void LaunchWindow::on_actionTutorials_triggered()
 {
-    app::openOnlineTutorials();
+    common::ui::openOnlineTutorials();
 }
 
 void LaunchWindow::on_actionSupport_triggered()
 {
-    app::openTechnicalSupport();
+    common::ui::openTechnicalSupport();
 }
 
 void LaunchWindow::on_actionAbout_triggered()
 {
-    app::openAboutPage(this);
+    common::ui::openAboutPage(this);
 }
 
 }

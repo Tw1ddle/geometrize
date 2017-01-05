@@ -21,6 +21,13 @@ void printToConsole(const std::string& str);
 void debugBreak();
 
 /**
+ * @brief fileExists Checks if a file exists, returns true if it does.
+ * @param filePath The file path.
+ * @return True if the file exists, false if it does not.
+ */
+bool fileExists(const std::string& filePath);
+
+/**
  * @brief directoryExists Checks if a directory exists, returns true if it does.
  * @param dirPath The directory path.
  * @return True if the directory exists, false if it does not.

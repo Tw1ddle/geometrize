@@ -22,6 +22,7 @@ std::shared_ptr<chaiscript::Module> createBindings()
     ADD_FREE_FUN(printToConsole);
 
     ADD_FREE_FUN(directoryContainsFile);
+    ADD_FREE_FUN(fileExists);
     ADD_FREE_FUN(directoryExists);
     ADD_FREE_FUN(readFileAsString);
     ADD_FREE_FUN(getFilePathsForDirectory);

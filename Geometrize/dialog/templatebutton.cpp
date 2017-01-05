@@ -8,6 +8,7 @@
 
 #include "chaiscript/chaiscript.hpp"
 #include "formatsupport.h"
+#include "script/scriptrunner.h"
 #include "util.h"
 
 namespace geometrize
@@ -27,12 +28,14 @@ TemplateButton::TemplateButton(chaiscript::ChaiScript* const templateLoader, con
     const QString firstImageFile{QString::fromStdString(util::getFirstFileWithExtensions(m_templateFolder.toStdString(), format::getSupportedImageFileExtensions(false)))};
 
     setToolTip(firstImageFile);
-    ui->titleLabel->setText(firstImageFile);
+
+    ui->titleLabel->setText("item name"); // TODO set title to the name of the artwork or actual template action
 
     if(!firstImageFile.isEmpty()) {
         const QPixmap thumbnail(firstImageFile);
         if(!thumbnail.isNull()) {
-            ui->imageLabel->setPixmap(thumbnail);
+            const QSize size{ui->imageLabel->size()};
+            ui->imageLabel->setPixmap(thumbnail.scaled(size, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         }
     }
 
@@ -45,18 +48,8 @@ TemplateButton::TemplateButton(chaiscript::ChaiScript* const templateLoader, con
         }
 
         const std::string script{util::readFileAsString(scripts.front())};
-
-        try {
-            m_templateLoader->set_global(chaiscript::var(m_templateFolder.toStdString()), "templateDirectory");
-            m_templateLoader->eval(script);
-        } catch (const std::string& s) {
-            QMessageBox::warning(nullptr, QString::fromStdString(s), QString::fromStdString(s));
-        } catch (const std::exception& e) {
-          // This is the one what will be called in the specific throw() above
-             QMessageBox::warning(nullptr, QString(e.what()), QString(e.what()));
-        } catch (...) {
-            QMessageBox::warning(nullptr, "Evaluation failed", "Failed to evaluate template script");
-        }
+        m_templateLoader->set_global(chaiscript::var(m_templateFolder.toStdString()), "templateDirectory");
+        geometrize::script::runScript(script, *m_templateLoader, nullptr);
     });
 }
 

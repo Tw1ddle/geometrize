@@ -6,10 +6,11 @@
 #include <QRegExp>
 #include <QString>
 
+#include "common/sharedapp.h"
+#include "common/uiactions.h"
 #include "network/downloader.h"
 #include "network/networkactions.h"
 #include "recentitems.h"
-#include "sharedapp.h"
 
 namespace geometrize
 {
@@ -26,8 +27,8 @@ void onImageDownloadComplete(network::Downloader* self, QNetworkReply::NetworkEr
 
     QPixmap image;
     image.loadFromData(self->downloadedData());
-    app::SharedApp::get().getRecentFiles().add(self->getUrl().toString());
-    app::createImageJob(nullptr, self->getUrl().toString(), image);
+    common::app::SharedApp::get().getRecentFiles().add(self->getUrl().toString());
+    common::ui::createImageJob(nullptr, self->getUrl().toString(), image);
 
     delete self;
 }

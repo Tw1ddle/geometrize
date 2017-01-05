@@ -38,6 +38,7 @@ private slots:
     void on_actionAbout_triggered();
     void on_openImageButton_clicked();
     void on_openWebpageButton_clicked();
+    void on_runScriptButton_clicked();
 
 private:
     void closeEvent(QCloseEvent *bar) override;

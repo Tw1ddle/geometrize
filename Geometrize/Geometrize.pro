@@ -23,10 +23,11 @@ SOURCES += main.cpp \
     imagejobpreferences.cpp \
     preferences.cpp \
     searchpaths.cpp \
-    sharedapp.cpp \
     recentitems.cpp \
     versioninfo.cpp \
     util.cpp \
+    common/sharedapp.cpp \
+    common/uiactions.cpp \
     dialog/aboutdialog.cpp \
     dialog/quitdialog.cpp \
     dialog/licensedialog.cpp \
@@ -37,6 +38,7 @@ SOURCES += main.cpp \
     dialog/recentjobslist.cpp \
     dialog/itembutton.cpp \
     dialog/openurldialog.cpp \
+    dialog/runscriptdialog.cpp \
     dialog/templatebutton.cpp \
     dialog/templategrid.cpp \
     layout/flowlayout.cpp \
@@ -45,7 +47,9 @@ SOURCES += main.cpp \
     network/networkactions.cpp \
     script/bindingscreator.cpp \
     script/bindingswrapper.cpp \
-    script/chaiscriptcreator.cpp
+    script/chaiscriptcreator.cpp \
+    script/scriptoptions.cpp \
+    script/scriptrunner.cpp
 
 HEADERS += chaiscript/chaiscript.hpp \
     constants.h \
@@ -55,10 +59,11 @@ HEADERS += chaiscript/chaiscript.hpp \
     preferences.h \
     recentitems.h \
     searchpaths.h \
-    sharedapp.h \
     util.h \
     versioninfo.h \
     winversioninfo.h \
+    common/sharedapp.h \
+    common/uiactions.h \
     lib/geometrizer/geometrizer/bitmap/bitmapdata.h \
     lib/geometrizer/geometrizer/bitmap/rgba.h \
     lib/geometrizer/geometrizer/exporters/shapearrayexporter.h \
@@ -88,6 +93,7 @@ HEADERS += chaiscript/chaiscript.hpp \
     dialog/recentjobslist.h \
     dialog/itembutton.h \
     dialog/openurldialog.h \
+    dialog/runscriptdialog.h \
     dialog/templatebutton.h \
     dialog/templategrid.h \
     layout/flowlayout.h \
@@ -96,7 +102,10 @@ HEADERS += chaiscript/chaiscript.hpp \
     network/networkactions.h \
     script/bindingscreator.h \
     script/bindingswrapper.h \
-    script/chaiscriptcreator.h
+    script/chaiscriptcreator.h \
+    script/scriptoptions.h \
+    script/scriptrunner.h
+
 
 FORMS += dialog/imagejobwindow.ui \
     dialog/aboutdialog.ui \
@@ -108,4 +117,5 @@ FORMS += dialog/imagejobwindow.ui \
     dialog/launchwindow.ui \
     dialog/itembutton.ui \
     dialog/openurldialog.ui \
+    dialog/runscriptdialog.ui \
     dialog/templatebutton.ui

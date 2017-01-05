@@ -4,9 +4,9 @@
 
 #include <QList>
 
+#include "common/uiactions.h"
 #include "formatsupport.h"
 #include "searchpaths.h"
-#include "sharedapp.h"
 #include "util.h"
 
 namespace geometrize
@@ -28,6 +28,11 @@ void printToConsole(const std::string& str)
 void debugBreak()
 {
     geometrize::util::debugBreak();
+}
+
+bool fileExists(const std::string& filePath)
+{
+    return geometrize::util::fileExists(filePath);
 }
 
 bool directoryExists(const std::string& dirPath)
@@ -75,6 +80,7 @@ std::vector<std::string> getFilesWithExtensions(const std::string& dirPath, cons
     std::vector<std::string> files;
 
     for(const std::string& extension : extensions) {
+        // TODO
     }
 
     return files;
@@ -103,7 +109,7 @@ void openJob(const std::string& url)
         return;
     }
 
-    geometrize::app::openJobs(QStringList(QString::fromStdString(url)));
+    geometrize::common::ui::openJobs(QStringList(QString::fromStdString(url)));
 }
 
 bool openDirectoryInDefaultExplorer(const std::string& dirPath)

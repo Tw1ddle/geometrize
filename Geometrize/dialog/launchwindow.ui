@@ -129,6 +129,13 @@
          </widget>
         </item>
         <item>
+         <widget class="QPushButton" name="runScriptButton">
+          <property name="text">
+           <string>Run Script</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QLabel" name="recentListTitle">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">

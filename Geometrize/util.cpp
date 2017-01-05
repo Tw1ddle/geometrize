@@ -33,6 +33,11 @@ void printToConsole(const std::string& str)
     qDebug() << QString::fromStdString(str);
 }
 
+bool fileExists(const std::string& filePath)
+{
+    return QFile(QString::fromStdString(filePath)).exists();
+}
+
 bool directoryExists(const std::string& dirPath)
 {
     return QDir(QString::fromStdString(dirPath)).exists();

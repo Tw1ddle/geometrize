@@ -1,22 +1,18 @@
-#include "sharedapp.h"
+#include "uiactions.h"
 
 #include <assert.h>
 
-#include <QApplication>
 #include <QDesktopServices>
-#include <QException>
 #include <QFileDialog>
-#include <QGraphicsPixmapItem>
-#include <QGraphicsView>
 #include <QImage>
 #include <QMessageBox>
 #include <QPixmap>
-#include <QtGlobal>
 #include <QUrl>
 
 #include "lib/geometrizer/geometrizer/bitmap/bitmapdata.h"
 #include "lib/geometrizer/geometrizer/bitmap/rgba.h"
 
+#include "common/sharedapp.h"
 #include "constants.h"
 #include "dialog/aboutdialog.h"
 #include "dialog/imagejobwindow.h"
@@ -24,6 +20,7 @@
 #include "dialog/openurldialog.h"
 #include "dialog/preferencestabdialog.h"
 #include "dialog/quitdialog.h"
+#include "dialog/runscriptdialog.h"
 #include "imagejobcontext.h"
 #include "network/completionhandlers.h"
 #include "network/networkactions.h"
@@ -32,7 +29,10 @@
 namespace geometrize
 {
 
-namespace app
+namespace common
+{
+
+namespace ui
 {
 
 void openAboutPage(QWidget* parent)
@@ -59,6 +59,18 @@ QUrl openGetUrlDialog(QWidget* parent)
     dialog::OpenUrlDialog dialog(parent);
     dialog.exec();
     return dialog.getUrl();
+}
+
+QPair<QString, geometrize::script::ScriptOptions> openGetScriptDialog(QWidget* parent)
+{
+    dialog::RunScriptDialog dialog(parent);
+    dialog.exec();
+    return QPair<QString, geometrize::script::ScriptOptions>(dialog.getScriptFilepath(), dialog.getScriptOptions());
+}
+
+QString openSelectScriptDialog(QWidget* parent)
+{
+    return QFileDialog::getOpenFileName(parent, QWidget::tr("Select Script"), "", QWidget::tr("ChaiScript Files (*.chai)", ""));
 }
 
 void openTechnicalSupport()
@@ -97,7 +109,7 @@ ImageJobContext* createImageJobAndUpdateRecents(QWidget* parent, const QUrl& url
         return nullptr;
     }
     app::SharedApp::get().getRecentFiles().add(url.toString());
-    return app::createImageJob(parent, url.toString(), pixmap);
+    return ui::createImageJob(parent, url.toString(), pixmap);
 }
 
 void openJobs(const QStringList& urls)
@@ -177,47 +189,12 @@ QPixmap openPixmap(QWidget* parent, const QString& imagePath)
 
     assert(!pixmap.isNull());
     if(!pixmap.isNull()) {
-        SharedApp::get().getRecentFiles().add(imagePath);
+        app::SharedApp::get().getRecentFiles().add(imagePath);
     }
 
     return pixmap;
 }
 
-/**
- * @brief The SharedAppImpl class contains the concrete implementation of the SharedApp class.
- */
-class SharedApp::SharedAppImpl : public QObject
-{
-public:
-    SharedAppImpl() : m_recentFiles{RecentItems::RECENT_FILES_SETTINGS_GROUP}
-    {
-    }
-
-    SharedAppImpl& operator=(const SharedAppImpl&) = delete;
-    SharedAppImpl(const SharedAppImpl&) = delete;
-    ~SharedAppImpl() = default;
-
-    RecentItems& getRecentFiles()
-    {
-        return m_recentFiles;
-    }
-
-private:
-    RecentItems m_recentFiles;
-};
-
-SharedApp::SharedApp() : d{std::make_unique<geometrize::app::SharedApp::SharedAppImpl>()} {}
-SharedApp::~SharedApp() {}
-
-SharedApp& SharedApp::get()
-{
-    static SharedApp _instance;
-    return _instance;
-}
-
-RecentItems& SharedApp::getRecentFiles()
-{
-    return d->getRecentFiles();
 }
 
 }

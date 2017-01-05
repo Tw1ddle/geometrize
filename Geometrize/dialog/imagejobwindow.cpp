@@ -8,11 +8,11 @@
 #include <QMessageBox>
 #include <QPixmap>
 
+#include "common/uiactions.h"
 #include "constants.h"
 #include "dialog/aboutdialog.h"
 #include "dialog/preferencestabdialog.h"
 #include "dialog/quitdialog.h"
-#include "sharedapp.h"
 
 namespace geometrize
 {
@@ -33,7 +33,7 @@ public:
 
     int closeWindow()
     {
-        const int dialogResult{app::openQuitDialog(q)};
+        const int dialogResult{common::ui::openQuitDialog(q)};
         switch(dialogResult) {
             case QDialog::Accepted:
                 // TODO save any outstanding stuff(?) separate method needed
@@ -62,7 +62,7 @@ ImageJobWindow::~ImageJobWindow()
 
 void ImageJobWindow::on_actionAbout_triggered()
 {
-    app::openAboutPage(this);
+    common::ui::openAboutPage(this);
 }
 
 void ImageJobWindow::on_actionExit_triggered()
@@ -72,7 +72,7 @@ void ImageJobWindow::on_actionExit_triggered()
 
 void ImageJobWindow::closeEvent(QCloseEvent* event)
 {
-    const int dialogResult{app::openQuitDialog(this)};
+    const int dialogResult{common::ui::openQuitDialog(this)};
     if(dialogResult == QDialog::Accepted) {
         return;
     }
@@ -82,17 +82,17 @@ void ImageJobWindow::closeEvent(QCloseEvent* event)
 
 void ImageJobWindow::on_actionTechnical_Support_triggered()
 {
-    app::openTechnicalSupport();
+    common::ui::openTechnicalSupport();
 }
 
 void ImageJobWindow::on_actionOnline_Tutorials_triggered()
 {
-    app::openOnlineTutorials();
+    common::ui::openOnlineTutorials();
 }
 
 void ImageJobWindow::on_actionOpenPreferences_triggered()
 {
-    app::openPreferences(this);
+    common::ui::openPreferences(this);
 }
 
 void ImageJobWindow::on_imageJob_updated()

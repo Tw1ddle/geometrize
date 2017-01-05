@@ -1,26 +1,26 @@
 #pragma once
 
-#include <memory>
-
-#include <QList>
-#include <QObject>
+#include <QPair>
+#include <QPixmap>
+#include <QString>
 #include <QUrl>
 
-class QGraphicsScene;
-class QPixmap;
-class QString;
+#include "script/scriptoptions.h"
+
 class QWidget;
 
 namespace geometrize
 {
 class ImageJobContext;
-class RecentItems;
 }
 
 namespace geometrize
 {
 
-namespace app
+namespace common
+{
+
+namespace ui
 {
 
 // Common UI actions
@@ -28,6 +28,8 @@ void openAboutPage(QWidget* parent);
 void openPreferences(QWidget* parent);
 int openQuitDialog(QWidget* parent);
 QUrl openGetUrlDialog(QWidget* parent);
+QPair<QString, geometrize::script::ScriptOptions> openGetScriptDialog(QWidget* parent);
+QString openSelectScriptDialog(QWidget* parent);
 void openTechnicalSupport();
 void openOnlineTutorials();
 void openTechnicalSupport();
@@ -42,27 +44,7 @@ void openJobs(const QStringList& urls);
 ImageJobContext* createImageJob(QWidget* parent, const QString& displayName, const QPixmap& pixmap);
 ImageJobContext* createImageJobAndUpdateRecents(QWidget* parent, const QUrl& url);
 
-/**
- * @brief The SharedApp class is a lazy singleton that contains common core functionality.
- */
-class SharedApp : public QObject
-{
-    Q_OBJECT
-public:
-    static SharedApp& get();
-    SharedApp& operator=(const SharedApp&) = delete;
-    SharedApp(const SharedApp&) = delete;
-
-    // Recent files
-    RecentItems& getRecentFiles();
-
-private:
-    class SharedAppImpl;
-    std::unique_ptr<SharedAppImpl> d;
-
-    SharedApp();
-    ~SharedApp();
-};
+}
 
 }
 

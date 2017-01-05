@@ -15,6 +15,8 @@ void printToConsole(const std::string& str);
 
 void debugBreak();
 
+bool fileExists(const std::string& filePath);
+
 bool directoryExists(const std::string& dirPath);
 
 bool directoryContainsFile(const std::string& dirPath, const std::string& fileName);
