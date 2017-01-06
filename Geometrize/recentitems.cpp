@@ -29,10 +29,10 @@ public:
     {
         QSettings settings;
         settings.beginGroup(m_group);
-        const QStringList keys{settings.childKeys()};
+        const QStringList childGroups{settings.childGroups()};
         QList<RecentItem> recentItems;
-        for(const QString& key : keys) {
-            settings.beginGroup(key);
+        for(const QString& group : childGroups) {
+            settings.beginGroup(group);
             RecentItem item;
             item.m_displayName = settings.value(DISPLAY_NAME_KEY, "").toString();
             item.m_itemKey = settings.value(ITEM_PATH_KEY, "").toString();
@@ -49,9 +49,9 @@ public:
     {
         QSettings settings;
         settings.beginGroup(m_group);
-        const QStringList keys{settings.childKeys()};
-        for(const QString& key : keys) {
-            settings.beginGroup(key);
+        const QStringList childGroups{settings.childGroups()};
+        for(const QString& group : childGroups) {
+            settings.beginGroup(group);
             if(settings.value(ITEM_PATH_KEY) == value) {
                 return true;
             }
@@ -64,11 +64,11 @@ public:
 
     void addItem(const QString& value)
     {
-        const QString key{getItemKey()};
+        const QString group{getItemGroup()};
 
         QSettings settings;
         settings.beginGroup(m_group);
-        settings.beginGroup(key);
+        settings.beginGroup(group);
 
         settings.setValue(ITEM_PATH_KEY, QVariant(value));
         settings.setValue(TIME_STAMP_KEY, QVariant(msSinceEpochAsString()));
@@ -82,9 +82,9 @@ public:
     {
         QSettings settings;
         settings.beginGroup(m_group);
-        const QStringList keys{settings.childKeys()};
-        for(const QString& key : keys) {
-            settings.beginGroup(key);
+        const QStringList childGroups{settings.childGroups()};
+        for(const QString& group : childGroups) {
+            settings.beginGroup(group);
             if(settings.value(ITEM_PATH_KEY) == value) {
                 settings.remove("");
             }
@@ -102,7 +102,7 @@ public:
     }
 
 private:
-    static QString getItemKey()
+    static QString getItemGroup()
     {
         return msSinceEpochAsString() + "_" + getId();
     }

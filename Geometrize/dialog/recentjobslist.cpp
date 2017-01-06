@@ -36,38 +36,21 @@ public:
 
     void setRecentItems(RecentItems* recents)
     {
-        // TODO disconnect?
         m_recents = recents;
+        q->clear();
+        setupConnections();
+        loadExistingItems();
+    }
 
-        if(m_recents != nullptr) {
-            connect(m_recents, &RecentItems::signal_added, [this](const QString& item, const bool preexisting) {
-                qDebug() << "ADDED" << " " << item;
-                if(preexisting) {
-                    const QList<QListWidgetItem*> items{findItems(item, Qt::MatchExactly)};
-                    for(auto* item : items) {
-                        removeItemWidget(item);
-                    }
-                } else {
-                    QListWidgetItem* widgetItem{new QListWidgetItem(item)};
-                    widgetItem->setToolTip(item);
-                    addItem(widgetItem);
-                }
-            });
-            connect(m_recents, &RecentItems::signal_cleared, [this]() {
-                qDebug() << "CLEARED";
-                clear();
-            });
-            connect(m_recents, &RecentItems::signal_removed, [this](const QString& item) {
-                qDebug() << "REMOVED" << " " << item;
-                const QList<QListWidgetItem*> items{findItems(item, Qt::MatchExactly)};
-                for(auto* item : items) {
-                    removeItemWidget(item);
-                }
-            });
+private:
+    void loadExistingItems()
+    {
+        if(m_recents == nullptr) {
+            return;
         }
 
         // TODO sort
-        const auto items{recents->getItems()};
+        const auto items{m_recents->getItems()};
         for(const auto& item : items) {
             QListWidgetItem* widgetItem{new QListWidgetItem(item.m_itemKey)};
             widgetItem->setToolTip(item.m_itemKey);
@@ -75,9 +58,41 @@ public:
         }
     }
 
-private:
+    void setupConnections()
+    {
+        for(auto& connection : m_connections) {
+            QObject::disconnect(connection);
+        }
+        m_connections.clear();
+
+        if(m_recents == nullptr) {
+            return;
+        }
+
+        m_connections.push_back(connect(m_recents, &RecentItems::signal_added, [this](const QString& item, const bool preexisting) {
+            if(preexisting) {
+                return;
+            }
+            QListWidgetItem* widgetItem{new QListWidgetItem(item)};
+            widgetItem->setToolTip(item);
+            q->addItem(widgetItem);
+        }));
+
+        m_connections.push_back(connect(m_recents, &RecentItems::signal_cleared, [this]() {
+            q->clear();
+        }));
+
+        m_connections.push_back(connect(m_recents, &RecentItems::signal_removed, [this](const QString& item) {
+            const QList<QListWidgetItem*> items{findItems(item, Qt::MatchExactly)};
+            for(auto* item : items) {
+                q->removeItemWidget(item);
+            }
+        }));
+    }
+
     RecentJobsList* q;
     RecentItems* m_recents;
+    std::vector<QMetaObject::Connection> m_connections;
 };
 
 RecentJobsList::RecentJobsList(QWidget* parent) : QListWidget(parent), d{std::make_unique<RecentJobsList::RecentJobsListImpl>(this)}
