@@ -13,7 +13,7 @@ namespace format
  */
 std::vector<std::string> getSupportedImageFileExtensions(const bool includeDotPrefix)
 {
-    const static std::vector<std::string> extensions{"jpg", "png"}; // TODO case sensitivity?
+    const static std::vector<std::string> extensions{"jpg", "png", "jpeg"}; // TODO case sensitivity?
     // TODO
 
     return extensions;

@@ -8,5 +8,6 @@
         <file>flowlayout_license.txt</file>
         <file>geometrize_license.txt</file>
         <file>qt_license.txt</file>
+        <file>template_assets_license.txt</file>
     </qresource>
 </RCC>

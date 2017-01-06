@@ -78,6 +78,16 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="MiscAssets">
+      <attribute name="title">
+       <string>Assets</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_7">
+       <item>
+        <widget class="QTextBrowser" name="assetsLicenses"/>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
    <item>

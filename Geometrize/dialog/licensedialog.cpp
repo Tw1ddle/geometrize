@@ -51,6 +51,7 @@ LicenseDialog::LicenseDialog(QWidget* parent) :
     ui->qtLicense->setText(readLicenseFile(":/license/qt_license.txt"));
     ui->chaiScriptLicense->setText(readLicenseFile(":/license/chaiscript_license.txt"));
     ui->flowLayoutLicense->setText(readLicenseFile(":/license/flowlayout_license.txt"));
+    ui->assetsLicenses->setText(readLicenseFile(":/license/template_assets_license.txt"));
 }
 
 LicenseDialog::~LicenseDialog()

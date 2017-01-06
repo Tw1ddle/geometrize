@@ -1,0 +1,1 @@
+openJob(getFirstFileWithExtensions(templateDirectory, getSupportedImageFileExtensions()));

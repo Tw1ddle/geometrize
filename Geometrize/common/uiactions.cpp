@@ -21,6 +21,7 @@
 #include "dialog/preferencestabdialog.h"
 #include "dialog/quitdialog.h"
 #include "dialog/runscriptdialog.h"
+#include "formatsupport.h"
 #include "imagejobcontext.h"
 #include "network/completionhandlers.h"
 #include "network/networkactions.h"
