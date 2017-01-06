@@ -68,9 +68,9 @@ public:
 
         // TODO sort
         const auto items{recents->getItems()};
-        for(auto& item : items) {
-            QListWidgetItem* widgetItem{new QListWidgetItem(item.second)};
-            widgetItem->setToolTip(item.second);
+        for(const auto& item : items) {
+            QListWidgetItem* widgetItem{new QListWidgetItem(item.m_itemKey)};
+            widgetItem->setToolTip(item.m_itemKey);
             q->addItem(widgetItem);
         }
     }

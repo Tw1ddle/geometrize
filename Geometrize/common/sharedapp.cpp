@@ -17,7 +17,7 @@ namespace app
 class SharedApp::SharedAppImpl : public QObject
 {
 public:
-    SharedAppImpl() : m_recentFiles{RecentItems::RECENT_FILES_SETTINGS_GROUP}
+    SharedAppImpl() : m_recentFiles{RecentItems::RECENTLY_OPENED_ITEMS_SETTINGS_GROUP}
     {
     }
 

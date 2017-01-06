@@ -1,16 +1,15 @@
 #include "recentitems.h"
 
-#include "assert.h"
+#include <assert.h>
+#include <atomic>
 
 #include <QDateTime>
-#include <QDebug>
-#include <QHash>
 #include <QSettings>
 
 namespace geometrize
 {
 
-const QString RecentItems::RECENT_FILES_SETTINGS_GROUP = "recently_opened_files";
+const QString RecentItems::RECENTLY_OPENED_ITEMS_SETTINGS_GROUP = "recently_opened_items";
 
 class RecentItems::RecentItemsImpl
 {
@@ -26,68 +25,56 @@ public:
     RecentItemsImpl& operator=(const RecentItemsImpl&) = default;
     RecentItemsImpl(const RecentItemsImpl&) = default;
 
-    QList<QPair<qint64, QString>> getItems() const
+    QList<RecentItem> getItems() const
     {
-        // Construct list of items
         QSettings settings;
         settings.beginGroup(m_group);
         const QStringList keys{settings.childKeys()};
-        QList<QPair<qint64, QString>> pairs;
+        QList<RecentItem> recentItems;
         for(const QString& key : keys) {
-            const QStringList items{key.split("_")};
-            assert(items.length() == 2);
-            const QString item{items.at(1)};
-
-            bool success = false;
-            qint64 time{item.toLongLong(&success)};
-            assert(success);
-
-            pairs.push_back(qMakePair(time, settings.value(key, "").toString()));
+            settings.beginGroup(key);
+            RecentItem item;
+            item.m_displayName = settings.value(DISPLAY_NAME_KEY, "").toString();
+            item.m_itemKey = settings.value(ITEM_PATH_KEY, "").toString();
+            item.m_timeStamp = settings.value(TIME_STAMP_KEY, 0).toLongLong();
+            settings.endGroup();
+            recentItems.push_back(item);
         }
         settings.endGroup();
 
-        return pairs;
+        return recentItems;
     }
 
     bool contains(const QString& value)
     {
         QSettings settings;
-
         settings.beginGroup(m_group);
         const QStringList keys{settings.childKeys()};
-        settings.endGroup();
-
-        const QString valueHash{qHash(value.split("_")[0])}; // TODO incorrect
         for(const QString& key : keys) {
-            if(key.startsWith(valueHash)) {
+            settings.beginGroup(key);
+            if(settings.value(ITEM_PATH_KEY) == value) {
                 return true;
             }
+            settings.endGroup();
         }
+        settings.endGroup();
 
         return false;
     }
 
     void addItem(const QString& value)
     {
-        const QString key{getItemKey(value)};
+        const QString key{getItemKey()};
 
         QSettings settings;
         settings.beginGroup(m_group);
+        settings.beginGroup(key);
 
-        if(!settings.contains(key)) {
-            // Add the new key
-            settings.setValue(key, value);
-        } else {
-            // Replace the old key
-            const QStringList keys{settings.childKeys()};
-            for(const QString& k : keys) {
-                if(settings.value(k, "").toString() == value) {
-                    settings.remove(k);
-                    settings.setValue(key, value);
-                }
-            }
-        }
+        settings.setValue(ITEM_PATH_KEY, QVariant(value));
+        settings.setValue(TIME_STAMP_KEY, QVariant(msSinceEpochAsString()));
+        settings.setValue(DISPLAY_NAME_KEY, QVariant(value));
 
+        settings.endGroup();
         settings.endGroup();
     }
 
@@ -97,9 +84,11 @@ public:
         settings.beginGroup(m_group);
         const QStringList keys{settings.childKeys()};
         for(const QString& key : keys) {
-            if(settings.value(key, "").toString() == value) {
-                settings.remove(key);
+            settings.beginGroup(key);
+            if(settings.value(ITEM_PATH_KEY) == value) {
+                settings.remove("");
             }
+            settings.endGroup();
         }
         settings.endGroup();
     }
@@ -113,31 +102,36 @@ public:
     }
 
 private:
-    static QString getItemKey(const QString& value)
+    static QString getItemKey()
     {
-        return msSinceEpoch() + "_" + getStringHash(value);
+        return msSinceEpochAsString() + "_" + getId();
     }
 
-    static QString getStringHash(const QString& s)
-    {
-        return QString::number(qHash(s));
-    }
-
-    static QString msSinceEpoch()
+    static QString msSinceEpochAsString()
     {
         return QString::number(QDateTime::currentMSecsSinceEpoch());
     }
 
-    const QString m_group; ///< The base path group for storing the recent items in settings e.g. "recent_image_paths", "recent_video_names" etc.
-    static const QString TIME_STAMP_KEY; ///< Constant string appended to the hash of the item string to get the timestamp.
+    static QString getId()
+    {
+        static std::atomic_int id = 0;
+        return QString::number(id++);
+    }
+
+    const QString m_group; ///< The base path group for storing the recent items in settings e.g. "recent_image_paths" etc.
+
+    static const QString ITEM_PATH_KEY; ///< Key for the path or URL to the item.
+    static const QString TIME_STAMP_KEY; ///< Key for the timestamp of when the item was added or replaced.
+    static const QString DISPLAY_NAME_KEY; ///< Key for the display name of the item.
 };
 
-const QString RecentItems::RecentItemsImpl::TIME_STAMP_KEY = "_time";
+const QString RecentItems::RecentItemsImpl::ITEM_PATH_KEY{"path"};
+const QString RecentItems::RecentItemsImpl::TIME_STAMP_KEY{"timestamp"};
+const QString RecentItems::RecentItemsImpl::DISPLAY_NAME_KEY{"displayName"};
 
 void swap(RecentItems& first, RecentItems& second)
 {
-    using std::swap;
-    swap(first.d, second.d);
+    std::swap(first.d, second.d);
 }
 
 RecentItems::RecentItems(const QString& group) : d{std::make_unique<RecentItemsImpl>(group)}
@@ -164,7 +158,7 @@ RecentItems::RecentItems(RecentItems&& other)
     swap(*this, other);
 }
 
-QList<QPair<qint64, QString>> RecentItems::getItems() const
+QList<RecentItem> RecentItems::getItems() const
 {
     return d->getItems();
 }

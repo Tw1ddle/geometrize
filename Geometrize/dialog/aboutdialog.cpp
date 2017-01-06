@@ -39,7 +39,8 @@ AboutDialog::AboutDialog(QWidget* parent) :
                              " " + geometrize::version::getRuntimeMachineHostName());
 
     ui->copyrightNotice->setText(geometrize::constants::Strings::getCopyrightNotice());
-    ui->websiteLink->setText("<a href=\"" + geometrize::constants::DEVELOPER_WEBSITE_URL + "\">" + geometrize::constants::DEVELOPER_WEBSITE_URL + "</a>");
+    ui->personalWebsiteLink->setText("<a href=\"" + geometrize::constants::DEVELOPER_WEBSITE_URL + "\">" + geometrize::constants::DEVELOPER_WEBSITE_URL + "</a>");
+    ui->projectWebsiteLink->setText("<a href=\"" + geometrize::constants::PROJECT_WEBSITE_URL + "\">" + geometrize::constants::PROJECT_WEBSITE_URL + "</a>");
 }
 
 AboutDialog::~AboutDialog()

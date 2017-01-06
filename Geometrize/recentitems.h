@@ -8,14 +8,24 @@ namespace geometrize
 {
 
 /**
+ * @brief The RecentItem struct models an item that was recently interacted with.
+ */
+struct RecentItem
+{
+    QString m_displayName; ///< Display name of the item, suitable for showing to the user.
+    QString m_itemKey; ///< Key, path, URL or other useful identifier for the item.
+    qint64 m_timeStamp; ///< Timestamp, typically when the item was last accessed or used.
+};
+
+/**
  * @brief The RecentItems class encapsulates a list of items that were recently interacted with.
- * The class keeps a record of these items stored in preferences. Useful for keeping track of recently opened files etc.
+ * The class keeps a record of these items stored in preferences. Useful for keeping track of recently opened files.
  */
 class RecentItems : public QObject
 {
     Q_OBJECT
 public:
-    static const QString RECENT_FILES_SETTINGS_GROUP; ///< The base path group for keeping track of recently opened files.
+    static const QString RECENTLY_OPENED_ITEMS_SETTINGS_GROUP; ///< The base path group for keeping track of recently opened items.
 
     /**
      * @brief RecentItems Creates a new RecentItems instance.
@@ -32,7 +42,7 @@ public:
      * @brief getItems Gets the recent item times and names.
      * @return A list of the times and names of all of the current recent items. Note these are not sorted in any way.
      */
-    QList<QPair<qint64, QString>> getItems() const;
+    QList<RecentItem> getItems() const;
 
     /**
      * @brief add Adds an item to the recent items.

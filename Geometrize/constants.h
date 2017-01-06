@@ -24,7 +24,7 @@ public:
      */
     static QString getApplicationName()
     {
-        return tr("Geometrize", "This means to 'turn into geometry' or to 'represent using geometric primitives'. The name of the application, so must be short and meaningful - do not translate if this is difficult.");
+        return tr("Geometrize", "This means to 'turn into geometry' or to 'represent using geometric primitives'. The name of the application, so must be short and meaningful. Do not translate if this is difficult to communicate in one word.");
     }
 
     /**
@@ -33,7 +33,7 @@ public:
      */
     static QString getApplicationDescription()
     {
-        return tr("A tool for reproducing images as animated geometric primitives.", "This is a short description of what this application does.");
+        return tr("A tool for reproducing media as animated geometric primitives.", "This is a short description of what this application does.");
     }
 
     /**
@@ -46,6 +46,7 @@ public:
     }
 };
 
+const QString PROJECT_WEBSITE_URL{"http://www.geometrize.it"}; ///< The project's dedicated website URL.
 const QString DEVELOPER_WEBSITE_URL{"http://www.samcodes.co.uk"}; ///< The core developer's personal website URL.
 const QString TECHNICAL_SUPPORT_URL{"http://www.samcodes.co.uk/contact"}; ///< The technical support webpage URL for the software.
 const QString MORE_RESOURCES_URL{"https://github.com/Tw1ddle/geometrize-resources"}; ///< Webpage URL to a page providing additional templates, scripts and/or helpful links.
