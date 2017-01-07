@@ -22,6 +22,9 @@
   <property name="windowTitle">
    <string>License Information</string>
   </property>
+  <property name="sizeGripEnabled">
+   <bool>true</bool>
+  </property>
   <property name="modal">
    <bool>true</bool>
   </property>
@@ -33,7 +36,7 @@
      </property>
      <widget class="QWidget" name="Geometrize">
       <attribute name="title">
-       <string>Geometrize</string>
+       <string notr="true">Geometrize</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
@@ -50,7 +53,7 @@
      </widget>
      <widget class="QWidget" name="Qt">
       <attribute name="title">
-       <string>Qt</string>
+       <string notr="true">Qt</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_5">
        <item>
@@ -60,7 +63,7 @@
      </widget>
      <widget class="QWidget" name="ChaiScript">
       <attribute name="title">
-       <string>ChaiScript</string>
+       <string notr="true">ChaiScript</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
@@ -68,9 +71,39 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="Cereal">
+      <attribute name="title">
+       <string notr="true">Cereal</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_8">
+       <item>
+        <widget class="QTextBrowser" name="cerealLicense"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="RapidJSON">
+      <attribute name="title">
+       <string>RapidJSON</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_10">
+       <item>
+        <widget class="QTextBrowser" name="rapidJSONLicense"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="RapidXml">
+      <attribute name="title">
+       <string>RapidXml</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_9">
+       <item>
+        <widget class="QTextBrowser" name="rapidXmlLicense"/>
+       </item>
+      </layout>
+     </widget>
      <widget class="QWidget" name="FlowLayout">
       <attribute name="title">
-       <string>FlowLayout</string>
+       <string notr="true">FlowLayout</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>

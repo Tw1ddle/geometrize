@@ -320,5 +320,8 @@
         <file>icons/zoom_out.png</file>
         <file>icons/zoom_refresh.png</file>
         <file>icons/zoom_selection.png</file>
+        <file>licenses/cereal_license.txt</file>
+        <file>licenses/rapidjson_license.txt</file>
+        <file>licenses/rapidxml_license.txt</file>
     </qresource>
 </RCC>

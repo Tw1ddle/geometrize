@@ -3,11 +3,7 @@
 #include <QApplication>
 #include <QCommandLineParser>
 
-#include "chaiscript/chaiscript.hpp"
-
-#include "script/chaiscriptcreator.h"
 #include "constants.h"
-#include "util.h"
 #include "versioninfo.h"
 
 void setupSettingsFields()

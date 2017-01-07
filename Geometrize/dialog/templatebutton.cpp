@@ -35,7 +35,7 @@ TemplateButton::TemplateButton(chaiscript::ChaiScript* const templateLoader, con
         const QPixmap thumbnail(firstImageFile);
         if(!thumbnail.isNull()) {
             const QSize size{ui->imageLabel->size()};
-            ui->imageLabel->setPixmap(thumbnail.scaled(size, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+            ui->imageLabel->setPixmap(thumbnail.scaled(size, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation));
         }
     }
 
