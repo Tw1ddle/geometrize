@@ -33,10 +33,7 @@ public:
         QList<RecentItem> recentItems;
         for(const QString& group : childGroups) {
             settings.beginGroup(group);
-            RecentItem item;
-            item.m_displayName = settings.value(DISPLAY_NAME_KEY, "").toString();
-            item.m_itemKey = settings.value(ITEM_PATH_KEY, "").toString();
-            item.m_timeStamp = settings.value(TIME_STAMP_KEY, 0).toLongLong();
+            const RecentItem item(settings.value(ID_KEY, "").toString(), settings.value(DISPLAY_NAME_KEY, "").toString(), settings.value(TIME_STAMP_KEY, 0).toLongLong());
             settings.endGroup();
             recentItems.push_back(item);
         }
@@ -52,7 +49,7 @@ public:
         const QStringList childGroups{settings.childGroups()};
         for(const QString& group : childGroups) {
             settings.beginGroup(group);
-            if(settings.value(ITEM_PATH_KEY) == value) {
+            if(settings.value(ID_KEY) == value) {
                 return true;
             }
             settings.endGroup();
@@ -62,20 +59,23 @@ public:
         return false;
     }
 
-    void addItem(const QString& value)
+    RecentItem addItem(const QString& itemId, const QString& itemDisplayName)
     {
+        const RecentItem item(itemId, itemDisplayName, msSinceEpoch());
         const QString group{getItemGroup()};
 
         QSettings settings;
         settings.beginGroup(m_group);
         settings.beginGroup(group);
 
-        settings.setValue(ITEM_PATH_KEY, QVariant(value));
-        settings.setValue(TIME_STAMP_KEY, QVariant(msSinceEpochAsString()));
-        settings.setValue(DISPLAY_NAME_KEY, QVariant(value));
+        settings.setValue(ID_KEY, QVariant(item.getKey()));
+        settings.setValue(DISPLAY_NAME_KEY, QVariant(item.getDisplayName()));
+        settings.setValue(TIME_STAMP_KEY, QVariant(item.getTimeStamp()));
 
         settings.endGroup();
         settings.endGroup();
+
+        return item;
     }
 
     void removeItem(const QString& value)
@@ -85,7 +85,7 @@ public:
         const QStringList childGroups{settings.childGroups()};
         for(const QString& group : childGroups) {
             settings.beginGroup(group);
-            if(settings.value(ITEM_PATH_KEY) == value) {
+            if(settings.value(ID_KEY) == value) {
                 settings.remove("");
             }
             settings.endGroup();
@@ -109,7 +109,12 @@ private:
 
     static QString msSinceEpochAsString()
     {
-        return QString::number(QDateTime::currentMSecsSinceEpoch());
+        return QString::number(msSinceEpoch());
+    }
+
+    static long long int msSinceEpoch()
+    {
+        return QDateTime::currentMSecsSinceEpoch();
     }
 
     static QString getId()
@@ -120,14 +125,14 @@ private:
 
     const QString m_group; ///< The base path group for storing the recent items in settings e.g. "recent_image_paths" etc.
 
-    static const QString ITEM_PATH_KEY; ///< Key for the path or URL to the item.
-    static const QString TIME_STAMP_KEY; ///< Key for the timestamp of when the item was added or replaced.
+    static const QString ID_KEY; ///< Key for the path or URL to the item.
     static const QString DISPLAY_NAME_KEY; ///< Key for the display name of the item.
+    static const QString TIME_STAMP_KEY; ///< Key for the timestamp of when the item was added or replaced.
 };
 
-const QString RecentItems::RecentItemsImpl::ITEM_PATH_KEY{"path"};
+const QString RecentItems::RecentItemsImpl::ID_KEY{"id"};
+const QString RecentItems::RecentItemsImpl::DISPLAY_NAME_KEY{"displayname"};
 const QString RecentItems::RecentItemsImpl::TIME_STAMP_KEY{"timestamp"};
-const QString RecentItems::RecentItemsImpl::DISPLAY_NAME_KEY{"displayName"};
 
 void swap(RecentItems& first, RecentItems& second)
 {
@@ -163,13 +168,14 @@ QList<RecentItem> RecentItems::getItems() const
     return d->getItems();
 }
 
-void RecentItems::add(const QString& itemId)
+void RecentItems::add(const QString& itemId, const QString& itemDisplayName)
 {
     const bool preexisting{d->contains(itemId)};
 
-    d->addItem(itemId);
-
-    emit signal_added(itemId, preexisting);
+    if(!preexisting) {
+        const RecentItem item{d->addItem(itemId, itemDisplayName)};
+        emit signal_added(item);
+    }
 }
 
 void RecentItems::remove(const QString& itemId)

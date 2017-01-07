@@ -4,18 +4,10 @@
 
 #include <QObject>
 
+#include "recentitem.h"
+
 namespace geometrize
 {
-
-/**
- * @brief The RecentItem struct models an item that was recently interacted with.
- */
-struct RecentItem
-{
-    QString m_displayName; ///< Display name of the item, suitable for showing to the user.
-    QString m_itemKey; ///< Key, path, URL or other useful identifier for the item.
-    qint64 m_timeStamp; ///< Timestamp, typically when the item was last accessed or used.
-};
 
 /**
  * @brief The RecentItems class encapsulates a list of items that were recently interacted with.
@@ -40,19 +32,20 @@ public:
 
     /**
      * @brief getItems Gets the recent item times and names.
-     * @return A list of the times and names of all of the current recent items. Note these are not sorted in any way.
+     * @return A list of the recent items. Note these are unsorted.
      */
     QList<RecentItem> getItems() const;
 
     /**
      * @brief add Adds an item to the recent items.
      * @param itemId A unique id for the item (e.g. a complete file path).
+     * @param itemDisplayName A display name for the item (e.g. a file name).
      */
-    void add(const QString& itemId);
+    void add(const QString& itemId, const QString& itemDisplayName);
 
     /**
      * @brief remove Removes an item from the recent items.
-     * @param itemId The unique id for the item.
+     * @param itemId The item id to remove.
      */
     void remove(const QString& itemId);
 
@@ -64,14 +57,13 @@ public:
 signals:
     /**
      * @brief signal_added is emitted after an item is added.
-     * @param itemId The unique id for the item.
-     * @param preexisting Whether the item already existed in the recent items.
+     * @param item The item that was added.
      */
-    void signal_added(const QString& itemId, bool preexisting);
+    void signal_added(const RecentItem& item);
 
     /**
      * @brief signal_removed is emitted after an item is removed.
-     * @param itemId The unique id for the item.
+     * @param itemId The id of the item that was removed.
      */
     void signal_removed(const QString& itemId);
 

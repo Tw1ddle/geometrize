@@ -14,7 +14,7 @@
 #include "network/downloader.h"
 #include "network/networkactions.h"
 #include "formatsupport.h"
-#include "dialog/itembutton.h"
+#include "dialog/recentitemwidget.h"
 #include "recentitems.h"
 
 namespace geometrize
@@ -52,6 +52,8 @@ public:
             QMenu itemContextMenu;
             QAction openAction(tr("Open"));
             itemContextMenu.addAction(&openAction);
+            QAction viewInExplorer(tr("Explore"));
+            itemContextMenu.addAction(&viewInExplorer);
             QAction copyToClipboard(tr("Copy path to clipboard"));
             itemContextMenu.addAction(&copyToClipboard);
             QAction removalAction(tr("Remove from list"));

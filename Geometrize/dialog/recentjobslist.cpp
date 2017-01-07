@@ -2,14 +2,12 @@
 
 #include "assert.h"
 
-#include <memory>
-
 #include <QApplication>
 #include <QClipboard>
-#include <QDebug>
 #include <QContextMenuEvent>
-#include <QPoint>
 
+#include "recentitemwidget.h"
+#include "recentitem.h"
 #include "recentitems.h"
 
 namespace geometrize
@@ -23,6 +21,7 @@ class RecentJobsList::RecentJobsListImpl
 public:
     RecentJobsListImpl(RecentJobsList* pQ) : q{pQ}
     {
+        q->setSizeAdjustPolicy(QListWidget::AdjustToContents);
     }
 
     RecentJobsListImpl operator=(const RecentJobsListImpl&) = delete;
@@ -52,9 +51,7 @@ private:
         // TODO sort
         const auto items{m_recents->getItems()};
         for(const auto& item : items) {
-            QListWidgetItem* widgetItem{new QListWidgetItem(item.m_itemKey)};
-            widgetItem->setToolTip(item.m_itemKey);
-            q->addItem(widgetItem);
+            addItem(item);
         }
     }
 
@@ -69,13 +66,8 @@ private:
             return;
         }
 
-        m_connections.push_back(connect(m_recents, &RecentItems::signal_added, [this](const QString& item, const bool preexisting) {
-            if(preexisting) {
-                return;
-            }
-            QListWidgetItem* widgetItem{new QListWidgetItem(item)};
-            widgetItem->setToolTip(item);
-            q->addItem(widgetItem);
+        m_connections.push_back(connect(m_recents, &RecentItems::signal_added, [this](const RecentItem& item) {
+            addItem(item);
         }));
 
         m_connections.push_back(connect(m_recents, &RecentItems::signal_cleared, [this]() {
@@ -88,6 +80,18 @@ private:
                 q->removeItemWidget(item);
             }
         }));
+    }
+
+    void addItem(const RecentItem& recentItem)
+    {
+        QListWidgetItem* item{new QListWidgetItem()};
+        dialog::RecentItemWidget* button{new dialog::RecentItemWidget(recentItem)};
+
+        item->setToolTip(recentItem.getDisplayName()); // TODO?
+
+        item->setSizeHint(button->sizeHint());
+        q->addItem(item);
+        q->setItemWidget(item, button);
     }
 
     RecentJobsList* q;
@@ -129,7 +133,7 @@ void RecentJobsList::keyPressEvent(QKeyEvent* e)
         }
         QApplication::clipboard()->setText(strings.join("\n"));
     } else if(e->key() == Qt::Key_Delete || e->key() == Qt::Key_Backspace) {
-        qDebug() << "TODO remove item";
+        // TODO remove item
     }
 }
 

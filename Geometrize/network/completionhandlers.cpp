@@ -27,7 +27,9 @@ void onImageDownloadComplete(network::Downloader* self, QNetworkReply::NetworkEr
 
     QPixmap image;
     image.loadFromData(self->downloadedData());
-    common::app::SharedApp::get().getRecentFiles().add(self->getUrl().toString());
+
+    // TODO unify with common action
+    //common::app::SharedApp::get().getRecentFiles().add(self->getUrl().toString());
     common::ui::createImageJob(nullptr, self->getUrl().toString(), image);
 
     delete self;

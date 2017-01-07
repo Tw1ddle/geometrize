@@ -23,6 +23,7 @@ SOURCES += main.cpp \
     imagejobpreferences.cpp \
     preferences.cpp \
     searchpaths.cpp \
+    recentitem.cpp \
     recentitems.cpp \
     versioninfo.cpp \
     util.cpp \
@@ -36,7 +37,6 @@ SOURCES += main.cpp \
     dialog/imagejobwindow.cpp \
     dialog/launchwindow.cpp \
     dialog/recentjobslist.cpp \
-    dialog/itembutton.cpp \
     dialog/openurldialog.cpp \
     dialog/runscriptdialog.cpp \
     dialog/templatebutton.cpp \
@@ -49,7 +49,8 @@ SOURCES += main.cpp \
     script/bindingswrapper.cpp \
     script/chaiscriptcreator.cpp \
     script/scriptoptions.cpp \
-    script/scriptrunner.cpp
+    script/scriptrunner.cpp \
+    dialog/recentitemwidget.cpp
 
 HEADERS += chaiscript/chaiscript.hpp \
     constants.h \
@@ -57,6 +58,7 @@ HEADERS += chaiscript/chaiscript.hpp \
     imagejobcontext.h \
     imagejobpreferences.h \
     preferences.h \
+    recentitem.h \
     recentitems.h \
     searchpaths.h \
     util.h \
@@ -91,7 +93,6 @@ HEADERS += chaiscript/chaiscript.hpp \
     dialog/imagejobwindow.h \
     dialog/launchwindow.h \
     dialog/recentjobslist.h \
-    dialog/itembutton.h \
     dialog/openurldialog.h \
     dialog/runscriptdialog.h \
     dialog/templatebutton.h \
@@ -104,8 +105,8 @@ HEADERS += chaiscript/chaiscript.hpp \
     script/bindingswrapper.h \
     script/chaiscriptcreator.h \
     script/scriptoptions.h \
-    script/scriptrunner.h
-
+    script/scriptrunner.h \
+    dialog/recentitemwidget.h
 
 FORMS += dialog/imagejobwindow.ui \
     dialog/aboutdialog.ui \
@@ -115,7 +116,7 @@ FORMS += dialog/imagejobwindow.ui \
     dialog/creditsdialog.ui \
     dialog/preferencestabdialog.ui \
     dialog/launchwindow.ui \
-    dialog/itembutton.ui \
     dialog/openurldialog.ui \
     dialog/runscriptdialog.ui \
-    dialog/templatebutton.ui
+    dialog/templatebutton.ui \
+    dialog/recentitemwidget.ui

@@ -114,7 +114,8 @@ ImageJobContext* createImageJobAndUpdateRecents(QWidget* parent, const QUrl& url
     if(pixmap.isNull()) {
         return nullptr;
     }
-    app::SharedApp::get().getRecentFiles().add(url.toString());
+
+    app::SharedApp::get().getRecentFiles().add(url.toString(), "TODO"); // TODO extract display title
     return ui::createImageJob(parent, url.toString(), pixmap);
 }
 
@@ -192,12 +193,6 @@ QPixmap openPixmap(QWidget* parent, const QString& imagePath)
     };
 
     const QPixmap pixmap{openPix(parent, imagePath)};
-
-    assert(!pixmap.isNull());
-    if(!pixmap.isNull()) {
-        app::SharedApp::get().getRecentFiles().add(imagePath);
-    }
-
     return pixmap;
 }
 
