@@ -78,13 +78,23 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="MiscAssets">
+     <widget class="QWidget" name="IconAssets">
       <attribute name="title">
-       <string>Assets</string>
+       <string>Icons</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_6">
+       <item>
+        <widget class="QTextBrowser" name="iconAssetsLicense"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="TemplateAssets">
+      <attribute name="title">
+       <string>Templates</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_7">
        <item>
-        <widget class="QTextBrowser" name="assetsLicenses"/>
+        <widget class="QTextBrowser" name="templateAssetsLicense"/>
        </item>
       </layout>
      </widget>

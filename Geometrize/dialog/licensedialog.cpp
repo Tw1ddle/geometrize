@@ -47,11 +47,12 @@ LicenseDialog::LicenseDialog(QWidget* parent) :
         return text;
     };
 
-    ui->geometrizeLicense->setText(readLicenseFile(":/license/geometrize_license.txt"));
-    ui->qtLicense->setText(readLicenseFile(":/license/qt_license.txt"));
-    ui->chaiScriptLicense->setText(readLicenseFile(":/license/chaiscript_license.txt"));
-    ui->flowLayoutLicense->setText(readLicenseFile(":/license/flowlayout_license.txt"));
-    ui->assetsLicenses->setText(readLicenseFile(":/license/template_assets_license.txt"));
+    ui->geometrizeLicense->setText(readLicenseFile(":/licenses/geometrize_license.txt"));
+    ui->qtLicense->setText(readLicenseFile(":/licenses/qt_license.txt"));
+    ui->chaiScriptLicense->setText(readLicenseFile(":/licenses/chaiscript_license.txt"));
+    ui->flowLayoutLicense->setText(readLicenseFile(":/licenses/flowlayout_license.txt"));
+    ui->iconAssetsLicense->setText(readLicenseFile(":/licenses/fatcow_icon_license.txt"));
+    ui->templateAssetsLicense->setText(readLicenseFile(":/licenses/template_assets_license.txt"));
 }
 
 LicenseDialog::~LicenseDialog()

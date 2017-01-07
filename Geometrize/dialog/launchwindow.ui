@@ -253,6 +253,9 @@
                 <property name="text">
                  <string notr="true">More Resources Link</string>
                 </property>
+                <property name="openExternalLinks">
+                 <bool>true</bool>
+                </property>
                 <property name="textInteractionFlags">
                  <set>Qt::TextBrowserInteraction</set>
                 </property>

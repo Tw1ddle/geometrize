@@ -18,7 +18,8 @@ RecentItemWidget::RecentItemWidget(const RecentItem& item) :
     const QString key{item.getKey()};
     ui->itemPath->setText(key);
 
-    // TODO infer type of item and get appropriate icon
+    // TODO infer item type
+    ui->itemTypeIcon->setPixmap(QPixmap(":/icons/folder_image.png"));
 }
 
 RecentItemWidget::~RecentItemWidget()
