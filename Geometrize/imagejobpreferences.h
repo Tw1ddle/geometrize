@@ -1,5 +1,8 @@
 #pragma once
 
+#include <memory>
+#include <string>
+
 namespace geometrize
 {
 
@@ -13,6 +16,14 @@ class ImageJobPreferences
 {
 public:
     ImageJobPreferences();
+    ImageJobPreferences(const std::string& settingsFilepath);
+    ImageJobPreferences& operator=(const ImageJobPreferences&) = delete;
+    ImageJobPreferences(const ImageJobPreferences&) = delete;
+    ~ImageJobPreferences();
+
+private:
+    class ImageJobPreferencesImpl;
+    std::unique_ptr<ImageJobPreferencesImpl> d;
 };
 
 }

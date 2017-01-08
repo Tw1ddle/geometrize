@@ -37,7 +37,7 @@ private slots:
     void on_actionSupport_triggered();
     void on_actionAbout_triggered();
     void on_openImageButton_clicked();
-    void on_openWebpageButton_clicked();
+    void on_openLinkButton_clicked();
     void on_runScriptButton_clicked();
 
 private:

@@ -139,7 +139,7 @@ void LaunchWindow::on_openImageButton_clicked()
     common::ui::createImageJobAndUpdateRecents(this, common::ui::getImagePath(this));
 }
 
-void LaunchWindow::on_openWebpageButton_clicked()
+void LaunchWindow::on_openLinkButton_clicked()
 {
     const QUrl url{common::ui::openGetUrlDialog(this)};
     if(url.isValid()) {

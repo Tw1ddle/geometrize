@@ -32,7 +32,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="Geometrize">
       <attribute name="title">
@@ -48,6 +48,16 @@
           </size>
          </property>
         </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="Geometrizer">
+      <attribute name="title">
+       <string notr="true">Geometrizer</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_11">
+       <item>
+        <widget class="QTextBrowser" name="geometrizerLicense"/>
        </item>
       </layout>
      </widget>

@@ -1,7 +1,6 @@
 #include "preferences.h"
 
 #include "serialization/preferencesdata.h"
-#include "serialization/preferencesserializer.h"
 
 namespace geometrize
 {

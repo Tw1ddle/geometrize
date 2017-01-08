@@ -3,8 +3,8 @@
 #include <string>
 #include <vector>
 
-#include "cereal/types/vector.hpp"
 #include "cereal/cereal.hpp"
+#include "cereal/types/vector.hpp"
 
 namespace geometrize
 {

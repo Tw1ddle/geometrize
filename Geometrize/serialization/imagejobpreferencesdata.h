@@ -1,5 +1,7 @@
 #pragma once
 
+#include "cereal/cereal.hpp"
+
 namespace geometrize
 {
 
@@ -11,7 +13,17 @@ namespace serialization
  */
 struct ImageJobPreferencesData
 {
+    template<class Archive>
+    void save(Archive& archive)
+    {
+        //archive();
+    }
 
+    template<class Archive>
+    void load(Archive& archive)
+    {
+        //archive();
+    }
 };
 
 }
