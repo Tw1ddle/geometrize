@@ -29,6 +29,7 @@ public:
     LaunchWindowImpl(LaunchWindow* pQ, Ui::LaunchWindow* pUi) : q{pQ}, ui{pUi}
     {
         ui->setupUi(q);
+        ui->consoleWidget->setVisible(false);
 
         const QString moreResourcesLabel{tr("Get more templates online")};
         ui->moreResourcesLink->setText(R"(<a href=")" + constants::MORE_RESOURCES_URL + R"(" style="text-decoration:none;">)" + moreResourcesLabel + R"(</a>)");
@@ -72,6 +73,11 @@ public:
     void openJobs(const QStringList& urls)
     {
         common::ui::openJobs(urls);
+    }
+
+    void setConsoleVisibility(const bool visible)
+    {
+        ui->consoleWidget->setVisible(visible);
     }
 
 private:
@@ -168,6 +174,11 @@ void LaunchWindow::on_actionSupport_triggered()
 void LaunchWindow::on_actionAbout_triggered()
 {
     common::ui::openAboutPage(this);
+}
+
+void LaunchWindow::on_actionScript_Console_toggled(const bool checked)
+{
+    d->setConsoleVisibility(checked);
 }
 
 }

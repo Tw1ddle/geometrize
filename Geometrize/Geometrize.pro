@@ -25,6 +25,7 @@ SOURCES += main.cpp \
     searchpaths.cpp \
     recentitem.cpp \
     recentitems.cpp \
+    templatemanifest.cpp \
     versioninfo.cpp \
     util.cpp \
     common/sharedapp.cpp \
@@ -40,6 +41,7 @@ SOURCES += main.cpp \
     dialog/recentjobslist.cpp \
     dialog/openurldialog.cpp \
     dialog/runscriptdialog.cpp \
+    dialog/scriptconsole.cpp \
     dialog/templatebutton.cpp \
     dialog/templategrid.cpp \
     layout/flowlayout.cpp \
@@ -50,8 +52,7 @@ SOURCES += main.cpp \
     script/bindingswrapper.cpp \
     script/chaiscriptcreator.cpp \
     script/scriptoptions.cpp \
-    script/scriptrunner.cpp \
-    templatemanifest.cpp
+    script/scriptrunner.cpp
 
 HEADERS += chaiscript/chaiscript.hpp \
     cereal/archives/adapters.hpp \
@@ -141,6 +142,7 @@ HEADERS += chaiscript/chaiscript.hpp \
     recentitem.h \
     recentitems.h \
     searchpaths.h \
+    templatemanifest.h \
     util.h \
     versioninfo.h \
     winversioninfo.h \
@@ -175,6 +177,7 @@ HEADERS += chaiscript/chaiscript.hpp \
     dialog/recentitemwidget.h \
     dialog/recentjobslist.h \
     dialog/openurldialog.h \
+    dialog/scriptconsole.h \
     dialog/runscriptdialog.h \
     dialog/templatebutton.h \
     dialog/templategrid.h \
@@ -189,8 +192,7 @@ HEADERS += chaiscript/chaiscript.hpp \
     script/scriptrunner.h \
     serialization/preferencesdata.h \
     serialization/imagejobpreferencesdata.h \
-    serialization/templatemetadata.h \
-    templatemanifest.h
+    serialization/templatemetadata.h
 
 FORMS += dialog/imagejobwindow.ui \
     dialog/aboutdialog.ui \
@@ -203,4 +205,5 @@ FORMS += dialog/imagejobwindow.ui \
     dialog/openurldialog.ui \
     dialog/runscriptdialog.ui \
     dialog/templatebutton.ui \
-    dialog/recentitemwidget.ui
+    dialog/recentitemwidget.ui \
+    dialog/scriptconsole.ui

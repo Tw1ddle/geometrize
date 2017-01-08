@@ -48,6 +48,7 @@ LicenseDialog::LicenseDialog(QWidget* parent) :
     };
 
     ui->geometrizeLicense->setText(readLicenseFile(":/licenses/geometrize_license.txt"));
+    ui->geometrizerLicense->setText(readLicenseFile(":/licenses/geometrizer_license.txt"));
     ui->qtLicense->setText(readLicenseFile(":/licenses/qt_license.txt"));
     ui->chaiScriptLicense->setText(readLicenseFile(":/licenses/chaiscript_license.txt"));
     ui->cerealLicense->setText(readLicenseFile(":/licenses/cereal_license.txt"));

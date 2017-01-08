@@ -39,6 +39,7 @@ private slots:
     void on_openImageButton_clicked();
     void on_openLinkButton_clicked();
     void on_runScriptButton_clicked();
+    void on_actionScript_Console_toggled(bool checked);
 
 private:
     void closeEvent(QCloseEvent *bar) override;

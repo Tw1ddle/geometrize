@@ -29,7 +29,7 @@
    <bool>true</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout_2">
+   <layout class="QVBoxLayout" name="verticalLayout_9">
     <item>
      <widget class="QSplitter" name="centralsplitter">
       <property name="sizePolicy">
@@ -375,7 +375,7 @@
              <x>0</x>
              <y>0</y>
              <width>851</width>
-             <height>589</height>
+             <height>278</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -410,6 +410,14 @@
       </widget>
      </widget>
     </item>
+    <item>
+     <widget class="geometrize::dialog::ScriptConsole" name="consoleWidget" native="true">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_8"/>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -438,7 +446,14 @@
     <addaction name="actionSupport"/>
     <addaction name="actionAbout"/>
    </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <addaction name="actionScript_Console"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuView"/>
    <addaction name="menuHelp"/>
   </widget>
   <action name="actionClear_Recents">
@@ -476,6 +491,14 @@
     <string>Image</string>
    </property>
   </action>
+  <action name="actionScript_Console">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Script Console</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -487,6 +510,12 @@
    <class>geometrize::dialog::TemplateGrid</class>
    <extends>QWidget</extends>
    <header>dialog/templategrid.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>geometrize::dialog::ScriptConsole</class>
+   <extends>QWidget</extends>
+   <header>dialog/scriptconsole.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

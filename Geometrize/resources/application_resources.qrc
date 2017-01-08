@@ -323,5 +323,6 @@
         <file>licenses/cereal_license.txt</file>
         <file>licenses/rapidjson_license.txt</file>
         <file>licenses/rapidxml_license.txt</file>
+        <file>licenses/geometrizer_license.txt</file>
     </qresource>
 </RCC>
