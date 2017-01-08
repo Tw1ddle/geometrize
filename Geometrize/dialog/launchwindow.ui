@@ -28,10 +28,10 @@
   <property name="unifiedTitleAndToolBarOnMac">
    <bool>true</bool>
   </property>
-  <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_9">
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QVBoxLayout" name="verticalLayout_5">
     <item>
-     <widget class="QSplitter" name="centralsplitter">
+     <widget class="QSplitter" name="centralSplitter">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
         <horstretch>0</horstretch>
@@ -45,7 +45,7 @@
        <enum>QFrame::Plain</enum>
       </property>
       <property name="orientation">
-       <enum>Qt::Horizontal</enum>
+       <enum>Qt::Vertical</enum>
       </property>
       <property name="opaqueResize">
        <bool>true</bool>
@@ -56,220 +56,187 @@
       <property name="childrenCollapsible">
        <bool>false</bool>
       </property>
-      <widget class="QWidget" name="recentsWidget" native="true">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>400</width>
-         <height>0</height>
-        </size>
-       </property>
-       <layout class="QVBoxLayout" name="recentsLayout">
+      <widget class="QWidget" name="mainContainer" native="true">
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
-         <widget class="QLabel" name="geometrizeTitle">
+         <widget class="QSplitter" name="templateRecentsSplitter">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>0</height>
-           </size>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
           </property>
-          <property name="font">
-           <font>
-            <pointsize>20</pointsize>
-           </font>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
           </property>
-          <property name="text">
-           <string>Geometrize</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <layout class="QVBoxLayout" name="verticalLayout">
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout">
-            <property name="spacing">
-             <number>10</number>
-            </property>
-            <property name="leftMargin">
-             <number>10</number>
-            </property>
-            <property name="topMargin">
-             <number>10</number>
-            </property>
-            <property name="rightMargin">
-             <number>10</number>
-            </property>
-            <property name="bottomMargin">
-             <number>10</number>
-            </property>
-            <item>
-             <widget class="QToolButton" name="openImageButton">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">padding: 5px;</string>
-              </property>
-              <property name="text">
-               <string>Open Image</string>
-              </property>
-              <property name="icon">
-               <iconset resource="../resources/application_resources.qrc">
-                <normaloff>:/icons/folder_image.png</normaloff>:/icons/folder_image.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>32</width>
-                <height>32</height>
-               </size>
-              </property>
-              <property name="toolButtonStyle">
-               <enum>Qt::ToolButtonTextUnderIcon</enum>
-              </property>
-              <property name="arrowType">
-               <enum>Qt::NoArrow</enum>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QToolButton" name="openLinkButton">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">padding: 5px;</string>
-              </property>
-              <property name="text">
-               <string>Open Link</string>
-              </property>
-              <property name="icon">
-               <iconset resource="../resources/application_resources.qrc">
-                <normaloff>:/icons/globe_network.png</normaloff>:/icons/globe_network.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>32</width>
-                <height>32</height>
-               </size>
-              </property>
-              <property name="toolButtonStyle">
-               <enum>Qt::ToolButtonTextUnderIcon</enum>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QToolButton" name="runScriptButton">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">padding: 5px;</string>
-              </property>
-              <property name="text">
-               <string>Run Script</string>
-              </property>
-              <property name="icon">
-               <iconset resource="../resources/application_resources.qrc">
-                <normaloff>:/icons/script_go.png</normaloff>:/icons/script_go.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>32</width>
-                <height>32</height>
-               </size>
-              </property>
-              <property name="toolButtonStyle">
-               <enum>Qt::ToolButtonTextUnderIcon</enum>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <widget class="QLabel" name="recentsListTitle">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>16</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>Recent</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="verticalSpacer">
           <property name="orientation">
-           <enum>Qt::Vertical</enum>
+           <enum>Qt::Horizontal</enum>
           </property>
-          <property name="sizeType">
-           <enum>QSizePolicy::Maximum</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>10</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="geometrize::dialog::RecentJobsList" name="recentsList">
-          <property name="sortingEnabled">
+          <property name="opaqueResize">
            <bool>true</bool>
           </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="templatesWidget" native="true">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-         <horstretch>1</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>600</width>
-         <height>0</height>
-        </size>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout_4">
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_3">
+          <property name="handleWidth">
+           <number>5</number>
+          </property>
+          <property name="childrenCollapsible">
+           <bool>false</bool>
+          </property>
+          <widget class="QWidget" name="recentsWidget" native="true">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>400</width>
+             <height>0</height>
+            </size>
+           </property>
+           <layout class="QVBoxLayout" name="recentsLayout">
             <item>
-             <widget class="QLabel" name="templatesTitle">
+             <widget class="QLabel" name="geometrizeTitle">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>20</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Geometrize</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout">
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout">
+                <property name="spacing">
+                 <number>10</number>
+                </property>
+                <property name="leftMargin">
+                 <number>10</number>
+                </property>
+                <property name="topMargin">
+                 <number>10</number>
+                </property>
+                <property name="rightMargin">
+                 <number>10</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>10</number>
+                </property>
+                <item>
+                 <widget class="QToolButton" name="openImageButton">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">padding: 5px;</string>
+                  </property>
+                  <property name="text">
+                   <string>Open Image</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../resources/application_resources.qrc">
+                    <normaloff>:/icons/folder_image.png</normaloff>:/icons/folder_image.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>32</width>
+                    <height>32</height>
+                   </size>
+                  </property>
+                  <property name="toolButtonStyle">
+                   <enum>Qt::ToolButtonTextUnderIcon</enum>
+                  </property>
+                  <property name="arrowType">
+                   <enum>Qt::NoArrow</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QToolButton" name="openLinkButton">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">padding: 5px;</string>
+                  </property>
+                  <property name="text">
+                   <string>Open Link</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../resources/application_resources.qrc">
+                    <normaloff>:/icons/globe_network.png</normaloff>:/icons/globe_network.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>32</width>
+                    <height>32</height>
+                   </size>
+                  </property>
+                  <property name="toolButtonStyle">
+                   <enum>Qt::ToolButtonTextUnderIcon</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QToolButton" name="runScriptButton">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">padding: 5px;</string>
+                  </property>
+                  <property name="text">
+                   <string>Run Script</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../resources/application_resources.qrc">
+                    <normaloff>:/icons/script_go.png</normaloff>:/icons/script_go.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>32</width>
+                    <height>32</height>
+                   </size>
+                  </property>
+                  <property name="toolButtonStyle">
+                   <enum>Qt::ToolButtonTextUnderIcon</enum>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QLabel" name="recentsListTitle">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -282,25 +249,179 @@
                </font>
               </property>
               <property name="text">
-               <string>Templates &amp; Samples</string>
+               <string>Recent</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="templatesSearchEdit">
-              <property name="text">
-               <string extracomment="The contents of the search box the user can type in to search for recent demo projects">Search project templates...</string>
+             <spacer name="verticalSpacer">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Maximum</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>10</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="geometrize::dialog::RecentJobsList" name="recentsList">
+              <property name="sortingEnabled">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
            </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_4">
+          </widget>
+          <widget class="QWidget" name="templatesWidget" native="true">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>1</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>600</width>
+             <height>0</height>
+            </size>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_4">
             <item>
-             <spacer name="horizontalSpacer_3">
+             <layout class="QHBoxLayout" name="horizontalLayout_3">
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_3">
+                <item>
+                 <widget class="QLabel" name="templatesTitle">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>16</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Templates &amp; Samples</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="templatesSearchEdit">
+                  <property name="text">
+                   <string extracomment="The contents of the search box the user can type in to search for recent demo projects">Search project templates...</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_4">
+                <item>
+                 <spacer name="horizontalSpacer_3">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeType">
+                   <enum>QSizePolicy::Fixed</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <layout class="QVBoxLayout" name="verticalLayout_2">
+                  <item>
+                   <widget class="QLabel" name="moreResourcesLink">
+                    <property name="font">
+                     <font>
+                      <pointsize>11</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string notr="true">More Resources Link</string>
+                    </property>
+                    <property name="openExternalLinks">
+                     <bool>true</bool>
+                    </property>
+                    <property name="textInteractionFlags">
+                     <set>Qt::TextBrowserInteraction</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="tutorialsLink">
+                    <property name="text">
+                     <string notr="true">Tutorials Link</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                    </property>
+                    <property name="openExternalLinks">
+                     <bool>true</bool>
+                    </property>
+                    <property name="textInteractionFlags">
+                     <set>Qt::TextBrowserInteraction</set>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QScrollArea" name="scrollArea">
+              <property name="frameShape">
+               <enum>QFrame::NoFrame</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>0</number>
+              </property>
+              <property name="widgetResizable">
+               <bool>true</bool>
+              </property>
+              <widget class="QWidget" name="scrollableWidget">
+               <property name="geometry">
+                <rect>
+                 <x>0</x>
+                 <y>0</y>
+                 <width>839</width>
+                 <height>551</height>
+                </rect>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_6">
+                <item>
+                 <widget class="geometrize::dialog::TemplateGrid" name="templateGrid" native="true">
+                  <property name="autoFillBackground">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </widget>
+            </item>
+            <item>
+             <spacer name="verticalSpacer_3">
               <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+               <enum>Qt::Vertical</enum>
               </property>
               <property name="sizeType">
                <enum>QSizePolicy::Fixed</enum>
@@ -308,120 +429,35 @@
               <property name="sizeHint" stdset="0">
                <size>
                 <width>20</width>
-                <height>20</height>
+                <height>10</height>
                </size>
               </property>
              </spacer>
-            </item>
-            <item>
-             <layout class="QVBoxLayout" name="verticalLayout_2">
-              <item>
-               <widget class="QLabel" name="moreResourcesLink">
-                <property name="font">
-                 <font>
-                  <pointsize>11</pointsize>
-                 </font>
-                </property>
-                <property name="text">
-                 <string notr="true">More Resources Link</string>
-                </property>
-                <property name="openExternalLinks">
-                 <bool>true</bool>
-                </property>
-                <property name="textInteractionFlags">
-                 <set>Qt::TextBrowserInteraction</set>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="tutorialsLink">
-                <property name="text">
-                 <string notr="true">Tutorials Link</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                </property>
-                <property name="openExternalLinks">
-                 <bool>true</bool>
-                </property>
-                <property name="textInteractionFlags">
-                 <set>Qt::TextBrowserInteraction</set>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <widget class="QScrollArea" name="scrollArea">
-          <property name="frameShape">
-           <enum>QFrame::NoFrame</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Plain</enum>
-          </property>
-          <property name="lineWidth">
-           <number>0</number>
-          </property>
-          <property name="widgetResizable">
-           <bool>true</bool>
-          </property>
-          <widget class="QWidget" name="scrollableWidget">
-           <property name="geometry">
-            <rect>
-             <x>0</x>
-             <y>0</y>
-             <width>851</width>
-             <height>278</height>
-            </rect>
-           </property>
-           <layout class="QVBoxLayout" name="verticalLayout_6">
-            <item>
-             <widget class="geometrize::dialog::TemplateGrid" name="templateGrid" native="true">
-              <property name="autoFillBackground">
-               <bool>true</bool>
-              </property>
-             </widget>
             </item>
            </layout>
           </widget>
          </widget>
         </item>
-        <item>
-         <spacer name="verticalSpacer_3">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeType">
-           <enum>QSizePolicy::Fixed</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>10</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
        </layout>
       </widget>
-     </widget>
-    </item>
-    <item>
-     <widget class="geometrize::dialog::ScriptConsole" name="consoleWidget" native="true">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_8"/>
+      <widget class="geometrize::dialog::ScriptConsole" name="consoleWidget" native="true">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_8"/>
+      </widget>
      </widget>
     </item>
    </layout>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
-  <widget class="QMenuBar" name="menubar">
+  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>

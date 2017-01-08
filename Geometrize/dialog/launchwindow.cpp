@@ -31,7 +31,7 @@ public:
         ui->setupUi(q);
         ui->consoleWidget->setVisible(false);
 
-        const QString moreResourcesLabel{tr("Get more templates online")};
+        const QString moreResourcesLabel{tr("Get more online")};
         ui->moreResourcesLink->setText(R"(<a href=")" + constants::MORE_RESOURCES_URL + R"(" style="text-decoration:none;">)" + moreResourcesLabel + R"(</a>)");
 
         const QString tutorialsLabel{tr("Video tutorials")};

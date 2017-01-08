@@ -1,10 +1,17 @@
 #pragma once
 
+#include <memory>
+
 #include <QWidget>
 
 namespace Ui
 {
 class ScriptConsole;
+}
+
+namespace chaiscript
+{
+class ChaiScript;
 }
 
 namespace geometrize
@@ -24,8 +31,13 @@ public:
     explicit ScriptConsole(QWidget* parent = 0);
     ~ScriptConsole();
 
+    void setEngine(chaiscript::ChaiScript* engine);
+
 private:
     Ui::ScriptConsole* ui;
+
+    class ScriptConsoleImpl;
+    std::unique_ptr<ScriptConsoleImpl> d;
 };
 
 }
