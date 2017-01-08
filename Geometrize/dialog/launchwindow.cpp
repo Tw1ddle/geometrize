@@ -8,6 +8,8 @@
 #include <QMap>
 #include <QMenu>
 
+#include "chaiscript/chaiscript.hpp"
+
 #include "constants.h"
 #include "common/sharedapp.h"
 #include "common/uiactions.h"
@@ -16,6 +18,7 @@
 #include "formatsupport.h"
 #include "dialog/recentitemwidget.h"
 #include "recentitems.h"
+#include "script/chaiscriptcreator.h"
 
 namespace geometrize
 {
@@ -26,10 +29,11 @@ namespace dialog
 class LaunchWindow::LaunchWindowImpl
 {
 public:
-    LaunchWindowImpl(LaunchWindow* pQ, Ui::LaunchWindow* pUi) : q{pQ}, ui{pUi}
+    LaunchWindowImpl(LaunchWindow* pQ, Ui::LaunchWindow* pUi) : q{pQ}, ui{pUi}, m_engine{script::createChaiScript()}
     {
         ui->setupUi(q);
         ui->consoleWidget->setVisible(false);
+        ui->consoleWidget->setEngine(m_engine.get());
 
         const QString moreResourcesLabel{tr("Get more online")};
         ui->moreResourcesLink->setText(R"(<a href=")" + constants::MORE_RESOURCES_URL + R"(" style="text-decoration:none;">)" + moreResourcesLabel + R"(</a>)");
@@ -83,6 +87,7 @@ public:
 private:
     LaunchWindow* q;
     Ui::LaunchWindow* ui;
+    std::unique_ptr<chaiscript::ChaiScript> m_engine;
 };
 
 LaunchWindow::LaunchWindow() :
