@@ -9,6 +9,7 @@
 #include "chaiscript/chaiscript.hpp"
 #include "formatsupport.h"
 #include "script/scriptrunner.h"
+#include "templatemanifest.h"
 #include "util.h"
 
 namespace geometrize
@@ -26,10 +27,10 @@ TemplateButton::TemplateButton(chaiscript::ChaiScript* const templateLoader, con
     ui->setupUi(this);
 
     const QString firstImageFile{QString::fromStdString(util::getFirstFileWithExtensions(m_templateFolder.toStdString(), format::getSupportedImageFileExtensions(false)))};
+    const TemplateManifest manifest(util::getFirstFileWithExtensions(m_templateFolder.toStdString(), format::getSupportedTemplateManifestFileExtensions()));
 
-    setToolTip(firstImageFile);
-
-    ui->titleLabel->setText("item name"); // TODO set title to the name of the artwork or actual template action
+    setToolTip(QString::fromStdString(manifest.getName() + " (" + manifest.getLicense() + ")"));
+    ui->titleLabel->setText(QString::fromStdString(manifest.getName()));
 
     if(!firstImageFile.isEmpty()) {
         const QPixmap thumbnail(firstImageFile);

@@ -15,11 +15,17 @@ namespace format
 {
 
 /**
- * @brief getSupportedImageFileExtensions Gets a list of supported image file extensions for loading.
+ * @brief getSupportedImageFileExtensions Gets the supported image file extensions for loading.
  * @param includeDotPrefix Whether to include the dot prefix on file extensions e.g. "jpg" or ".jpg".
  * @return The list of supported image file extensions.
  */
 std::vector<std::string> getSupportedImageFileExtensions(const bool includeDotPrefix);
+
+/**
+ * @brief getSupportedTemplateManifestFileExtensions Gets the supported template manifest file extensions for serialization and de-serialization.
+ * @return The list of supported template manifest file extensions.
+ */
+std::vector<std::string> getSupportedTemplateManifestFileExtensions();
 
 /**
  * @brief getUrls Gets a list of URLs from a Qt MimeData item.

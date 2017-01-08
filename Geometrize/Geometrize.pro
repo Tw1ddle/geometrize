@@ -50,7 +50,8 @@ SOURCES += main.cpp \
     script/bindingswrapper.cpp \
     script/chaiscriptcreator.cpp \
     script/scriptoptions.cpp \
-    script/scriptrunner.cpp
+    script/scriptrunner.cpp \
+    templatemanifest.cpp
 
 HEADERS += chaiscript/chaiscript.hpp \
     cereal/archives/adapters.hpp \
@@ -186,12 +187,10 @@ HEADERS += chaiscript/chaiscript.hpp \
     script/chaiscriptcreator.h \
     script/scriptoptions.h \
     script/scriptrunner.h \
-    serialization/preferencesserializer.h \
     serialization/preferencesdata.h \
     serialization/imagejobpreferencesdata.h \
-    serialization/imagejobpreferencesserializer.h \
-    serialization/templatemetadataserializer.h \
-    serialization/templatemetadata.h
+    serialization/templatemetadata.h \
+    templatemanifest.h
 
 FORMS += dialog/imagejobwindow.ui \
     dialog/aboutdialog.ui \
