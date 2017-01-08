@@ -30,15 +30,16 @@ TemplateButton::TemplateButton(chaiscript::ChaiScript* const templateLoader, con
     const TemplateManifest manifest(util::getFirstFileWithExtensions(m_templateFolder.toStdString(), format::getSupportedTemplateManifestFileExtensions()));
 
     setToolTip(QString::fromStdString(manifest.getName() + " (" + manifest.getLicense() + ")"));
-    ui->titleLabel->setText(QString::fromStdString(manifest.getName()));
 
     if(!firstImageFile.isEmpty()) {
         const QPixmap thumbnail(firstImageFile);
         if(!thumbnail.isNull()) {
-            const QSize size{ui->imageLabel->size()};
+            const QSize size{170, 150};
             ui->imageLabel->setPixmap(thumbnail.scaled(size, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation));
         }
     }
+
+    ui->titleLabel->setText(QString::fromStdString(manifest.getName()));
 
     connect(this, &TemplateButton::clicked, [this]() {
         const std::vector<std::string> scripts{util::getScriptsForPath(m_templateFolder.toStdString())};

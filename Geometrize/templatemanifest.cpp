@@ -1,39 +1,59 @@
 #include "templatemanifest.h"
 
+#include <assert.h>
 #include <fstream>
+
+#include "serialization/templatemetadata.h"
+#include "cereal/archives/json.hpp"
 
 namespace geometrize
 {
 
-TemplateManifest::TemplateManifest(const std::string& manifestFilepath)
+class TemplateManifest::TemplateManifestImpl
 {
-    std::ifstream input(manifestFilepath);
-
-    try {
-        m_data.load(cereal::JSONInputArchive(input));
-    } catch(...) {
-        assert(0 && "Failed to read template manifest");
+public:
+    TemplateManifestImpl(const std::string& manifestFilepath)
+    {
+        std::ifstream input(manifestFilepath);
+        try {
+            m_data.load(cereal::JSONInputArchive(input));
+        } catch(...) {
+            assert(0 && "Failed to read template manifest");
+        }
     }
+    ~TemplateManifestImpl() = default;
+    TemplateManifestImpl& operator=(const TemplateManifestImpl&) = default;
+    TemplateManifestImpl(const TemplateManifestImpl&) = default;
+
+    serialization::TemplateMetadata m_data;
+};
+
+TemplateManifest::TemplateManifest(const std::string& manifestFilepath) : d{std::make_unique<TemplateManifest::TemplateManifestImpl>(manifestFilepath)}
+{
+}
+
+TemplateManifest::~TemplateManifest()
+{
 }
 
 std::string TemplateManifest::getName() const
 {
-    return m_data.name;
+    return d->m_data.name;
 }
 
 std::vector<std::string> TemplateManifest::getTags() const
 {
-    return m_data.tags;
+    return d->m_data.tags;
 }
 
 std::vector<std::string> TemplateManifest::getAuthors() const
 {
-    return m_data.authors;
+    return d->m_data.authors;
 }
 
 std::string TemplateManifest::getLicense() const
 {
-    return m_data.license;
+    return d->m_data.license;
 }
 
 }
