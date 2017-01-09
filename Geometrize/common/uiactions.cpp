@@ -19,6 +19,7 @@
 #include "dialog/launchwindow.h"
 #include "dialog/openurldialog.h"
 #include "dialog/preferencestabdialog.h"
+#include "dialog/recentjobslist.h"
 #include "dialog/quitdialog.h"
 #include "dialog/runscriptdialog.h"
 #include "formatsupport.h"
@@ -115,7 +116,7 @@ ImageJobContext* createImageJobAndUpdateRecents(QWidget* parent, const QUrl& url
         return nullptr;
     }
 
-    app::SharedApp::get().getRecentFiles().add(url.toString(), "TODO"); // TODO extract display title
+    app::SharedApp::get().getRecentFiles().add(url.toString(), dialog::RecentJobsList::getDisplayNameForJobPath(url)); // TODO extract display title
     return ui::createImageJob(parent, url.toString(), pixmap);
 }
 

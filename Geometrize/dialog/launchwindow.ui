@@ -357,7 +357,7 @@
                      <bool>true</bool>
                     </property>
                     <property name="textInteractionFlags">
-                     <set>Qt::TextBrowserInteraction</set>
+                     <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse</set>
                     </property>
                    </widget>
                   </item>
@@ -373,7 +373,7 @@
                      <bool>true</bool>
                     </property>
                     <property name="textInteractionFlags">
-                     <set>Qt::TextBrowserInteraction</set>
+                     <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse</set>
                     </property>
                    </widget>
                   </item>

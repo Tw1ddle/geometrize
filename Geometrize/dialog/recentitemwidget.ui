@@ -7,8 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>200</width>
-    <height>120</height>
+    <height>130</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>Form</string>
@@ -19,7 +25,7 @@
      <item>
       <widget class="QLabel" name="itemTypeIcon">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+        <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -37,21 +43,39 @@
      </item>
      <item>
       <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="spacing">
+        <number>4</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
        <item>
-        <widget class="QLabel" name="itemDisplayName">
+        <widget class="geometrize::dialog::ElidedLabel" name="itemDisplayName">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <sizepolicy hsizetype="Ignored" vsizetype="Expanding">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="font">
           <font>
-           <pointsize>10</pointsize>
+           <pointsize>11</pointsize>
           </font>
          </property>
          <property name="text">
           <string notr="true">displayName</string>
+         </property>
+         <property name="textFormat">
+          <enum>Qt::PlainText</enum>
+         </property>
+         <property name="scaledContents">
+          <bool>false</bool>
+         </property>
+         <property name="margin">
+          <number>4</number>
+         </property>
+         <property name="indent">
+          <number>-1</number>
          </property>
          <property name="textInteractionFlags">
           <set>Qt::NoTextInteraction</set>
@@ -59,15 +83,37 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="itemPath">
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Maximum</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>2</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="geometrize::dialog::ElidedLabel" name="itemPath">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <sizepolicy hsizetype="Ignored" vsizetype="Expanding">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="text">
           <string notr="true">itemPath</string>
+         </property>
+         <property name="textFormat">
+          <enum>Qt::PlainText</enum>
+         </property>
+         <property name="margin">
+          <number>4</number>
          </property>
          <property name="textInteractionFlags">
           <set>Qt::NoTextInteraction</set>
@@ -80,6 +126,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>geometrize::dialog::ElidedLabel</class>
+   <extends>QLabel</extends>
+   <header>dialog/elidedlabel.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

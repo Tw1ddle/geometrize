@@ -22,6 +22,7 @@ public:
     RecentJobsListImpl(RecentJobsList* pQ) : q{pQ}
     {
         q->setSizeAdjustPolicy(QListWidget::AdjustToContents);
+        q->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     }
 
     RecentJobsListImpl operator=(const RecentJobsListImpl&) = delete;
@@ -39,6 +40,22 @@ public:
         q->clear();
         setupConnections();
         loadExistingItems();
+    }
+
+    static QString getDisplayNameForJobPath(const QUrl& url)
+    {
+        if(url.isEmpty()) {
+            return tr("Empty URL");
+        }
+
+        // Look for a filename first
+        const QString fileName{url.fileName(QUrl::FullyDecoded)};
+        if(!fileName.isEmpty() ) {
+            return fileName;
+        }
+
+        // Otherwise return only a trimmed part of the URL's path
+        return url.path(QUrl::FullyDecoded).rightJustified(50, '.', false);
     }
 
 private:
@@ -87,7 +104,7 @@ private:
         QListWidgetItem* item{new QListWidgetItem()};
         dialog::RecentItemWidget* button{new dialog::RecentItemWidget(recentItem)};
 
-        item->setToolTip(recentItem.getDisplayName()); // TODO?
+        item->setToolTip(recentItem.getKey());
 
         item->setSizeHint(button->sizeHint());
         q->addItem(item);
@@ -111,6 +128,11 @@ void RecentJobsList::setRecentItems(RecentItems* recents)
 RecentItems* RecentJobsList::getRecentItems()
 {
     return d->getRecentItems();
+}
+
+QString RecentJobsList::getDisplayNameForJobPath(const QUrl &url)
+{
+    return RecentJobsListImpl::getDisplayNameForJobPath(url);
 }
 
 void RecentJobsList::contextMenuEvent(QContextMenuEvent* e)

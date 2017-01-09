@@ -21,7 +21,7 @@ namespace dialog
 {
 
 /**
- * @brief The ScriptConsole class models a console-style input
+ * @brief The ScriptConsole class models a command line and output window.
  */
 class ScriptConsole : public QWidget
 {

@@ -16,7 +16,7 @@ namespace dialog
 {
 
 /**
- * @brief The RecentJobsList class models the UI for a list of recently opened jobs/files.
+ * @brief The RecentJobsList class models the UI for a list of recently opened jobs.
  */
 class RecentJobsList : public QListWidget
 {
@@ -35,6 +35,13 @@ public:
      * @return The recent items object.
      */
     RecentItems* getRecentItems();
+
+    /**
+     * @brief getDisplayNameForJobPath Extracts a display name suitable for displaying to the user from the job URL/file path.
+     * @param url The URL pointing to the job (could be a local file, a webpage, a file from a template or sample, whatever).
+     * @return A display name for the job, suitable for showing to the user in the recent jobs list.
+     */
+    static QString getDisplayNameForJobPath(const QUrl& url);
 
 signals:
     void signal_contextMenuRequested(QListWidgetItem* item, QPoint pos);

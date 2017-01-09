@@ -32,7 +32,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="Geometrize">
       <attribute name="title">
@@ -93,7 +93,7 @@
      </widget>
      <widget class="QWidget" name="RapidJSON">
       <attribute name="title">
-       <string>RapidJSON</string>
+       <string notr="true">RapidJSON</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_10">
        <item>
@@ -103,7 +103,7 @@
      </widget>
      <widget class="QWidget" name="RapidXml">
       <attribute name="title">
-       <string>RapidXml</string>
+       <string notr="true">RapidXml</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_9">
        <item>
@@ -118,6 +118,16 @@
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
         <widget class="QTextBrowser" name="flowLayoutLicense"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="ElidedLabel">
+      <attribute name="title">
+       <string notr="true">ElidedLabel</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_12">
+       <item>
+        <widget class="QTextBrowser" name="elidedLabelLicense"/>
        </item>
       </layout>
      </widget>

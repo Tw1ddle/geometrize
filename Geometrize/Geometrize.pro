@@ -31,15 +31,16 @@ SOURCES += main.cpp \
     common/sharedapp.cpp \
     common/uiactions.cpp \
     dialog/aboutdialog.cpp \
-    dialog/quitdialog.cpp \
-    dialog/licensedialog.cpp \
     dialog/creditsdialog.cpp \
-    dialog/preferencestabdialog.cpp \
+    dialog/elidedlabel.cpp \
     dialog/imagejobwindow.cpp \
     dialog/launchwindow.cpp \
+    dialog/licensedialog.cpp \
+    dialog/openurldialog.cpp \
+    dialog/preferencestabdialog.cpp \
+    dialog/quitdialog.cpp \
     dialog/recentitemwidget.cpp \
     dialog/recentjobslist.cpp \
-    dialog/openurldialog.cpp \
     dialog/runscriptdialog.cpp \
     dialog/scriptconsole.cpp \
     dialog/templatebutton.cpp \
@@ -168,12 +169,13 @@ HEADERS += chaiscript/chaiscript.hpp \
     lib/geometrizer/geometrizer/state.h \
     lib/geometrizer/geometrizer/util.h \
     dialog/aboutdialog.h \
-    dialog/quitdialog.h \
-    dialog/licensedialog.h \
     dialog/creditsdialog.h \
-    dialog/preferencestabdialog.h \
+    dialog/elidedlabel.h \
     dialog/imagejobwindow.h \
     dialog/launchwindow.h \
+    dialog/licensedialog.h \
+    dialog/preferencestabdialog.h \
+    dialog/quitdialog.h \
     dialog/recentitemwidget.h \
     dialog/recentjobslist.h \
     dialog/openurldialog.h \
@@ -194,16 +196,16 @@ HEADERS += chaiscript/chaiscript.hpp \
     serialization/imagejobpreferencesdata.h \
     serialization/templatemetadata.h
 
-FORMS += dialog/imagejobwindow.ui \
-    dialog/aboutdialog.ui \
-    dialog/quitdialog.ui \
-    dialog/globalpreferencesdialog.ui \
-    dialog/licensedialog.ui \
+FORMS += dialog/aboutdialog.ui \
     dialog/creditsdialog.ui \
-    dialog/preferencestabdialog.ui \
+    dialog/globalpreferencesdialog.ui \
+    dialog/imagejobwindow.ui \
     dialog/launchwindow.ui \
+    dialog/licensedialog.ui \
     dialog/openurldialog.ui \
-    dialog/runscriptdialog.ui \
-    dialog/templatebutton.ui \
+    dialog/preferencestabdialog.ui \
+    dialog/quitdialog.ui \
     dialog/recentitemwidget.ui \
-    dialog/scriptconsole.ui
+    dialog/runscriptdialog.ui \
+    dialog/scriptconsole.ui \
+    dialog/templatebutton.ui
