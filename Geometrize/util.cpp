@@ -2,6 +2,8 @@
 
 #include <assert.h>
 
+#include <QApplication>
+#include <QClipboard>
 #include <QDebug>
 #include <QDesktopServices>
 #include <QDir>
@@ -167,13 +169,24 @@ std::string getDirectoryForFilePath(const std::string& filePath)
     return fileInfo.absoluteDir().absolutePath().toStdString();
 }
 
-bool openDirectoryInDefaultExplorer(const std::string& dirPath)
+bool openInDefaultApplication(const std::string& path)
 {
-    const QDir dir{QDir::toNativeSeparators(QString::fromStdString(dirPath))};
-    if(!dir.exists()) {
-        return false;
-    }
-    return QDesktopServices::openUrl(QUrl::fromLocalFile(dir.absolutePath()));
+    return QDesktopServices::openUrl(QUrl::fromUserInput(QString::fromStdString(path)));
+}
+
+void clearGlobalClipboard()
+{
+    QApplication::clipboard()->clear();
+}
+
+std::string getGlobalClipboardText()
+{
+    return QApplication::clipboard()->text().toStdString();
+}
+
+void setGlobalClipboardText(const std::string& text)
+{
+    QApplication::clipboard()->setText(QString::fromStdString(text));
 }
 
 }

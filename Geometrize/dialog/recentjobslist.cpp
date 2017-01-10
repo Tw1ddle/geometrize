@@ -88,27 +88,38 @@ private:
         }));
 
         m_connections.push_back(connect(m_recents, &RecentItems::signal_cleared, [this]() {
-            q->clear();
+            clear();
         }));
 
-        m_connections.push_back(connect(m_recents, &RecentItems::signal_removed, [this](const QString& item) {
-            const QList<QListWidgetItem*> items{findItems(item, Qt::MatchExactly)};
-            for(auto* item : items) {
-                q->removeItemWidget(item);
-            }
+        m_connections.push_back(connect(m_recents, &RecentItems::signal_removed, [this](const QString& key) {
+            removeItem(key);
         }));
     }
 
-    void addItem(const RecentItem& recentItem)
+    void addItem(const RecentItem& recentItem) const
     {
-        QListWidgetItem* item{new QListWidgetItem()};
         dialog::RecentItemWidget* button{new dialog::RecentItemWidget(recentItem)};
-
+        QListWidgetItem* item{new QListWidgetItem()};
         item->setToolTip(recentItem.getKey());
-
         item->setSizeHint(button->sizeHint());
+        item->setData(Qt::UserRole, recentItem.getKey());
         q->addItem(item);
         q->setItemWidget(item, button);
+    }
+
+    void removeItem(const QString& key) const
+    {
+        for(int i = 0; i < q->count(); i++) {
+            if(q->item(i)->data(Qt::UserRole).toString() == key) {
+                q->takeItem(i);
+                return;
+            }
+        }
+    }
+
+    void clear() const
+    {
+        q->clear();
     }
 
     RecentJobsList* q;
@@ -133,14 +144,6 @@ RecentItems* RecentJobsList::getRecentItems()
 QString RecentJobsList::getDisplayNameForJobPath(const QUrl &url)
 {
     return RecentJobsListImpl::getDisplayNameForJobPath(url);
-}
-
-void RecentJobsList::contextMenuEvent(QContextMenuEvent* e)
-{
-    if(e->reason() != QContextMenuEvent::Mouse) {
-        return;
-    }
-    emit signal_contextMenuRequested(itemAt(e->pos()), mapToGlobal(e->pos()));
 }
 
 void RecentJobsList::keyPressEvent(QKeyEvent* e)

@@ -100,11 +100,28 @@ std::vector<std::string> getTemplateFoldersForPath(const std::string& dirPath);
 std::string getDirectoryForFilePath(const std::string& filePath);
 
 /**
- * @brief openDirectoryInDefaultExplorer Opens the given directory in the default file explorer.
- * @param dirPath The directory to open.
- * @return True if the directory exists and should open, else false.
+ * @brief openInDefaultApplication Opens the given path in the default application.
+ * @param path The path to the resource to open.
+ * @return True if the directory, file, URL (or whatever) should open, else false.
  */
-bool openDirectoryInDefaultExplorer(const std::string& dirPath);
+bool openInDefaultApplication(const std::string& path);
+
+/**
+ * @brief clearGlobalClipboard Clears the global system clipboard contents.
+ */
+void clearGlobalClipboard();
+
+/**
+ * @brief getGlobalClipboardText Gets the global system clipboard text.
+ * @return The global system clipboard text, or an empty string if the clipboard does not contain any text.
+ */
+std::string getGlobalClipboardText();
+
+/**
+ * @brief setClipboardText Sets the global system clipboard text.
+ * @param text The text to set as the clipboard text.
+ */
+void setGlobalClipboardText(const std::string& text);
 
 }
 

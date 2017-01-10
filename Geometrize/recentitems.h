@@ -18,12 +18,14 @@ class RecentItems : public QObject
     Q_OBJECT
 public:
     static const QString RECENTLY_OPENED_ITEMS_SETTINGS_GROUP; ///< The base path group for keeping track of recently opened items.
+    static const unsigned int MAX_RECENTLY_OPENED_ITEMS_COUNT; ///< The maximum number of recently opened items to keep track of.
 
     /**
      * @brief RecentItems Creates a new RecentItems instance.
      * @param group The base path group to use for storing the recent items in settings e.g. "recent_image_paths", "recent_video_names" etc.
+     * @param maxItems The maximum number of items to load. The most recent items will be loaded initially, and the oldest items will be replaced when new items are added over the limit.
      */
-    RecentItems(const QString& group);
+    RecentItems(const QString& group, unsigned int maxItems);
 
     RecentItems& operator=(RecentItems&);
     RecentItems(RecentItems&);

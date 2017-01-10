@@ -112,9 +112,24 @@ void openJob(const std::string& url)
     geometrize::common::ui::openJobs(QStringList(QString::fromStdString(url)));
 }
 
-bool openDirectoryInDefaultExplorer(const std::string& dirPath)
+bool openInDefaultApplication(const std::string& path)
 {
-    return geometrize::util::openDirectoryInDefaultExplorer(dirPath);
+    return geometrize::util::openInDefaultApplication(path);
+}
+
+void clearGlobalClipboard()
+{
+    geometrize::util::clearGlobalClipboard();
+}
+
+std::string getGlobalClipboardText()
+{
+    return geometrize::util::getGlobalClipboardText();
+}
+
+void setGlobalClipboardText(const std::string& text)
+{
+    geometrize::util::setGlobalClipboardText(text);
 }
 
 }

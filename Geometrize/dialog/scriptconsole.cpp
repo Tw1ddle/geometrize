@@ -22,18 +22,19 @@ public:
         ui->outputView->append(tr("Type 'help' for a list of commands"));
 
         connect(ui->commandLine, &QLineEdit::returnPressed, [this]() {
+            const QString text{ui->commandLine->text()};
+            const std::string stdText{ui->commandLine->text().toStdString()};
+
+            ui->outputView->append(text);
+            m_history.push_back(stdText);
+
             if(m_engine != nullptr) {
-                if(ui->commandLine->text() == "help") { // TODO?
-                    const auto state{m_engine->get_state()};
-                    const auto funcs{state.engine_state.m_functions};
-                    for(auto it = funcs.begin(); it != funcs.end(); ++it) {
-                        ui->outputView->append(QString::fromStdString(it->first));
-                    }
+                if(text == "help") { // TODO?
+                    printEngineFunctions();
                 } else {
-                    script::runScript(ui->commandLine->text().toStdString(), *m_engine, nullptr);
+                    script::runScript(stdText, *m_engine, nullptr);
                 }
             }
-            ui->outputView->append(ui->commandLine->text());
             ui->commandLine->clear();
         });
     }
@@ -48,9 +49,19 @@ public:
     }
 
 private:
+    void printEngineFunctions()
+    {
+        const auto state{m_engine->get_state()};
+        const auto funcs{state.engine_state.m_functions};
+        for(auto it = funcs.begin(); it != funcs.end(); ++it) {
+            ui->outputView->append(QString::fromStdString(it->first));
+        }
+    }
+
     ScriptConsole* q;
     Ui::ScriptConsole* ui;
     chaiscript::ChaiScript* m_engine;
+    std::vector<std::string> m_history;
 };
 
 ScriptConsole::ScriptConsole(QWidget* parent) : QWidget(parent), ui(new Ui::ScriptConsole), d{std::make_unique<ScriptConsole::ScriptConsoleImpl>(this, ui)}

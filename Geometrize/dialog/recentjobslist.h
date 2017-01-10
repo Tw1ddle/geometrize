@@ -43,11 +43,7 @@ public:
      */
     static QString getDisplayNameForJobPath(const QUrl& url);
 
-signals:
-    void signal_contextMenuRequested(QListWidgetItem* item, QPoint pos);
-
 private:
-    virtual void contextMenuEvent(QContextMenuEvent* e) override;
     virtual void keyPressEvent(QKeyEvent* e) override;
 
     class RecentJobsListImpl;

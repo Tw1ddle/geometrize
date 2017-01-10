@@ -26,6 +26,8 @@ TemplateButton::TemplateButton(chaiscript::ChaiScript* const templateLoader, con
 {
     ui->setupUi(this);
 
+    // TODO add right click context menu, 'explore'?
+
     const QString firstImageFile{QString::fromStdString(util::getFirstFileWithExtensions(m_templateFolder.toStdString(), format::getSupportedImageFileExtensions(false)))};
     const TemplateManifest manifest(util::getFirstFileWithExtensions(m_templateFolder.toStdString(), format::getSupportedTemplateManifestFileExtensions()));
 

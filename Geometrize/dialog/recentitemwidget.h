@@ -29,6 +29,8 @@ public:
 private:
     Ui::RecentItemWidget* ui;
     RecentItem m_item;
+
+    virtual void contextMenuEvent(QContextMenuEvent* e) override;
 };
 
 }

@@ -10,11 +10,12 @@ namespace geometrize
 {
 
 const QString RecentItems::RECENTLY_OPENED_ITEMS_SETTINGS_GROUP = "recently_opened_items";
+const unsigned int RecentItems::MAX_RECENTLY_OPENED_ITEMS_COUNT = 75;
 
 class RecentItems::RecentItemsImpl
 {
 public:
-    RecentItemsImpl(const QString group) : m_group{group}
+    RecentItemsImpl(const QString group, unsigned int maxItems) : m_group{group}, m_maxItems{maxItems}
     {
         assert(m_group.length() > 0 && "Base group cannot be empty");
         assert(!m_group.contains('/') && "Base group must not contain forward slashes");
@@ -42,7 +43,7 @@ public:
         return recentItems;
     }
 
-    bool contains(const QString& value)
+    bool contains(const QString& value) const
     {
         QSettings settings;
         settings.beginGroup(m_group);
@@ -101,6 +102,34 @@ public:
         settings.endGroup();
     }
 
+    unsigned int getItemCount() const
+    {
+        QSettings settings;
+        settings.beginGroup(m_group);
+        const int count{settings.childGroups().length()};
+        settings.endGroup();
+
+        return count;
+    }
+
+    unsigned int getMaxItemCount() const
+    {
+        return m_maxItems;
+    }
+
+    QString getOldestItemKey() const
+    {
+        QList<RecentItem> items{getItems()};
+        if(items.empty()) {
+            return "";
+        }
+
+        std::sort(items.begin(), items.end(), [](const RecentItem& a, const RecentItem& b) {
+            return a.getTimeStamp() < b.getTimeStamp();
+        });
+        return items.front().getKey();
+    }
+
 private:
     static QString getItemGroup()
     {
@@ -124,6 +153,7 @@ private:
     }
 
     const QString m_group; ///< The base path group for storing the recent items in settings e.g. "recent_image_paths" etc.
+    const unsigned int m_maxItems; ///< The maximum number of items.
 
     static const QString ID_KEY; ///< Key for the path or URL to the item.
     static const QString DISPLAY_NAME_KEY; ///< Key for the display name of the item.
@@ -139,7 +169,7 @@ void swap(RecentItems& first, RecentItems& second)
     std::swap(first.d, second.d);
 }
 
-RecentItems::RecentItems(const QString& group) : d{std::make_unique<RecentItemsImpl>(group)}
+RecentItems::RecentItems(const QString& group, const unsigned int maxItems) : d{std::make_unique<RecentItemsImpl>(group, maxItems)}
 {
 }
 
@@ -170,8 +200,11 @@ QList<RecentItem> RecentItems::getItems() const
 
 void RecentItems::add(const QString& itemId, const QString& itemDisplayName)
 {
-    const bool preexisting{d->contains(itemId)};
+    if(d->getItemCount() > d->getMaxItemCount()) {
+        remove(d->getOldestItemKey());
+    }
 
+    const bool preexisting{d->contains(itemId)};
     if(!preexisting) {
         const RecentItem item{d->addItem(itemId, itemDisplayName)};
         emit signal_added(item);
@@ -181,14 +214,12 @@ void RecentItems::add(const QString& itemId, const QString& itemDisplayName)
 void RecentItems::remove(const QString& itemId)
 {
     d->removeItem(itemId);
-
     emit signal_removed(itemId);
 }
 
 void RecentItems::clear()
 {
     d->clearItems();
-
     emit signal_cleared();
 }
 

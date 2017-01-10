@@ -43,31 +43,12 @@ public:
 
         ui->recentsList->setRecentItems(&common::app::SharedApp::get().getRecentFiles());
 
-        connect(ui->recentsList, &RecentJobsList::itemActivated, [this](QListWidgetItem* item) {
+        connect(ui->recentsList, &RecentJobsList::itemClicked, [this](QListWidgetItem* item) {
             qDebug() << "Item activated " << item->text();
 
             // TODO deal with bad paths, use data not text
             const QStringList files{item->text()};
             openJobs(files);
-        });
-
-        connect(ui->recentsList, &RecentJobsList::signal_contextMenuRequested, [](QListWidgetItem* item, QPoint position) {
-            // TODO
-
-            QMenu itemContextMenu;
-            QAction openAction(tr("Open"));
-            itemContextMenu.addAction(&openAction);
-            QAction viewInExplorer(tr("Explore"));
-            itemContextMenu.addAction(&viewInExplorer);
-            QAction copyToClipboard(tr("Copy path to clipboard"));
-            itemContextMenu.addAction(&copyToClipboard);
-            QAction removalAction(tr("Remove from list"));
-            //connect(&removalAction, &QAction::triggered, [this, &item]() {
-                //ui->recentsList->getRecentItems()->remove(item->text()); // TODO
-            //});
-            itemContextMenu.addAction(&removalAction);
-
-            itemContextMenu.exec(position);
         });
     }
     LaunchWindowImpl operator=(const LaunchWindowImpl&) = delete;

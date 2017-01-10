@@ -38,6 +38,12 @@
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
+      <property name="styleSheet">
+       <string notr="true">QSplitter::handle
+{
+    background-color: rgba(255, 255, 255, 80);
+}</string>
+      </property>
       <property name="frameShape">
        <enum>QFrame::NoFrame</enum>
       </property>
@@ -51,7 +57,7 @@
        <bool>true</bool>
       </property>
       <property name="handleWidth">
-       <number>5</number>
+       <number>10</number>
       </property>
       <property name="childrenCollapsible">
        <bool>false</bool>
@@ -66,6 +72,12 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="styleSheet">
+           <string notr="true">QSplitter::handle
+{
+    background-color: rgba(255, 255, 255, 80);
+}</string>
+          </property>
           <property name="frameShape">
            <enum>QFrame::NoFrame</enum>
           </property>
@@ -79,7 +91,7 @@
            <bool>true</bool>
           </property>
           <property name="handleWidth">
-           <number>5</number>
+           <number>10</number>
           </property>
           <property name="childrenCollapsible">
            <bool>false</bool>
@@ -402,8 +414,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>839</width>
-                 <height>551</height>
+                 <width>834</width>
+                 <height>546</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_6">

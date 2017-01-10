@@ -1,6 +1,14 @@
 #include "recentitemwidget.h"
 #include "ui_recentitemwidget.h"
 
+#include <QAction>
+#include <QContextMenuEvent>
+#include <QMenu>
+
+#include "common/uiactions.h"
+#include "common/sharedapp.h"
+#include "util.h"
+
 namespace geometrize
 {
 
@@ -20,11 +28,44 @@ RecentItemWidget::RecentItemWidget(const RecentItem& item) :
 
     // TODO infer item type
     ui->itemTypeIcon->setPixmap(QPixmap(":/icons/folder_image.png"));
+
+    // TODO setup context menu
 }
 
 RecentItemWidget::~RecentItemWidget()
 {
     delete ui;
+}
+
+void RecentItemWidget::contextMenuEvent(QContextMenuEvent* e)
+{
+    QMenu itemContextMenu;
+
+    QAction openAction(tr("Open"));
+    itemContextMenu.addAction(&openAction);
+    connect(&openAction, &QAction::triggered, [this]() {
+        geometrize::common::ui::openJobs({m_item.getKey()});
+    });
+
+    QAction openInDefaultViewer(tr("Open in default viewer"));
+    itemContextMenu.addAction(&openInDefaultViewer);
+    connect(&openInDefaultViewer, &QAction::triggered, [this]() {
+        geometrize::util::openInDefaultApplication(m_item.getKey().toStdString());
+    });
+
+    QAction copyToClipboard(tr("Copy path to clipboard"));
+    itemContextMenu.addAction(&copyToClipboard);
+    connect(&copyToClipboard, &QAction::triggered, [this]() {
+        geometrize::util::setGlobalClipboardText(m_item.getKey().toStdString());
+    });
+
+    QAction removalAction(tr("Remove from list"));
+    itemContextMenu.addAction(&removalAction);
+    connect(&removalAction, &QAction::triggered, [this]() {
+        geometrize::common::app::SharedApp::get().getRecentFiles().remove(m_item.getKey());
+    });
+
+    itemContextMenu.exec(e->globalPos());
 }
 
 }

@@ -43,7 +43,13 @@ std::vector<std::string> getScriptsForPath(const std::string& dirPath);
 
 void openJob(const std::string& url);
 
-bool openDirectoryInDefaultExplorer(const std::string& dirPath);
+bool openInDefaultApplication(const std::string& path);
+
+void clearGlobalClipboard();
+
+std::string getGlobalClipboardText();
+
+void setGlobalClipboardText(const std::string& text);
 
 }
 
