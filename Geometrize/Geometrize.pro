@@ -28,6 +28,7 @@ SOURCES += main.cpp \
     templatemanifest.cpp \
     versioninfo.cpp \
     util.cpp \
+    analytics/analytics.cpp \
     common/sharedapp.cpp \
     common/uiactions.cpp \
     dialog/aboutdialog.cpp \
@@ -147,6 +148,7 @@ HEADERS += chaiscript/chaiscript.hpp \
     util.h \
     versioninfo.h \
     winversioninfo.h \
+    analytics/analytics.h \
     common/sharedapp.h \
     common/uiactions.h \
     lib/geometrizer/geometrizer/bitmap/bitmapdata.h \
