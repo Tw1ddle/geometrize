@@ -33,8 +33,8 @@ public:
     ~RecentItems();
 
     /**
-     * @brief getItems Gets the recent item times and names.
-     * @return A list of the recent items. Note these are unsorted.
+     * @brief getItems Gets the recent items.
+     * @return A list of the recent items, sorted from most recently interacted with to oldest.
      */
     QList<RecentItem> getItems() const;
 

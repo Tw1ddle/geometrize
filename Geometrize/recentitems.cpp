@@ -40,6 +40,9 @@ public:
         }
         settings.endGroup();
 
+        std::sort(recentItems.begin(), recentItems.end(), [](const RecentItem& a, const RecentItem& b) {
+            return a.getTimeStamp() < b.getTimeStamp();
+        });
         return recentItems;
     }
 
@@ -123,10 +126,6 @@ public:
         if(items.empty()) {
             return "";
         }
-
-        std::sort(items.begin(), items.end(), [](const RecentItem& a, const RecentItem& b) {
-            return a.getTimeStamp() < b.getTimeStamp();
-        });
         return items.front().getKey();
     }
 
