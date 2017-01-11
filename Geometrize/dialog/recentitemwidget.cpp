@@ -47,13 +47,13 @@ void RecentItemWidget::contextMenuEvent(QContextMenuEvent* e)
         geometrize::common::ui::openJobs({m_item.getKey()});
     });
 
-    QAction openInDefaultViewer(tr("Open in default viewer"));
+    QAction openInDefaultViewer(tr("Open in viewer"));
     itemContextMenu.addAction(&openInDefaultViewer);
     connect(&openInDefaultViewer, &QAction::triggered, [this]() {
         geometrize::util::openInDefaultApplication(m_item.getKey().toStdString());
     });
 
-    QAction revealInDefaultExplorer(tr("Reveal in default explorer"));
+    QAction revealInDefaultExplorer(tr("Reveal in explorer"));
     itemContextMenu.addAction(&revealInDefaultExplorer);
     connect(&revealInDefaultExplorer, &QAction::triggered, [this]() {
         geometrize::util::revealInDefaultApplication(m_item.getKey().toStdString());

@@ -3,7 +3,9 @@
 
 #include <assert.h>
 
+#include <QContextMenuEvent>
 #include <QMessageBox>
+#include <QMenu>
 #include <QPixmap>
 
 #include "chaiscript/chaiscript.hpp"
@@ -44,22 +46,46 @@ TemplateButton::TemplateButton(chaiscript::ChaiScript* const templateLoader, con
     ui->titleLabel->setText(QString::fromStdString(manifest.getName()));
 
     connect(this, &TemplateButton::clicked, [this]() {
-        const std::vector<std::string> scripts{util::getScriptsForPath(m_templateFolder.toStdString())};
-
-        if(scripts.empty()) {
-            assert(0 && "Could not find script for template");
-            return;
-        }
-
-        const std::string script{util::readFileAsString(scripts.front())};
-        m_templateLoader->set_global(chaiscript::var(m_templateFolder.toStdString()), "templateDirectory");
-        geometrize::script::runScript(script, *m_templateLoader, nullptr);
+        openTemplate();
     });
 }
 
 TemplateButton::~TemplateButton()
 {
     delete ui;
+}
+
+void TemplateButton::openTemplate()
+{
+    const std::vector<std::string> scripts{util::getScriptsForPath(m_templateFolder.toStdString())};
+
+    if(scripts.empty()) {
+        assert(0 && "Could not find script for template");
+        return;
+    }
+
+    const std::string script{util::readFileAsString(scripts.front())};
+    m_templateLoader->set_global(chaiscript::var(m_templateFolder.toStdString()), "templateDirectory");
+    geometrize::script::runScript(script, *m_templateLoader, nullptr);
+}
+
+void TemplateButton::contextMenuEvent(QContextMenuEvent* e)
+{
+    QMenu itemContextMenu;
+
+    QAction openAction(tr("Open"));
+    itemContextMenu.addAction(&openAction);
+    connect(&openAction, &QAction::triggered, [this]() {
+        openTemplate();
+    });
+
+    QAction openInDefaultViewer(tr("Reveal in explorer"));
+    itemContextMenu.addAction(&openInDefaultViewer);
+    connect(&openInDefaultViewer, &QAction::triggered, [this]() {
+        geometrize::util::openInDefaultApplication(m_templateFolder.toStdString());
+    });
+
+    itemContextMenu.exec(e->globalPos());
 }
 
 }

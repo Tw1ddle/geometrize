@@ -6,8 +6,11 @@
         <file>licenses/geometrize_license.txt</file>
         <file>licenses/qt_license.txt</file>
         <file>licenses/template_assets_license.txt</file>
-        <file>logos/logo.png</file>
-        <file>logos/logo_small.png</file>
+        <file>licenses/cereal_license.txt</file>
+        <file>licenses/rapidjson_license.txt</file>
+        <file>licenses/rapidxml_license.txt</file>
+        <file>licenses/geometrizer_license.txt</file>
+        <file>licenses/elidedlabel_license.txt</file>
         <file>icons/add.png</file>
         <file>icons/application_osx_terminal.png</file>
         <file>icons/application_xp_terminal.png</file>
@@ -31,6 +34,10 @@
         <file>icons/arrow_turn_right.png</file>
         <file>icons/arrow_undo.png</file>
         <file>icons/arrow_up.png</file>
+        <file>icons/billboard_picture.png</file>
+        <file>icons/blueprint.png</file>
+        <file>icons/blueprint_horizontal.png</file>
+        <file>icons/blueprints.png</file>
         <file>icons/clock_.png</file>
         <file>icons/clock_15.png</file>
         <file>icons/clock_45.png</file>
@@ -57,10 +64,21 @@
         <file>icons/color_adjustment_blue.png</file>
         <file>icons/color_adjustment_green.png</file>
         <file>icons/color_adjustment_red.png</file>
+        <file>icons/color_gradient.png</file>
+        <file>icons/color_management.png</file>
+        <file>icons/color_pick.png</file>
         <file>icons/color_picker.png</file>
+        <file>icons/color_picker_default.png</file>
+        <file>icons/color_picker_switch.png</file>
+        <file>icons/color_picker_transparent.png</file>
+        <file>icons/color_swatch.png</file>
+        <file>icons/color_swatches.png</file>
+        <file>icons/color_wheel.png</file>
         <file>icons/compile.png</file>
         <file>icons/compile_error.png</file>
         <file>icons/compile_warning.png</file>
+        <file>icons/compress.png</file>
+        <file>icons/compress_repair.png</file>
         <file>icons/control_cursor.png</file>
         <file>icons/control_cursor_blue.png</file>
         <file>icons/control_eject.png</file>
@@ -87,8 +105,288 @@
         <file>icons/control_start_blue.png</file>
         <file>icons/control_stop.png</file>
         <file>icons/control_stop_blue.png</file>
+        <file>icons/controller.png</file>
+        <file>icons/controller_add.png</file>
+        <file>icons/controller_delete.png</file>
+        <file>icons/controller_error.png</file>
+        <file>icons/ddr_memory.png</file>
+        <file>icons/diagnostic_chart.png</file>
+        <file>icons/domain_legal_issues.png</file>
         <file>icons/domain_names_advanced.png</file>
+        <file>icons/error.png</file>
+        <file>icons/error_add.png</file>
+        <file>icons/error_checking.png</file>
+        <file>icons/error_delete.png</file>
+        <file>icons/error_go.png</file>
         <file>icons/facebook.png</file>
+        <file>icons/film.png</file>
+        <file>icons/film_add.png</file>
+        <file>icons/film_delete.png</file>
+        <file>icons/film_edit.png</file>
+        <file>icons/film_error.png</file>
+        <file>icons/film_go.png</file>
+        <file>icons/film_key.png</file>
+        <file>icons/film_link.png</file>
+        <file>icons/film_photo.png</file>
+        <file>icons/film_save.png</file>
+        <file>icons/filter.png</file>
+        <file>icons/filter_add.png</file>
+        <file>icons/filter_advanced.png</file>
+        <file>icons/filter_clear.png</file>
+        <file>icons/filter_delete.png</file>
+        <file>icons/filter_reapply.png</file>
+        <file>icons/flag_afghanistan.png</file>
+        <file>icons/flag_albania.png</file>
+        <file>icons/flag_algeria.png</file>
+        <file>icons/flag_american_samoa.png</file>
+        <file>icons/flag_andorra.png</file>
+        <file>icons/flag_angola.png</file>
+        <file>icons/flag_anguilla.png</file>
+        <file>icons/flag_antigua_and_barbuda.png</file>
+        <file>icons/flag_argentina.png</file>
+        <file>icons/flag_armenia.png</file>
+        <file>icons/flag_aruba.png</file>
+        <file>icons/flag_australia.png</file>
+        <file>icons/flag_austria.png</file>
+        <file>icons/flag_azerbaijan.png</file>
+        <file>icons/flag_bahamas.png</file>
+        <file>icons/flag_bahrain.png</file>
+        <file>icons/flag_bangladesh.png</file>
+        <file>icons/flag_barbados.png</file>
+        <file>icons/flag_belarus.png</file>
+        <file>icons/flag_belgium.png</file>
+        <file>icons/flag_belize.png</file>
+        <file>icons/flag_benin.png</file>
+        <file>icons/flag_bermuda.png</file>
+        <file>icons/flag_bhutan.png</file>
+        <file>icons/flag_bolivia.png</file>
+        <file>icons/flag_bosnia.png</file>
+        <file>icons/flag_botswana.png</file>
+        <file>icons/flag_boy_scout.png</file>
+        <file>icons/flag_brazil.png</file>
+        <file>icons/flag_british_indian_ocean.png</file>
+        <file>icons/flag_british_virgin_islands.png</file>
+        <file>icons/flag_brunei.png</file>
+        <file>icons/flag_bulgaria.png</file>
+        <file>icons/flag_burkina_faso.png</file>
+        <file>icons/flag_burma.png</file>
+        <file>icons/flag_burundi.png</file>
+        <file>icons/flag_cambodia.png</file>
+        <file>icons/flag_cameroon.png</file>
+        <file>icons/flag_canada.png</file>
+        <file>icons/flag_cape_verde.png</file>
+        <file>icons/flag_cayman_islands.png</file>
+        <file>icons/flag_central_african_republic.png</file>
+        <file>icons/flag_chad.png</file>
+        <file>icons/flag_chile.png</file>
+        <file>icons/flag_china.png</file>
+        <file>icons/flag_colombia.png</file>
+        <file>icons/flag_comoros.png</file>
+        <file>icons/flag_congo_democratic_republic.png</file>
+        <file>icons/flag_congo_republic.png</file>
+        <file>icons/flag_cook_islands.png</file>
+        <file>icons/flag_costa_rica.png</file>
+        <file>icons/flag_cote_divoire.png</file>
+        <file>icons/flag_croatia.png</file>
+        <file>icons/flag_cuba.png</file>
+        <file>icons/flag_cyprus.png</file>
+        <file>icons/flag_czech_republic.png</file>
+        <file>icons/flag_denmark.png</file>
+        <file>icons/flag_djibouti.png</file>
+        <file>icons/flag_dominica.png</file>
+        <file>icons/flag_dominican_republic.png</file>
+        <file>icons/flag_east_timor.png</file>
+        <file>icons/flag_egypt.png</file>
+        <file>icons/flag_el_salvador.png</file>
+        <file>icons/flag_england.png</file>
+        <file>icons/flag_equador.png</file>
+        <file>icons/flag_equatorial_guinea.png</file>
+        <file>icons/flag_eritrea.png</file>
+        <file>icons/flag_estonia.png</file>
+        <file>icons/flag_ethiopia.png</file>
+        <file>icons/flag_european_union.png</file>
+        <file>icons/flag_falkland_islands.png</file>
+        <file>icons/flag_faroe_islands.png</file>
+        <file>icons/flag_fiji.png</file>
+        <file>icons/flag_finish.png</file>
+        <file>icons/flag_finland.png</file>
+        <file>icons/flag_flyaway_blue.png</file>
+        <file>icons/flag_flyaway_green.png</file>
+        <file>icons/flag_flyaway_orange.png</file>
+        <file>icons/flag_flyaway_pink.png</file>
+        <file>icons/flag_flyaway_pointed.png</file>
+        <file>icons/flag_flyaway_purple.png</file>
+        <file>icons/flag_flyaway_red.png</file>
+        <file>icons/flag_flyaway_yellow.png</file>
+        <file>icons/flag_france.png</file>
+        <file>icons/flag_french_polynesia.png</file>
+        <file>icons/flag_gabon.png</file>
+        <file>icons/flag_gambia.png</file>
+        <file>icons/flag_georgia.png</file>
+        <file>icons/flag_germany.png</file>
+        <file>icons/flag_ghana.png</file>
+        <file>icons/flag_gibraltar.png</file>
+        <file>icons/flag_great_britain.png</file>
+        <file>icons/flag_greece.png</file>
+        <file>icons/flag_green.png</file>
+        <file>icons/flag_greenland.png</file>
+        <file>icons/flag_grenada.png</file>
+        <file>icons/flag_guam.png</file>
+        <file>icons/flag_guatemala.png</file>
+        <file>icons/flag_guernsey.png</file>
+        <file>icons/flag_guinea.png</file>
+        <file>icons/flag_guinea_bissau.png</file>
+        <file>icons/flag_guyana.png</file>
+        <file>icons/flag_haiti.png</file>
+        <file>icons/flag_honduras.png</file>
+        <file>icons/flag_hong_kong.png</file>
+        <file>icons/flag_hot.png</file>
+        <file>icons/flag_hungary.png</file>
+        <file>icons/flag_iceland.png</file>
+        <file>icons/flag_india.png</file>
+        <file>icons/flag_indonesia.png</file>
+        <file>icons/flag_iran.png</file>
+        <file>icons/flag_iraq.png</file>
+        <file>icons/flag_ireland.png</file>
+        <file>icons/flag_isle_of_man.png</file>
+        <file>icons/flag_israel.png</file>
+        <file>icons/flag_italy.png</file>
+        <file>icons/flag_jamaica.png</file>
+        <file>icons/flag_japan.png</file>
+        <file>icons/flag_jersey.png</file>
+        <file>icons/flag_jordan.png</file>
+        <file>icons/flag_kazakhstan.png</file>
+        <file>icons/flag_kenya.png</file>
+        <file>icons/flag_kiribati.png</file>
+        <file>icons/flag_kuwait.png</file>
+        <file>icons/flag_kyrgyzstan.png</file>
+        <file>icons/flag_laos.png</file>
+        <file>icons/flag_latvia.png</file>
+        <file>icons/flag_lebanon.png</file>
+        <file>icons/flag_lesotho.png</file>
+        <file>icons/flag_liberia.png</file>
+        <file>icons/flag_libya.png</file>
+        <file>icons/flag_liechtenstein.png</file>
+        <file>icons/flag_lithuania.png</file>
+        <file>icons/flag_luxembourg.png</file>
+        <file>icons/flag_macau.png</file>
+        <file>icons/flag_macedonia.png</file>
+        <file>icons/flag_madagascar.png</file>
+        <file>icons/flag_malawi.png</file>
+        <file>icons/flag_malaysia.png</file>
+        <file>icons/flag_maledives.png</file>
+        <file>icons/flag_mali.png</file>
+        <file>icons/flag_malta.png</file>
+        <file>icons/flag_marshall_islands.png</file>
+        <file>icons/flag_martinique.png</file>
+        <file>icons/flag_mauretania.png</file>
+        <file>icons/flag_mauritius.png</file>
+        <file>icons/flag_mexico.png</file>
+        <file>icons/flag_micronesia.png</file>
+        <file>icons/flag_moldova.png</file>
+        <file>icons/flag_monaco.png</file>
+        <file>icons/flag_mongolia.png</file>
+        <file>icons/flag_montserrat.png</file>
+        <file>icons/flag_morocco.png</file>
+        <file>icons/flag_mozambique.png</file>
+        <file>icons/flag_namibia.png</file>
+        <file>icons/flag_nato.png</file>
+        <file>icons/flag_nauru.png</file>
+        <file>icons/flag_nepal.png</file>
+        <file>icons/flag_netherlands.png</file>
+        <file>icons/flag_netherlands_antilles.png</file>
+        <file>icons/flag_new.png</file>
+        <file>icons/flag_new_zealand.png</file>
+        <file>icons/flag_nicaragua.png</file>
+        <file>icons/flag_niger.png</file>
+        <file>icons/flag_nigeria.png</file>
+        <file>icons/flag_niue.png</file>
+        <file>icons/flag_norfolk_islands.png</file>
+        <file>icons/flag_north_korea.png</file>
+        <file>icons/flag_northern_mariana_islands.png</file>
+        <file>icons/flag_norway.png</file>
+        <file>icons/flag_olympic.png</file>
+        <file>icons/flag_oman.png</file>
+        <file>icons/flag_pakistan.png</file>
+        <file>icons/flag_palau.png</file>
+        <file>icons/flag_panama.png</file>
+        <file>icons/flag_papua_new_guinea.png</file>
+        <file>icons/flag_paraquay.png</file>
+        <file>icons/flag_peru.png</file>
+        <file>icons/flag_philippines.png</file>
+        <file>icons/flag_pitcairn_islands.png</file>
+        <file>icons/flag_poland.png</file>
+        <file>icons/flag_portugal.png</file>
+        <file>icons/flag_puerto_rico.png</file>
+        <file>icons/flag_qatar.png</file>
+        <file>icons/flag_red_cross.png</file>
+        <file>icons/flag_red_dull.png</file>
+        <file>icons/flag_romania.png</file>
+        <file>icons/flag_russia.png</file>
+        <file>icons/flag_rwanda.png</file>
+        <file>icons/flag_saint_helena.png</file>
+        <file>icons/flag_saint_kitts_and_nevis.png</file>
+        <file>icons/flag_saint_lucia.png</file>
+        <file>icons/flag_saint_pierre_and_miquelon.png</file>
+        <file>icons/flag_saint_vincent_and_grenadines.png</file>
+        <file>icons/flag_samoa.png</file>
+        <file>icons/flag_san_marino.png</file>
+        <file>icons/flag_sao_tome_and_principe.png</file>
+        <file>icons/flag_saudi_arabia.png</file>
+        <file>icons/flag_scotland.png</file>
+        <file>icons/flag_senegal.png</file>
+        <file>icons/flag_serbia_montenegro.png</file>
+        <file>icons/flag_seychelles.png</file>
+        <file>icons/flag_sierra_leone.png</file>
+        <file>icons/flag_singapore.png</file>
+        <file>icons/flag_slovakia.png</file>
+        <file>icons/flag_slovenia.png</file>
+        <file>icons/flag_solomon_islands.png</file>
+        <file>icons/flag_somalia.png</file>
+        <file>icons/flag_south_africa.png</file>
+        <file>icons/flag_south_georgia.png</file>
+        <file>icons/flag_south_korea.png</file>
+        <file>icons/flag_spain.png</file>
+        <file>icons/flag_sri_lanka.png</file>
+        <file>icons/flag_sudan.png</file>
+        <file>icons/flag_suriname.png</file>
+        <file>icons/flag_swaziland.png</file>
+        <file>icons/flag_sweden.png</file>
+        <file>icons/flag_switzerland.png</file>
+        <file>icons/flag_syria.png</file>
+        <file>icons/flag_taiwan.png</file>
+        <file>icons/flag_tajikistan.png</file>
+        <file>icons/flag_tanzania.png</file>
+        <file>icons/flag_thailand.png</file>
+        <file>icons/flag_tibet.png</file>
+        <file>icons/flag_togo.png</file>
+        <file>icons/flag_tonga.png</file>
+        <file>icons/flag_trinidad_and_tobago.png</file>
+        <file>icons/flag_tunisia.png</file>
+        <file>icons/flag_turkey.png</file>
+        <file>icons/flag_turkmenistan.png</file>
+        <file>icons/flag_turks_and_caicos_islands.png</file>
+        <file>icons/flag_tuvalu.png</file>
+        <file>icons/flag_uganda.png</file>
+        <file>icons/flag_ukraine.png</file>
+        <file>icons/flag_unesco.png</file>
+        <file>icons/flag_united_arab_emirates.png</file>
+        <file>icons/flag_united_nations.png</file>
+        <file>icons/flag_uruquay.png</file>
+        <file>icons/flag_usa.png</file>
+        <file>icons/flag_uzbekistan.png</file>
+        <file>icons/flag_vanuatu.png</file>
+        <file>icons/flag_vatican_city.png</file>
+        <file>icons/flag_venezuela.png</file>
+        <file>icons/flag_vietnam.png</file>
+        <file>icons/flag_virgin_islands.png</file>
+        <file>icons/flag_wales.png</file>
+        <file>icons/flag_wallis_and_futuna.png</file>
+        <file>icons/flag_wto.png</file>
+        <file>icons/flag_wwf.png</file>
+        <file>icons/flag_yemen.png</file>
+        <file>icons/flag_zambia.png</file>
+        <file>icons/flag_zimbabwe.png</file>
         <file>icons/flickr.png</file>
         <file>icons/folder.png</file>
         <file>icons/folder_add.png</file>
@@ -103,6 +401,7 @@
         <file>icons/folder_edit.png</file>
         <file>icons/folder_error.png</file>
         <file>icons/folder_explore.png</file>
+        <file>icons/folder_explorer.png</file>
         <file>icons/folder_feed.png</file>
         <file>icons/folder_find.png</file>
         <file>icons/folder_go.png</file>
@@ -131,11 +430,18 @@
         <file>icons/folder_wrench.png</file>
         <file>icons/folders.png</file>
         <file>icons/folders_explorer.png</file>
+        <file>icons/function.png</file>
         <file>icons/global_telecom.png</file>
         <file>icons/globe_model.png</file>
         <file>icons/globe_network.png</file>
         <file>icons/globe_place.png</file>
         <file>icons/google.png</file>
+        <file>icons/hammer.png</file>
+        <file>icons/heart.png</file>
+        <file>icons/heart_add.png</file>
+        <file>icons/heart_break.png</file>
+        <file>icons/heart_delete.png</file>
+        <file>icons/heart_empty.png</file>
         <file>icons/help.png</file>
         <file>icons/hourglass.png</file>
         <file>icons/hourglass_add.png</file>
@@ -207,6 +513,9 @@
         <file>icons/link_delete.png</file>
         <file>icons/link_edit.png</file>
         <file>icons/link_go.png</file>
+        <file>icons/link_unchain.png</file>
+        <file>icons/locale_xml.png</file>
+        <file>icons/locate.png</file>
         <file>icons/magnifier.png</file>
         <file>icons/magnifier_zoom_in.png</file>
         <file>icons/magnifier_zoom_out.png</file>
@@ -220,24 +529,57 @@
         <file>icons/monitor_go.png</file>
         <file>icons/monitor_lightning.png</file>
         <file>icons/monitor_link.png</file>
+        <file>icons/newspaper.png</file>
+        <file>icons/newspaper_add.png</file>
+        <file>icons/newspaper_delete.png</file>
+        <file>icons/newspaper_go.png</file>
         <file>icons/open_folder.png</file>
+        <file>icons/page_paste.png</file>
+        <file>icons/page_refresh.png</file>
+        <file>icons/page_size.png</file>
+        <file>icons/page_update.png</file>
+        <file>icons/page_white.png</file>
+        <file>icons/page_white_add.png</file>
         <file>icons/page_white_cd.png</file>
         <file>icons/page_white_code.png</file>
         <file>icons/page_white_code_red.png</file>
+        <file>icons/page_white_compress.png</file>
+        <file>icons/page_white_copy.png</file>
         <file>icons/page_white_database.png</file>
+        <file>icons/page_white_delete.png</file>
+        <file>icons/page_white_edit.png</file>
+        <file>icons/page_white_error.png</file>
         <file>icons/page_white_find.png</file>
+        <file>icons/page_white_gear.png</file>
         <file>icons/page_white_get.png</file>
         <file>icons/page_white_go.png</file>
+        <file>icons/page_white_horizontal.png</file>
+        <file>icons/page_white_key.png</file>
+        <file>icons/page_white_lightning.png</file>
+        <file>icons/page_white_link.png</file>
         <file>icons/page_white_magnify.png</file>
+        <file>icons/page_white_paint.png</file>
         <file>icons/page_white_paste.png</file>
         <file>icons/page_white_picture.png</file>
         <file>icons/page_white_put.png</file>
+        <file>icons/page_white_stack.png</file>
+        <file>icons/page_white_star.png</file>
+        <file>icons/page_white_vector.png</file>
+        <file>icons/page_white_width.png</file>
         <file>icons/page_white_world.png</file>
         <file>icons/page_white_wrench.png</file>
         <file>icons/page_world.png</file>
+        <file>icons/paginator.png</file>
         <file>icons/palette.png</file>
+        <file>icons/pencil.png</file>
+        <file>icons/pencil_add.png</file>
+        <file>icons/pencil_delete.png</file>
+        <file>icons/pencil_go.png</file>
+        <file>icons/pencil_ruler.png</file>
+        <file>icons/people_panel.png</file>
         <file>icons/photo.png</file>
         <file>icons/photo_add.png</file>
+        <file>icons/photo_album.png</file>
         <file>icons/photo_delete.png</file>
         <file>icons/photo_link.png</file>
         <file>icons/photos.png</file>
@@ -250,11 +592,26 @@
         <file>icons/picture_error.png</file>
         <file>icons/picture_frame.png</file>
         <file>icons/picture_go.png</file>
+        <file>icons/picture_insert.png</file>
+        <file>icons/picture_insert_from_web.png</file>
         <file>icons/picture_key.png</file>
         <file>icons/picture_link.png</file>
+        <file>icons/picture_position.png</file>
         <file>icons/picture_save.png</file>
+        <file>icons/picture_sunset.png</file>
         <file>icons/pictures.png</file>
+        <file>icons/preferences.png</file>
+        <file>icons/preview_results.png</file>
+        <file>icons/processor.png</file>
+        <file>icons/profiles.png</file>
+        <file>icons/question.png</file>
+        <file>icons/radiobutton_group.png</file>
+        <file>icons/record_slide_show.png</file>
+        <file>icons/recover_deleted_items.png</file>
         <file>icons/reddit.png</file>
+        <file>icons/redirects.png</file>
+        <file>icons/redo.png</file>
+        <file>icons/refresh_all.png</file>
         <file>icons/report.png</file>
         <file>icons/report_add.png</file>
         <file>icons/report_delete.png</file>
@@ -271,9 +628,13 @@
         <file>icons/resultset_last.png</file>
         <file>icons/resultset_next.png</file>
         <file>icons/resultset_previous.png</file>
+        <file>icons/rip.png</file>
         <file>icons/save_as.png</file>
+        <file>icons/save_data.png</file>
+        <file>icons/screwdriver.png</file>
         <file>icons/script.png</file>
         <file>icons/script_add.png</file>
+        <file>icons/script_binary.png</file>
         <file>icons/script_black.png</file>
         <file>icons/script_code.png</file>
         <file>icons/script_code_red.png</file>
@@ -292,7 +653,61 @@
         <file>icons/script_torn.png</file>
         <file>icons/script_yellow.png</file>
         <file>icons/scripts.png</file>
+        <file>icons/scroll_pane_image.png</file>
+        <file>icons/select.png</file>
+        <file>icons/select_by_color.png</file>
+        <file>icons/server.png</file>
+        <file>icons/server_add.png</file>
+        <file>icons/server_chart.png</file>
+        <file>icons/server_compress.png</file>
+        <file>icons/server_configuration.png</file>
+        <file>icons/server_connect.png</file>
+        <file>icons/server_database.png</file>
+        <file>icons/server_delete.png</file>
+        <file>icons/server_edit.png</file>
+        <file>icons/server_error.png</file>
+        <file>icons/server_go.png</file>
+        <file>icons/server_information.png</file>
+        <file>icons/server_key.png</file>
+        <file>icons/server_lightning.png</file>
+        <file>icons/server_link.png</file>
+        <file>icons/server_property.png</file>
+        <file>icons/server_stanchion.png</file>
+        <file>icons/server_uncompress.png</file>
+        <file>icons/servers.png</file>
+        <file>icons/servers_network.png</file>
+        <file>icons/service_status.png</file>
+        <file>icons/setting_tools.png</file>
+        <file>icons/sheduled_task.png</file>
+        <file>icons/skeleton_directory.png</file>
+        <file>icons/smartart_change_color_gallery.png</file>
+        <file>icons/sparklines.png</file>
+        <file>icons/speedometer.png</file>
+        <file>icons/stethoscope.png</file>
+        <file>icons/stopwatch_finish.png</file>
+        <file>icons/stopwatch_pause.png</file>
+        <file>icons/stopwatch_start.png</file>
+        <file>icons/switch.png</file>
+        <file>icons/switch_windows.png</file>
+        <file>icons/system_monitor.png</file>
+        <file>icons/system_time.png</file>
+        <file>icons/table_save.png</file>
+        <file>icons/temperature_cold.png</file>
+        <file>icons/temperature_cool.png</file>
+        <file>icons/temperature_hot.png</file>
+        <file>icons/temperature_normal.png</file>
+        <file>icons/temperature_warm.png</file>
         <file>icons/terminal.png</file>
+        <file>icons/text_functions.png</file>
+        <file>icons/text_language.png</file>
+        <file>icons/textfield.png</file>
+        <file>icons/textfield_add.png</file>
+        <file>icons/textfield_delete.png</file>
+        <file>icons/textfield_key.png</file>
+        <file>icons/textfield_password.png</file>
+        <file>icons/textfield_password_green.png</file>
+        <file>icons/textfield_password_red.png</file>
+        <file>icons/textfield_password_yellow.png</file>
         <file>icons/transform_crop_resize.png</file>
         <file>icons/transform_flip.png</file>
         <file>icons/transform_layer.png</file>
@@ -305,12 +720,39 @@
         <file>icons/transform_shear.png</file>
         <file>icons/tumblr.png</file>
         <file>icons/twitter_1.png</file>
+        <file>icons/undo.png</file>
+        <file>icons/update.png</file>
+        <file>icons/upload_for_cloud.png</file>
+        <file>icons/user.png</file>
+        <file>icons/user_add.png</file>
+        <file>icons/vector.png</file>
+        <file>icons/vector_add.png</file>
+        <file>icons/vector_delete.png</file>
+        <file>icons/video.png</file>
+        <file>icons/view_available_locales.png</file>
+        <file>icons/watch_window.png</file>
+        <file>icons/web_layout.png</file>
+        <file>icons/webcam.png</file>
+        <file>icons/webcam_add.png</file>
+        <file>icons/webcam_delete.png</file>
+        <file>icons/wine_pairings.png</file>
+        <file>icons/workspace.png</file>
         <file>icons/world.png</file>
         <file>icons/world_add.png</file>
         <file>icons/world_delete.png</file>
         <file>icons/world_edit.png</file>
         <file>icons/world_go.png</file>
         <file>icons/world_link.png</file>
+        <file>icons/wrapping_behind.png</file>
+        <file>icons/wrapping_between.png</file>
+        <file>icons/wrapping_edit.png</file>
+        <file>icons/wrapping_in_front.png</file>
+        <file>icons/wrapping_inline.png</file>
+        <file>icons/wrapping_magazine.png</file>
+        <file>icons/wrapping_square.png</file>
+        <file>icons/wrapping_tight.png</file>
+        <file>icons/wrench.png</file>
+        <file>icons/wrench_orange.png</file>
         <file>icons/www_page.png</file>
         <file>icons/zoom_extend.png</file>
         <file>icons/zoom_fit.png</file>
@@ -320,10 +762,7 @@
         <file>icons/zoom_out.png</file>
         <file>icons/zoom_refresh.png</file>
         <file>icons/zoom_selection.png</file>
-        <file>licenses/cereal_license.txt</file>
-        <file>licenses/rapidjson_license.txt</file>
-        <file>licenses/rapidxml_license.txt</file>
-        <file>licenses/geometrizer_license.txt</file>
-        <file>licenses/elidedlabel_license.txt</file>
+        <file>logos/logo.png</file>
+        <file>logos/logo_small.png</file>
     </qresource>
 </RCC>

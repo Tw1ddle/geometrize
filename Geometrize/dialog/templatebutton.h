@@ -31,6 +31,9 @@ public:
     ~TemplateButton();
 
 private:
+    virtual void contextMenuEvent(QContextMenuEvent* e) override;
+    void openTemplate();
+
     Ui::TemplateButton* ui;
 
     const QString m_templateFolder;
