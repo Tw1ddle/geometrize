@@ -174,6 +174,12 @@ bool openInDefaultApplication(const std::string& path)
     return QDesktopServices::openUrl(QUrl::fromUserInput(QString::fromStdString(path)));
 }
 
+bool revealInDefaultApplication(const std::string& path)
+{
+    const QUrl directoryPath{QUrl::fromUserInput(QString::fromStdString(path)).adjusted(QUrl::RemoveFilename)};
+    return QDesktopServices::openUrl(directoryPath);
+}
+
 void clearGlobalClipboard()
 {
     QApplication::clipboard()->clear();

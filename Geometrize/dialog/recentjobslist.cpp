@@ -2,9 +2,11 @@
 
 #include "assert.h"
 
+#include <QAction>
 #include <QApplication>
 #include <QClipboard>
 #include <QContextMenuEvent>
+#include <QMenu>
 
 #include "recentitemwidget.h"
 #include "recentitem.h"
@@ -29,19 +31,6 @@ public:
     RecentJobsListImpl(const RecentJobsListImpl&) = delete;
     ~RecentJobsListImpl() = default;
 
-    RecentItems* getRecentItems()
-    {
-        return m_recents;
-    }
-
-    void setRecentItems(RecentItems* recents)
-    {
-        m_recents = recents;
-        q->clear();
-        setupConnections();
-        loadExistingItems();
-    }
-
     static QString getDisplayNameForJobPath(const QUrl& url)
     {
         if(url.isEmpty()) {
@@ -58,6 +47,32 @@ public:
         return url.path(QUrl::FullyDecoded).rightJustified(50, '.', false);
     }
 
+    void setRecentItems(RecentItems* recents)
+    {
+        m_recents = recents;
+        q->clear();
+        setupConnections();
+        loadExistingItems();
+    }
+
+    void clearItemDataAndMenu() const
+    {
+        if(m_recents == nullptr) {
+            return;
+        }
+        m_recents->clear();
+    }
+
+    void removeItemDataAndMenuItems(const QList<QListWidgetItem*>& items)
+    {
+        if(m_recents == nullptr) {
+            return;
+        }
+        for(const QListWidgetItem* const item : items) {
+            m_recents->remove(getMenuItemKey(item));
+        }
+    }
+
 private:
     void loadExistingItems()
     {
@@ -65,7 +80,6 @@ private:
             return;
         }
 
-        // TODO sort
         const auto items{m_recents->getItems()};
         for(const auto& item : items) {
             addItem(item);
@@ -102,7 +116,7 @@ private:
         QListWidgetItem* item{new QListWidgetItem()};
         item->setToolTip(recentItem.getKey());
         item->setSizeHint(button->sizeHint());
-        item->setData(Qt::UserRole, recentItem.getKey());
+        setMenuItemKey(item, recentItem.getKey());
         q->addItem(item);
         q->setItemWidget(item, button);
     }
@@ -110,7 +124,7 @@ private:
     void removeItem(const QString& key) const
     {
         for(int i = 0; i < q->count(); i++) {
-            if(q->item(i)->data(Qt::UserRole).toString() == key) {
+            if(getMenuItemKey(q->item(i)) == key) {
                 q->takeItem(i);
                 return;
             }
@@ -120,6 +134,16 @@ private:
     void clear() const
     {
         q->clear();
+    }
+
+    QString getMenuItemKey(const QListWidgetItem* const item) const
+    {
+        return item->data(Qt::UserRole).toString();
+    }
+
+    void setMenuItemKey(QListWidgetItem* item, const QString& key) const
+    {
+        item->setData(Qt::UserRole, key);
     }
 
     RecentJobsList* q;
@@ -136,11 +160,6 @@ void RecentJobsList::setRecentItems(RecentItems* recents)
     d->setRecentItems(recents);
 }
 
-RecentItems* RecentJobsList::getRecentItems()
-{
-    return d->getRecentItems();
-}
-
 QString RecentJobsList::getDisplayNameForJobPath(const QUrl &url)
 {
     return RecentJobsListImpl::getDisplayNameForJobPath(url);
@@ -150,16 +169,34 @@ void RecentJobsList::keyPressEvent(QKeyEvent* e)
 {
     QListWidget::keyPressEvent(e);
 
+    const QList<QListWidgetItem*> items{selectedItems()};
+
     if(e->matches(QKeySequence::Copy)) {
-        const QList<QListWidgetItem*> items{selectedItems()};
         QStringList strings;
         for(const QListWidgetItem* item : items) {
             strings.push_back(item->text());
         }
         QApplication::clipboard()->setText(strings.join("\n"));
     } else if(e->key() == Qt::Key_Delete || e->key() == Qt::Key_Backspace) {
-        // TODO remove item
+        d->removeItemDataAndMenuItems(items);
     }
+}
+
+void RecentJobsList::contextMenuEvent(QContextMenuEvent* e)
+{
+    if(count() == 0) {
+        return;
+    }
+
+    QMenu recentsContextMenu;
+
+    QAction clearAction(tr("Remove all items"));
+    recentsContextMenu.addAction(&clearAction);
+    connect(&clearAction, &QAction::triggered, [this]() {
+        d->clearItemDataAndMenu();
+    });
+
+    recentsContextMenu.exec(e->globalPos());
 }
 
 }

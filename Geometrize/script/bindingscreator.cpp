@@ -43,6 +43,7 @@ std::shared_ptr<chaiscript::Module> createBindings()
     ADD_FREE_FUN(openJob);
 
     ADD_FREE_FUN(openInDefaultApplication);
+    ADD_FREE_FUN(revealInDefaultApplication);
 
     ADD_FREE_FUN(clearGlobalClipboard);
     ADD_FREE_FUN(getGlobalClipboardText);

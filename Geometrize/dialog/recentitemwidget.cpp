@@ -53,6 +53,12 @@ void RecentItemWidget::contextMenuEvent(QContextMenuEvent* e)
         geometrize::util::openInDefaultApplication(m_item.getKey().toStdString());
     });
 
+    QAction revealInDefaultExplorer(tr("Reveal in default explorer"));
+    itemContextMenu.addAction(&revealInDefaultExplorer);
+    connect(&revealInDefaultExplorer, &QAction::triggered, [this]() {
+        geometrize::util::revealInDefaultApplication(m_item.getKey().toStdString());
+    });
+
     QAction copyToClipboard(tr("Copy path to clipboard"));
     itemContextMenu.addAction(&copyToClipboard);
     connect(&copyToClipboard, &QAction::triggered, [this]() {

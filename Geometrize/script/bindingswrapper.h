@@ -45,6 +45,8 @@ void openJob(const std::string& url);
 
 bool openInDefaultApplication(const std::string& path);
 
+bool revealInDefaultApplication(const std::string& path);
+
 void clearGlobalClipboard();
 
 std::string getGlobalClipboardText();

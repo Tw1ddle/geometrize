@@ -117,6 +117,11 @@ bool openInDefaultApplication(const std::string& path)
     return geometrize::util::openInDefaultApplication(path);
 }
 
+bool revealInDefaultApplication(const std::string& path)
+{
+    return geometrize::util::revealInDefaultApplication(path);
+}
+
 void clearGlobalClipboard()
 {
     geometrize::util::clearGlobalClipboard();

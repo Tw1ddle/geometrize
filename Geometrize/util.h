@@ -107,6 +107,13 @@ std::string getDirectoryForFilePath(const std::string& filePath);
 bool openInDefaultApplication(const std::string& path);
 
 /**
+ * @brief revealInDefaultApplication Reveals the given path in the parent folder (or path with the filename trimmed).
+ * @param path The path to the resource to view.
+ * @return True if the file, folder, URL (or whatever) should be revealed, else false.
+ */
+bool revealInDefaultApplication(const std::string& path);
+
+/**
  * @brief clearGlobalClipboard Clears the global system clipboard contents.
  */
 void clearGlobalClipboard();

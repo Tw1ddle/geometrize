@@ -31,12 +31,6 @@ public:
     void setRecentItems(RecentItems* items);
 
     /**
-     * @brief getRecentItems Gets the recent items object that the recent jobs list currently reflects.
-     * @return The recent items object.
-     */
-    RecentItems* getRecentItems();
-
-    /**
      * @brief getDisplayNameForJobPath Extracts a display name suitable for displaying to the user from the job URL/file path.
      * @param url The URL pointing to the job (could be a local file, a webpage, a file from a template or sample, whatever).
      * @return A display name for the job, suitable for showing to the user in the recent jobs list.
@@ -45,6 +39,7 @@ public:
 
 private:
     virtual void keyPressEvent(QKeyEvent* e) override;
+    virtual void contextMenuEvent(QContextMenuEvent* e) override;
 
     class RecentJobsListImpl;
     std::unique_ptr<RecentJobsListImpl> d;
