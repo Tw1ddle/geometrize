@@ -1,5 +1,5 @@
-#include "preferencestabdialog.h"
-#include "ui_preferencestabdialog.h"
+#include "globalpreferencestabdialog.h"
+#include "ui_globalpreferencestabdialog.h"
 
 #include <QVariant>
 
@@ -9,9 +9,7 @@ namespace geometrize
 namespace dialog
 {
 
-PreferencesTabDialog::PreferencesTabDialog(QWidget* parent) :
-    QDialog(parent),
-    ui(new Ui::PreferencesTabDialog)
+GlobalPreferencesTabDialog::GlobalPreferencesTabDialog(QWidget* parent) : QDialog(parent), ui(new Ui::GlobalPreferencesTabDialog)
 {
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint); // Remove question mark from title bar
     ui->setupUi(this);
@@ -21,7 +19,7 @@ PreferencesTabDialog::PreferencesTabDialog(QWidget* parent) :
     });
 }
 
-PreferencesTabDialog::~PreferencesTabDialog()
+GlobalPreferencesTabDialog::~GlobalPreferencesTabDialog()
 {
     delete ui;
 }

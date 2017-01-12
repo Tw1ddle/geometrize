@@ -18,7 +18,7 @@
 #include "dialog/imagejobwindow.h"
 #include "dialog/launchwindow.h"
 #include "dialog/openurldialog.h"
-#include "dialog/preferencestabdialog.h"
+#include "dialog/globalpreferencestabdialog.h"
 #include "dialog/recentjobslist.h"
 #include "dialog/quitdialog.h"
 #include "dialog/runscriptdialog.h"
@@ -45,7 +45,7 @@ void openAboutPage(QWidget* parent)
 
 void openPreferences(QWidget* parent)
 {
-    dialog::PreferencesTabDialog preferencesTabDialog(parent);
+    dialog::GlobalPreferencesTabDialog preferencesTabDialog(parent);
     preferencesTabDialog.exec();
 }
 

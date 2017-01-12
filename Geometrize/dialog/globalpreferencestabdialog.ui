@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>PreferencesTabDialog</class>
- <widget class="QDialog" name="PreferencesTabDialog">
+ <class>GlobalPreferencesTabDialog</class>
+ <widget class="QDialog" name="GlobalPreferencesTabDialog">
   <property name="windowModality">
    <enum>Qt::ApplicationModal</enum>
   </property>
@@ -134,7 +134,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="generalPreferencesPage">
        <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -407,7 +407,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>PreferencesTabDialog</receiver>
+   <receiver>GlobalPreferencesTabDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -423,7 +423,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>PreferencesTabDialog</receiver>
+   <receiver>GlobalPreferencesTabDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

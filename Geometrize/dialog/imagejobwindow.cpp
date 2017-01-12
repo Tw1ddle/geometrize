@@ -11,7 +11,7 @@
 #include "common/uiactions.h"
 #include "constants.h"
 #include "dialog/aboutdialog.h"
-#include "dialog/preferencestabdialog.h"
+#include "dialog/globalpreferencestabdialog.h"
 #include "dialog/quitdialog.h"
 
 namespace geometrize

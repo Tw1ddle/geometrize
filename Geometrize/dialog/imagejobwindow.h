@@ -37,9 +37,9 @@ private slots:
     void on_runStopButton_clicked();
 
 private:
-    Ui::ImageJobWindow *ui;
-
     void closeEvent(QCloseEvent* bar) override;
+
+    Ui::ImageJobWindow *ui;
 
     class ImageJobWindowImpl;
     std::unique_ptr<ImageJobWindowImpl> d;

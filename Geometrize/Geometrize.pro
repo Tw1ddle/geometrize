@@ -20,8 +20,6 @@ QMAKE_CXXFLAGS += -bigobj
 SOURCES += main.cpp \
     formatsupport.cpp \
     imagejobcontext.cpp \
-    imagejobpreferences.cpp \
-    preferences.cpp \
     searchpaths.cpp \
     recentitem.cpp \
     recentitems.cpp \
@@ -35,11 +33,11 @@ SOURCES += main.cpp \
     dialog/commandlineedit.cpp \
     dialog/creditsdialog.cpp \
     dialog/elidedlabel.cpp \
+    dialog/globalpreferencestabdialog.cpp \
     dialog/imagejobwindow.cpp \
     dialog/launchwindow.cpp \
     dialog/licensedialog.cpp \
     dialog/openurldialog.cpp \
-    dialog/preferencestabdialog.cpp \
     dialog/quitdialog.cpp \
     dialog/recentitemwidget.cpp \
     dialog/recentjobslist.cpp \
@@ -51,12 +49,14 @@ SOURCES += main.cpp \
     network/completionhandlers.cpp \
     network/downloader.cpp \
     network/networkactions.cpp \
+    preferences/globalpreferences.cpp \
+    preferences/imagejobpreferences.cpp \
     script/bindingscreator.cpp \
     script/bindingswrapper.cpp \
     script/chaiscriptcreator.cpp \
     script/scriptoptions.cpp \
     script/scriptrunner.cpp \
-    script/scriptutil.cpp \
+    script/scriptutil.cpp
 
 HEADERS += chaiscript/chaiscript.hpp \
     cereal/archives/adapters.hpp \
@@ -141,8 +141,6 @@ HEADERS += chaiscript/chaiscript.hpp \
     constants.h \
     formatsupport.h \
     imagejobcontext.h \
-    imagejobpreferences.h \
-    preferences.h \
     recentitem.h \
     recentitems.h \
     searchpaths.h \
@@ -176,10 +174,10 @@ HEADERS += chaiscript/chaiscript.hpp \
     dialog/commandlineedit.h \
     dialog/creditsdialog.h \
     dialog/elidedlabel.h \
+    dialog/globalpreferencestabdialog.h \
     dialog/imagejobwindow.h \
     dialog/launchwindow.h \
     dialog/licensedialog.h \
-    dialog/preferencestabdialog.h \
     dialog/quitdialog.h \
     dialog/recentitemwidget.h \
     dialog/recentjobslist.h \
@@ -192,24 +190,26 @@ HEADERS += chaiscript/chaiscript.hpp \
     network/completionhandlers.h \
     network/downloader.h \
     network/networkactions.h \
+    preferences/globalpreferences.h \
+    preferences/imagejobpreferences.h \
     script/bindingscreator.h \
     script/bindingswrapper.h \
     script/chaiscriptcreator.h \
     script/scriptoptions.h \
     script/scriptrunner.h \
     script/scriptutil.h \
+    serialization/globalpreferencesdata.h \
     serialization/imagejobpreferencesdata.h \
-    serialization/preferencesdata.h \
     serialization/templatemetadata.h
 
 FORMS += dialog/aboutdialog.ui \
     dialog/commandlineedit.ui \
     dialog/creditsdialog.ui \
+    dialog/globalpreferencestabdialog.ui \
     dialog/imagejobwindow.ui \
     dialog/launchwindow.ui \
     dialog/licensedialog.ui \
     dialog/openurldialog.ui \
-    dialog/preferencestabdialog.ui \
     dialog/quitdialog.ui \
     dialog/recentitemwidget.ui \
     dialog/runscriptdialog.ui \

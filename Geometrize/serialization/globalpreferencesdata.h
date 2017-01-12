@@ -9,9 +9,9 @@ namespace serialization
 {
 
 /**
- * @brief The PreferencesData struct represents the data for the global application preferences.
+ * @brief The GlobalPreferencesData struct represents the data for the global application preferences.
  */
-struct PreferencesData
+struct GlobalPreferencesData
 {
     template<class Archive>
     void save(Archive& archive)
