@@ -1,6 +1,8 @@
 #include "preferencestabdialog.h"
 #include "ui_preferencestabdialog.h"
 
+#include <QVariant>
+
 namespace geometrize
 {
 
@@ -13,6 +15,10 @@ PreferencesTabDialog::PreferencesTabDialog(QWidget* parent) :
 {
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint); // Remove question mark from title bar
     ui->setupUi(this);
+
+    connect(ui->preferenceCategoryList, &QListWidget::currentRowChanged, [this](const int currentRow) {
+        ui->preferencePageStack->setCurrentIndex(currentRow);
+    });
 }
 
 PreferencesTabDialog::~PreferencesTabDialog()

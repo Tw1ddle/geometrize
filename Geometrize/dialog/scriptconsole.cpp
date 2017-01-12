@@ -2,8 +2,8 @@
 #include "ui_scriptconsole.h"
 
 #include "chaiscript/chaiscript.hpp"
-#include "script/chaiscriptcreator.h"
 #include "script/scriptrunner.h"
+#include "script/scriptutil.h"
 
 namespace geometrize
 {
@@ -21,21 +21,34 @@ public:
         ui->outputView->append("ChaiScript " + QString::fromStdString(m_engine->build_id()));
         ui->outputView->append(tr("Type 'help' for a list of commands"));
 
-        connect(ui->commandLine, &QLineEdit::returnPressed, [this]() {
-            const QString text{ui->commandLine->text()};
-            const std::string stdText{ui->commandLine->text().toStdString()};
+        connect(ui->commandLine, &geometrize::dialog::CommandLineEdit::signal_commandSubmitted, [this](const std::string& command) {
+            // TODO refactor so the real CLI uses this function with a REPL-like setup
 
-            ui->outputView->append(text);
-            m_history.push_back(stdText);
+            ui->outputView->append(QString::fromStdString(command));
+
+            if(command.empty()) {
+                return;
+            }
 
             if(m_engine != nullptr) {
-                if(text == "help") { // TODO?
-                    printEngineFunctions();
+                if(command == "help") {
+                    const std::vector<std::string> functions{script::getEngineFunctionNames(*m_engine)};
+                    for(const std::string& f : functions) {
+                        ui->outputView->append(QString::fromStdString(f));
+                    }
+                } else if(command == "clearHistory") {
+                    ui->commandLine->clearHistory();
+                } else if(command == "history") {
+                   const std::vector<std::string> history{ui->commandLine->getHistory()};
+                   for(const std::string& command : history) {
+                        ui->outputView->append(QString::fromStdString(command));
+                    }
+                } else if(command == "clear") {
+                    ui->outputView->clear();
                 } else {
-                    script::runScript(stdText, *m_engine, nullptr);
+                    script::runScript(command, *m_engine, nullptr);
                 }
             }
-            ui->commandLine->clear();
         });
     }
 
@@ -49,15 +62,6 @@ public:
     }
 
 private:
-    void printEngineFunctions()
-    {
-        const auto state{m_engine->get_state()};
-        const auto funcs{state.engine_state.m_functions};
-        for(auto it = funcs.begin(); it != funcs.end(); ++it) {
-            ui->outputView->append(QString::fromStdString(it->first));
-        }
-    }
-
     ScriptConsole* q;
     Ui::ScriptConsole* ui;
     chaiscript::ChaiScript* m_engine;

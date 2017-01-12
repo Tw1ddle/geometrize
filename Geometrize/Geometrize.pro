@@ -32,6 +32,7 @@ SOURCES += main.cpp \
     common/sharedapp.cpp \
     common/uiactions.cpp \
     dialog/aboutdialog.cpp \
+    dialog/commandlineedit.cpp \
     dialog/creditsdialog.cpp \
     dialog/elidedlabel.cpp \
     dialog/imagejobwindow.cpp \
@@ -54,7 +55,8 @@ SOURCES += main.cpp \
     script/bindingswrapper.cpp \
     script/chaiscriptcreator.cpp \
     script/scriptoptions.cpp \
-    script/scriptrunner.cpp
+    script/scriptrunner.cpp \
+    script/scriptutil.cpp \
 
 HEADERS += chaiscript/chaiscript.hpp \
     cereal/archives/adapters.hpp \
@@ -171,6 +173,7 @@ HEADERS += chaiscript/chaiscript.hpp \
     lib/geometrizer/geometrizer/state.h \
     lib/geometrizer/geometrizer/util.h \
     dialog/aboutdialog.h \
+    dialog/commandlineedit.h \
     dialog/creditsdialog.h \
     dialog/elidedlabel.h \
     dialog/imagejobwindow.h \
@@ -194,13 +197,14 @@ HEADERS += chaiscript/chaiscript.hpp \
     script/chaiscriptcreator.h \
     script/scriptoptions.h \
     script/scriptrunner.h \
-    serialization/preferencesdata.h \
+    script/scriptutil.h \
     serialization/imagejobpreferencesdata.h \
+    serialization/preferencesdata.h \
     serialization/templatemetadata.h
 
 FORMS += dialog/aboutdialog.ui \
+    dialog/commandlineedit.ui \
     dialog/creditsdialog.ui \
-    dialog/globalpreferencesdialog.ui \
     dialog/imagejobwindow.ui \
     dialog/launchwindow.ui \
     dialog/licensedialog.ui \

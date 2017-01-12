@@ -14,8 +14,8 @@ namespace dialog
 {
 
 /**
- * @brief The PreferencesTabDialog class models the UI for the tabbed preferences dialog with various application settings.
- * Note this is a modal dialog, job-specific preferences are edited in a dialog.
+ * @brief The PreferencesTabDialog class models the UI for a tabbed preferences dialog for application-level preferences.
+ * Note this is a modal dialog, job-specific preferences are edited elsewhere.
  */
 class PreferencesTabDialog : public QDialog
 {

@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>400</height>
+    <width>800</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -30,165 +30,373 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout_2">
-     <item>
-      <widget class="QSplitter" name="splitter">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+    <widget class="QSplitter" name="splitter">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="handleWidth">
+      <number>8</number>
+     </property>
+     <property name="childrenCollapsible">
+      <bool>false</bool>
+     </property>
+     <widget class="QListWidget" name="preferenceCategoryList">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="editTriggers">
+       <set>QAbstractItemView::NoEditTriggers</set>
+      </property>
+      <property name="showDropIndicator" stdset="0">
+       <bool>false</bool>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>32</width>
+        <height>32</height>
+       </size>
+      </property>
+      <property name="movement">
+       <enum>QListView::Static</enum>
+      </property>
+      <property name="flow">
+       <enum>QListView::TopToBottom</enum>
+      </property>
+      <property name="spacing">
+       <number>4</number>
+      </property>
+      <property name="uniformItemSizes">
+       <bool>false</bool>
+      </property>
+      <property name="currentRow">
+       <number>0</number>
+      </property>
+      <item>
+       <property name="text">
+        <string>General</string>
        </property>
-       <property name="handleWidth">
-        <number>8</number>
+       <property name="icon">
+        <iconset resource="../resources/application_resources.qrc">
+         <normaloff>:/icons/wrench.png</normaloff>:/icons/wrench.png</iconset>
        </property>
-       <property name="childrenCollapsible">
-        <bool>false</bool>
+      </item>
+      <item>
+       <property name="text">
+        <string>Display</string>
        </property>
-       <widget class="QListWidget" name="preferenceCategoryList">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="editTriggers">
-         <set>QAbstractItemView::NoEditTriggers</set>
-        </property>
-        <property name="showDropIndicator" stdset="0">
-         <bool>false</bool>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-        <property name="movement">
-         <enum>QListView::Static</enum>
-        </property>
-        <property name="flow">
-         <enum>QListView::TopToBottom</enum>
-        </property>
-        <property name="spacing">
-         <number>4</number>
-        </property>
-        <property name="uniformItemSizes">
-         <bool>false</bool>
-        </property>
-        <property name="currentRow">
-         <number>0</number>
-        </property>
+       <property name="icon">
+        <iconset resource="../resources/application_resources.qrc">
+         <normaloff>:/icons/monitor_edit.png</normaloff>:/icons/monitor_edit.png</iconset>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>File Paths</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../resources/application_resources.qrc">
+         <normaloff>:/icons/folders.png</normaloff>:/icons/folders.png</iconset>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Performance</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../resources/application_resources.qrc">
+         <normaloff>:/icons/processor.png</normaloff>:/icons/processor.png</iconset>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Language</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../resources/application_resources.qrc">
+         <normaloff>:/icons/locate.png</normaloff>:/icons/locate.png</iconset>
+       </property>
+      </item>
+     </widget>
+     <widget class="QStackedWidget" name="preferencePageStack">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>2</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="currentIndex">
+       <number>1</number>
+      </property>
+      <widget class="QWidget" name="generalPreferencesPage">
+       <layout class="QVBoxLayout" name="verticalLayout_5">
         <item>
-         <property name="text">
-          <string>General</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../resources/application_resources.qrc">
-           <normaloff>:/icons/wrench.png</normaloff>:/icons/wrench.png</iconset>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Display</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../resources/application_resources.qrc">
-           <normaloff>:/icons/monitor_edit.png</normaloff>:/icons/monitor_edit.png</iconset>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>File Paths</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../resources/application_resources.qrc">
-           <normaloff>:/icons/folders.png</normaloff>:/icons/folders.png</iconset>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Performance</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../resources/application_resources.qrc">
-           <normaloff>:/icons/processor.png</normaloff>:/icons/processor.png</iconset>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Language</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../resources/application_resources.qrc">
-           <normaloff>:/icons/locate.png</normaloff>:/icons/locate.png</iconset>
-         </property>
-        </item>
-       </widget>
-       <widget class="QStackedWidget" name="preferencePageStack">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>2</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="currentIndex">
-         <number>0</number>
-        </property>
-        <widget class="QWidget" name="generalPreferences">
-         <layout class="QVBoxLayout" name="verticalLayout_5">
+         <layout class="QVBoxLayout" name="verticalLayout_4">
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout_4">
-            <item>
-             <widget class="QLabel" name="generalTitle">
-              <property name="text">
-               <string>General</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="Line" name="generalTitleSpacer">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-             </widget>
-            </item>
-           </layout>
+           <widget class="QLabel" name="generalTitle">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>General</string>
+            </property>
+           </widget>
           </item>
           <item>
-           <layout class="QFormLayout" name="formLayout">
-            <item row="0" column="0">
-             <widget class="QLabel" name="label_2">
-              <property name="text">
-               <string>Todo</string>
+           <widget class="Line" name="generalTitleSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_18">
+            <item>
+             <widget class="QGroupBox" name="startupOptionsGroup">
+              <property name="title">
+               <string>Start Up</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="miscOptionsGroup">
+              <property name="title">
+               <string>Misc</string>
               </property>
              </widget>
             </item>
            </layout>
           </item>
          </layout>
-        </widget>
-        <widget class="QWidget" name="performancePreferences"/>
-        <widget class="QWidget" name="displayPreferences"/>
-        <widget class="QWidget" name="languagePreferences"/>
-        <widget class="QWidget" name="filePathPreferences"/>
-       </widget>
+        </item>
+       </layout>
       </widget>
-     </item>
-     <item>
-      <widget class="QDialogButtonBox" name="buttonBox">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="standardButtons">
-        <set>QDialogButtonBox::Close</set>
-       </property>
+      <widget class="QWidget" name="displayPreferencesPage">
+       <layout class="QVBoxLayout" name="verticalLayout_11">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_7">
+          <item>
+           <widget class="QLabel" name="displayTitle">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Display</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Line" name="displayTitleSpacer">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_10">
+            <item>
+             <widget class="QGroupBox" name="launchPageDisplayOptionsGroup">
+              <property name="title">
+               <string>Launch Page Display</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="imageJobDisplayOptionsGroup">
+              <property name="title">
+               <string>Image Geometrizer Display</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="groupBox">
+              <property name="title">
+               <string>Console Display</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </widget>
-     </item>
-    </layout>
+      <widget class="QWidget" name="filePathPreferencesPage">
+       <layout class="QVBoxLayout" name="verticalLayout_13">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_9">
+          <item>
+           <widget class="QLabel" name="filePathsTitle">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>File Paths</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Line" name="filePathsTitleSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_12">
+            <item>
+             <widget class="QGroupBox" name="defaultLoadPathOptionsGroup">
+              <property name="title">
+               <string>Default Load Paths</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="defaultSavePathOptionsGroup">
+              <property name="title">
+               <string>Default Save Paths</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="templatePathOptionsGroup">
+              <property name="title">
+               <string>Template Paths</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="performancePreferencesPage">
+       <layout class="QVBoxLayout" name="verticalLayout_15">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_6">
+          <item>
+           <widget class="QLabel" name="performanceTitle">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Performance</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Line" name="performanceTitleSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_14">
+            <item>
+             <widget class="QGroupBox" name="imageResizingGroup">
+              <property name="title">
+               <string>Image Resizing</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="threadingOptionsGroup">
+              <property name="title">
+               <string>Multithreading</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="languagePreferencesPage">
+       <layout class="QVBoxLayout" name="verticalLayout_16">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_8">
+          <item>
+           <widget class="QLabel" name="languageTitle">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Language</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Line" name="languageTitleSpacer">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_2">
+            <item>
+             <widget class="QGroupBox" name="availableLanguagesOptionsGroup">
+              <property name="title">
+               <string>Available Languages</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Close</set>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
