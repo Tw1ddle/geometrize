@@ -1,8 +1,13 @@
 #include "dialog/launchwindow.h"
 
+#include <assert.h>
+
+#include <QDebug>
+
 #include <QApplication>
 #include <QCommandLineParser>
 
+#include "commandlineparser.h"
 #include "constants.h"
 #include "versioninfo.h"
 
@@ -20,19 +25,6 @@ void setupSettingsFields()
     QCoreApplication::setApplicationVersion(geometrize::version::getApplicationVersionString());
 }
 
-void setupCommandLineParser(QCommandLineParser& parser, const QStringList& arguments)
-{
-    parser.setApplicationDescription(geometrize::constants::Strings::getApplicationDescription());
-    parser.addHelpOption();
-    parser.addVersionOption();
-
-    parser.addOptions({
-        {{"s", "script"}, QCoreApplication::translate("main", "Path to ChaiScript script file")}
-    });
-
-    parser.process(arguments);
-}
-
 int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
@@ -40,18 +32,10 @@ int main(int argc, char* argv[])
     setupSettingsFields();
 
     QCommandLineParser parser;
-    setupCommandLineParser(parser, app.arguments());
-
-    // TODO add open-with support for files, scripts, urls etc
+    geometrize::cli::setupCommandLineParser(parser, app.arguments());
+    geometrize::cli::handlePositionalArguments(parser.positionalArguments());
 
     geometrize::dialog::LaunchWindow w;
-
-    // If widget is larger than the main display, resize so it fits
-    //const QRect mainScreenSize{QApplication::desktop()->availableGeometry()};
-    //if(w.width() > mainScreenSize.width() || w.height() > mainScreenSize.height()) {
-    //    w.resize(mainScreenSize.width(), mainScreenSize.height());
-    //}
-
     w.show();
 
     return app.exec();

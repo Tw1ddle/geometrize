@@ -18,6 +18,7 @@ RESOURCES = resources/application_resources.qrc
 QMAKE_CXXFLAGS += -bigobj
 
 SOURCES += main.cpp \
+    commandlineparser.cpp \
     formatsupport.cpp \
     imagejobcontext.cpp \
     searchpaths.cpp \
@@ -138,6 +139,7 @@ HEADERS += chaiscript/chaiscript.hpp \
     cereal/access.hpp \
     cereal/cereal.hpp \
     cereal/macros.hpp \
+    commandlineparser.h \
     constants.h \
     formatsupport.h \
     imagejobcontext.h \

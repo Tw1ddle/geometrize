@@ -2,7 +2,7 @@
 
 Geometrizer is a cross-platform library for recreating images as animated sets of geometric primitives.
 
-Geometrizer was written in optimized C++ by Sam Twidale.
+Geometrizer is written in C++ by Sam Twidale.
 
 ## Usage
 

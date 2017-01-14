@@ -2,7 +2,7 @@
 
 #include <QObject>
 
-#include "imagejobpreferences.h"
+#include "preferences/imagejobpreferences.h"
 
 #include "lib/geometrizer/geometrizer/bitmap/bitmapdata.h"
 #include "lib/geometrizer/geometrizer/runner/imagerunner.h"
