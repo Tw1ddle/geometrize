@@ -25,6 +25,8 @@
 
 #pragma once
 
+#include <memory>
+
 #include <QLabel>
 
 namespace geometrize
@@ -39,9 +41,9 @@ namespace dialog
 class ElidedLabel : public QLabel
 {
 public:
-    ElidedLabel(QWidget* parent = 0, Qt::WindowFlags f = 0);
-    ElidedLabel(const QString& txt, QWidget* parent = 0, Qt::WindowFlags f = 0);
-    ElidedLabel(const QString& txt, Qt::TextElideMode elideMode = Qt::ElideRight, QWidget* parent = 0, Qt::WindowFlags f = 0);
+    ElidedLabel(QWidget* parent = nullptr, Qt::WindowFlags flags = 0);
+    ElidedLabel(const QString& text, QWidget* parent = nullptr, Qt::WindowFlags flags = 0);
+    ElidedLabel(const QString& text, Qt::TextElideMode elideMode = Qt::ElideRight, QWidget* parent = nullptr, Qt::WindowFlags flags = 0);
 
     /**
      * @brief getElideMode Get the elide mode currently used when displaying text.
@@ -65,14 +67,8 @@ protected:
     void resizeEvent(QResizeEvent*) override;
 
 private:
-    /**
-     * @brief cacheElidedText Caches the elided text, to avoid recomputing it every paint event.
-     * @param w The width of the widget.
-     */
-    void cacheElidedText(int w);
-
-    Qt::TextElideMode m_elideMode; ///< The current elision mode.
-    QString m_elidedText; ///< The cached elided text.
+    class ElidedLabelImpl;
+    std::unique_ptr<ElidedLabelImpl> d;
 };
 
 }

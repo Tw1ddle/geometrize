@@ -34,54 +34,93 @@ namespace geometrize
 namespace dialog
 {
 
-ElidedLabel::ElidedLabel(QWidget* parent, const Qt::WindowFlags flags) : QLabel(parent, flags), m_elideMode{Qt::ElideRight}
+class ElidedLabel::ElidedLabelImpl
+{
+public:
+    ElidedLabelImpl(ElidedLabel* pQ, Qt::TextElideMode elideMode = Qt::ElideRight) : q{pQ}, m_elideMode{elideMode}
+    {
+    }
+
+    Qt::TextElideMode getElideMode() const
+    {
+        return m_elideMode;
+    }
+
+    void setElideMode(const Qt::TextElideMode elideMode)
+    {
+        m_elideMode = elideMode;
+        q->updateGeometry();
+    }
+
+    void setText(const QString& text)
+    {
+        cacheElidedText(text, q->geometry().width());
+    }
+
+    QString getElidedText() const
+    {
+        return m_elidedText;
+    }
+
+    void cacheElidedText(const QString& text, const int width)
+    {
+        m_elidedText = q->fontMetrics().elidedText(text, m_elideMode, width, Qt::TextShowMnemonic);
+    }
+
+private:
+    Qt::TextElideMode m_elideMode; ///< The current elision mode.
+    QString m_elidedText; ///< The cached elided text.
+    ElidedLabel* q;
+};
+
+ElidedLabel::ElidedLabel(QWidget* parent, const Qt::WindowFlags flags) :
+    QLabel(parent, flags),
+    d{std::make_unique<ElidedLabel::ElidedLabelImpl>(this)}
 {
 }
 
-ElidedLabel::ElidedLabel(const QString& text, QWidget* parent, const Qt::WindowFlags flags) : QLabel(text, parent, flags), m_elideMode{Qt::ElideRight}
+ElidedLabel::ElidedLabel(const QString& text, QWidget* parent, const Qt::WindowFlags flags) :
+    QLabel(text, parent, flags),
+    d{std::make_unique<ElidedLabel::ElidedLabelImpl>(this)}
 {
 }
 
-ElidedLabel::ElidedLabel(const QString& text, const Qt::TextElideMode elideMode, QWidget* parent, const Qt::WindowFlags flags) : QLabel(text, parent, flags), m_elideMode{elideMode}
+ElidedLabel::ElidedLabel(const QString& text, const Qt::TextElideMode elideMode, QWidget* parent, const Qt::WindowFlags flags) :
+    QLabel(text, parent, flags),
+    d{std::make_unique<ElidedLabel::ElidedLabelImpl>(this, elideMode)}
 {
 }
 
 Qt::TextElideMode ElidedLabel::getElideMode() const
 {
-    return m_elideMode;
+    return d->getElideMode();
 }
 
 void ElidedLabel::setElideMode(const Qt::TextElideMode elideMode)
 {
-    m_elideMode = elideMode;
-    updateGeometry();
+    d->setElideMode(elideMode);
 }
 
 void ElidedLabel::setText(const QString& text)
 {
     QLabel::setText(text);
-    cacheElidedText(geometry().width());
+    d->setText(text);
 }
 
 void ElidedLabel::resizeEvent(QResizeEvent* e)
 {
     QLabel::resizeEvent(e);
-    cacheElidedText(e->size().width());
+    d->cacheElidedText(text(), e->size().width());
 }
 
 void ElidedLabel::paintEvent(QPaintEvent* e)
 {
-    if (m_elideMode == Qt::ElideNone) {
+    if (d->getElideMode() == Qt::ElideNone) {
         QLabel::paintEvent(e);
     } else {
         QPainter p(this);
-        p.drawText(0, 0, geometry().width(), geometry().height(), alignment(), m_elidedText, nullptr);
+        p.drawText(0, 0, geometry().width(), geometry().height(), alignment(), d->getElidedText(), nullptr);
     }
-}
-
-void ElidedLabel::cacheElidedText(const int width)
-{
-    m_elidedText = fontMetrics().elidedText(text(), m_elideMode, width, Qt::TextShowMnemonic);
 }
 
 }
