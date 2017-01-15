@@ -9,6 +9,7 @@
 #include <QDir>
 #include <QDirIterator>
 #include <QFileInfo>
+#include <QStandardPaths>
 #include <QUrl>
 
 #ifdef _MSC_VER
@@ -193,6 +194,16 @@ std::string getGlobalClipboardText()
 void setGlobalClipboardText(const std::string& text)
 {
     QApplication::clipboard()->setText(QString::fromStdString(text));
+}
+
+bool stringEndsWith(const std::string& str, const std::string& suffix)
+{
+    return str.size() >= suffix.size() && str.compare(str.size() - suffix.size(), suffix.size(), suffix) == 0;
+}
+
+std::string getAppDataLocation()
+{
+    return QStandardPaths::writableLocation(QStandardPaths::AppDataLocation).toStdString();
 }
 
 }

@@ -49,6 +49,10 @@ std::shared_ptr<chaiscript::Module> createBindings()
     ADD_FREE_FUN(getGlobalClipboardText);
     ADD_FREE_FUN(setGlobalClipboardText);
 
+    ADD_FREE_FUN(stringEndsWith);
+
+    ADD_FREE_FUN(getAppDataLocation);
+
     return module;
 }
 

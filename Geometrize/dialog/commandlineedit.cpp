@@ -4,7 +4,6 @@
 #include <string>
 #include <vector>
 
-#include <QtGlobal>
 #include <QKeyEvent>
 
 namespace geometrize
@@ -23,6 +22,23 @@ public:
     CommandLineEditImpl operator=(const CommandLineEditImpl&) = delete;
     CommandLineEditImpl(const CommandLineEditImpl&) = delete;
     ~CommandLineEditImpl() = default;
+
+    void keyPressEvent(const int key)
+    {
+        switch(key) {
+            case Qt::Key_Up:
+                stepHistory(-1);
+                break;
+            case Qt::Key_Down:
+                stepHistory(1);
+                break;
+            case Qt::Key_Return:
+                submitCommand();
+                break;
+            default:
+                break;
+        }
+    }
 
     void stepHistory(const int steps)
     {
@@ -50,6 +66,12 @@ public:
     std::vector<std::string> getHistory()
     {
         return m_history;
+    }
+
+    void setHistory(const std::vector<std::string>& history)
+    {
+        m_history = history;
+        m_historyIndex = static_cast<int>(m_history.size());
     }
 
     void clearHistory()
@@ -94,13 +116,7 @@ void CommandLineEdit::keyPressEvent(QKeyEvent* e)
 {
     QWidget::keyPressEvent(e);
 
-    if(e->key() == Qt::Key_Up) {
-        d->stepHistory(-1);
-    } else if(e->key() == Qt::Key_Down) {
-        d->stepHistory(1);
-    } else if(e->key() == Qt::Key_Return) {
-        d->submitCommand();
-    }
+    d->keyPressEvent(e->key());
 }
 
 void CommandLineEdit::clearHistory()
@@ -111,6 +127,11 @@ void CommandLineEdit::clearHistory()
 std::vector<std::string> CommandLineEdit::getHistory() const
 {
     return d->getHistory();
+}
+
+void CommandLineEdit::setHistory(const std::vector<std::string>& history)
+{
+    d->setHistory(history);
 }
 
 }

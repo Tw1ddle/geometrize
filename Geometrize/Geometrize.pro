@@ -58,7 +58,8 @@ SOURCES += main.cpp \
     script/chaiscriptcreator.cpp \
     script/scriptoptions.cpp \
     script/scriptrunner.cpp \
-    script/scriptutil.cpp
+    script/scriptutil.cpp \
+    serialization/serializationutil.cpp
 
 HEADERS += chaiscript/chaiscript.hpp \
     cereal/archives/adapters.hpp \
@@ -204,7 +205,9 @@ HEADERS += chaiscript/chaiscript.hpp \
     script/scriptutil.h \
     serialization/globalpreferencesdata.h \
     serialization/imagejobpreferencesdata.h \
-    serialization/templatemetadata.h
+    serialization/templatemetadata.h \
+    serialization/stringvectordata.h \
+    serialization/serializationutil.h
 
 FORMS += dialog/aboutdialog.ui \
     dialog/commandlineedit.ui \

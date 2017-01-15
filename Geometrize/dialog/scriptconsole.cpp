@@ -61,6 +61,16 @@ public:
         m_engine = engine;
     }
 
+    std::vector<std::string> getHistory() const
+    {
+        return ui->commandLine->getHistory();
+    }
+
+    void setHistory(const std::vector<std::string>& history)
+    {
+        ui->commandLine->setHistory(history);
+    }
+
 private:
     ScriptConsole* q;
     Ui::ScriptConsole* ui;
@@ -81,6 +91,23 @@ void ScriptConsole::setEngine(chaiscript::ChaiScript* engine)
 {
     d->setEngine(engine);
 }
+
+std::vector<std::string> ScriptConsole::getHistory() const
+{
+    return d->getHistory();
+}
+
+void ScriptConsole::setHistory(const std::vector<std::string>& history)
+{
+    d->setHistory(history);
+}
+
+std::string ScriptConsole::getConsoleHistoryFilenameForJob(const std::string& jobUrl)
+{
+    return ""; // TODO
+}
+
+const std::string ScriptConsole::launchConsoleHistoryFilename = "launch_console_command_history.json";
 
 }
 

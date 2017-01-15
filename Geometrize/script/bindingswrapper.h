@@ -53,6 +53,10 @@ std::string getGlobalClipboardText();
 
 void setGlobalClipboardText(const std::string& text);
 
+bool stringEndsWith(const std::string& str, const std::string& suffix);
+
+std::string getAppDataLocation();
+
 }
 
 }

@@ -130,6 +130,20 @@ std::string getGlobalClipboardText();
  */
 void setGlobalClipboardText(const std::string& text);
 
+/**
+ * @brief stringEndsWith Checks if a string ends with the given suffix.
+ * @param str The string to check.
+ * @param suffix The suffix ending to check for.
+ * @return True if the string ends with the given suffix, false otherwise.
+ */
+bool stringEndsWith(const std::string& str, const std::string& suffix);
+
+/**
+ * @brief getAppDataLocation Returns a directory location where persistent application data can be stored.
+ * @return Directory location where persistent application data can be stored.
+ */
+std::string getAppDataLocation();
+
 }
 
 }

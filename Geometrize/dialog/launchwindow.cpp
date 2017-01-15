@@ -19,6 +19,8 @@
 #include "dialog/recentitemwidget.h"
 #include "recentitems.h"
 #include "script/chaiscriptcreator.h"
+#include "util.h"
+#include "serialization/serializationutil.h"
 
 namespace geometrize
 {
@@ -50,6 +52,8 @@ public:
             const QStringList files{item->text()};
             openJobs(files);
         });
+
+        loadConsoleHistory();
     }
     LaunchWindowImpl operator=(const LaunchWindowImpl&) = delete;
     LaunchWindowImpl(const LaunchWindowImpl&) = delete;
@@ -63,6 +67,18 @@ public:
     void setConsoleVisibility(const bool visible)
     {
         ui->consoleWidget->setVisible(visible);
+    }
+
+    void loadConsoleHistory()
+    {
+        std::vector<std::string> history{util::readStringVector(util::getAppDataLocation().append("/").append(geometrize::dialog::ScriptConsole::launchConsoleHistoryFilename))};
+        q->ui->consoleWidget->setHistory(history);
+    }
+
+    void saveConsoleHistory()
+    {
+        const std::vector<std::string> history{q->ui->consoleWidget->getHistory()};
+        util::writeStringVector(history, util::getAppDataLocation().append("/").append(geometrize::dialog::ScriptConsole::launchConsoleHistoryFilename));
     }
 
 private:
@@ -96,12 +112,7 @@ void LaunchWindow::dropEvent(QDropEvent* event)
 
 void LaunchWindow::closeEvent(QCloseEvent* event)
 {
-    const int dialogResult{common::ui::openQuitDialog(this)}; // TODO unsaved changes check
-    if(dialogResult == QDialog::Accepted) {
-        event->accept();
-    } else {
-        event->ignore();
-    }
+    d->saveConsoleHistory();
 }
 
 void LaunchWindow::on_actionPreferences_triggered()

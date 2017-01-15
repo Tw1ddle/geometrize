@@ -43,6 +43,12 @@ public:
      */
     std::vector<std::string> getHistory() const;
 
+    /**
+     * @brief setHistory Sets the history of commands.
+     * @param history The command history to use.
+     */
+    void setHistory(const std::vector<std::string>& history);
+
 signals:
     /**
      * @brief signal_commandSubmitted is fired when a command is submitted by the user (e.g. after pressing return).
