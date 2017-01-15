@@ -24,6 +24,7 @@ SOURCES += main.cpp \
     searchpaths.cpp \
     recentitem.cpp \
     recentitems.cpp \
+    runguard.cpp \
     templatemanifest.cpp \
     versioninfo.cpp \
     util.cpp \
@@ -145,6 +146,7 @@ HEADERS += chaiscript/chaiscript.hpp \
     imagejobcontext.h \
     recentitem.h \
     recentitems.h \
+    runguard.h \
     searchpaths.h \
     templatemanifest.h \
     util.h \
