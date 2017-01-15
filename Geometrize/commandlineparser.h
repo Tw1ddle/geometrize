@@ -45,8 +45,16 @@ private:
 CommandLineResult setupCommandLineParser(QCommandLineParser& parser, const QStringList& arguments);
 
 /**
+ * @brief handleArgumentPairs Handles the argument-value pairs that were set on the parser.
+ * @param parser The parser to use to use.
+ * @return  The result of handling the argument-value pairs.
+ */
+CommandLineResult handleArgumentPairs(QCommandLineParser& parser);
+
+/**
  * @brief handlePositionalArguments
- * @param arguments The position arguments to handle.
+ * @param arguments The positional arguments to handle.
+ * @return The result of handling the positional arguments.
  */
 CommandLineResult handlePositionalArguments(const QStringList& arguments);
 

@@ -9,6 +9,7 @@
 
 #include "commandlineparser.h"
 #include "constants.h"
+#include "runguard.h"
 #include "versioninfo.h"
 
 void setupSettingsFields()
@@ -27,16 +28,21 @@ void setupSettingsFields()
 
 int main(int argc, char* argv[])
 {
-    QApplication app(argc, argv);
-
     setupSettingsFields();
 
-    QCommandLineParser parser;
-    geometrize::cli::setupCommandLineParser(parser, app.arguments());
-    geometrize::cli::handlePositionalArguments(parser.positionalArguments());
+    QApplication app(argc, argv);
 
+    QCommandLineParser parser;
+    const geometrize::cli::CommandLineResult cliSetup{geometrize::cli::setupCommandLineParser(parser, app.arguments())};
+    const geometrize::cli::CommandLineResult options{geometrize::cli::handleArgumentPairs(parser)};
+    const geometrize::cli::CommandLineResult positionals{geometrize::cli::handlePositionalArguments(parser.positionalArguments())};
+
+    // Open launcher window if there isn't an instance of Geometrize already running
+    geometrize::RunGuard runGuard("geometrize_run_guard_key");
     geometrize::dialog::LaunchWindow w;
-    w.show();
+    if(runGuard.tryToRun()) {
+        w.show();
+    }
 
     return app.exec();
 }

@@ -6,6 +6,7 @@
 #include <QStringList>
 
 #include "constants.h"
+#include "common/uiactions.h"
 
 namespace geometrize
 {
@@ -35,8 +36,8 @@ CommandLineResult setupCommandLineParser(QCommandLineParser& parser, const QStri
     parser.addVersionOption();
 
     parser.addOptions({
-        {{"s", options::script}, QCoreApplication::translate("cli", "Executes the ChaiScript script file at the given path or URL.")},
-        {{"e", options::eval}, QCoreApplication::translate("cli", "Evaluates the ChaiScript input provided directly.")}
+        {{"e", options::eval}, QCoreApplication::translate("cli", "Evaluates the ChaiScript input provided directly.")},
+        {{"s", options::script}, QCoreApplication::translate("cli", "Executes the ChaiScript script file at the given path or URL.")}
     });
 
     if(!parser.parse(arguments)) {
@@ -48,10 +49,22 @@ CommandLineResult setupCommandLineParser(QCommandLineParser& parser, const QStri
     return CommandLineResult(CommandLineError::CommandLineOk, "");
 }
 
+CommandLineResult handleArgumentPairs(QCommandLineParser& parser)
+{
+    if(parser.isSet(options::eval)) {
+        //parser.value()
+    }
+    if(parser.isSet(options::script)) {
+        // TODO
+    }
+
+    return CommandLineResult(CommandLineError::CommandLineOk, "");
+}
+
 CommandLineResult handlePositionalArguments(const QStringList& arguments)
 {
     for(const QString& argument : arguments) {
-        // TODO validate and open jobs, else error
+        geometrize::common::ui::openJobs({ argument });
     }
 
     return CommandLineResult(CommandLineError::CommandLineOk, ""); // TODO
