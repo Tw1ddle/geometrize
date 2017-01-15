@@ -1,12 +1,10 @@
 #pragma once
 
-#include <QString>
+#include <memory>
+
 #include <QPushButton>
 
-namespace Ui
-{
-class TemplateButton;
-}
+class QString;
 
 namespace chaiscript
 {
@@ -20,7 +18,7 @@ namespace dialog
 {
 
 /**
- * @brief The TemplateButton class is a button that opens a pre-made job template when clicked.
+ * @brief The TemplateButton class is a button that opens a job template when clicked.
  */
 class TemplateButton : public QPushButton
 {
@@ -32,12 +30,9 @@ public:
 
 private:
     virtual void contextMenuEvent(QContextMenuEvent* e) override;
-    void openTemplate();
 
-    Ui::TemplateButton* ui;
-
-    const QString m_templateFolder;
-    chaiscript::ChaiScript* const m_templateLoader;
+    class TemplateButtonImpl;
+    std::unique_ptr<TemplateButtonImpl> d;
 };
 
 }
