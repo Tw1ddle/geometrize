@@ -1,0 +1,6 @@
+[submodule "lib/cereal"]
+	path = lib/cereal
+	url = https://github.com/USCiLab/cereal
+[submodule "lib/chaiscript"]
+	path = lib/chaiscript
+	url = https://github.com/ChaiScript/ChaiScript
