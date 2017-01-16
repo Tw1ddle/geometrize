@@ -28,7 +28,7 @@ public:
     serialization::TemplateMetadata m_data;
 };
 
-TemplateManifest::TemplateManifest(const std::string& manifestFilepath) : d{std::make_unique<TemplateManifest::TemplateManifestImpl>(manifestFilepath)}
+TemplateManifest::TemplateManifest(const std::string& manifestFilepath) : d{std::make_shared<TemplateManifest::TemplateManifestImpl>(manifestFilepath)}
 {
 }
 

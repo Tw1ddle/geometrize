@@ -10,6 +10,9 @@
 namespace geometrize
 {
 
+namespace job
+{
+
 class ImageJobContext::ImageJobContextImpl : public QObject
 {
 public:
@@ -40,6 +43,8 @@ ImageJobContext::ImageJobContext(const QString& displayName, BitmapData& bitmap)
 QString ImageJobContext::getDisplayName() const
 {
     return d->getDisplayName();
+}
+
 }
 
 }

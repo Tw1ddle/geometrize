@@ -15,12 +15,6 @@ namespace version
 QString getApplicationVersionString();
 
 /**
- * @brief getRuntimeOperatingSystemVersionName Gets the version string for the OS version the application is running on e.g. "10", "Leopard", "Vista".
- * @return The version name of the OS the application is running on.
- */
-QString getRuntimeOperatingSystemVersionName();
-
-/**
  * @brief getRuntimeMachineHostName Gets the system's runtime host name, if one is set.
  * @return The system's host name.
  */

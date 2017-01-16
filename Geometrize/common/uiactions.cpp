@@ -23,7 +23,7 @@
 #include "dialog/quitdialog.h"
 #include "dialog/runscriptdialog.h"
 #include "formatsupport.h"
-#include "imagejobcontext.h"
+#include "job/imagejobcontext.h"
 #include "network/completionhandlers.h"
 #include "network/networkactions.h"
 #include "recentitems.h"
@@ -90,7 +90,7 @@ void openMoreResourcesPage()
     QDesktopServices::openUrl(QUrl(geometrize::constants::MORE_RESOURCES_URL));
 }
 
-ImageJobContext* createImageJob(QWidget* parent, const QString& displayName, const QPixmap& pixmap)
+job::ImageJobContext* createImageJob(QWidget* parent, const QString& displayName, const QPixmap& pixmap)
 {
     dialog::ImageJobWindow* imageJobWindow = new dialog::ImageJobWindow(parent);
     imageJobWindow->show(); // TODO cleanup
@@ -99,11 +99,11 @@ ImageJobContext* createImageJob(QWidget* parent, const QString& displayName, con
     // TODO QImage instead?
     //BitmapData data(pixmap.data_ptr().);
 
-    ImageJobContext* context = new ImageJobContext(displayName, BitmapData(10, 10, rgba{0, 0, 0, 0})); // TODO
+    job::ImageJobContext* context = new job::ImageJobContext(displayName, BitmapData(10, 10, rgba{0, 0, 0, 0})); // TODO
     return context;
 }
 
-ImageJobContext* createImageJobAndUpdateRecents(QWidget* parent, const QUrl& url)
+job::ImageJobContext* createImageJobAndUpdateRecents(QWidget* parent, const QUrl& url)
 {
     // TODO error message and exit out
 

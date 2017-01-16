@@ -20,7 +20,6 @@ QMAKE_CXXFLAGS += -bigobj
 SOURCES += main.cpp \
     commandlineparser.cpp \
     formatsupport.cpp \
-    imagejobcontext.cpp \
     searchpaths.cpp \
     recentitem.cpp \
     recentitems.cpp \
@@ -45,8 +44,11 @@ SOURCES += main.cpp \
     dialog/recentjobslist.cpp \
     dialog/runscriptdialog.cpp \
     dialog/scriptconsole.cpp \
+    dialog/searchbox.cpp \
     dialog/templatebutton.cpp \
     dialog/templategrid.cpp \
+    job/jobutil.cpp \
+    job/imagejobcontext.cpp \
     layout/flowlayout.cpp \
     network/completionhandlers.cpp \
     network/downloader.cpp \
@@ -144,7 +146,6 @@ HEADERS += chaiscript/chaiscript.hpp \
     commandlineparser.h \
     constants.h \
     formatsupport.h \
-    imagejobcontext.h \
     recentitem.h \
     recentitems.h \
     runguard.h \
@@ -188,9 +189,12 @@ HEADERS += chaiscript/chaiscript.hpp \
     dialog/recentjobslist.h \
     dialog/openurldialog.h \
     dialog/scriptconsole.h \
+    dialog/searchbox.h \
     dialog/runscriptdialog.h \
     dialog/templatebutton.h \
     dialog/templategrid.h \
+    job/jobutil.h \
+    job/imagejobcontext.h \
     layout/flowlayout.h \
     network/completionhandlers.h \
     network/downloader.h \

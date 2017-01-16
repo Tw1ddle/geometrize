@@ -9,6 +9,9 @@ namespace geometrize
 
 class BitmapData;
 
+namespace job
+{
+
 /**
  * @brief The ImageJobContext class contains the data worked on by an image job.
  */
@@ -30,5 +33,7 @@ private:
     class ImageJobContextImpl;
     std::unique_ptr<ImageJobContextImpl> d;
 };
+
+}
 
 }

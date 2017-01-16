@@ -14,8 +14,8 @@ class TemplateManifest
 {
 public:
     TemplateManifest(const std::string& manifestFilepath);
-    TemplateManifest& operator=(const TemplateManifest&) = delete;
-    TemplateManifest(const TemplateManifest&) = delete;
+    TemplateManifest& operator=(const TemplateManifest&) = default;
+    TemplateManifest(const TemplateManifest&) = default;
     ~TemplateManifest();
 
     std::string getName() const;
@@ -25,7 +25,7 @@ public:
 
 private:
     class TemplateManifestImpl;
-    std::unique_ptr<TemplateManifestImpl> d;
+    std::shared_ptr<TemplateManifestImpl> d;
 };
 
 }

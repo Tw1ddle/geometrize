@@ -131,6 +131,14 @@ std::string getGlobalClipboardText();
 void setGlobalClipboardText(const std::string& text);
 
 /**
+ * @brief stringBeginsWith Checks if a string begins with the given prefix.
+ * @param str The string to check.
+ * @param prefix The prefix to check for.
+ * @return True if the string begins with the given prefix, false otherwise.
+ */
+bool stringBeginsWith(const std::string& str, const std::string& prefix);
+
+/**
  * @brief stringEndsWith Checks if a string ends with the given suffix.
  * @param str The string to check.
  * @param suffix The suffix ending to check for.

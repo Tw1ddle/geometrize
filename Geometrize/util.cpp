@@ -196,6 +196,11 @@ void setGlobalClipboardText(const std::string& text)
     QApplication::clipboard()->setText(QString::fromStdString(text));
 }
 
+bool stringBeginsWith(const std::string& str, const std::string& prefix)
+{
+    return str.size() >= prefix.size() && std::equal(prefix.begin(), prefix.end(), str.begin());
+}
+
 bool stringEndsWith(const std::string& str, const std::string& suffix)
 {
     return str.size() >= suffix.size() && str.compare(str.size() - suffix.size(), suffix.size(), suffix) == 0;

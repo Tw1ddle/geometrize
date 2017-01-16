@@ -11,7 +11,12 @@ class QWidget;
 
 namespace geometrize
 {
+
+namespace job
+{
 class ImageJobContext;
+}
+
 }
 
 namespace geometrize
@@ -42,8 +47,8 @@ QString getImagePath(QWidget* parent);
 
 // Image job creation/opening
 void openJobs(const QStringList& urls);
-ImageJobContext* createImageJob(QWidget* parent, const QString& displayName, const QPixmap& pixmap);
-ImageJobContext* createImageJobAndUpdateRecents(QWidget* parent, const QUrl& url);
+job::ImageJobContext* createImageJob(QWidget* parent, const QString& displayName, const QPixmap& pixmap);
+job::ImageJobContext* createImageJobAndUpdateRecents(QWidget* parent, const QUrl& url);
 
 }
 

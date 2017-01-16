@@ -33,7 +33,6 @@ AboutDialog::AboutDialog(QWidget* parent) :
 
     ui->runtimeInfo->setText(tr("Runtime Info:", "Technical information about the platform the software is running on follows") +
                              " " + geometrize::version::getBuildOperatingSystemName() +
-                             " " + geometrize::version::getRuntimeOperatingSystemVersionName() +
                              " " + geometrize::version::getRuntimeCpuArchitectureName() +
                              " " + geometrize::version::getRuntimeQtVersionName() +
                              " " + geometrize::version::getRuntimeMachineHostName());

@@ -1,6 +1,7 @@
 #include "templategrid.h"
 
 #include <assert.h>
+#include <list>
 
 #include <QDir>
 #include <QFileInfo>
@@ -26,21 +27,37 @@ namespace dialog
 class TemplateGrid::TemplateGridImpl
 {
 public:
-    TemplateGridImpl(TemplateGrid* pQ) : q{pQ}, m_layout{new layout::FlowLayout(40, 32, 32)}, m_templateLoader{geometrize::script::createChaiScript()}
+    TemplateGridImpl(TemplateGrid* pQ) : q{pQ}, m_layout{new layout::FlowLayout(24, 24, 24)}, m_templateLoader{geometrize::script::createChaiScript()}
     {
         q->setLayout(m_layout);
+    }
 
+    void loadTemplates()
+    {
         const std::string basePath{geometrize::searchpaths::getApplicationDirectoryPath()};
         const std::vector<std::string> paths{geometrize::searchpaths::getTemplateSearchPaths()};
         for(const std::string& path : paths) {
             const QString fullPath{QString::fromStdString(basePath + path)};
             m_fileWatch.addPath(fullPath);
 
-            const std::vector<std::string> templates{util::getTemplateFoldersForPath(fullPath.toStdString())};
+            const std::vector<std::string> templateFolders{util::getTemplateFoldersForPath(fullPath.toStdString())};
 
-            for(const std::string& t : templates) {
-                const bool result{addTemplateItem(QString::fromStdString(t))};
-                emit q->signal_templateLoaded(QString::fromStdString(t), result);
+            for(const std::string& folder : templateFolders) {
+                const bool result{addTemplateItem(QString::fromStdString(folder))};
+                emit q->signal_templateLoaded(QString::fromStdString(folder), result);
+            }
+        }
+    }
+
+    // TODO remove this and use a modified grid layout instead
+    void setItemFilter(const QString& filter)
+    {
+        const std::string stdFilter{filter.toStdString()};
+        for(TemplateButton* const button : m_buttons) {
+            if(util::stringBeginsWith(button->getTemplateManifest().getName(), stdFilter)) {
+                button->show();
+            } else {
+                button->hide();
             }
         }
     }
@@ -52,7 +69,9 @@ public:
 private:
     bool addTemplateItem(const QString& templateFolder)
     {
-        m_layout->addWidget(new TemplateButton(m_templateLoader.get(), templateFolder));
+        TemplateButton* item{new TemplateButton(m_templateLoader.get(), templateFolder)};
+        m_layout->addWidget(item);
+        m_buttons.push_back(item);
         return true;
     }
 
@@ -60,12 +79,23 @@ private:
     layout::FlowLayout* m_layout;
     QFileSystemWatcher m_fileWatch;
     std::unique_ptr<chaiscript::ChaiScript> m_templateLoader;
+    std::vector<TemplateButton*> m_buttons;
 };
 
 TemplateGrid::TemplateGrid(QWidget* parent) :
     QWidget(parent),
     d{std::make_unique<TemplateGrid::TemplateGridImpl>(this)}
 {
+}
+
+void TemplateGrid::loadTemplates()
+{
+    d->loadTemplates();
+}
+
+void TemplateGrid::setItemFilter(const QString& filter)
+{
+    d->setItemFilter(filter);
 }
 
 }

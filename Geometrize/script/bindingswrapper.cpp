@@ -137,6 +137,11 @@ void setGlobalClipboardText(const std::string& text)
     geometrize::util::setGlobalClipboardText(text);
 }
 
+bool stringBeginsWith(const std::string& str, const std::string& prefix)
+{
+    return geometrize::util::stringBeginsWith(str, prefix);
+}
+
 bool stringEndsWith(const std::string& str, const std::string& suffix)
 {
     return geometrize::util::stringEndsWith(str, suffix);

@@ -11,6 +11,7 @@
 
 #include "chaiscript/chaiscript.hpp"
 #include "formatsupport.h"
+#include "job/jobutil.h"
 #include "script/scriptrunner.h"
 #include "templatemanifest.h"
 #include "util.h"
@@ -28,48 +29,41 @@ public:
         ui(new Ui::TemplateButton),
         q{pQ},
         m_templateLoader{templateLoader},
-        m_templateFolder{templateFolder}
+        m_templateFolder{templateFolder},
+        m_manifest{util::getTemplateManifest(m_templateFolder.toStdString())}
     {
         ui->setupUi(q);
 
         const QString firstImageFile{QString::fromStdString(util::getFirstFileWithExtensions(m_templateFolder.toStdString(), format::getSupportedImageFileExtensions(false)))};
-        const TemplateManifest manifest(util::getFirstFileWithExtensions(m_templateFolder.toStdString(), format::getSupportedTemplateManifestFileExtensions()));
 
-        q->setToolTip(QString::fromStdString(manifest.getName() + " (" + manifest.getLicense() + ")"));
+        q->setToolTip(QString::fromStdString(m_manifest.getName() + " (" + m_manifest.getLicense() + ")"));
 
         if(!firstImageFile.isEmpty()) {
             const QPixmap thumbnail(firstImageFile);
             if(!thumbnail.isNull()) {
-                const QSize size{170, 150};
+                const QSize size{180, 150};
                 ui->imageLabel->setPixmap(thumbnail.scaled(size, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation));
             }
         }
 
-        ui->titleLabel->setText(QString::fromStdString(manifest.getName()));
+        ui->titleLabel->setText(QString::fromStdString(m_manifest.getName()));
 
         q->connect(q, &TemplateButton::clicked, [this]() {
             openTemplate();
         });
     }
+
     ~TemplateButtonImpl()
     {
         delete ui;
     }
+
     TemplateButtonImpl operator=(const TemplateButtonImpl&) = delete;
     TemplateButtonImpl(const TemplateButtonImpl&) = delete;
 
     void openTemplate()
     {
-        const std::vector<std::string> scripts{util::getScriptsForPath(m_templateFolder.toStdString())};
-
-        if(scripts.empty()) {
-            assert(0 && "Could not find script for template");
-            return;
-        }
-
-        const std::string script{util::readFileAsString(scripts.front())};
-        m_templateLoader->set_global(chaiscript::var(m_templateFolder.toStdString()), "templateDirectory");
-        geometrize::script::runScript(script, *m_templateLoader, nullptr);
+        geometrize::util::openTemplate(*m_templateLoader, m_templateFolder.toStdString());
     }
 
     void revealTemplateInExplorer()
@@ -96,9 +90,15 @@ public:
         itemContextMenu.exec(e->globalPos());
     }
 
+    TemplateManifest getTemplateManifest() const
+    {
+        return m_manifest;
+    }
+
 private:
     chaiscript::ChaiScript* const m_templateLoader;
     const QString m_templateFolder;
+    const TemplateManifest m_manifest;
     Ui::TemplateButton* ui;
     TemplateButton* q;
 };
@@ -109,13 +109,14 @@ TemplateButton::TemplateButton(chaiscript::ChaiScript* const templateLoader, con
 {
 }
 
-TemplateButton::~TemplateButton()
-{
-}
-
 void TemplateButton::contextMenuEvent(QContextMenuEvent* e)
 {
     d->showContextMenu(e);
+}
+
+TemplateManifest TemplateButton::getTemplateManifest() const
+{
+    return d->getTemplateManifest();
 }
 
 }

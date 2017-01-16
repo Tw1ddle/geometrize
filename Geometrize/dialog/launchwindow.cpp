@@ -19,6 +19,7 @@
 #include "dialog/recentitemwidget.h"
 #include "recentitems.h"
 #include "script/chaiscriptcreator.h"
+#include "job/jobutil.h"
 #include "util.h"
 #include "serialization/serializationutil.h"
 
@@ -54,6 +55,17 @@ public:
         });
 
         loadConsoleHistory();
+
+        connect(ui->templateGrid, &dialog::TemplateGrid::signal_templateLoaded, [this](const QString& templateFolder, const bool success) {
+            // TODO add search by tags etc
+            ui->templatesSearchEdit->addToCompletionList(QString::fromStdString(util::getTemplateManifest(templateFolder.toStdString()).getName()));
+        });
+
+        connect(ui->templatesSearchEdit, &dialog::SearchBox::textChanged, [this](const QString& text) {
+            ui->templateGrid->setItemFilter(text);
+        });
+
+        ui->templateGrid->loadTemplates();
     }
     LaunchWindowImpl operator=(const LaunchWindowImpl&) = delete;
     LaunchWindowImpl(const LaunchWindowImpl&) = delete;
