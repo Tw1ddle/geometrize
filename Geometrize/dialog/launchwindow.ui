@@ -329,7 +329,10 @@
                 <item>
                  <widget class="QLineEdit" name="templatesSearchEdit">
                   <property name="text">
-                   <string extracomment="The contents of the search box the user can type in to search for recent demo projects">Search project templates...</string>
+                   <string notr="true" extracomment="The contents of the search box the user can type in to search for recent demo projects"/>
+                  </property>
+                  <property name="placeholderText">
+                   <string>Search project templates...</string>
                   </property>
                  </widget>
                 </item>

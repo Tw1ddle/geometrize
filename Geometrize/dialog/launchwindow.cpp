@@ -71,6 +71,7 @@ public:
 
     void loadConsoleHistory()
     {
+        // TODO possibly add helper function to make this instead of appending slash?
         std::vector<std::string> history{util::readStringVector(util::getAppDataLocation().append("/").append(geometrize::dialog::ScriptConsole::launchConsoleHistoryFilename))};
         q->ui->consoleWidget->setHistory(history);
     }

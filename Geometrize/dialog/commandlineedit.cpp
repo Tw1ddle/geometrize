@@ -23,6 +23,7 @@ public:
     CommandLineEditImpl(const CommandLineEditImpl&) = delete;
     ~CommandLineEditImpl() = default;
 
+    // TODO add completion events
     void keyPressEvent(const int key)
     {
         switch(key) {

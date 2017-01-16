@@ -13,6 +13,7 @@ namespace cli
 
 namespace options
 {
+    // TODO replace with QCommandLineOption, and do it all in the cpp?
     const QString script{"script"};
     const QString eval{"eval"};
 }
