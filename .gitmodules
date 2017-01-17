@@ -4,3 +4,6 @@
 [submodule "lib/chaiscript"]
 	path = lib/chaiscript
 	url = https://github.com/ChaiScript/ChaiScript
+[submodule "lib/geometrize"]
+	path = lib/geometrize
+	url = https://bitbucket.org/Tw1ddle/geometrize-lib

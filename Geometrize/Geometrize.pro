@@ -18,15 +18,16 @@ RESOURCES = resources/application_resources.qrc
 QMAKE_CXXFLAGS += -bigobj
 
 INCLUDEPATH += $$PWD/../lib/cereal/include \
+    $$PWD/../lib/geometrize/include \
     $$PWD/../lib/chaiscript/include
 
-SOURCES += main.cpp \
-    commandlineparser.cpp \
+SOURCES += commandlineparser.cpp \
     formatsupport.cpp \
-    searchpaths.cpp \
+    main.cpp \
     recentitem.cpp \
     recentitems.cpp \
     runguard.cpp \
+    searchpaths.cpp \
     templatemanifest.cpp \
     versioninfo.cpp \
     util.cpp \
@@ -80,25 +81,6 @@ HEADERS += commandlineparser.h \
     analytics/analytics.h \
     common/sharedapp.h \
     common/uiactions.h \
-    lib/geometrizer/geometrizer/bitmap/bitmapdata.h \
-    lib/geometrizer/geometrizer/bitmap/rgba.h \
-    lib/geometrizer/geometrizer/exporters/shapearrayexporter.h \
-    lib/geometrizer/geometrizer/exporters/shapejsonexporter.h \
-    lib/geometrizer/geometrizer/runner/imagerunner.h \
-    lib/geometrizer/geometrizer/shape/circle.h \
-    lib/geometrizer/geometrizer/shape/ellipse.h \
-    lib/geometrizer/geometrizer/shape/rectangle.h \
-    lib/geometrizer/geometrizer/shape/rotatedellipse.h \
-    lib/geometrizer/geometrizer/shape/rotatedrectangle.h \
-    lib/geometrizer/geometrizer/shape/shape.h \
-    lib/geometrizer/geometrizer/shape/shapefactory.h \
-    lib/geometrizer/geometrizer/shape/shapetypes.h \
-    lib/geometrizer/geometrizer/shape/triangle.h \
-    lib/geometrizer/geometrizer/geometrize.h \
-    lib/geometrizer/geometrizer/model.h \
-    lib/geometrizer/geometrizer/scanline.h \
-    lib/geometrizer/geometrizer/state.h \
-    lib/geometrizer/geometrizer/util.h \
     dialog/aboutdialog.h \
     dialog/commandlineedit.h \
     dialog/creditsdialog.h \

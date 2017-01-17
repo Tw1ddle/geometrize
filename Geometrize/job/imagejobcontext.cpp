@@ -4,8 +4,8 @@
 
 #include "preferences/imagejobpreferences.h"
 
-#include "lib/geometrizer/geometrizer/bitmap/bitmapdata.h"
-#include "lib/geometrizer/geometrizer/runner/imagerunner.h"
+#include "geometrize/bitmap/bitmapdata.h"
+#include "geometrize/runner/imagerunner.h"
 
 namespace geometrize
 {

@@ -9,8 +9,9 @@
 #include <QPixmap>
 #include <QUrl>
 
-#include "lib/geometrizer/geometrizer/bitmap/bitmapdata.h"
-#include "lib/geometrizer/geometrizer/bitmap/rgba.h"
+// TODO remove
+#include "geometrize/bitmap/bitmapdata.h"
+#include "geometrize/bitmap/rgba.h"
 
 #include "common/sharedapp.h"
 #include "constants.h"
