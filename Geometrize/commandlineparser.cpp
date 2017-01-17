@@ -6,7 +6,7 @@
 #include <QStringList>
 
 #include "constants.h"
-#include "common/uiactions.h"
+#include "job/jobutil.h"
 
 namespace geometrize
 {
@@ -64,7 +64,7 @@ CommandLineResult handleArgumentPairs(QCommandLineParser& parser)
 CommandLineResult handlePositionalArguments(const QStringList& arguments)
 {
     for(const QString& argument : arguments) {
-        geometrize::common::ui::openJobs({ argument });
+        geometrize::util::openJobs({ argument });
     }
 
     return CommandLineResult(CommandLineError::CommandLineOk, ""); // TODO

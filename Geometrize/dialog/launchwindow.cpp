@@ -73,7 +73,7 @@ public:
 
     void openJobs(const QStringList& urls)
     {
-        common::ui::openJobs(urls);
+        util::openJobs(urls);
     }
 
     void setConsoleVisibility(const bool visible)
@@ -152,14 +152,15 @@ void LaunchWindow::on_actionExit_triggered()
 void LaunchWindow::on_openImageButton_clicked()
 {
     // TODO support other file types?
-    common::ui::createImageJobAndUpdateRecents(this, common::ui::getImagePath(this));
+    // TODO
+    //common::ui::createImageJobAndUpdateRecents(this, common::ui::getImagePath(this));
 }
 
 void LaunchWindow::on_openLinkButton_clicked()
 {
     const QUrl url{common::ui::openGetUrlDialog(this)};
     if(url.isValid()) {
-        common::ui::openJobs({ url.toString() });
+        geometrize::util::openJobs({ url.toString() });
     }
 }
 

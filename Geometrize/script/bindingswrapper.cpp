@@ -6,6 +6,7 @@
 
 #include "common/uiactions.h"
 #include "formatsupport.h"
+#include "job/jobutil.h"
 #include "searchpaths.h"
 #include "util.h"
 
@@ -109,7 +110,7 @@ void openJob(const std::string& url)
         return;
     }
 
-    geometrize::common::ui::openJobs(QStringList(QString::fromStdString(url)));
+    geometrize::util::openJobs(QStringList(QString::fromStdString(url)));
 }
 
 bool openInDefaultApplication(const std::string& path)

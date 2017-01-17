@@ -7,6 +7,7 @@
 
 #include "common/uiactions.h"
 #include "common/sharedapp.h"
+#include "job/jobutil.h"
 #include "util.h"
 
 namespace geometrize
@@ -44,7 +45,7 @@ void RecentItemWidget::contextMenuEvent(QContextMenuEvent* e)
     QAction openAction(tr("Open"));
     itemContextMenu.addAction(&openAction);
     connect(&openAction, &QAction::triggered, [this]() {
-        geometrize::common::ui::openJobs({m_item.getKey()});
+        geometrize::util::openJobs({m_item.getKey()});
     });
 
     QAction openInDefaultViewer(tr("Open in viewer"));
