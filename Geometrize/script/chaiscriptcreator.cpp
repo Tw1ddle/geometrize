@@ -13,7 +13,7 @@ namespace script
 
 std::unique_ptr<chaiscript::ChaiScript> createChaiScript()
 {
-    std::unique_ptr<chaiscript::ChaiScript> chai = std::make_unique<chaiscript::ChaiScript>(chaiscript::Std_Lib::library());
+    std::unique_ptr<chaiscript::ChaiScript> chai = std::make_unique<chaiscript::ChaiScript>();
 
     chai->add(chaiscript::bootstrap::standard_library::vector_type<std::vector<int>>("IntVector"));
     chai->add(chaiscript::bootstrap::standard_library::vector_type<std::vector<std::string>>("StringVector"));

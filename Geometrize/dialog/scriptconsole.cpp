@@ -18,7 +18,7 @@ public:
     {
         ui->setupUi(q);
 
-        ui->outputView->append("ChaiScript " + QString::fromStdString(m_engine->build_id()));
+        ui->outputView->append("ChaiScript " + QString(chaiscript::compiler_name));
         ui->outputView->append(tr("Type 'help' for a list of commands"));
 
         connect(ui->commandLine, &geometrize::dialog::CommandLineEdit::signal_commandSubmitted, [this](const std::string& command) {
