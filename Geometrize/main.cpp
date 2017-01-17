@@ -6,7 +6,9 @@
 
 #include <QApplication>
 #include <QCommandLineParser>
+#include <QString>
 
+#include "analytics/analyticswrapper.h"
 #include "commandlineparser.h"
 #include "constants.h"
 #include "runguard.h"
@@ -31,6 +33,10 @@ int main(int argc, char* argv[])
     setupSettingsFields();
 
     QApplication app(argc, argv);
+
+    geometrize::analytics::AnalyticsWrapper analytics;
+    analytics.startSession();
+    analytics.onLaunch();
 
     QCommandLineParser parser;
     const geometrize::cli::CommandLineResult cliSetup{geometrize::cli::setupCommandLineParser(parser, app.arguments())};

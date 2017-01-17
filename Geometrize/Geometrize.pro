@@ -21,6 +21,8 @@ INCLUDEPATH += $$PWD/../lib/cereal/include \
     $$PWD/../lib/geometrize/include \
     $$PWD/../lib/chaiscript/include
 
+include($$PWD/../lib/qt_google_analytics/qt-google-analytics.pri)
+
 SOURCES += commandlineparser.cpp \
     formatsupport.cpp \
     main.cpp \
@@ -32,6 +34,7 @@ SOURCES += commandlineparser.cpp \
     versioninfo.cpp \
     util.cpp \
     analytics/analytics.cpp \
+    analytics/analyticswrapper.cpp \
     common/sharedapp.cpp \
     common/uiactions.cpp \
     dialog/aboutdialog.cpp \
@@ -79,6 +82,7 @@ HEADERS += commandlineparser.h \
     versioninfo.h \
     winversioninfo.h \
     analytics/analytics.h \
+    analytics/analyticswrapper.h \
     common/sharedapp.h \
     common/uiactions.h \
     dialog/aboutdialog.h \

@@ -1,4 +1,4 @@
-Geometrizer is a library for turning images into geometric primitives. It is licensed under the MIT License (MIT) as follows:
+The Geometrize library is a library for turning images into geometric primitives. It is licensed under the MIT License (MIT) as follows:
 
 Copyright (c) 2017 Sam Twidale (http://samcodes.co.uk/)
 

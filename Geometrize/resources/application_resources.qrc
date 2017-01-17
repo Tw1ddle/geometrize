@@ -9,7 +9,6 @@
         <file>licenses/cereal_license.txt</file>
         <file>licenses/rapidjson_license.txt</file>
         <file>licenses/rapidxml_license.txt</file>
-        <file>licenses/geometrizer_license.txt</file>
         <file>licenses/elidedlabel_license.txt</file>
         <file>icons/add.png</file>
         <file>icons/application_osx_terminal.png</file>
@@ -764,5 +763,7 @@
         <file>icons/zoom_selection.png</file>
         <file>logos/logo.png</file>
         <file>logos/logo_small.png</file>
+        <file>licenses/qt_google_analytics_license.txt</file>
+        <file>licenses/geometrize_library_license.txt</file>
     </qresource>
 </RCC>

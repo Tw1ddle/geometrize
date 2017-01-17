@@ -48,12 +48,13 @@ LicenseDialog::LicenseDialog(QWidget* parent) :
     };
 
     ui->geometrizeLicense->setText(readLicenseFile(":/licenses/geometrize_license.txt"));
-    ui->geometrizerLicense->setText(readLicenseFile(":/licenses/geometrizer_license.txt"));
+    ui->geometrizeLibraryLicense->setText(readLicenseFile(":/licenses/geometrize_library_license.txt"));
     ui->qtLicense->setText(readLicenseFile(":/licenses/qt_license.txt"));
     ui->chaiScriptLicense->setText(readLicenseFile(":/licenses/chaiscript_license.txt"));
     ui->cerealLicense->setText(readLicenseFile(":/licenses/cereal_license.txt"));
     ui->rapidJSONLicense->setText(readLicenseFile(":/licenses/rapidjson_license.txt"));
     ui->rapidXmlLicense->setText(readLicenseFile(":/licenses/rapidxml_license.txt"));
+    ui->qtGoogleAnalyticsLicense->setText(readLicenseFile(":/licenses/qt_google_analytics_license.txt"));
     ui->flowLayoutLicense->setText(readLicenseFile(":/licenses/flowlayout_license.txt"));
     ui->elidedLabelLicense->setText(readLicenseFile(":/licenses/elidedlabel_license.txt"));
     ui->iconAssetsLicense->setText(readLicenseFile(":/licenses/fatcow_icon_license.txt"));
