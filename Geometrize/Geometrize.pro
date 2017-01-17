@@ -131,3 +131,9 @@ FORMS += dialog/aboutdialog.ui \
     dialog/runscriptdialog.ui \
     dialog/scriptconsole.ui \
     dialog/templatebutton.ui
+
+OTHER_FILES += $$PWD/../lib/geometrize/include/geometrize/*.* \
+    $$PWD/../lib/geometrize/include/geometrize/bitmap/*.* \
+    $$PWD/../lib/geometrize/include/geometrize/exporters/*.* \
+    $$PWD/../lib/geometrize/include/geometrize/runner/*.* \
+    $$PWD/../lib/geometrize/include/geometrize/shape/*.*
