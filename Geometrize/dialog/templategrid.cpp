@@ -1,15 +1,7 @@
 #include "templategrid.h"
 
-#include <assert.h>
-#include <list>
-
-#include <QDir>
-#include <QFileInfo>
 #include <QFileSystemWatcher>
-#include <QMessageBox>
-#include <QPushButton>
 #include <QString>
-#include <QWidget>
 
 #include "script/chaiscriptcreator.h"
 #include "chaiscript/chaiscript.hpp"

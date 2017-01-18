@@ -41,7 +41,7 @@ namespace dialog
 class ElidedLabel : public QLabel
 {
 public:
-    ElidedLabel(QWidget* parent = nullptr, Qt::WindowFlags flags = 0);
+    explicit ElidedLabel(QWidget* parent = nullptr, Qt::WindowFlags flags = 0);
     ElidedLabel(const QString& text, QWidget* parent = nullptr, Qt::WindowFlags flags = 0);
     ElidedLabel(const QString& text, Qt::TextElideMode elideMode = Qt::ElideRight, QWidget* parent = nullptr, Qt::WindowFlags flags = 0);
 

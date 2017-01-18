@@ -23,7 +23,7 @@ namespace dialog
 class ImageJobWindow::ImageJobWindowImpl
 {
 public:
-    ImageJobWindowImpl(ImageJobWindow* pQ, Ui::ImageJobWindow* pUi) : q{pQ}, ui{pUi}
+    ImageJobWindowImpl(ImageJobWindow* pQ) : q{pQ}, ui{std::make_unique<Ui::ImageJobWindow>()}
     {
         ui->setupUi(q);
     }
@@ -44,20 +44,18 @@ public:
 
 private:
     ImageJobWindow* q;
-    Ui::ImageJobWindow* ui;
+    std::unique_ptr<Ui::ImageJobWindow> ui;
 };
 
 ImageJobWindow::ImageJobWindow(QWidget* parent) :
     QMainWindow(parent),
-    ui(new Ui::ImageJobWindow),
-    d{std::make_unique<ImageJobWindowImpl>(this, ui)}
+    d{std::make_unique<ImageJobWindowImpl>(this)}
 {
     // TODO set title to name of image loaded?
 }
 
 ImageJobWindow::~ImageJobWindow()
 {
-    delete ui;
 }
 
 void ImageJobWindow::on_actionAbout_triggered()

@@ -1,7 +1,6 @@
 #include "versioninfo.h"
 
 #include <QSysInfo>
-#include <QtGlobal>
 
 namespace geometrize
 {

@@ -4,7 +4,6 @@
 
 #include <QList>
 
-#include "common/uiactions.h"
 #include "formatsupport.h"
 #include "job/jobutil.h"
 #include "searchpaths.h"

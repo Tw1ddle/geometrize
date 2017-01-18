@@ -6,11 +6,6 @@
 
 #include <QWidget>
 
-namespace Ui
-{
-class ScriptConsole;
-}
-
 namespace chaiscript
 {
 class ChaiScript;
@@ -47,8 +42,6 @@ public:
     void setHistory(const std::vector<std::string>& history);
 
 private:
-    Ui::ScriptConsole* ui;
-
     class ScriptConsoleImpl;
     std::unique_ptr<ScriptConsoleImpl> d;
 };

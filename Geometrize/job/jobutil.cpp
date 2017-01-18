@@ -7,10 +7,10 @@
 #include <QUrl>
 
 #include "chaiscript/chaiscript.hpp"
+
 #include "geometrize/bitmap/bitmapdata.h"
 #include "geometrize/bitmap/rgba.h"
 
-#include "common/sharedapp.h"
 #include "job/imagejobcontext.h"
 #include "formatsupport.h"
 #include "dialog/imagejobwindow.h"

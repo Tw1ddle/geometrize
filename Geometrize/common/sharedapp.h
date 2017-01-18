@@ -2,8 +2,6 @@
 
 #include <memory>
 
-#include <QObject>
-
 namespace geometrize
 {
 class RecentItems;
@@ -21,15 +19,17 @@ namespace app
 /**
  * @brief The SharedApp class is a lazy singleton that contains common core functionality.
  */
-class SharedApp : public QObject
+class SharedApp
 {
-    Q_OBJECT
 public:
     static SharedApp& get();
     SharedApp& operator=(const SharedApp&) = delete;
     SharedApp(const SharedApp&) = delete;
 
-    // Recent files
+    /**
+     * @brief getRecentFiles Gets a reference to the recent files list.
+     * @return The recent files list.
+     */
     RecentItems& getRecentFiles();
 
 private:

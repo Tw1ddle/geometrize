@@ -1,23 +1,16 @@
 #include "launchwindow.h"
 #include "ui_launchwindow.h"
 
-#include <QAction>
 #include <QCloseEvent>
 #include <QDebug>
 #include <QDialog>
-#include <QMap>
-#include <QMenu>
 
 #include "chaiscript/chaiscript.hpp"
 
 #include "constants.h"
 #include "common/sharedapp.h"
 #include "common/uiactions.h"
-#include "network/downloader.h"
-#include "network/networkactions.h"
-#include "formatsupport.h"
 #include "dialog/recentitemwidget.h"
-#include "recentitems.h"
 #include "script/chaiscriptcreator.h"
 #include "job/jobutil.h"
 #include "util.h"
@@ -32,7 +25,7 @@ namespace dialog
 class LaunchWindow::LaunchWindowImpl
 {
 public:
-    LaunchWindowImpl(LaunchWindow* pQ, Ui::LaunchWindow* pUi) : q{pQ}, ui{pUi}, m_engine{script::createChaiScript()}
+    LaunchWindowImpl(LaunchWindow* pQ) : ui{std::make_unique<Ui::LaunchWindow>()}, q{pQ}, m_engine{script::createChaiScript()}
     {
         ui->setupUi(q);
         ui->consoleWidget->setVisible(false);
@@ -85,31 +78,29 @@ public:
     {
         // TODO possibly add helper function to make this instead of appending slash?
         std::vector<std::string> history{util::readStringVector(util::getAppDataLocation().append("/").append(geometrize::dialog::ScriptConsole::launchConsoleHistoryFilename))};
-        q->ui->consoleWidget->setHistory(history);
+        ui->consoleWidget->setHistory(history);
     }
 
     void saveConsoleHistory()
     {
-        const std::vector<std::string> history{q->ui->consoleWidget->getHistory()};
+        const std::vector<std::string> history{ui->consoleWidget->getHistory()};
         util::writeStringVector(history, util::getAppDataLocation().append("/").append(geometrize::dialog::ScriptConsole::launchConsoleHistoryFilename));
     }
 
 private:
+    std::unique_ptr<Ui::LaunchWindow> ui;
     LaunchWindow* q;
-    Ui::LaunchWindow* ui;
     std::unique_ptr<chaiscript::ChaiScript> m_engine;
 };
 
 LaunchWindow::LaunchWindow() :
     QMainWindow(nullptr),
-    ui(new Ui::LaunchWindow),
-    d{std::make_unique<LaunchWindow::LaunchWindowImpl>(this, ui)}
+    d{std::make_unique<LaunchWindow::LaunchWindowImpl>(this)}
 {
 }
 
 LaunchWindow::~LaunchWindow()
 {
-    delete ui;
 }
 
 void LaunchWindow::dragEnterEvent(QDragEnterEvent* event)

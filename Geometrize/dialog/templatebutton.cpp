@@ -1,10 +1,7 @@
 #include "templatebutton.h"
 #include "ui_templatebutton.h"
 
-#include <assert.h>
-
 #include <QContextMenuEvent>
-#include <QMessageBox>
 #include <QMenu>
 #include <QPixmap>
 #include <QString>
@@ -12,7 +9,6 @@
 #include "chaiscript/chaiscript.hpp"
 #include "formatsupport.h"
 #include "job/jobutil.h"
-#include "script/scriptrunner.h"
 #include "templatemanifest.h"
 #include "util.h"
 

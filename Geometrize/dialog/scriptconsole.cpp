@@ -14,7 +14,7 @@ namespace dialog
 class ScriptConsole::ScriptConsoleImpl
 {
 public:
-    ScriptConsoleImpl(ScriptConsole* pQ, Ui::ScriptConsole* pUi) : q{pQ}, ui{pUi}, m_engine{nullptr}
+    ScriptConsoleImpl(ScriptConsole* pQ) : q{pQ}, ui{std::make_unique<Ui::ScriptConsole>()}, m_engine{nullptr}
     {
         ui->setupUi(q);
 
@@ -54,7 +54,10 @@ public:
 
     ScriptConsoleImpl operator=(const ScriptConsoleImpl&) = delete;
     ScriptConsoleImpl(const ScriptConsoleImpl&) = delete;
-    ~ScriptConsoleImpl() = default;
+    ~ScriptConsoleImpl()
+    {
+
+    }
 
     void setEngine(chaiscript::ChaiScript* engine)
     {
@@ -73,18 +76,17 @@ public:
 
 private:
     ScriptConsole* q;
-    Ui::ScriptConsole* ui;
+    std::unique_ptr<Ui::ScriptConsole> ui;
     chaiscript::ChaiScript* m_engine;
     std::vector<std::string> m_history;
 };
 
-ScriptConsole::ScriptConsole(QWidget* parent) : QWidget(parent), ui(new Ui::ScriptConsole), d{std::make_unique<ScriptConsole::ScriptConsoleImpl>(this, ui)}
+ScriptConsole::ScriptConsole(QWidget* parent) : QWidget(parent), d{std::make_unique<ScriptConsole::ScriptConsoleImpl>(this)}
 {
 }
 
 ScriptConsole::~ScriptConsole()
 {
-    delete ui;
 }
 
 void ScriptConsole::setEngine(chaiscript::ChaiScript* engine)

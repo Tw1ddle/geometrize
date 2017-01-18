@@ -33,7 +33,7 @@ public:
      * @brief getTemplateManifest Get the manifest data of the template this item corresponds to.
      * @return The template manifest data this item corresponds to.
      */
-    geometrize::TemplateManifest getTemplateManifest() const;
+    TemplateManifest getTemplateManifest() const;
 
 private:
     virtual void contextMenuEvent(QContextMenuEvent* e) override;

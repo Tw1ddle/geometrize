@@ -44,8 +44,6 @@ private slots:
 private:
     void closeEvent(QCloseEvent *bar) override;
 
-    Ui::LaunchWindow* ui;
-
     class LaunchWindowImpl;
     std::unique_ptr<LaunchWindowImpl> d;
 };

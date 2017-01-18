@@ -6,12 +6,9 @@
 #include <QRegExp>
 #include <QString>
 
-#include "common/sharedapp.h"
-#include "common/uiactions.h"
 #include "job/jobutil.h"
 #include "network/downloader.h"
 #include "network/networkactions.h"
-#include "recentitems.h"
 
 namespace geometrize
 {
@@ -30,7 +27,6 @@ void onImageDownloadComplete(network::Downloader* self, QNetworkReply::NetworkEr
     image.loadFromData(self->downloadedData());
 
     // TODO unify with common action
-    //common::app::SharedApp::get().getRecentFiles().add(self->getUrl().toString());
     util::createImageJob(nullptr, self->getUrl().toString(), image);
 
     delete self;

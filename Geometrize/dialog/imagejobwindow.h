@@ -4,11 +4,6 @@
 
 #include <QMainWindow>
 
-namespace Ui
-{
-class ImageJobWindow;
-}
-
 namespace geometrize
 {
 
@@ -21,8 +16,6 @@ namespace dialog
  */
 class ImageJobWindow : public QMainWindow
 {
-    Q_OBJECT
-
 public:
     explicit ImageJobWindow(QWidget* parent = 0);
     ~ImageJobWindow();
@@ -38,8 +31,6 @@ private slots:
 
 private:
     void closeEvent(QCloseEvent* bar) override;
-
-    Ui::ImageJobWindow *ui;
 
     class ImageJobWindowImpl;
     std::unique_ptr<ImageJobWindowImpl> d;

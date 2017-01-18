@@ -15,7 +15,7 @@ namespace dialog
 class CommandLineEdit::CommandLineEditImpl
 {
 public:
-    CommandLineEditImpl(CommandLineEdit* pQ, Ui::CommandLineEdit* pUi) : q{pQ}, ui{pUi}, m_historyIndex{0}
+    CommandLineEditImpl(CommandLineEdit* pQ) : q{pQ}, ui{std::make_unique<Ui::CommandLineEdit>()}, m_historyIndex{0}
     {
         ui->setupUi(q);
     }
@@ -98,19 +98,18 @@ private:
     }
 
     CommandLineEdit* q;
-    Ui::CommandLineEdit* ui;
+    std::unique_ptr<Ui::CommandLineEdit> ui;
 
     int m_historyIndex;
     std::vector<std::string> m_history;
 };
 
-CommandLineEdit::CommandLineEdit(QWidget *parent) : QWidget(parent), ui(new Ui::CommandLineEdit), d{std::make_unique<CommandLineEdit::CommandLineEditImpl>(this, ui)}
+CommandLineEdit::CommandLineEdit(QWidget *parent) : QWidget(parent), d{std::make_unique<CommandLineEdit::CommandLineEditImpl>(this)}
 {
 }
 
 CommandLineEdit::~CommandLineEdit()
 {
-    delete ui;
 }
 
 void CommandLineEdit::keyPressEvent(QKeyEvent* e)

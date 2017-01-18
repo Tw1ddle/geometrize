@@ -5,11 +5,6 @@
 
 #include <QWidget>
 
-namespace Ui
-{
-class CommandLineEdit;
-}
-
 namespace chaiscript
 {
 class ChaiScript;
@@ -29,7 +24,7 @@ class CommandLineEdit : public QWidget
     Q_OBJECT
 
 public:
-    explicit CommandLineEdit(QWidget *parent = 0);
+    explicit CommandLineEdit(QWidget* parent = 0);
     ~CommandLineEdit();
 
     /**
@@ -62,8 +57,6 @@ signals:
 
 private:
     virtual void keyPressEvent(QKeyEvent* e) override;
-
-    Ui::CommandLineEdit* ui;
 
     class CommandLineEditImpl;
     std::unique_ptr<CommandLineEditImpl> d;

@@ -1,16 +1,11 @@
 #include "dialog/launchwindow.h"
 
-#include <assert.h>
-
-#include <QDebug>
-
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QString>
 
 #include "analytics/analyticswrapper.h"
 #include "commandlineparser.h"
-#include "constants.h"
 #include "runguard.h"
 #include "versioninfo.h"
 

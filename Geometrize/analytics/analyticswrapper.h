@@ -22,7 +22,7 @@ public:
     void startSession();
     void endSession();
 
-    void onLaunch(); // TODO log mode?
+    void onLaunch(); // TODO log mode it was launched in e.g. command line, GUI, executing script etc?
 
 private:
     Analytics m_analytics;
