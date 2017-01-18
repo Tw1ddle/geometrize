@@ -224,7 +224,7 @@
             <item>
              <widget class="QGroupBox" name="imageJobDisplayOptionsGroup">
               <property name="title">
-               <string>Image Geometrizer Display</string>
+               <string>Image Geometrize Display</string>
               </property>
              </widget>
             </item>

@@ -16,6 +16,7 @@ public:
     AnalyticsImpl(Analytics* pQ) : q{pQ}, m_analytics{"UA-58489066-5"}
     {
         m_analytics.setLanguage(QLocale::system().name());
+        m_analytics.setSendInterval(30000);
     }
     ~AnalyticsImpl()
     {
