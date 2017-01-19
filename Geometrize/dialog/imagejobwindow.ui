@@ -53,19 +53,47 @@
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
+      <property name="styleSheet">
+       <string notr="true">QSplitter::handle
+{
+    background-color: rgba(255, 255, 255, 80);
+}</string>
+      </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
       <property name="handleWidth">
-       <number>5</number>
+       <number>10</number>
       </property>
-      <widget class="QGraphicsView" name="imageView"/>
+      <property name="childrenCollapsible">
+       <bool>false</bool>
+      </property>
+      <widget class="QGraphicsView" name="imageView">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>2</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+      </widget>
       <widget class="QTabWidget" name="settingsTab">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>500</width>
+         <height>0</height>
+        </size>
        </property>
        <property name="tabPosition">
         <enum>QTabWidget::North</enum>
@@ -94,7 +122,7 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>416</width>
+              <width>482</width>
               <height>735</height>
              </rect>
             </property>
@@ -304,28 +332,6 @@
          </item>
         </layout>
        </widget>
-      </widget>
-      <widget class="QTreeWidget" name="shapeTreeView">
-       <property name="rootIsDecorated">
-        <bool>true</bool>
-       </property>
-       <property name="animated">
-        <bool>true</bool>
-       </property>
-       <property name="headerHidden">
-        <bool>true</bool>
-       </property>
-       <property name="columnCount">
-        <number>1</number>
-       </property>
-       <attribute name="headerVisible">
-        <bool>false</bool>
-       </attribute>
-       <column>
-        <property name="text">
-         <string notr="true">1</string>
-        </property>
-       </column>
       </widget>
      </widget>
     </item>
