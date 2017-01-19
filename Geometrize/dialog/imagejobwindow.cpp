@@ -93,15 +93,6 @@ void ImageJobWindow::on_actionOpenPreferences_triggered()
     common::ui::openPreferences(this);
 }
 
-void ImageJobWindow::on_imageJob_updated()
-{
-    qDebug("Image job updated");
-
-    // TODO get the image job
-    // TODO draw the new shapes onto the graphics view?
-    // TODO check if the job should stop?
-}
-
 void ImageJobWindow::on_runStopButton_clicked()
 {
     // TODO check settings are valid

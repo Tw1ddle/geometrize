@@ -21,7 +21,6 @@ public:
     ~ImageJobWindow();
 
 private slots:
-    void on_imageJob_updated();
     void on_actionAbout_triggered();
     void on_actionExit_triggered();
     void on_actionTechnical_Support_triggered();

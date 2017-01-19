@@ -1,5 +1,6 @@
 #include "common/sharedapp.h"
 
+#include "job/joblookup.h"
 #include "recentitems.h"
 
 namespace geometrize
@@ -30,8 +31,14 @@ public:
         return m_recentFiles;
     }
 
+    job::JobLookup& getJobLookup()
+    {
+        return m_jobLookup;
+    }
+
 private:
     RecentItems m_recentFiles;
+    job::JobLookup m_jobLookup;
 };
 
 SharedApp::SharedApp() : d{std::make_unique<geometrize::common::app::SharedApp::SharedAppImpl>()} {}
@@ -46,6 +53,11 @@ SharedApp& SharedApp::get()
 RecentItems& SharedApp::getRecentFiles()
 {
     return d->getRecentFiles();
+}
+
+job::JobLookup& SharedApp::getJobLookup()
+{
+    return d->getJobLookup();
 }
 
 }

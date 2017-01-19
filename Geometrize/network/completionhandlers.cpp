@@ -6,6 +6,7 @@
 #include <QRegExp>
 #include <QString>
 
+#include "job/imagejob.h"
 #include "job/jobutil.h"
 #include "network/downloader.h"
 #include "network/networkactions.h"
@@ -27,7 +28,7 @@ void onImageDownloadComplete(network::Downloader* self, QNetworkReply::NetworkEr
     image.loadFromData(self->downloadedData());
 
     // TODO unify with common action
-    util::createImageJob(nullptr, self->getUrl().toString(), image);
+    //new job::ImageJob(self->getUrl().toString().toStdString(), image);
 
     delete self;
 }

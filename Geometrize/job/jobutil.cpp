@@ -8,12 +8,9 @@
 
 #include "chaiscript/chaiscript.hpp"
 
-#include "geometrize/bitmap/bitmapdata.h"
-#include "geometrize/bitmap/rgba.h"
-
-#include "job/imagejobcontext.h"
+#include "job/imagejob.h"
+#include "job/imagejobcreator.h"
 #include "formatsupport.h"
-#include "dialog/imagejobwindow.h"
 #include "network/completionhandlers.h"
 #include "network/downloader.h"
 #include "network/networkactions.h"
@@ -26,18 +23,6 @@ namespace geometrize
 namespace util
 {
 
-job::ImageJobContext* createImageJob(QWidget* parent, const QString& displayName, const QPixmap& pixmap)
-{
-    dialog::ImageJobWindow* imageJobWindow = new dialog::ImageJobWindow(parent);
-    imageJobWindow->show(); // TODO cleanup
-    imageJobWindow->setWindowTitle(displayName);
-
-    // TODO QImage instead?
-    //BitmapData data(pixmap.data_ptr().);
-
-    return new job::ImageJobContext(displayName, BitmapData(10, 10, rgba{0, 0, 0, 0})); // TODO
-}
-
 void openJobs(const QStringList& urls)
 {
     if(urls.empty()) {
@@ -47,7 +32,8 @@ void openJobs(const QStringList& urls)
     for(const QString& s : urls) {
         const QUrl url{QUrl::fromUserInput(s)};
         if(url.isLocalFile()) {
-            createImageJob(nullptr, url.toString(), url.toLocalFile());
+            // TODO
+            //geometrize::job::createImageJobAndWindow(url.toString(), url.toLocalFile());
         } else if(url.toString().endsWith(".png")) { // TODO need list of supported formats
             network::downloadImage(url, network::completionhandlers::onImageDownloadComplete);
         } else {

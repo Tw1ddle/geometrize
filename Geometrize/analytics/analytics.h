@@ -14,7 +14,7 @@ namespace analytics
 
 /**
  * @brief The Analytics class provides a simple frontend for a user analytics service (like Google Analytics).
- * Should be used sparingly (and with user option to disable it) to get some insight on how the app is used.
+ * Should be used sparingly (and provide a user option to disable it) to get some insight on how the app is used.
  */
 class Analytics
 {
