@@ -21,7 +21,7 @@ class OpenUrlDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit OpenUrlDialog(QWidget* parent = 0);
+    explicit OpenUrlDialog(QWidget* parent = nullptr);
     ~OpenUrlDialog();
 
     /**

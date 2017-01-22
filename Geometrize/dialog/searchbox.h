@@ -19,7 +19,7 @@ class SearchBox : public QLineEdit
     Q_OBJECT
 
 public:
-    explicit SearchBox(QWidget* parent = 0);
+    explicit SearchBox(QWidget* parent = nullptr);
 
     void setCompletionList(const QStringList& completionList);
     void addToCompletionList(const QString& item);

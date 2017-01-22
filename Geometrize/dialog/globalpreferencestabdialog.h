@@ -22,7 +22,7 @@ class GlobalPreferencesTabDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit GlobalPreferencesTabDialog(QWidget* parent = 0);
+    explicit GlobalPreferencesTabDialog(QWidget* parent = nullptr);
     ~GlobalPreferencesTabDialog();
 
 private:

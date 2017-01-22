@@ -24,7 +24,7 @@ class CommandLineEdit : public QWidget
     Q_OBJECT
 
 public:
-    explicit CommandLineEdit(QWidget* parent = 0);
+    explicit CommandLineEdit(QWidget* parent = nullptr);
     ~CommandLineEdit();
 
     /**

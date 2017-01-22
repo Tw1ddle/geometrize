@@ -21,7 +21,7 @@ class QuitDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit QuitDialog(QWidget* parent = 0);
+    explicit QuitDialog(QWidget* parent = nullptr);
     ~QuitDialog();
 
 private slots:

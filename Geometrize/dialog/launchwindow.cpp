@@ -142,7 +142,6 @@ void LaunchWindow::on_actionExit_triggered()
 
 void LaunchWindow::on_openImageButton_clicked()
 {
-    // TODO support other file types?
     // TODO
     //common::ui::createImageJobAndUpdateRecents(this, common::ui::getImagePath(this));
 }

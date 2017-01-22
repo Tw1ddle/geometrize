@@ -26,8 +26,8 @@ public:
     explicit LaunchWindow();
     ~LaunchWindow();
 
-    virtual void dragEnterEvent(QDragEnterEvent *event) override;
-    virtual void dropEvent(QDropEvent *event) override;
+    virtual void dragEnterEvent(QDragEnterEvent* event) override;
+    virtual void dropEvent(QDropEvent* event) override;
 
 private slots:
     void on_actionPreferences_triggered();
@@ -42,7 +42,7 @@ private slots:
     void on_actionScript_Console_toggled(bool checked);
 
 private:
-    void closeEvent(QCloseEvent *bar) override;
+    void closeEvent(QCloseEvent* bar) override;
 
     class LaunchWindowImpl;
     std::unique_ptr<LaunchWindowImpl> d;

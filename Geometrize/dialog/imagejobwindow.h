@@ -17,7 +17,7 @@ namespace dialog
 class ImageJobWindow : public QMainWindow
 {
 public:
-    explicit ImageJobWindow(QWidget* parent = 0);
+    explicit ImageJobWindow(QWidget* parent = nullptr);
     ~ImageJobWindow();
 
 private slots:

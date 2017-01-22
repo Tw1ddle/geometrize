@@ -19,7 +19,7 @@ class TemplateGrid : public QWidget
     Q_OBJECT
 
 public:
-    explicit TemplateGrid(QWidget* parent = 0);
+    explicit TemplateGrid(QWidget* parent = nullptr);
 
     /**
      * @brief loadTemplates Loads all of the available templates, creating buttons for each one in the grid.
