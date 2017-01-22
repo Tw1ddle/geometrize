@@ -25,7 +25,7 @@ void onImageDownloadComplete(network::Downloader* self, QNetworkReply::NetworkEr
     qDebug() << "FINISHED DOWNLOADING IMAGE WITH ERROR" << error; // TODO error checks
 
     QPixmap image;
-    image.loadFromData(self->downloadedData());
+    image.loadFromData(self->getDownloadedData());
 
     // TODO unify with common action
     //new job::ImageJob(self->getUrl().toString().toStdString(), image);
@@ -37,7 +37,7 @@ void onWebpageDownloadComplete(network::Downloader* self, QNetworkReply::Network
 {
     qDebug() << "FINISHED DOWNLOADING WEBPAGE WITH ERROR" << error; // TODO error checks
 
-    const QString document(self->downloadedData());
+    const QString document(self->getDownloadedData());
 
     QRegExp imageTagRegex("\\<img[^\\>]*src\\s*=\\s*\"([^\"]*)\"[^\\>]*\\>", Qt::CaseInsensitive);
     imageTagRegex.setMinimal(true);

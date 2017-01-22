@@ -1,11 +1,10 @@
 #pragma once
 
 #include <functional>
+#include <memory>
 
 #include <QByteArray>
-#include <QNetworkAccessManager>
 #include <QNetworkReply>
-#include <QNetworkRequest>
 #include <QObject>
 
 namespace geometrize
@@ -26,7 +25,7 @@ public:
      * @param url The URL to download.
      * @param onDownloaded The callback triggered when the download completes.
      */
-    explicit Downloader(QUrl url, const std::function<void(Downloader*, QNetworkReply::NetworkError)>& onDownloaded);
+    explicit Downloader(const QUrl& url, const std::function<void(Downloader*, QNetworkReply::NetworkError)>& onDownloaded);
     virtual ~Downloader() = default;
     Downloader& operator=(const Downloader&) = delete;
     Downloader(const Downloader&) = delete;
@@ -35,7 +34,7 @@ public:
      * @brief downloadedData Gets the data the Downloader has downloaded.
      * @return The downloaded data.
      */
-    QByteArray downloadedData() const;
+    QByteArray getDownloadedData() const;
 
     /**
      * @brief getUrl Gets the URL the Downloader was made to download.
@@ -51,13 +50,9 @@ signals:
      */
     void signal_downloaded(Downloader* downloader, QNetworkReply::NetworkError error);
 
-private slots:
-    void downloadFinished(QNetworkReply* pReply);
-
 private:
-    QNetworkAccessManager m_webCtrl;
-    QByteArray m_downloadedData;
-    QUrl m_url;
+    class DownloaderImpl;
+    std::unique_ptr<DownloaderImpl> d;
 };
 
 }
