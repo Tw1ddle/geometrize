@@ -37,8 +37,8 @@ void createImageJobAndWindow(const std::string& displayName, const std::string& 
     ImageJob* job{createImageJob(displayName, jobUrl)};
 
     dialog::ImageJobWindow* imageJobWindow{new dialog::ImageJobWindow()};
-    imageJobWindow->setWindowTitle(QString::fromStdString(displayName));
     imageJobWindow->setImageJob(job);
+    imageJobWindow->setDisplayName(QString::fromStdString(displayName));
     imageJobWindow->show();
 }
 

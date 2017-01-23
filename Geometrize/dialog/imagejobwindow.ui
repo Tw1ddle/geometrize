@@ -84,7 +84,7 @@
       </widget>
       <widget class="QTabWidget" name="settingsTab">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -133,6 +133,13 @@
                 <widget class="QPushButton" name="runStopButton">
                  <property name="text">
                   <string>Run</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="stepButton">
+                 <property name="text">
+                  <string>Step</string>
                  </property>
                 </widget>
                </item>
@@ -190,17 +197,14 @@
                   </property>
                   <layout class="QGridLayout" name="gridLayout">
                    <item row="0" column="0">
-                    <widget class="QPushButton" name="pushButton_2">
+                    <widget class="QPushButton" name="pushButton_10">
                      <property name="text">
                       <string>PushButton</string>
-                     </property>
-                     <property name="checkable">
-                      <bool>true</bool>
                      </property>
                     </widget>
                    </item>
                    <item row="1" column="0">
-                    <widget class="QPushButton" name="pushButton_3">
+                    <widget class="QPushButton" name="pushButton_2">
                      <property name="text">
                       <string>PushButton</string>
                      </property>
@@ -248,41 +252,78 @@
                </property>
                <layout class="QHBoxLayout" name="horizontalLayout">
                 <item>
-                 <widget class="QLabel" name="label">
-                  <property name="autoFillBackground">
-                   <bool>true</bool>
-                  </property>
-                  <property name="text">
-                   <string notr="true"/>
-                  </property>
-                 </widget>
+                 <layout class="QVBoxLayout" name="verticalLayout">
+                  <item>
+                   <widget class="QLabel" name="label">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>150</width>
+                      <height>150</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>150</width>
+                      <height>150</height>
+                     </size>
+                    </property>
+                    <property name="autoFillBackground">
+                     <bool>true</bool>
+                    </property>
+                    <property name="text">
+                     <string notr="true"/>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="pushButton">
+                    <property name="text">
+                     <string>Select Target Image</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="pushButton">
-                  <property name="text">
-                   <string>Select Target Image</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLabel" name="label_3">
-                  <property name="text">
-                   <string>Starting Backdrop</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLabel" name="label_5">
-                  <property name="autoFillBackground">
-                   <bool>true</bool>
-                  </property>
-                  <property name="text">
-                   <string notr="true"/>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QComboBox" name="comboBox_2"/>
+                 <layout class="QVBoxLayout" name="verticalLayout_2">
+                  <item>
+                   <widget class="QLabel" name="label_5">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>150</width>
+                      <height>150</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>150</width>
+                      <height>150</height>
+                     </size>
+                    </property>
+                    <property name="autoFillBackground">
+                     <bool>true</bool>
+                    </property>
+                    <property name="text">
+                     <string notr="true"/>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QComboBox" name="comboBox_2"/>
+                  </item>
+                 </layout>
                 </item>
                </layout>
               </widget>
@@ -351,114 +392,30 @@
      <string>File</string>
     </property>
     <addaction name="actionSave_Settings_Template"/>
-    <addaction name="actionOpenPreferences"/>
     <addaction name="actionExit"/>
    </widget>
-   <widget class="QMenu" name="menuHelp">
+   <widget class="QMenu" name="menuView">
     <property name="title">
-     <string>Help</string>
+     <string>View</string>
     </property>
-    <addaction name="actionOnline_Tutorials"/>
-    <addaction name="actionTechnical_Support"/>
-    <addaction name="actionAbout"/>
+    <addaction name="actionReveal_Launch_Window"/>
    </widget>
    <addaction name="menuFile"/>
-   <addaction name="menuHelp"/>
+   <addaction name="menuView"/>
   </widget>
-  <action name="actionOpen_New_Image">
-   <property name="text">
-    <string>Open New Image</string>
-   </property>
-   <property name="toolTip">
-    <string>Open New Image</string>
-   </property>
-  </action>
-  <action name="actionSave_Geometrized_Image">
-   <property name="text">
-    <string>Save Geometrized Image</string>
-   </property>
-   <property name="toolTip">
-    <string>Save Geometrized Image</string>
-   </property>
-  </action>
-  <action name="actionOpen_New_Image_2">
-   <property name="text">
-    <string>Open New Image</string>
-   </property>
-   <property name="toolTip">
-    <string>Open New Image</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+O</string>
-   </property>
-  </action>
-  <action name="actionSave_Geometrized_Image_2">
-   <property name="text">
-    <string>Save Geometrized Image</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+S</string>
-   </property>
-  </action>
-  <action name="actionOpenPreferences">
-   <property name="text">
-    <string>Preferences</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+P</string>
-   </property>
-  </action>
-  <action name="actionAbout">
-   <property name="text">
-    <string>About</string>
-   </property>
-  </action>
-  <action name="actionTechnical_Support">
-   <property name="text">
-    <string>Support</string>
-   </property>
-  </action>
-  <action name="actionOnline_Tutorials">
-   <property name="text">
-    <string>Tutorials</string>
-   </property>
-  </action>
   <action name="actionExit">
    <property name="text">
     <string>Exit</string>
    </property>
   </action>
-  <action name="actionShow_Settings_Tabs">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Show Settings Tabs</string>
-   </property>
-  </action>
-  <action name="actionAnimation">
-   <property name="text">
-    <string>Canvas Animation</string>
-   </property>
-  </action>
-  <action name="actionShape_Data">
-   <property name="text">
-    <string>Geometry Data</string>
-   </property>
-  </action>
-  <action name="actionShape_Data_2">
-   <property name="text">
-    <string>Geometry Data</string>
-   </property>
-  </action>
-  <action name="actionGIF_Animation">
-   <property name="text">
-    <string>GIF Animation</string>
-   </property>
-  </action>
   <action name="actionSave_Settings_Template">
    <property name="text">
     <string>Save Settings Template</string>
+   </property>
+  </action>
+  <action name="actionReveal_Launch_Window">
+   <property name="text">
+    <string>Reveal Launch Window</string>
    </property>
   </action>
  </widget>

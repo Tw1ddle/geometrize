@@ -542,11 +542,6 @@
     <string>Preferences</string>
    </property>
   </action>
-  <action name="actionImage">
-   <property name="text">
-    <string>Image</string>
-   </property>
-  </action>
   <action name="actionScript_Console">
    <property name="checkable">
     <bool>true</bool>

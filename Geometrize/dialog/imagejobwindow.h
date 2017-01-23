@@ -4,6 +4,11 @@
 
 #include <QMainWindow>
 
+namespace Ui
+{
+class ImageJobWindow;
+}
+
 namespace geometrize
 {
 
@@ -36,16 +41,23 @@ public:
      */
     void setImageJob(job::ImageJob* job);
 
+    /**
+     * @brief setDisplayName Sets the display name of the image job shown by the window.
+     * @param title The title to display for the window.
+     */
+    void setDisplayName(const QString& title);
+
 private slots:
-    void on_actionAbout_triggered();
     void on_actionExit_triggered();
-    void on_actionTechnical_Support_triggered();
-    void on_actionOnline_Tutorials_triggered();
-    void on_actionOpenPreferences_triggered();
     void on_runStopButton_clicked();
+    void on_stepButton_clicked();
+    void on_actionSave_Settings_Template_triggered();
+    void on_actionReveal_Launch_Window_triggered();
 
 private:
     void closeEvent(QCloseEvent* bar) override;
+
+    Ui::ImageJobWindow* ui;
 
     class ImageJobWindowImpl;
     std::unique_ptr<ImageJobWindowImpl> d;

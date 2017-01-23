@@ -27,7 +27,7 @@ namespace dialog
 class ImageJobWindow::ImageJobWindowImpl
 {
 public:
-    ImageJobWindowImpl(ImageJobWindow* pQ) : q{pQ}, m_job{nullptr}, ui{std::make_unique<Ui::ImageJobWindow>()}
+    ImageJobWindowImpl(ImageJobWindow* pQ, Ui::ImageJobWindow* pUi) : q{pQ}, m_job{nullptr}, ui{pUi}
     {
         ui->setupUi(q);
         ui->imageView->setScene(&m_scene);
@@ -57,21 +57,38 @@ public:
         m_scene.addPixmap(pixmap); // TODO use a single pixmap?
     }
 
+    void setDisplayName(const QString& displayName)
+    {
+        q->setWindowTitle(tr("Geometrize - Image - %1").arg(displayName));
+    }
+
+    void runStopModel()
+    {
+
+    }
+
+    void stepModel()
+    {
+
+    }
+
 private:
     job::ImageJob* m_job;
     ImageJobWindow* q;
-    std::unique_ptr<Ui::ImageJobWindow> ui;
+    Ui::ImageJobWindow* ui;
     QGraphicsScene m_scene;
 };
 
 ImageJobWindow::ImageJobWindow(QWidget* parent) :
     QMainWindow(parent),
-    d{std::make_unique<ImageJobWindowImpl>(this)}
+    ui(new Ui::ImageJobWindow),
+    d{std::make_unique<ImageJobWindowImpl>(this, ui)}
 {
 }
 
 ImageJobWindow::~ImageJobWindow()
 {
+    delete ui;
 }
 
 void ImageJobWindow::setImageJob(job::ImageJob* job)
@@ -79,9 +96,9 @@ void ImageJobWindow::setImageJob(job::ImageJob* job)
     d->setImageJob(job);
 }
 
-void ImageJobWindow::on_actionAbout_triggered()
+void ImageJobWindow::setDisplayName(const QString& displayName)
 {
-    common::ui::openAboutPage(this);
+    d->setDisplayName(displayName);
 }
 
 void ImageJobWindow::on_actionExit_triggered()
@@ -99,24 +116,24 @@ void ImageJobWindow::closeEvent(QCloseEvent* event)
     QMainWindow::closeEvent(event);
 }
 
-void ImageJobWindow::on_actionTechnical_Support_triggered()
-{
-    common::ui::openTechnicalSupport();
-}
-
-void ImageJobWindow::on_actionOnline_Tutorials_triggered()
-{
-    common::ui::openOnlineTutorials();
-}
-
-void ImageJobWindow::on_actionOpenPreferences_triggered()
-{
-    common::ui::openPreferences(this);
-}
-
 void ImageJobWindow::on_runStopButton_clicked()
 {
-    // TODO check settings are valid
+    d->runStopModel();
+}
+
+void ImageJobWindow::on_stepButton_clicked()
+{
+    d->stepModel();
+}
+
+void ImageJobWindow::on_actionSave_Settings_Template_triggered()
+{
+
+}
+
+void ImageJobWindow::on_actionReveal_Launch_Window_triggered()
+{
+
 }
 
 }
