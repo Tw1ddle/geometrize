@@ -10,6 +10,16 @@ class RecentItems;
 namespace geometrize
 {
 
+namespace image
+{
+class ImageLookup;
+}
+
+}
+
+namespace geometrize
+{
+
 namespace job
 {
 class JobLookup;
@@ -47,6 +57,12 @@ public:
      * @return The job lookup object.
      */
     job::JobLookup& getJobLookup();
+
+    /**
+     * @brief getImageLookup Gets the shared image lookup object, for finding existing image objects.
+     * @return The image lookup object.
+     */
+    image::ImageLookup& getImageLookup();
 
 private:
     class SharedAppImpl;

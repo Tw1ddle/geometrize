@@ -55,7 +55,6 @@ Analytics::Analytics() : d{std::make_unique<Analytics::AnalyticsImpl>(this)}
 
 Analytics::~Analytics()
 {
-
 }
 
 void Analytics::startSession()

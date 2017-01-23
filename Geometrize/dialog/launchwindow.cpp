@@ -142,8 +142,12 @@ void LaunchWindow::on_actionExit_triggered()
 
 void LaunchWindow::on_openImageButton_clicked()
 {
-    // TODO
-    //common::ui::createImageJobAndUpdateRecents(this, common::ui::getImagePath(this));
+    const QString imagePath{common::ui::openImagePathPickerDialog(this)};
+    if(imagePath.isEmpty()) {
+        return;
+    }
+
+    d->openJobs({ imagePath });
 }
 
 void LaunchWindow::on_openLinkButton_clicked()

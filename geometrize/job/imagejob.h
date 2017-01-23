@@ -33,7 +33,7 @@ namespace job
 class ImageJob
 {
 public:
-    ImageJob(const std::string& displayName, BitmapData& bitmap);
+    ImageJob(const std::string& displayName, const std::string& jobUrl, BitmapData& bitmap);
     ImageJob& operator=(const ImageJob&) = delete;
     ImageJob(const ImageJob&) = delete;
     ~ImageJob() = default;
@@ -44,7 +44,25 @@ public:
      */
     std::string getDisplayName() const;
 
-private:    
+    /**
+     * @brief getJobUrl Gets the URL of the image job.
+     * @return The URL of the image job.
+     */
+    std::string getJobUrl() const;
+
+    /**
+     * @brief getJobId Gets the unique id of the image job.
+     * @return The unique id of the image job.
+     */
+     int getJobId() const;
+
+     /**
+      * @brief getBitmapData Gets a reference to the bitmap data the image job is working on.
+      * @return A reference to the bitmap data of the image job.
+      */
+     BitmapData& getBitmapData();
+
+private:
     class ImageJobImpl;
     std::unique_ptr<ImageJobImpl> d;
 };

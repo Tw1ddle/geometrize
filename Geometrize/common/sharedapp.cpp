@@ -1,5 +1,6 @@
 #include "common/sharedapp.h"
 
+#include "image/imagelookup.h"
 #include "job/joblookup.h"
 #include "recentitems.h"
 
@@ -36,9 +37,15 @@ public:
         return m_jobLookup;
     }
 
+    image::ImageLookup& getImageLookup()
+    {
+        return m_imageLookup;
+    }
+
 private:
     RecentItems m_recentFiles;
     job::JobLookup m_jobLookup;
+    image::ImageLookup m_imageLookup;
 };
 
 SharedApp::SharedApp() : d{std::make_unique<geometrize::common::app::SharedApp::SharedAppImpl>()} {}
@@ -58,6 +65,11 @@ RecentItems& SharedApp::getRecentFiles()
 job::JobLookup& SharedApp::getJobLookup()
 {
     return d->getJobLookup();
+}
+
+image::ImageLookup& SharedApp::getImageLookup()
+{
+    return d->getImageLookup();
 }
 
 }

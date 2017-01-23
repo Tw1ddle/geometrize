@@ -30,8 +30,9 @@ public:
     JobLookup(const JobLookup&) = delete;
     ~JobLookup();
 
+    // TODO setup proper ids, paths are insufficient since there can be more than one
     ImageJob* getImageJob(const std::string& id);
-    void setImageJob(const std::string& id);
+    void setImageJob(const std::string& id, ImageJob* job);
 
 private:
     class JobLookupImpl;

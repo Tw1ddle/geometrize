@@ -2,6 +2,8 @@
 
 #include "imagejob.h"
 
+#include <map>
+
 namespace geometrize
 {
 
@@ -18,15 +20,16 @@ public:
 
     ImageJob* getImageJob(const std::string& id)
     {
-        return nullptr; // TODO
+        return m_jobs[id];
     }
 
-    void setImageJob(const std::string& id)
+    void setImageJob(const std::string& id, ImageJob* job)
     {
-        // TODO
+        m_jobs[id] = job;
     }
 
 private:
+    std::map<std::string, ImageJob*> m_jobs;
 };
 
 ImageJob* JobLookup::getImageJob(const std::string& id)
@@ -34,9 +37,9 @@ ImageJob* JobLookup::getImageJob(const std::string& id)
     return d->getImageJob(id);
 }
 
-void JobLookup::setImageJob(const std::string& id)
+void JobLookup::setImageJob(const std::string& id, ImageJob* job)
 {
-    d->setImageJob(id);
+    d->setImageJob(id, job);
 }
 
 JobLookup::JobLookup() : d{std::make_unique<JobLookup::JobLookupImpl>()}

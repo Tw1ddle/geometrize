@@ -31,7 +31,7 @@ public:
     Downloader(const Downloader&) = delete;
 
     /**
-     * @brief downloadedData Gets the data the Downloader has downloaded.
+     * @brief getDownloadedData Gets the data the Downloader has downloaded.
      * @return The downloaded data.
      */
     QByteArray getDownloadedData() const;

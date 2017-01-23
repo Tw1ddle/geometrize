@@ -1,10 +1,15 @@
 #include "imagejobcreator.h"
 
+#include <assert.h>
+
 #include "geometrize/bitmap/bitmapdata.h"
 #include "geometrize/bitmap/rgba.h"
 
 #include "dialog/imagejobwindow.h"
 #include "imagejob.h"
+#include "common/sharedapp.h"
+#include "joblookup.h"
+#include "image/imageloader.h"
 
 namespace geometrize
 {
@@ -12,12 +17,29 @@ namespace geometrize
 namespace job
 {
 
-void createImageJobAndWindow(const std::string& displayName)
+ImageJob* createImageJob(const std::string& displayName, const std::string& jobUrl)
 {
-    dialog::ImageJobWindow* imageJobWindow{new dialog::ImageJobWindow()};
-    imageJobWindow->show();
+    const QImage image{image::loadImage(QString::fromStdString(jobUrl))};
+    BitmapData* bitmapData(image::createBitmapData(image));
 
-    new ImageJob(displayName, BitmapData(10, 10, rgba{0, 0, 0, 0})); // TODO
+    if(bitmapData == nullptr) {
+        assert(0 && "Failed to create bitmap data");
+        return nullptr;
+    }
+
+    ImageJob* job{new ImageJob(displayName, jobUrl, *bitmapData)};
+    common::app::SharedApp::get().getJobLookup().setImageJob(displayName, job);
+    return job;
+}
+
+void createImageJobAndWindow(const std::string& displayName, const std::string& jobUrl)
+{
+    ImageJob* job{createImageJob(displayName, jobUrl)};
+
+    dialog::ImageJobWindow* imageJobWindow{new dialog::ImageJobWindow()};
+    imageJobWindow->setWindowTitle(QString::fromStdString(displayName));
+    imageJobWindow->setImageJob(job);
+    imageJobWindow->show();
 }
 
 }

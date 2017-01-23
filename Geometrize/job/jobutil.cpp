@@ -32,8 +32,7 @@ void openJobs(const QStringList& urls)
     for(const QString& s : urls) {
         const QUrl url{QUrl::fromUserInput(s)};
         if(url.isLocalFile()) {
-            // TODO
-            //geometrize::job::createImageJobAndWindow(url.toString(), url.toLocalFile());
+            geometrize::job::createImageJobAndWindow(url.toLocalFile().toStdString(), url.toLocalFile().toStdString());
         } else if(url.toString().endsWith(".png")) { // TODO need list of supported formats
             network::downloadImage(url, network::completionhandlers::onImageDownloadComplete);
         } else {

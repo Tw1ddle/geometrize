@@ -7,6 +7,16 @@
 namespace geometrize
 {
 
+namespace job
+{
+class ImageJob;
+}
+
+}
+
+namespace geometrize
+{
+
 namespace dialog
 {
 
@@ -19,6 +29,12 @@ class ImageJobWindow : public QMainWindow
 public:
     explicit ImageJobWindow(QWidget* parent = nullptr);
     ~ImageJobWindow();
+
+    /**
+     * @brief setImageJob Sets the current image job shown by the window.
+     * @param job The image job to set on the image job window.
+     */
+    void setImageJob(job::ImageJob* job);
 
 private slots:
     void on_actionAbout_triggered();

@@ -8,11 +8,15 @@
 #include <QMessageBox>
 #include <QPixmap>
 
+#include "geometrize/bitmap/bitmapdata.h"
+
 #include "common/uiactions.h"
 #include "constants.h"
 #include "dialog/aboutdialog.h"
 #include "dialog/globalpreferencestabdialog.h"
 #include "dialog/quitdialog.h"
+#include "image/imageloader.h"
+#include "job/imagejob.h"
 
 namespace geometrize
 {
@@ -23,9 +27,10 @@ namespace dialog
 class ImageJobWindow::ImageJobWindowImpl
 {
 public:
-    ImageJobWindowImpl(ImageJobWindow* pQ) : q{pQ}, ui{std::make_unique<Ui::ImageJobWindow>()}
+    ImageJobWindowImpl(ImageJobWindow* pQ) : q{pQ}, m_job{nullptr}, ui{std::make_unique<Ui::ImageJobWindow>()}
     {
         ui->setupUi(q);
+        ui->imageView->setScene(&m_scene);
     }
     ImageJobWindowImpl operator=(const ImageJobWindowImpl&) = delete;
     ImageJobWindowImpl(const ImageJobWindowImpl&) = delete;
@@ -42,20 +47,36 @@ public:
         return dialogResult;
     }
 
+    void setImageJob(job::ImageJob* job)
+    {
+        m_job = job;
+
+        // TODO reset ui?
+
+        const QPixmap pixmap{image::createPixmap(m_job->getBitmapData())};
+        m_scene.addPixmap(pixmap); // TODO use a single pixmap?
+    }
+
 private:
+    job::ImageJob* m_job;
     ImageJobWindow* q;
     std::unique_ptr<Ui::ImageJobWindow> ui;
+    QGraphicsScene m_scene;
 };
 
 ImageJobWindow::ImageJobWindow(QWidget* parent) :
     QMainWindow(parent),
     d{std::make_unique<ImageJobWindowImpl>(this)}
 {
-    // TODO set title to name of image loaded?
 }
 
 ImageJobWindow::~ImageJobWindow()
 {
+}
+
+void ImageJobWindow::setImageJob(job::ImageJob* job)
+{
+    d->setImageJob(job);
 }
 
 void ImageJobWindow::on_actionAbout_triggered()

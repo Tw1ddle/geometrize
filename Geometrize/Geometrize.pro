@@ -54,6 +54,8 @@ SOURCES += commandlineparser.cpp \
     dialog/searchbox.cpp \
     dialog/templatebutton.cpp \
     dialog/templategrid.cpp \
+    image/imageloader.cpp \
+    image/imagelookup.cpp \
     job/imagejob.cpp \
     job/imagejobcreator.cpp \
     job/joblookup.cpp \
@@ -104,6 +106,8 @@ HEADERS += commandlineparser.h \
     dialog/runscriptdialog.h \
     dialog/templatebutton.h \
     dialog/templategrid.h \
+    image/imageloader.h \
+    image/imagelookup.h \
     job/imagejob.h \
     job/imagejobcreator.h \
     job/joblookup.h \
