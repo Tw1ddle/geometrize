@@ -2,8 +2,7 @@
 
 #include <assert.h>
 
-#include "geometrize/bitmap/bitmapdata.h"
-#include "geometrize/bitmap/rgba.h"
+#include "geometrize/core.h"
 
 #include "dialog/imagejobwindow.h"
 #include "imagejob.h"
@@ -38,7 +37,6 @@ void createImageJobAndWindow(const std::string& displayName, const std::string& 
 
     dialog::ImageJobWindow* imageJobWindow{new dialog::ImageJobWindow()};
     imageJobWindow->setImageJob(job);
-    imageJobWindow->setDisplayName(QString::fromStdString(displayName));
     imageJobWindow->show();
 }
 

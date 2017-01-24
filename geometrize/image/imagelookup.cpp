@@ -2,7 +2,7 @@
 
 #include <map>
 
-#include "geometrize/bitmap/bitmapdata.h"
+#include "geometrize/core.h"
 
 namespace geometrize
 {

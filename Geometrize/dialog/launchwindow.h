@@ -4,11 +4,6 @@
 
 #include <QMainWindow>
 
-namespace Ui
-{
-class LaunchWindow;
-}
-
 namespace geometrize
 {
 

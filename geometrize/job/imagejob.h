@@ -1,8 +1,12 @@
 #pragma once
 
 #include <memory>
+#include <vector>
 
+#include <QObject>
 #include <QString>
+
+#include "geometrize/shaperesult.h"
 
 class QPixmap;
 
@@ -16,7 +20,7 @@ namespace geometrize
 
 namespace job
 {
-class ImageJob;
+class ImageJobImpl;
 }
 
 }
@@ -30,8 +34,9 @@ namespace job
 /**
  * @brief The ImageJob class contains the data worked on by an image job.
  */
-class ImageJob
+class ImageJob : public QObject
 {
+    Q_OBJECT
 public:
     ImageJob(const std::string& displayName, const std::string& jobUrl, BitmapData& bitmap);
     ImageJob& operator=(const ImageJob&) = delete;
@@ -61,6 +66,18 @@ public:
       * @return A reference to the bitmap data of the image job.
       */
      BitmapData& getBitmapData();
+
+     /**
+      * @brief stepModel Steps the internal model, typically adding a shape.
+      */
+     std::vector<geometrize::ShapeResult> stepModel();
+
+signals:
+     /**
+      * @brief signal_modelStepped Signal that is emitted when the underlying image job model is stepped.
+      * @param shapes The shapes that were added in this step.
+      */
+     void signal_modelStepped(const std::vector<geometrize::ShapeResult>& shapes);
 
 private:
     class ImageJobImpl;

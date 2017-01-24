@@ -1,14 +1,16 @@
 #include "imagejob.h"
 
 #include <atomic>
+#include <vector>
 
 #include <QPixmap>
 #include <QObject>
 
-#include "preferences/imagejobpreferences.h"
-
-#include "geometrize/bitmap/bitmapdata.h"
 #include "geometrize/runner/imagerunner.h"
+#include "geometrize/bitmap/bitmapdata.h"
+#include "geometrize/shaperesult.h"
+
+#include "preferences/imagejobpreferences.h"
 
 namespace geometrize
 {
@@ -44,6 +46,11 @@ public:
     BitmapData& getBitmapData()
     {
         return m_runner.getBitmapData();
+    }
+
+    std::vector<geometrize::ShapeResult> stepModel()
+    {
+        return m_runner.step();
     }
 
 private:
@@ -84,6 +91,14 @@ int ImageJob::getJobId() const
 BitmapData& ImageJob::getBitmapData()
 {
     return d->getBitmapData();
+}
+
+std::vector<geometrize::ShapeResult> ImageJob::stepModel()
+{
+    const std::vector<ShapeResult> shapes{d->stepModel()};
+    emit signal_modelStepped(shapes);
+
+    return shapes;
 }
 
 }

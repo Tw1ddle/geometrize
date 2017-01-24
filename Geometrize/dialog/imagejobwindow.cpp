@@ -8,7 +8,7 @@
 #include <QMessageBox>
 #include <QPixmap>
 
-#include "geometrize/bitmap/bitmapdata.h"
+#include "geometrize/core.h"
 
 #include "common/uiactions.h"
 #include "constants.h"
@@ -27,7 +27,7 @@ namespace dialog
 class ImageJobWindow::ImageJobWindowImpl
 {
 public:
-    ImageJobWindowImpl(ImageJobWindow* pQ, Ui::ImageJobWindow* pUi) : q{pQ}, m_job{nullptr}, ui{pUi}
+    ImageJobWindowImpl(ImageJobWindow* pQ) : ui{std::make_unique<Ui::ImageJobWindow>()}, q{pQ}, m_job{nullptr}
     {
         ui->setupUi(q);
         ui->imageView->setScene(&m_scene);
@@ -53,57 +53,74 @@ public:
 
         // TODO reset ui?
 
-        const QPixmap pixmap{image::createPixmap(m_job->getBitmapData())};
-        m_scene.addPixmap(pixmap); // TODO use a single pixmap?
+        updateWorkingImage();
+
+        setDisplayName(QString::fromStdString(m_job->getDisplayName()));
+
+        // TODO disconnect when setting new job
+        connect(job, &job::ImageJob::signal_modelStepped, [this](const std::vector<geometrize::ShapeResult>& shapes) {
+            updateWorkingImage();
+        });
     }
 
-    void setDisplayName(const QString& displayName)
+    void toggleModelRunning()
     {
-        q->setWindowTitle(tr("Geometrize - Image - %1").arg(displayName));
-    }
-
-    void runStopModel()
-    {
-
     }
 
     void stepModel()
+    {
+        m_job->stepModel();
+    }
+
+    void revealLaunchWindow()
+    {
+
+    }
+
+    void resetJob()
+    {
+
+    }
+
+    void saveSettingsTemplate()
     {
 
     }
 
 private:
+    void setDisplayName(const QString& displayName)
+    {
+        q->setWindowTitle(tr("Geometrize - Image - %1").arg(displayName));
+    }
+
+    void updateWorkingImage()
+    {
+        // TODO replace item
+        m_scene.clear();
+        const QPixmap pixmap{image::createPixmap(m_job->getBitmapData())};
+        m_scene.addPixmap(pixmap); // TODO use a single pixmap?
+    }
+
     job::ImageJob* m_job;
     ImageJobWindow* q;
-    Ui::ImageJobWindow* ui;
     QGraphicsScene m_scene;
+    std::unique_ptr<Ui::ImageJobWindow> ui;
 };
 
-ImageJobWindow::ImageJobWindow(QWidget* parent) :
-    QMainWindow(parent),
-    ui(new Ui::ImageJobWindow),
-    d{std::make_unique<ImageJobWindowImpl>(this, ui)}
+ImageJobWindow::ImageJobWindow() :
+    QMainWindow(nullptr),
+    d{std::make_unique<ImageJobWindow::ImageJobWindowImpl>(this)}
 {
 }
 
 ImageJobWindow::~ImageJobWindow()
 {
-    delete ui;
+
 }
 
 void ImageJobWindow::setImageJob(job::ImageJob* job)
 {
     d->setImageJob(job);
-}
-
-void ImageJobWindow::setDisplayName(const QString& displayName)
-{
-    d->setDisplayName(displayName);
-}
-
-void ImageJobWindow::on_actionExit_triggered()
-{
-    d->closeWindow();
 }
 
 void ImageJobWindow::closeEvent(QCloseEvent* event)
@@ -116,9 +133,24 @@ void ImageJobWindow::closeEvent(QCloseEvent* event)
     QMainWindow::closeEvent(event);
 }
 
+void ImageJobWindow::on_actionExit_triggered()
+{
+    d->closeWindow();
+}
+
+void ImageJobWindow::on_actionSave_Settings_Template_triggered()
+{
+    d->saveSettingsTemplate();
+}
+
+void ImageJobWindow::on_actionReveal_Launch_Window_triggered()
+{
+    d->revealLaunchWindow();
+}
+
 void ImageJobWindow::on_runStopButton_clicked()
 {
-    d->runStopModel();
+    d->toggleModelRunning();
 }
 
 void ImageJobWindow::on_stepButton_clicked()
@@ -126,14 +158,9 @@ void ImageJobWindow::on_stepButton_clicked()
     d->stepModel();
 }
 
-void ImageJobWindow::on_actionSave_Settings_Template_triggered()
+void ImageJobWindow::on_resetButton_clicked()
 {
-
-}
-
-void ImageJobWindow::on_actionReveal_Launch_Window_triggered()
-{
-
+    d->resetJob();
 }
 
 }
