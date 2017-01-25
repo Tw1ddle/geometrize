@@ -74,7 +74,11 @@ public:
 
     void revealLaunchWindow()
     {
-
+        if(common::ui::isLaunchWindowOpen()) {
+            common::ui::bringLaunchWindowToFront();
+        } else {
+            common::ui::openLaunchWindow();
+        }
     }
 
     void resetJob()

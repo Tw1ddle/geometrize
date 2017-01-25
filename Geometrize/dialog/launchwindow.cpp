@@ -64,6 +64,20 @@ public:
     LaunchWindowImpl(const LaunchWindowImpl&) = delete;
     ~LaunchWindowImpl() = default;
 
+    static std::vector<LaunchWindow*> getTopLevelLaunchWindows()
+    {
+        std::vector<LaunchWindow*> windows;
+
+        QWidgetList topLevelWidgets{QApplication::topLevelWidgets()};
+        for(QWidget* w : topLevelWidgets) {
+            if(LaunchWindow* lw = dynamic_cast<LaunchWindow*>(w)) {
+                windows.push_back(lw);
+            }
+        }
+
+        return windows;
+    }
+
     void openJobs(const QStringList& urls)
     {
         util::openJobs(urls);
@@ -101,6 +115,11 @@ LaunchWindow::LaunchWindow() :
 
 LaunchWindow::~LaunchWindow()
 {
+}
+
+std::vector<LaunchWindow*> LaunchWindow::getTopLevelLaunchWindows()
+{
+    return LaunchWindowImpl::getTopLevelLaunchWindows();
 }
 
 void LaunchWindow::dragEnterEvent(QDragEnterEvent* event)

@@ -27,6 +27,9 @@ namespace common
 namespace ui
 {
 
+void openLaunchWindow();
+bool isLaunchWindowOpen();
+void bringLaunchWindowToFront();
 void openAboutPage(QWidget* parent);
 void openPreferences(QWidget* parent);
 int openQuitDialog(QWidget* parent);

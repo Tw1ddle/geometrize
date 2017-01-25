@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <vector>
 
 #include <QMainWindow>
 
@@ -20,6 +21,12 @@ class LaunchWindow : public QMainWindow
 public:
     explicit LaunchWindow();
     ~LaunchWindow();
+
+    /**
+     * @brief getTopLevelLaunchWindows Gets all of the existing top level launch windows.
+     * @return The top level launch windows, empty if there are no launch windows open.
+     */
+    static std::vector<LaunchWindow*> getTopLevelLaunchWindows();
 
     virtual void dragEnterEvent(QDragEnterEvent* event) override;
     virtual void dropEvent(QDropEvent* event) override;

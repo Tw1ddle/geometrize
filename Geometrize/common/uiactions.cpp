@@ -7,6 +7,7 @@
 #include "constants.h"
 #include "dialog/aboutdialog.h"
 #include "dialog/globalpreferencestabdialog.h"
+#include "dialog/launchwindow.h"
 #include "dialog/openurldialog.h"
 #include "dialog/quitdialog.h"
 #include "dialog/runscriptdialog.h"
@@ -19,6 +20,31 @@ namespace common
 
 namespace ui
 {
+
+void openLaunchWindow()
+{
+    dialog::LaunchWindow launcher;
+    launcher.show();
+}
+
+bool isLaunchWindowOpen()
+{
+    return dialog::LaunchWindow::getTopLevelLaunchWindows().size() > 0;
+}
+
+void bringLaunchWindowToFront()
+{
+    std::vector<dialog::LaunchWindow*> launchWindows{dialog::LaunchWindow::getTopLevelLaunchWindows()};
+
+    if(launchWindows.empty()) {
+        return;
+    }
+
+    dialog::LaunchWindow* firstLauncher{launchWindows.front()};
+    firstLauncher->setWindowState(firstLauncher->windowState() & ~Qt::WindowMinimized);
+    firstLauncher->show();
+    firstLauncher->raise();
+}
 
 void openAboutPage(QWidget* parent)
 {
