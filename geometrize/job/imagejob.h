@@ -74,10 +74,15 @@ public:
 
 signals:
      /**
-      * @brief signal_modelStepped Signal that is emitted when the underlying image job model is stepped.
-      * @param shapes The shapes that were added in this step.
+      * @brief signal_modelWillStep Signal that is emitted immediately before the underlying image job model is stepped.
       */
-     void signal_modelStepped(const std::vector<geometrize::ShapeResult>& shapes);
+     void signal_modelWillStep();
+
+     /**
+      * @brief signal_modelDidStep Signal that is emitted immediately after the underlying image job model is stepped.
+      * @param shapes The shapes that were added in the last step.
+      */
+     void signal_modelDidStep(const std::vector<geometrize::ShapeResult>& shapes);
 
 private:
     class ImageJobImpl;

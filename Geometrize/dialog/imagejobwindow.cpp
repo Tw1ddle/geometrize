@@ -58,7 +58,7 @@ public:
         setDisplayName(QString::fromStdString(m_job->getDisplayName()));
 
         // TODO disconnect when setting new job
-        connect(job, &job::ImageJob::signal_modelStepped, [this](const std::vector<geometrize::ShapeResult>& shapes) {
+        connect(job, &job::ImageJob::signal_modelDidStep, [this](const std::vector<geometrize::ShapeResult>& shapes) {
             updateWorkingImage();
         });
     }
@@ -82,6 +82,11 @@ public:
     }
 
     void resetJob()
+    {
+
+    }
+
+    void loadSettingsTemplate()
     {
 
     }
@@ -140,6 +145,11 @@ void ImageJobWindow::closeEvent(QCloseEvent* event)
 void ImageJobWindow::on_actionExit_triggered()
 {
     d->closeWindow();
+}
+
+void ImageJobWindow::on_actionLoad_Settings_Template_triggered()
+{
+    d->loadSettingsTemplate();
 }
 
 void ImageJobWindow::on_actionSave_Settings_Template_triggered()

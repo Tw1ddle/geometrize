@@ -24,7 +24,7 @@ public:
 
     /**
      * @brief getTopLevelLaunchWindows Gets all of the existing top level launch windows.
-     * @return The top level launch windows, empty if there are no launch windows open.
+     * @return The top level launch windows. Should only be empty if there are no launch windows open.
      */
     static std::vector<LaunchWindow*> getTopLevelLaunchWindows();
 

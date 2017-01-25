@@ -391,6 +391,7 @@
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="actionLoad_Settings_Template"/>
     <addaction name="actionSave_Settings_Template"/>
     <addaction name="actionExit"/>
    </widget>
@@ -416,6 +417,11 @@
   <action name="actionReveal_Launch_Window">
    <property name="text">
     <string>Reveal Launch Window</string>
+   </property>
+  </action>
+  <action name="actionLoad_Settings_Template">
+   <property name="text">
+    <string>Load Settings Template</string>
    </property>
   </action>
  </widget>

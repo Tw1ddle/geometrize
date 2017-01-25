@@ -95,8 +95,9 @@ BitmapData& ImageJob::getBitmapData()
 
 std::vector<geometrize::ShapeResult> ImageJob::stepModel()
 {
+    emit signal_modelWillStep();
     const std::vector<ShapeResult> shapes{d->stepModel()};
-    emit signal_modelStepped(shapes);
+    emit signal_modelDidStep(shapes);
 
     return shapes;
 }
