@@ -18,9 +18,9 @@ RESOURCES = resources/application_resources.qrc
 QMAKE_CXXFLAGS += -bigobj
 
 INCLUDEPATH += $$PWD/../lib/cereal/include \
-    $$PWD/../lib/geometrize/include \
     $$PWD/../lib/chaiscript/include
 
+include($$PWD/../lib/geometrize/geometrize.pri)
 include($$PWD/../lib/qt_google_analytics/qt-google-analytics.pri)
 
 SOURCES += commandlineparser.cpp \
@@ -143,9 +143,3 @@ FORMS += dialog/aboutdialog.ui \
     dialog/runscriptdialog.ui \
     dialog/scriptconsole.ui \
     dialog/templatebutton.ui
-
-OTHER_FILES += $$PWD/../lib/geometrize/include/geometrize/*.* \
-    $$PWD/../lib/geometrize/include/geometrize/bitmap/*.* \
-    $$PWD/../lib/geometrize/include/geometrize/exporters/*.* \
-    $$PWD/../lib/geometrize/include/geometrize/runner/*.* \
-    $$PWD/../lib/geometrize/include/geometrize/shape/*.*
