@@ -7,7 +7,7 @@
 #include <QObject>
 
 #include "geometrize/runner/imagerunner.h"
-#include "geometrize/bitmap/bitmapdata.h"
+#include "geometrize/bitmap/bitmap.h"
 #include "geometrize/shaperesult.h"
 
 #include "preferences/imagejobpreferences.h"
@@ -21,7 +21,7 @@ namespace job
 class ImageJob::ImageJobImpl : public QObject
 {
 public:
-    ImageJobImpl(const std::string& displayName, const std::string& jobUrl, BitmapData& bitmap) : m_paused{true}, m_preferences{}, m_displayName{displayName}, m_jobUrl{jobUrl}, m_id{getId()}, m_runner{bitmap}
+    ImageJobImpl(const std::string& displayName, const std::string& jobUrl, Bitmap& bitmap) : m_paused{true}, m_preferences{}, m_displayName{displayName}, m_jobUrl{jobUrl}, m_id{getId()}, m_runner{bitmap}
     {
     }
 
@@ -43,9 +43,9 @@ public:
         return m_id;
     }
 
-    BitmapData& getBitmapData()
+    Bitmap& getBitmap()
     {
-        return m_runner.getBitmapData();
+        return m_runner.getBitmap();
     }
 
     std::vector<geometrize::ShapeResult> stepModel()
@@ -68,7 +68,7 @@ private:
     ImageRunner m_runner;
 };
 
-ImageJob::ImageJob(const std::string& displayName, const std::string& jobUrl, BitmapData& bitmap) : d{std::make_unique<ImageJob::ImageJobImpl>(displayName, jobUrl, bitmap)}
+ImageJob::ImageJob(const std::string& displayName, const std::string& jobUrl, Bitmap& bitmap) : d{std::make_unique<ImageJob::ImageJobImpl>(displayName, jobUrl, bitmap)}
 {
 
 }
@@ -88,9 +88,9 @@ int ImageJob::getJobId() const
     return d->getJobId();
 }
 
-BitmapData& ImageJob::getBitmapData()
+Bitmap& ImageJob::getBitmap()
 {
-    return d->getBitmapData();
+    return d->getBitmap();
 }
 
 std::vector<geometrize::ShapeResult> ImageJob::stepModel()

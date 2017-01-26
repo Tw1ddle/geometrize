@@ -14,7 +14,7 @@ namespace geometrize
 namespace image
 {
 
-BitmapData* createBitmapData(const QImage& image)
+Bitmap* createBitmap(const QImage& image)
 {
     if(image.isNull()) {
         assert(0 && "Image is null, will fail to create bitmap data");
@@ -32,10 +32,10 @@ BitmapData* createBitmapData(const QImage& image)
     }
 
     const std::vector<uchar> data(image.bits(), image.bits() + image.byteCount());
-    return new BitmapData(image.width(), image.height(), data);
+    return new Bitmap(image.width(), image.height(), data);
 }
 
-QPixmap createPixmap(const BitmapData& data)
+QPixmap createPixmap(const Bitmap& data)
 {
     if(data.getWidth() == 0 || data.getHeight() == 0) {
         assert(0 && "Bad bitmap data");

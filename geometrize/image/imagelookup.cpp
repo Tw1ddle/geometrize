@@ -18,28 +18,28 @@ public:
     ImageLookupImpl(const ImageLookupImpl&) = delete;
     ~ImageLookupImpl() = default;
 
-    BitmapData* getImage(const std::string& id)
+    Bitmap* getImage(const std::string& id)
     {
         return m_images[id];
     }
 
-    void setImage(const std::string& id, BitmapData* bitmapData)
+    void setImage(const std::string& id, Bitmap* bitmap)
     {
-        m_images[id] = bitmapData;
+        m_images[id] = bitmap;
     }
 
 private:
-    std::map<std::string, BitmapData*> m_images;
+    std::map<std::string, Bitmap*> m_images;
 };
 
-BitmapData* ImageLookup::getImage(const std::string& id)
+Bitmap* ImageLookup::getImage(const std::string& id)
 {
     return d->getImage(id);
 }
 
-void ImageLookup::setImage(const std::string& id, BitmapData* bitmapData)
+void ImageLookup::setImage(const std::string& id, Bitmap* bitmap)
 {
-    d->setImage(id, bitmapData);
+    d->setImage(id, bitmap);
 }
 
 ImageLookup::ImageLookup() : d{std::make_unique<ImageLookup::ImageLookupImpl>()}

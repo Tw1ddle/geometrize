@@ -5,7 +5,7 @@
 
 namespace geometrize
 {
-class BitmapData;
+class Bitmap;
 }
 
 namespace geometrize
@@ -25,8 +25,8 @@ public:
     ImageLookup(const ImageLookup&) = delete;
     ~ImageLookup();
 
-    BitmapData* getImage(const std::string& id);
-    void setImage(const std::string& id, BitmapData* bitmapData);
+    Bitmap* getImage(const std::string& id);
+    void setImage(const std::string& id, Bitmap* bitmap);
 
 private:
     class ImageLookupImpl;

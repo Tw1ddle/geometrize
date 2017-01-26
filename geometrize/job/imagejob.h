@@ -12,7 +12,7 @@ class QPixmap;
 
 namespace geometrize
 {
-class BitmapData;
+class Bitmap;
 }
 
 namespace geometrize
@@ -38,7 +38,7 @@ class ImageJob : public QObject
 {
     Q_OBJECT
 public:
-    ImageJob(const std::string& displayName, const std::string& jobUrl, BitmapData& bitmap);
+    ImageJob(const std::string& displayName, const std::string& jobUrl, Bitmap& bitmap);
     ImageJob& operator=(const ImageJob&) = delete;
     ImageJob(const ImageJob&) = delete;
     ~ImageJob() = default;
@@ -62,10 +62,10 @@ public:
      int getJobId() const;
 
      /**
-      * @brief getBitmapData Gets a reference to the bitmap data the image job is working on.
+      * @brief getBitmap Gets a reference to the bitmap data the image job is working on.
       * @return A reference to the bitmap data of the image job.
       */
-     BitmapData& getBitmapData();
+     Bitmap& getBitmap();
 
      /**
       * @brief stepModel Steps the internal model, typically adding a shape.

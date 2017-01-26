@@ -106,7 +106,7 @@ private:
     {
         // TODO replace item
         m_scene.clear();
-        const QPixmap pixmap{image::createPixmap(m_job->getBitmapData())};
+        const QPixmap pixmap{image::createPixmap(m_job->getBitmap())};
         m_scene.addPixmap(pixmap); // TODO use a single pixmap?
     }
 

@@ -9,7 +9,7 @@ class QString;
 
 namespace geometrize
 {
-class BitmapData;
+class Bitmap;
 }
 
 namespace geometrize
@@ -19,18 +19,18 @@ namespace image
 {
 
 /**
- * @brief createBitmapData Creates a bitmap data object from the given image.
+ * @brief createBitmap Creates a bitmap data object from the given image.
  * @param image The image to create the bitmap data from.
  * @return The new bitmap data.
  */
-BitmapData* createBitmapData(const QImage& image);
+Bitmap* createBitmap(const QImage& image);
 
 /**
  * @brief createPixmap Creates a pixmap from the bitmap data object. Assumes RGBA8888 format.
  * @param data The bitmap data, RGBA8888 bytes (must be a multiple of 4).
  * @return The pixmap created from the bytes data.
  */
-QPixmap createPixmap(const BitmapData& data);
+QPixmap createPixmap(const Bitmap& data);
 
 /**
  * @brief loadImage Loads an image from the image at the file path. Converts to RGBA8888 format.

@@ -19,14 +19,14 @@ namespace job
 ImageJob* createImageJob(const std::string& displayName, const std::string& jobUrl)
 {
     const QImage image{image::loadImage(QString::fromStdString(jobUrl))};
-    BitmapData* bitmapData(image::createBitmapData(image));
+    Bitmap* bitmap(image::createBitmap(image));
 
-    if(bitmapData == nullptr) {
+    if(bitmap == nullptr) {
         assert(0 && "Failed to create bitmap data");
         return nullptr;
     }
 
-    ImageJob* job{new ImageJob(displayName, jobUrl, *bitmapData)};
+    ImageJob* job{new ImageJob(displayName, jobUrl, *bitmap)};
     common::app::SharedApp::get().getJobLookup().setImageJob(displayName, job);
     return job;
 }
