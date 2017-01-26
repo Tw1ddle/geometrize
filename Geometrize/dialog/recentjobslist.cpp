@@ -21,7 +21,7 @@ namespace dialog
 class RecentJobsList::RecentJobsListImpl
 {
 public:
-    RecentJobsListImpl(RecentJobsList* pQ) : q{pQ}
+    RecentJobsListImpl(RecentJobsList* pQ) : q{pQ}, m_recents{nullptr}
     {
         q->setSizeAdjustPolicy(QListWidget::AdjustToContents);
         q->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
