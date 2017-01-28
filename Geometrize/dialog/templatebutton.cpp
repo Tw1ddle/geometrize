@@ -32,15 +32,16 @@ public:
 
         const QString firstImageFile{QString::fromStdString(util::getFirstFileWithExtensions(m_templateFolder.toStdString(), format::getSupportedImageFileExtensions(false)))};
 
-        q->setToolTip(QString::fromStdString(m_manifest.getName() + " (" + m_manifest.getLicense() + ")"));
-
-        if(!firstImageFile.isEmpty()) {
-            const QPixmap thumbnail(firstImageFile);
-            if(!thumbnail.isNull()) {
-                const QSize size{180, 150};
-                ui->imageLabel->setPixmap(thumbnail.scaled(size, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation));
-            }
+        const QPixmap thumbnail(firstImageFile);
+        if(!thumbnail.isNull()) {
+            const QSize size{180, 150};
+            ui->imageLabel->setPixmap(thumbnail.scaled(size, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation));
         }
+
+        const QString name{tr("Name: %1").arg(QString::fromStdString(m_manifest.getName()))};
+        const QString license{tr("License: %2").arg(QString::fromStdString(m_manifest.getLicense()))};
+        const QString size{tr("Size: %3").arg(QString::number(thumbnail.width()) + "x" + QString::number(thumbnail.height()))};
+        q->setToolTip(name + "<br>" + license + "<br>" + size);
 
         ui->titleLabel->setText(QString::fromStdString(m_manifest.getName()));
 
