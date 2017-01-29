@@ -68,7 +68,7 @@
       <property name="childrenCollapsible">
        <bool>false</bool>
       </property>
-      <widget class="QGraphicsView" name="imageView">
+      <widget class="geometrize::dialog::ImageGraphicsView" name="imageView">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
          <horstretch>2</horstretch>
@@ -426,6 +426,13 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>geometrize::dialog::ImageGraphicsView</class>
+   <extends>QGraphicsView</extends>
+   <header>dialog/imagegraphicsview.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
