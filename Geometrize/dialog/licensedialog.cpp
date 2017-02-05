@@ -55,6 +55,7 @@ LicenseDialog::LicenseDialog(QWidget* parent) :
     ui->rapidJSONLicense->setText(readLicenseFile(":/licenses/rapidjson_license.txt"));
     ui->rapidXmlLicense->setText(readLicenseFile(":/licenses/rapidxml_license.txt"));
     ui->qtGoogleAnalyticsLicense->setText(readLicenseFile(":/licenses/qt_google_analytics_license.txt"));
+    ui->libsimdppLicense->setText(readLicenseFile(":/licenses/libsimdpp_license.txt"));
     ui->flowLayoutLicense->setText(readLicenseFile(":/licenses/flowlayout_license.txt"));
     ui->elidedLabelLicense->setText(readLicenseFile(":/licenses/elidedlabel_license.txt"));
     ui->iconAssetsLicense->setText(readLicenseFile(":/licenses/fatcow_icon_license.txt"));

@@ -32,7 +32,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>8</number>
      </property>
      <widget class="QWidget" name="Geometrize">
       <attribute name="title">
@@ -118,6 +118,16 @@
       <layout class="QVBoxLayout" name="verticalLayout_13">
        <item>
         <widget class="QTextBrowser" name="qtGoogleAnalyticsLicense"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="libsimdpp">
+      <attribute name="title">
+       <string>libsimdpp</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_14">
+       <item>
+        <widget class="QTextBrowser" name="libsimdppLicense"/>
        </item>
       </layout>
      </widget>

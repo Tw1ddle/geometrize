@@ -20,7 +20,7 @@ QMAKE_CXXFLAGS += -bigobj
 INCLUDEPATH += $$PWD/../lib/cereal/include \
     $$PWD/../lib/chaiscript/include
 
-include($$PWD/../lib/geometrize/geometrize.pri)
+include($$PWD/../lib/geometrize/geometrize/geometrize.pri)
 include($$PWD/../lib/qt_google_analytics/qt-google-analytics.pri)
 
 SOURCES += commandlineparser.cpp \
