@@ -39,7 +39,6 @@ public:
     void setImageJob(job::ImageJob* job);
 
 private slots:
-    void on_actionExit_triggered();
     void on_actionLoad_Settings_Template_triggered();
     void on_actionSave_Settings_Template_triggered();
     void on_actionReveal_Launch_Window_triggered();
@@ -48,8 +47,6 @@ private slots:
     void on_resetButton_clicked();
 
 private:
-    void closeEvent(QCloseEvent* bar) override;
-
     class ImageJobWindowImpl;
     std::unique_ptr<ImageJobWindowImpl> d;
 };

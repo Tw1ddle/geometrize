@@ -36,17 +36,6 @@ public:
     ImageJobWindowImpl(const ImageJobWindowImpl&) = delete;
     ~ImageJobWindowImpl() = default;
 
-    int closeWindow()
-    {
-        const int dialogResult{common::ui::openQuitDialog(q)};
-        switch(dialogResult) {
-            case QDialog::Accepted:
-                // TODO save any outstanding stuff(?) separate method needed
-                q->close();
-        }
-        return dialogResult;
-    }
-
     void setImageJob(job::ImageJob* job)
     {
         m_job = job;
@@ -130,21 +119,6 @@ ImageJobWindow::~ImageJobWindow()
 void ImageJobWindow::setImageJob(job::ImageJob* job)
 {
     d->setImageJob(job);
-}
-
-void ImageJobWindow::closeEvent(QCloseEvent* event)
-{
-    const int dialogResult{common::ui::openQuitDialog(this)};
-    if(dialogResult == QDialog::Accepted) {
-        return;
-    }
-
-    QMainWindow::closeEvent(event);
-}
-
-void ImageJobWindow::on_actionExit_triggered()
-{
-    d->closeWindow();
 }
 
 void ImageJobWindow::on_actionLoad_Settings_Template_triggered()
