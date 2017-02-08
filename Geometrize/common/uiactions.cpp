@@ -1,5 +1,6 @@
 #include "uiactions.h"
 
+#include <QApplication>
 #include <QDesktopServices>
 #include <QFileDialog>
 #include <QUrl>
@@ -44,6 +45,7 @@ void bringLaunchWindowToFront()
     firstLauncher->setWindowState(firstLauncher->windowState() & ~Qt::WindowMinimized);
     firstLauncher->show();
     firstLauncher->raise();
+    QApplication::setActiveWindow(firstLauncher);
 }
 
 void openAboutPage(QWidget* parent)
