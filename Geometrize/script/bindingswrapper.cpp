@@ -101,7 +101,7 @@ std::vector<std::string> getScriptsForPath(const std::string& dirPath)
     return geometrize::util::getScriptsForPath(dirPath);
 }
 
-void openJob(const std::string& url)
+void openJob(const std::string& url, const bool addToRecents)
 {
     const QUrl qUrl(QString::fromStdString(url));
     if(!qUrl.isValid()) {
@@ -109,7 +109,7 @@ void openJob(const std::string& url)
         return;
     }
 
-    geometrize::util::openJobs(QStringList(QString::fromStdString(url)));
+    geometrize::util::openJobs(QStringList(QString::fromStdString(url)), addToRecents);
 }
 
 bool openInDefaultApplication(const std::string& path)

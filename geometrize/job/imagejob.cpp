@@ -18,7 +18,7 @@ namespace geometrize
 namespace job
 {
 
-class ImageJob::ImageJobImpl : public QObject
+class ImageJob::ImageJobImpl
 {
 public:
     ImageJobImpl(const std::string& displayName, const std::string& jobUrl, Bitmap& bitmap) : m_paused{true}, m_preferences{}, m_displayName{displayName}, m_jobUrl{jobUrl}, m_id{getId()}, m_runner{bitmap}
@@ -51,6 +51,16 @@ public:
     std::vector<geometrize::ShapeResult> stepModel()
     {
         return m_runner.step();
+    }
+
+    void applyPreferences(const preferences::ImageJobPreferences& preferences)
+    {
+        // TODO
+    }
+
+    preferences::ImageJobPreferences& getPreferences()
+    {
+        return m_preferences;
     }
 
 private:
@@ -93,13 +103,21 @@ Bitmap& ImageJob::getBitmap()
     return d->getBitmap();
 }
 
-std::vector<geometrize::ShapeResult> ImageJob::stepModel()
+void ImageJob::stepModel()
 {
     emit signal_modelWillStep();
     const std::vector<ShapeResult> shapes{d->stepModel()};
     emit signal_modelDidStep(shapes);
+}
 
-    return shapes;
+void ImageJob::applyPreferences(const preferences::ImageJobPreferences& preferences)
+{
+    d->applyPreferences(preferences);
+}
+
+preferences::ImageJobPreferences& ImageJob::getPreferences()
+{
+    return d->getPreferences();
 }
 
 }

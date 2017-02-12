@@ -111,6 +111,16 @@ void openMoreResourcesPage()
     QDesktopServices::openUrl(QUrl(geometrize::constants::MORE_RESOURCES_URL));
 }
 
+QString openLoadImageJobSettingsDialog(QWidget* parent)
+{
+    return QFileDialog::getOpenFileName(parent, QWidget::tr("Load Image Job Settings"), "", QWidget::tr("JSON Image Job Settings File (*.json)"));
+}
+
+QString openSaveImageJobSettingsDialog(QWidget* parent)
+{
+    return QFileDialog::getSaveFileName(parent, QWidget::tr("Save Image Job Settings"), "", QWidget::tr("JSON Image Job Settings File (*.json)"));
+}
+
 }
 
 }

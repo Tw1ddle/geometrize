@@ -1,1 +1,1 @@
-openJob("https://en.wikipedia.org/wiki/Special:Random");
+openJob("https://en.wikipedia.org/wiki/Special:Random", false);

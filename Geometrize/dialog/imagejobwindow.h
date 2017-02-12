@@ -39,6 +39,7 @@ public:
     void setImageJob(job::ImageJob* job);
 
 private slots:
+    void on_actionExit_triggered();
     void on_actionLoad_Settings_Template_triggered();
     void on_actionSave_Settings_Template_triggered();
     void on_actionReveal_Launch_Window_triggered();

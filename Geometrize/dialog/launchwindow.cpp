@@ -2,7 +2,6 @@
 #include "ui_launchwindow.h"
 
 #include <QCloseEvent>
-#include <QDebug>
 #include <QDialog>
 
 #include "chaiscript/chaiscript.hpp"
@@ -40,17 +39,14 @@ public:
         ui->recentsList->setRecentItems(&common::app::SharedApp::get().getRecentFiles());
 
         connect(ui->recentsList, &RecentJobsList::itemClicked, [this](QListWidgetItem* item) {
-            qDebug() << "Item activated " << item->text();
-
             // TODO deal with bad paths, use data not text
             const QStringList files{item->text()};
-            openJobs(files);
+            openJobs(files, false);
         });
 
         loadConsoleHistory();
 
         connect(ui->templateGrid, &dialog::TemplateGrid::signal_templateLoaded, [this](const QString& templateFolder, const bool success) {
-            // TODO add search by tags etc
             ui->templatesSearchEdit->addToCompletionList(QString::fromStdString(util::getTemplateManifest(templateFolder.toStdString()).getName()));
         });
 
@@ -59,6 +55,8 @@ public:
         });
 
         ui->templateGrid->loadTemplates();
+
+        startLogoImageJob();
     }
     LaunchWindowImpl operator=(const LaunchWindowImpl&) = delete;
     LaunchWindowImpl(const LaunchWindowImpl&) = delete;
@@ -78,9 +76,9 @@ public:
         return windows;
     }
 
-    void openJobs(const QStringList& urls)
+    void openJobs(const QStringList& urls, const bool addToRecents)
     {
-        util::openJobs(urls);
+        util::openJobs(urls, addToRecents);
     }
 
     void setConsoleVisibility(const bool visible)
@@ -102,6 +100,13 @@ public:
     }
 
 private:
+    void startLogoImageJob()
+    {
+        const QPixmap* logo{ui->logoLabel->pixmap()};
+        // TODO set the logo to a starting image and then run for n shapes on another thread...
+        // TODO set the tip text in the callback
+    }
+
     std::unique_ptr<Ui::LaunchWindow> ui;
     LaunchWindow* q;
     std::unique_ptr<chaiscript::ChaiScript> m_engine;
@@ -150,13 +155,7 @@ void LaunchWindow::on_actionClear_Recents_triggered()
 
 void LaunchWindow::on_actionExit_triggered()
 {
-    // TODO
-    const int dialogResult{common::ui::openQuitDialog(this)};
-    switch(dialogResult) {
-        case QDialog::Accepted:
-            // TODO save any outstanding stuff(?) separate method needed
-            QApplication::quit();
-    }
+    close();
 }
 
 void LaunchWindow::on_openImageButton_clicked()
@@ -166,14 +165,14 @@ void LaunchWindow::on_openImageButton_clicked()
         return;
     }
 
-    d->openJobs({ imagePath });
+    d->openJobs({ imagePath }, true);
 }
 
 void LaunchWindow::on_openLinkButton_clicked()
 {
     const QUrl url{common::ui::openGetUrlDialog(this)};
     if(url.isValid()) {
-        geometrize::util::openJobs({ url.toString() });
+        geometrize::util::openJobs({ url.toString() }, true);
     }
 }
 

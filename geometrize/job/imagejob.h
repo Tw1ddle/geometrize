@@ -7,6 +7,7 @@
 #include <QString>
 
 #include "geometrize/shaperesult.h"
+#include "preferences/imagejobpreferences.h"
 
 class QPixmap;
 
@@ -70,7 +71,19 @@ public:
      /**
       * @brief stepModel Steps the internal model, typically adding a shape.
       */
-     std::vector<geometrize::ShapeResult> stepModel();
+     void stepModel();
+
+     /**
+      * @brief applyPreferences Applies the given image job preferences to the job.
+      * @param preferences The preferences to apply.
+      */
+     void applyPreferences(const geometrize::preferences::ImageJobPreferences& preferences);
+
+     /**
+      * @brief getPreferences Gets a reference to the current preferences of this job.
+      * @return A reference to the current preferences of this job.
+      */
+     geometrize::preferences::ImageJobPreferences& getPreferences();
 
 signals:
      /**

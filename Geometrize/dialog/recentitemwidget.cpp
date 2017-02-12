@@ -45,7 +45,7 @@ void RecentItemWidget::contextMenuEvent(QContextMenuEvent* e)
     QAction openAction(tr("Open"));
     itemContextMenu.addAction(&openAction);
     connect(&openAction, &QAction::triggered, [this]() {
-        geometrize::util::openJobs({m_item.getKey()});
+        geometrize::util::openJobs({m_item.getKey()}, false);
     });
 
     QAction openInDefaultViewer(tr("Open in viewer"));

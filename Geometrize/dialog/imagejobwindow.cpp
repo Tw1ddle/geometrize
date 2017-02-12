@@ -13,6 +13,7 @@
 #include "common/uiactions.h"
 #include "constants.h"
 #include "dialog/aboutdialog.h"
+#include "dialog/collapsiblesection.h"
 #include "dialog/globalpreferencestabdialog.h"
 #include "dialog/quitdialog.h"
 #include "image/imageloader.h"
@@ -30,11 +31,17 @@ public:
     ImageJobWindowImpl(ImageJobWindow* pQ) : ui{std::make_unique<Ui::ImageJobWindow>()}, q{pQ}, m_job{nullptr}
     {
         ui->setupUi(q);
+
         ui->imageView->setScene(&m_scene);
     }
     ImageJobWindowImpl operator=(const ImageJobWindowImpl&) = delete;
     ImageJobWindowImpl(const ImageJobWindowImpl&) = delete;
     ~ImageJobWindowImpl() = default;
+
+    void close()
+    {
+        q->close();
+    }
 
     void setImageJob(job::ImageJob* job)
     {
@@ -77,12 +84,22 @@ public:
 
     void loadSettingsTemplate()
     {
+        const QString path{common::ui::openLoadImageJobSettingsDialog(q)};
+        if(path.isEmpty()) {
+            return;
+        }
 
+        m_job->getPreferences().load(path.toStdString());
     }
 
     void saveSettingsTemplate()
     {
+        const QString path{common::ui::openSaveImageJobSettingsDialog(q)};
+        if(path.isEmpty()) {
+            return;
+        }
 
+        m_job->getPreferences().save(path.toStdString());
     }
 
 private:
@@ -119,6 +136,11 @@ ImageJobWindow::~ImageJobWindow()
 void ImageJobWindow::setImageJob(job::ImageJob* job)
 {
     d->setImageJob(job);
+}
+
+void ImageJobWindow::on_actionExit_triggered()
+{
+    d->close();
 }
 
 void ImageJobWindow::on_actionLoad_Settings_Template_triggered()

@@ -42,6 +42,8 @@ void openTechnicalSupport();
 void openOnlineTutorials();
 void openTechnicalSupport();
 void openMoreResourcesPage();
+QString openLoadImageJobSettingsDialog(QWidget* parent);
+QString openSaveImageJobSettingsDialog(QWidget* parent);
 
 }
 

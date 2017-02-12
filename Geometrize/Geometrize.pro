@@ -73,7 +73,8 @@ SOURCES += commandlineparser.cpp \
     script/scriptrunner.cpp \
     script/scriptutil.cpp \
     serialization/serializationutil.cpp \
-    dialog/imagegraphicsview.cpp
+    dialog/imagegraphicsview.cpp \
+    dialog/collapsiblesection.cpp
 
 HEADERS += commandlineparser.h \
     constants.h \
@@ -130,7 +131,8 @@ HEADERS += commandlineparser.h \
     serialization/templatemetadata.h \
     serialization/serializationutil.h \
     serialization/stringvectordata.h \
-    dialog/imagegraphicsview.h
+    dialog/imagegraphicsview.h \
+    dialog/collapsiblesection.h
 
 FORMS += dialog/aboutdialog.ui \
     dialog/commandlineedit.ui \

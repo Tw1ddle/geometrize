@@ -1,1 +1,1 @@
-openJob(getFirstFileWithExtensions(templateDirectory, getSupportedImageFileExtensions()));
+openJob(getFirstFileWithExtensions(templateDirectory, getSupportedImageFileExtensions()), false);

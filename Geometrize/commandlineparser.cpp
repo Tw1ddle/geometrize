@@ -64,7 +64,7 @@ CommandLineResult handleArgumentPairs(QCommandLineParser& parser)
 CommandLineResult handlePositionalArguments(const QStringList& arguments)
 {
     for(const QString& argument : arguments) {
-        geometrize::util::openJobs({ argument });
+        geometrize::util::openJobs({ argument }, true);
     }
 
     return CommandLineResult(CommandLineError::CommandLineOk, ""); // TODO

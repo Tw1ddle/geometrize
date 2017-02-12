@@ -8,6 +8,8 @@
 
 #include "chaiscript/chaiscript.hpp"
 
+#include "common/sharedapp.h"
+#include "recentitems.h"
 #include "job/imagejob.h"
 #include "job/imagejobcreator.h"
 #include "formatsupport.h"
@@ -23,10 +25,16 @@ namespace geometrize
 namespace util
 {
 
-void openJobs(const QStringList& urls)
+void openJobs(const QStringList& urls, const bool addToRecents)
 {
     if(urls.empty()) {
         return;
+    }
+
+    if(addToRecents) {
+        for(const QString& url : urls) {
+            common::app::SharedApp::get().getRecentFiles().add(url, url);
+        }
     }
 
     for(const QString& s : urls) {

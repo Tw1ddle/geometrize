@@ -49,7 +49,7 @@ private:
     QByteArray m_downloadedData;
     QUrl m_url;
 };
- 
+
 Downloader::Downloader(const QUrl& url, const std::function<void(Downloader*, QNetworkReply::NetworkError)>& onDownloaded) : QObject(nullptr), d{std::make_unique<Downloader::DownloaderImpl>(this, url, onDownloaded)}
 {
 }

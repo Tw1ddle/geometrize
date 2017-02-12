@@ -17,7 +17,7 @@ namespace geometrize
 namespace util
 {
 
-void openJobs(const QStringList& urls);
+void openJobs(const QStringList& urls, bool addToRecents);
 
 bool openTemplate(chaiscript::ChaiScript& engine, const std::string& templateFolder);
 

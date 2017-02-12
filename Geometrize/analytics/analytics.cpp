@@ -13,7 +13,7 @@ namespace analytics
 class Analytics::AnalyticsImpl
 {
 public:
-    AnalyticsImpl(Analytics* pQ) : q{pQ}, m_analytics{"UA-58489066-5"}
+    AnalyticsImpl() : m_analytics{"UA-58489066-5"}
     {
         m_analytics.setLanguage(QLocale::system().name());
         m_analytics.setSendInterval(30000);
@@ -45,11 +45,10 @@ public:
     }
 
 private:
-    Analytics* q;
     GAnalytics m_analytics;
 };
 
-Analytics::Analytics() : d{std::make_unique<Analytics::AnalyticsImpl>(this)}
+Analytics::Analytics() : d{std::make_unique<Analytics::AnalyticsImpl>()}
 {
 }
 

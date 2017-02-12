@@ -41,15 +41,30 @@ public:
         }
     }
 
-    // TODO remove this and use a modified grid layout instead
     void setItemFilter(const QString& filter)
     {
-        const std::string stdFilter{filter.toStdString()};
+        if(filter.isEmpty()) {
+            for(TemplateButton* const button : m_buttons) {
+                button->show();
+            }
+            return;
+        }
+
         for(TemplateButton* const button : m_buttons) {
-            if(util::stringBeginsWith(button->getTemplateManifest().getName(), stdFilter)) {
+            const QString name{QString::fromStdString(button->getTemplateManifest().getName())};
+            const std::vector<std::string> tags{button->getTemplateManifest().getTags()};
+
+            if(name.contains(filter, Qt::CaseInsensitive)) {
                 button->show();
             } else {
                 button->hide();
+            }
+
+            for(const std::string& tag : tags) {
+                const QString qTag{QString::fromStdString(tag)};
+                if(qTag.contains(filter, Qt::CaseInsensitive)) {
+                    button->show();
+                }
             }
         }
     }

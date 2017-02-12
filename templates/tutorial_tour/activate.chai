@@ -1,1 +1,1 @@
-openJob("https://unsplash.it/200/300/?random");
+openJob(getFirstFileWithExtensions(templateDirectory, getSupportedImageFileExtensions()), false);

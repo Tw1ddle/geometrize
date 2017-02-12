@@ -41,7 +41,7 @@ std::vector<std::string> getSupportedImageFileExtensions();
 
 std::vector<std::string> getScriptsForPath(const std::string& dirPath);
 
-void openJob(const std::string& url);
+void openJob(const std::string& url, bool addToRecents);
 
 bool openInDefaultApplication(const std::string& path);
 
