@@ -6,34 +6,20 @@
 #include <QObject>
 #include <QString>
 
+#include "geometrize/bitmap/bitmap.h"
 #include "geometrize/shaperesult.h"
 #include "preferences/imagejobpreferences.h"
 
-class QPixmap;
-
-namespace geometrize
-{
-class Bitmap;
-}
-
 namespace geometrize
 {
 
 namespace job
 {
-class ImageJobImpl;
-}
 
-}
-
-namespace geometrize
-{
-
-namespace job
-{
+Q_DECLARE_METATYPE(std::vector<geometrize::ShapeResult>) ///< Shape data passed around by the image job worker thread.
 
 /**
- * @brief The ImageJob class contains the data worked on by an image job.
+ * @brief The ImageJob class transforms a source image into a collection of shapes approximating the source image.
  */
 class ImageJob : public QObject
 {
@@ -43,6 +29,8 @@ public:
     ImageJob& operator=(const ImageJob&) = delete;
     ImageJob(const ImageJob&) = delete;
     ~ImageJob() = default;
+
+    Bitmap& getBitmap();
 
     /**
      * @brief getDisplayName Gets the display name of the image job.
@@ -63,12 +51,6 @@ public:
      int getJobId() const;
 
      /**
-      * @brief getBitmap Gets a reference to the bitmap data the image job is working on.
-      * @return A reference to the bitmap data of the image job.
-      */
-     Bitmap& getBitmap();
-
-     /**
       * @brief stepModel Steps the internal model, typically adding a shape.
       */
      void stepModel();
@@ -87,6 +69,11 @@ public:
 
 signals:
      /**
+      * @brief signal_step Signal that the image job emits to make the internal model step.
+      */
+     void signal_step();
+
+     /**
       * @brief signal_modelWillStep Signal that is emitted immediately before the underlying image job model is stepped.
       */
      void signal_modelWillStep();
@@ -95,9 +82,12 @@ signals:
       * @brief signal_modelDidStep Signal that is emitted immediately after the underlying image job model is stepped.
       * @param shapes The shapes that were added in the last step.
       */
-     void signal_modelDidStep(const std::vector<geometrize::ShapeResult>& shapes);
+     void signal_modelDidStep(std::vector<geometrize::ShapeResult> shapes);
 
 private:
+    void modelWillStep();
+    void modelDidStep(std::vector<geometrize::ShapeResult> shapes);
+
     class ImageJobImpl;
     std::unique_ptr<ImageJobImpl> d;
 };

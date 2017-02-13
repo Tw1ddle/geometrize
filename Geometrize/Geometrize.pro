@@ -74,7 +74,8 @@ SOURCES += commandlineparser.cpp \
     script/scriptutil.cpp \
     serialization/serializationutil.cpp \
     dialog/imagegraphicsview.cpp \
-    dialog/collapsiblesection.cpp
+    dialog/collapsiblesection.cpp \
+    job/imagejobworker.cpp
 
 HEADERS += commandlineparser.h \
     constants.h \
@@ -132,7 +133,8 @@ HEADERS += commandlineparser.h \
     serialization/serializationutil.h \
     serialization/stringvectordata.h \
     dialog/imagegraphicsview.h \
-    dialog/collapsiblesection.h
+    dialog/collapsiblesection.h \
+    job/imagejobworker.h
 
 FORMS += dialog/aboutdialog.ui \
     dialog/commandlineedit.ui \

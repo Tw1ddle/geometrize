@@ -3,13 +3,15 @@
 #include <atomic>
 #include <vector>
 
-#include <QPixmap>
+#include <QDebug>
 #include <QObject>
+#include <QThread>
 
-#include "geometrize/runner/imagerunner.h"
 #include "geometrize/bitmap/bitmap.h"
+#include "geometrize/runner/imagerunner.h"
 #include "geometrize/shaperesult.h"
 
+#include "imagejobworker.h"
 #include "preferences/imagejobpreferences.h"
 
 namespace geometrize
@@ -21,12 +23,32 @@ namespace job
 class ImageJob::ImageJobImpl
 {
 public:
-    ImageJobImpl(const std::string& displayName, const std::string& jobUrl, Bitmap& bitmap) : m_paused{true}, m_preferences{}, m_displayName{displayName}, m_jobUrl{jobUrl}, m_id{getId()}, m_runner{bitmap}
+    ImageJobImpl(ImageJob* pQ, const std::string& displayName, const std::string& jobUrl, Bitmap& bitmap) : q{pQ}, m_preferences{}, m_displayName{displayName}, m_jobUrl{jobUrl}, m_id{getId()}, m_worker{bitmap}
     {
+        qRegisterMetaType<std::vector<geometrize::ShapeResult>>();
+
+        m_worker.moveToThread(&m_workerThread);
+        m_workerThread.start();
+
+        q->connect(q, &ImageJob::signal_step, &m_worker, &ImageJobWorker::step);
+        q->connect(&m_worker, &ImageJobWorker::signal_willStep, q, &ImageJob::signal_modelWillStep);
+        q->connect(&m_worker, &ImageJobWorker::signal_didStep, q, &ImageJob::signal_modelDidStep);
+    }
+
+    ~ImageJobImpl()
+    {
+        // TODO need to ensure these get halted/destroyed when the window/job is destroyed
+        m_workerThread.quit();
+        m_workerThread.wait();
     }
 
     ImageJobImpl& operator=(const ImageJobImpl&) = delete;
     ImageJobImpl(const ImageJobImpl&) = delete;
+
+    Bitmap& getBitmap()
+    {
+        return m_worker.getBitmap();
+    }
 
     std::string getDisplayName() const
     {
@@ -43,14 +65,19 @@ public:
         return m_id;
     }
 
-    Bitmap& getBitmap()
+    void stepModel()
     {
-        return m_runner.getBitmap();
+        emit q->signal_step();
     }
 
-    std::vector<geometrize::ShapeResult> stepModel()
+    void modelWillStep()
     {
-        return m_runner.step();
+        emit q->signal_modelWillStep();
+    }
+
+    void modelDidStep(std::vector<geometrize::ShapeResult> shapes)
+    {
+        emit q->signal_modelDidStep(shapes);
     }
 
     void applyPreferences(const preferences::ImageJobPreferences& preferences)
@@ -70,17 +97,22 @@ private:
         return id++;
     }
 
-    bool m_paused; ///> Whether the job is running or paused.
+    ImageJob* q;
     preferences::ImageJobPreferences m_preferences; ///> Runtime configuration parameters for the runner.
     std::string m_displayName; ///> The display name of the image job.
     std::string m_jobUrl; ///> The URL/original source of the data for the image job.
     const int m_id; ///> A unique id for the image job.
-    ImageRunner m_runner;
+    QThread m_workerThread; ///> Thread that the image job worker runs on.
+    ImageJobWorker m_worker; ///> The image job worker.
 };
 
-ImageJob::ImageJob(const std::string& displayName, const std::string& jobUrl, Bitmap& bitmap) : d{std::make_unique<ImageJob::ImageJobImpl>(displayName, jobUrl, bitmap)}
+ImageJob::ImageJob(const std::string& displayName, const std::string& jobUrl, Bitmap& bitmap) :  QObject(), d{std::make_unique<ImageJob::ImageJobImpl>(this, displayName, jobUrl, bitmap)}
 {
+}
 
+Bitmap& ImageJob::getBitmap()
+{
+    return d->getBitmap();
 }
 
 std::string ImageJob::getDisplayName() const
@@ -98,16 +130,19 @@ int ImageJob::getJobId() const
     return d->getJobId();
 }
 
-Bitmap& ImageJob::getBitmap()
-{
-    return d->getBitmap();
-}
-
 void ImageJob::stepModel()
 {
-    emit signal_modelWillStep();
-    const std::vector<ShapeResult> shapes{d->stepModel()};
-    emit signal_modelDidStep(shapes);
+    d->stepModel();
+}
+
+void ImageJob::modelWillStep()
+{
+    d->modelWillStep();
+}
+
+void ImageJob::modelDidStep(std::vector<geometrize::ShapeResult> shapes)
+{
+    d->modelDidStep(shapes);
 }
 
 void ImageJob::applyPreferences(const preferences::ImageJobPreferences& preferences)

@@ -8,6 +8,7 @@
 #include <QMessageBox>
 #include <QPixmap>
 
+#include "geometrize/bitmap/bitmap.h"
 #include "geometrize/core.h"
 
 #include "common/uiactions.h"
@@ -49,12 +50,12 @@ public:
 
         // TODO reset ui?
 
-        updateWorkingImage();
+       updateWorkingImage();
 
         setDisplayName(QString::fromStdString(m_job->getDisplayName()));
 
         // TODO disconnect when setting new job
-        connect(job, &job::ImageJob::signal_modelDidStep, [this](const std::vector<geometrize::ShapeResult>& shapes) {
+        connect(job, &job::ImageJob::signal_modelDidStep, [this](std::vector<geometrize::ShapeResult> shapes) {
             updateWorkingImage();
         });
     }
@@ -113,7 +114,7 @@ private:
         // TODO replace item
         m_scene.clear();
         const QPixmap pixmap{image::createPixmap(m_job->getBitmap())};
-        m_scene.addPixmap(pixmap); // TODO use a single pixmap?
+        m_scene.addPixmap(pixmap);
     }
 
     job::ImageJob* m_job;
