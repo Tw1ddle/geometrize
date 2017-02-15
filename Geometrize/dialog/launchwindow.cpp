@@ -11,7 +11,9 @@
 #include "common/uiactions.h"
 #include "dialog/recentitemwidget.h"
 #include "script/chaiscriptcreator.h"
+#include "job/imagejob.h"
 #include "job/jobutil.h"
+#include "image/imageloader.h"
 #include "util.h"
 #include "serialization/serializationutil.h"
 
@@ -56,7 +58,7 @@ public:
 
         ui->templateGrid->loadTemplates();
 
-        startLogoImageJob();
+        setupLogoImageJob();
     }
     LaunchWindowImpl operator=(const LaunchWindowImpl&) = delete;
     LaunchWindowImpl(const LaunchWindowImpl&) = delete;
@@ -100,16 +102,32 @@ public:
     }
 
 private:
-    void startLogoImageJob()
+    void setupLogoImageJob()
     {
         const QPixmap* logo{ui->logoLabel->pixmap()};
-        // TODO set the logo to a starting image and then run for n shapes on another thread...
-        // TODO set the tip text in the callback
+        geometrize::Bitmap logoBitmap{image::createBitmap(logo->toImage())};
+        m_logoJob = std::make_unique<job::ImageJob>("Logo Image Job", "Logo (Resource File)", logoBitmap);
+
+        connect(m_logoJob.get(), &job::ImageJob::signal_modelDidStep, [this](std::vector<geometrize::ShapeResult> results) {
+            const QPixmap pixmap{image::createPixmap(m_logoJob->getBitmap())};
+            ui->logoLabel->setPixmap(pixmap);
+
+            // TODO set tooltip for number of steps and time taken
+            // TODO disconnect when finished and destroy job?
+            // TODO alpha background is currently black
+        });
+
+        for(int i = 0; i < maxLogoJobSteps; i++) {
+            m_logoJob->stepModel();
+        }
     }
 
     std::unique_ptr<Ui::LaunchWindow> ui;
     LaunchWindow* q;
     std::unique_ptr<chaiscript::ChaiScript> m_engine;
+
+    std::unique_ptr<job::ImageJob> m_logoJob;
+    const int maxLogoJobSteps{500};
 };
 
 LaunchWindow::LaunchWindow() :

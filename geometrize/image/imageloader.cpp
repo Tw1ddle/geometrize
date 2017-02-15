@@ -14,25 +14,14 @@ namespace geometrize
 namespace image
 {
 
-Bitmap* createBitmap(const QImage& image)
+Bitmap createBitmap(const QImage& image)
 {
-    if(image.isNull()) {
-        assert(0 && "Image is null, will fail to create bitmap data");
-        return nullptr;
-    }
-
-    if(image.width() == 0 || image.height() == 0) {
-        assert(0 && "Image has zero width or height");
-        return nullptr;
-    }
-
-    if(image.format() != QImage::Format_RGBA8888) {
-        assert(0 && "Cannot create bitmap data from a non-RGBA8888 image");
-        return nullptr;
-    }
+    assert(image.isNull() && "Image is null, will fail to create bitmap data");
+    assert((image.width() == 0 || image.height() == 0) && "Image has zero width or height");
+    assert((image.format() != QImage::Format_RGBA8888) && "Cannot create bitmap data from a non-RGBA8888 image");
 
     const std::vector<uchar> data(image.bits(), image.bits() + image.byteCount());
-    return new Bitmap(image.width(), image.height(), data);
+    return Bitmap(image.width(), image.height(), data);
 }
 
 QPixmap createPixmap(const Bitmap& data)

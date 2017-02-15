@@ -1,9 +1,6 @@
 #include "aboutdialog.h"
 #include "ui_aboutdialog.h"
 
-#include <QBitmap>
-#include <QPixmap>
-
 #include "constants.h"
 #include "creditsdialog.h"
 #include "licensedialog.h"

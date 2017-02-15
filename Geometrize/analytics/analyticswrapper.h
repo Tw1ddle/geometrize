@@ -19,10 +19,25 @@ public:
     AnalyticsWrapper(const AnalyticsWrapper&) = delete;
     ~AnalyticsWrapper() = default;
 
+    /**
+     * @brief startSession Event recorded when the app is launched.
+     */
     void startSession();
+
+    /**
+     * @brief endSession Event recorded when the app quits normally.
+     */
     void endSession();
 
+    /**
+     * @brief onLaunch Event recorded when the app is launched.
+     */
     void onLaunch(); // TODO log mode it was launched in e.g. command line, GUI, executing script etc?
+
+    /**
+     * @brief onLogoImageJobFinished Event recorded when the image job embedded in the lauch image completes.
+     */
+    void onLogoImageJobFinished(int shapeCount, float durationMs);
 
 private:
     Analytics m_analytics;
