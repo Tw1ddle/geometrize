@@ -113,7 +113,7 @@
      </widget>
      <widget class="QWidget" name="QtGifImage">
       <attribute name="title">
-       <string>QtGifImage</string>
+       <string notr="true">QtGifImage</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_15">
        <item>
@@ -123,7 +123,7 @@
      </widget>
      <widget class="QWidget" name="GIFLIB">
       <attribute name="title">
-       <string>GIFLIB</string>
+       <string notr="true">GIFLIB</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_16">
        <item>
@@ -133,7 +133,7 @@
      </widget>
      <widget class="QWidget" name="QtGoogleAnalytics">
       <attribute name="title">
-       <string>Qt Google Analytics</string>
+       <string notr="true">Qt Google Analytics</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_13">
        <item>
@@ -143,7 +143,7 @@
      </widget>
      <widget class="QWidget" name="libsimdpp">
       <attribute name="title">
-       <string>libsimdpp</string>
+       <string notr="true">libsimdpp</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_14">
        <item>
@@ -173,7 +173,7 @@
      </widget>
      <widget class="QWidget" name="IconAssets">
       <attribute name="title">
-       <string>Icons</string>
+       <string notr="true">Icons</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_6">
        <item>
@@ -183,7 +183,7 @@
      </widget>
      <widget class="QWidget" name="TemplateAssets">
       <attribute name="title">
-       <string>Templates</string>
+       <string notr="true">Templates</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_7">
        <item>
