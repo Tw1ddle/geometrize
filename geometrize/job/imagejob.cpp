@@ -37,9 +37,11 @@ public:
 
     ~ImageJobImpl()
     {
-        // TODO need to ensure these get halted/destroyed when the window/job is destroyed
         m_workerThread.quit();
-        m_workerThread.wait();
+        if(!m_workerThread.wait(1000)) {
+            m_workerThread.terminate();
+            m_workerThread.wait();
+        }
     }
 
     ImageJobImpl& operator=(const ImageJobImpl&) = delete;

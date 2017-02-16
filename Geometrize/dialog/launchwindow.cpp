@@ -104,9 +104,11 @@ public:
 private:
     void setupLogoImageJob()
     {
+        // TODO ensure format is RGBA8888
         const QPixmap* logo{ui->logoLabel->pixmap()};
         geometrize::Bitmap logoBitmap{image::createBitmap(logo->toImage())};
         m_logoJob = std::make_unique<job::ImageJob>("Logo Image Job", "Logo (Resource File)", logoBitmap);
+        ui->logoLabel->setPixmap(image::createPixmap(m_logoJob->getBitmap()));
 
         connect(m_logoJob.get(), &job::ImageJob::signal_modelDidStep, [this](std::vector<geometrize::ShapeResult> results) {
             const QPixmap pixmap{image::createPixmap(m_logoJob->getBitmap())};
@@ -127,7 +129,7 @@ private:
     std::unique_ptr<chaiscript::ChaiScript> m_engine;
 
     std::unique_ptr<job::ImageJob> m_logoJob;
-    const int maxLogoJobSteps{500};
+    const int maxLogoJobSteps{100};
 };
 
 LaunchWindow::LaunchWindow() :
