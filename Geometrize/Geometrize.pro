@@ -22,6 +22,7 @@ INCLUDEPATH += $$PWD/../lib/cereal/include \
 
 include($$PWD/../lib/geometrize/geometrize/geometrize.pri)
 include($$PWD/../lib/qt_google_analytics/qt-google-analytics.pri)
+include($$PWD/../lib/qtgifimage/src/gifimage/qtgifimage.pri)
 
 SOURCES += commandlineparser.cpp \
     formatsupport.cpp \

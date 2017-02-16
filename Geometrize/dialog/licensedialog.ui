@@ -111,6 +111,26 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="QtGifImage">
+      <attribute name="title">
+       <string>QtGifImage</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_15">
+       <item>
+        <widget class="QTextBrowser" name="qtGifImageLicense"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="GIFLIB">
+      <attribute name="title">
+       <string>GIFLIB</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_16">
+       <item>
+        <widget class="QTextBrowser" name="GIFLIBLicense"/>
+       </item>
+      </layout>
+     </widget>
      <widget class="QWidget" name="QtGoogleAnalytics">
       <attribute name="title">
        <string>Qt Google Analytics</string>

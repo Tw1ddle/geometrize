@@ -47,19 +47,25 @@ LicenseDialog::LicenseDialog(QWidget* parent) :
         return text;
     };
 
-    ui->geometrizeLicense->setText(readLicenseFile(":/licenses/geometrize_license.txt"));
-    ui->geometrizeLibraryLicense->setText(readLicenseFile(":/licenses/geometrize_library_license.txt"));
-    ui->qtLicense->setText(readLicenseFile(":/licenses/qt_license.txt"));
-    ui->chaiScriptLicense->setText(readLicenseFile(":/licenses/chaiscript_license.txt"));
-    ui->cerealLicense->setText(readLicenseFile(":/licenses/cereal_license.txt"));
-    ui->rapidJSONLicense->setText(readLicenseFile(":/licenses/rapidjson_license.txt"));
-    ui->rapidXmlLicense->setText(readLicenseFile(":/licenses/rapidxml_license.txt"));
-    ui->qtGoogleAnalyticsLicense->setText(readLicenseFile(":/licenses/qt_google_analytics_license.txt"));
-    ui->libsimdppLicense->setText(readLicenseFile(":/licenses/libsimdpp_license.txt"));
-    ui->flowLayoutLicense->setText(readLicenseFile(":/licenses/flowlayout_license.txt"));
-    ui->elidedLabelLicense->setText(readLicenseFile(":/licenses/elidedlabel_license.txt"));
-    ui->iconAssetsLicense->setText(readLicenseFile(":/licenses/fatcow_icon_license.txt"));
-    ui->templateAssetsLicense->setText(readLicenseFile(":/licenses/template_assets_license.txt"));
+    const auto setLicenseText{[&readLicenseFile](QTextBrowser* textBrowser, const QString& licenseFilePath) {
+        textBrowser->setText(readLicenseFile(":/licenses/ " + licenseFilePath));
+    }};
+
+    setLicenseText(ui->geometrizeLicense, "geometrize_license.txt");
+    setLicenseText(ui->geometrizeLibraryLicense, "geometrize_library_license.txt");
+    setLicenseText(ui->qtLicense, "qt_license.txt");
+    setLicenseText(ui->chaiScriptLicense, "chaiscript_license.txt");
+    setLicenseText(ui->cerealLicense, "cereal_license.txt");
+    setLicenseText(ui->rapidJSONLicense, "rapidjson_license.txt");
+    setLicenseText(ui->rapidXmlLicense, "rapidxml_license.txt");
+    setLicenseText(ui->qtGifImageLicense, "qtgifimage_license.txt");
+    setLicenseText(ui->GIFLIBLicense, "giflib_license.txt");
+    setLicenseText(ui->qtGoogleAnalyticsLicense, "qt_google_analytics_license.txt");
+    setLicenseText(ui->libsimdppLicense, "libsimdpp_license.txt");
+    setLicenseText(ui->flowLayoutLicense, "flowlayout_license.txt");
+    setLicenseText(ui->elidedLabelLicense, "elidedlabel_license.txt");
+    setLicenseText(ui->iconAssetsLicense, "fatcow_icon_license.txt");
+    setLicenseText(ui->templateAssetsLicense, "template_assets_license.txt");
 }
 
 LicenseDialog::~LicenseDialog()
