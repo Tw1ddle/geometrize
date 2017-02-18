@@ -34,6 +34,15 @@ public:
         ui->setupUi(q);
 
         ui->imageView->setScene(&m_scene);
+        m_scene.addItem(&m_currentPixmapItem);
+        m_scene.addItem(&m_targetPixmapItem);
+
+        connect(ui->targetOpacitySlider, &QSlider::valueChanged, [this](int value) {
+            m_targetPixmapItem.setOpacity(value * 0.01f);
+        });
+
+        const float startingTargetOpacity{25};
+        ui->targetOpacitySlider->setValue(startingTargetOpacity);
     }
     ImageJobWindowImpl operator=(const ImageJobWindowImpl&) = delete;
     ImageJobWindowImpl(const ImageJobWindowImpl&) = delete;
@@ -48,9 +57,8 @@ public:
     {
         m_job = job;
 
-        // TODO reset ui?
-
-       updateWorkingImage();
+        setupOverlayImage();
+        updateWorkingImage();
 
         setDisplayName(QString::fromStdString(m_job->getDisplayName()));
 
@@ -111,16 +119,23 @@ private:
 
     void updateWorkingImage()
     {
-        // TODO replace item
-        m_scene.clear();
-        const QPixmap pixmap{image::createPixmap(m_job->getBitmap())};
-        m_scene.addPixmap(pixmap);
+        const QPixmap pixmap{image::createPixmap(m_job->getCurrent())};
+        m_currentPixmapItem.setPixmap(pixmap);
+    }
+
+    void setupOverlayImage()
+    {
+        const QPixmap pixmap{image::createPixmap(m_job->getTarget())};
+        m_targetPixmapItem.setPixmap(pixmap);
     }
 
     job::ImageJob* m_job;
     ImageJobWindow* q;
     QGraphicsScene m_scene;
     std::unique_ptr<Ui::ImageJobWindow> ui;
+
+    QGraphicsPixmapItem m_targetPixmapItem;
+    QGraphicsPixmapItem m_currentPixmapItem;
 };
 
 ImageJobWindow::ImageJobWindow() :

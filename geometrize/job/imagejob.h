@@ -30,7 +30,17 @@ public:
     ImageJob(const ImageJob&) = delete;
     ~ImageJob() = default;
 
-    Bitmap& getBitmap();
+    /**
+     * @brief getTarget Gets the target bitmap.
+     * @return The target bitmap.
+     */
+    Bitmap& getTarget();
+
+    /**
+     * @brief getCurrent Gets the current bitmap.
+     * @return The current bitmap.
+     */
+    Bitmap& getCurrent();
 
     /**
      * @brief getDisplayName Gets the display name of the image job.

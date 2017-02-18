@@ -21,9 +21,14 @@ void ImageJobWorker::step()
     emit signal_didStep(results);
 }
 
-geometrize::Bitmap& ImageJobWorker::getBitmap()
+geometrize::Bitmap& ImageJobWorker::getCurrent()
 {
-    return m_runner.getBitmap();
+    return m_runner.getCurrent();
+}
+
+geometrize::Bitmap& ImageJobWorker::getTarget()
+{
+    return m_runner.getTarget();
 }
 
 }

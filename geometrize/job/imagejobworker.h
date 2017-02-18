@@ -28,7 +28,8 @@ public:
 
     void step();
 
-    geometrize::Bitmap& getBitmap();
+    geometrize::Bitmap& getCurrent();
+    geometrize::Bitmap& getTarget();
 
 signals:
     void signal_willStep();

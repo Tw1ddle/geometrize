@@ -47,9 +47,14 @@ public:
     ImageJobImpl& operator=(const ImageJobImpl&) = delete;
     ImageJobImpl(const ImageJobImpl&) = delete;
 
-    Bitmap& getBitmap()
+    Bitmap& getTarget()
     {
-        return m_worker.getBitmap();
+        return m_worker.getTarget();
+    }
+
+    Bitmap& getCurrent()
+    {
+        return m_worker.getCurrent();
     }
 
     std::string getDisplayName() const
@@ -112,9 +117,14 @@ ImageJob::ImageJob(const std::string& displayName, const std::string& jobUrl, Bi
 {
 }
 
-Bitmap& ImageJob::getBitmap()
+Bitmap& ImageJob::getTarget()
 {
-    return d->getBitmap();
+    return d->getTarget();
+}
+
+Bitmap& ImageJob::getCurrent()
+{
+    return d->getCurrent();
 }
 
 std::string ImageJob::getDisplayName() const
