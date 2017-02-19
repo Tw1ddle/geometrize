@@ -2,9 +2,12 @@
 #include "ui_templatebutton.h"
 
 #include <QContextMenuEvent>
+#include <QFuture>
+#include <QFutureWatcher>
 #include <QMenu>
 #include <QPixmap>
 #include <QString>
+#include <QtConcurrent/QtConcurrentRun>
 
 #include "chaiscript/chaiscript.hpp"
 #include "formatsupport.h"
@@ -30,24 +33,26 @@ public:
     {
         ui->setupUi(q);
 
-        const QString firstImageFile{QString::fromStdString(util::getFirstFileWithExtensions(m_templateFolder.toStdString(), format::getSupportedImageFileExtensions(false)))};
-
-        const QPixmap thumbnail(firstImageFile);
-        if(!thumbnail.isNull()) {
-            const QSize size{180, 150};
-            ui->imageLabel->setPixmap(thumbnail.scaled(size, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation));
-        }
-
-        const QString name{tr("Name: %1").arg(QString::fromStdString(m_manifest.getName()))};
-        const QString license{tr("License: %2").arg(QString::fromStdString(m_manifest.getLicense()))};
-        const QString size{tr("Size: %3").arg(QString::number(thumbnail.width()) + "x" + QString::number(thumbnail.height()))};
-        q->setToolTip(name + "<br>" + license + "<br>" + size);
-
-        ui->titleLabel->setText(QString::fromStdString(m_manifest.getName()));
-
         q->connect(q, &TemplateButton::clicked, [this]() {
             openTemplate();
         });
+
+        q->connect(&m_thumbnailLoaderWatcher, &QFutureWatcher<QImage>::finished, [this]() {
+            const QImage thumbnail{m_thumbnailLoaderWatcher.future().result()};
+
+            ui->imageLabel->setPixmap(QPixmap::fromImage(thumbnail));
+
+            const QString name{tr("Name: %1").arg(QString::fromStdString(m_manifest.getName()))};
+            const QString license{tr("License: %2").arg(QString::fromStdString(m_manifest.getLicense()))};
+            const QString size{tr("Size: %3").arg(QString::number(thumbnail.width()) + "x" + QString::number(thumbnail.height()))};
+            q->setToolTip(name + "<br>" + license + "<br>" + size);
+
+            ui->titleLabel->setText(QString::fromStdString(m_manifest.getName()));
+        });
+
+        const QString firstImageFile{QString::fromStdString(util::getFirstFileWithExtensions(m_templateFolder.toStdString(), format::getSupportedImageFileExtensions(false)))};
+        QFuture<QImage> thumbnailFuture{QtConcurrent::run(this, &TemplateButtonImpl::setupThumbnail, firstImageFile)};
+        m_thumbnailLoaderWatcher.setFuture(thumbnailFuture);
     }
 
     ~TemplateButtonImpl()
@@ -57,6 +62,16 @@ public:
 
     TemplateButtonImpl operator=(const TemplateButtonImpl&) = delete;
     TemplateButtonImpl(const TemplateButtonImpl&) = delete;
+
+    QImage setupThumbnail(const QString& imageFilepath)
+    {
+        const QImage thumbnail(imageFilepath);
+        if(!thumbnail.isNull()) {
+            const QSize size{180, 150};
+            return thumbnail.scaled(size, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+        }
+        return thumbnail;
+    }
 
     void openTemplate()
     {
@@ -98,6 +113,7 @@ private:
     const TemplateManifest m_manifest;
     Ui::TemplateButton* ui;
     TemplateButton* q;
+    QFutureWatcher<QImage> m_thumbnailLoaderWatcher;
 };
 
 TemplateButton::TemplateButton(chaiscript::ChaiScript* const templateLoader, const QString& templateFolder) :
