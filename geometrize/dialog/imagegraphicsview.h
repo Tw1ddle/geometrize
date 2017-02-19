@@ -16,6 +16,8 @@ namespace dialog
  */
 class ImageGraphicsView : public QGraphicsView
 {
+    Q_OBJECT
+
 public:
     explicit ImageGraphicsView(QWidget* parent = nullptr);
 

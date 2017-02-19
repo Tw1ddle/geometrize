@@ -41,7 +41,7 @@ public:
             m_targetPixmapItem.setOpacity(value * 0.01f);
         });
 
-        const float startingTargetOpacity{25};
+        const float startingTargetOpacity{10};
         ui->targetOpacitySlider->setValue(startingTargetOpacity);
     }
     ImageJobWindowImpl operator=(const ImageJobWindowImpl&) = delete;
@@ -57,7 +57,7 @@ public:
     {
         m_job = job;
 
-        setupOverlayImage();
+        setupOverlayImages();
         updateWorkingImage();
 
         setDisplayName(QString::fromStdString(m_job->getDisplayName()));
@@ -123,10 +123,10 @@ private:
         m_currentPixmapItem.setPixmap(pixmap);
     }
 
-    void setupOverlayImage()
+    void setupOverlayImages()
     {
-        const QPixmap pixmap{image::createPixmap(m_job->getTarget())};
-        m_targetPixmapItem.setPixmap(pixmap);
+        const QPixmap target{image::createPixmap(m_job->getTarget())};
+        m_targetPixmapItem.setPixmap(target);
     }
 
     job::ImageJob* m_job;

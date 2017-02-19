@@ -1,8 +1,5 @@
 #pragma once
 
-#include <string>
-#include <vector>
-
 class QImage;
 class QPixmap;
 class QString;

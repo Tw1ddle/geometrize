@@ -17,6 +17,8 @@ namespace dialog
  */
 class CollapsibleSection : public QGroupBox
 {
+    Q_OBJECT
+
 public:
     CollapsibleSection(QWidget* parent = nullptr);
 

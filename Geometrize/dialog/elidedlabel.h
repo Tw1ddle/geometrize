@@ -40,6 +40,8 @@ namespace dialog
  */
 class ElidedLabel : public QLabel
 {
+    Q_OBJECT
+
 public:
     explicit ElidedLabel(QWidget* parent = nullptr, Qt::WindowFlags flags = 0);
     ElidedLabel(const QString& text, QWidget* parent = nullptr, Qt::WindowFlags flags = 0);

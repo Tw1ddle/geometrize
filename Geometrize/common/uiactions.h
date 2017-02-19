@@ -11,16 +11,6 @@ class QWidget;
 namespace geometrize
 {
 
-namespace job
-{
-class ImageJobContext;
-}
-
-}
-
-namespace geometrize
-{
-
 namespace common
 {
 

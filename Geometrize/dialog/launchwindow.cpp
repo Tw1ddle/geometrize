@@ -108,6 +108,7 @@ private:
         const QPixmap* logo{ui->logoLabel->pixmap()};
         geometrize::Bitmap logoBitmap{image::createBitmap(logo->toImage())};
         m_logoJob = std::make_unique<job::ImageJob>("Logo Image Job", "Logo (Resource File)", logoBitmap);
+
         ui->logoLabel->setPixmap(image::createPixmap(m_logoJob->getCurrent()));
 
         connect(m_logoJob.get(), &job::ImageJob::signal_modelDidStep, [this](std::vector<geometrize::ShapeResult> results) {
