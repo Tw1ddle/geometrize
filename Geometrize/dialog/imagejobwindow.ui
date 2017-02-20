@@ -122,8 +122,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>482</width>
-              <height>735</height>
+              <width>472</width>
+              <height>737</height>
              </rect>
             </property>
             <layout class="QGridLayout" name="gridLayout_2">
@@ -138,6 +138,72 @@
                <property name="title">
                 <string>Runner Settings</string>
                </property>
+               <layout class="QVBoxLayout" name="verticalLayout_8">
+                <item>
+                 <layout class="QFormLayout" name="formLayout_8">
+                  <property name="fieldGrowthPolicy">
+                   <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+                  </property>
+                  <item row="0" column="0">
+                   <widget class="QLabel" name="maximumThreadsLabel">
+                    <property name="text">
+                     <string>Maximum Threads</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="1">
+                   <widget class="QSpinBox" name="maximumThreadsSpinBox">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                    </property>
+                    <property name="minimum">
+                     <number>1</number>
+                    </property>
+                    <property name="maximum">
+                     <number>64</number>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_3">
+                  <item>
+                   <widget class="QLabel" name="shapeCountTextLabel">
+                    <property name="font">
+                     <font>
+                      <pointsize>8</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Shape Count</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="shapeCountValueLabel">
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string notr="true">0</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
               </widget>
              </item>
              <item row="1" column="0">
@@ -149,7 +215,7 @@
                 </sizepolicy>
                </property>
                <property name="title">
-                <string>Shapes</string>
+                <string>Shape Settings</string>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_18">
                 <item>
@@ -267,15 +333,15 @@
                 <item>
                  <layout class="QVBoxLayout" name="verticalLayout_15">
                   <item>
-                   <layout class="QGridLayout" name="gridLayout">
-                    <item row="0" column="0">
+                   <layout class="QHBoxLayout" name="horizontalLayout">
+                    <item>
                      <widget class="QLabel" name="shapesPerStepLabel">
                       <property name="text">
                        <string>Shapes Per Step</string>
                       </property>
                      </widget>
                     </item>
-                    <item row="0" column="1">
+                    <item>
                      <widget class="QSpinBox" name="shapesPerStepSpinBox">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -477,13 +543,6 @@
                 <widget class="QPushButton" name="stepButton">
                  <property name="text">
                   <string>Step</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="resetButton">
-                 <property name="text">
-                  <string>Reset</string>
                  </property>
                 </widget>
                </item>

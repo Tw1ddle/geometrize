@@ -29,7 +29,7 @@ namespace dialog
 class ImageJobWindow::ImageJobWindowImpl
 {
 public:
-    ImageJobWindowImpl(ImageJobWindow* pQ) : ui{std::make_unique<Ui::ImageJobWindow>()}, q{pQ}, m_job{nullptr}
+    ImageJobWindowImpl(ImageJobWindow* pQ) : ui{std::make_unique<Ui::ImageJobWindow>()}, q{pQ}, m_job{nullptr}, m_running{false}
     {
         ui->setupUi(q);
 
@@ -65,11 +65,25 @@ public:
         // TODO disconnect when setting new job
         connect(job, &job::ImageJob::signal_modelDidStep, [this](std::vector<geometrize::ShapeResult> shapes) {
             updateWorkingImage();
+
+            if(m_running) {
+                stepModel();
+            }
+
+            ui->shapeCountValueLabel->setText(QString::number(ui->shapeCountValueLabel->text().toInt() + shapes.size()));
         });
     }
 
-    void toggleModelRunning()
+    void toggleRunning()
     {
+        m_running = !m_running;
+
+        if(m_running) {
+            stepModel();
+            ui->runStopButton->setText(tr("Stop"));
+        } else {
+            ui->runStopButton->setText(tr("Run"));
+        }
     }
 
     void stepModel()
@@ -136,6 +150,8 @@ private:
 
     QGraphicsPixmapItem m_targetPixmapItem;
     QGraphicsPixmapItem m_currentPixmapItem;
+
+    bool m_running; // Whether the model is running (automatically)
 };
 
 ImageJobWindow::ImageJobWindow() :
@@ -176,17 +192,12 @@ void ImageJobWindow::on_actionReveal_Launch_Window_triggered()
 
 void ImageJobWindow::on_runStopButton_clicked()
 {
-    d->toggleModelRunning();
+    d->toggleRunning();
 }
 
 void ImageJobWindow::on_stepButton_clicked()
 {
     d->stepModel();
-}
-
-void ImageJobWindow::on_resetButton_clicked()
-{
-    d->resetJob();
 }
 
 }

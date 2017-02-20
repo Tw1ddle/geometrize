@@ -45,7 +45,6 @@ private slots:
     void on_actionReveal_Launch_Window_triggered();
     void on_runStopButton_clicked();
     void on_stepButton_clicked();
-    void on_resetButton_clicked();
 
 private:
     class ImageJobWindowImpl;
