@@ -104,9 +104,10 @@ public:
 private:
     void setupLogoImageJob()
     {
-        // TODO ensure format is RGBA8888
-        const QPixmap* logo{ui->logoLabel->pixmap()};
-        geometrize::Bitmap logoBitmap{image::createBitmap(logo->toImage())};
+        QImage image(":/logos/logo_small.png");
+        image = image.convertToFormat(QImage::Format_RGBA8888); // Note doing this to guarantee format is RGBA8888
+
+        geometrize::Bitmap logoBitmap{image::createBitmap(image)};
         m_logoJob = std::make_unique<job::ImageJob>("Logo Image Job", "Logo (Resource File)", logoBitmap);
 
         ui->logoLabel->setPixmap(image::createPixmap(m_logoJob->getCurrent()));
@@ -115,12 +116,13 @@ private:
             const QPixmap pixmap{image::createPixmap(m_logoJob->getCurrent())};
             ui->logoLabel->setPixmap(pixmap);
 
-            // TODO set tooltip for number of steps and time taken
-            // TODO disconnect when finished and destroy job?
-            // TODO alpha background is currently black
+            m_logoJobShapeCount += results.size();
+            m_logoJobStepCount += 1;
+            const QString logoToolTip{tr("Logo: %1 shapes added in %2 steps").arg(QString::number(m_logoJobShapeCount)).arg(m_logoJobStepCount)};
+            ui->logoLabel->setToolTip(logoToolTip);
         });
 
-        for(int i = 0; i < maxLogoJobSteps; i++) {
+        for(int i = 0; i < m_maxLogoJobSteps; i++) {
             m_logoJob->stepModel();
         }
     }
@@ -130,7 +132,9 @@ private:
     std::unique_ptr<chaiscript::ChaiScript> m_engine;
 
     std::unique_ptr<job::ImageJob> m_logoJob;
-    const int maxLogoJobSteps{100};
+    std::size_t m_logoJobShapeCount{0};
+    std::size_t m_logoJobStepCount{0};
+    const std::size_t m_maxLogoJobSteps{100};
 };
 
 LaunchWindow::LaunchWindow() :

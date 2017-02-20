@@ -44,8 +44,7 @@ public:
 
             const QString name{tr("Name: %1").arg(QString::fromStdString(m_manifest.getName()))};
             const QString license{tr("License: %2").arg(QString::fromStdString(m_manifest.getLicense()))};
-            const QString size{tr("Size: %3").arg(QString::number(thumbnail.width()) + "x" + QString::number(thumbnail.height()))};
-            q->setToolTip(name + "<br>" + license + "<br>" + size);
+            q->setToolTip(name + "<br>" + license);
 
             ui->titleLabel->setText(QString::fromStdString(m_manifest.getName()));
         });
