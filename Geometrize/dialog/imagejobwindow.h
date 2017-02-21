@@ -45,6 +45,13 @@ private slots:
     void on_actionReveal_Launch_Window_triggered();
     void on_runStopButton_clicked();
     void on_stepButton_clicked();
+    void on_saveImageButton_clicked();
+    void on_saveSVGButton_clicked();
+    void on_saveGeometryDataButton_clicked();
+    void on_saveGIFButton_clicked();
+    void on_saveCanvasAnimationButton_clicked();
+    void on_saveWebGLButton_clicked();
+    void on_saveRawImageDataButton_clicked();
 
 private:
     class ImageJobWindowImpl;

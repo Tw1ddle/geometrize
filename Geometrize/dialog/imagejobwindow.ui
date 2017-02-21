@@ -99,7 +99,7 @@
         <enum>QTabWidget::North</enum>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="settingsTabOne">
         <attribute name="title">
@@ -122,8 +122,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>472</width>
-              <height>737</height>
+              <width>482</width>
+              <height>735</height>
              </rect>
             </property>
             <layout class="QGridLayout" name="gridLayout_2">
@@ -227,9 +227,12 @@
                    <item row="0" column="0">
                     <widget class="QCheckBox" name="useRectangles">
                      <property name="text">
-                      <string>CheckBox</string>
+                      <string>Enabled</string>
                      </property>
                     </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <layout class="QFormLayout" name="formLayout_10"/>
                    </item>
                   </layout>
                  </widget>
@@ -243,9 +246,12 @@
                    <item row="0" column="0">
                     <widget class="QCheckBox" name="useRotatedRectangles">
                      <property name="text">
-                      <string>CheckBox</string>
+                      <string>Enabled</string>
                      </property>
                     </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <layout class="QFormLayout" name="formLayout_11"/>
                    </item>
                   </layout>
                  </widget>
@@ -259,9 +265,12 @@
                    <item row="0" column="0">
                     <widget class="QCheckBox" name="useTriangles">
                      <property name="text">
-                      <string>Enable</string>
+                      <string>Enabled</string>
                      </property>
                     </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <layout class="QFormLayout" name="formLayout_12"/>
                    </item>
                   </layout>
                  </widget>
@@ -275,9 +284,12 @@
                    <item row="0" column="0">
                     <widget class="QCheckBox" name="useEllipses">
                      <property name="text">
-                      <string>CheckBox</string>
+                      <string>Enabled</string>
                      </property>
                     </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <layout class="QFormLayout" name="formLayout_13"/>
                    </item>
                   </layout>
                  </widget>
@@ -291,9 +303,12 @@
                    <item row="0" column="0">
                     <widget class="QCheckBox" name="useRotatedEllipses">
                      <property name="text">
-                      <string>CheckBox</string>
+                      <string>Enabled</string>
                      </property>
                     </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <layout class="QFormLayout" name="formLayout_14"/>
                    </item>
                   </layout>
                  </widget>
@@ -307,9 +322,12 @@
                    <item row="0" column="0">
                     <widget class="QCheckBox" name="useCircles">
                      <property name="text">
-                      <string>CheckBox</string>
+                      <string>Enabled</string>
                      </property>
                     </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <layout class="QFormLayout" name="formLayout_15"/>
                    </item>
                   </layout>
                  </widget>
@@ -466,6 +484,19 @@
                   <property name="horizontalSpacing">
                    <number>20</number>
                   </property>
+                  <item row="0" column="0">
+                   <widget class="QLabel" name="label_2">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="text">
+                     <string>Target Image Opacity</string>
+                    </property>
+                   </widget>
+                  </item>
                   <item row="0" column="1">
                    <widget class="QSlider" name="targetOpacitySlider">
                     <property name="sizePolicy">
@@ -485,43 +516,10 @@
                     </property>
                    </widget>
                   </item>
-                  <item row="0" column="0">
-                   <widget class="QLabel" name="label_2">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="text">
-                     <string>Target Image Opacity</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="2" column="0">
-                   <widget class="QLabel" name="label_3">
-                    <property name="text">
-                     <string>Heatmap Image Opacity</string>
-                    </property>
-                   </widget>
-                  </item>
                   <item row="1" column="0">
                    <widget class="Line" name="line">
                     <property name="orientation">
                      <enum>Qt::Horizontal</enum>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="2" column="1">
-                   <widget class="QSlider" name="heatmapOpacitySlider">
-                    <property name="maximum">
-                     <number>100</number>
-                    </property>
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="tickPosition">
-                     <enum>QSlider::TicksBelow</enum>
                     </property>
                    </widget>
                   </item>
@@ -585,52 +583,6 @@
             </widget>
            </item>
            <item>
-            <widget class="QGroupBox" name="exportGeometryDataBox">
-             <property name="title">
-              <string>Export Geometry Data</string>
-             </property>
-             <layout class="QVBoxLayout" name="verticalLayout_11">
-              <item>
-               <layout class="QVBoxLayout" name="verticalLayout_5">
-                <item>
-                 <widget class="QPushButton" name="saveGeometryDataButton">
-                  <property name="text">
-                   <string>Save Geometry Data</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_8"/>
-                </item>
-               </layout>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QGroupBox" name="exportAnimatedGIFBox">
-             <property name="title">
-              <string>Export Animated GIF</string>
-             </property>
-             <layout class="QVBoxLayout" name="verticalLayout_10">
-              <item>
-               <layout class="QVBoxLayout" name="verticalLayout_6">
-                <item>
-                 <widget class="QPushButton" name="saveGIFButton">
-                  <property name="text">
-                   <string>Save GIF</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_7"/>
-                </item>
-               </layout>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
             <widget class="QGroupBox" name="exportHTML5CanvasBox">
              <property name="title">
               <string>Export HTML5 Canvas Animation</string>
@@ -670,6 +622,98 @@
                 </item>
                 <item>
                  <layout class="QHBoxLayout" name="horizontalLayout_10"/>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="exportAnimatedGIFBox">
+             <property name="title">
+              <string>Export Animated GIF</string>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_10">
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_6">
+                <item>
+                 <widget class="QPushButton" name="saveGIFButton">
+                  <property name="text">
+                   <string>Save GIF</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_7"/>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="exportSVGBox">
+             <property name="title">
+              <string>Export SVG Image</string>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_23">
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_22">
+                <item>
+                 <widget class="QPushButton" name="saveSVGButton">
+                  <property name="text">
+                   <string>Save SVG</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_14"/>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="exportGeometryDataBox">
+             <property name="title">
+              <string>Export Geometry Data</string>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_11">
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_5">
+                <item>
+                 <widget class="QPushButton" name="saveGeometryDataButton">
+                  <property name="text">
+                   <string>Save Geometry Data</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_8"/>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="exportRawImageDataBox">
+             <property name="title">
+              <string>Export Raw Image Data</string>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_20">
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_19">
+                <item>
+                 <widget class="QPushButton" name="saveRawImageDataButton">
+                  <property name="text">
+                   <string>Save Raw Image Data</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_12"/>
                 </item>
                </layout>
               </item>

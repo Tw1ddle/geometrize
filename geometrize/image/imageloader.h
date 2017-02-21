@@ -23,6 +23,13 @@ namespace image
 Bitmap createBitmap(const QImage& image);
 
 /**
+ * @brief createImage Creates an image from the bitmap data object. Assumes RGBA8888 format.
+ * @param data The bitmap data, RGBA8888 bytes (must be a multiple of 4).
+ * @return The pixmap created from the bytes data.
+ */
+QImage createImage(const Bitmap& data);
+
+/**
  * @brief createPixmap Creates a pixmap from the bitmap data object. Assumes RGBA8888 format.
  * @param data The bitmap data, RGBA8888 bytes (must be a multiple of 4).
  * @return The pixmap created from the bytes data.

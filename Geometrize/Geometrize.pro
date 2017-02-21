@@ -39,10 +39,12 @@ SOURCES += commandlineparser.cpp \
     common/sharedapp.cpp \
     common/uiactions.cpp \
     dialog/aboutdialog.cpp \
+    dialog/collapsiblesection.cpp \
     dialog/commandlineedit.cpp \
     dialog/creditsdialog.cpp \
     dialog/elidedlabel.cpp \
     dialog/globalpreferencestabdialog.cpp \
+    dialog/imagegraphicsview.cpp \
     dialog/imagejobwindow.cpp \
     dialog/launchwindow.cpp \
     dialog/licensedialog.cpp \
@@ -55,12 +57,18 @@ SOURCES += commandlineparser.cpp \
     dialog/searchbox.cpp \
     dialog/templatebutton.cpp \
     dialog/templategrid.cpp \
+    exporter/canvasanimationexporter.cpp \
+    exporter/gifexporter.cpp \
+    exporter/imageexporter.cpp \
+    exporter/shapedataexporter.cpp \
+    exporter/webglanimationexporter.cpp \
     image/imageloader.cpp \
     image/imagelookup.cpp \
     job/imagejob.cpp \
     job/imagejobcreator.cpp \
     job/joblookup.cpp \
     job/jobutil.cpp \
+    job/imagejobworker.cpp \
     layout/flowlayout.cpp \
     network/completionhandlers.cpp \
     network/downloader.cpp \
@@ -73,10 +81,7 @@ SOURCES += commandlineparser.cpp \
     script/scriptoptions.cpp \
     script/scriptrunner.cpp \
     script/scriptutil.cpp \
-    serialization/serializationutil.cpp \
-    dialog/imagegraphicsview.cpp \
-    dialog/collapsiblesection.cpp \
-    job/imagejobworker.cpp
+    serialization/serializationutil.cpp
 
 HEADERS += commandlineparser.h \
     constants.h \
@@ -94,10 +99,12 @@ HEADERS += commandlineparser.h \
     common/sharedapp.h \
     common/uiactions.h \
     dialog/aboutdialog.h \
+    dialog/collapsiblesection.h \
     dialog/commandlineedit.h \
     dialog/creditsdialog.h \
     dialog/elidedlabel.h \
     dialog/globalpreferencestabdialog.h \
+    dialog/imagegraphicsview.h \
     dialog/imagejobwindow.h \
     dialog/launchwindow.h \
     dialog/licensedialog.h \
@@ -110,12 +117,18 @@ HEADERS += commandlineparser.h \
     dialog/runscriptdialog.h \
     dialog/templatebutton.h \
     dialog/templategrid.h \
+    exporter/canvasanimationexporter.h \
+    exporter/gifexporter.h \
+    exporter/imageexporter.h \
+    exporter/shapedataexporter.h \
+    exporter/webglanimationexporter.h \
     image/imageloader.h \
     image/imagelookup.h \
     job/imagejob.h \
     job/imagejobcreator.h \
     job/joblookup.h \
     job/jobutil.h \
+    job/imagejobworker.h \
     layout/flowlayout.h \
     network/completionhandlers.h \
     network/downloader.h \
@@ -132,10 +145,7 @@ HEADERS += commandlineparser.h \
     serialization/imagejobpreferencesdata.h \
     serialization/templatemetadata.h \
     serialization/serializationutil.h \
-    serialization/stringvectordata.h \
-    dialog/imagegraphicsview.h \
-    dialog/collapsiblesection.h \
-    job/imagejobworker.h
+    serialization/stringvectordata.h
 
 FORMS += dialog/aboutdialog.ui \
     dialog/commandlineedit.ui \

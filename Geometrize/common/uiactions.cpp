@@ -74,7 +74,42 @@ QString openImagePathPickerDialog(QWidget* parent)
 
 QString openSaveImagePathPickerDialog(QWidget* parent)
 {
-    return QFileDialog::getSaveFileName(parent, QWidget::tr("Save Image"), "", QWidget::tr("JPEG Image (*.jpg *.jpeg);;PNG Image (*.png);;BMP Image (*.bmp);;SVG Vector Graphics (*.svg)"));
+    return QFileDialog::getSaveFileName(parent, QWidget::tr("Save Image"), "", QWidget::tr("JPEG Image (*.jpg *.jpeg);;PNG Image (*.png);;BMP Image (*.bmp);;PPM Image (*.ppm)"));
+}
+
+QString openSaveSVGPathPickerDialog(QWidget* parent)
+{
+    return QFileDialog::getSaveFileName(parent, QWidget::tr("Save SVG Image"), "", QWidget::tr("SVG Image (*.svg)"));
+}
+
+QString openSaveBitmapPathPickerDialog(QWidget* parent)
+{
+    return QFileDialog::getSaveFileName(parent, QWidget::tr("Save Bitmap Image"), "", QWidget::tr("BMP Image (*.bmp)"));
+}
+
+QString openSaveGeometryDataPathPickerDialog(QWidget* parent)
+{
+    return QFileDialog::getSaveFileName(parent, QWidget::tr("Save Geometry Data"), "", QWidget::tr("JSON Data (*.json);;XML Data (*.xml);;Text Array (*.txt)"));
+}
+
+QString openSaveGIFPathPickerDialog(QWidget* parent)
+{
+    return QFileDialog::getSaveFileName(parent, QWidget::tr("Save Animated GIF"), "", QWidget::tr("GIF Animation (*.gif)"));
+}
+
+QString openSaveCanvasAnimationPathPickerDialog(QWidget* parent)
+{
+    return QFileDialog::getSaveFileName(parent, QWidget::tr("Save Canvas Animation"), "", QWidget::tr("HTML Webpage (*.html)"));
+}
+
+QString openSaveWebGLPathPickerDialog(QWidget* parent)
+{
+    return QFileDialog::getSaveFileName(parent, QWidget::tr("Save WebGL Animation"), "", QWidget::tr("HTML Webpage (*.html)"));
+}
+
+QString openSaveRawImageDataPathPickerDialog(QWidget* parent)
+{
+    return QFileDialog::getSaveFileName(parent, QWidget::tr("Save Raw Image Data"));
 }
 
 QUrl openGetUrlDialog(QWidget* parent)

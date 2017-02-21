@@ -1,6 +1,8 @@
 #include "imagejobwindow.h"
 #include "ui_imagejobwindow.h"
 
+#include <assert.h>
+
 #include <QCloseEvent>
 #include <QDesktopServices>
 #include <QFileDialog>
@@ -10,6 +12,9 @@
 
 #include "geometrize/bitmap/bitmap.h"
 #include "geometrize/core.h"
+#include "geometrize/exporter/bitmapdataexporter.h"
+#include "geometrize/exporter/bitmapexporter.h"
+#include "geometrize/exporter/svgexporter.h"
 
 #include "common/uiactions.h"
 #include "constants.h"
@@ -17,6 +22,11 @@
 #include "dialog/collapsiblesection.h"
 #include "dialog/globalpreferencestabdialog.h"
 #include "dialog/quitdialog.h"
+#include "exporter/gifexporter.h"
+#include "exporter/imageexporter.h"
+#include "exporter/canvasanimationexporter.h"
+#include "exporter/shapedataexporter.h"
+#include "exporter/webglanimationexporter.h"
 #include "image/imageloader.h"
 #include "job/imagejob.h"
 
@@ -55,6 +65,7 @@ public:
 
     void setImageJob(job::ImageJob* job)
     {
+        assert(!m_job && "Changing image job once one has already been set is currently unsupported");
         m_job = job;
 
         setupOverlayImages();
@@ -62,7 +73,6 @@ public:
 
         setDisplayName(QString::fromStdString(m_job->getDisplayName()));
 
-        // TODO disconnect when setting new job
         connect(job, &job::ImageJob::signal_modelDidStep, [this](std::vector<geometrize::ShapeResult> shapes) {
             updateWorkingImage();
 
@@ -100,11 +110,6 @@ public:
         }
     }
 
-    void resetJob()
-    {
-
-    }
-
     void loadSettingsTemplate()
     {
         const QString path{common::ui::openLoadImageJobSettingsDialog(q)};
@@ -115,7 +120,7 @@ public:
         m_job->getPreferences().load(path.toStdString());
     }
 
-    void saveSettingsTemplate()
+    void saveSettingsTemplate() const
     {
         const QString path{common::ui::openSaveImageJobSettingsDialog(q)};
         if(path.isEmpty()) {
@@ -123,6 +128,87 @@ public:
         }
 
         m_job->getPreferences().save(path.toStdString());
+    }
+
+    void saveImage() const
+    {
+        const QString path{common::ui::openSaveImagePathPickerDialog(q)};
+        if(path.isEmpty()) {
+            return;
+        }
+
+        exporter::exportImage(m_job->getCurrent(), path.toStdString());
+    }
+
+    void saveSVG() const
+    {
+        const QString path{common::ui::openSaveSVGPathPickerDialog(q)};
+        if(path.isEmpty()) {
+            return;
+        }
+
+        // TODO record added shapes and pass them to export svg data
+        //exporter::exportSvg()
+    }
+
+    void saveGeometryData() const
+    {
+        const QString path{common::ui::openSaveGeometryDataPathPickerDialog(q)};
+        if(path.isEmpty()) {
+            return;
+        }
+
+        // TODO record added shapes and save them
+        /*
+        if(path.endsWith("json")) {
+            exporter::exportShapeData();
+        } else if(path.endsWith("txt")) {
+            exporter::exportShapeData();
+        }
+        */
+    }
+
+    void saveGIF() const
+    {
+        const QString path{common::ui::openSaveGIFPathPickerDialog(q)};
+        if(path.isEmpty()) {
+            return;
+        }
+
+        // TODO generate images from shape data (and possibly options)
+        //exporter::exportGIF()
+    }
+
+    void saveCanvasAnimation() const
+    {
+        const QString path{common::ui::openSaveCanvasAnimationPathPickerDialog(q)};
+        if(path.isEmpty()) {
+            return;
+        }
+
+        // TODO
+        // exporter::exportCanvasAnimation(shapeData);
+    }
+
+    void saveWebGLAnimation() const
+    {
+        const QString path{common::ui::openSaveWebGLPathPickerDialog(q)};
+        if(path.isEmpty()) {
+            return;
+        }
+
+        // TODO
+        //exporter::exportWebGLAnimation(shapeData);
+    }
+
+    void saveRawImageDataButton() const
+    {
+        const QString path{common::ui::openSaveRawImageDataPathPickerDialog(q)};
+        if(path.isEmpty()) {
+            return;
+        }
+
+        exporter::exportBitmapData(m_job->getCurrent(), path.toStdString());
     }
 
 private:
@@ -198,6 +284,41 @@ void ImageJobWindow::on_runStopButton_clicked()
 void ImageJobWindow::on_stepButton_clicked()
 {
     d->stepModel();
+}
+
+void ImageJobWindow::on_saveImageButton_clicked()
+{
+    d->saveImage();
+}
+
+void ImageJobWindow::on_saveSVGButton_clicked()
+{
+    d->saveSVG();
+}
+
+void ImageJobWindow::on_saveGeometryDataButton_clicked()
+{
+    d->saveGeometryData();
+}
+
+void ImageJobWindow::on_saveGIFButton_clicked()
+{
+    d->saveGIF();
+}
+
+void ImageJobWindow::on_saveCanvasAnimationButton_clicked()
+{
+    d->saveCanvasAnimation();
+}
+
+void ImageJobWindow::on_saveWebGLButton_clicked()
+{
+    d->saveWebGLAnimation();
+}
+
+void ImageJobWindow::on_saveRawImageDataButton_clicked()
+{
+    d->saveRawImageDataButton();
 }
 
 }
