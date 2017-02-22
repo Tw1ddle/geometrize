@@ -31,6 +31,7 @@ QImage createImage(const Bitmap& data)
         return QImage();
     }
 
+    // Note! This takes a shallow copy of the data, and so depends on the bitmap itself continuing to live on
     return QImage(data.getDataRef().data(), data.getWidth(), data.getHeight(), QImage::Format_RGBA8888);
 }
 

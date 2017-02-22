@@ -39,7 +39,7 @@ namespace dialog
 class ImageJobWindow::ImageJobWindowImpl
 {
 public:
-    ImageJobWindowImpl(ImageJobWindow* pQ) : ui{std::make_unique<Ui::ImageJobWindow>()}, q{pQ}, m_job{nullptr}, m_running{false}
+    ImageJobWindowImpl(ImageJobWindow* pQ) : ui{std::make_unique<Ui::ImageJobWindow>()}, q{pQ}, m_job{nullptr}, m_running{false}, m_initialJobImage{nullptr}
     {
         ui->setupUi(q);
 
@@ -68,6 +68,8 @@ public:
         assert(!m_job && "Changing image job once one has already been set is currently unsupported");
         m_job = job;
 
+        m_initialJobImage = std::make_unique<geometrize::Bitmap>(m_job->getCurrent());
+
         setupOverlayImages();
         updateWorkingImage();
 
@@ -80,7 +82,8 @@ public:
                 stepModel();
             }
 
-            ui->shapeCountValueLabel->setText(QString::number(ui->shapeCountValueLabel->text().toInt() + shapes.size()));
+            std::copy(shapes.begin(), shapes.end(), std::back_inserter(m_shapes));
+            ui->shapeCountValueLabel->setText(QString::number(m_shapes.size()));
         });
     }
 
@@ -175,8 +178,7 @@ public:
             return;
         }
 
-        // TODO generate images from shape data (and possibly options)
-        //exporter::exportGIF()
+        exporter::exportGIF(*m_initialJobImage, m_job->getTarget(), m_shapes, path.toStdString());
     }
 
     void saveCanvasAnimation() const
@@ -233,6 +235,9 @@ private:
     ImageJobWindow* q;
     QGraphicsScene m_scene;
     std::unique_ptr<Ui::ImageJobWindow> ui;
+
+    std::unique_ptr<geometrize::Bitmap> m_initialJobImage;
+    std::vector<geometrize::ShapeResult> m_shapes;
 
     QGraphicsPixmapItem m_targetPixmapItem;
     QGraphicsPixmapItem m_currentPixmapItem;

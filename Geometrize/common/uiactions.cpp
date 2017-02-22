@@ -89,7 +89,7 @@ QString openSaveBitmapPathPickerDialog(QWidget* parent)
 
 QString openSaveGeometryDataPathPickerDialog(QWidget* parent)
 {
-    return QFileDialog::getSaveFileName(parent, QWidget::tr("Save Geometry Data"), "", QWidget::tr("JSON Data (*.json);;XML Data (*.xml);;Text Array (*.txt)"));
+    return QFileDialog::getSaveFileName(parent, QWidget::tr("Save Geometry Data"), "", QWidget::tr("JSON Data (*.json);;Text Array (*.txt)"));
 }
 
 QString openSaveGIFPathPickerDialog(QWidget* parent)
