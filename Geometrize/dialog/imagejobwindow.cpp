@@ -2,6 +2,7 @@
 #include "ui_imagejobwindow.h"
 
 #include <assert.h>
+#include <fstream>
 
 #include <QCloseEvent>
 #include <QDesktopServices>
@@ -161,14 +162,19 @@ public:
             return;
         }
 
-        // TODO record added shapes and save them
-        /*
+        exporter::ShapeDataFormat format = exporter::ShapeDataFormat::JSON;
         if(path.endsWith("json")) {
-            exporter::exportShapeData();
+            format = exporter::ShapeDataFormat::JSON;
         } else if(path.endsWith("txt")) {
-            exporter::exportShapeData();
+            format = exporter::ShapeDataFormat::CUSTOM_ARRAY;
         }
-        */
+
+        const std::string data{exporter::exportShapeData(m_shapes, format)};
+
+        std::ofstream out(path.toStdString());
+        if(out) {
+            out << data;
+        }
     }
 
     void saveGIF() const
