@@ -31,7 +31,11 @@
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="urlLineEdit"/>
+    <widget class="QLineEdit" name="urlLineEdit">
+     <property name="placeholderText">
+      <string notr="true">http://www.geometrize.co.uk/</string>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">

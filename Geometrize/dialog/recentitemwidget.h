@@ -1,8 +1,10 @@
 #pragma once
 
+#include <memory>
+
 #include <QWidget>
 
-#include "recentitems.h"
+#include "recentitem.h"
 
 namespace Ui
 {
@@ -29,8 +31,8 @@ public:
 private:
     virtual void contextMenuEvent(QContextMenuEvent* e) override;
 
-    Ui::RecentItemWidget* ui;
-    RecentItem m_item;
+    class RecentItemWidgetImpl;
+    std::unique_ptr<RecentItemWidget::RecentItemWidgetImpl> d;
 };
 
 }

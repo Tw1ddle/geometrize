@@ -768,5 +768,7 @@
         <file>licenses/libsimdpp_license.txt</file>
         <file>licenses/giflib_license.txt</file>
         <file>licenses/qtgifimage_license.txt</file>
+        <file>web_templates/canvas_export.html</file>
+        <file>web_templates/webgl_export.html</file>
     </qresource>
 </RCC>

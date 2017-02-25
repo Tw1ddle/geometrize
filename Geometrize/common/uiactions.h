@@ -22,7 +22,6 @@ bool isLaunchWindowOpen();
 void bringLaunchWindowToFront();
 void openAboutPage(QWidget* parent);
 void openPreferences(QWidget* parent);
-int openQuitDialog(QWidget* parent);
 QString openImagePathPickerDialog(QWidget* parent);
 QString openSaveImagePathPickerDialog(QWidget* parent);
 QString openSaveSVGPathPickerDialog(QWidget* parent);

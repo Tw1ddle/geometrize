@@ -40,6 +40,9 @@
      <property name="text">
       <string notr="true"/>
      </property>
+     <property name="placeholderText">
+      <string>Input commands...</string>
+     </property>
      <property name="clearButtonEnabled">
       <bool>false</bool>
      </property>

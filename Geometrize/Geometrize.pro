@@ -49,7 +49,6 @@ SOURCES += commandlineparser.cpp \
     dialog/launchwindow.cpp \
     dialog/licensedialog.cpp \
     dialog/openurldialog.cpp \
-    dialog/quitdialog.cpp \
     dialog/recentitemwidget.cpp \
     dialog/recentjobslist.cpp \
     dialog/runscriptdialog.cpp \
@@ -108,7 +107,6 @@ HEADERS += commandlineparser.h \
     dialog/imagejobwindow.h \
     dialog/launchwindow.h \
     dialog/licensedialog.h \
-    dialog/quitdialog.h \
     dialog/recentitemwidget.h \
     dialog/recentjobslist.h \
     dialog/openurldialog.h \
@@ -155,7 +153,6 @@ FORMS += dialog/aboutdialog.ui \
     dialog/launchwindow.ui \
     dialog/licensedialog.ui \
     dialog/openurldialog.ui \
-    dialog/quitdialog.ui \
     dialog/recentitemwidget.ui \
     dialog/runscriptdialog.ui \
     dialog/scriptconsole.ui \

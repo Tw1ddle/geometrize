@@ -14,6 +14,7 @@
 #include "job/imagejob.h"
 #include "job/jobutil.h"
 #include "image/imageloader.h"
+#include "recentitems.h"
 #include "util.h"
 #include "serialization/serializationutil.h"
 

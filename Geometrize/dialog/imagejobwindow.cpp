@@ -22,7 +22,6 @@
 #include "dialog/aboutdialog.h"
 #include "dialog/collapsiblesection.h"
 #include "dialog/globalpreferencestabdialog.h"
-#include "dialog/quitdialog.h"
 #include "exporter/gifexporter.h"
 #include "exporter/imageexporter.h"
 #include "exporter/canvasanimationexporter.h"

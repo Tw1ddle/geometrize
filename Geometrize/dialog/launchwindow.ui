@@ -167,7 +167,7 @@
                  </font>
                 </property>
                 <property name="text">
-                 <string>Geometrize</string>
+                 <string notr="true">Geometrize</string>
                 </property>
                </widget>
               </item>

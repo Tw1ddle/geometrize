@@ -10,7 +10,6 @@
 #include "dialog/globalpreferencestabdialog.h"
 #include "dialog/launchwindow.h"
 #include "dialog/openurldialog.h"
-#include "dialog/quitdialog.h"
 #include "dialog/runscriptdialog.h"
 
 namespace geometrize
@@ -58,13 +57,6 @@ void openPreferences(QWidget* parent)
 {
     dialog::GlobalPreferencesTabDialog preferencesTabDialog(parent);
     preferencesTabDialog.exec();
-}
-
-int openQuitDialog(QWidget* parent)
-{
-    dialog::QuitDialog dialog(parent);
-    dialog.exec();
-    return dialog.result();
 }
 
 QString openImagePathPickerDialog(QWidget* parent)

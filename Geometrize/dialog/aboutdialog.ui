@@ -82,7 +82,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Name And Version</string>
+      <string notr="true">Name And Version</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -103,7 +103,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Short Application Description</string>
+      <string notr="true">Short Application Description</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -140,7 +140,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Build Arch, Build Qt and Build ABI</string>
+      <string notr="true">Build Arch, Build Qt and Build ABI</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -161,7 +161,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Runtime Arch, Runtime Qt</string>
+      <string notr="true">Runtime Arch, Runtime Qt</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -221,7 +221,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Project Website Link</string>
+        <string notr="true">Project Website Link</string>
        </property>
        <property name="textFormat">
         <enum>Qt::RichText</enum>
@@ -249,7 +249,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Personal Website Link</string>
+        <string notr="true">Personal Website Link</string>
        </property>
        <property name="textFormat">
         <enum>Qt::RichText</enum>
