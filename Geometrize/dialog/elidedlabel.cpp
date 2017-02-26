@@ -26,6 +26,7 @@
 #include "elidedlabel.h"
 
 #include <QPainter>
+#include <QRegularExpression>
 #include <QResizeEvent>
 
 namespace geometrize
@@ -37,7 +38,8 @@ namespace dialog
 class ElidedLabel::ElidedLabelImpl
 {
 public:
-    ElidedLabelImpl(ElidedLabel* pQ, Qt::TextElideMode elideMode = Qt::ElideRight) : q{pQ}, m_elideMode{elideMode}
+    ElidedLabelImpl(ElidedLabel* pQ, const Qt::TextElideMode elideMode = Qt::ElideLeft, const ElidedLabel::TrimMode trimMode = TrimMode::None) :
+        q{pQ}, m_elideMode{elideMode}, m_trimMode{trimMode}
     {
     }
 
@@ -64,11 +66,19 @@ public:
 
     void cacheElidedText(const QString& text, const int width)
     {
-        m_elidedText = q->fontMetrics().elidedText(text, m_elideMode, width, Qt::TextShowMnemonic);
+        QString elidedText{q->fontMetrics().elidedText(text, m_elideMode, width, Qt::TextShowMnemonic)};
+
+        switch(m_trimMode) {
+            case TrimMode::None:
+                break;
+        }
+
+        m_elidedText = elidedText;
     }
 
 private:
     Qt::TextElideMode m_elideMode; ///< The current elision mode.
+    ElidedLabel::TrimMode m_trimMode; ///< The current post-elision trim mode.
     QString m_elidedText; ///< The cached elided text.
     ElidedLabel* q;
 };
@@ -85,9 +95,9 @@ ElidedLabel::ElidedLabel(const QString& text, QWidget* parent, const Qt::WindowF
 {
 }
 
-ElidedLabel::ElidedLabel(const QString& text, const Qt::TextElideMode elideMode, QWidget* parent, const Qt::WindowFlags flags) :
+ElidedLabel::ElidedLabel(const QString& text, const Qt::TextElideMode elideMode, const ElidedLabel::TrimMode trimMode, QWidget* parent,  const Qt::WindowFlags flags) :
     QLabel(text, parent, flags),
-    d{std::make_unique<ElidedLabel::ElidedLabelImpl>(this, elideMode)}
+    d{std::make_unique<ElidedLabel::ElidedLabelImpl>(this, elideMode, trimMode)}
 {
 }
 

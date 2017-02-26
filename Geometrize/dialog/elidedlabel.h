@@ -42,10 +42,18 @@ class ElidedLabel : public QLabel
 {
     Q_OBJECT
 
+    /**
+     * @brief The TrimMode enum specifies the type of additional trimming done after the label text is elided.
+     */
+    enum class TrimMode
+    {
+        None ///< Does no extra trimming
+    };
+
 public:
     explicit ElidedLabel(QWidget* parent = nullptr, Qt::WindowFlags flags = 0);
     ElidedLabel(const QString& text, QWidget* parent = nullptr, Qt::WindowFlags flags = 0);
-    ElidedLabel(const QString& text, Qt::TextElideMode elideMode = Qt::ElideRight, QWidget* parent = nullptr, Qt::WindowFlags flags = 0);
+    ElidedLabel(const QString& text, Qt::TextElideMode elideMode, ElidedLabel::TrimMode trimMode, QWidget* parent = nullptr, Qt::WindowFlags flags = 0);
 
     /**
      * @brief getElideMode Get the elide mode currently used when displaying text.
