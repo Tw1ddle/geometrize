@@ -13,6 +13,21 @@ class RecentItem
 public:
     RecentItem(const QString& key, const QString& displayName, const long long int timeStamp);
 
+    enum class Type
+    {
+        LOCAL_IMAGE,
+        LOCAL_CHAISCRIPT,
+        REMOTE_RESOURCE,
+        UNKNOWN
+    };
+
+    /**
+     * @brief getTypeForKey Gets the recent item type for the given recent item key.
+     * @param key The recent item key.
+     * @return The recent item type.
+     */
+    static RecentItem::Type getTypeForKey(const QString& key);
+
     QString getKey() const;
     QString getDisplayName() const;
     long long int getTimeStamp() const;

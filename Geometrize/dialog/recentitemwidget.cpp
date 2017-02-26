@@ -22,15 +22,6 @@ namespace geometrize
 namespace dialog
 {
 
-enum class RecentItemType
-{
-    LOCAL_IMAGE,
-    REMOTE_IMAGE,
-    REMOTE_URL,
-    SCRIPT,
-    UNKNOWN
-};
-
 class RecentItemWidget::RecentItemWidgetImpl
 {
 public:
@@ -48,26 +39,15 @@ public:
             ui->thumbnailIcon->setPixmap(QPixmap::fromImage(thumbnail));
         });
 
-        // TODO choose item image path based on icon type
-        const QString iconPath{item.getKey()};
-        const RecentItemType type{RecentItemType::LOCAL_IMAGE};
+        const QString itemPath{item.getKey()};
+        const RecentItem::Type type{RecentItem::getTypeForKey(itemPath)};
 
-        QFuture<QImage> thumbnailFuture{QtConcurrent::run(this, &RecentItemWidgetImpl::setupThumbnail, iconPath, type)};
+        QFuture<QImage> thumbnailFuture{QtConcurrent::run(this, &RecentItemWidgetImpl::setupThumbnail, itemPath, type)};
         m_thumbnailLoaderWatcher.setFuture(thumbnailFuture);
     }
 
     ~RecentItemWidgetImpl()
     {
-    }
-
-    QImage setupThumbnail(const QString& imageFilepath, const RecentItemType type)
-    {
-        const QImage thumbnail(imageFilepath);
-        if(!thumbnail.isNull()) {
-            const QSize size{90, 50};
-            return thumbnail.scaled(size, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
-        }
-        return thumbnail;
     }
 
     void onContextMenuEvent(QContextMenuEvent* e)
@@ -108,6 +88,41 @@ public:
     }
 
 private:
+    QImage setupThumbnail(const QString& itemPath, const RecentItem::Type type)
+    {
+        switch(type) {
+            case RecentItem::Type::LOCAL_IMAGE:
+            {
+                const QImage thumbnail(itemPath);
+                if(!thumbnail.isNull()) {
+                    const QSize size{100, 100};
+                    return thumbnail.scaled(size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+                }
+                break;
+            }
+            case RecentItem::Type::LOCAL_CHAISCRIPT:
+            {
+                const QImage thumbnail(":/icons/script_go.png");
+                if(!thumbnail.isNull()) {
+                    return thumbnail;
+                }
+                break;
+            }
+            case RecentItem::Type::REMOTE_RESOURCE:
+            {
+                const QImage thumbnail(":/icons/world_link.png");
+                if(!thumbnail.isNull()) {
+                    return thumbnail;
+                }
+                break;
+            }
+            case RecentItem::Type::UNKNOWN:
+                break;
+        }
+
+        return QImage(":/icons/error.png");
+    }
+
     RecentItemWidget* q;
     std::unique_ptr<Ui::RecentItemWidget> ui;
     RecentItem m_item;
