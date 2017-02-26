@@ -51,7 +51,7 @@ void RunScriptDialog::on_buttonBox_accepted()
     }
 
     const std::string script{util::readFileAsString(scriptPath)};
-    geometrize::script::runScript(script, &getScriptOptions());
+    geometrize::script::runScript(script, getScriptOptions());
 }
 
 }

@@ -13,11 +13,9 @@ namespace geometrize
 namespace script
 {
 
-void runScript(const std::string& script, chaiscript::ChaiScript& runner, const geometrize::script::ScriptOptions* const options)
+void runScript(const std::string& script, chaiscript::ChaiScript& runner, const geometrize::script::ScriptOptions& options)
 {
-    if(options != nullptr) {
-        // TODO set options on the runner?
-    }
+    // TODO set options on the runner?
 
     const QString errorTitle{QCoreApplication::translate("Script evaluation error dialog title", "Script evaluation failure")};
     const QString errorPreamble{QCoreApplication::translate("Script evaluation error message", "Could not evaluate script: %1")};
@@ -36,7 +34,7 @@ void runScript(const std::string& script, chaiscript::ChaiScript& runner, const 
     }
 }
 
-void runScript(const std::string& script, const ScriptOptions* const options)
+void runScript(const std::string& script, const ScriptOptions& options)
 {
     auto engine{createChaiScript()};
     runScript(script, *engine, options);

@@ -87,6 +87,24 @@ public:
         itemContextMenu.exec(e->globalPos());
     }
 
+    void onMouseReleaseEvent(QMouseEvent* e)
+    {
+        if(e->button() != Qt::LeftButton) {
+            return;
+        }
+
+        geometrize::util::openJobs({m_item.getKey()}, false);
+    }
+
+    void onKeyPressEvent(QKeyEvent* e)
+    {
+        if(e->key() != Qt::Key_Return || e->key() != Qt::Key_Enter) {
+            return;
+        }
+
+        geometrize::util::openJobs({m_item.getKey()}, false);
+    }
+
 private:
     QImage setupThumbnail(const QString& itemPath, const RecentItem::Type type)
     {
@@ -117,7 +135,9 @@ private:
                 break;
             }
             case RecentItem::Type::UNKNOWN:
+            {
                 break;
+            }
         }
 
         return QImage(":/icons/error.png");
@@ -140,6 +160,15 @@ RecentItemWidget::~RecentItemWidget()
 void RecentItemWidget::contextMenuEvent(QContextMenuEvent* e)
 {
     d->onContextMenuEvent(e);
+
+    QWidget::contextMenuEvent(e);
+}
+
+void RecentItemWidget::mouseReleaseEvent(QMouseEvent* e)
+{
+    d->onMouseReleaseEvent(e);
+
+    QWidget::mouseReleaseEvent(e);
 }
 
 }

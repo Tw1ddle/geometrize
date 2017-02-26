@@ -14,8 +14,14 @@ class Downloader::DownloaderImpl
 public:
     DownloaderImpl(Downloader* pQ, const QUrl& url, const std::function<void(Downloader*, QNetworkReply::NetworkError)>& onDownloaded) : q{pQ}, m_url{url}
     {
-        connect(&m_webCtrl, SIGNAL(finished(QNetworkReply*)), q, SLOT(downloadFinished(QNetworkReply*)));
-        connect(q, &Downloader::signal_downloaded, onDownloaded);
+        q->connect(&m_webCtrl, &QNetworkAccessManager::finished, [this](QNetworkReply* pReply) {
+            m_downloadedData = pReply->readAll();
+            const QNetworkReply::NetworkError error{pReply->error()};
+            pReply->deleteLater();
+
+            emit q->signal_downloaded(q, error); // Note caller may delete the Downloader instance at this point
+        });
+        q->connect(q, &Downloader::signal_downloaded, onDownloaded);
 
         const QNetworkRequest request(m_url);
         m_webCtrl.get(request);
@@ -35,15 +41,6 @@ public:
     }
 
 private:
-    void downloadFinished(QNetworkReply* pReply)
-    {
-        m_downloadedData = pReply->readAll();
-        const QNetworkReply::NetworkError error{pReply->error()};
-        pReply->deleteLater();
-
-        emit q->signal_downloaded(q, error); // Note caller may delete the Downloader instance at this point
-    }
-
     Downloader* q;
     QNetworkAccessManager m_webCtrl;
     QByteArray m_downloadedData;

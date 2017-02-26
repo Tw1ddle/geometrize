@@ -24,11 +24,10 @@ void onImageDownloadComplete(network::Downloader* self, QNetworkReply::NetworkEr
 {
     qDebug() << "FINISHED DOWNLOADING IMAGE WITH ERROR" << error; // TODO error checks
 
-    QPixmap image;
+    QImage image;
     image.loadFromData(self->getDownloadedData());
 
-    // TODO unify with common action
-    //new job::ImageJob(self->getUrl().toString().toStdString(), image);
+    util::openImageJobFromWeb(image, self->getUrl().toString(), true);
 
     delete self;
 }

@@ -6,6 +6,10 @@ namespace geometrize
 namespace script
 {
 
+ScriptOptions::ScriptOptions()
+{
+}
+
 ScriptOptions::ScriptOptions(const QStringList& options) : m_options{options}
 {
 }

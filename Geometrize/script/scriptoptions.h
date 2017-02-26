@@ -14,6 +14,7 @@ namespace script
 class ScriptOptions
 {
 public:
+    ScriptOptions();
     ScriptOptions(const QString& options);
     ScriptOptions(const QStringList& options);
     ScriptOptions& operator=(const ScriptOptions&) = default;

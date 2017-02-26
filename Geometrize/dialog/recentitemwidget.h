@@ -30,6 +30,7 @@ public:
 
 private:
     virtual void contextMenuEvent(QContextMenuEvent* e) override;
+    virtual void mouseReleaseEvent(QMouseEvent* e) override;
 
     class RecentItemWidgetImpl;
     std::unique_ptr<RecentItemWidget::RecentItemWidgetImpl> d;

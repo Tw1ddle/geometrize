@@ -4,6 +4,8 @@
 
 #include "templatemanifest.h"
 
+class QImage;
+class QString;
 class QStringList;
 
 namespace chaiscript
@@ -18,6 +20,8 @@ namespace util
 {
 
 void openJobs(const QStringList& urls, bool addToRecents);
+
+void openImageJobFromWeb(const QImage& image, const QString& url, bool addToRecents);
 
 bool openTemplate(chaiscript::ChaiScript& engine, const std::string& templateFolder);
 

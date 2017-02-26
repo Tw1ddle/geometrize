@@ -10,13 +10,15 @@
 #include "common/sharedapp.h"
 #include "common/uiactions.h"
 #include "dialog/recentitemwidget.h"
-#include "script/chaiscriptcreator.h"
 #include "job/imagejob.h"
 #include "job/jobutil.h"
 #include "image/imageloader.h"
+#include "script/chaiscriptcreator.h"
+#include "script/scriptrunner.h"
+#include "serialization/serializationutil.h"
+#include "formatsupport.h"
 #include "recentitems.h"
 #include "util.h"
-#include "serialization/serializationutil.h"
 
 namespace geometrize
 {
@@ -41,15 +43,9 @@ public:
 
         ui->recentsList->setRecentItems(&common::app::SharedApp::get().getRecentFiles());
 
-        connect(ui->recentsList, &RecentJobsList::itemClicked, [this](QListWidgetItem* item) {
-            // TODO deal with bad paths, use data not text
-            const QStringList files{item->text()};
-            openJobs(files, false);
-        });
-
         loadConsoleHistory();
 
-        connect(ui->templateGrid, &dialog::TemplateGrid::signal_templateLoaded, [this](const QString& templateFolder, const bool success) {
+        connect(ui->templateGrid, &dialog::TemplateGrid::signal_templateLoaded, [this](const QString& templateFolder, const bool /*success*/) {
             ui->templatesSearchEdit->addToCompletionList(QString::fromStdString(util::getTemplateManifest(templateFolder.toStdString()).getName()));
         });
 
@@ -77,11 +73,6 @@ public:
         }
 
         return windows;
-    }
-
-    void openJobs(const QStringList& urls, const bool addToRecents)
-    {
-        util::openJobs(urls, addToRecents);
     }
 
     void setConsoleVisibility(const bool visible)
@@ -160,11 +151,16 @@ void LaunchWindow::dragEnterEvent(QDragEnterEvent* event)
 
 void LaunchWindow::dropEvent(QDropEvent* event)
 {
-    // TODO
-    //d->openJobs(geometrize::format::getUrls(event->mimeData()));
+    const QList<QUrl> urls{geometrize::format::getUrls(event->mimeData())};
+    QStringList jobs;
+    for(const QUrl& url : urls) {
+        jobs.push_back(url.toString());
+    }
+
+    util::openJobs(jobs, true);
 }
 
-void LaunchWindow::closeEvent(QCloseEvent* event)
+void LaunchWindow::closeEvent(QCloseEvent* /*event*/)
 {
     d->saveConsoleHistory();
 }
@@ -191,7 +187,7 @@ void LaunchWindow::on_openImageButton_clicked()
         return;
     }
 
-    d->openJobs({ imagePath }, true);
+    geometrize::util::openJobs({ imagePath }, true);
 }
 
 void LaunchWindow::on_openLinkButton_clicked()
@@ -204,10 +200,8 @@ void LaunchWindow::on_openLinkButton_clicked()
 
 void LaunchWindow::on_runScriptButton_clicked()
 {
-    common::ui::openGetScriptDialog(this);
-
-    // TODO get path and args and run
-    //app::runScript(scriptPath, arguments);
+    const QPair<QString, geometrize::script::ScriptOptions> result{common::ui::openGetScriptDialog(this)};
+    geometrize::script::runScript(result.first.toStdString(), result.second);
 }
 
 void LaunchWindow::on_actionTutorials_triggered()

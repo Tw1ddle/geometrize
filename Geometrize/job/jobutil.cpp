@@ -49,6 +49,16 @@ void openJobs(const QStringList& urls, const bool addToRecents)
     }
 }
 
+void openImageJobFromWeb(const QImage& image, const QString& url, bool addToRecents)
+{
+    if(addToRecents) {
+        common::app::SharedApp::get().getRecentFiles().add(url, url);
+    }
+
+    // TODO
+    //geometrize::job::createImageJobAndWindow(url.toLocalFile().toStdString(), url.toLocalFile().toStdString());
+}
+
 bool openTemplate(chaiscript::ChaiScript& engine, const std::string& templateFolder)
 {
     const std::vector<std::string> scripts{util::getScriptsForPath(templateFolder)};
@@ -60,7 +70,7 @@ bool openTemplate(chaiscript::ChaiScript& engine, const std::string& templateFol
 
     const std::string script{util::readFileAsString(scripts.front())};
     engine.set_global(chaiscript::var(templateFolder), "templateDirectory");
-    geometrize::script::runScript(script, engine, nullptr);
+    geometrize::script::runScript(script, engine);
 
     return true;
 }

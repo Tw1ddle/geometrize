@@ -46,7 +46,7 @@ public:
                 } else if(command == "clear") {
                     ui->outputView->clear();
                 } else {
-                    script::runScript(command, *m_engine, nullptr);
+                    script::runScript(command, *m_engine);
                 }
             }
         });
