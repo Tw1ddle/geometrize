@@ -48,7 +48,7 @@ LicenseDialog::LicenseDialog(QWidget* parent) :
     };
 
     const auto setLicenseText{[&readLicenseFile](QTextBrowser* textBrowser, const QString& licenseFilePath) {
-        textBrowser->setText(readLicenseFile(":/licenses/ " + licenseFilePath));
+        textBrowser->setText(readLicenseFile(":/licenses/" + licenseFilePath));
     }};
     setLicenseText(ui->geometrizeLicense, "geometrize_license.txt");
     setLicenseText(ui->geometrizeLibraryLicense, "geometrize_library_license.txt");
