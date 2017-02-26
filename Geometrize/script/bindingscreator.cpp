@@ -54,6 +54,8 @@ std::shared_ptr<chaiscript::Module> createBindings()
 
     ADD_FREE_FUN(getAppDataLocation);
 
+    ADD_FREE_FUN(writeStringToFile);
+
     return module;
 }
 

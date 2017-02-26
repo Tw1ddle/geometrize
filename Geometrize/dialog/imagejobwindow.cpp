@@ -29,6 +29,7 @@
 #include "exporter/webglanimationexporter.h"
 #include "image/imageloader.h"
 #include "job/imagejob.h"
+#include "util.h"
 
 namespace geometrize
 {
@@ -169,11 +170,7 @@ public:
         }
 
         const std::string data{exporter::exportShapeData(m_shapes, format)};
-
-        std::ofstream out(path.toStdString());
-        if(out) {
-            out << data;
-        }
+        util::writeStringToFile(data, path.toStdString());
     }
 
     void saveGIF() const
@@ -193,8 +190,8 @@ public:
             return;
         }
 
-        // TODO
-        // exporter::exportCanvasAnimation(shapeData);
+        const std::string pageSource{exporter::exportCanvasAnimation(m_shapes)};
+        util::writeStringToFile(pageSource, path.toStdString());
     }
 
     void saveWebGLAnimation() const
@@ -204,8 +201,8 @@ public:
             return;
         }
 
-        // TODO
-        //exporter::exportWebGLAnimation(shapeData);
+        const std::string pageSource{exporter::exportWebGLAnimation(m_shapes)};
+        util::writeStringToFile(pageSource, path.toStdString());
     }
 
     void saveRawImageDataButton() const

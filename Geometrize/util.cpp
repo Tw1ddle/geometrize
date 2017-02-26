@@ -1,6 +1,7 @@
 #include "util.h"
 
 #include <assert.h>
+#include <fstream>
 
 #include <QApplication>
 #include <QClipboard>
@@ -209,6 +210,26 @@ bool stringEndsWith(const std::string& str, const std::string& suffix)
 std::string getAppDataLocation()
 {
     return QStandardPaths::writableLocation(QStandardPaths::AppDataLocation).toStdString();
+}
+
+bool writeStringToFile(const std::string& str, const std::string& path)
+{
+    std::ofstream out(path, std::ios::trunc | std::ios::out);
+    if(!out.is_open()) {
+        return false;
+    }
+
+    if(out) {
+        out << str;
+    }
+
+    out.close();
+
+    if(!out) {
+        return false;
+    }
+
+    return true;
 }
 
 }

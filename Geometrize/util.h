@@ -152,6 +152,14 @@ bool stringEndsWith(const std::string& str, const std::string& suffix);
  */
 std::string getAppDataLocation();
 
+/**
+ * @brief writeStringToFile Writes the string to the file path, attempting to overwrite any existing file at the path.
+ * @param str The string to write to file.
+ * @param path The file path to write to.
+ * @return True if the string was successfully written to the file, else false.
+ */
+bool writeStringToFile(const std::string& str, const std::string& path);
+
 }
 
 }

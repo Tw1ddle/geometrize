@@ -1,7 +1,11 @@
 #include "webglanimationexporter.h"
 
+#include <assert.h>
 #include <string>
 #include <vector>
+
+#include <QFile>
+#include <QString>
 
 #include "geometrize/shaperesult.h"
 
@@ -13,14 +17,22 @@ namespace geometrize
 namespace exporter
 {
 
+const QString SHAPE_DATA_TAG = "::SHAPE_DATA_TAG::";
+
 std::string exportWebGLAnimation(const std::vector<geometrize::ShapeResult>& data)
 {
+    QFile file{":/web_templates/webgl_export.html"};
+    if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        assert(0 && "Failed to open WebGL template");
+        return "";
+    }
+
+    QString templateSource{file.readAll()};
+
     const std::string shapeData{exporter::exportShapeData(data, ShapeDataFormat::CUSTOM_ARRAY)};
+    templateSource.replace(SHAPE_DATA_TAG, QString::fromStdString(shapeData));
 
-    // TODO insert the shape data into the source code for a webpage
-    std::string pageSource;
-
-    return pageSource;
+    return templateSource.toStdString();
 }
 
 }

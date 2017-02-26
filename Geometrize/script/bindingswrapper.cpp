@@ -152,6 +152,11 @@ std::string getAppDataLocation()
     return geometrize::util::getAppDataLocation();
 }
 
+bool writeStringToFile(const std::string& str, const std::string& path)
+{
+    return geometrize::util::writeStringToFile(str, path);
+}
+
 }
 
 }

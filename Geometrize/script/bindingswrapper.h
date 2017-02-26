@@ -59,6 +59,8 @@ bool stringEndsWith(const std::string& str, const std::string& suffix);
 
 std::string getAppDataLocation();
 
+bool writeStringToFile(const std::string& str, const std::string& path);
+
 }
 
 }
