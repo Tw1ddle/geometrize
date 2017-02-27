@@ -100,7 +100,8 @@ private:
         image = image.convertToFormat(QImage::Format_RGBA8888); // Note doing this to guarantee format is RGBA8888
 
         geometrize::Bitmap logoBitmap{image::createBitmap(image)};
-        m_logoJob = std::make_unique<job::ImageJob>("Logo Image Job", "Logo (Resource File)", logoBitmap);
+        geometrize::Bitmap initialBitmap{logoBitmap.getWidth(), logoBitmap.getHeight(), geometrize::rgba{0, 0, 0, 0}};
+        m_logoJob = std::make_unique<job::ImageJob>("Logo Image Job", "Logo (Resource File)", logoBitmap, initialBitmap);
 
         ui->logoLabel->setPixmap(image::createPixmap(m_logoJob->getCurrent()));
 

@@ -26,6 +26,7 @@ class ImageJob : public QObject
     Q_OBJECT
 public:
     ImageJob(const std::string& displayName, const std::string& jobUrl, Bitmap& bitmap);
+    ImageJob(const std::string& displayName, const std::string& jobUrl, Bitmap& bitmap, const Bitmap& initial);
     ImageJob& operator=(const ImageJob&) = delete;
     ImageJob(const ImageJob&) = delete;
     ~ImageJob() = default;

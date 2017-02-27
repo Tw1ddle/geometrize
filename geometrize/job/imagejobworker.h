@@ -22,6 +22,7 @@ class ImageJobWorker : public QObject
     Q_OBJECT
 public:
     explicit ImageJobWorker(Bitmap& bitmap);
+    ImageJobWorker(Bitmap& bitmap, const Bitmap& initial);
     ImageJobWorker& operator=(const ImageJobWorker&) = delete;
     ImageJobWorker(const ImageJobWorker&) = delete;
     ~ImageJobWorker() = default;

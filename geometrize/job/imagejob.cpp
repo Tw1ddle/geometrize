@@ -23,16 +23,16 @@ namespace job
 class ImageJob::ImageJobImpl
 {
 public:
-    ImageJobImpl(ImageJob* pQ, const std::string& displayName, const std::string& jobUrl, Bitmap& bitmap) : q{pQ}, m_preferences{}, m_displayName{displayName}, m_jobUrl{jobUrl}, m_id{getId()}, m_worker{bitmap}
+    ImageJobImpl(ImageJob* pQ, const std::string& displayName, const std::string& jobUrl, Bitmap& bitmap) :
+        q{pQ}, m_preferences{}, m_displayName{displayName}, m_jobUrl{jobUrl}, m_id{getId()}, m_worker{bitmap}
     {
-        qRegisterMetaType<std::vector<geometrize::ShapeResult>>();
+        init();
+    }
 
-        m_worker.moveToThread(&m_workerThread);
-        m_workerThread.start();
-
-        q->connect(q, &ImageJob::signal_step, &m_worker, &ImageJobWorker::step);
-        q->connect(&m_worker, &ImageJobWorker::signal_willStep, q, &ImageJob::signal_modelWillStep);
-        q->connect(&m_worker, &ImageJobWorker::signal_didStep, q, &ImageJob::signal_modelDidStep);
+    ImageJobImpl(ImageJob* pQ, const std::string& displayName, const std::string& jobUrl, Bitmap& bitmap, const Bitmap& initial) :
+        q{pQ}, m_preferences{}, m_displayName{displayName}, m_jobUrl{jobUrl}, m_id{getId()}, m_worker{bitmap, initial}
+    {
+        init();
     }
 
     ~ImageJobImpl()
@@ -104,6 +104,18 @@ private:
         return id++;
     }
 
+    void init()
+    {
+        qRegisterMetaType<std::vector<geometrize::ShapeResult>>();
+
+        m_worker.moveToThread(&m_workerThread);
+        m_workerThread.start();
+
+        q->connect(q, &ImageJob::signal_step, &m_worker, &ImageJobWorker::step);
+        q->connect(&m_worker, &ImageJobWorker::signal_willStep, q, &ImageJob::signal_modelWillStep);
+        q->connect(&m_worker, &ImageJobWorker::signal_didStep, q, &ImageJob::signal_modelDidStep);
+    }
+
     ImageJob* q;
     preferences::ImageJobPreferences m_preferences; ///> Runtime configuration parameters for the runner.
     std::string m_displayName; ///> The display name of the image job.
@@ -113,7 +125,13 @@ private:
     ImageJobWorker m_worker; ///> The image job worker.
 };
 
-ImageJob::ImageJob(const std::string& displayName, const std::string& jobUrl, Bitmap& bitmap) :  QObject(), d{std::make_unique<ImageJob::ImageJobImpl>(this, displayName, jobUrl, bitmap)}
+ImageJob::ImageJob(const std::string& displayName, const std::string& jobUrl, Bitmap& bitmap) :  QObject(),
+    d{std::make_unique<ImageJob::ImageJobImpl>(this, displayName, jobUrl, bitmap)}
+{
+}
+
+ImageJob::ImageJob(const std::string& displayName, const std::string& jobUrl, Bitmap& bitmap, const Bitmap& initial) : QObject(),
+    d{std::make_unique<ImageJob::ImageJobImpl>(this, displayName, jobUrl, bitmap, initial)}
 {
 }
 

@@ -14,6 +14,10 @@ ImageJobWorker::ImageJobWorker(Bitmap& bitmap) : QObject(), m_runner{bitmap}
 {
 }
 
+ImageJobWorker::ImageJobWorker(Bitmap& bitmap, const Bitmap& initial) : QObject(), m_runner{bitmap, initial}
+{
+}
+
 void ImageJobWorker::step()
 {
     emit signal_willStep();
