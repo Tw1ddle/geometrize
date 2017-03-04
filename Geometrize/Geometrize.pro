@@ -15,7 +15,7 @@ RC_ICONS = icon.ico
 RC_FILE = winicon.rc
 RESOURCES = resources/application_resources.qrc
 
-QMAKE_CXXFLAGS += -bigobj
+msvc:QMAKE_CXXFLAGS += -bigobj
 
 INCLUDEPATH += $$PWD/../lib/cereal/include \
     $$PWD/../lib/chaiscript/include
