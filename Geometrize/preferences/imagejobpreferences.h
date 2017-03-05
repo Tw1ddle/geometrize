@@ -50,7 +50,6 @@ public:
     void setShapeAlpha(std::uint8_t alpha);
     void setCandidateShapeCount(std::uint32_t shapeCount);
     void setMaxShapeMutations(std::uint32_t maxMutations);
-    void setPasses(std::uint32_t passes);
 
 private:
     class ImageJobPreferencesImpl;

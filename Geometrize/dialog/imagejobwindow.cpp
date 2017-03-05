@@ -241,11 +241,6 @@ public:
         m_job->getPreferences().setMaxShapeMutations(value);
     }
 
-    void setPasses(const int value)
-    {
-        m_job->getPreferences().setPasses(value);
-    }
-
 private:
     void setDisplayName(const QString& displayName)
     {
@@ -288,7 +283,6 @@ private:
         ui->shapeOpacitySlider->setValue(opts.alpha);
         ui->candidateShapesPerStepSlider->setValue(opts.shapeCount);
         ui->mutationsPerCandidateShapeSlider->setValue(opts.maxShapeMutations);
-        ui->passesSlider->setValue(opts.passes);
     }
 
     job::ImageJob* m_job;
@@ -439,11 +433,6 @@ void ImageJobWindow::on_candidateShapesPerStepSlider_valueChanged(int value)
 void ImageJobWindow::on_mutationsPerCandidateShapeSlider_valueChanged(int value)
 {
     d->setMutationsPerCandidateShape(value);
-}
-
-void ImageJobWindow::on_passesSlider_valueChanged(int value)
-{
-    d->setPasses(value);
 }
 
 }

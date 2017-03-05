@@ -79,11 +79,6 @@ public:
         m_options.maxShapeMutations = maxMutations;
     }
 
-    void setPasses(const std::uint32_t passes)
-    {
-        m_options.passes = passes;
-    }
-
 private:
     serialization::ImageJobPreferencesData m_data;
     geometrize::ImageRunnerOptions m_options;
@@ -149,11 +144,6 @@ void ImageJobPreferences::setCandidateShapeCount(const std::uint32_t shapeCount)
 void ImageJobPreferences::setMaxShapeMutations(const std::uint32_t maxMutations)
 {
     d->setMaxShapeMutations(maxMutations);
-}
-
-void ImageJobPreferences::setPasses(const std::uint32_t passes)
-{
-    d->setPasses(passes);
 }
 
 }
