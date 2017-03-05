@@ -23,8 +23,8 @@ class ImageJobPreferences : public QObject
 public:
     ImageJobPreferences();
     ImageJobPreferences(const std::string& filePath);
-    ImageJobPreferences& operator=(const ImageJobPreferences&) = delete;
-    ImageJobPreferences(const ImageJobPreferences&) = delete;
+    ImageJobPreferences& operator=(const ImageJobPreferences& other);
+    ImageJobPreferences(const ImageJobPreferences& other);
     ~ImageJobPreferences();
 
     /**
@@ -54,7 +54,7 @@ public:
 
 private:
     class ImageJobPreferencesImpl;
-    std::unique_ptr<ImageJobPreferencesImpl> d;
+    std::shared_ptr<ImageJobPreferencesImpl> d;
 };
 
 }

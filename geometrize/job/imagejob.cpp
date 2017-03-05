@@ -92,6 +92,11 @@ public:
         return m_preferences;
     }
 
+    void setPreferences(const preferences::ImageJobPreferences preferences)
+    {
+        m_preferences = preferences;
+    }
+
 private:
     static int getId()
     {
@@ -174,6 +179,11 @@ void ImageJob::modelDidStep(std::vector<geometrize::ShapeResult> shapes)
 preferences::ImageJobPreferences& ImageJob::getPreferences()
 {
     return d->getPreferences();
+}
+
+void ImageJob::setPreferences(const preferences::ImageJobPreferences preferences)
+{
+    d->setPreferences(preferences);
 }
 
 }

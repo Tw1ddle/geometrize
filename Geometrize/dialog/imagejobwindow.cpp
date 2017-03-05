@@ -122,6 +122,8 @@ public:
         }
 
         m_job->getPreferences().load(path.toStdString());
+
+        syncUserInterfaceWithOptions();
     }
 
     void saveSettingsTemplate() const

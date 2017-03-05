@@ -74,6 +74,12 @@ public:
       */
      geometrize::preferences::ImageJobPreferences& getPreferences();
 
+     /**
+      * @brief setPreferences Sets the preferences for this job.
+      * @param preferences The preferences to set.
+      */
+     void setPreferences(preferences::ImageJobPreferences preferences);
+
 signals:
      /**
       * @brief signal_step Signal that the image job emits to make the internal model step.

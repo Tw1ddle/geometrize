@@ -1,9 +1,11 @@
 #pragma once
 
+#include <string>
+
 #include "cereal/cereal.hpp"
 #include "cereal/types/vector.hpp"
 
-#include "geometrize/shape/shapetypes.h"
+#include "geometrize/runner/imagerunneroptions.h"
 
 namespace geometrize
 {
@@ -18,19 +20,21 @@ class ImageJobPreferencesData
 {
 public:
     template<class Archive>
-    void save(Archive& archive)
+    void archive(Archive& ar, geometrize::ImageRunnerOptions& options)
     {
-        archive(CEREAL_NVP(shapes));
-    }
-
-    template<class Archive>
-    void load(Archive& archive)
-    {
-        archive(CEREAL_NVP(shapes));
+        ar(cereal::make_nvp(shapeAlphaKey, options.alpha));
+        ar(cereal::make_nvp(maxShapeMutationsKey, options.maxShapeMutations));
+        ar(cereal::make_nvp(shapeCountKey, options.shapeCount));
+        ar(cereal::make_nvp(shapeTypesKey, options.shapeTypes));
+        ar(cereal::make_nvp(passesKey, options.passes));
     }
 
 private:
-    std::vector<geometrize::shapes::ShapeTypes> shapes;
+    const std::string shapeAlphaKey{"shapeAlpha"};
+    const std::string maxShapeMutationsKey{"maxShapeMutations"};
+    const std::string shapeCountKey{"shapeCount"};
+    const std::string shapeTypesKey{"shapeTypes"};
+    const std::string passesKey{"passes"};
 };
 
 }

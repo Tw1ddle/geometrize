@@ -16,11 +16,11 @@ namespace preferences
 class ImageJobPreferences::ImageJobPreferencesImpl
 {
 public:
-    ImageJobPreferencesImpl(ImageJobPreferences* pQ) : q{pQ}
+    ImageJobPreferencesImpl()
     {
     }
 
-    ImageJobPreferencesImpl(ImageJobPreferences* pQ, const std::string& filePath) : q{pQ}
+    ImageJobPreferencesImpl(const std::string& filePath)
     {
         load(filePath);
     }
@@ -33,7 +33,7 @@ public:
     {
         std::ifstream input(filePath);
         try {
-            m_data.load(cereal::JSONInputArchive(input));
+            m_data.archive(cereal::JSONInputArchive(input), m_options);
         } catch(...) {
             assert(0 && "Failed to read image preferences");
         }
@@ -43,7 +43,7 @@ public:
     {
         std::ofstream output(filePath);
         try {
-            m_data.save(cereal::JSONOutputArchive(output));
+            m_data.archive(cereal::JSONOutputArchive(output), m_options);
         } catch(...) {
             assert(0 && "Failed to write image preferences");
         }
@@ -87,18 +87,27 @@ public:
 private:
     serialization::ImageJobPreferencesData m_data;
     geometrize::ImageRunnerOptions m_options;
-    ImageJobPreferences* q;
 };
 
-ImageJobPreferences::ImageJobPreferences() : d{std::make_unique<ImageJobPreferences::ImageJobPreferencesImpl>(this)}
+ImageJobPreferences::ImageJobPreferences() : d{std::make_shared<ImageJobPreferences::ImageJobPreferencesImpl>()}
 {
 }
 
-ImageJobPreferences::ImageJobPreferences(const std::string& filePath) : d{std::make_unique<ImageJobPreferences::ImageJobPreferencesImpl>(this, filePath)}
+ImageJobPreferences::ImageJobPreferences(const std::string& filePath) : d{std::make_shared<ImageJobPreferences::ImageJobPreferencesImpl>(filePath)}
 {
 }
 
 ImageJobPreferences::~ImageJobPreferences()
+{
+}
+
+ImageJobPreferences& ImageJobPreferences::operator=(const ImageJobPreferences& other)
+{
+    d = other.d;
+    return *this;
+}
+
+ImageJobPreferences::ImageJobPreferences(const ImageJobPreferences& other) : d{other.d}
 {
 }
 
