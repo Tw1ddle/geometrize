@@ -62,13 +62,11 @@ private slots:
     void on_usesLines_clicked(bool checked);
     void on_usesSplines_clicked(bool checked);
 
-    void on_shapeOpacitySpinBox_valueChanged(int value);
-
-    void on_candidateShapesPerStepSpinBox_valueChanged(int value);
-    void on_mutationsPerCandidateShapeSpinBox_valueChanged(int value);
-    void on_passesSpinBox_valueChanged(int value);
-    void on_maxThreadsSpinBox_valueChanged(int value);
-
+    void on_shapeOpacitySlider_valueChanged(int value);
+    void on_candidateShapesPerStepSlider_valueChanged(int value);
+    void on_mutationsPerCandidateShapeSlider_valueChanged(int value);
+    void on_passesSlider_valueChanged(int value);
+    void on_maxThreadsSlider_valueChanged(int value);
 
 private:
     class ImageJobWindowImpl;

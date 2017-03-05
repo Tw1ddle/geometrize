@@ -52,9 +52,6 @@ public:
         connect(ui->targetOpacitySlider, &QSlider::valueChanged, [this](int value) {
             m_targetPixmapItem.setOpacity(value * 0.01f);
         });
-
-        const float startingTargetOpacity{10};
-        ui->targetOpacitySlider->setValue(startingTargetOpacity);
     }
     ImageJobWindowImpl operator=(const ImageJobWindowImpl&) = delete;
     ImageJobWindowImpl(const ImageJobWindowImpl&) = delete;
@@ -274,6 +271,9 @@ private:
     {
         const geometrize::ImageRunnerOptions opts{m_job->getPreferences().getImageRunnerOptions()}; // Geometrize library options
 
+        const float startingTargetOpacity{10};
+        ui->targetOpacitySlider->setValue(startingTargetOpacity);
+
         const auto usesShape = [&opts](const geometrize::shapes::ShapeTypes type) -> bool {
             const std::uint32_t shapes{static_cast<std::uint32_t>(opts.shapeTypes)};
             return shapes & type;
@@ -287,6 +287,12 @@ private:
         ui->usesCircles->setChecked(usesShape(shapes::CIRCLE));
         ui->usesLines->setChecked(usesShape(shapes::LINE));
         ui->usesSplines->setChecked(usesShape(shapes::SPLINE));
+
+        ui->shapeOpacitySlider->setValue(opts.alpha);
+        ui->candidateShapesPerStepSlider->setValue(opts.shapeCount);
+        ui->mutationsPerCandidateShapeSlider->setValue(opts.maxShapeMutations);
+        ui->passesSlider->setValue(opts.passes);
+        //ui->maxThreadsSlider->setValue(opts.maxThreads); // TODO
     }
 
     job::ImageJob* m_job;
@@ -424,27 +430,27 @@ void ImageJobWindow::on_usesSplines_clicked(bool checked)
     d->setShapes(geometrize::shapes::SPLINE, checked);
 }
 
-void ImageJobWindow::on_shapeOpacitySpinBox_valueChanged(int value)
+void ImageJobWindow::on_shapeOpacitySlider_valueChanged(int value)
 {
     d->setShapeOpacity(value);
 }
 
-void ImageJobWindow::on_candidateShapesPerStepSpinBox_valueChanged(int value)
+void ImageJobWindow::on_candidateShapesPerStepSlider_valueChanged(int value)
 {
     d->setCandidateShapesPerStep(value);
 }
 
-void ImageJobWindow::on_mutationsPerCandidateShapeSpinBox_valueChanged(int value)
+void ImageJobWindow::on_mutationsPerCandidateShapeSlider_valueChanged(int value)
 {
     d->setMutationsPerCandidateShape(value);
 }
 
-void ImageJobWindow::on_passesSpinBox_valueChanged(int value)
+void ImageJobWindow::on_passesSlider_valueChanged(int value)
 {
     d->setPasses(value);
 }
 
-void ImageJobWindow::on_maxThreadsSpinBox_valueChanged(int value)
+void ImageJobWindow::on_maxThreadsSlider_valueChanged(int value)
 {
     d->setMaxThreads(value);
 }
