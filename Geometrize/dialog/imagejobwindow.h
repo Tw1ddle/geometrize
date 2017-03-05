@@ -53,6 +53,23 @@ private slots:
     void on_saveWebGLButton_clicked();
     void on_saveRawImageDataButton_clicked();
 
+    void on_usesRectangles_clicked(bool checked);
+    void on_usesRotatedRectangles_clicked(bool checked);
+    void on_usesTriangles_clicked(bool checked);
+    void on_usesEllipses_clicked(bool checked);
+    void on_usesRotatedEllipses_clicked(bool checked);
+    void on_usesCircles_clicked(bool checked);
+    void on_usesLines_clicked(bool checked);
+    void on_usesSplines_clicked(bool checked);
+
+    void on_shapeOpacitySpinBox_valueChanged(int value);
+
+    void on_candidateShapesPerStepSpinBox_valueChanged(int value);
+    void on_mutationsPerCandidateShapeSpinBox_valueChanged(int value);
+    void on_passesSpinBox_valueChanged(int value);
+    void on_maxThreadsSpinBox_valueChanged(int value);
+
+
 private:
     class ImageJobWindowImpl;
     std::unique_ptr<ImageJobWindowImpl> d;

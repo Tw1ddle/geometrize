@@ -182,23 +182,6 @@ void RecentJobsList::keyPressEvent(QKeyEvent* e)
     }
 }
 
-void RecentJobsList::contextMenuEvent(QContextMenuEvent* e)
-{
-    if(count() == 0) {
-        return;
-    }
-
-    QMenu recentsContextMenu;
-
-    QAction clearAction(tr("Remove all items"));
-    recentsContextMenu.addAction(&clearAction);
-    connect(&clearAction, &QAction::triggered, [this]() {
-        d->clearItemDataAndMenu();
-    });
-
-    recentsContextMenu.exec(e->globalPos());
-}
-
 }
 
 }

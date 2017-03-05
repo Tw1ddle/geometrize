@@ -6,6 +6,7 @@
 
 #include "geometrize/bitmap/bitmap.h"
 #include "geometrize/runner/imagerunner.h"
+#include "geometrize/runner/imagerunneroptions.h"
 #include "geometrize/shaperesult.h"
 
 namespace geometrize
@@ -27,7 +28,7 @@ public:
     ImageJobWorker(const ImageJobWorker&) = delete;
     ~ImageJobWorker() = default;
 
-    void step();
+    void step(geometrize::ImageRunnerOptions options);
 
     geometrize::Bitmap& getCurrent();
     geometrize::Bitmap& getTarget();

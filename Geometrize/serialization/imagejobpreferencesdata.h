@@ -30,7 +30,7 @@ public:
     }
 
 private:
-    std::vector<geometrize::shapes::ShapeTypes> shapes; ///< The shapes that are used for
+    std::vector<geometrize::shapes::ShapeTypes> shapes;
 };
 
 }

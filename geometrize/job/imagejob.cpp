@@ -74,7 +74,7 @@ public:
 
     void stepModel()
     {
-        emit q->signal_step();
+        emit q->signal_step(m_preferences.getImageRunnerOptions());
     }
 
     void modelWillStep()
@@ -85,11 +85,6 @@ public:
     void modelDidStep(std::vector<geometrize::ShapeResult> shapes)
     {
         emit q->signal_modelDidStep(shapes);
-    }
-
-    void applyPreferences(const preferences::ImageJobPreferences& preferences)
-    {
-        // TODO
     }
 
     preferences::ImageJobPreferences& getPreferences()
@@ -107,6 +102,7 @@ private:
     void init()
     {
         qRegisterMetaType<std::vector<geometrize::ShapeResult>>();
+        qRegisterMetaType<geometrize::ImageRunnerOptions>();
 
         m_worker.moveToThread(&m_workerThread);
         m_workerThread.start();
@@ -173,11 +169,6 @@ void ImageJob::modelWillStep()
 void ImageJob::modelDidStep(std::vector<geometrize::ShapeResult> shapes)
 {
     d->modelDidStep(shapes);
-}
-
-void ImageJob::applyPreferences(const preferences::ImageJobPreferences& preferences)
-{
-    d->applyPreferences(preferences);
 }
 
 preferences::ImageJobPreferences& ImageJob::getPreferences()

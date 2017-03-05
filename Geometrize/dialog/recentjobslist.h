@@ -39,7 +39,6 @@ public:
 
 private:
     virtual void keyPressEvent(QKeyEvent* e) override;
-    virtual void contextMenuEvent(QContextMenuEvent* e) override;
 
     class RecentJobsListImpl;
     std::unique_ptr<RecentJobsListImpl> d;

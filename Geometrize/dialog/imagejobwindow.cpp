@@ -15,6 +15,7 @@
 #include "geometrize/core.h"
 #include "geometrize/exporter/bitmapdataexporter.h"
 #include "geometrize/exporter/bitmapexporter.h"
+#include "geometrize/runner/imagerunneroptions.h"
 #include "geometrize/exporter/svgexporter.h"
 
 #include "common/uiactions.h"
@@ -75,6 +76,8 @@ public:
         updateWorkingImage();
 
         setDisplayName(QString::fromStdString(m_job->getDisplayName()));
+
+        syncUserInterfaceWithOptions();
 
         connect(job, &job::ImageJob::signal_modelDidStep, [this](std::vector<geometrize::ShapeResult> shapes) {
             updateWorkingImage();
@@ -215,6 +218,40 @@ public:
         exporter::exportBitmapData(m_job->getCurrent(), path.toStdString());
     }
 
+    void setShapes(const geometrize::shapes::ShapeTypes shapeTypes, const bool enable)
+    {
+        if(enable) {
+            m_job->getPreferences().enableShapeTypes(shapeTypes);
+        } else {
+            m_job->getPreferences().disableShapeTypes(shapeTypes);
+        }
+    }
+
+    void setShapeOpacity(const int opacity)
+    {
+        m_job->getPreferences().setShapeAlpha(opacity);
+    }
+
+    void setCandidateShapesPerStep(const int value)
+    {
+        m_job->getPreferences().setCandidateShapeCount(value);
+    }
+
+    void setMutationsPerCandidateShape(const int value)
+    {
+        m_job->getPreferences().setMaxShapeMutations(value);
+    }
+
+    void setPasses(const int value)
+    {
+        m_job->getPreferences().setPasses(value);
+    }
+
+    void setMaxThreads(const int value)
+    {
+        // TODO
+    }
+
 private:
     void setDisplayName(const QString& displayName)
     {
@@ -231,6 +268,25 @@ private:
     {
         const QPixmap target{image::createPixmap(m_job->getTarget())};
         m_targetPixmapItem.setPixmap(target);
+    }
+
+    void syncUserInterfaceWithOptions()
+    {
+        const geometrize::ImageRunnerOptions opts{m_job->getPreferences().getImageRunnerOptions()}; // Geometrize library options
+
+        const auto usesShape = [&opts](const geometrize::shapes::ShapeTypes type) -> bool {
+            const std::uint32_t shapes{static_cast<std::uint32_t>(opts.shapeTypes)};
+            return shapes & type;
+        };
+
+        ui->usesRectangles->setChecked(usesShape(shapes::RECTANGLE));
+        ui->usesRotatedRectangles->setChecked(usesShape(shapes::ROTATED_RECTANGLE));
+        ui->usesTriangles->setChecked(usesShape(shapes::TRIANGLE));
+        ui->usesEllipses->setChecked(usesShape(shapes::ELLIPSE));
+        ui->usesRotatedEllipses->setChecked(usesShape(shapes::ROTATED_ELLIPSE));
+        ui->usesCircles->setChecked(usesShape(shapes::CIRCLE));
+        ui->usesLines->setChecked(usesShape(shapes::LINE));
+        ui->usesSplines->setChecked(usesShape(shapes::SPLINE));
     }
 
     job::ImageJob* m_job;
@@ -326,6 +382,71 @@ void ImageJobWindow::on_saveWebGLButton_clicked()
 void ImageJobWindow::on_saveRawImageDataButton_clicked()
 {
     d->saveRawImageDataButton();
+}
+
+void ImageJobWindow::on_usesRectangles_clicked(bool checked)
+{
+    d->setShapes(geometrize::shapes::RECTANGLE, checked);
+}
+
+void ImageJobWindow::on_usesRotatedRectangles_clicked(bool checked)
+{
+    d->setShapes(geometrize::shapes::ROTATED_RECTANGLE, checked);
+}
+
+void ImageJobWindow::on_usesTriangles_clicked(bool checked)
+{
+    d->setShapes(geometrize::shapes::TRIANGLE, checked);
+}
+
+void ImageJobWindow::on_usesEllipses_clicked(bool checked)
+{
+    d->setShapes(geometrize::shapes::ELLIPSE, checked);
+}
+
+void ImageJobWindow::on_usesRotatedEllipses_clicked(bool checked)
+{
+    d->setShapes(geometrize::shapes::ROTATED_ELLIPSE, checked);
+}
+
+void ImageJobWindow::on_usesCircles_clicked(bool checked)
+{
+    d->setShapes(geometrize::shapes::CIRCLE, checked);
+}
+
+void ImageJobWindow::on_usesLines_clicked(bool checked)
+{
+    d->setShapes(geometrize::shapes::LINE, checked);
+}
+
+void ImageJobWindow::on_usesSplines_clicked(bool checked)
+{
+    d->setShapes(geometrize::shapes::SPLINE, checked);
+}
+
+void ImageJobWindow::on_shapeOpacitySpinBox_valueChanged(int value)
+{
+    d->setShapeOpacity(value);
+}
+
+void ImageJobWindow::on_candidateShapesPerStepSpinBox_valueChanged(int value)
+{
+    d->setCandidateShapesPerStep(value);
+}
+
+void ImageJobWindow::on_mutationsPerCandidateShapeSpinBox_valueChanged(int value)
+{
+    d->setMutationsPerCandidateShape(value);
+}
+
+void ImageJobWindow::on_passesSpinBox_valueChanged(int value)
+{
+    d->setPasses(value);
+}
+
+void ImageJobWindow::on_maxThreadsSpinBox_valueChanged(int value)
+{
+    d->setMaxThreads(value);
 }
 
 }

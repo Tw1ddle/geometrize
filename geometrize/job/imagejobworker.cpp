@@ -18,10 +18,10 @@ ImageJobWorker::ImageJobWorker(Bitmap& bitmap, const Bitmap& initial) : QObject(
 {
 }
 
-void ImageJobWorker::step()
+void ImageJobWorker::step(const geometrize::ImageRunnerOptions options)
 {
     emit signal_willStep();
-    const std::vector<geometrize::ShapeResult> results{m_runner.step()};
+    const std::vector<geometrize::ShapeResult> results{m_runner.step(options)};
     emit signal_didStep(results);
 }
 

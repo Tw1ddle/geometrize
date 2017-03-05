@@ -8,6 +8,7 @@
 
 #include "geometrize/bitmap/bitmap.h"
 #include "geometrize/shaperesult.h"
+#include "geometrize/runner/imagerunneroptions.h"
 #include "preferences/imagejobpreferences.h"
 
 namespace geometrize
@@ -17,6 +18,7 @@ namespace job
 {
 
 Q_DECLARE_METATYPE(std::vector<geometrize::ShapeResult>) ///< Shape data passed around by the image job worker thread.
+Q_DECLARE_METATYPE(geometrize::ImageRunnerOptions) ///< Image runner options passed to the image job worker thread.
 
 /**
  * @brief The ImageJob class transforms a source image into a collection of shapes approximating the source image.
@@ -67,12 +69,6 @@ public:
      void stepModel();
 
      /**
-      * @brief applyPreferences Applies the given image job preferences to the job.
-      * @param preferences The preferences to apply.
-      */
-     void applyPreferences(const geometrize::preferences::ImageJobPreferences& preferences);
-
-     /**
       * @brief getPreferences Gets a reference to the current preferences of this job.
       * @return A reference to the current preferences of this job.
       */
@@ -82,7 +78,7 @@ signals:
      /**
       * @brief signal_step Signal that the image job emits to make the internal model step.
       */
-     void signal_step();
+     void signal_step(geometrize::ImageRunnerOptions options);
 
      /**
       * @brief signal_modelWillStep Signal that is emitted immediately before the underlying image job model is stepped.

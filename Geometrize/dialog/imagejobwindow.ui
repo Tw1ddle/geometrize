@@ -122,8 +122,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>482</width>
-              <height>735</height>
+              <width>472</width>
+              <height>875</height>
              </rect>
             </property>
             <layout class="QGridLayout" name="gridLayout_2">
@@ -140,27 +140,78 @@
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_8">
                 <item>
-                 <layout class="QFormLayout" name="formLayout_8">
-                  <property name="fieldGrowthPolicy">
-                   <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-                  </property>
+                 <layout class="QFormLayout" name="formLayout_9">
                   <item row="0" column="0">
-                   <widget class="QLabel" name="maximumThreadsLabel">
+                   <widget class="QLabel" name="candidateShapesPerStepLabel">
                     <property name="text">
-                     <string>Maximum Threads</string>
+                     <string>Candidate Shapes Per Step</string>
                     </property>
                    </widget>
                   </item>
                   <item row="0" column="1">
-                   <widget class="QSpinBox" name="maximumThreadsSpinBox">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
+                   <widget class="QSpinBox" name="candidateShapesPerStepSpinBox">
                     <property name="alignment">
-                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                    </property>
+                    <property name="minimum">
+                     <number>1</number>
+                    </property>
+                    <property name="maximum">
+                     <number>5000</number>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="0">
+                   <widget class="QLabel" name="mutationsPerCandidateShapeLabel">
+                    <property name="text">
+                     <string>Mutations Per Candidate Shape</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="1">
+                   <widget class="QSpinBox" name="mutationsPerCandidateShapeSpinBox">
+                    <property name="alignment">
+                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                    </property>
+                    <property name="minimum">
+                     <number>1</number>
+                    </property>
+                    <property name="maximum">
+                     <number>5000</number>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="0">
+                   <widget class="QLabel" name="passesLabel">
+                    <property name="text">
+                     <string>Passes</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="1">
+                   <widget class="QSpinBox" name="passesSpinBox">
+                    <property name="alignment">
+                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                    </property>
+                    <property name="minimum">
+                     <number>1</number>
+                    </property>
+                    <property name="maximum">
+                     <number>50</number>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="3" column="0">
+                   <widget class="QLabel" name="maxThreadsLabel">
+                    <property name="text">
+                     <string>Max Threads</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="3" column="1">
+                   <widget class="QSpinBox" name="maxThreadsSpinBox">
+                    <property name="alignment">
+                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                     </property>
                     <property name="minimum">
                      <number>1</number>
@@ -171,6 +222,13 @@
                    </widget>
                   </item>
                  </layout>
+                </item>
+                <item>
+                 <widget class="Line" name="separator">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                 </widget>
                 </item>
                 <item>
                  <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -206,185 +264,6 @@
                </layout>
               </widget>
              </item>
-             <item row="1" column="0">
-              <widget class="QGroupBox" name="shapeSettingsBox">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="title">
-                <string>Shape Settings</string>
-               </property>
-               <layout class="QVBoxLayout" name="verticalLayout_18">
-                <item>
-                 <widget class="QGroupBox" name="rectanglesGroupBox">
-                  <property name="title">
-                   <string>Rectangles</string>
-                  </property>
-                  <layout class="QFormLayout" name="formLayout_4">
-                   <item row="0" column="0">
-                    <widget class="QCheckBox" name="useRectangles">
-                     <property name="text">
-                      <string>Enabled</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="0" column="1">
-                    <layout class="QFormLayout" name="formLayout_10"/>
-                   </item>
-                  </layout>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QGroupBox" name="rotatedRectanglesGroupBox">
-                  <property name="title">
-                   <string>Rotated Rectangles</string>
-                  </property>
-                  <layout class="QFormLayout" name="formLayout_6">
-                   <item row="0" column="0">
-                    <widget class="QCheckBox" name="useRotatedRectangles">
-                     <property name="text">
-                      <string>Enabled</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="0" column="1">
-                    <layout class="QFormLayout" name="formLayout_11"/>
-                   </item>
-                  </layout>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QGroupBox" name="trianglesGroupBox">
-                  <property name="title">
-                   <string>Triangles</string>
-                  </property>
-                  <layout class="QFormLayout" name="formLayout_7">
-                   <item row="0" column="0">
-                    <widget class="QCheckBox" name="useTriangles">
-                     <property name="text">
-                      <string>Enabled</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="0" column="1">
-                    <layout class="QFormLayout" name="formLayout_12"/>
-                   </item>
-                  </layout>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QGroupBox" name="ellipsesGroupBox">
-                  <property name="title">
-                   <string>Ellipses</string>
-                  </property>
-                  <layout class="QFormLayout" name="formLayout_2">
-                   <item row="0" column="0">
-                    <widget class="QCheckBox" name="useEllipses">
-                     <property name="text">
-                      <string>Enabled</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="0" column="1">
-                    <layout class="QFormLayout" name="formLayout_13"/>
-                   </item>
-                  </layout>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QGroupBox" name="rotatedEllipsesGroupBox">
-                  <property name="title">
-                   <string>Rotated Ellipses</string>
-                  </property>
-                  <layout class="QFormLayout" name="formLayout_5">
-                   <item row="0" column="0">
-                    <widget class="QCheckBox" name="useRotatedEllipses">
-                     <property name="text">
-                      <string>Enabled</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="0" column="1">
-                    <layout class="QFormLayout" name="formLayout_14"/>
-                   </item>
-                  </layout>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QGroupBox" name="circlesGroupBox">
-                  <property name="title">
-                   <string>Circles</string>
-                  </property>
-                  <layout class="QFormLayout" name="formLayout_3">
-                   <item row="0" column="0">
-                    <widget class="QCheckBox" name="useCircles">
-                     <property name="text">
-                      <string>Enabled</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="0" column="1">
-                    <layout class="QFormLayout" name="formLayout_15"/>
-                   </item>
-                  </layout>
-                 </widget>
-                </item>
-                <item>
-                 <spacer name="verticalSpacer">
-                  <property name="orientation">
-                   <enum>Qt::Vertical</enum>
-                  </property>
-                  <property name="sizeType">
-                   <enum>QSizePolicy::Fixed</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>20</width>
-                    <height>10</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item>
-                 <layout class="QVBoxLayout" name="verticalLayout_15">
-                  <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout">
-                    <item>
-                     <widget class="QLabel" name="shapesPerStepLabel">
-                      <property name="text">
-                       <string>Shapes Per Step</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QSpinBox" name="shapesPerStepSpinBox">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="correctionMode">
-                       <enum>QAbstractSpinBox::CorrectToNearestValue</enum>
-                      </property>
-                      <property name="minimum">
-                       <number>1</number>
-                      </property>
-                      <property name="maximum">
-                       <number>15</number>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
-                  </item>
-                 </layout>
-                </item>
-               </layout>
-              </widget>
-             </item>
              <item row="0" column="0">
               <widget class="QGroupBox" name="targetImageSettingsBox">
                <property name="sizePolicy">
@@ -402,7 +281,7 @@
                   <item>
                    <layout class="QVBoxLayout" name="verticalLayout">
                     <item>
-                     <widget class="QLabel" name="label">
+                     <widget class="QLabel" name="targetImageLabel">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                         <horstretch>0</horstretch>
@@ -434,7 +313,7 @@
                   <item>
                    <layout class="QVBoxLayout" name="verticalLayout_2">
                     <item>
-                     <widget class="QPushButton" name="pushButton_2">
+                     <widget class="QPushButton" name="selectGradientTargetImageButton">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                         <horstretch>0</horstretch>
@@ -447,7 +326,7 @@
                      </widget>
                     </item>
                     <item>
-                     <widget class="QPushButton" name="pushButton">
+                     <widget class="QPushButton" name="selectTargetImageButton">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                         <horstretch>0</horstretch>
@@ -485,7 +364,7 @@
                    <number>20</number>
                   </property>
                   <item row="0" column="0">
-                   <widget class="QLabel" name="label_2">
+                   <widget class="QLabel" name="targetOpacityLabel">
                     <property name="sizePolicy">
                      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                       <horstretch>0</horstretch>
@@ -516,14 +395,201 @@
                     </property>
                    </widget>
                   </item>
-                  <item row="1" column="0">
-                   <widget class="Line" name="line">
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
+                 </layout>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QGroupBox" name="shapeSettingsBox">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="title">
+                <string>Shape Settings</string>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_18">
+                <item>
+                 <layout class="QFormLayout" name="formLayout_17">
+                  <item row="0" column="0">
+                   <widget class="QLabel" name="shapeOpacityLabel">
+                    <property name="text">
+                     <string>Shape Opacity</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="1">
+                   <widget class="QSpinBox" name="shapeOpacitySpinBox">
+                    <property name="alignment">
+                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                    </property>
+                    <property name="minimum">
+                     <number>0</number>
+                    </property>
+                    <property name="maximum">
+                     <number>255</number>
+                    </property>
+                    <property name="value">
+                     <number>0</number>
                     </property>
                    </widget>
                   </item>
                  </layout>
+                </item>
+                <item>
+                 <widget class="QGroupBox" name="rectanglesGroupBox">
+                  <property name="title">
+                   <string>Rectangles</string>
+                  </property>
+                  <layout class="QFormLayout" name="formLayout_4">
+                   <item row="0" column="0">
+                    <widget class="QCheckBox" name="usesRectangles">
+                     <property name="text">
+                      <string>Enabled</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <layout class="QFormLayout" name="formLayout_10"/>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QGroupBox" name="rotatedRectanglesGroupBox">
+                  <property name="title">
+                   <string>Rotated Rectangles</string>
+                  </property>
+                  <layout class="QFormLayout" name="formLayout_6">
+                   <item row="0" column="0">
+                    <widget class="QCheckBox" name="usesRotatedRectangles">
+                     <property name="text">
+                      <string>Enabled</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <layout class="QFormLayout" name="formLayout_11"/>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QGroupBox" name="trianglesGroupBox">
+                  <property name="title">
+                   <string>Triangles</string>
+                  </property>
+                  <layout class="QFormLayout" name="formLayout_7">
+                   <item row="0" column="0">
+                    <widget class="QCheckBox" name="usesTriangles">
+                     <property name="text">
+                      <string>Enabled</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <layout class="QFormLayout" name="formLayout_12"/>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QGroupBox" name="ellipsesGroupBox">
+                  <property name="title">
+                   <string>Ellipses</string>
+                  </property>
+                  <layout class="QFormLayout" name="formLayout_2">
+                   <item row="0" column="0">
+                    <widget class="QCheckBox" name="usesEllipses">
+                     <property name="text">
+                      <string>Enabled</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <layout class="QFormLayout" name="formLayout_13"/>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QGroupBox" name="rotatedEllipsesGroupBox">
+                  <property name="title">
+                   <string>Rotated Ellipses</string>
+                  </property>
+                  <layout class="QFormLayout" name="formLayout_5">
+                   <item row="0" column="0">
+                    <widget class="QCheckBox" name="usesRotatedEllipses">
+                     <property name="text">
+                      <string>Enabled</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <layout class="QFormLayout" name="formLayout_14"/>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QGroupBox" name="circlesGroupBox">
+                  <property name="title">
+                   <string>Circles</string>
+                  </property>
+                  <layout class="QFormLayout" name="formLayout_3">
+                   <item row="0" column="0">
+                    <widget class="QCheckBox" name="usesCircles">
+                     <property name="text">
+                      <string>Enabled</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <layout class="QFormLayout" name="formLayout_15"/>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QGroupBox" name="linesGroupBox">
+                  <property name="title">
+                   <string>Lines</string>
+                  </property>
+                  <layout class="QFormLayout" name="formLayout_20">
+                   <item row="0" column="0">
+                    <widget class="QCheckBox" name="usesLines">
+                     <property name="text">
+                      <string>Enabled</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <layout class="QFormLayout" name="formLayout_18"/>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QGroupBox" name="splinesGroupBox">
+                  <property name="title">
+                   <string>Splines</string>
+                  </property>
+                  <layout class="QFormLayout" name="formLayout_21">
+                   <item row="0" column="0">
+                    <widget class="QCheckBox" name="usesSplines">
+                     <property name="text">
+                      <string>Enabled</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <layout class="QFormLayout" name="formLayout_19"/>
+                   </item>
+                  </layout>
+                 </widget>
                 </item>
                </layout>
               </widget>
