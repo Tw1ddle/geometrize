@@ -52,14 +52,6 @@ public:
     void setMaxShapeMutations(std::uint32_t maxMutations);
     void setPasses(std::uint32_t passes);
 
-signals:
-    void signal_shapeTypesEnabled(geometrize::shapes::ShapeTypes current, geometrize::shapes::ShapeTypes enabled);
-    void signal_shapeTypesDisabled(geometrize::shapes::ShapeTypes current, geometrize::shapes::ShapeTypes disabled);
-    void signal_alphaChanged(std::uint8_t from, std::uint8_t to);
-    void signal_candidateShapeCountChanged(std::uint32_t from, std::uint32_t to);
-    void signal_maxShapeMutationsChanged(std::uint32_t from, std::uint32_t to);
-    void signal_passesChanged(std::uint32_t from, std::uint32_t to);
-
 private:
     class ImageJobPreferencesImpl;
     std::unique_ptr<ImageJobPreferencesImpl> d;

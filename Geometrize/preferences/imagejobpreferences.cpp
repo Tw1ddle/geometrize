@@ -56,44 +56,32 @@ public:
 
     void enableShapeTypes(const geometrize::shapes::ShapeTypes shapes)
     {
-        const geometrize::shapes::ShapeTypes oldShapeTypes{m_options.shapeTypes};
         m_options.shapeTypes = static_cast<geometrize::shapes::ShapeTypes>(static_cast<std::uint32_t>(m_options.shapeTypes) | static_cast<std::uint32_t>(shapes));
-        emit q->signal_shapeTypesEnabled(oldShapeTypes, shapes);
     }
 
     void disableShapeTypes(const geometrize::shapes::ShapeTypes shapes)
     {
-        const geometrize::shapes::ShapeTypes oldShapeTypes{m_options.shapeTypes};
         m_options.shapeTypes = static_cast<geometrize::shapes::ShapeTypes>(static_cast<std::uint32_t>(m_options.shapeTypes) &~ static_cast<std::uint32_t>(shapes));
-        emit q->signal_shapeTypesDisabled(oldShapeTypes, shapes);
     }
 
     void setShapeAlpha(const std::uint8_t alpha)
     {
-        const std::uint8_t oldAlpha{m_options.alpha};
         m_options.alpha = alpha;
-        emit q->signal_alphaChanged(oldAlpha, alpha);
     }
 
     void setCandidateShapeCount(const std::uint32_t shapeCount)
     {
-        const std::uint32_t oldCount{m_options.shapeCount};
         m_options.shapeCount = shapeCount;
-        emit q->signal_candidateShapeCountChanged(oldCount, shapeCount);
     }
 
     void setMaxShapeMutations(const std::uint32_t maxMutations)
     {
-        const std::uint32_t oldMaxMutations{m_options.maxShapeMutations};
         m_options.maxShapeMutations = maxMutations;
-        emit q->signal_maxShapeMutationsChanged(oldMaxMutations, maxMutations);
     }
 
     void setPasses(const std::uint32_t passes)
     {
-        const std::uint32_t oldPasses{m_options.passes};
         m_options.passes = passes;
-        emit q->signal_passesChanged(oldPasses, passes);
     }
 
 private:
