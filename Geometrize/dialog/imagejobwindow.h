@@ -66,7 +66,6 @@ private slots:
     void on_candidateShapesPerStepSlider_valueChanged(int value);
     void on_mutationsPerCandidateShapeSlider_valueChanged(int value);
     void on_passesSlider_valueChanged(int value);
-    void on_maxThreadsSlider_valueChanged(int value);
 
 private:
     class ImageJobWindowImpl;

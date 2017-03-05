@@ -244,11 +244,6 @@ public:
         m_job->getPreferences().setPasses(value);
     }
 
-    void setMaxThreads(const int value)
-    {
-        // TODO
-    }
-
 private:
     void setDisplayName(const QString& displayName)
     {
@@ -292,7 +287,6 @@ private:
         ui->candidateShapesPerStepSlider->setValue(opts.shapeCount);
         ui->mutationsPerCandidateShapeSlider->setValue(opts.maxShapeMutations);
         ui->passesSlider->setValue(opts.passes);
-        //ui->maxThreadsSlider->setValue(opts.maxThreads); // TODO
     }
 
     job::ImageJob* m_job;
@@ -448,11 +442,6 @@ void ImageJobWindow::on_mutationsPerCandidateShapeSlider_valueChanged(int value)
 void ImageJobWindow::on_passesSlider_valueChanged(int value)
 {
     d->setPasses(value);
-}
-
-void ImageJobWindow::on_maxThreadsSlider_valueChanged(int value)
-{
-    d->setMaxThreads(value);
 }
 
 }
