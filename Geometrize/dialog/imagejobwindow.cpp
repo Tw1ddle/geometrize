@@ -143,7 +143,7 @@ public:
             return;
         }
 
-        exporter::exportImage(m_job->getCurrent(), path.toStdString());
+        geometrize::exporter::exportImage(m_job->getCurrent(), path.toStdString());
     }
 
     void saveSVG() const
@@ -153,8 +153,8 @@ public:
             return;
         }
 
-        // TODO record added shapes and pass them to export svg data
-        //exporter::exportSvg()
+        const std::string data{geometrize::exporter::exportSVG(m_shapes, m_job->getCurrent().getWidth(), m_job->getCurrent().getHeight())};
+        util::writeStringToFile(data, path.toStdString());
     }
 
     void saveGeometryData() const
@@ -164,14 +164,14 @@ public:
             return;
         }
 
-        exporter::ShapeDataFormat format = exporter::ShapeDataFormat::JSON;
+        geometrize::exporter::ShapeDataFormat format = exporter::ShapeDataFormat::JSON;
         if(path.endsWith("json")) {
-            format = exporter::ShapeDataFormat::JSON;
+            format = geometrize::exporter::ShapeDataFormat::JSON;
         } else if(path.endsWith("txt")) {
-            format = exporter::ShapeDataFormat::CUSTOM_ARRAY;
+            format = geometrize::exporter::ShapeDataFormat::CUSTOM_ARRAY;
         }
 
-        const std::string data{exporter::exportShapeData(m_shapes, format)};
+        const std::string data{geometrize::exporter::exportShapeData(m_shapes, format)};
         util::writeStringToFile(data, path.toStdString());
     }
 
@@ -182,7 +182,7 @@ public:
             return;
         }
 
-        exporter::exportGIF(*m_initialJobImage, m_job->getTarget(), m_shapes, path.toStdString());
+        geometrize::exporter::exportGIF(*m_initialJobImage, m_job->getTarget(), m_shapes, path.toStdString());
     }
 
     void saveCanvasAnimation() const
@@ -192,7 +192,7 @@ public:
             return;
         }
 
-        const std::string pageSource{exporter::exportCanvasAnimation(m_shapes)};
+        const std::string pageSource{geometrize::exporter::exportCanvasAnimation(m_shapes)};
         util::writeStringToFile(pageSource, path.toStdString());
     }
 
@@ -203,7 +203,7 @@ public:
             return;
         }
 
-        const std::string pageSource{exporter::exportWebGLAnimation(m_shapes)};
+        const std::string pageSource{geometrize::exporter::exportWebGLAnimation(m_shapes)};
         util::writeStringToFile(pageSource, path.toStdString());
     }
 
@@ -214,7 +214,7 @@ public:
             return;
         }
 
-        exporter::exportBitmapData(m_job->getCurrent(), path.toStdString());
+        geometrize::exporter::exportBitmapData(m_job->getCurrent(), path.toStdString());
     }
 
     void setShapes(const geometrize::shapes::ShapeTypes shapeTypes, const bool enable)

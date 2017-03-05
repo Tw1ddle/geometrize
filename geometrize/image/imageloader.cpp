@@ -6,6 +6,7 @@
 #include <QPixmap>
 #include <QString>
 
+#include "geometrize/bitmap/bitmap.h"
 #include "geometrize/core.h"
 
 namespace geometrize
