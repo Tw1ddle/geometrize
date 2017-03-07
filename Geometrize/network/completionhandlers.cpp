@@ -26,6 +26,7 @@ void onImageDownloadComplete(network::Downloader* self, QNetworkReply::NetworkEr
 
     QImage image;
     image.loadFromData(self->getDownloadedData());
+    image = image.convertToFormat(QImage::Format_RGBA8888); // Note doing this to guarantee format is RGBA8888
 
     util::openImageJobFromWeb(image, self->getUrl().toString(), true);
 

@@ -55,8 +55,7 @@ void openImageJobFromWeb(const QImage& image, const QString& url, bool addToRece
         common::app::SharedApp::get().getRecentFiles().add(url, url);
     }
 
-    // TODO
-    //geometrize::job::createImageJobAndWindow(url.toLocalFile().toStdString(), url.toLocalFile().toStdString());
+    geometrize::job::createImageJobAndWindow(url.toStdString(), image);
 }
 
 bool openTemplate(chaiscript::ChaiScript& engine, const std::string& templateFolder)
