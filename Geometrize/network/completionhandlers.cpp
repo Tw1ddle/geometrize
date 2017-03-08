@@ -7,6 +7,7 @@
 #include <QString>
 
 #include "job/imagejob.h"
+#include "job/imagejobcreator.h"
 #include "job/jobutil.h"
 #include "network/downloader.h"
 #include "network/networkactions.h"
@@ -20,24 +21,46 @@ namespace network
 namespace completionhandlers
 {
 
-void onImageDownloadComplete(network::Downloader* self, QNetworkReply::NetworkError error)
+void onImageDownloadComplete(network::Downloader* self, const QNetworkReply::NetworkError error)
 {
-    qDebug() << "FINISHED DOWNLOADING IMAGE WITH ERROR" << error; // TODO error checks
+    const QByteArray data{self->getDownloadedData()};
+    const QUrl url{self->getUrl()};
+    self->deleteLater();
 
-    QImage image;
-    image.loadFromData(self->getDownloadedData());
-    image = image.convertToFormat(QImage::Format_RGBA8888); // Note doing this to guarantee format is RGBA8888
+    if(error != QNetworkReply::NoError) {
+        // TODO post error to console or somewhere?
+        qDebug() << "FINISHED DOWNLOADING WEBPAGE WITH ERROR" << error;
+        return;
+    }
 
-    util::openImageJobFromWeb(image, self->getUrl().toString(), true);
+    QImage image{QImage::fromData(data)};
+    if(image.isNull()) {
+        qDebug() << "FAILED TO CREATE IMAGE FROM DOWNLOADED DATA BUFFER";
+        return;
+    }
 
-    delete self;
+    image = image.convertToFormat(QImage::Format_RGBA8888); // Note: to guarantee format is RGBA8888
+    if(image.format() != QImage::Format_RGBA8888) {
+        qDebug() << "FAILED TO CONVERT IMAGE TO RGBA8888";
+        return;
+    }
+
+    job::createImageJobAndWindow(url.toString().toStdString(), image);
 }
 
-void onWebpageDownloadComplete(network::Downloader* self, QNetworkReply::NetworkError error)
+void onWebpageDownloadComplete(network::Downloader* self, const QNetworkReply::NetworkError error)
 {
-    qDebug() << "FINISHED DOWNLOADING WEBPAGE WITH ERROR" << error; // TODO error checks
+    const QByteArray data{self->getDownloadedData()};
+    const QUrl url{self->getUrl()};
+    self->deleteLater();
 
-    const QString document(self->getDownloadedData());
+    if(error != QNetworkReply::NoError) {
+        // TODO post error to console or somewhere?
+        qDebug() << "FINISHED DOWNLOADING WEBPAGE WITH ERROR" << error; // TODO error checks
+        return;
+    }
+
+    const QString document(data);
 
     QRegExp imageTagRegex("\\<img[^\\>]*src\\s*=\\s*\"([^\"]*)\"[^\\>]*\\>", Qt::CaseInsensitive);
     imageTagRegex.setMinimal(true);
@@ -52,23 +75,33 @@ void onWebpageDownloadComplete(network::Downloader* self, QNetworkReply::Network
         urlMatches.append(imageTagRegex.cap(1)); // Should hold only src property
     }
 
-    qDebug() << imageMatches;
-    qDebug() << urlMatches;
-
     QList<QUrl> imageUrls;
     for(const QString& url : urlMatches) {
         imageUrls.push_back(QUrl(url));
     }
 
-    const QString baseUrl{self->getUrl().adjusted(QUrl::RemoveFilename | QUrl::StripTrailingSlash).toString()};
-    for(QUrl& url : imageUrls) {
-        if(url.isRelative()) {
-            url = QUrl(baseUrl + url.toString());
-        }
-        network::downloadImage(url, onImageDownloadComplete);
-    }
+    const QString currentPathUrl{url.adjusted(QUrl::RemoveFilename | QUrl::StripTrailingSlash | QUrl::RemoveFragment).toString()};
+    for(QUrl& imageUrl : imageUrls) {
 
-    delete self;
+        // Special cases for relative URLs
+        if(imageUrl.scheme().isEmpty()) {
+            const QString imageUrlString{imageUrl.toString(QUrl::PrettyDecoded)};
+            if(imageUrlString.startsWith("//")) {
+                // Some relative links are like //thedomain.com/example.png - so are relative and just missing the scheme
+                if(!url.scheme().isEmpty()) {
+                    imageUrl.setScheme(url.scheme()); // Take the scheme from the source page
+                } else {
+                    imageUrl.setScheme("http"); // Assume HTTP if it's '//' relative and have no clue about the scheme
+                }
+            } else if(imageUrlString.startsWith("/")) {
+                imageUrl = imageUrl.resolved(currentPathUrl); // A URL relative to the current path
+            } else {
+                imageUrl = QUrl(currentPathUrl + imageUrl.toString()); // Should be relative path based on the document root, so append the base URL
+            }
+        }
+
+        network::downloadImage(imageUrl, onImageDownloadComplete);
+    }
 }
 
 }

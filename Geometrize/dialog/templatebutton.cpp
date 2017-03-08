@@ -49,7 +49,7 @@ public:
             ui->titleLabel->setText(QString::fromStdString(m_manifest.getName()));
         });
 
-        const QString firstImageFile{QString::fromStdString(util::getFirstFileWithExtensions(m_templateFolder.toStdString(), format::getSupportedImageFileExtensions(false)))};
+        const QString firstImageFile{QString::fromStdString(util::getFirstFileWithExtensions(m_templateFolder.toStdString(), format::getReadableImageFileExtensions(false)))};
         QFuture<QImage> thumbnailFuture{QtConcurrent::run(this, &TemplateButtonImpl::setupThumbnail, firstImageFile)};
         m_thumbnailLoaderWatcher.setFuture(thumbnailFuture);
     }

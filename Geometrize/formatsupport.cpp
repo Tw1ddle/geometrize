@@ -1,15 +1,26 @@
 #include "formatsupport.h"
 
+#include <QImageReader>
+
 namespace geometrize
 {
 
 namespace format
 {
 
-std::vector<std::string> getSupportedImageFileExtensions(const bool includeDotPrefix)
+std::vector<std::string> getReadableImageFileExtensions(const bool includeDotPrefix)
 {
-    const static std::vector<std::string> extensions{"jpg", "png", "jpeg"}; // TODO case sensitivity?
-    // TODO
+    std::vector<std::string> extensions;
+
+    const QList<QByteArray> supportedImageFormats{QImageReader::supportedImageFormats()};
+    for(int i = 0; i < supportedImageFormats.count(); i++) {
+        QString format;
+        if(includeDotPrefix) {
+            format += ".";
+        }
+        format += QString(supportedImageFormats.at(i)).toLower();
+        extensions.push_back(format.toStdString());
+    }
 
     return extensions;
 }

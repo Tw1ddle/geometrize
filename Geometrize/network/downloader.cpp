@@ -19,11 +19,12 @@ public:
             const QNetworkReply::NetworkError error{pReply->error()};
             pReply->deleteLater();
 
-            emit q->signal_downloaded(q, error); // Note caller may delete the Downloader instance at this point
+            emit q->signal_downloaded(q, error); // Note caller may delete/deleteLater the Downloader instance at this point
         });
         q->connect(q, &Downloader::signal_downloaded, onDownloaded);
 
-        const QNetworkRequest request(m_url);
+        QNetworkRequest request(m_url);
+        request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true); // So that it can handle redirects e.g. Wikipedia random article links
         m_webCtrl.get(request);
     }
     DownloaderImpl& operator=(const DownloaderImpl&) = delete;

@@ -41,21 +41,19 @@ void openJobs(const QStringList& urls, const bool addToRecents)
         const QUrl url{QUrl::fromUserInput(s)};
         if(url.isLocalFile()) {
             geometrize::job::createImageJobAndWindow(url.toLocalFile().toStdString(), url.toLocalFile().toStdString());
-        } else if(url.toString().endsWith(".png")) { // TODO need list of supported formats
-            network::downloadImage(url, network::completionhandlers::onImageDownloadComplete);
-        } else {
-            network::downloadWebpage(url, network::completionhandlers::onWebpageDownloadComplete);
+            continue;
         }
-    }
-}
 
-void openImageJobFromWeb(const QImage& image, const QString& url, bool addToRecents)
-{
-    if(addToRecents) {
-        common::app::SharedApp::get().getRecentFiles().add(url, url);
-    }
+        std::vector<std::string> imageExtensions{format::getReadableImageFileExtensions(true)};
+        for(const std::string& ext : imageExtensions) {
+            if(url.toString().endsWith(QString::fromStdString(ext), Qt::CaseInsensitive)) {
+                network::downloadImage(url, network::completionhandlers::onImageDownloadComplete);
+                continue;
+            }
+        }
 
-    geometrize::job::createImageJobAndWindow(url.toStdString(), image);
+        network::downloadWebpage(url, network::completionhandlers::onWebpageDownloadComplete);
+    }
 }
 
 bool openTemplate(chaiscript::ChaiScript& engine, const std::string& templateFolder)

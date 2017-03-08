@@ -15,11 +15,11 @@ namespace format
 {
 
 /**
- * @brief getSupportedImageFileExtensions Gets the supported image file extensions for loading.
+ * @brief getReadableImageFileExtensions Gets the lower-case image file extensions that have read support.
  * @param includeDotPrefix Whether to include the dot prefix on file extensions e.g. "jpg" or ".jpg".
  * @return The list of supported image file extensions.
  */
-std::vector<std::string> getSupportedImageFileExtensions(const bool includeDotPrefix);
+std::vector<std::string> getReadableImageFileExtensions(bool includeDotPrefix);
 
 /**
  * @brief getSupportedTemplateManifestFileExtensions Gets the supported template manifest file extensions for serialization and de-serialization.

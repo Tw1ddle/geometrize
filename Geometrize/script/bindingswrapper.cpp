@@ -93,7 +93,7 @@ std::vector<std::string> getFilesWithExtension(const std::string& dirPath, const
 
 std::vector<std::string> getSupportedImageFileExtensions()
 {
-    return geometrize::format::getSupportedImageFileExtensions(false); // TODO?
+    return geometrize::format::getReadableImageFileExtensions(false);
 }
 
 std::vector<std::string> getScriptsForPath(const std::string& dirPath)
