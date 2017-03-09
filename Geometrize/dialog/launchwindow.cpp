@@ -82,7 +82,6 @@ public:
 
     void loadConsoleHistory()
     {
-        // TODO possibly add helper function to make this instead of appending slash?
         std::vector<std::string> history{util::readStringVector(util::getAppDataLocation().append("/").append(geometrize::dialog::ScriptConsole::launchConsoleHistoryFilename))};
         ui->consoleWidget->setHistory(history);
     }
@@ -194,9 +193,11 @@ void LaunchWindow::on_openImageButton_clicked()
 void LaunchWindow::on_openLinkButton_clicked()
 {
     const QUrl url{common::ui::openGetUrlDialog(this)};
-    if(url.isValid()) {
-        geometrize::util::openJobs({ url.toString() }, true);
+    if(!url.isValid()) {
+        return;
     }
+
+    geometrize::util::openJobs({ url.toString() }, true);
 }
 
 void LaunchWindow::on_runScriptButton_clicked()
