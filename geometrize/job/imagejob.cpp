@@ -3,8 +3,6 @@
 #include <atomic>
 #include <vector>
 
-#include <QDebug>
-#include <QObject>
 #include <QThread>
 
 #include "geometrize/bitmap/bitmap.h"
