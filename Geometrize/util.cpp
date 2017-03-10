@@ -2,6 +2,7 @@
 
 #include <assert.h>
 #include <fstream>
+#include <random>
 
 #include <QApplication>
 #include <QClipboard>
@@ -230,6 +231,22 @@ bool writeStringToFile(const std::string& str, const std::string& path)
     }
 
     return true;
+}
+
+std::string percentEncode(const std::string& str)
+{
+    const QString s{QString::fromStdString(str)};
+    return QUrl::toPercentEncoding(s).toStdString();
+}
+
+int randomInRange(const int lower, const int upper)
+{
+    assert(lower <= upper);
+
+    std::random_device rd;
+    std::mt19937 eng(rd());
+    std::uniform_int_distribution<> distr(lower, upper);
+    return distr(eng);
 }
 
 }

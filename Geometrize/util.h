@@ -160,6 +160,21 @@ std::string getAppDataLocation();
  */
 bool writeStringToFile(const std::string& str, const std::string& path);
 
+/**
+ * @brief percentEncode Returns a percent-encoded copy of the input string.
+ * @param str The input string, to be percent-encoded.
+ * @return The percent-encoded input string.
+ */
+std::string percentEncode(const std::string& str);
+
+/**
+ * @brief randomInRange Returns a random integer in the range [lower, upper], inclusive.
+ * @param lower The minimum value.
+ * @param upper The maximum value.
+ * @return An integer in the range [lower, upper] inclusive.
+ */
+int randomInRange(int lower, int upper);
+
 }
 
 }

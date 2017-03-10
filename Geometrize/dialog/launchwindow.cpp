@@ -152,12 +152,27 @@ void LaunchWindow::dragEnterEvent(QDragEnterEvent* event)
 void LaunchWindow::dropEvent(QDropEvent* event)
 {
     const QList<QUrl> urls{geometrize::format::getUrls(event->mimeData())};
+    QStringList scripts;
     QStringList jobs;
     for(const QUrl& url : urls) {
-        jobs.push_back(url.toString());
+        const QString urlString{url.toString()};
+
+        if(urlString.endsWith(".chai") && url.isLocalFile()) {
+            scripts.push_back(url.toLocalFile());
+        } else {
+            jobs.push_back(urlString);
+        }
     }
 
-    util::openJobs(jobs, true);
+    if(!scripts.empty()) {
+        for(const QString& scriptPath : scripts) {
+            geometrize::script::runScript(util::readFileAsString(scriptPath.toStdString()));
+        }
+    }
+
+    if(!jobs.empty()) {
+        util::openJobs(jobs, true);
+    }
 }
 
 void LaunchWindow::closeEvent(QCloseEvent* /*event*/)

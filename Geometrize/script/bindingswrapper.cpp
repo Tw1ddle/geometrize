@@ -157,6 +157,16 @@ bool writeStringToFile(const std::string& str, const std::string& path)
     return geometrize::util::writeStringToFile(str, path);
 }
 
+std::string percentEncode(const std::string& str)
+{
+    return geometrize::util::percentEncode(str);
+}
+
+int randomInRange(const int lower, const int upper)
+{
+    return geometrize::util::randomInRange(lower, upper);
+}
+
 }
 
 }

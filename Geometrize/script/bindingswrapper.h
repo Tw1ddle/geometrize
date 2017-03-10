@@ -61,6 +61,10 @@ std::string getAppDataLocation();
 
 bool writeStringToFile(const std::string& str, const std::string& path);
 
+std::string percentEncode(const std::string& str);
+
+int randomInRange(int lower, int upper);
+
 }
 
 }

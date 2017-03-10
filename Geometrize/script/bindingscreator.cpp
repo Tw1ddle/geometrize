@@ -56,6 +56,10 @@ std::shared_ptr<chaiscript::Module> createBindings()
 
     ADD_FREE_FUN(writeStringToFile);
 
+    ADD_FREE_FUN(percentEncode);
+
+    ADD_FREE_FUN(randomInRange);
+
     return module;
 }
 
