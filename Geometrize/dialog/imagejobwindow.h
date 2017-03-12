@@ -61,6 +61,7 @@ private slots:
     void on_usesCircles_clicked(bool checked);
     void on_usesLines_clicked(bool checked);
     void on_usesSplines_clicked(bool checked);
+    void on_usesPolylines_clicked(bool checked);
 
     void on_shapeOpacitySlider_valueChanged(int value);
     void on_candidateShapesPerStepSlider_valueChanged(int value);

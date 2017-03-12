@@ -557,6 +557,25 @@
                   </layout>
                  </widget>
                 </item>
+                <item>
+                 <widget class="QGroupBox" name="polylinesGroupBox">
+                  <property name="title">
+                   <string>Polylines</string>
+                  </property>
+                  <layout class="QFormLayout" name="formLayout_16">
+                   <item row="0" column="0">
+                    <widget class="QCheckBox" name="usesPolylines">
+                     <property name="text">
+                      <string>Enabled</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <layout class="QFormLayout" name="formLayout_8"/>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
                </layout>
               </widget>
              </item>

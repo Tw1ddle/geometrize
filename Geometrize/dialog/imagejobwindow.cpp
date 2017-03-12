@@ -153,7 +153,7 @@ public:
             return;
         }
 
-        const std::string data{geometrize::exporter::exportSVG(m_shapes, m_job->getCurrent().getWidth(), m_job->getCurrent().getHeight())};
+        const std::string data{geometrize::exporter::exportSVG(m_shapes, m_job->getCurrent().getWidth(), m_job->getCurrent().getHeight(), geometrize::core::getAverageImageColor(m_job->getTarget()))};
         util::writeStringToFile(data, path.toStdString());
     }
 
@@ -279,6 +279,7 @@ private:
         ui->usesCircles->setChecked(usesShape(shapes::CIRCLE));
         ui->usesLines->setChecked(usesShape(shapes::LINE));
         ui->usesSplines->setChecked(usesShape(shapes::SPLINE));
+        ui->usesPolylines->setChecked(usesShape(shapes::POLYLINE));
 
         ui->shapeOpacitySlider->setValue(opts.alpha);
         ui->candidateShapesPerStepSlider->setValue(opts.shapeCount);
@@ -418,6 +419,11 @@ void ImageJobWindow::on_usesLines_clicked(bool checked)
 void ImageJobWindow::on_usesSplines_clicked(bool checked)
 {
     d->setShapes(geometrize::shapes::SPLINE, checked);
+}
+
+void ImageJobWindow::on_usesPolylines_clicked(bool checked)
+{
+    d->setShapes(geometrize::shapes::POLYLINE, checked);
 }
 
 void ImageJobWindow::on_shapeOpacitySlider_valueChanged(int value)
