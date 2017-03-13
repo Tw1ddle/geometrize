@@ -47,6 +47,7 @@ private slots:
     void on_stepButton_clicked();
     void on_saveImageButton_clicked();
     void on_saveSVGButton_clicked();
+    void on_saveRasterizedSVGButton_clicked();
     void on_saveGeometryDataButton_clicked();
     void on_saveGIFButton_clicked();
     void on_saveCanvasAnimationButton_clicked();

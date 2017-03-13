@@ -9,7 +9,9 @@
 #include <QFileDialog>
 #include <QGraphicsPixmapItem>
 #include <QMessageBox>
+#include <QPainter>
 #include <QPixmap>
+#include <QSvgRenderer>
 
 #include "geometrize/bitmap/bitmap.h"
 #include "geometrize/core.h"
@@ -155,6 +157,37 @@ public:
 
         const std::string data{geometrize::exporter::exportSVG(m_shapes, m_job->getCurrent().getWidth(), m_job->getCurrent().getHeight(), geometrize::core::getAverageImageColor(m_job->getTarget()))};
         util::writeStringToFile(data, path.toStdString());
+    }
+
+    void saveRasterizedSVG() const
+    {
+        const QString path{common::ui::openSaveRasterizedSVGPathPickerDialog(q)};
+        if(path.isEmpty()) {
+            return;
+        }
+
+        const int width{ui->svgImageWidthSpinBox->value()};
+        const int height{ui->svgImageHeightSpinBox->value()};
+
+        const std::string data{geometrize::exporter::exportSVG(m_shapes, m_job->getCurrent().getWidth(), m_job->getCurrent().getHeight(), geometrize::core::getAverageImageColor(m_job->getTarget()))};
+        const QByteArray arrayData(data.c_str(), static_cast<int>(data.length()));
+        QSvgRenderer renderer;
+        renderer.load(arrayData);
+
+        if(!renderer.isValid()) {
+            assert(0 && "SVG renderer has invalid state");
+            return;
+        }
+
+        QPainter painter;
+        QImage image(width, height, QImage::Format_RGBA8888);
+        image.fill(0);
+
+        painter.begin(&image);
+        renderer.render(&painter);
+        painter.end();
+
+        geometrize::exporter::exportImage(image, path.toStdString());
     }
 
     void saveGeometryData() const
@@ -354,6 +387,11 @@ void ImageJobWindow::on_saveImageButton_clicked()
 void ImageJobWindow::on_saveSVGButton_clicked()
 {
     d->saveSVG();
+}
+
+void ImageJobWindow::on_saveRasterizedSVGButton_clicked()
+{
+    d->saveRasterizedSVG();
 }
 
 void ImageJobWindow::on_saveGeometryDataButton_clicked()

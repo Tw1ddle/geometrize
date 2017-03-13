@@ -74,6 +74,11 @@ QString openSaveSVGPathPickerDialog(QWidget* parent)
     return QFileDialog::getSaveFileName(parent, QWidget::tr("Save SVG Image"), "", QWidget::tr("SVG Image (*.svg)"));
 }
 
+QString openSaveRasterizedSVGPathPickerDialog(QWidget* parent)
+{
+    return QFileDialog::getSaveFileName(parent, QWidget::tr("Save Rasterized SVG Image"), "", QWidget::tr("Image Files (*.jpg *.jpeg *.png *.bmp)", ""));
+}
+
 QString openSaveBitmapPathPickerDialog(QWidget* parent)
 {
     return QFileDialog::getSaveFileName(parent, QWidget::tr("Save Bitmap Image"), "", QWidget::tr("BMP Image (*.bmp)"));

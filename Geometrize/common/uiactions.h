@@ -25,6 +25,7 @@ void openPreferences(QWidget* parent);
 QString openImagePathPickerDialog(QWidget* parent);
 QString openSaveImagePathPickerDialog(QWidget* parent);
 QString openSaveSVGPathPickerDialog(QWidget* parent);
+QString openSaveRasterizedSVGPathPickerDialog(QWidget* parent);
 QString openSaveBitmapPathPickerDialog(QWidget* parent);
 QString openSaveGeometryDataPathPickerDialog(QWidget* parent);
 QString openSaveGIFPathPickerDialog(QWidget* parent);

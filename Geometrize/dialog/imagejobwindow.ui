@@ -99,7 +99,7 @@
         <enum>QTabWidget::North</enum>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="settingsTabOne">
         <attribute name="title">
@@ -178,6 +178,20 @@
                     </property>
                     <property name="orientation">
                      <enum>Qt::Horizontal</enum>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="0">
+                   <widget class="QLabel" name="randomSeedLabel">
+                    <property name="text">
+                     <string>Random Seed</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="1">
+                   <widget class="QSpinBox" name="randomSeedSpinBox">
+                    <property name="alignment">
+                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                     </property>
                    </widget>
                   </item>
@@ -711,14 +725,77 @@
               <item>
                <layout class="QVBoxLayout" name="verticalLayout_22">
                 <item>
-                 <widget class="QPushButton" name="saveSVGButton">
-                  <property name="text">
-                   <string>Save SVG</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_14"/>
+                 <layout class="QHBoxLayout" name="horizontalLayout_13">
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_16">
+                    <item>
+                     <widget class="QPushButton" name="saveSVGButton">
+                      <property name="text">
+                       <string>Save SVG</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_14"/>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_15">
+                    <item>
+                     <widget class="QPushButton" name="saveRasterizedSVGButton">
+                      <property name="text">
+                       <string>Save Rasterized SVG</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <layout class="QFormLayout" name="formLayout_17">
+                      <item row="0" column="0">
+                       <widget class="QLabel" name="svgImageWidthLabel">
+                        <property name="text">
+                         <string>Image Width</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="0" column="1">
+                       <widget class="QSpinBox" name="svgImageWidthSpinBox">
+                        <property name="alignment">
+                         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                        </property>
+                        <property name="minimum">
+                         <number>1</number>
+                        </property>
+                        <property name="maximum">
+                         <number>99999</number>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="1" column="0">
+                       <widget class="QLabel" name="svgImageHeightLabel">
+                        <property name="text">
+                         <string>Image Height</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="1" column="1">
+                       <widget class="QSpinBox" name="svgImageHeightSpinBox">
+                        <property name="alignment">
+                         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                        </property>
+                        <property name="minimum">
+                         <number>1</number>
+                        </property>
+                        <property name="maximum">
+                         <number>99999</number>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
                 </item>
                </layout>
               </item>
