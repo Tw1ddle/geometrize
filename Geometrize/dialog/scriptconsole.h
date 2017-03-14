@@ -41,6 +41,8 @@ public:
     std::vector<std::string> getHistory() const;
     void setHistory(const std::vector<std::string>& history);
 
+    virtual bool event(QEvent* event) override;
+
 private:
     class ScriptConsoleImpl;
     std::unique_ptr<ScriptConsoleImpl> d;

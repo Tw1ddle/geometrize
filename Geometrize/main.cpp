@@ -6,6 +6,7 @@
 
 #include "analytics/analyticswrapper.h"
 #include "commandlineparser.h"
+#include "logmessagehandlers.h"
 #include "runguard.h"
 #include "versioninfo.h"
 
@@ -27,6 +28,7 @@ int main(int argc, char* argv[])
 {
     setupSettingsFields();
 
+    qInstallMessageHandler(geometrize::log::handleLogMessages);
     QApplication app(argc, argv);
 
     geometrize::analytics::AnalyticsWrapper analytics;

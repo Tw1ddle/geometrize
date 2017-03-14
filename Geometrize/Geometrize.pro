@@ -80,7 +80,10 @@ SOURCES += commandlineparser.cpp \
     script/scriptoptions.cpp \
     script/scriptrunner.cpp \
     script/scriptutil.cpp \
-    serialization/serializationutil.cpp
+    serialization/serializationutil.cpp \
+    logmessagehandlers.cpp \
+    logmessageevents.cpp \
+    logger.cpp
 
 HEADERS += commandlineparser.h \
     constants.h \
@@ -143,7 +146,10 @@ HEADERS += commandlineparser.h \
     serialization/imagejobpreferencesdata.h \
     serialization/templatemetadata.h \
     serialization/serializationutil.h \
-    serialization/stringvectordata.h
+    serialization/stringvectordata.h \
+    logmessagehandlers.h \
+    logmessageevents.h \
+    logger.h
 
 FORMS += dialog/aboutdialog.ui \
     dialog/commandlineedit.ui \

@@ -2,6 +2,9 @@
 #include "ui_scriptconsole.h"
 
 #include "chaiscript/chaiscript.hpp"
+
+#include "logger.h"
+#include "logmessageevents.h"
 #include "script/scriptrunner.h"
 #include "script/scriptutil.h"
 
@@ -34,7 +37,7 @@ public:
                 if(command == "help") {
                     const std::vector<std::string> functions{script::getEngineFunctionNames(*m_engine)};
                     for(const std::string& f : functions) {
-                        ui->outputView->append(QString::fromStdString(f));
+                        append(QString::fromStdString(f));
                     }
                 } else if(command == "clearHistory") {
                     ui->commandLine->clearHistory();
@@ -74,6 +77,11 @@ public:
         ui->commandLine->setHistory(history);
     }
 
+    void append(const QString& message)
+    {
+        ui->outputView->append(message);
+    }
+
 private:
     ScriptConsole* q;
     std::unique_ptr<Ui::ScriptConsole> ui;
@@ -107,6 +115,17 @@ void ScriptConsole::setHistory(const std::vector<std::string>& history)
 std::string ScriptConsole::getConsoleHistoryFilenameForJob(const std::string& jobUrl)
 {
     return ""; // TODO
+}
+
+bool ScriptConsole::event(QEvent* event)
+{
+    if(event->type() == geometrize::log::LogMessageEvent::textualWidgetEventType) {
+        geometrize::log::TextualWidgetMessageEvent* message{static_cast<geometrize::log::TextualWidgetMessageEvent*>(event)};
+        d->append(message->getMessage());
+        return true;
+    } else {
+        return QWidget::event(event);
+    }
 }
 
 const std::string ScriptConsole::launchConsoleHistoryFilename = "launch_console_command_history.json";
