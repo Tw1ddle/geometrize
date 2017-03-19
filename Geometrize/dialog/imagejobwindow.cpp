@@ -15,6 +15,7 @@
 
 #include "geometrize/bitmap/bitmap.h"
 #include "geometrize/core.h"
+#include "geometrize/commonutil.h"
 #include "geometrize/exporter/bitmapdataexporter.h"
 #include "geometrize/exporter/bitmapexporter.h"
 #include "geometrize/runner/imagerunneroptions.h"
@@ -155,7 +156,7 @@ public:
             return;
         }
 
-        const std::string data{geometrize::exporter::exportSVG(m_shapes, m_job->getCurrent().getWidth(), m_job->getCurrent().getHeight(), geometrize::core::getAverageImageColor(m_job->getTarget()))};
+        const std::string data{geometrize::exporter::exportSVG(m_shapes, m_job->getCurrent().getWidth(), m_job->getCurrent().getHeight(), geometrize::commonutil::getAverageImageColor(m_job->getTarget()))};
         util::writeStringToFile(data, path.toStdString());
     }
 
@@ -169,7 +170,7 @@ public:
         const int width{ui->svgImageWidthSpinBox->value()};
         const int height{ui->svgImageHeightSpinBox->value()};
 
-        const std::string data{geometrize::exporter::exportSVG(m_shapes, m_job->getCurrent().getWidth(), m_job->getCurrent().getHeight(), geometrize::core::getAverageImageColor(m_job->getTarget()))};
+        const std::string data{geometrize::exporter::exportSVG(m_shapes, m_job->getCurrent().getWidth(), m_job->getCurrent().getHeight(), geometrize::commonutil::getAverageImageColor(m_job->getTarget()))};
         const QByteArray arrayData(data.c_str(), static_cast<int>(data.length()));
         QSvgRenderer renderer;
         renderer.load(arrayData);
