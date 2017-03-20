@@ -141,16 +141,6 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="libsimdpp">
-      <attribute name="title">
-       <string notr="true">libsimdpp</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_14">
-       <item>
-        <widget class="QTextBrowser" name="libsimdppLicense"/>
-       </item>
-      </layout>
-     </widget>
      <widget class="QWidget" name="FlowLayout">
       <attribute name="title">
        <string notr="true">FlowLayout</string>

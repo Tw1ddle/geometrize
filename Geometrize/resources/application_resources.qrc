@@ -765,7 +765,6 @@
         <file>logos/logo_small.png</file>
         <file>licenses/qt_google_analytics_license.txt</file>
         <file>licenses/geometrize_library_license.txt</file>
-        <file>licenses/libsimdpp_license.txt</file>
         <file>licenses/giflib_license.txt</file>
         <file>licenses/qtgifimage_license.txt</file>
         <file>web_templates/canvas_export.html</file>

@@ -312,7 +312,7 @@ private:
         ui->usesRotatedEllipses->setChecked(usesShape(shapes::ROTATED_ELLIPSE));
         ui->usesCircles->setChecked(usesShape(shapes::CIRCLE));
         ui->usesLines->setChecked(usesShape(shapes::LINE));
-        ui->usesSplines->setChecked(usesShape(shapes::SPLINE));
+        ui->usesQuadraticBeziers->setChecked(usesShape(shapes::QUADRATIC_BEZIER));
         ui->usesPolylines->setChecked(usesShape(shapes::POLYLINE));
 
         ui->shapeOpacitySlider->setValue(opts.alpha);
@@ -455,9 +455,9 @@ void ImageJobWindow::on_usesLines_clicked(bool checked)
     d->setShapes(geometrize::shapes::LINE, checked);
 }
 
-void ImageJobWindow::on_usesSplines_clicked(bool checked)
+void ImageJobWindow::on_usesQuadraticBeziers_clicked(bool checked)
 {
-    d->setShapes(geometrize::shapes::SPLINE, checked);
+    d->setShapes(geometrize::shapes::QUADRATIC_BEZIER, checked);
 }
 
 void ImageJobWindow::on_usesPolylines_clicked(bool checked)

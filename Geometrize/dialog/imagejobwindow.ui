@@ -553,13 +553,13 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QGroupBox" name="splinesGroupBox">
+                 <widget class="QGroupBox" name="quadraticBeziersGroupBox">
                   <property name="title">
-                   <string>Splines</string>
+                   <string>Quadratic Beziers</string>
                   </property>
                   <layout class="QFormLayout" name="formLayout_21">
                    <item row="0" column="0">
-                    <widget class="QCheckBox" name="usesSplines">
+                    <widget class="QCheckBox" name="usesQuadraticBeziers">
                      <property name="text">
                       <string>Enabled</string>
                      </property>

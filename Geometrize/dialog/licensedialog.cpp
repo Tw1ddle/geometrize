@@ -60,7 +60,6 @@ LicenseDialog::LicenseDialog(QWidget* parent) :
     setLicenseText(ui->qtGifImageLicense, "qtgifimage_license.txt");
     setLicenseText(ui->GIFLIBLicense, "giflib_license.txt");
     setLicenseText(ui->qtGoogleAnalyticsLicense, "qt_google_analytics_license.txt");
-    setLicenseText(ui->libsimdppLicense, "libsimdpp_license.txt");
     setLicenseText(ui->flowLayoutLicense, "flowlayout_license.txt");
     setLicenseText(ui->elidedLabelLicense, "elidedlabel_license.txt");
     setLicenseText(ui->iconAssetsLicense, "fatcow_icon_license.txt");
