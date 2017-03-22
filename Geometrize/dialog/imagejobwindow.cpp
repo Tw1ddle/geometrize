@@ -26,6 +26,8 @@
 #include "dialog/aboutdialog.h"
 #include "dialog/collapsiblesection.h"
 #include "dialog/globalpreferencestabdialog.h"
+#include "dialog/imagejobpixmapgraphicsitem.h"
+#include "dialog/imagejobscene.h"
 #include "exporter/gifexporter.h"
 #include "exporter/imageexporter.h"
 #include "exporter/canvasanimationexporter.h"
@@ -322,14 +324,14 @@ private:
 
     job::ImageJob* m_job;
     ImageJobWindow* q;
-    QGraphicsScene m_scene;
+    ImageJobScene m_scene;
     std::unique_ptr<Ui::ImageJobWindow> ui;
 
     std::unique_ptr<geometrize::Bitmap> m_initialJobImage;
     std::vector<geometrize::ShapeResult> m_shapes;
 
-    QGraphicsPixmapItem m_targetPixmapItem;
-    QGraphicsPixmapItem m_currentPixmapItem;
+    ImageJobPixmapGraphicsItem m_targetPixmapItem;
+    ImageJobPixmapGraphicsItem m_currentPixmapItem;
 
     bool m_running; // Whether the model is running (automatically)
 };

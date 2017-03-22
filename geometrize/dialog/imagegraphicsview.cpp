@@ -10,7 +10,7 @@ namespace dialog
 
 ImageGraphicsView::ImageGraphicsView(QWidget* parent) : QGraphicsView(parent)
 {
-
+    setMouseTracking(true);
 }
 
 void ImageGraphicsView::wheelEvent(QWheelEvent* e)
@@ -49,6 +49,11 @@ void ImageGraphicsView::wheelEvent(QWheelEvent* e)
 
         e->accept();
     }
+}
+
+void ImageGraphicsView::mouseMoveEvent(QMouseEvent* event)
+{
+    QGraphicsView::mouseMoveEvent(event);
 }
 
 }

@@ -83,7 +83,9 @@ SOURCES += commandlineparser.cpp \
     serialization/serializationutil.cpp \
     logmessagehandlers.cpp \
     logmessageevents.cpp \
-    logger.cpp
+    logger.cpp \
+    dialog/imagejobpixmapgraphicsitem.cpp \
+    dialog/imagejobscene.cpp
 
 HEADERS += commandlineparser.h \
     constants.h \
@@ -149,7 +151,9 @@ HEADERS += commandlineparser.h \
     serialization/stringvectordata.h \
     logmessagehandlers.h \
     logmessageevents.h \
-    logger.h
+    logger.h \
+    dialog/imagejobpixmapgraphicsitem.h \
+    dialog/imagejobscene.h
 
 FORMS += dialog/aboutdialog.ui \
     dialog/commandlineedit.ui \
