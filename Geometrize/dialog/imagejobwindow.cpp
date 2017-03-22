@@ -253,7 +253,7 @@ public:
         geometrize::exporter::exportBitmapData(m_job->getCurrent(), path.toStdString());
     }
 
-    void setShapes(const geometrize::shapes::ShapeTypes shapeTypes, const bool enable)
+    void setShapes(const geometrize::ShapeTypes shapeTypes, const bool enable)
     {
         if(enable) {
             m_job->getPreferences().enableShapeTypes(shapeTypes);
@@ -302,20 +302,20 @@ private:
         const float startingTargetOpacity{10};
         ui->targetOpacitySlider->setValue(startingTargetOpacity);
 
-        const auto usesShape = [&opts](const geometrize::shapes::ShapeTypes type) -> bool {
+        const auto usesShape = [&opts](const geometrize::ShapeTypes type) -> bool {
             const std::uint32_t shapes{static_cast<std::uint32_t>(opts.shapeTypes)};
             return shapes & type;
         };
 
-        ui->usesRectangles->setChecked(usesShape(shapes::RECTANGLE));
-        ui->usesRotatedRectangles->setChecked(usesShape(shapes::ROTATED_RECTANGLE));
-        ui->usesTriangles->setChecked(usesShape(shapes::TRIANGLE));
-        ui->usesEllipses->setChecked(usesShape(shapes::ELLIPSE));
-        ui->usesRotatedEllipses->setChecked(usesShape(shapes::ROTATED_ELLIPSE));
-        ui->usesCircles->setChecked(usesShape(shapes::CIRCLE));
-        ui->usesLines->setChecked(usesShape(shapes::LINE));
-        ui->usesQuadraticBeziers->setChecked(usesShape(shapes::QUADRATIC_BEZIER));
-        ui->usesPolylines->setChecked(usesShape(shapes::POLYLINE));
+        ui->usesRectangles->setChecked(usesShape(geometrize::RECTANGLE));
+        ui->usesRotatedRectangles->setChecked(usesShape(geometrize::ROTATED_RECTANGLE));
+        ui->usesTriangles->setChecked(usesShape(geometrize::TRIANGLE));
+        ui->usesEllipses->setChecked(usesShape(geometrize::ELLIPSE));
+        ui->usesRotatedEllipses->setChecked(usesShape(geometrize::ROTATED_ELLIPSE));
+        ui->usesCircles->setChecked(usesShape(geometrize::CIRCLE));
+        ui->usesLines->setChecked(usesShape(geometrize::LINE));
+        ui->usesQuadraticBeziers->setChecked(usesShape(geometrize::QUADRATIC_BEZIER));
+        ui->usesPolylines->setChecked(usesShape(geometrize::POLYLINE));
 
         ui->shapeOpacitySlider->setValue(opts.alpha);
         ui->candidateShapesPerStepSlider->setValue(opts.shapeCount);
@@ -424,47 +424,47 @@ void ImageJobWindow::on_saveRawImageDataButton_clicked()
 
 void ImageJobWindow::on_usesRectangles_clicked(bool checked)
 {
-    d->setShapes(geometrize::shapes::RECTANGLE, checked);
+    d->setShapes(geometrize::RECTANGLE, checked);
 }
 
 void ImageJobWindow::on_usesRotatedRectangles_clicked(bool checked)
 {
-    d->setShapes(geometrize::shapes::ROTATED_RECTANGLE, checked);
+    d->setShapes(geometrize::ROTATED_RECTANGLE, checked);
 }
 
 void ImageJobWindow::on_usesTriangles_clicked(bool checked)
 {
-    d->setShapes(geometrize::shapes::TRIANGLE, checked);
+    d->setShapes(geometrize::TRIANGLE, checked);
 }
 
 void ImageJobWindow::on_usesEllipses_clicked(bool checked)
 {
-    d->setShapes(geometrize::shapes::ELLIPSE, checked);
+    d->setShapes(geometrize::ELLIPSE, checked);
 }
 
 void ImageJobWindow::on_usesRotatedEllipses_clicked(bool checked)
 {
-    d->setShapes(geometrize::shapes::ROTATED_ELLIPSE, checked);
+    d->setShapes(geometrize::ROTATED_ELLIPSE, checked);
 }
 
 void ImageJobWindow::on_usesCircles_clicked(bool checked)
 {
-    d->setShapes(geometrize::shapes::CIRCLE, checked);
+    d->setShapes(geometrize::CIRCLE, checked);
 }
 
 void ImageJobWindow::on_usesLines_clicked(bool checked)
 {
-    d->setShapes(geometrize::shapes::LINE, checked);
+    d->setShapes(geometrize::LINE, checked);
 }
 
 void ImageJobWindow::on_usesQuadraticBeziers_clicked(bool checked)
 {
-    d->setShapes(geometrize::shapes::QUADRATIC_BEZIER, checked);
+    d->setShapes(geometrize::QUADRATIC_BEZIER, checked);
 }
 
 void ImageJobWindow::on_usesPolylines_clicked(bool checked)
 {
-    d->setShapes(geometrize::shapes::POLYLINE, checked);
+    d->setShapes(geometrize::POLYLINE, checked);
 }
 
 void ImageJobWindow::on_shapeOpacitySlider_valueChanged(int value)

@@ -54,14 +54,14 @@ public:
         return m_options;
     }
 
-    void enableShapeTypes(const geometrize::shapes::ShapeTypes shapes)
+    void enableShapeTypes(const geometrize::ShapeTypes shapes)
     {
-        m_options.shapeTypes = static_cast<geometrize::shapes::ShapeTypes>(static_cast<std::uint32_t>(m_options.shapeTypes) | static_cast<std::uint32_t>(shapes));
+        m_options.shapeTypes = static_cast<geometrize::ShapeTypes>(static_cast<std::uint32_t>(m_options.shapeTypes) | static_cast<std::uint32_t>(shapes));
     }
 
-    void disableShapeTypes(const geometrize::shapes::ShapeTypes shapes)
+    void disableShapeTypes(const geometrize::ShapeTypes shapes)
     {
-        m_options.shapeTypes = static_cast<geometrize::shapes::ShapeTypes>(static_cast<std::uint32_t>(m_options.shapeTypes) &~ static_cast<std::uint32_t>(shapes));
+        m_options.shapeTypes = static_cast<geometrize::ShapeTypes>(static_cast<std::uint32_t>(m_options.shapeTypes) &~ static_cast<std::uint32_t>(shapes));
     }
 
     void setShapeAlpha(const std::uint8_t alpha)
@@ -121,12 +121,12 @@ geometrize::ImageRunnerOptions ImageJobPreferences::getImageRunnerOptions() cons
     return d->getImageRunnerOptions();
 }
 
-void ImageJobPreferences::enableShapeTypes(const geometrize::shapes::ShapeTypes shapes)
+void ImageJobPreferences::enableShapeTypes(const geometrize::ShapeTypes shapes)
 {
     d->enableShapeTypes(shapes);
 }
 
-void ImageJobPreferences::disableShapeTypes(const geometrize::shapes::ShapeTypes shapes)
+void ImageJobPreferences::disableShapeTypes(const geometrize::ShapeTypes shapes)
 {
     d->disableShapeTypes(shapes);
 }

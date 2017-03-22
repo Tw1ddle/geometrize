@@ -45,8 +45,8 @@ public:
      */
     geometrize::ImageRunnerOptions getImageRunnerOptions() const;
 
-    void enableShapeTypes(geometrize::shapes::ShapeTypes shapes);
-    void disableShapeTypes(geometrize::shapes::ShapeTypes shapes);
+    void enableShapeTypes(geometrize::ShapeTypes shapes);
+    void disableShapeTypes(geometrize::ShapeTypes shapes);
     void setShapeAlpha(std::uint8_t alpha);
     void setCandidateShapeCount(std::uint32_t shapeCount);
     void setMaxShapeMutations(std::uint32_t maxMutations);
