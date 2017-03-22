@@ -51,11 +51,9 @@ public:
         ui->setupUi(q);
 
         ui->imageView->setScene(&m_scene);
-        m_scene.addItem(&m_currentPixmapItem);
-        m_scene.addItem(&m_targetPixmapItem);
 
         connect(ui->targetOpacitySlider, &QSlider::valueChanged, [this](int value) {
-            m_targetPixmapItem.setOpacity(value * 0.01f);
+            m_scene.setTargetPixmapOpacity(value * 0.01f);
         });
     }
     ImageJobWindowImpl operator=(const ImageJobWindowImpl&) = delete;
@@ -286,13 +284,13 @@ private:
     void updateWorkingImage()
     {
         const QPixmap pixmap{image::createPixmap(m_job->getCurrent())};
-        m_currentPixmapItem.setPixmap(pixmap);
+        m_scene.setWorkingPixmap(pixmap);
     }
 
     void setupOverlayImages()
     {
         const QPixmap target{image::createPixmap(m_job->getTarget())};
-        m_targetPixmapItem.setPixmap(target);
+        m_scene.setTargetPixmap(target);
     }
 
     void syncUserInterfaceWithOptions()
@@ -329,9 +327,6 @@ private:
 
     std::unique_ptr<geometrize::Bitmap> m_initialJobImage;
     std::vector<geometrize::ShapeResult> m_shapes;
-
-    ImageJobPixmapGraphicsItem m_targetPixmapItem;
-    ImageJobPixmapGraphicsItem m_currentPixmapItem;
 
     bool m_running; // Whether the model is running (automatically)
 };
