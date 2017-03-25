@@ -64,6 +64,11 @@ public:
         m_options.shapeTypes = static_cast<geometrize::ShapeTypes>(static_cast<std::uint32_t>(m_options.shapeTypes) &~ static_cast<std::uint32_t>(shapes));
     }
 
+    void setShapeTypes(const geometrize::ShapeTypes shapes)
+    {
+        m_options.shapeTypes = shapes;
+    }
+
     void setShapeAlpha(const std::uint8_t alpha)
     {
         m_options.alpha = alpha;
@@ -129,6 +134,11 @@ void ImageJobPreferences::enableShapeTypes(const geometrize::ShapeTypes shapes)
 void ImageJobPreferences::disableShapeTypes(const geometrize::ShapeTypes shapes)
 {
     d->disableShapeTypes(shapes);
+}
+
+void ImageJobPreferences::setShapeTypes(const geometrize::ShapeTypes shapes)
+{
+    d->setShapeTypes(shapes);
 }
 
 void ImageJobPreferences::setShapeAlpha(const std::uint8_t alpha)

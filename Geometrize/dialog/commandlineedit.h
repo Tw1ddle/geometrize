@@ -57,6 +57,8 @@ signals:
 
 private:
     virtual void keyPressEvent(QKeyEvent* e) override;
+    virtual bool focusNextPrevChild(bool next) override;
+    virtual void mouseDoubleClickEvent(QMouseEvent* event) override;
 
     class CommandLineEditImpl;
     std::unique_ptr<CommandLineEditImpl> d;

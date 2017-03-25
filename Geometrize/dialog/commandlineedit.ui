@@ -37,6 +37,9 @@
    </property>
    <item>
     <widget class="QLineEdit" name="lineEdit">
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
      <property name="text">
       <string notr="true"/>
      </property>

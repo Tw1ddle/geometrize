@@ -101,6 +101,8 @@ private:
         geometrize::Bitmap logoBitmap{image::createBitmap(image)};
         geometrize::Bitmap initialBitmap{logoBitmap.getWidth(), logoBitmap.getHeight(), geometrize::rgba{0, 0, 0, 0}};
         m_logoJob = std::make_unique<job::ImageJob>("Logo Image Job", "Logo (Resource File)", logoBitmap, initialBitmap);
+        m_logoJob->getPreferences().setShapeTypes(geometrize::ShapeTypes::RECTANGLE);
+        m_logoJob->getPreferences().setShapeAlpha(255U);
 
         ui->logoLabel->setPixmap(image::createPixmap(m_logoJob->getCurrent()));
 
@@ -112,11 +114,13 @@ private:
             m_logoJobStepCount += 1;
             const QString logoToolTip{tr("Logo: %1 shapes added in %2 steps").arg(QString::number(m_logoJobShapeCount)).arg(m_logoJobStepCount)};
             ui->logoLabel->setToolTip(logoToolTip);
-        });
 
-        for(int i = 0; i < m_maxLogoJobSteps; i++) {
-            m_logoJob->stepModel();
-        }
+            m_logoJobSteps++;
+            if(m_logoJobSteps < m_maxLogoJobSteps) {
+                m_logoJob->stepModel();
+            }
+        });
+        m_logoJob->stepModel();
     }
 
     std::unique_ptr<Ui::LaunchWindow> ui;
@@ -126,7 +130,8 @@ private:
     std::unique_ptr<job::ImageJob> m_logoJob;
     std::size_t m_logoJobShapeCount{0};
     std::size_t m_logoJobStepCount{0};
-    const std::size_t m_maxLogoJobSteps{100};
+    const std::size_t m_maxLogoJobSteps{300};
+    std::atomic_int m_logoJobSteps{0};
 };
 
 LaunchWindow::LaunchWindow() :

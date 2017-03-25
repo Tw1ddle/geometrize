@@ -23,7 +23,6 @@ public:
     CommandLineEditImpl(const CommandLineEditImpl&) = delete;
     ~CommandLineEditImpl() = default;
 
-    // TODO add completion events
     void keyPressEvent(const int key)
     {
         switch(key) {
@@ -35,6 +34,9 @@ public:
                 break;
             case Qt::Key_Return:
                 submitCommand();
+                break;
+            case Qt::Key_Tab:
+                setCurrentCommand(autoCompleteForCurrentInput());
                 break;
             default:
                 break;
@@ -81,6 +83,11 @@ public:
         m_historyIndex = 0;
     }
 
+    void mouseDoubleClickEvent()
+    {
+
+    }
+
 private:
     std::string getCurrentCommand() const
     {
@@ -95,6 +102,13 @@ private:
     void clear()
     {
         ui->lineEdit->clear();
+    }
+
+    std::string autoCompleteForCurrentInput()
+    {
+        // TODO get possible autocompletes
+        const std::string current{getCurrentCommand()};
+        return "";
     }
 
     CommandLineEdit* q;
@@ -114,8 +128,6 @@ CommandLineEdit::~CommandLineEdit()
 
 void CommandLineEdit::keyPressEvent(QKeyEvent* e)
 {
-    QWidget::keyPressEvent(e);
-
     d->keyPressEvent(e->key());
 }
 
@@ -132,6 +144,16 @@ std::vector<std::string> CommandLineEdit::getHistory() const
 void CommandLineEdit::setHistory(const std::vector<std::string>& history)
 {
     d->setHistory(history);
+}
+
+bool CommandLineEdit::focusNextPrevChild(const bool /*next*/)
+{
+    return false; // This ensures tab keypresses do not cause the widget to lose focus
+}
+
+void CommandLineEdit::mouseDoubleClickEvent(QMouseEvent* /*event*/)
+{
+    d->mouseDoubleClickEvent();
 }
 
 }

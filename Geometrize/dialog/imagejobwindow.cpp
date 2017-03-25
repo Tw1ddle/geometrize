@@ -248,7 +248,8 @@ public:
             return;
         }
 
-        geometrize::exporter::exportBitmapData(m_job->getCurrent(), path.toStdString());
+        const std::string bitmapData{geometrize::exporter::exportBitmapData(m_job->getCurrent())};
+        util::writeStringToFile(bitmapData, path.toStdString());
     }
 
     void setShapes(const geometrize::ShapeTypes shapeTypes, const bool enable)

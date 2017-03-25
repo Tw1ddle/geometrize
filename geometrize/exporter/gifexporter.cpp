@@ -12,7 +12,8 @@
 
 #include "geometrize/bitmap/bitmap.h"
 #include "geometrize/core.h"
-#include "geometrize/scanline.h"
+#include "geometrize/rasterizer/rasterizer.h"
+#include "geometrize/rasterizer/scanline.h"
 #include "geometrize/shape/shape.h"
 #include "geometrize/shaperesult.h"
 
@@ -34,7 +35,7 @@ bool exportGIF(const geometrize::Bitmap& backgroundBitmap, const geometrize::Bit
     bitmaps.push_back(backgroundBitmap);
     geometrize::Bitmap baseBitmap(backgroundBitmap);
     for(const geometrize::ShapeResult& shapeResult : data) {
-        geometrize::core::drawLines(baseBitmap, shapeResult.color, shapeResult.shape->rasterize());
+        geometrize::drawLines(baseBitmap, shapeResult.color, shapeResult.shape->rasterize());
         bitmaps.push_back(geometrize::Bitmap(baseBitmap));
     }
 
