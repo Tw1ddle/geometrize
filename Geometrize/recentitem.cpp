@@ -13,32 +13,17 @@ RecentItem::RecentItem(const QString& key, const QString& displayName, const lon
 
 RecentItem::Type RecentItem::getTypeForKey(const QString& key)
 {
-    const QUrl url{QUrl::fromLocalFile(key)};
-    if(url.isValid()) {
-        if(url.isLocalFile()) {
-            if(url.toString().endsWith(".chai", Qt::CaseInsensitive)) {
-                return RecentItem::Type::LOCAL_CHAISCRIPT;
-            } else {
-                const QImageReader reader(key);
-                if(reader.imageFormat() != QImage::Format_Invalid) {
-                    return RecentItem::Type::LOCAL_IMAGE;
-                }
-            }
+    const QUrl url{QUrl::fromUserInput(key)};
+    if(url.scheme() == "file") {
+        if(key.endsWith(".chai"), Qt::CaseInsensitive) {
+            return RecentItem::Type::LOCAL_CHAISCRIPT;
         } else {
-            return RecentItem::Type::REMOTE_RESOURCE;
+            return RecentItem::Type::LOCAL_IMAGE;
         }
     }
 
-    const QFileInfo fileInfo{key};
-    if(fileInfo.exists() && fileInfo.isFile()) {
-        if(key.endsWith(".chai", Qt::CaseInsensitive)) {
-            return RecentItem::Type::LOCAL_CHAISCRIPT;
-        } else {
-            const QImageReader reader(key);
-            if(reader.imageFormat() != QImage::Format_Invalid) {
-                return RecentItem::Type::LOCAL_IMAGE;
-            }
-        }
+    if(url.isValid()) {
+        return RecentItem::Type::REMOTE_RESOURCE;
     }
 
     return RecentItem::Type::UNKNOWN;

@@ -271,6 +271,22 @@
     </layout>
    </item>
    <item>
+    <spacer name="websitesAndBottomButtonSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>10</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
     <layout class="QHBoxLayout" name="buttonGroup" stretch="0,0,0">
      <property name="leftMargin">
       <number>50</number>

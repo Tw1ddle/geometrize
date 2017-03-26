@@ -111,10 +111,9 @@ private:
         switch(type) {
             case RecentItem::Type::LOCAL_IMAGE:
             {
-                const QImage thumbnail(itemPath);
+                const QImage thumbnail(":/icons/image.png");
                 if(!thumbnail.isNull()) {
-                    const QSize size{100, 100};
-                    return thumbnail.scaled(size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+                    return thumbnail;
                 }
                 break;
             }
