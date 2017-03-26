@@ -276,6 +276,11 @@ public:
         m_job->getPreferences().setMaxShapeMutations(value);
     }
 
+    void setRandomSeed(const int value)
+    {
+        m_job->getPreferences().setSeed(value);
+    }
+
 private:
     void setDisplayName(const QString& displayName)
     {
@@ -319,6 +324,7 @@ private:
         ui->shapeOpacitySlider->setValue(opts.alpha);
         ui->candidateShapesPerStepSlider->setValue(opts.shapeCount);
         ui->mutationsPerCandidateShapeSlider->setValue(opts.maxShapeMutations);
+        ui->randomSeedSpinBox->setValue(opts.seed);
     }
 
     job::ImageJob* m_job;
@@ -476,6 +482,11 @@ void ImageJobWindow::on_candidateShapesPerStepSlider_valueChanged(int value)
 void ImageJobWindow::on_mutationsPerCandidateShapeSlider_valueChanged(int value)
 {
     d->setMutationsPerCandidateShape(value);
+}
+
+void ImageJobWindow::on_randomSeedSpinBox_valueChanged(int value)
+{
+    d->setRandomSeed(value);
 }
 
 }

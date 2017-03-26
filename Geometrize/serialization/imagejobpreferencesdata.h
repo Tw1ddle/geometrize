@@ -26,6 +26,7 @@ public:
         ar(cereal::make_nvp(maxShapeMutationsKey, options.maxShapeMutations));
         ar(cereal::make_nvp(shapeCountKey, options.shapeCount));
         ar(cereal::make_nvp(shapeTypesKey, options.shapeTypes));
+        ar(cereal::make_nvp(randomSeedKey, options.seed));
     }
 
 private:
@@ -33,6 +34,7 @@ private:
     const std::string maxShapeMutationsKey{"maxShapeMutations"};
     const std::string shapeCountKey{"shapeCount"};
     const std::string shapeTypesKey{"shapeTypes"};
+    const std::string randomSeedKey{"randomSeed"};
 };
 
 }

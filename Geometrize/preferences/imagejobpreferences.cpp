@@ -84,6 +84,11 @@ public:
         m_options.maxShapeMutations = maxMutations;
     }
 
+    void setSeed(const std::uint32_t seed)
+    {
+        m_options.seed = seed;
+    }
+
 private:
     serialization::ImageJobPreferencesData m_data;
     geometrize::ImageRunnerOptions m_options;
@@ -154,6 +159,11 @@ void ImageJobPreferences::setCandidateShapeCount(const std::uint32_t shapeCount)
 void ImageJobPreferences::setMaxShapeMutations(const std::uint32_t maxMutations)
 {
     d->setMaxShapeMutations(maxMutations);
+}
+
+void ImageJobPreferences::setSeed(const std::uint32_t seed)
+{
+    d->setSeed(seed);
 }
 
 }

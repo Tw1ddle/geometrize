@@ -67,6 +67,7 @@ private slots:
     void on_shapeOpacitySlider_valueChanged(int value);
     void on_candidateShapesPerStepSlider_valueChanged(int value);
     void on_mutationsPerCandidateShapeSlider_valueChanged(int value);
+    void on_randomSeedSpinBox_valueChanged(int value);
 
 private:
     class ImageJobWindowImpl;
