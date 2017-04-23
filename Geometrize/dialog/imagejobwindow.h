@@ -45,6 +45,7 @@ private slots:
     void on_actionReveal_Launch_Window_triggered();
     void on_runStopButton_clicked();
     void on_stepButton_clicked();
+    void on_clearButton_clicked();
     void on_saveImageButton_clicked();
     void on_saveSVGButton_clicked();
     void on_saveRasterizedSVGButton_clicked();

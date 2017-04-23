@@ -67,7 +67,6 @@ public:
 
     void setImageJob(job::ImageJob* job)
     {
-        assert(!m_job && "Changing image job once one has already been set is currently unsupported");
         m_job = job;
 
         m_initialJobImage = std::make_unique<geometrize::Bitmap>(m_job->getCurrent());
@@ -106,6 +105,13 @@ public:
     void stepModel()
     {
         m_job->stepModel();
+    }
+
+    void clearModel()
+    {
+        // TODO reset or recreate the runner i.e. ensure the runner stops/the next shape produced is not added dispose of shapes
+        // TODO reset the current image to whatever the target image is
+        setImageJob(m_job); // TODO
     }
 
     void revealLaunchWindow()
@@ -382,6 +388,11 @@ void ImageJobWindow::on_runStopButton_clicked()
 void ImageJobWindow::on_stepButton_clicked()
 {
     d->stepModel();
+}
+
+void ImageJobWindow::on_clearButton_clicked()
+{
+    d->clearModel();
 }
 
 void ImageJobWindow::on_saveImageButton_clicked()
