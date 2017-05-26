@@ -53,6 +53,8 @@ public:
         ui->imageView->setScene(&m_scene);
 
         connect(ui->targetOpacitySlider, &QSlider::valueChanged, [this](int value) {
+            ui->targetImageOpacityValueLabel->setText(QString::number(value));
+
             m_scene.setTargetPixmapOpacity(value * 0.01f);
         });
     }
@@ -269,16 +271,22 @@ public:
 
     void setShapeOpacity(const int opacity)
     {
+        ui->shapeOpacityValueLabel->setText(QString::number(opacity));
+
         m_job->getPreferences().setShapeAlpha(opacity);
     }
 
     void setCandidateShapesPerStep(const int value)
     {
+        ui->candidateShapesPerStepCountLabel->setText(QString::number(value));
+
         m_job->getPreferences().setCandidateShapeCount(value);
     }
 
     void setMutationsPerCandidateShape(const int value)
     {
+        ui->mutationsPerCandidateShapeCountLabel->setText(QString::number(value));
+
         m_job->getPreferences().setMaxShapeMutations(value);
     }
 

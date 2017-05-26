@@ -1,5 +1,6 @@
 #include "versioninfo.h"
 
+#include <QLibraryInfo>
 #include <QSysInfo>
 
 namespace geometrize
@@ -63,7 +64,7 @@ QString getBuildQtVersionName()
 
 QString getBuildQtLicenseName()
 {
-    return QT_PRODUCT_LICENSE;
+    return QLibraryInfo::licensedProducts();
 }
 
 }
