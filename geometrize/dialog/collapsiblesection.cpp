@@ -76,10 +76,10 @@ public:
 
         for (int i = 0; i < toggleAnimation->animationCount() - 1; ++i)
         {
-            QPropertyAnimation* SectionAnimation = static_cast<QPropertyAnimation *>(toggleAnimation->animationAt(i));
-            SectionAnimation->setDuration(animationDuration);
-            SectionAnimation->setStartValue(collapsedHeight);
-            SectionAnimation->setEndValue(collapsedHeight + contentHeight);
+            QPropertyAnimation* sectionAnimation = static_cast<QPropertyAnimation *>(toggleAnimation->animationAt(i));
+            sectionAnimation->setDuration(animationDuration);
+            sectionAnimation->setStartValue(collapsedHeight);
+            sectionAnimation->setEndValue(collapsedHeight + contentHeight);
         }
 
         QPropertyAnimation* contentAnimation = static_cast<QPropertyAnimation *>(toggleAnimation->animationAt(toggleAnimation->animationCount() - 1));
