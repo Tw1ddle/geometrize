@@ -24,7 +24,7 @@
 #include "common/uiactions.h"
 #include "constants.h"
 #include "dialog/aboutdialog.h"
-#include "dialog/collapsiblesection.h"
+#include "dialog/collapsiblepanel.h"
 #include "dialog/globalpreferencestabdialog.h"
 #include "dialog/imagejobpixmapgraphicsitem.h"
 #include "dialog/imagejobscene.h"
