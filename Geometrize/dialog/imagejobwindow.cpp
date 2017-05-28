@@ -24,7 +24,7 @@
 #include "common/uiactions.h"
 #include "constants.h"
 #include "dialog/aboutdialog.h"
-#include "dialog/collapsiblesection.h"
+#include "dialog/collapsiblepanel.h"
 #include "dialog/globalpreferencestabdialog.h"
 #include "dialog/imagejobpixmapgraphicsitem.h"
 #include "dialog/imagejobscene.h"
@@ -49,6 +49,9 @@ public:
     ImageJobWindowImpl(ImageJobWindow* pQ) : ui{std::make_unique<Ui::ImageJobWindow>()}, q{pQ}, m_job{nullptr}, m_running{false}, m_initialJobImage{nullptr}
     {
         ui->setupUi(q);
+        ui->targetImageSettings->setup();
+        ui->runnerSettings->setup();
+        ui->shapeSettings->setup();
 
         ui->imageView->setScene(&m_scene);
 
@@ -57,6 +60,7 @@ public:
 
             m_scene.setTargetPixmapOpacity(value * 0.01f);
         });
+
     }
     ImageJobWindowImpl operator=(const ImageJobWindowImpl&) = delete;
     ImageJobWindowImpl(const ImageJobWindowImpl&) = delete;

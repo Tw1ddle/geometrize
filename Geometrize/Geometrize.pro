@@ -39,7 +39,6 @@ SOURCES += commandlineparser.cpp \
     common/sharedapp.cpp \
     common/uiactions.cpp \
     dialog/aboutdialog.cpp \
-    dialog/collapsiblesection.cpp \
     dialog/commandlineedit.cpp \
     dialog/creditsdialog.cpp \
     dialog/elidedlabel.cpp \
@@ -85,7 +84,8 @@ SOURCES += commandlineparser.cpp \
     logmessageevents.cpp \
     logger.cpp \
     dialog/imagejobpixmapgraphicsitem.cpp \
-    dialog/imagejobscene.cpp
+    dialog/imagejobscene.cpp \
+    dialog/collapsiblepanel.cpp
 
 HEADERS += commandlineparser.h \
     constants.h \
@@ -103,7 +103,6 @@ HEADERS += commandlineparser.h \
     common/sharedapp.h \
     common/uiactions.h \
     dialog/aboutdialog.h \
-    dialog/collapsiblesection.h \
     dialog/commandlineedit.h \
     dialog/creditsdialog.h \
     dialog/elidedlabel.h \
@@ -153,7 +152,8 @@ HEADERS += commandlineparser.h \
     logmessageevents.h \
     logger.h \
     dialog/imagejobpixmapgraphicsitem.h \
-    dialog/imagejobscene.h
+    dialog/imagejobscene.h \
+    dialog/collapsiblepanel.h
 
 FORMS += dialog/aboutdialog.ui \
     dialog/commandlineedit.ui \
