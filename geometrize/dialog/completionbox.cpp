@@ -1,4 +1,4 @@
-#include "searchbox.h"
+#include "completionbox.h"
 
 #include <QCompleter>
 #include <QStringListModel>
@@ -18,10 +18,10 @@ public:
     }
 };
 
-class SearchBox::SearchBoxImpl
+class CompletionBox::CompletionBoxImpl
 {
 public:
-    SearchBoxImpl(SearchBox* pQ) : q{pQ}
+    CompletionBoxImpl(CompletionBox* pQ) : q{pQ}
     {
         m_completer.setCompletionMode(QCompleter::PopupCompletion);
         m_completer.setCaseSensitivity(Qt::CaseInsensitive);
@@ -44,20 +44,20 @@ public:
 private:
     QCompleter m_completer;
     StringListModel m_model;
-    SearchBox* q;
+    CompletionBox* q;
 };
 
-SearchBox::SearchBox(QWidget* parent) : QLineEdit(parent), d{std::make_unique<SearchBox::SearchBoxImpl>(this)}
+CompletionBox::CompletionBox(QWidget* parent) : QLineEdit(parent), d{std::make_unique<CompletionBox::CompletionBoxImpl>(this)}
 {
 
 }
 
-void SearchBox::setCompletionList(const QStringList& completionList)
+void CompletionBox::setCompletionList(const QStringList& completionList)
 {
     d->setCompletionList(completionList);
 }
 
-void SearchBox::addToCompletionList(const QString& item)
+void CompletionBox::addToCompletionList(const QString& item)
 {
     d->addToCompletionList(item);
 }

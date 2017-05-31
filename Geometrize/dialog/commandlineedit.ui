@@ -36,7 +36,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QLineEdit" name="lineEdit">
+    <widget class="geometrize::dialog::CompletionBox" name="lineEdit">
      <property name="focusPolicy">
       <enum>Qt::ClickFocus</enum>
      </property>
@@ -53,6 +53,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>geometrize::dialog::CompletionBox</class>
+   <extends>QLineEdit</extends>
+   <header>dialog/completionbox.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

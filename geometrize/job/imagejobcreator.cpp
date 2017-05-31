@@ -18,7 +18,7 @@ namespace geometrize
 namespace job
 {
 
-ImageJob* createImageJob(const std::string& displayName, const std::string& jobUrl)
+std::shared_ptr<ImageJob> createImageJob(const std::string& displayName, const std::string& jobUrl)
 {
     const QImage image{image::loadImage(QString::fromStdString(jobUrl))};
     if(image.isNull()) {
@@ -28,11 +28,11 @@ ImageJob* createImageJob(const std::string& displayName, const std::string& jobU
     return createImageJob(displayName, image);
 }
 
-ImageJob* createImageJob(const std::string& displayName, const QImage& image)
+std::shared_ptr<ImageJob> createImageJob(const std::string& displayName, const QImage& image)
 {
     Bitmap bitmap(image::createBitmap(image));
 
-    ImageJob* job{new ImageJob(displayName, "", bitmap)};
+    std::shared_ptr<ImageJob> job{std::make_shared<ImageJob>(displayName, "", bitmap)};
     if(!job) {
         assert(0 && "Failed to create image job");
         return nullptr;
@@ -44,7 +44,7 @@ ImageJob* createImageJob(const std::string& displayName, const QImage& image)
 
 void createImageJobAndWindow(const std::string& displayName, const std::string& jobUrl)
 {
-    ImageJob* job{createImageJob(displayName, jobUrl)};
+    std::shared_ptr<ImageJob> job{createImageJob(displayName, jobUrl)};
     if(!job) {
         return;
     }
@@ -56,7 +56,7 @@ void createImageJobAndWindow(const std::string& displayName, const std::string& 
 
 void createImageJobAndWindow(const std::string& displayName, const QImage& image)
 {
-    ImageJob* job{createImageJob(displayName, image)};
+    std::shared_ptr<ImageJob> job{createImageJob(displayName, image)};
     if(!job) {
         return;
     }

@@ -379,7 +379,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="geometrize::dialog::SearchBox" name="templatesSearchEdit">
+                 <widget class="geometrize::dialog::CompletionBox" name="templatesSearchEdit">
                   <property name="text">
                    <string notr="true" extracomment="The contents of the search box the user can type in to search for recent demo projects"/>
                   </property>
@@ -625,9 +625,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>geometrize::dialog::SearchBox</class>
+   <class>geometrize::dialog::CompletionBox</class>
    <extends>QLineEdit</extends>
-   <header>dialog/searchbox.h</header>
+   <header>dialog/completionbox.h</header>
   </customwidget>
  </customwidgets>
  <resources>

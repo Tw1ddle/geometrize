@@ -49,9 +49,8 @@ public:
     ImageJobWindowImpl(ImageJobWindow* pQ) : ui{std::make_unique<Ui::ImageJobWindow>()}, q{pQ}, m_job{nullptr}, m_running{false}, m_initialJobImage{nullptr}
     {
         ui->setupUi(q);
-        ui->targetImageSettings->setup();
-        ui->runnerSettings->setup();
-        ui->shapeSettings->setup();
+        ui->targetImageSettings->setup(tr("Image Settings"));
+        ui->shapeSettings->setup("Shape Settings");
 
         ui->imageView->setScene(&m_scene);
 
@@ -60,7 +59,6 @@ public:
 
             m_scene.setTargetPixmapOpacity(value * 0.01f);
         });
-
     }
     ImageJobWindowImpl operator=(const ImageJobWindowImpl&) = delete;
     ImageJobWindowImpl(const ImageJobWindowImpl&) = delete;
@@ -71,7 +69,7 @@ public:
         q->close();
     }
 
-    void setImageJob(job::ImageJob* job)
+    void setImageJob(const std::shared_ptr<job::ImageJob>& job)
     {
         m_job = job;
 
@@ -84,7 +82,7 @@ public:
 
         syncUserInterfaceWithOptions();
 
-        connect(job, &job::ImageJob::signal_modelDidStep, [this](std::vector<geometrize::ShapeResult> shapes) {
+        connect(job.get(), &job::ImageJob::signal_modelDidStep, [this](std::vector<geometrize::ShapeResult> shapes) {
             updateWorkingImage();
 
             if(m_running) {
@@ -345,7 +343,7 @@ private:
         ui->randomSeedSpinBox->setValue(opts.seed);
     }
 
-    job::ImageJob* m_job;
+    std::shared_ptr<job::ImageJob> m_job;
     ImageJobWindow* q;
     ImageJobScene m_scene;
     std::unique_ptr<Ui::ImageJobWindow> ui;
@@ -367,7 +365,7 @@ ImageJobWindow::~ImageJobWindow()
 
 }
 
-void ImageJobWindow::setImageJob(job::ImageJob* job)
+void ImageJobWindow::setImageJob(const std::shared_ptr<job::ImageJob>& job)
 {
     d->setImageJob(job);
 }

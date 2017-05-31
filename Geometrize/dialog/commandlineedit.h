@@ -44,6 +44,12 @@ public:
      */
     void setHistory(const std::vector<std::string>& history);
 
+    /**
+     * @brief setCompletionList Sets the autocomplete list of commands.
+     * @param completionList The completion list to use.
+     */
+    void setCompletionList(const std::vector<std::string>& completionList);
+
 signals:
     /**
      * @brief signal_commandSubmitted is fired when a command is submitted by the user (e.g. after pressing return).

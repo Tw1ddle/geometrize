@@ -65,6 +65,7 @@ public:
     void setEngine(chaiscript::ChaiScript* engine)
     {
         m_engine = engine;
+        setCompletionList(engine);
     }
 
     std::vector<std::string> getHistory() const
@@ -83,6 +84,15 @@ public:
     }
 
 private:
+    void setCompletionList(chaiscript::ChaiScript* engine)
+    {
+        if(m_engine == nullptr) {
+            ui->commandLine->setCompletionList({});
+        } else {
+            ui->commandLine->setCompletionList(script::getEngineFunctionNames(*engine));
+        }
+    }
+
     ScriptConsole* q;
     std::unique_ptr<Ui::ScriptConsole> ui;
     chaiscript::ChaiScript* m_engine;

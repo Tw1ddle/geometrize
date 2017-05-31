@@ -75,6 +75,21 @@ public:
     {
         m_history = history;
         m_historyIndex = static_cast<int>(m_history.size());
+
+        //QStringList words;
+        //for(const std::string& word : history) {
+        //    words.push_back(QString::fromStdString(word));
+        //}
+        //ui->lineEdit->setCompletionList(words);
+    }
+
+    void setCompletionList(const std::vector<std::string>& completionList)
+    {
+        QStringList words;
+        for(const std::string& word : completionList) {
+            words.push_back(QString::fromStdString(word));
+        }
+        ui->lineEdit->setCompletionList(words);
     }
 
     void clearHistory()
@@ -144,6 +159,11 @@ std::vector<std::string> CommandLineEdit::getHistory() const
 void CommandLineEdit::setHistory(const std::vector<std::string>& history)
 {
     d->setHistory(history);
+}
+
+void CommandLineEdit::setCompletionList(const std::vector<std::string>& completionList)
+{
+    d->setCompletionList(completionList);
 }
 
 bool CommandLineEdit::focusNextPrevChild(const bool /*next*/)

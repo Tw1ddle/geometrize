@@ -4,6 +4,7 @@
 
 #include <QFrame>
 #include <QGridLayout>
+#include <QLabel>
 #include <QLayout>
 #include <QParallelAnimationGroup>
 #include <QPropertyAnimation>
@@ -27,7 +28,7 @@ public:
     CollapsiblePanelImpl operator=(const CollapsiblePanelImpl&) = delete;
     CollapsiblePanelImpl(const CollapsiblePanelImpl&) = delete;
 
-    void setup()
+    void setup(const QString& title)
     {
         QGridLayout* layout = dynamic_cast<QGridLayout*>(q->layout());
         if(layout == nullptr) {
@@ -36,14 +37,23 @@ public:
         }
         layout->setContentsMargins(0, 0, 0, 0);
 
-        toggleButton = new QToolButton(q);
+        panelHeaderFrame = new QFrame();
+        panelHeaderFrame->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        QHBoxLayout* boxLayout = new QHBoxLayout();
+        boxLayout->setContentsMargins(0, 0, 0, 0);
+        panelHeaderFrame->setLayout(boxLayout);
+
+        toggleButton = new QToolButton();
         toggleButton->setStyleSheet("QToolButton {border: none;}");
         toggleButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
         toggleButton->setArrowType(Qt::ArrowType::RightArrow);
         toggleButton->setCheckable(true);
         toggleButton->setChecked(false);
+        toggleButton->setText(title);
 
-        layout->addWidget(toggleButton, 0, 0, 1, 1, Qt::AlignLeft | Qt::AlignTop);
+        boxLayout->addWidget(toggleButton);
+
+        layout->addWidget(panelHeaderFrame, 0, 0, 1, 1, Qt::AlignLeft | Qt::AlignTop);
 
         QScrollArea* contentArea = getContentArea();
         if(contentArea == nullptr) {
@@ -53,6 +63,7 @@ public:
         contentArea->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
         contentArea->setMaximumHeight(0);
         contentArea->setMinimumHeight(0);
+        contentArea->resize(contentArea->size().width(), 0);
 
         const int collapsedHeight{q->sizeHint().height() - contentArea->maximumHeight()};
         const int contentHeight{contentArea->sizeHint().height()};
@@ -93,20 +104,21 @@ private:
     }
 
     CollapsiblePanel* q;
+    QFrame* panelHeaderFrame;
     QToolButton* toggleButton;
     QParallelAnimationGroup* toggleAnimation;
     const int animationDuration;
 };
 
 CollapsiblePanel::CollapsiblePanel(QWidget* parent) :
-    QGroupBox{parent},
-    d{std::make_unique<CollapsiblePanel::CollapsiblePanelImpl>(this, 100)}
+    QFrame{parent},
+    d{std::make_unique<CollapsiblePanel::CollapsiblePanelImpl>(this, 300)}
 {
 }
 
-void CollapsiblePanel::setup()
+void CollapsiblePanel::setup(const QString& title)
 {
-    d->setup();
+    d->setup(title);
 }
 
 }

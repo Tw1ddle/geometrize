@@ -18,28 +18,38 @@ public:
     JobLookupImpl(const JobLookupImpl&) = delete;
     ~JobLookupImpl() = default;
 
-    ImageJob* getImageJob(const std::string& id)
+    std::shared_ptr<ImageJob> getImageJob(const std::string& id)
     {
         return m_jobs[id];
     }
 
-    void setImageJob(const std::string& id, ImageJob* job)
+    void setImageJob(const std::string& id, const std::shared_ptr<ImageJob>& job)
     {
         m_jobs[id] = job;
     }
 
+    void removeImageJob(const std::string& id)
+    {
+        m_jobs.erase(id);
+    }
+
 private:
-    std::map<std::string, ImageJob*> m_jobs;
+    std::map<std::string, std::shared_ptr<ImageJob>> m_jobs;
 };
 
-ImageJob* JobLookup::getImageJob(const std::string& id)
+std::shared_ptr<ImageJob> JobLookup::getImageJob(const std::string& id)
 {
     return d->getImageJob(id);
 }
 
-void JobLookup::setImageJob(const std::string& id, ImageJob* job)
+void JobLookup::setImageJob(const std::string& id, const std::shared_ptr<ImageJob>& job)
 {
     d->setImageJob(id, job);
+}
+
+void JobLookup::removeImageJob(const std::string& id)
+{
+    d->removeImageJob(id);
 }
 
 JobLookup::JobLookup() : d{std::make_unique<JobLookup::JobLookupImpl>()}

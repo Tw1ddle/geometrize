@@ -49,7 +49,7 @@ public:
             ui->templatesSearchEdit->addToCompletionList(QString::fromStdString(util::getTemplateManifest(templateFolder.toStdString()).getName()));
         });
 
-        connect(ui->templatesSearchEdit, &dialog::SearchBox::textChanged, [this](const QString& text) {
+        connect(ui->templatesSearchEdit, &dialog::CompletionBox::textChanged, [this](const QString& text) {
             ui->templateGrid->setItemFilter(text);
         });
 

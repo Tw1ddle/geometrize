@@ -52,7 +52,6 @@ SOURCES += commandlineparser.cpp \
     dialog/recentjobslist.cpp \
     dialog/runscriptdialog.cpp \
     dialog/scriptconsole.cpp \
-    dialog/searchbox.cpp \
     dialog/templatebutton.cpp \
     dialog/templategrid.cpp \
     exporter/canvasanimationexporter.cpp \
@@ -85,7 +84,8 @@ SOURCES += commandlineparser.cpp \
     logger.cpp \
     dialog/imagejobpixmapgraphicsitem.cpp \
     dialog/imagejobscene.cpp \
-    dialog/collapsiblepanel.cpp
+    dialog/collapsiblepanel.cpp \
+    dialog/completionbox.cpp
 
 HEADERS += commandlineparser.h \
     constants.h \
@@ -115,7 +115,6 @@ HEADERS += commandlineparser.h \
     dialog/recentjobslist.h \
     dialog/openurldialog.h \
     dialog/scriptconsole.h \
-    dialog/searchbox.h \
     dialog/runscriptdialog.h \
     dialog/templatebutton.h \
     dialog/templategrid.h \
@@ -153,7 +152,8 @@ HEADERS += commandlineparser.h \
     logger.h \
     dialog/imagejobpixmapgraphicsitem.h \
     dialog/imagejobscene.h \
-    dialog/collapsiblepanel.h
+    dialog/collapsiblepanel.h \
+    dialog/completionbox.h
 
 FORMS += dialog/aboutdialog.ui \
     dialog/commandlineedit.ui \
