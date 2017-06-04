@@ -35,6 +35,11 @@ geometrize::Bitmap& ImageJobWorker::getTarget()
     return m_runner.getTarget();
 }
 
+geometrize::ImageRunner& ImageJobWorker::getRunner()
+{
+    return m_runner;
+}
+
 }
 
 }

@@ -7,9 +7,11 @@
 
 #include "geometrize/bitmap/bitmap.h"
 #include "geometrize/runner/imagerunner.h"
+#include "geometrize/model.h"
 #include "geometrize/shaperesult.h"
 
 #include "imagejobworker.h"
+#include "shapemutationrules.h"
 #include "preferences/imagejobpreferences.h"
 
 namespace geometrize
@@ -107,6 +109,8 @@ private:
         qRegisterMetaType<std::vector<geometrize::ShapeResult>>();
         qRegisterMetaType<geometrize::ImageRunnerOptions>();
 
+        m_mutationRules.setup(m_worker.getRunner().getModel().getShapeMutator());
+
         m_worker.moveToThread(&m_workerThread);
         m_workerThread.start();
 
@@ -122,6 +126,7 @@ private:
     const int m_id; ///> A unique id for the image job.
     QThread m_workerThread; ///> Thread that the image job worker runs on.
     ImageJobWorker m_worker; ///> The image job worker.
+    ShapeMutationRules m_mutationRules; ///> The shape mutation rules for the image job.
 };
 
 ImageJob::ImageJob(const std::string& displayName, const std::string& jobUrl, Bitmap& bitmap) :  QObject(),

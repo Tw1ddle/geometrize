@@ -32,6 +32,7 @@ public:
 
     geometrize::Bitmap& getCurrent();
     geometrize::Bitmap& getTarget();
+    ImageRunner& getRunner();
 
 signals:
     void signal_willStep();
