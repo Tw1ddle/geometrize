@@ -4,8 +4,19 @@
 
 #include "bindingswrapper.h"
 
+#include "geometrize/shape/circle.h"
+#include "geometrize/shape/ellipse.h"
+#include "geometrize/shape/line.h"
+#include "geometrize/shape/polyline.h"
+#include "geometrize/shape/quadraticbezier.h"
+#include "geometrize/shape/rectangle.h"
+#include "geometrize/shape/rotatedellipse.h"
+#include "geometrize/shape/rotatedrectangle.h"
+#include "geometrize/shape/triangle.h"
+
 #define ADD_FREE_FUN(Name) try { module->add(chaiscript::fun(&Name), #Name); } catch(...) { assert(0 && #Name); }
-#define ADD_MEM_FUN(Class, Name) try { module->add(chaiscript::fun(&Class::Name), #Name) } catch(...) { assert(0 && #Name); }
+#define ADD_TYPE(Class) try { module->add(chaiscript::user_type<Class>(), #Class); } catch(...) { assert(0 && #Class); }
+#define ADD_MEMBER(Class, Name) try { module->add(chaiscript::fun(&Class::Name), #Name); } catch(...) { assert(0 && #Name); }
 
 namespace geometrize
 {
@@ -17,7 +28,6 @@ std::shared_ptr<chaiscript::Module> createBindings()
 {
     auto module{std::make_shared<chaiscript::Module>()};
 
-    // Setup bindings
     ADD_FREE_FUN(debugBreak);
     ADD_FREE_FUN(printToConsole);
 
@@ -59,6 +69,69 @@ std::shared_ptr<chaiscript::Module> createBindings()
     ADD_FREE_FUN(percentEncode);
 
     ADD_FREE_FUN(randomInRange);
+
+    return module;
+}
+
+std::shared_ptr<chaiscript::Module> createShapeMutationBindings()
+{
+    auto module{std::make_shared<chaiscript::Module>()};
+
+    ADD_TYPE(Circle);
+    ADD_MEMBER(Circle, m_x);
+    ADD_MEMBER(Circle, m_y);
+    ADD_MEMBER(Circle, m_r);
+
+    ADD_TYPE(Ellipse);
+    ADD_MEMBER(Ellipse, m_x);
+    ADD_MEMBER(Ellipse, m_y);
+    ADD_MEMBER(Ellipse, m_rx);
+    ADD_MEMBER(Ellipse, m_ry);
+
+    ADD_TYPE(Line);
+    ADD_MEMBER(Line, m_x1);
+    ADD_MEMBER(Line, m_y1);
+    ADD_MEMBER(Line, m_x2);
+    ADD_MEMBER(Line, m_y2);
+
+    ADD_TYPE(Polyline);
+    ADD_MEMBER(Polyline, m_points);
+
+    ADD_TYPE(QuadraticBezier);
+    ADD_MEMBER(QuadraticBezier, m_cx);
+    ADD_MEMBER(QuadraticBezier, m_cy);
+    ADD_MEMBER(QuadraticBezier, m_x1);
+    ADD_MEMBER(QuadraticBezier, m_y1);
+    ADD_MEMBER(QuadraticBezier, m_x2);
+    ADD_MEMBER(QuadraticBezier, m_y2);
+
+    ADD_TYPE(Rectangle);
+    ADD_MEMBER(Rectangle, m_x1);
+    ADD_MEMBER(Rectangle, m_y1);
+    ADD_MEMBER(Rectangle, m_x2);
+    ADD_MEMBER(Rectangle, m_y2);
+
+    ADD_TYPE(RotatedEllipse);
+    ADD_MEMBER(RotatedEllipse, m_x);
+    ADD_MEMBER(RotatedEllipse, m_y);
+    ADD_MEMBER(RotatedEllipse, m_rx);
+    ADD_MEMBER(RotatedEllipse, m_ry);
+    ADD_MEMBER(RotatedEllipse, m_angle);
+
+    ADD_TYPE(RotatedRectangle);
+    ADD_MEMBER(RotatedRectangle, m_x1);
+    ADD_MEMBER(RotatedRectangle, m_y1);
+    ADD_MEMBER(RotatedRectangle, m_x2);
+    ADD_MEMBER(RotatedRectangle, m_y2);
+    ADD_MEMBER(RotatedRectangle, m_angle);
+
+    ADD_TYPE(Triangle);
+    ADD_MEMBER(Triangle, m_x1);
+    ADD_MEMBER(Triangle, m_y1);
+    ADD_MEMBER(Triangle, m_x2);
+    ADD_MEMBER(Triangle, m_y2);
+    ADD_MEMBER(Triangle, m_x3);
+    ADD_MEMBER(Triangle, m_y3);
 
     return module;
 }

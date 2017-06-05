@@ -24,6 +24,16 @@ std::unique_ptr<chaiscript::ChaiScript> createChaiScript()
     return chai;
 }
 
+std::unique_ptr<chaiscript::ChaiScript> createChaiScriptShapeMutator()
+{
+    std::unique_ptr<chaiscript::ChaiScript> chai = std::make_unique<chaiscript::ChaiScript>();
+
+    chai->add(createBindings());
+    chai->add(createShapeMutationBindings());
+
+    return chai;
+}
+
 }
 
 }

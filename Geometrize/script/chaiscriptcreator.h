@@ -19,6 +19,12 @@ namespace script
  */
 std::unique_ptr<chaiscript::ChaiScript> createChaiScript();
 
+/**
+ * @brief createChaiScriptShapeMutator Creates a Chaiscript engine object for mutating shapes.
+ * @return The Chaiscript engine object.
+ */
+std::unique_ptr<chaiscript::ChaiScript> createChaiScriptShapeMutator();
+
 }
 
 }

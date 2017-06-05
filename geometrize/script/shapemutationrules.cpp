@@ -15,6 +15,7 @@
 
 #include "chaiscript/chaiscript.hpp"
 #include "script/chaiscriptcreator.h"
+#include "script/scriptrunner.h"
 
 namespace geometrize
 {
@@ -22,8 +23,9 @@ namespace geometrize
 class ShapeMutationRules::ShapeMutationRulesImpl
 {
 public:
-    ShapeMutationRulesImpl() : m_engine{script::createChaiScript()}
+    ShapeMutationRulesImpl() : m_engine{script::createChaiScriptShapeMutator()}
     {
+
     }
 
     ~ShapeMutationRulesImpl() = default;
@@ -32,6 +34,10 @@ public:
 
     void setup(geometrize::ShapeMutator& mutator)
     {
+        m_engine->eval(R"(
+            def setupCircle(shape) { shape.m_x = 200; shape.m_y = 200; shape.m_r = 50; }
+        )");
+        /*
         mutator.setSetupFunction([this](geometrize::Circle& shape) {
             const std::int32_t xBound{shape.m_model.getWidth()};
             const std::int32_t yBound{shape.m_model.getHeight()};
@@ -40,6 +46,8 @@ public:
             shape.m_y = geometrize::commonutil::randomRange(0, yBound - 1);
             shape.m_r = geometrize::commonutil::randomRange(0, geometrize::commonutil::randomRange(0, 32) + 1);
         });
+        */
+        mutator.setSetupFunction(m_engine->eval<std::function<void(geometrize::Circle&)>>("setupCircle"));
 
         mutator.setSetupFunction([this](geometrize::Ellipse& shape) {
             const std::int32_t xBound{shape.m_model.getWidth()};
@@ -133,7 +141,10 @@ public:
             shape.m_y3 = shape.m_y1 + geometrize::commonutil::randomRange(-32, 32);
         });
 
-        mutator.setMutatorFunction([this](geometrize::Circle& shape) {
+        m_engine->eval(R"(
+            def mutateCircle(shape) { shape.m_x = 200; shape.m_y = 200; shape.m_r = 50; }
+        )");
+        /*
             const std::int32_t xBound{shape.m_model.getWidth()};
             const std::int32_t yBound{shape.m_model.getHeight()};
 
@@ -151,7 +162,8 @@ public:
                     break;
                 }
             }
-        });
+        */
+        mutator.setMutatorFunction(m_engine->eval<std::function<void(geometrize::Circle&)>>("mutateCircle"));
 
         mutator.setMutatorFunction([this](geometrize::Ellipse& shape) {
             const std::int32_t xBound{shape.m_model.getWidth()};
@@ -199,8 +211,7 @@ public:
                 }
             }
         });
-        mutator
-                .setMutatorFunction([this](geometrize::Polyline& shape) {
+        mutator.setMutatorFunction([this](geometrize::Polyline& shape) {
             const std::int32_t xBound{shape.m_model.getWidth()};
             const std::int32_t yBound{shape.m_model.getHeight()};
             const std::int32_t i{geometrize::commonutil::randomRange(static_cast<std::size_t>(0), shape.m_points.size() - 1)};
@@ -344,6 +355,7 @@ public:
         });
     }
 
+private:
     std::unique_ptr<chaiscript::ChaiScript> m_engine;
 };
 

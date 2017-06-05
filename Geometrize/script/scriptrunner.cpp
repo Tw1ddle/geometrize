@@ -13,7 +13,7 @@ namespace geometrize
 namespace script
 {
 
-void runScript(const std::string& code, chaiscript::ChaiScript& runner, const geometrize::script::ScriptOptions& options)
+void runScript(const std::string& code, chaiscript::ChaiScript& runner, const geometrize::script::ScriptOptions* const options)
 {
     // TODO set options on the runner?
 
@@ -23,7 +23,7 @@ void runScript(const std::string& code, chaiscript::ChaiScript& runner, const ge
 
     // TODO possibly get rid of message boxes
     try {
-        runner.parse(code); // Note parsing first to check the syntax is valid
+        //runner.parse(code); // Note parsing first to check the syntax is valid
         runner.eval(code);
     } catch (const std::string& s) {
         QMessageBox::warning(nullptr, errorTitle, errorPreamble.arg(QString::fromStdString(s)));
@@ -34,7 +34,7 @@ void runScript(const std::string& code, chaiscript::ChaiScript& runner, const ge
     }
 }
 
-void runScript(const std::string& script, const ScriptOptions& options)
+void runScript(const std::string& script, const ScriptOptions* const options)
 {
     auto engine{createChaiScript()};
     runScript(script, *engine, options);

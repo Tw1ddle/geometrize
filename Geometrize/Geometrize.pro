@@ -86,7 +86,7 @@ SOURCES += commandlineparser.cpp \
     dialog/imagejobscene.cpp \
     dialog/collapsiblepanel.cpp \
     dialog/completionbox.cpp \
-    job/shapemutationrules.cpp
+    script/shapemutationrules.cpp
 
 HEADERS += commandlineparser.h \
     constants.h \
@@ -155,7 +155,7 @@ HEADERS += commandlineparser.h \
     dialog/imagejobscene.h \
     dialog/collapsiblepanel.h \
     dialog/completionbox.h \
-    job/shapemutationrules.h
+    script/shapemutationrules.h
 
 FORMS += dialog/aboutdialog.ui \
     dialog/commandlineedit.ui \

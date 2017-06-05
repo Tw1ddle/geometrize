@@ -11,8 +11,8 @@
 #include "geometrize/shaperesult.h"
 
 #include "imagejobworker.h"
-#include "shapemutationrules.h"
 #include "preferences/imagejobpreferences.h"
+#include "script/shapemutationrules.h"
 
 namespace geometrize
 {
