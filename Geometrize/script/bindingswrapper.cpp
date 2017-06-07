@@ -167,6 +167,11 @@ int randomInRange(const int lower, const int upper)
     return geometrize::util::randomInRange(lower, upper);
 }
 
+int clamp(const int value, const int lower, const int upper)
+{
+    return geometrize::util::clamp(value, lower, upper);
+}
+
 }
 
 }

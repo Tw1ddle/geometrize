@@ -1,0 +1,12 @@
+def setupLine(shape) {
+    var xBound = shape.m_model.getWidth();
+    var yBound = shape.m_model.getHeight();
+
+    var first = randomInRange(0, xBound - 1);
+    var second = randomInRange(0, yBound - 1);
+
+    shape.m_x1 = clamp(first + randomInRange(-32, 32), 0, xBound - 1);
+    shape.m_y1 = clamp(second + randomInRange(-32, 32), 0, yBound - 1);
+    shape.m_x2 = clamp(first + randomInRange(-32, 32), 0, xBound - 1);
+    shape.m_y2 = clamp(second + randomInRange(-32, 32), 0, yBound - 1);
+}

@@ -1,0 +1,10 @@
+def setupRotatedRectangle(shape) {
+    var xBound = shape.m_model.getWidth();
+    var yBound = shape.m_model.getHeight();
+
+    shape.m_x1 = randomInRange(0, xBound - 1);
+    shape.m_y1 = randomInRange(0, yBound - 1);
+    shape.m_x2 = clamp(shape.m_x1 + randomInRange(1, 32), 0, xBound - 1);
+    shape.m_y2 = clamp(shape.m_y1 + randomInRange(1, 32), 0, yBound - 1);
+    shape.m_angle = randomInRange(0, 360);
+}

@@ -14,6 +14,8 @@
 #include <QStandardPaths>
 #include <QUrl>
 
+#include "geometrize/commonutil.h"
+
 #ifdef _MSC_VER
 #include <intrin.h> // For debugbreak
 #endif
@@ -242,11 +244,13 @@ std::string percentEncode(const std::string& str)
 int randomInRange(const int lower, const int upper)
 {
     assert(lower <= upper);
+    return geometrize::commonutil::randomRange(lower, upper);
+}
 
-    std::random_device rd;
-    std::mt19937 eng(rd());
-    std::uniform_int_distribution<> distr(lower, upper);
-    return distr(eng);
+int clamp(const int value, const int lower, const int upper)
+{
+    assert(lower <= upper);
+    return std::max(lower, std::min(value, upper));
 }
 
 }

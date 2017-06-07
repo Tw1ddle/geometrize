@@ -1,0 +1,13 @@
+def setupPolyline(shape) {
+    var xBound = shape.m_model.getWidth();
+    var yBound = shape.m_model.getHeight();
+
+    var startingPoint = Pair(randomInRange(0, xBound), randomInRange(0, yBound - 1));
+
+    for (var i = 0; i < 4; ++i) {
+        var first = clamp(startingPoint.first + randomInRange(-32, 32), 0, xBound - 1);
+        var second = clamp(startingPoint.second + randomInRange(-32, 32), 0, yBound - 1);
+        var point = Pair(first, second);
+        shape.m_points.push_back(point);
+    }
+}

@@ -65,6 +65,8 @@ std::string percentEncode(const std::string& str);
 
 int randomInRange(int lower, int upper);
 
+int clamp(int value, int lower, int upper);
+
 }
 
 }

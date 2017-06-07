@@ -1,0 +1,11 @@
+def setupTriangle(shape) {
+    var xBound = shape.m_model.getWidth();
+    var yBound = shape.m_model.getHeight();
+
+    shape.m_x1 = randomInRange(0, xBound - 1);
+    shape.m_y1 = randomInRange(0, yBound - 1);
+    shape.m_x2 = shape.m_x1 + randomInRange(-32, 32);
+    shape.m_y2 = shape.m_y1 + randomInRange(-32, 32);
+    shape.m_x3 = shape.m_x1 + randomInRange(-32, 32);
+    shape.m_y3 = shape.m_y1 + randomInRange(-32, 32);
+}

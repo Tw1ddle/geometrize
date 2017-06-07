@@ -1,0 +1,23 @@
+def mutateTriangle(shape) {
+    var xBound = shape.m_model.getWidth();
+    var yBound = shape.m_model.getHeight();
+
+    var r = randomInRange(0, 2);
+    switch(r) {
+        case (0) {
+            shape.m_x1 = clamp(shape.m_x1 + randomInRange(-32, 32), 0, xBound);
+            shape.m_y1 = clamp(shape.m_y1 + randomInRange(-32, 32), 0, yBound);
+            break;
+        }
+        case (1) {
+            shape.m_x2 = clamp(shape.m_x2 + randomInRange(-32, 32), 0, xBound);
+            shape.m_y2 = clamp(shape.m_y2 + randomInRange(-32, 32), 0, yBound);
+            break;
+        }
+        case (2) {
+            shape.m_x3 = clamp(shape.m_x3 + randomInRange(-32, 32), 0, xBound);
+            shape.m_y3 = clamp(shape.m_y3 + randomInRange(-32, 32), 0, yBound);
+            break;
+        }
+    }
+}

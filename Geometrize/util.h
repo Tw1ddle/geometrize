@@ -168,12 +168,22 @@ bool writeStringToFile(const std::string& str, const std::string& path);
 std::string percentEncode(const std::string& str);
 
 /**
- * @brief randomInRange Returns a random integer in the range [lower, upper], inclusive.
+ * @brief randomInRange Returns a random integer in the range [lower, upper], inclusive. Note that this uses thread-local RNGs under the hood.
+ * This must not be called on the same thread as the Geometrize shape mutation code - otherwise the shape generation may not be deterministic.
  * @param lower The minimum value.
  * @param upper The maximum value.
  * @return An integer in the range [lower, upper] inclusive.
  */
 int randomInRange(int lower, int upper);
+
+/**
+ * @brief clamp Clamps a value within a range.
+ * @param value The value to clamp.
+ * @param lower The lower bound of the range.
+ * @param upper The upper bound of the range.
+ * @return The clamped value.
+ */
+int clamp(int value, int lower, int upper);
 
 }
 

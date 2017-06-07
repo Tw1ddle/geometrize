@@ -1,0 +1,8 @@
+def setupCircle(shape) {
+    var xBound = shape.m_model.getWidth();
+    var yBound = shape.m_model.getHeight();
+
+    shape.m_x = randomInRange(0, xBound);
+    shape.m_y = randomInRange(0, yBound);
+    shape.m_r = randomInRange(1, 32);
+}

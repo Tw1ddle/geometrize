@@ -1,0 +1,13 @@
+def mutatePolyline(shape) {
+    var xBound = shape.m_model.getWidth();
+    var yBound = shape.m_model.getHeight();
+
+    var i = randomInRange(0, shape.m_points.size());
+
+    var point = shape.m_points[i];
+    var first = clamp(point.first + randomInRange(-64, 64), 0, xBound - 1);
+    var second = clamp(point.second + randominRange(-64, 64), 0, yBound - 1);
+
+    shape.m_points[i].first = first;
+    shape.m_points[i].second = second;
+}

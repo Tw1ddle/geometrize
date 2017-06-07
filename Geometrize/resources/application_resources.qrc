@@ -769,5 +769,23 @@
         <file>licenses/qtgifimage_license.txt</file>
         <file>web_templates/canvas_export.html</file>
         <file>web_templates/webgl_export.html</file>
+        <file>scripts/mutateCircle.chai</file>
+        <file>scripts/mutateEllipse.chai</file>
+        <file>scripts/mutateLine.chai</file>
+        <file>scripts/mutatePolyline.chai</file>
+        <file>scripts/mutateQuadraticBezier.chai</file>
+        <file>scripts/mutateRectangle.chai</file>
+        <file>scripts/mutateRotatedEllipse.chai</file>
+        <file>scripts/mutateRotatedRectangle.chai</file>
+        <file>scripts/mutateTriangle.chai</file>
+        <file>scripts/setupCircle.chai</file>
+        <file>scripts/setupEllipse.chai</file>
+        <file>scripts/setupLine.chai</file>
+        <file>scripts/setupPolyline.chai</file>
+        <file>scripts/setupQuadraticBezier.chai</file>
+        <file>scripts/setupRectangle.chai</file>
+        <file>scripts/setupRotatedEllipse.chai</file>
+        <file>scripts/setupRotatedRectangle.chai</file>
+        <file>scripts/setupTriangle.chai</file>
     </qresource>
 </RCC>
