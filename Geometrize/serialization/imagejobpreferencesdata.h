@@ -29,6 +29,7 @@ public:
         ar(cereal::make_nvp(shapeCountKey, options.shapeCount));
         ar(cereal::make_nvp(shapeTypesKey, options.shapeTypes));
         ar(cereal::make_nvp(randomSeedKey, options.seed));
+        ar(cereal::make_nvp(maxThreadsKey, options.maxThreads));
 
         ar(cereal::make_nvp(scriptsEnabledKey, scriptsEnabled));
         ar(cereal::make_nvp(scriptsKey, scripts));
@@ -40,6 +41,7 @@ private:
     const std::string shapeCountKey{"shapeCount"};
     const std::string shapeTypesKey{"shapeTypes"};
     const std::string randomSeedKey{"randomSeed"};
+    const std::string maxThreadsKey{"maxThreads"};
 
     const std::string scriptsEnabledKey{"scriptModeEnabled"};
     const std::string scriptsKey{"scripts"};

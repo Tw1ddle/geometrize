@@ -89,6 +89,11 @@ public:
         m_options.seed = seed;
     }
 
+    void setMaxThreads(const std::uint32_t maxThreads)
+    {
+        m_options.maxThreads = maxThreads;
+    }
+
     void setScriptModeEnabled(const bool enabled)
     {
         m_scriptsEnabled = enabled;
@@ -187,6 +192,11 @@ void ImageJobPreferences::setMaxShapeMutations(const std::uint32_t maxMutations)
 void ImageJobPreferences::setSeed(const std::uint32_t seed)
 {
     d->setSeed(seed);
+}
+
+void ImageJobPreferences::setMaxThreads(const std::uint32_t maxThreads)
+{
+    d->setMaxThreads(maxThreads);
 }
 
 void ImageJobPreferences::setScriptModeEnabled(const bool enabled)

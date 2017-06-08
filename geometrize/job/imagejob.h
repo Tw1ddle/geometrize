@@ -80,6 +80,16 @@ public:
       */
      void setPreferences(preferences::ImageJobPreferences preferences);
 
+     /**
+      * @brief activateLibraryShapeMutation Uses the Geometrize library's built-in implementation for mutating shapes.
+      */
+     void activateLibraryShapeMutation();
+
+     /**
+      * @brief activateScriptedShapeMutation Uses the custom scripted implementation for mutating shapes.
+      */
+     void activateScriptedShapeMutation();
+
 signals:
      /**
       * @brief signal_step Signal that the image job emits to make the internal model step.

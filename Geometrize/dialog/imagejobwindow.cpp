@@ -274,6 +274,12 @@ public:
     void setScriptingModeEnabled(const bool enabled)
     {
         m_job->getPreferences().setScriptModeEnabled(enabled);
+
+        if(enabled) {
+            m_job->activateScriptedShapeMutation();
+        } else {
+            m_job->activateLibraryShapeMutation();
+        }
     }
 
     void setShapeOpacity(const int opacity)
@@ -300,6 +306,11 @@ public:
     void setRandomSeed(const int value)
     {
         m_job->getPreferences().setSeed(value);
+    }
+
+    void setMaxThreads(const int value)
+    {
+        m_job->getPreferences().setMaxThreads(value);
     }
 
 private:
@@ -348,11 +359,13 @@ private:
         ui->candidateShapesPerStepSlider->setValue(opts.shapeCount);
         ui->mutationsPerCandidateShapeSlider->setValue(opts.maxShapeMutations);
         ui->randomSeedSpinBox->setValue(opts.seed);
+        ui->maxThreadsSpinBox->setValue(opts.maxThreads);
 
         const bool scriptModeEnabled{prefs.isScriptModeEnabled()};
         ui->scriptingModeEnabledCheckbox->setChecked(scriptModeEnabled);
 
         const std::map<std::string, std::string> scripts{prefs.getScripts()};
+        // TODO apply the scripts? or better use a signal from the prefs that something changed...? also need to subscribe to that for save actions on edit boxes on the UI itself
     }
 
     std::shared_ptr<job::ImageJob> m_job;
@@ -525,6 +538,11 @@ void ImageJobWindow::on_mutationsPerCandidateShapeSlider_valueChanged(int value)
 void ImageJobWindow::on_randomSeedSpinBox_valueChanged(int value)
 {
     d->setRandomSeed(value);
+}
+
+void ImageJobWindow::on_maxThreadsSpinBox_valueChanged(int value)
+{
+    d->setMaxThreads(value);
 }
 
 }

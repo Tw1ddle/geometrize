@@ -97,6 +97,16 @@ public:
         m_preferences = preferences;
     }
 
+    void activateLibraryShapeMutation()
+    {
+        m_mutationRules.setupLibraryDefaults(m_worker.getRunner().getModel().getShapeMutator());
+    }
+
+    void activateScriptedShapeMutation()
+    {
+        m_mutationRules.setupScriptedDefaults(m_worker.getRunner().getModel().getShapeMutator());
+    }
+
 private:
     static int getId()
     {
@@ -188,6 +198,16 @@ preferences::ImageJobPreferences& ImageJob::getPreferences()
 void ImageJob::setPreferences(const preferences::ImageJobPreferences preferences)
 {
     d->setPreferences(preferences);
+}
+
+void ImageJob::activateLibraryShapeMutation()
+{
+    d->activateLibraryShapeMutation();
+}
+
+void ImageJob::activateScriptedShapeMutation()
+{
+    d->activateScriptedShapeMutation();
 }
 
 }

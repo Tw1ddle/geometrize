@@ -522,7 +522,7 @@
             <item>
              <widget class="QCheckBox" name="scriptingModeEnabledCheckbox">
               <property name="text">
-               <string>Scripting Mode Enabled</string>
+               <string>Scripts Enabled</string>
               </property>
              </widget>
             </item>
@@ -872,8 +872,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>486</width>
-                <height>89</height>
+                <width>476</width>
+                <height>96</height>
                </rect>
               </property>
               <layout class="QGridLayout" name="gridLayout">
@@ -936,6 +936,30 @@
                     <widget class="QLabel" name="mutationsPerCandidateShapeCountLabel">
                      <property name="text">
                       <string>0</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_2">
+                   <item>
+                    <widget class="QLabel" name="maxThreadsLabel">
+                     <property name="text">
+                      <string>Max Threads</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QSpinBox" name="maxThreadsSpinBox">
+                     <property name="alignment">
+                      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                     </property>
+                     <property name="correctionMode">
+                      <enum>QAbstractSpinBox::CorrectToNearestValue</enum>
+                     </property>
+                     <property name="maximum">
+                      <number>32</number>
                      </property>
                     </widget>
                    </item>

@@ -43,45 +43,37 @@ public:
 
     void setupScriptedDefaults(geometrize::ShapeMutator& mutator)
     {
-        addSetupFunction<geometrize::Circle>(mutator, "setupCircle");
-        addSetupFunction<geometrize::Ellipse>(mutator, "setupEllipse");
-        addSetupFunction<geometrize::Line>(mutator, "setupLine");
-        addSetupFunction<geometrize::Polyline>(mutator, "setupPolyline");
-        addSetupFunction<geometrize::QuadraticBezier>(mutator, "setupQuadraticBezier");
-        addSetupFunction<geometrize::Rectangle>(mutator, "setupRectangle");
-        addSetupFunction<geometrize::RotatedEllipse>(mutator, "setupRotatedEllipse");
-        addSetupFunction<geometrize::RotatedRectangle>(mutator, "setupRotatedRectangle");
-        addSetupFunction<geometrize::Triangle>(mutator, "setupTriangle");
+        addDefaultSetupFunction<geometrize::Circle>(mutator, "setupCircle");
+        addDefaultSetupFunction<geometrize::Ellipse>(mutator, "setupEllipse");
+        addDefaultSetupFunction<geometrize::Line>(mutator, "setupLine");
+        addDefaultSetupFunction<geometrize::Polyline>(mutator, "setupPolyline");
+        addDefaultSetupFunction<geometrize::QuadraticBezier>(mutator, "setupQuadraticBezier");
+        addDefaultSetupFunction<geometrize::Rectangle>(mutator, "setupRectangle");
+        addDefaultSetupFunction<geometrize::RotatedEllipse>(mutator, "setupRotatedEllipse");
+        addDefaultSetupFunction<geometrize::RotatedRectangle>(mutator, "setupRotatedRectangle");
+        addDefaultSetupFunction<geometrize::Triangle>(mutator, "setupTriangle");
 
-        addMutatorFunction<geometrize::Circle>(mutator, "mutateCircle");
-        addMutatorFunction<geometrize::Ellipse>(mutator, "mutateEllipse");
-        addMutatorFunction<geometrize::Line>(mutator, "mutateLine");
-        addMutatorFunction<geometrize::Polyline>(mutator, "mutatePolyline");
-        addMutatorFunction<geometrize::QuadraticBezier>(mutator, "mutateQuadraticBezier");
-        addMutatorFunction<geometrize::Rectangle>(mutator, "mutateRectangle");
-        addMutatorFunction<geometrize::RotatedEllipse>(mutator, "mutateRotatedEllipse");
-        addMutatorFunction<geometrize::RotatedRectangle>(mutator, "mutateRotatedRectangle");
-        addMutatorFunction<geometrize::Triangle>(mutator, "mutateTriangle");
-    }
-
-    // TODO need to load scripts from saved settings/config files - TODO should do this in the same manner as loading changes to text in the GUI
-    void setCustomScriptedMutators(const std::vector<std::pair<std::string, std::string>>& functionNameCodePairs)
-    {
-        for(const std::pair<std::string, std::string>& pair : functionNameCodePairs) {
-
-        };
+        addDefaultMutatorFunction<geometrize::Circle>(mutator, "mutateCircle");
+        addDefaultMutatorFunction<geometrize::Ellipse>(mutator, "mutateEllipse");
+        addDefaultMutatorFunction<geometrize::Line>(mutator, "mutateLine");
+        addDefaultMutatorFunction<geometrize::Polyline>(mutator, "mutatePolyline");
+        addDefaultMutatorFunction<geometrize::QuadraticBezier>(mutator, "mutateQuadraticBezier");
+        addDefaultMutatorFunction<geometrize::Rectangle>(mutator, "mutateRectangle");
+        addDefaultMutatorFunction<geometrize::RotatedEllipse>(mutator, "mutateRotatedEllipse");
+        addDefaultMutatorFunction<geometrize::RotatedRectangle>(mutator, "mutateRotatedRectangle");
+        addDefaultMutatorFunction<geometrize::Triangle>(mutator, "mutateTriangle");
     }
 
 private:
     template <class T>
-    void addSetupFunction(geometrize::ShapeMutator& mutator, const std::string& functionName)
+    void addDefaultSetupFunction(geometrize::ShapeMutator& mutator, const std::string& functionName)
     {
         addDefaultFunction(functionName);
         mutator.setSetupFunction(m_engine->eval<std::function<void(T&)>>(functionName));
     }
 
     template <class T>
-    void addMutatorFunction(geometrize::ShapeMutator& mutator, const std::string& functionName)
+    void addDefaultMutatorFunction(geometrize::ShapeMutator& mutator, const std::string& functionName)
     {
         addDefaultFunction(functionName);
         mutator.setMutatorFunction(m_engine->eval<std::function<void(T&)>>(functionName));
@@ -90,12 +82,10 @@ private:
     void addDefaultFunction(const std::string& functionName)
     {
         const std::string code{util::readFileAsString(scriptResourceFolder + functionName + ".chai")};
-        m_functionCodeMap[functionName] = code;
-        m_engine->eval(code); // TODO cannot redefine functions this way with chaiscript, need to recreate the whole engine, or use a global??
+        m_engine->eval(code);
     }
 
     std::unique_ptr<chaiscript::ChaiScript> m_engine;
-    std::map<std::string, std::string> m_functionCodeMap; ///< Maps function names to source code
     const std::string scriptResourceFolder{":/scripts/"}; ///< Path to the scripts folder in the resources folder
 };
 

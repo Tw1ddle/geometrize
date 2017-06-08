@@ -53,6 +53,7 @@ public:
     void setCandidateShapeCount(std::uint32_t shapeCount);
     void setMaxShapeMutations(std::uint32_t maxMutations);
     void setSeed(std::uint32_t seed);
+    void setMaxThreads(std::uint32_t maxThreads);
 
     bool isScriptModeEnabled() const;
     void setScriptModeEnabled(bool enabled);
