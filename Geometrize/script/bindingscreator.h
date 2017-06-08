@@ -25,6 +25,12 @@ std::shared_ptr<chaiscript::Module> createBindings();
  */
 std::shared_ptr<chaiscript::Module> createShapeMutationBindings();
 
+/**
+ * @brief createMathBindings Creates the Chaiscript to C++ bindings for common math functions.
+ * @return A shared pointer to a module encapsulating the bindings.
+ */
+std::shared_ptr<chaiscript::Module> createMathBindings();
+
 }
 
 }

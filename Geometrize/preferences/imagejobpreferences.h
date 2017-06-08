@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -52,6 +53,11 @@ public:
     void setCandidateShapeCount(std::uint32_t shapeCount);
     void setMaxShapeMutations(std::uint32_t maxMutations);
     void setSeed(std::uint32_t seed);
+
+    bool isScriptModeEnabled() const;
+    void setScriptModeEnabled(bool enabled);
+    void setScript(const std::string& scriptName, const std::string& code);
+    std::map<std::string, std::string> getScripts() const;
 
 private:
     class ImageJobPreferencesImpl;

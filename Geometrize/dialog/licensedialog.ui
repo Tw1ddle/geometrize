@@ -81,6 +81,16 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="ChaiScriptExtras">
+      <attribute name="title">
+       <string>ChaiScript Extras</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_14">
+       <item>
+        <widget class="QTextBrowser" name="chaiScriptExtrasLicense"/>
+       </item>
+      </layout>
+     </widget>
      <widget class="QWidget" name="Cereal">
       <attribute name="title">
        <string notr="true">Cereal</string>

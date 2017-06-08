@@ -3,6 +3,7 @@
 #include "chaiscript/chaiscript.hpp"
 
 #include "bindingswrapper.h"
+#include "chaiscriptmathextras.h"
 
 #include "geometrize/model.h"
 #include "geometrize/shape/circle.h"
@@ -151,6 +152,11 @@ std::shared_ptr<chaiscript::Module> createShapeMutationBindings()
     ADD_MEMBER(Triangle, m_y3);
 
     return module;
+}
+
+std::shared_ptr<chaiscript::Module> createMathBindings()
+{
+    return chaiscript::extras::math::bootstrap();
 }
 
 }

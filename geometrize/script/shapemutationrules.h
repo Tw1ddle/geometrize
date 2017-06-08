@@ -22,12 +22,22 @@ public:
     ~ShapeMutationRules();
 
     /**
-     * @brief setup Sets the setup and mutation rules owned by this shape mutation rules object on the given shape mutator.
+     * @brief setupLibraryDefaults Sets the setup and mutation rules hardcoded in the Geometrize library on the given shape mutator.
+     * Far faster than other (scripted) mutation rules, but inflexible.
      * @param mutator The shape mutator that will use the rules.
      */
-    void setup(geometrize::ShapeMutator& mutator);
+    void setupLibraryDefaults(geometrize::ShapeMutator& mutator);
 
-    void setShapeRegion() {} // TODO
+    /**
+     * @brief setupScriptedDefaults Sets the default scripted setup and mutation rules on the given shape mutator.
+     * @param mutator The shape mutator that will use the rules.
+     */
+    void setupScriptedDefaults(geometrize::ShapeMutator& mutator);
+
+    // TODO?
+    //void setPermittedShapeRegion() {} // TODO
+    //void setIntProperty(const std::string& propName, int value);
+
     // TODO override the shape orientation, force it to be a particular angle?
     // TODO minimum sizes etc?
 

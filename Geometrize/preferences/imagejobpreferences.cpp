@@ -33,7 +33,7 @@ public:
     {
         std::ifstream input(filePath);
         try {
-            m_data.archive(cereal::JSONInputArchive(input), m_options);
+            m_data.archive(cereal::JSONInputArchive(input), m_options, m_scriptsEnabled, m_scripts);
         } catch(...) {
             assert(0 && "Failed to read image preferences");
         }
@@ -43,7 +43,7 @@ public:
     {
         std::ofstream output(filePath);
         try {
-            m_data.archive(cereal::JSONOutputArchive(output), m_options);
+            m_data.archive(cereal::JSONOutputArchive(output), m_options, m_scriptsEnabled, m_scripts);
         } catch(...) {
             assert(0 && "Failed to write image preferences");
         }
@@ -89,9 +89,32 @@ public:
         m_options.seed = seed;
     }
 
+    void setScriptModeEnabled(const bool enabled)
+    {
+        m_scriptsEnabled = enabled;
+    }
+
+    bool isScriptModeEnabled() const
+    {
+        return m_scriptsEnabled;
+    }
+
+    void setScript(const std::string& scriptName, const std::string& code)
+    {
+        m_scripts[scriptName] = code;
+    }
+
+    std::map<std::string, std::string> getScripts() const
+    {
+        return m_scripts;
+    }
+
 private:
-    serialization::ImageJobPreferencesData m_data;
-    geometrize::ImageRunnerOptions m_options;
+    serialization::ImageJobPreferencesData m_data; ///> The data that will be serialized/deserialized
+    geometrize::ImageRunnerOptions m_options; ///> The Geometrize library-level image runner options
+
+    bool m_scriptsEnabled{false}; ///> Whether the custom Chaiscript scripts are enabled or not
+    std::map<std::string, std::string> m_scripts; ///> Custom Chaiscript scripts that override the default Geometrize functionality
 };
 
 ImageJobPreferences::ImageJobPreferences() : d{std::make_shared<ImageJobPreferences::ImageJobPreferencesImpl>()}
@@ -164,6 +187,26 @@ void ImageJobPreferences::setMaxShapeMutations(const std::uint32_t maxMutations)
 void ImageJobPreferences::setSeed(const std::uint32_t seed)
 {
     d->setSeed(seed);
+}
+
+void ImageJobPreferences::setScriptModeEnabled(const bool enabled)
+{
+    d->setScriptModeEnabled(enabled);
+}
+
+bool ImageJobPreferences::isScriptModeEnabled() const
+{
+    return d->isScriptModeEnabled();
+}
+
+void ImageJobPreferences::setScript(const std::string& scriptName, const std::string& code)
+{
+    d->setScript(scriptName, code);
+}
+
+std::map<std::string, std::string> ImageJobPreferences::getScripts() const
+{
+    return d->getScripts();
 }
 
 }

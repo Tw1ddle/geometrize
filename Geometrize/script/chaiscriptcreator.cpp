@@ -30,6 +30,7 @@ std::unique_ptr<chaiscript::ChaiScript> createChaiScriptShapeMutator()
 
     chai->add(createBindings());
     chai->add(createShapeMutationBindings());
+    chai->add(createMathBindings());
 
     return chai;
 }

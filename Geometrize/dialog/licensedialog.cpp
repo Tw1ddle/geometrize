@@ -54,6 +54,7 @@ LicenseDialog::LicenseDialog(QWidget* parent) :
     setLicenseText(ui->geometrizeLibraryLicense, "geometrize_library_license.txt");
     setLicenseText(ui->qtLicense, "qt_license.txt");
     setLicenseText(ui->chaiScriptLicense, "chaiscript_license.txt");
+    setLicenseText(ui->chaiScriptExtrasLicense, "chaiscript_extras_license.txt");
     setLicenseText(ui->cerealLicense, "cereal_license.txt");
     setLicenseText(ui->rapidJSONLicense, "rapidjson_license.txt");
     setLicenseText(ui->rapidXmlLicense, "rapidxml_license.txt");

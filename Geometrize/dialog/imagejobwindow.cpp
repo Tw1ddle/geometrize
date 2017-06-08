@@ -50,7 +50,7 @@ public:
     {
         ui->setupUi(q);
         ui->targetImageSettings->setup(tr("Image Settings"));
-        ui->shapeSettings->setup("Shape Settings");
+        ui->scriptingPanel->setup("Custom Scripts");
 
         ui->imageView->setScene(&m_scene);
 
@@ -271,6 +271,11 @@ public:
         }
     }
 
+    void setScriptingModeEnabled(const bool enabled)
+    {
+        m_job->getPreferences().setScriptModeEnabled(enabled);
+    }
+
     void setShapeOpacity(const int opacity)
     {
         ui->shapeOpacityValueLabel->setText(QString::number(opacity));
@@ -317,10 +322,12 @@ private:
 
     void syncUserInterfaceWithOptions()
     {
-        const geometrize::ImageRunnerOptions opts{m_job->getPreferences().getImageRunnerOptions()}; // Geometrize library options
+        geometrize::preferences::ImageJobPreferences& prefs{m_job->getPreferences()};
 
         const float startingTargetOpacity{10};
         ui->targetOpacitySlider->setValue(startingTargetOpacity);
+
+        const geometrize::ImageRunnerOptions opts{prefs.getImageRunnerOptions()}; // Geometrize library options
 
         const auto usesShape = [&opts](const geometrize::ShapeTypes type) -> bool {
             const std::uint32_t shapes{static_cast<std::uint32_t>(opts.shapeTypes)};
@@ -341,6 +348,11 @@ private:
         ui->candidateShapesPerStepSlider->setValue(opts.shapeCount);
         ui->mutationsPerCandidateShapeSlider->setValue(opts.maxShapeMutations);
         ui->randomSeedSpinBox->setValue(opts.seed);
+
+        const bool scriptModeEnabled{prefs.isScriptModeEnabled()};
+        ui->scriptingModeEnabledCheckbox->setChecked(scriptModeEnabled);
+
+        const std::map<std::string, std::string> scripts{prefs.getScripts()};
     }
 
     std::shared_ptr<job::ImageJob> m_job;
@@ -488,6 +500,11 @@ void ImageJobWindow::on_usesQuadraticBeziers_clicked(bool checked)
 void ImageJobWindow::on_usesPolylines_clicked(bool checked)
 {
     d->setShapes(geometrize::POLYLINE, checked);
+}
+
+void ImageJobWindow::on_scriptingModeEnabledCheckbox_clicked(bool checked)
+{
+    d->setScriptingModeEnabled(checked);
 }
 
 void ImageJobWindow::on_shapeOpacitySlider_valueChanged(int value)

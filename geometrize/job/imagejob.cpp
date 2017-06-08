@@ -109,7 +109,8 @@ private:
         qRegisterMetaType<std::vector<geometrize::ShapeResult>>();
         qRegisterMetaType<geometrize::ImageRunnerOptions>();
 
-        m_mutationRules.setup(m_worker.getRunner().getModel().getShapeMutator());
+        // Default to the Geometrize library default/hardcoded implementation
+        m_mutationRules.setupLibraryDefaults(m_worker.getRunner().getModel().getShapeMutator());
 
         m_worker.moveToThread(&m_workerThread);
         m_workerThread.start();

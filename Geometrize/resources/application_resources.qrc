@@ -787,5 +787,6 @@
         <file>scripts/setupRotatedEllipse.chai</file>
         <file>scripts/setupRotatedRectangle.chai</file>
         <file>scripts/setupTriangle.chai</file>
+        <file>licenses/chaiscript_extras_license.txt</file>
     </qresource>
 </RCC>

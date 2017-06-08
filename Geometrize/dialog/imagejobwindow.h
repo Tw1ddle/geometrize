@@ -65,6 +65,8 @@ private slots:
     void on_usesQuadraticBeziers_clicked(bool checked);
     void on_usesPolylines_clicked(bool checked);
 
+    void on_scriptingModeEnabledCheckbox_clicked(bool checked);
+
     void on_shapeOpacitySlider_valueChanged(int value);
     void on_candidateShapesPerStepSlider_valueChanged(int value);
     void on_mutationsPerCandidateShapeSlider_valueChanged(int value);

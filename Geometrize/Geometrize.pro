@@ -155,7 +155,8 @@ HEADERS += commandlineparser.h \
     dialog/imagejobscene.h \
     dialog/collapsiblepanel.h \
     dialog/completionbox.h \
-    script/shapemutationrules.h
+    script/shapemutationrules.h \
+    script/chaiscriptmathextras.h
 
 FORMS += dialog/aboutdialog.ui \
     dialog/commandlineedit.ui \

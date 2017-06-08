@@ -82,558 +82,177 @@
         </size>
        </property>
       </widget>
-      <widget class="QTabWidget" name="optionsTab">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>500</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="tabPosition">
-        <enum>QTabWidget::North</enum>
-       </property>
-       <property name="currentIndex">
-        <number>0</number>
-       </property>
-       <widget class="QWidget" name="settingsTab">
-        <attribute name="title">
-         <string>Settings</string>
-        </attribute>
-        <layout class="QVBoxLayout" name="verticalLayout_28">
-         <item>
-          <widget class="QScrollArea" name="settingsScrollArea">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="widgetResizable">
-            <bool>true</bool>
-           </property>
-           <widget class="QWidget" name="scrollAreaWidgetContents">
-            <property name="geometry">
-             <rect>
-              <x>0</x>
-              <y>0</y>
-              <width>482</width>
-              <height>636</height>
-             </rect>
-            </property>
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_17">
-             <item>
-              <widget class="geometrize::dialog::CollapsiblePanel" name="targetImageSettings">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <layout class="QGridLayout" name="gridLayout_7">
-                <item row="0" column="0">
-                 <widget class="QScrollArea" name="targetImageSettingsScrollArea">
-                  <property name="frameShape">
-                   <enum>QFrame::NoFrame</enum>
+      <widget class="QWidget" name="optionsSection" native="true">
+       <layout class="QVBoxLayout" name="verticalLayout_18">
+        <item>
+         <widget class="QTabWidget" name="settingsTabWidget">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>500</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="tabPosition">
+           <enum>QTabWidget::North</enum>
+          </property>
+          <property name="currentIndex">
+           <number>2</number>
+          </property>
+          <widget class="QWidget" name="imageSettingsTab">
+           <attribute name="title">
+            <string>Image Settings</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_24">
+            <item>
+             <widget class="geometrize::dialog::CollapsiblePanel" name="targetImageSettings">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_7">
+               <item row="0" column="0">
+                <widget class="QScrollArea" name="targetImageSettingsScrollArea">
+                 <property name="frameShape">
+                  <enum>QFrame::NoFrame</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Plain</enum>
+                 </property>
+                 <property name="verticalScrollBarPolicy">
+                  <enum>Qt::ScrollBarAlwaysOff</enum>
+                 </property>
+                 <property name="horizontalScrollBarPolicy">
+                  <enum>Qt::ScrollBarAlwaysOff</enum>
+                 </property>
+                 <property name="widgetResizable">
+                  <bool>true</bool>
+                 </property>
+                 <widget class="QWidget" name="targetImageSettingsScrollAreaContents">
+                  <property name="geometry">
+                   <rect>
+                    <x>0</x>
+                    <y>0</y>
+                    <width>472</width>
+                    <height>214</height>
+                   </rect>
                   </property>
-                  <property name="frameShadow">
-                   <enum>QFrame::Plain</enum>
-                  </property>
-                  <property name="verticalScrollBarPolicy">
-                   <enum>Qt::ScrollBarAlwaysOff</enum>
-                  </property>
-                  <property name="horizontalScrollBarPolicy">
-                   <enum>Qt::ScrollBarAlwaysOff</enum>
-                  </property>
-                  <property name="widgetResizable">
-                   <bool>true</bool>
-                  </property>
-                  <widget class="QWidget" name="targetImageSettingsScrollAreaContents">
-                   <property name="geometry">
-                    <rect>
-                     <x>0</x>
-                     <y>0</y>
-                     <width>458</width>
-                     <height>214</height>
-                    </rect>
-                   </property>
-                   <layout class="QGridLayout" name="gridLayout_4">
-                    <item row="0" column="0">
-                     <layout class="QHBoxLayout" name="horizontalLayout">
-                      <item>
-                       <layout class="QVBoxLayout" name="verticalLayout">
-                        <item>
-                         <widget class="QLabel" name="targetImageLabel">
-                          <property name="sizePolicy">
-                           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                           </sizepolicy>
-                          </property>
-                          <property name="minimumSize">
-                           <size>
-                            <width>150</width>
-                            <height>150</height>
-                           </size>
-                          </property>
-                          <property name="maximumSize">
-                           <size>
-                            <width>150</width>
-                            <height>150</height>
-                           </size>
-                          </property>
-                          <property name="autoFillBackground">
-                           <bool>true</bool>
-                          </property>
-                          <property name="text">
-                           <string notr="true"/>
-                          </property>
-                         </widget>
-                        </item>
-                       </layout>
-                      </item>
-                      <item>
-                       <layout class="QVBoxLayout" name="verticalLayout_2">
-                        <item>
-                         <widget class="QPushButton" name="selectGradientTargetImageButton">
-                          <property name="sizePolicy">
-                           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                           </sizepolicy>
-                          </property>
-                          <property name="text">
-                           <string>Select Gradient Target Image</string>
-                          </property>
-                         </widget>
-                        </item>
-                        <item>
-                         <widget class="QPushButton" name="selectTargetImageButton">
-                          <property name="sizePolicy">
-                           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                           </sizepolicy>
-                          </property>
-                          <property name="text">
-                           <string>Select Target Image</string>
-                          </property>
-                         </widget>
-                        </item>
-                       </layout>
-                      </item>
-                     </layout>
-                    </item>
-                    <item row="1" column="0">
-                     <widget class="QGroupBox" name="imageSettingsGroupBox">
-                      <layout class="QVBoxLayout" name="verticalLayout_25">
+                  <layout class="QGridLayout" name="gridLayout_4">
+                   <item row="0" column="0">
+                    <layout class="QHBoxLayout" name="horizontalLayout">
+                     <item>
+                      <layout class="QVBoxLayout" name="verticalLayout">
                        <item>
-                        <layout class="QHBoxLayout" name="horizontalLayout_21">
-                         <item>
-                          <widget class="QLabel" name="targetOpacityLabel">
-                           <property name="sizePolicy">
-                            <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                             <horstretch>0</horstretch>
-                             <verstretch>0</verstretch>
-                            </sizepolicy>
-                           </property>
-                           <property name="text">
-                            <string>Target Image Opacity</string>
-                           </property>
-                          </widget>
-                         </item>
-                         <item>
-                          <widget class="QSlider" name="targetOpacitySlider">
-                           <property name="sizePolicy">
-                            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                             <horstretch>0</horstretch>
-                             <verstretch>0</verstretch>
-                            </sizepolicy>
-                           </property>
-                           <property name="maximum">
-                            <number>100</number>
-                           </property>
-                           <property name="orientation">
-                            <enum>Qt::Horizontal</enum>
-                           </property>
-                           <property name="tickPosition">
-                            <enum>QSlider::NoTicks</enum>
-                           </property>
-                           <property name="tickInterval">
-                            <number>5</number>
-                           </property>
-                          </widget>
-                         </item>
-                         <item>
-                          <widget class="QLabel" name="targetImageOpacityValueLabel">
-                           <property name="text">
-                            <string>0</string>
-                           </property>
-                          </widget>
-                         </item>
-                        </layout>
+                        <widget class="QLabel" name="targetImageLabel">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>150</width>
+                           <height>150</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>150</width>
+                           <height>150</height>
+                          </size>
+                         </property>
+                         <property name="autoFillBackground">
+                          <bool>true</bool>
+                         </property>
+                         <property name="text">
+                          <string notr="true"/>
+                         </property>
+                        </widget>
                        </item>
                       </layout>
-                     </widget>
-                    </item>
-                   </layout>
-                  </widget>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
-             <item>
-              <widget class="geometrize::dialog::CollapsiblePanel" name="shapeSettings">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <layout class="QGridLayout" name="gridLayout_6">
-                <item row="0" column="0">
-                 <widget class="QScrollArea" name="shapeSettingsScrollArea">
-                  <property name="frameShape">
-                   <enum>QFrame::NoFrame</enum>
-                  </property>
-                  <property name="frameShadow">
-                   <enum>QFrame::Plain</enum>
-                  </property>
-                  <property name="verticalScrollBarPolicy">
-                   <enum>Qt::ScrollBarAlwaysOff</enum>
-                  </property>
-                  <property name="horizontalScrollBarPolicy">
-                   <enum>Qt::ScrollBarAlwaysOff</enum>
-                  </property>
-                  <property name="sizeAdjustPolicy">
-                   <enum>QAbstractScrollArea::AdjustIgnored</enum>
-                  </property>
-                  <property name="widgetResizable">
-                   <bool>true</bool>
-                  </property>
-                  <widget class="QWidget" name="shapeSettingsScrollAreaContents">
-                   <property name="geometry">
-                    <rect>
-                     <x>0</x>
-                     <y>0</y>
-                     <width>458</width>
-                     <height>515</height>
-                    </rect>
-                   </property>
-                   <layout class="QGridLayout" name="gridLayout_3">
-                    <item row="0" column="0">
-                     <widget class="QGroupBox" name="shapeOpacityGroupBox">
-                      <property name="title">
-                       <string>All Shapes</string>
-                      </property>
-                      <layout class="QVBoxLayout" name="verticalLayout_26">
+                     </item>
+                     <item>
+                      <layout class="QVBoxLayout" name="verticalLayout_2">
                        <item>
-                        <layout class="QHBoxLayout" name="horizontalLayout_19">
-                         <item>
-                          <widget class="QLabel" name="shapeOpacityLabel">
-                           <property name="text">
-                            <string>Opacity</string>
-                           </property>
-                          </widget>
-                         </item>
-                         <item>
-                          <widget class="QSlider" name="shapeOpacitySlider">
-                           <property name="minimum">
-                            <number>1</number>
-                           </property>
-                           <property name="maximum">
-                            <number>255</number>
-                           </property>
-                           <property name="orientation">
-                            <enum>Qt::Horizontal</enum>
-                           </property>
-                           <property name="tickPosition">
-                            <enum>QSlider::NoTicks</enum>
-                           </property>
-                           <property name="tickInterval">
-                            <number>5</number>
-                           </property>
-                          </widget>
-                         </item>
-                         <item>
-                          <widget class="QLabel" name="shapeOpacityValueLabel">
-                           <property name="text">
-                            <string>0</string>
-                           </property>
-                          </widget>
-                         </item>
-                        </layout>
-                       </item>
-                      </layout>
-                     </widget>
-                    </item>
-                    <item row="1" column="0">
-                     <widget class="QGroupBox" name="linesGroupBox">
-                      <property name="title">
-                       <string>Lines</string>
-                      </property>
-                      <layout class="QFormLayout" name="formLayout_20">
-                       <item row="0" column="0">
-                        <widget class="QCheckBox" name="usesLines">
+                        <widget class="QPushButton" name="selectGradientTargetImageButton">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
                          <property name="text">
-                          <string>Enabled</string>
+                          <string>Select Gradient Target Image</string>
                          </property>
                         </widget>
                        </item>
-                       <item row="0" column="1">
-                        <layout class="QFormLayout" name="formLayout_18"/>
-                       </item>
-                      </layout>
-                     </widget>
-                    </item>
-                    <item row="2" column="0">
-                     <widget class="QGroupBox" name="trianglesGroupBox">
-                      <property name="title">
-                       <string>Triangles</string>
-                      </property>
-                      <layout class="QFormLayout" name="formLayout_7">
-                       <item row="0" column="0">
-                        <widget class="QCheckBox" name="usesTriangles">
+                       <item>
+                        <widget class="QPushButton" name="selectTargetImageButton">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
                          <property name="text">
-                          <string>Enabled</string>
+                          <string>Select Target Image</string>
                          </property>
                         </widget>
                        </item>
-                       <item row="0" column="1">
-                        <layout class="QFormLayout" name="formLayout_12"/>
-                       </item>
                       </layout>
-                     </widget>
-                    </item>
-                    <item row="3" column="0">
-                     <widget class="QGroupBox" name="ellipsesGroupBox">
-                      <property name="title">
-                       <string>Ellipses</string>
-                      </property>
-                      <layout class="QFormLayout" name="formLayout_2">
-                       <item row="0" column="0">
-                        <widget class="QCheckBox" name="usesEllipses">
-                         <property name="text">
-                          <string>Enabled</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item row="0" column="1">
-                        <layout class="QFormLayout" name="formLayout_13"/>
-                       </item>
-                      </layout>
-                     </widget>
-                    </item>
-                    <item row="4" column="0">
-                     <widget class="QGroupBox" name="rotatedEllipsesGroupBox">
-                      <property name="title">
-                       <string>Rotated Ellipses</string>
-                      </property>
-                      <layout class="QFormLayout" name="formLayout_5">
-                       <item row="0" column="0">
-                        <widget class="QCheckBox" name="usesRotatedEllipses">
-                         <property name="text">
-                          <string>Enabled</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item row="0" column="1">
-                        <layout class="QFormLayout" name="formLayout_14"/>
-                       </item>
-                      </layout>
-                     </widget>
-                    </item>
-                    <item row="5" column="0">
-                     <widget class="QGroupBox" name="rectanglesGroupBox">
-                      <property name="title">
-                       <string>Rectangles</string>
-                      </property>
-                      <layout class="QFormLayout" name="formLayout_4">
-                       <item row="0" column="0">
-                        <widget class="QCheckBox" name="usesRectangles">
-                         <property name="text">
-                          <string>Enabled</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item row="0" column="1">
-                        <layout class="QFormLayout" name="formLayout_10"/>
-                       </item>
-                      </layout>
-                     </widget>
-                    </item>
-                    <item row="6" column="0">
-                     <widget class="QGroupBox" name="quadraticBeziersGroupBox">
-                      <property name="title">
-                       <string>Quadratic Beziers</string>
-                      </property>
-                      <layout class="QFormLayout" name="formLayout_21">
-                       <item row="0" column="0">
-                        <widget class="QCheckBox" name="usesQuadraticBeziers">
-                         <property name="text">
-                          <string>Enabled</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item row="0" column="1">
-                        <layout class="QFormLayout" name="formLayout_19"/>
-                       </item>
-                      </layout>
-                     </widget>
-                    </item>
-                    <item row="7" column="0">
-                     <widget class="QGroupBox" name="polylinesGroupBox">
-                      <property name="title">
-                       <string>Polylines</string>
-                      </property>
-                      <layout class="QFormLayout" name="formLayout_16">
-                       <item row="0" column="0">
-                        <widget class="QCheckBox" name="usesPolylines">
-                         <property name="text">
-                          <string>Enabled</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item row="0" column="1">
-                        <layout class="QFormLayout" name="formLayout_8"/>
-                       </item>
-                      </layout>
-                     </widget>
-                    </item>
-                    <item row="8" column="0">
-                     <widget class="QGroupBox" name="circlesGroupBox">
-                      <property name="title">
-                       <string>Circles</string>
-                      </property>
-                      <layout class="QFormLayout" name="formLayout_3">
-                       <item row="0" column="0">
-                        <widget class="QCheckBox" name="usesCircles">
-                         <property name="text">
-                          <string>Enabled</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item row="0" column="1">
-                        <layout class="QFormLayout" name="formLayout_15"/>
-                       </item>
-                      </layout>
-                     </widget>
-                    </item>
-                    <item row="9" column="0">
-                     <widget class="QGroupBox" name="rotatedRectanglesGroupBox">
-                      <property name="title">
-                       <string>Rotated Rectangles</string>
-                      </property>
-                      <layout class="QFormLayout" name="formLayout_6">
-                       <item row="0" column="0">
-                        <widget class="QCheckBox" name="usesRotatedRectangles">
-                         <property name="text">
-                          <string>Enabled</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item row="0" column="1">
-                        <layout class="QFormLayout" name="formLayout_11"/>
-                       </item>
-                      </layout>
-                     </widget>
-                    </item>
-                   </layout>
-                  </widget>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
-             <item>
-              <widget class="QGroupBox" name="runnerSettings">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="title">
-                <string>Runner Settings</string>
-               </property>
-               <property name="flat">
-                <bool>false</bool>
-               </property>
-               <layout class="QVBoxLayout" name="verticalLayout_8">
-                <property name="spacing">
-                 <number>4</number>
-                </property>
-                <property name="leftMargin">
-                 <number>4</number>
-                </property>
-                <property name="topMargin">
-                 <number>4</number>
-                </property>
-                <property name="rightMargin">
-                 <number>4</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>4</number>
-                </property>
-                <item>
-                 <widget class="QScrollArea" name="runnerSettingsScrollArea">
-                  <property name="frameShape">
-                   <enum>QFrame::NoFrame</enum>
-                  </property>
-                  <property name="frameShadow">
-                   <enum>QFrame::Plain</enum>
-                  </property>
-                  <property name="widgetResizable">
-                   <bool>true</bool>
-                  </property>
-                  <widget class="QWidget" name="runnerSettingsScrollAreaContents">
-                   <property name="geometry">
-                    <rect>
-                     <x>0</x>
-                     <y>0</y>
-                     <width>456</width>
-                     <height>89</height>
-                    </rect>
-                   </property>
-                   <layout class="QGridLayout" name="gridLayout">
-                    <item row="0" column="0">
-                     <layout class="QVBoxLayout" name="runnerSettingsBoxLayout">
+                     </item>
+                    </layout>
+                   </item>
+                   <item row="1" column="0">
+                    <widget class="QGroupBox" name="imageSettingsGroupBox">
+                     <layout class="QVBoxLayout" name="verticalLayout_25">
                       <item>
-                       <layout class="QHBoxLayout" name="horizontalLayout_15">
+                       <layout class="QHBoxLayout" name="horizontalLayout_21">
                         <item>
-                         <widget class="QLabel" name="candidateShapesPerStepLabel">
+                         <widget class="QLabel" name="targetOpacityLabel">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
                           <property name="text">
-                           <string>Candidate Shapes Per Step</string>
+                           <string>Target Image Opacity</string>
                           </property>
                          </widget>
                         </item>
                         <item>
-                         <widget class="QSlider" name="candidateShapesPerStepSlider">
-                          <property name="minimum">
-                           <number>1</number>
+                         <widget class="QSlider" name="targetOpacitySlider">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
                           </property>
                           <property name="maximum">
-                           <number>1000</number>
+                           <number>100</number>
                           </property>
                           <property name="orientation">
                            <enum>Qt::Horizontal</enum>
                           </property>
+                          <property name="tickPosition">
+                           <enum>QSlider::NoTicks</enum>
+                          </property>
+                          <property name="tickInterval">
+                           <number>5</number>
+                          </property>
                          </widget>
                         </item>
                         <item>
-                         <widget class="QLabel" name="candidateShapesPerStepCountLabel">
+                         <widget class="QLabel" name="targetImageOpacityValueLabel">
                           <property name="text">
                            <string>0</string>
                           </property>
@@ -641,386 +260,780 @@
                         </item>
                        </layout>
                       </item>
-                      <item>
-                       <layout class="QHBoxLayout" name="horizontalLayout_16">
-                        <item>
-                         <widget class="QLabel" name="mutationsPerCandidateShapeLabel">
-                          <property name="text">
-                           <string>Mutations Per Candidate Shape</string>
-                          </property>
-                         </widget>
-                        </item>
-                        <item>
-                         <widget class="QSlider" name="mutationsPerCandidateShapeSlider">
-                          <property name="minimum">
-                           <number>1</number>
-                          </property>
-                          <property name="maximum">
-                           <number>1000</number>
-                          </property>
-                          <property name="orientation">
-                           <enum>Qt::Horizontal</enum>
-                          </property>
-                         </widget>
-                        </item>
-                        <item>
-                         <widget class="QLabel" name="mutationsPerCandidateShapeCountLabel">
-                          <property name="text">
-                           <string>0</string>
-                          </property>
-                         </widget>
-                        </item>
-                       </layout>
-                      </item>
-                      <item>
-                       <layout class="QHBoxLayout" name="horizontalLayout_17">
-                        <item>
-                         <widget class="QLabel" name="randomSeedLabel">
-                          <property name="text">
-                           <string>Random Seed</string>
-                          </property>
-                         </widget>
-                        </item>
-                        <item>
-                         <widget class="QSpinBox" name="randomSeedSpinBox">
-                          <property name="alignment">
-                           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                          </property>
-                          <property name="correctionMode">
-                           <enum>QAbstractSpinBox::CorrectToNearestValue</enum>
-                          </property>
-                          <property name="showGroupSeparator" stdset="0">
-                           <bool>false</bool>
-                          </property>
-                          <property name="maximum">
-                           <number>2147483647</number>
-                          </property>
-                         </widget>
-                        </item>
-                       </layout>
-                      </item>
                      </layout>
-                    </item>
-                    <item row="1" column="0">
-                     <layout class="QHBoxLayout" name="horizontalLayout_2">
-                      <item>
-                       <widget class="QLabel" name="shapeCountTextLabel">
-                        <property name="font">
-                         <font>
-                          <pointsize>8</pointsize>
-                         </font>
-                        </property>
-                        <property name="text">
-                         <string>Shape Count</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
-                       <widget class="QLabel" name="shapeCountValueLabel">
-                        <property name="font">
-                         <font>
-                          <pointsize>10</pointsize>
-                         </font>
-                        </property>
-                        <property name="text">
-                         <string notr="true">0</string>
-                        </property>
-                        <property name="alignment">
-                         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                        </property>
-                       </widget>
-                      </item>
-                     </layout>
-                    </item>
-                   </layout>
-                  </widget>
+                    </widget>
+                   </item>
+                  </layout>
                  </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="bottomButtons">
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+           <zorder>targetImageSettings</zorder>
+           <zorder>targetImageSettingsScrollArea</zorder>
+           <zorder>targetImageSettings</zorder>
+          </widget>
+          <widget class="QWidget" name="shapeSettingsTab">
+           <attribute name="title">
+            <string>Shape Settings</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_21">
+            <item>
+             <widget class="QWidget" name="shapeOpacityWidget" native="true">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_19">
                <item>
-                <widget class="QPushButton" name="runStopButton">
+                <widget class="QLabel" name="shapeOpacityLabel">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
                  <property name="text">
-                  <string>Run</string>
+                  <string>Shape Opacity</string>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="stepButton">
-                 <property name="text">
-                  <string>Step</string>
+                <widget class="QSlider" name="shapeOpacitySlider">
+                 <property name="minimum">
+                  <number>1</number>
+                 </property>
+                 <property name="maximum">
+                  <number>255</number>
+                 </property>
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="tickPosition">
+                  <enum>QSlider::NoTicks</enum>
+                 </property>
+                 <property name="tickInterval">
+                  <number>5</number>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="clearButton">
+                <widget class="QLabel" name="shapeOpacityValueLabel">
                  <property name="text">
-                  <string>Clear</string>
+                  <string>0</string>
                  </property>
                 </widget>
                </item>
               </layout>
-             </item>
-            </layout>
-           </widget>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QWidget" name="exportersTab">
-        <attribute name="title">
-         <string>Exporters</string>
-        </attribute>
-        <layout class="QHBoxLayout" name="horizontalLayout_6">
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout_3">
-           <item>
-            <widget class="QGroupBox" name="exportImageBox">
-             <property name="title">
-              <string>Export Image</string>
-             </property>
-             <layout class="QVBoxLayout" name="verticalLayout_12">
-              <item>
-               <layout class="QVBoxLayout" name="verticalLayout_4">
-                <item>
-                 <widget class="QPushButton" name="saveImageButton">
-                  <property name="text">
-                   <string>Save Image</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_9"/>
-                </item>
-               </layout>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QGroupBox" name="exportHTML5CanvasBox">
-             <property name="title">
-              <string>Export HTML5 Canvas Animation</string>
-             </property>
-             <layout class="QVBoxLayout" name="verticalLayout_9">
-              <item>
-               <layout class="QVBoxLayout" name="verticalLayout_7">
-                <item>
-                 <widget class="QPushButton" name="saveCanvasAnimationButton">
-                  <property name="text">
-                   <string>Save Canvas Animation</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_5"/>
-                </item>
-               </layout>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QGroupBox" name="exportWebGLBox">
-             <property name="title">
-              <string>Export WebGL Animation</string>
-             </property>
-             <layout class="QVBoxLayout" name="verticalLayout_14">
-              <item>
-               <layout class="QVBoxLayout" name="verticalLayout_13">
-                <item>
-                 <widget class="QPushButton" name="saveWebGLButton">
-                  <property name="text">
-                   <string>Save WebGL Animation</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_10"/>
-                </item>
-               </layout>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QGroupBox" name="exportAnimatedGIFBox">
-             <property name="title">
-              <string>Export Animated GIF</string>
-             </property>
-             <layout class="QVBoxLayout" name="verticalLayout_10">
-              <item>
-               <layout class="QVBoxLayout" name="verticalLayout_6">
-                <item>
-                 <widget class="QPushButton" name="saveGIFButton">
-                  <property name="text">
-                   <string>Save GIF</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_7"/>
-                </item>
-               </layout>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QGroupBox" name="exportSVGBox">
-             <property name="title">
-              <string>Export SVG Image</string>
-             </property>
-             <layout class="QVBoxLayout" name="verticalLayout_23">
-              <item>
-               <layout class="QVBoxLayout" name="verticalLayout_22">
-                <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_13">
-                  <item>
-                   <layout class="QVBoxLayout" name="verticalLayout_16">
-                    <item>
-                     <widget class="QPushButton" name="saveSVGButton">
-                      <property name="text">
-                       <string>Save SVG</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <layout class="QHBoxLayout" name="horizontalLayout_14"/>
-                    </item>
-                   </layout>
-                  </item>
-                  <item>
-                   <layout class="QVBoxLayout" name="verticalLayout_15">
-                    <item>
-                     <widget class="QPushButton" name="saveRasterizedSVGButton">
-                      <property name="text">
-                       <string>Save Rasterized SVG</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <layout class="QFormLayout" name="formLayout_17">
-                      <item row="0" column="0">
-                       <widget class="QLabel" name="svgImageWidthLabel">
-                        <property name="text">
-                         <string>Image Width</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item row="0" column="1">
-                       <widget class="QSpinBox" name="svgImageWidthSpinBox">
-                        <property name="alignment">
-                         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                        </property>
-                        <property name="minimum">
-                         <number>1</number>
-                        </property>
-                        <property name="maximum">
-                         <number>99999</number>
-                        </property>
-                       </widget>
-                      </item>
-                      <item row="1" column="0">
-                       <widget class="QLabel" name="svgImageHeightLabel">
-                        <property name="text">
-                         <string>Image Height</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item row="1" column="1">
-                       <widget class="QSpinBox" name="svgImageHeightSpinBox">
-                        <property name="alignment">
-                         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                        </property>
-                        <property name="minimum">
-                         <number>1</number>
-                        </property>
-                        <property name="maximum">
-                         <number>99999</number>
-                        </property>
-                       </widget>
-                      </item>
-                     </layout>
-                    </item>
-                   </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="shapesEnabledGroupBox">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="title">
+               <string>Shapes Enabled</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_2">
+               <item row="0" column="0">
+                <widget class="QGroupBox" name="trianglesGroupBox">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="title">
+                  <string>Triangles</string>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_9">
+                  <item row="0" column="0">
+                   <widget class="QCheckBox" name="usesTriangles">
+                    <property name="text">
+                     <string>Enabled</string>
+                    </property>
+                   </widget>
                   </item>
                  </layout>
-                </item>
-               </layout>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QGroupBox" name="exportGeometryDataBox">
-             <property name="title">
-              <string>Export Geometry Data</string>
-             </property>
-             <layout class="QVBoxLayout" name="verticalLayout_11">
-              <item>
-               <layout class="QVBoxLayout" name="verticalLayout_5">
-                <item>
-                 <widget class="QPushButton" name="saveGeometryDataButton">
-                  <property name="text">
-                   <string>Save Geometry Data</string>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QGroupBox" name="rotatedEllipsesGroupBox">
+                 <property name="title">
+                  <string>Rotated Ellipses</string>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_11">
+                  <item row="0" column="0">
+                   <widget class="QCheckBox" name="usesRotatedEllipses">
+                    <property name="text">
+                     <string>Enabled</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QGroupBox" name="quadraticBeziersGroupBox">
+                 <property name="title">
+                  <string>Quadratic Beziers</string>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_10">
+                  <item row="0" column="0">
+                   <widget class="QCheckBox" name="usesQuadraticBeziers">
+                    <property name="text">
+                     <string>Enabled</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QGroupBox" name="rectanglesGroupBox">
+                 <property name="title">
+                  <string>Rectangles</string>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_14">
+                  <item row="0" column="0">
+                   <widget class="QCheckBox" name="usesRectangles">
+                    <property name="text">
+                     <string>Enabled</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QGroupBox" name="ellipsesGroupBox">
+                 <property name="title">
+                  <string>Ellipses</string>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_8">
+                  <item row="0" column="0">
+                   <widget class="QCheckBox" name="usesEllipses">
+                    <property name="text">
+                     <string>Enabled</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QGroupBox" name="polylinesGroupBox">
+                 <property name="title">
+                  <string>Polylines</string>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_13">
+                  <item row="0" column="0">
+                   <widget class="QCheckBox" name="usesPolylines">
+                    <property name="text">
+                     <string>Enabled</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item row="2" column="2">
+                <widget class="QGroupBox" name="circlesGroupBox">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="title">
+                  <string>Circles</string>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_15">
+                  <item row="0" column="0">
+                   <widget class="QCheckBox" name="usesCircles">
+                    <property name="text">
+                     <string>Enabled</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item row="1" column="2">
+                <widget class="QGroupBox" name="rotatedRectanglesGroupBox">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="title">
+                  <string>Rotated Rectangles</string>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_12">
+                  <item row="0" column="0">
+                   <widget class="QCheckBox" name="usesRotatedRectangles">
+                    <property name="text">
+                     <string>Enabled</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item row="0" column="2">
+                <widget class="QGroupBox" name="linesGroupBox">
+                 <property name="title">
+                  <string>Lines</string>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_5">
+                  <item row="0" column="0">
+                   <widget class="QCheckBox" name="usesLines">
+                    <property name="text">
+                     <string>Enabled</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+           <zorder>scriptingSettingsScrollArea</zorder>
+           <zorder>scriptingSettingsScrollArea</zorder>
+           <zorder>shapeOpacityWidget</zorder>
+           <zorder>shapesEnabledGroupBox</zorder>
+          </widget>
+          <widget class="QWidget" name="scriptingTab">
+           <attribute name="title">
+            <string>Scripting</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_17">
+            <item>
+             <widget class="QCheckBox" name="scriptingModeEnabledCheckbox">
+              <property name="text">
+               <string>Scripting Mode Enabled</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="geometrize::dialog::CollapsiblePanel" name="scriptingPanel">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_6">
+               <item row="0" column="0">
+                <widget class="QScrollArea" name="scriptingSettingsScrollArea">
+                 <property name="frameShape">
+                  <enum>QFrame::NoFrame</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Plain</enum>
+                 </property>
+                 <property name="verticalScrollBarPolicy">
+                  <enum>Qt::ScrollBarAlwaysOff</enum>
+                 </property>
+                 <property name="horizontalScrollBarPolicy">
+                  <enum>Qt::ScrollBarAlwaysOff</enum>
+                 </property>
+                 <property name="sizeAdjustPolicy">
+                  <enum>QAbstractScrollArea::AdjustIgnored</enum>
+                 </property>
+                 <property name="widgetResizable">
+                  <bool>true</bool>
+                 </property>
+                 <widget class="QWidget" name="scriptingSettingsScrollAreaContents">
+                  <property name="geometry">
+                   <rect>
+                    <x>0</x>
+                    <y>0</y>
+                    <width>472</width>
+                    <height>240</height>
+                   </rect>
                   </property>
+                  <layout class="QGridLayout" name="gridLayout_3"/>
                  </widget>
-                </item>
-                <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_8"/>
-                </item>
-               </layout>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="exportersTab">
+           <attribute name="title">
+            <string>Exporters</string>
+           </attribute>
+           <layout class="QHBoxLayout" name="horizontalLayout_6">
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_3">
+              <item>
+               <widget class="QGroupBox" name="exportImageBox">
+                <property name="title">
+                 <string>Export Image</string>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_12">
+                 <item>
+                  <layout class="QVBoxLayout" name="verticalLayout_4">
+                   <item>
+                    <widget class="QPushButton" name="saveImageButton">
+                     <property name="text">
+                      <string>Save Image</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <layout class="QHBoxLayout" name="horizontalLayout_9"/>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QGroupBox" name="exportHTML5CanvasBox">
+                <property name="title">
+                 <string>Export HTML5 Canvas Animation</string>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_9">
+                 <item>
+                  <layout class="QVBoxLayout" name="verticalLayout_7">
+                   <item>
+                    <widget class="QPushButton" name="saveCanvasAnimationButton">
+                     <property name="text">
+                      <string>Save Canvas Animation</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <layout class="QHBoxLayout" name="horizontalLayout_5"/>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QGroupBox" name="exportWebGLBox">
+                <property name="title">
+                 <string>Export WebGL Animation</string>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_14">
+                 <item>
+                  <layout class="QVBoxLayout" name="verticalLayout_13">
+                   <item>
+                    <widget class="QPushButton" name="saveWebGLButton">
+                     <property name="text">
+                      <string>Save WebGL Animation</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <layout class="QHBoxLayout" name="horizontalLayout_10"/>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QGroupBox" name="exportAnimatedGIFBox">
+                <property name="title">
+                 <string>Export Animated GIF</string>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_10">
+                 <item>
+                  <layout class="QVBoxLayout" name="verticalLayout_6">
+                   <item>
+                    <widget class="QPushButton" name="saveGIFButton">
+                     <property name="text">
+                      <string>Save GIF</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <layout class="QHBoxLayout" name="horizontalLayout_7"/>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QGroupBox" name="exportSVGBox">
+                <property name="title">
+                 <string>Export SVG Image</string>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_23">
+                 <item>
+                  <layout class="QVBoxLayout" name="verticalLayout_22">
+                   <item>
+                    <layout class="QHBoxLayout" name="horizontalLayout_13">
+                     <item>
+                      <layout class="QVBoxLayout" name="verticalLayout_16">
+                       <item>
+                        <widget class="QPushButton" name="saveSVGButton">
+                         <property name="text">
+                          <string>Save SVG</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <layout class="QHBoxLayout" name="horizontalLayout_14"/>
+                       </item>
+                      </layout>
+                     </item>
+                     <item>
+                      <layout class="QVBoxLayout" name="verticalLayout_15">
+                       <item>
+                        <widget class="QPushButton" name="saveRasterizedSVGButton">
+                         <property name="text">
+                          <string>Save Rasterized SVG</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <layout class="QFormLayout" name="formLayout_17">
+                         <item row="0" column="0">
+                          <widget class="QLabel" name="svgImageWidthLabel">
+                           <property name="text">
+                            <string>Image Width</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item row="0" column="1">
+                          <widget class="QSpinBox" name="svgImageWidthSpinBox">
+                           <property name="alignment">
+                            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                           </property>
+                           <property name="minimum">
+                            <number>1</number>
+                           </property>
+                           <property name="maximum">
+                            <number>99999</number>
+                           </property>
+                          </widget>
+                         </item>
+                         <item row="1" column="0">
+                          <widget class="QLabel" name="svgImageHeightLabel">
+                           <property name="text">
+                            <string>Image Height</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item row="1" column="1">
+                          <widget class="QSpinBox" name="svgImageHeightSpinBox">
+                           <property name="alignment">
+                            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                           </property>
+                           <property name="minimum">
+                            <number>1</number>
+                           </property>
+                           <property name="maximum">
+                            <number>99999</number>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </item>
+                      </layout>
+                     </item>
+                    </layout>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QGroupBox" name="exportGeometryDataBox">
+                <property name="title">
+                 <string>Export Geometry Data</string>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_11">
+                 <item>
+                  <layout class="QVBoxLayout" name="verticalLayout_5">
+                   <item>
+                    <widget class="QPushButton" name="saveGeometryDataButton">
+                     <property name="text">
+                      <string>Save Geometry Data</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <layout class="QHBoxLayout" name="horizontalLayout_8"/>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QGroupBox" name="exportRawImageDataBox">
+                <property name="title">
+                 <string>Export Raw Image Data</string>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_20">
+                 <item>
+                  <layout class="QVBoxLayout" name="verticalLayout_19">
+                   <item>
+                    <widget class="QPushButton" name="saveRawImageDataButton">
+                     <property name="text">
+                      <string>Save Raw Image Data</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <layout class="QHBoxLayout" name="horizontalLayout_12"/>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <spacer name="verticalSpacer_3">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::MinimumExpanding</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </widget>
               </item>
              </layout>
-            </widget>
-           </item>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="runnerSettings">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="title">
+           <string>Runner Settings</string>
+          </property>
+          <property name="flat">
+           <bool>false</bool>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_8">
+           <property name="spacing">
+            <number>4</number>
+           </property>
+           <property name="leftMargin">
+            <number>4</number>
+           </property>
+           <property name="topMargin">
+            <number>4</number>
+           </property>
+           <property name="rightMargin">
+            <number>4</number>
+           </property>
+           <property name="bottomMargin">
+            <number>4</number>
+           </property>
            <item>
-            <widget class="QGroupBox" name="exportRawImageDataBox">
-             <property name="title">
-              <string>Export Raw Image Data</string>
+            <widget class="QScrollArea" name="runnerSettingsScrollArea">
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
              </property>
-             <layout class="QVBoxLayout" name="verticalLayout_20">
-              <item>
-               <layout class="QVBoxLayout" name="verticalLayout_19">
-                <item>
-                 <widget class="QPushButton" name="saveRawImageDataButton">
-                  <property name="text">
-                   <string>Save Raw Image Data</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_12"/>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <spacer name="verticalSpacer_3">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
-                </property>
-                <property name="sizeType">
-                 <enum>QSizePolicy::MinimumExpanding</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>20</width>
-                  <height>40</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-             </layout>
+             <property name="frameShadow">
+              <enum>QFrame::Plain</enum>
+             </property>
+             <property name="widgetResizable">
+              <bool>true</bool>
+             </property>
+             <widget class="QWidget" name="runnerSettingsScrollAreaContents">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>486</width>
+                <height>89</height>
+               </rect>
+              </property>
+              <layout class="QGridLayout" name="gridLayout">
+               <item row="0" column="0">
+                <layout class="QVBoxLayout" name="runnerSettingsBoxLayout">
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_15">
+                   <item>
+                    <widget class="QLabel" name="candidateShapesPerStepLabel">
+                     <property name="text">
+                      <string>Candidate Shapes Per Step</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QSlider" name="candidateShapesPerStepSlider">
+                     <property name="minimum">
+                      <number>1</number>
+                     </property>
+                     <property name="maximum">
+                      <number>1000</number>
+                     </property>
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="candidateShapesPerStepCountLabel">
+                     <property name="text">
+                      <string>0</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_16">
+                   <item>
+                    <widget class="QLabel" name="mutationsPerCandidateShapeLabel">
+                     <property name="text">
+                      <string>Mutations Per Candidate Shape</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QSlider" name="mutationsPerCandidateShapeSlider">
+                     <property name="minimum">
+                      <number>1</number>
+                     </property>
+                     <property name="maximum">
+                      <number>1000</number>
+                     </property>
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="mutationsPerCandidateShapeCountLabel">
+                     <property name="text">
+                      <string>0</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_17">
+                   <item>
+                    <widget class="QLabel" name="randomSeedLabel">
+                     <property name="text">
+                      <string>Random Seed</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QSpinBox" name="randomSeedSpinBox">
+                     <property name="alignment">
+                      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                     </property>
+                     <property name="correctionMode">
+                      <enum>QAbstractSpinBox::CorrectToNearestValue</enum>
+                     </property>
+                     <property name="showGroupSeparator" stdset="0">
+                      <bool>false</bool>
+                     </property>
+                     <property name="maximum">
+                      <number>2147483647</number>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
             </widget>
            </item>
           </layout>
-         </item>
-        </layout>
-       </widget>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="shapeCountLayout">
+          <item>
+           <widget class="QLabel" name="shapeCountTextLabel">
+            <property name="font">
+             <font>
+              <pointsize>8</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Shape Count</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="shapeCountValueLabel">
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string notr="true">0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="bottomButtons">
+          <item>
+           <widget class="QPushButton" name="runStopButton">
+            <property name="text">
+             <string>Run</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="stepButton">
+            <property name="text">
+             <string>Step</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="clearButton">
+            <property name="text">
+             <string>Clear</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>
