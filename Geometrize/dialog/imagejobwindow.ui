@@ -46,7 +46,7 @@
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_4">
     <item>
-     <widget class="QSplitter" name="splitter">
+     <widget class="QSplitter" name="imageViewOptionsSplitter">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
@@ -102,11 +102,11 @@
            <enum>QTabWidget::North</enum>
           </property>
           <property name="currentIndex">
-           <number>2</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="imageSettingsTab">
            <attribute name="title">
-            <string>Image Settings</string>
+            <string>Image</string>
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout_24">
             <item>
@@ -271,13 +271,10 @@
              </widget>
             </item>
            </layout>
-           <zorder>targetImageSettings</zorder>
-           <zorder>targetImageSettingsScrollArea</zorder>
-           <zorder>targetImageSettings</zorder>
           </widget>
           <widget class="QWidget" name="shapeSettingsTab">
            <attribute name="title">
-            <string>Shape Settings</string>
+            <string>Shapes</string>
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout_21">
             <item>
@@ -509,14 +506,10 @@
              </widget>
             </item>
            </layout>
-           <zorder>scriptingSettingsScrollArea</zorder>
-           <zorder>scriptingSettingsScrollArea</zorder>
-           <zorder>shapeOpacityWidget</zorder>
-           <zorder>shapesEnabledGroupBox</zorder>
           </widget>
           <widget class="QWidget" name="scriptingTab">
            <attribute name="title">
-            <string>Scripting</string>
+            <string>Scripts</string>
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout_17">
             <item>
@@ -561,7 +554,7 @@
                     <x>0</x>
                     <y>0</y>
                     <width>472</width>
-                    <height>240</height>
+                    <height>49</height>
                    </rect>
                   </property>
                   <layout class="QGridLayout" name="gridLayout_3"/>
@@ -824,6 +817,44 @@
             </item>
            </layout>
           </widget>
+          <widget class="QWidget" name="statisticsTab">
+           <attribute name="title">
+            <string>Stats</string>
+           </attribute>
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <item>
+             <layout class="QHBoxLayout" name="shapeCountLayout">
+              <item>
+               <widget class="QLabel" name="shapeCountTextLabel">
+                <property name="font">
+                 <font>
+                  <pointsize>8</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Shape Count</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="shapeCountValueLabel">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string notr="true">0</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
          </widget>
         </item>
         <item>
@@ -872,7 +903,7 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>476</width>
+                <width>486</width>
                 <height>96</height>
                </rect>
               </property>
@@ -1000,37 +1031,6 @@
            </item>
           </layout>
          </widget>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="shapeCountLayout">
-          <item>
-           <widget class="QLabel" name="shapeCountTextLabel">
-            <property name="font">
-             <font>
-              <pointsize>8</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>Shape Count</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="shapeCountValueLabel">
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string notr="true">0</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-           </widget>
-          </item>
-         </layout>
         </item>
         <item>
          <layout class="QHBoxLayout" name="bottomButtons">

@@ -122,11 +122,6 @@ void ScriptConsole::setHistory(const std::vector<std::string>& history)
     d->setHistory(history);
 }
 
-std::string ScriptConsole::getConsoleHistoryFilenameForJob(const std::string& jobUrl)
-{
-    return ""; // TODO
-}
-
 bool ScriptConsole::event(QEvent* event)
 {
     if(event->type() == geometrize::log::LogMessageEvent::textualWidgetEventType) {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>GlobalPreferencesTabDialog</class>
- <widget class="QDialog" name="GlobalPreferencesTabDialog">
+ <class>GlobalPreferencesDialog</class>
+ <widget class="QDialog" name="GlobalPreferencesDialog">
   <property name="windowModality">
    <enum>Qt::ApplicationModal</enum>
   </property>
@@ -20,7 +20,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Preferences</string>
+   <string>Global Preferences</string>
   </property>
   <property name="sizeGripEnabled">
    <bool>true</bool>
@@ -233,6 +233,26 @@
               <property name="title">
                <string>Console Display</string>
               </property>
+              <layout class="QVBoxLayout" name="verticalLayout_24">
+               <item>
+                <layout class="QVBoxLayout" name="verticalLayout_23">
+                 <item>
+                  <widget class="QCheckBox" name="showLaunchWindowConsoleByDefault">
+                   <property name="text">
+                    <string>Show Launch Console By Default</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="showImageJobConsoleByDefault">
+                   <property name="text">
+                    <string>Show Image Geometrizing Console By Default</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
              </widget>
             </item>
            </layout>
@@ -323,8 +343,74 @@
             <item>
              <widget class="QGroupBox" name="imageResizingGroup">
               <property name="title">
-               <string>Image Resizing</string>
+               <string>Image Downscaling</string>
               </property>
+              <layout class="QVBoxLayout" name="verticalLayout_17">
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout">
+                 <item>
+                  <widget class="QCheckBox" name="imageResizeCheckbox">
+                   <property name="text">
+                    <string>Enabled</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_2">
+                 <item>
+                  <widget class="QLabel" name="resizeThresholdLabel">
+                   <property name="toolTip">
+                    <string>Images larger than this will be scaled down</string>
+                   </property>
+                   <property name="text">
+                    <string>Resize Threshold</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <layout class="QVBoxLayout" name="verticalLayout_19">
+                   <item>
+                    <layout class="QFormLayout" name="formLayout_2">
+                     <property name="formAlignment">
+                      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                     </property>
+                     <item row="0" column="0">
+                      <widget class="QLabel" name="resizeWidthLabel">
+                       <property name="text">
+                        <string>Width</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="1">
+                      <widget class="QSpinBox" name="resizeWidthSpinBox">
+                       <property name="maximum">
+                        <number>65536</number>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="1" column="0">
+                      <widget class="QLabel" name="resizeHeightLabel">
+                       <property name="text">
+                        <string>Height</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="1" column="1">
+                      <widget class="QSpinBox" name="resizeHeightSpinBox">
+                       <property name="maximum">
+                        <number>65536</number>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </item>
+              </layout>
              </widget>
             </item>
             <item>
@@ -332,6 +418,33 @@
               <property name="title">
                <string>Multithreading</string>
               </property>
+              <layout class="QVBoxLayout" name="verticalLayout_21">
+               <item>
+                <layout class="QVBoxLayout" name="verticalLayout_20">
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_4">
+                   <item>
+                    <widget class="QLabel" name="threadsPerImageJobLabel">
+                     <property name="text">
+                      <string>Max Threads Per Image Job</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QSpinBox" name="maxThreadsPerImageJobSpinBox">
+                     <property name="maximum">
+                      <number>128</number>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_5"/>
+                 </item>
+                </layout>
+               </item>
+              </layout>
              </widget>
             </item>
            </layout>
@@ -407,7 +520,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>GlobalPreferencesTabDialog</receiver>
+   <receiver>GlobalPreferencesDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -423,7 +536,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>GlobalPreferencesTabDialog</receiver>
+   <receiver>GlobalPreferencesDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

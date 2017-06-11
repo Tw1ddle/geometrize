@@ -2,6 +2,7 @@
 
 #include "image/imagelookup.h"
 #include "job/joblookup.h"
+#include "preferences/globalpreferences.h"
 #include "recentitems.h"
 
 namespace geometrize
@@ -19,7 +20,9 @@ namespace app
 class SharedApp::SharedAppImpl : public QObject
 {
 public:
-    SharedAppImpl() : m_recentFiles{RecentItems::RECENTLY_OPENED_ITEMS_SETTINGS_GROUP, RecentItems::MAX_RECENTLY_OPENED_ITEMS_COUNT}
+    SharedAppImpl() :
+        m_recentFiles{RecentItems::RECENTLY_OPENED_ITEMS_SETTINGS_GROUP, RecentItems::MAX_RECENTLY_OPENED_ITEMS_COUNT},
+        m_globalPreferences{preferences::getGlobalPreferencesConfigPath()}
     {
     }
 
@@ -42,10 +45,16 @@ public:
         return m_imageLookup;
     }
 
+    preferences::GlobalPreferences& getGlobalPreferences()
+    {
+        return m_globalPreferences;
+    }
+
 private:
     RecentItems m_recentFiles;
     job::JobLookup m_jobLookup;
     image::ImageLookup m_imageLookup;
+    preferences::GlobalPreferences m_globalPreferences;
 };
 
 SharedApp::SharedApp() : d{std::make_unique<geometrize::common::app::SharedApp::SharedAppImpl>()} {}
@@ -70,6 +79,11 @@ job::JobLookup& SharedApp::getJobLookup()
 image::ImageLookup& SharedApp::getImageLookup()
 {
     return d->getImageLookup();
+}
+
+preferences::GlobalPreferences& SharedApp::getGlobalPreferences()
+{
+    return d->getGlobalPreferences();
 }
 
 }

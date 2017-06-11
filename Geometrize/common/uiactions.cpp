@@ -7,7 +7,7 @@
 
 #include "constants.h"
 #include "dialog/aboutdialog.h"
-#include "dialog/globalpreferencestabdialog.h"
+#include "dialog/globalpreferencesdialog.h"
 #include "dialog/launchwindow.h"
 #include "dialog/openurldialog.h"
 #include "dialog/runscriptdialog.h"
@@ -53,10 +53,10 @@ void openAboutPage(QWidget* parent)
     dialog.exec();
 }
 
-void openPreferences(QWidget* parent)
+void openGlobalPreferences(QWidget* parent)
 {
-    dialog::GlobalPreferencesTabDialog preferencesTabDialog(parent);
-    preferencesTabDialog.exec();
+    dialog::GlobalPreferencesDialog preferencesDialog(parent);
+    preferencesDialog.exec();
 }
 
 QString openImagePathPickerDialog(QWidget* parent)
@@ -151,6 +151,16 @@ QString openLoadImageJobSettingsDialog(QWidget* parent)
 QString openSaveImageJobSettingsDialog(QWidget* parent)
 {
     return QFileDialog::getSaveFileName(parent, QWidget::tr("Save Image Job Settings"), "", QWidget::tr("JSON Image Job Settings File (*.json)"));
+}
+
+QString openLoadGlobalSettingsDialog(QWidget* parent)
+{
+    return QFileDialog::getOpenFileName(parent, QWidget::tr("Load Global Settings"), "", QWidget::tr("JSON Global Settings File (*.json)"));
+}
+
+QString openSaveGlobalSettingsDialog(QWidget* parent)
+{
+    return QFileDialog::getSaveFileName(parent, QWidget::tr("Save Global Settings"), "", QWidget::tr("JSON Global Settings File (*.json)"));
 }
 
 }

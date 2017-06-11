@@ -34,8 +34,6 @@ int main(int argc, char* argv[])
     geometrize::analytics::AnalyticsWrapper analytics;
     analytics.startSession();
     analytics.onLaunch();
-    // TODO
-    // analytics.onLogoImageJobFinished(1, 10.0f);
 
     QCommandLineParser parser;
     const geometrize::cli::CommandLineResult cliSetup{geometrize::cli::setupCommandLineParser(parser, app.arguments())};

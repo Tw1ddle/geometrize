@@ -32,7 +32,9 @@ public:
     virtual void dropEvent(QDropEvent* event) override;
 
 private slots:
-    void on_actionPreferences_triggered();
+    void on_actionGlobal_Preferences_triggered();
+    void on_actionLoad_Global_Preferences_triggered();
+    void on_actionSave_Global_Preferences_triggered();
     void on_actionClear_Recents_triggered();
     void on_actionExit_triggered();
     void on_actionTutorials_triggered();

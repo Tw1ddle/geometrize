@@ -21,7 +21,7 @@ void openLaunchWindow();
 bool isLaunchWindowOpen();
 void bringLaunchWindowToFront();
 void openAboutPage(QWidget* parent);
-void openPreferences(QWidget* parent);
+void openGlobalPreferences(QWidget* parent);
 QString openImagePathPickerDialog(QWidget* parent);
 QString openSaveImagePathPickerDialog(QWidget* parent);
 QString openSaveSVGPathPickerDialog(QWidget* parent);
@@ -41,6 +41,8 @@ void openTechnicalSupport();
 void openMoreResourcesPage();
 QString openLoadImageJobSettingsDialog(QWidget* parent);
 QString openSaveImageJobSettingsDialog(QWidget* parent);
+QString openLoadGlobalSettingsDialog(QWidget* parent);
+QString openSaveGlobalSettingsDialog(QWidget* parent);
 
 }
 

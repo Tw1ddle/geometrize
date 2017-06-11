@@ -1,9 +1,3 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2016-11-16T19:04:04
-#
-#-------------------------------------------------
-
 QT += core gui network svg
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -42,7 +36,7 @@ SOURCES += commandlineparser.cpp \
     dialog/commandlineedit.cpp \
     dialog/creditsdialog.cpp \
     dialog/elidedlabel.cpp \
-    dialog/globalpreferencestabdialog.cpp \
+    dialog/globalpreferencesdialog.cpp \
     dialog/imagegraphicsview.cpp \
     dialog/imagejobwindow.cpp \
     dialog/launchwindow.cpp \
@@ -107,7 +101,7 @@ HEADERS += commandlineparser.h \
     dialog/commandlineedit.h \
     dialog/creditsdialog.h \
     dialog/elidedlabel.h \
-    dialog/globalpreferencestabdialog.h \
+    dialog/globalpreferencesdialog.h \
     dialog/imagegraphicsview.h \
     dialog/imagejobwindow.h \
     dialog/launchwindow.h \
@@ -161,7 +155,6 @@ HEADERS += commandlineparser.h \
 FORMS += dialog/aboutdialog.ui \
     dialog/commandlineedit.ui \
     dialog/creditsdialog.ui \
-    dialog/globalpreferencestabdialog.ui \
     dialog/imagejobwindow.ui \
     dialog/launchwindow.ui \
     dialog/licensedialog.ui \
@@ -169,4 +162,5 @@ FORMS += dialog/aboutdialog.ui \
     dialog/recentitemwidget.ui \
     dialog/runscriptdialog.ui \
     dialog/scriptconsole.ui \
-    dialog/templatebutton.ui
+    dialog/templatebutton.ui \
+    dialog/globalpreferencesdialog.ui

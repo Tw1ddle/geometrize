@@ -13,6 +13,7 @@
 #include "job/imagejob.h"
 #include "job/jobutil.h"
 #include "image/imageloader.h"
+#include "preferences/globalpreferences.h"
 #include "script/chaiscriptcreator.h"
 #include "script/scriptrunner.h"
 #include "serialization/serializationutil.h"
@@ -90,6 +91,24 @@ public:
     {
         const std::vector<std::string> history{ui->consoleWidget->getHistory()};
         util::writeStringVector(history, util::getAppDataLocation().append("/").append(geometrize::dialog::ScriptConsole::launchConsoleHistoryFilename));
+    }
+
+    void loadGlobalSettingsTemplate()
+    {
+        const QString path{common::ui::openLoadGlobalSettingsDialog(q)};
+        if(path.isEmpty()) {
+            return;
+        }
+        geometrize::common::app::SharedApp::get().getGlobalPreferences().load(path.toStdString());
+    }
+
+    void saveGlobalSettingsTemplate() const
+    {
+        const QString path{common::ui::openSaveGlobalSettingsDialog(q)};
+        if(path.isEmpty()) {
+            return;
+        }
+        geometrize::common::app::SharedApp::get().getGlobalPreferences().save(path.toStdString());
     }
 
 private:
@@ -185,9 +204,19 @@ void LaunchWindow::closeEvent(QCloseEvent* /*event*/)
     d->saveConsoleHistory();
 }
 
-void LaunchWindow::on_actionPreferences_triggered()
+void LaunchWindow::on_actionGlobal_Preferences_triggered()
 {
-    common::ui::openPreferences(this);
+    common::ui::openGlobalPreferences(this);
+}
+
+void LaunchWindow::on_actionLoad_Global_Preferences_triggered()
+{
+    d->loadGlobalSettingsTemplate();
+}
+
+void LaunchWindow::on_actionSave_Global_Preferences_triggered()
+{
+    d->saveGlobalSettingsTemplate();
 }
 
 void LaunchWindow::on_actionClear_Recents_triggered()

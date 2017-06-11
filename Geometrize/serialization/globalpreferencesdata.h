@@ -1,6 +1,10 @@
 #pragma once
 
+#include <string>
+#include <utility>
+
 #include "cereal/cereal.hpp"
+#include "cereal/types/utility.hpp"
 
 namespace geometrize
 {
@@ -11,19 +15,19 @@ namespace serialization
 /**
  * @brief The GlobalPreferencesData struct represents the data for the global application preferences.
  */
-struct GlobalPreferencesData
+class GlobalPreferencesData
 {
+public:
     template<class Archive>
-    void save(Archive& archive)
+    void archive(Archive& ar, bool& imageJobImageResizeEnabled, std::pair<std::uint32_t, std::uint32_t>& imageJobImageResizeThreshold)
     {
-        //archive();
+        ar(cereal::make_nvp(imageJobImageResizeEnabledKey, imageJobImageResizeEnabled));
+        ar(cereal::make_nvp(imageJobImageResizeThresholdKey, imageJobImageResizeThreshold));
     }
 
-    template<class Archive>
-    void load(Archive& archive)
-    {
-        //archive();
-    }
+private:
+    const std::string imageJobImageResizeEnabledKey{"imageJobImageResizeEnabled"};
+    const std::string imageJobImageResizeThresholdKey{"imageJobImageResizeThreshold"};
 };
 
 }

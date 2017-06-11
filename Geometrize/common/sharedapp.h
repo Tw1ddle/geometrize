@@ -10,19 +10,19 @@ class RecentItems;
 namespace geometrize
 {
 
+namespace job
+{
+class JobLookup;
+}
+
 namespace image
 {
 class ImageLookup;
 }
 
-}
-
-namespace geometrize
+namespace preferences
 {
-
-namespace job
-{
-class JobLookup;
+class GlobalPreferences;
 }
 
 }
@@ -63,6 +63,12 @@ public:
      * @return The image lookup object.
      */
     image::ImageLookup& getImageLookup();
+
+    /**
+     * @brief getGlobalPreferences Gets the shared global preferences object, which stores global application preferences.
+     * @return The global preferences object.
+     */
+    preferences::GlobalPreferences& getGlobalPreferences();
 
 private:
     class SharedAppImpl;

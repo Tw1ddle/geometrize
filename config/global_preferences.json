@@ -1,0 +1,7 @@
+{
+    "imageJobImageResizeEnabled": false,
+    "imageJobImageResizeThreshold": {
+        "first": 512,
+        "second": 512
+    }
+}
