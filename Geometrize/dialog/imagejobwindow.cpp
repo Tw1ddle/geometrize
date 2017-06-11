@@ -2,7 +2,6 @@
 #include "ui_imagejobwindow.h"
 
 #include <assert.h>
-#include <fstream>
 
 #include <QCloseEvent>
 #include <QDesktopServices>
@@ -48,8 +47,6 @@ public:
     ImageJobWindowImpl(ImageJobWindow* pQ) : ui{std::make_unique<Ui::ImageJobWindow>()}, q{pQ}, m_job{nullptr}, m_running{false}, m_initialJobImage{nullptr}
     {
         ui->setupUi(q);
-        ui->targetImageSettings->setup(tr("Image Settings"));
-        ui->scriptingPanel->setup("Custom Scripts");
 
         ui->imageView->setScene(&m_scene);
 
