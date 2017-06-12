@@ -3,15 +3,14 @@
 #include <QApplication>
 #include <QLibraryInfo>
 #include <QLocale>
+#include <QString>
 #include <QTranslator>
 
 namespace geometrize
 {
 
-void setupLocalization(QApplication& application)
+void setupLocalization(QApplication& application, const QString& locale)
 {
-    const QString locale{QLocale::system().name()};
-
     QTranslator qtTranslator;
     qtTranslator.load("qt_" + locale, QLibraryInfo::location(QLibraryInfo::TranslationsPath));
     application.installTranslator(&qtTranslator);

@@ -2,6 +2,7 @@
 
 #include <QApplication>
 #include <QCommandLineParser>
+#include <QLocale>
 #include <QString>
 
 #include "analytics/analyticswrapper.h"
@@ -32,7 +33,7 @@ int main(int argc, char* argv[])
     qInstallMessageHandler(geometrize::log::handleLogMessages);
     QApplication app(argc, argv);
 
-    geometrize::setupLocalization(app);
+    geometrize::setupLocalization(app, QLocale::system().name());
 
     geometrize::analytics::AnalyticsWrapper analytics;
     analytics.startSession();
