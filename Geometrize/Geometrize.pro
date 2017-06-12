@@ -20,6 +20,10 @@ include($$PWD/../lib/qtgifimage/src/gifimage/qtgifimage.pri)
 
 SOURCES += commandlineparser.cpp \
     formatsupport.cpp \
+    localization.cpp \
+    logger.cpp \
+    logmessageevents.cpp \
+    logmessagehandlers.cpp \
     main.cpp \
     recentitem.cpp \
     recentitems.cpp \
@@ -33,11 +37,15 @@ SOURCES += commandlineparser.cpp \
     common/sharedapp.cpp \
     common/uiactions.cpp \
     dialog/aboutdialog.cpp \
+    dialog/collapsiblepanel.cpp \
     dialog/commandlineedit.cpp \
+    dialog/completionbox.cpp \
     dialog/creditsdialog.cpp \
     dialog/elidedlabel.cpp \
     dialog/globalpreferencesdialog.cpp \
     dialog/imagegraphicsview.cpp \
+    dialog/imagejobpixmapgraphicsitem.cpp \
+    dialog/imagejobscene.cpp \
     dialog/imagejobwindow.cpp \
     dialog/launchwindow.cpp \
     dialog/licensedialog.cpp \
@@ -46,6 +54,9 @@ SOURCES += commandlineparser.cpp \
     dialog/recentjobslist.cpp \
     dialog/runscriptdialog.cpp \
     dialog/scriptconsole.cpp \
+    dialog/scripteditorwidget.cpp \
+    dialog/svgpreviewdialog.cpp \
+    dialog/svgpreviewview.cpp \
     dialog/templatebutton.cpp \
     dialog/templategrid.cpp \
     exporter/canvasanimationexporter.cpp \
@@ -57,9 +68,9 @@ SOURCES += commandlineparser.cpp \
     image/imagelookup.cpp \
     job/imagejob.cpp \
     job/imagejobcreator.cpp \
+    job/imagejobworker.cpp \
     job/joblookup.cpp \
     job/jobutil.cpp \
-    job/imagejobworker.cpp \
     layout/flowlayout.cpp \
     network/completionhandlers.cpp \
     network/downloader.cpp \
@@ -72,23 +83,16 @@ SOURCES += commandlineparser.cpp \
     script/scriptoptions.cpp \
     script/scriptrunner.cpp \
     script/scriptutil.cpp \
-    serialization/serializationutil.cpp \
-    logmessagehandlers.cpp \
-    logmessageevents.cpp \
-    logger.cpp \
-    dialog/imagejobpixmapgraphicsitem.cpp \
-    dialog/imagejobscene.cpp \
-    dialog/collapsiblepanel.cpp \
-    dialog/completionbox.cpp \
     script/shapemutationrules.cpp \
-    localization.cpp \
-    dialog/svgpreviewview.cpp \
-    dialog/svgpreviewdialog.cpp \
-    dialog/scripteditorwidget.cpp
+    serialization/serializationutil.cpp
 
 HEADERS += commandlineparser.h \
     constants.h \
     formatsupport.h \
+    localization.h \
+    logger.h \
+    logmessageevents.h \
+    logmessagehandlers.h \
     recentitem.h \
     recentitems.h \
     runguard.h \
@@ -102,18 +106,25 @@ HEADERS += commandlineparser.h \
     common/sharedapp.h \
     common/uiactions.h \
     dialog/aboutdialog.h \
+    dialog/collapsiblepanel.h \
     dialog/commandlineedit.h \
+    dialog/completionbox.h \
     dialog/creditsdialog.h \
     dialog/elidedlabel.h \
     dialog/globalpreferencesdialog.h \
     dialog/imagegraphicsview.h \
+    dialog/imagejobpixmapgraphicsitem.h \
+    dialog/imagejobscene.h \
     dialog/imagejobwindow.h \
     dialog/launchwindow.h \
     dialog/licensedialog.h \
-    dialog/recentitemwidget.h \
-    dialog/recentjobslist.h \
     dialog/openurldialog.h \
+    dialog/recentjobslist.h \
+    dialog/recentitemwidget.h \
     dialog/scriptconsole.h \
+    dialog/scripteditorwidget.h \
+    dialog/svgpreviewdialog.h \
+    dialog/svgpreviewview.h \
     dialog/runscriptdialog.h \
     dialog/templatebutton.h \
     dialog/templategrid.h \
@@ -126,9 +137,9 @@ HEADERS += commandlineparser.h \
     image/imagelookup.h \
     job/imagejob.h \
     job/imagejobcreator.h \
+    job/imagejobworker.h \
     job/joblookup.h \
     job/jobutil.h \
-    job/imagejobworker.h \
     layout/flowlayout.h \
     network/completionhandlers.h \
     network/downloader.h \
@@ -138,31 +149,21 @@ HEADERS += commandlineparser.h \
     script/bindingscreator.h \
     script/bindingswrapper.h \
     script/chaiscriptcreator.h \
+    script/chaiscriptmathextras.h \
     script/scriptoptions.h \
     script/scriptrunner.h \
     script/scriptutil.h \
+    script/shapemutationrules.h \
     serialization/globalpreferencesdata.h \
     serialization/imagejobpreferencesdata.h \
-    serialization/templatemetadata.h \
     serialization/serializationutil.h \
     serialization/stringvectordata.h \
-    logmessagehandlers.h \
-    logmessageevents.h \
-    logger.h \
-    dialog/imagejobpixmapgraphicsitem.h \
-    dialog/imagejobscene.h \
-    dialog/collapsiblepanel.h \
-    dialog/completionbox.h \
-    script/shapemutationrules.h \
-    script/chaiscriptmathextras.h \
-    localization.h \
-    dialog/svgpreviewview.h \
-    dialog/svgpreviewdialog.h \
-    dialog/scripteditorwidget.h
+    serialization/templatemetadata.h \
 
 FORMS += dialog/aboutdialog.ui \
     dialog/commandlineedit.ui \
     dialog/creditsdialog.ui \
+    dialog/globalpreferencesdialog.ui \
     dialog/imagejobwindow.ui \
     dialog/launchwindow.ui \
     dialog/licensedialog.ui \
@@ -170,7 +171,6 @@ FORMS += dialog/aboutdialog.ui \
     dialog/recentitemwidget.ui \
     dialog/runscriptdialog.ui \
     dialog/scriptconsole.ui \
-    dialog/templatebutton.ui \
-    dialog/globalpreferencesdialog.ui \
+    dialog/scripteditorwidget.ui \
     dialog/svgpreviewdialog.ui \
-    dialog/scripteditorwidget.ui
+    dialog/templatebutton.ui \
