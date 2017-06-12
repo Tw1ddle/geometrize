@@ -29,6 +29,7 @@ SOURCES += commandlineparser.cpp \
     recentitems.cpp \
     runguard.cpp \
     searchpaths.cpp \
+    strings.cpp \
     templatemanifest.cpp \
     versioninfo.cpp \
     util.cpp \
@@ -97,6 +98,7 @@ HEADERS += commandlineparser.h \
     recentitems.h \
     runguard.h \
     searchpaths.h \
+    strings.h \
     templatemanifest.h \
     util.h \
     versioninfo.h \
@@ -158,7 +160,7 @@ HEADERS += commandlineparser.h \
     serialization/imagejobpreferencesdata.h \
     serialization/serializationutil.h \
     serialization/stringvectordata.h \
-    serialization/templatemetadata.h \
+    serialization/templatemetadata.h
 
 FORMS += dialog/aboutdialog.ui \
     dialog/commandlineedit.ui \

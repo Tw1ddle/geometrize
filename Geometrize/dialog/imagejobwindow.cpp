@@ -35,6 +35,7 @@
 #include "exporter/webglanimationexporter.h"
 #include "image/imageloader.h"
 #include "job/imagejob.h"
+#include "strings.h"
 #include "util.h"
 
 namespace geometrize
@@ -376,14 +377,9 @@ private:
     void setupScriptEditPanels()
     {
         // TODO set these up properly, pass a shape type, signals and slots etc
-        ui->scriptingEditBoxes->layout()->addWidget(new ScriptEditorWidget());
-        ui->scriptingEditBoxes->layout()->addWidget(new ScriptEditorWidget());
-        ui->scriptingEditBoxes->layout()->addWidget(new ScriptEditorWidget());
-        ui->scriptingEditBoxes->layout()->addWidget(new ScriptEditorWidget());
-        ui->scriptingEditBoxes->layout()->addWidget(new ScriptEditorWidget());
-        ui->scriptingEditBoxes->layout()->addWidget(new ScriptEditorWidget());
-        ui->scriptingEditBoxes->layout()->addWidget(new ScriptEditorWidget());
-        ui->scriptingEditBoxes->layout()->addWidget(new ScriptEditorWidget());
+        for(const geometrize::ShapeTypes type : geometrize::allShapes) {
+            ui->scriptingEditBoxes->layout()->addWidget(new ScriptEditorWidget(geometrize::strings::Strings::getShapeTypeNamePlural(type), nullptr)); // TODO add for named functions, not shape types?
+        }
     }
 
     std::shared_ptr<job::ImageJob> m_job;

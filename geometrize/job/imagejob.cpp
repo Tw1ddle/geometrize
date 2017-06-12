@@ -132,8 +132,8 @@ private:
 
     ImageJob* q;
     preferences::ImageJobPreferences m_preferences; ///> Runtime configuration parameters for the runner.
-    std::string m_displayName; ///> The display name of the image job.
-    std::string m_jobUrl; ///> The URL/original source of the data for the image job.
+    const std::string m_displayName; ///> The display name of the image job.
+    const std::string m_jobUrl; ///> The URL/original source of the data for the image job.
     const int m_id; ///> A unique id for the image job.
     QThread m_workerThread; ///> Thread that the image job worker runs on.
     ImageJobWorker m_worker; ///> The image job worker.

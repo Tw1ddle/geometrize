@@ -1,11 +1,9 @@
 #pragma once
 
-#include <QGroupBox>
+#include <memory>
 
-namespace Ui
-{
-class ScriptEditorWidget;
-}
+#include <QGroupBox>
+#include <QString>
 
 namespace geometrize
 {
@@ -13,16 +11,20 @@ namespace geometrize
 namespace dialog
 {
 
+/**
+ * @brief The ScriptEditorWidget class implements a widget for interactively editing a Chaiscript function.
+ */
 class ScriptEditorWidget : public QGroupBox
 {
     Q_OBJECT
 
 public:
-    explicit ScriptEditorWidget(QWidget* parent = 0);
+    explicit ScriptEditorWidget(const QString& title, QWidget* parent = nullptr);
     ~ScriptEditorWidget();
 
 private:
-    Ui::ScriptEditorWidget *ui;
+    class ScriptEditorWidgetImpl;
+    std::unique_ptr<ScriptEditorWidgetImpl> d;
 };
 
 }

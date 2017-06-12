@@ -5,7 +5,7 @@
 #include <QString>
 #include <QStringList>
 
-#include "constants.h"
+#include "strings.h"
 #include "job/jobutil.h"
 
 namespace geometrize
@@ -31,7 +31,7 @@ QString CommandLineResult::getErrorText() const
 
 CommandLineResult setupCommandLineParser(QCommandLineParser& parser, const QStringList& arguments)
 {
-    parser.setApplicationDescription(geometrize::constants::Strings::getApplicationDescription());
+    parser.setApplicationDescription(geometrize::strings::Strings::getApplicationDescription());
     parser.addHelpOption();
     parser.addVersionOption();
 

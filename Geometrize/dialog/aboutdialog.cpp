@@ -2,6 +2,7 @@
 #include "ui_aboutdialog.h"
 
 #include "constants.h"
+#include "strings.h"
 #include "creditsdialog.h"
 #include "licensedialog.h"
 #include "versioninfo.h"
@@ -19,10 +20,10 @@ AboutDialog::AboutDialog(QWidget* parent) :
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint); // Remove question mark from title bar
     ui->setupUi(this);
 
-    setWindowTitle(tr("About %1", "The title of the 'about' page with information about the application").arg(geometrize::constants::Strings::getApplicationName()));
+    setWindowTitle(tr("About %1", "The title of the 'about' page with information about the application").arg(geometrize::strings::Strings::getApplicationName()));
 
-    ui->nameAndVersion->setText(geometrize::constants::Strings::getApplicationName() + " " + geometrize::version::getApplicationVersionString());
-    ui->appShortDescription->setText(geometrize::constants::Strings::getApplicationDescription());
+    ui->nameAndVersion->setText(geometrize::strings::Strings::getApplicationName() + " " + geometrize::version::getApplicationVersionString());
+    ui->appShortDescription->setText(geometrize::strings::Strings::getApplicationDescription());
 
     ui->buildInfo->setText(tr("Build Info:", "Technical information about the way the software was built follows") +
                            " " + geometrize::version::getBuildAbiName() +
@@ -34,7 +35,7 @@ AboutDialog::AboutDialog(QWidget* parent) :
                              " " + geometrize::version::getRuntimeQtVersionName() +
                              " " + geometrize::version::getRuntimeMachineHostName());
 
-    ui->copyrightNotice->setText(geometrize::constants::Strings::getCopyrightNotice());
+    ui->copyrightNotice->setText(geometrize::strings::Strings::getCopyrightNotice());
     ui->personalWebsiteLink->setText("<a href=\"" + geometrize::constants::DEVELOPER_WEBSITE_URL + "\">" + geometrize::constants::DEVELOPER_WEBSITE_URL + "</a>");
     ui->projectWebsiteLink->setText("<a href=\"" + geometrize::constants::PROJECT_WEBSITE_URL + "\">" + geometrize::constants::PROJECT_WEBSITE_URL + "</a>");
 }
