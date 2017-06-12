@@ -42,7 +42,7 @@
     </size>
    </property>
    <property name="autoFillBackground">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_4">
     <item>
@@ -59,6 +59,9 @@
         <height>0</height>
        </size>
       </property>
+      <property name="autoFillBackground">
+       <bool>true</bool>
+      </property>
      </widget>
     </item>
    </layout>
@@ -71,6 +74,9 @@
      <width>1280</width>
      <height>17</height>
     </rect>
+   </property>
+   <property name="autoFillBackground">
+    <bool>true</bool>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
@@ -90,6 +96,12 @@
    <addaction name="menuView"/>
   </widget>
   <widget class="QDockWidget" name="runnerSettingsDock">
+   <property name="contextMenuPolicy">
+    <enum>Qt::NoContextMenu</enum>
+   </property>
+   <property name="autoFillBackground">
+    <bool>true</bool>
+   </property>
    <property name="features">
     <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
    </property>
@@ -99,7 +111,7 @@
    <attribute name="dockWidgetArea">
     <number>2</number>
    </attribute>
-   <widget class="QWidget" name="dockWidgetContents">
+   <widget class="QWidget" name="runnerSettingsDockContents">
     <layout class="QHBoxLayout" name="horizontalLayout_11">
      <item>
       <widget class="QWidget" name="optionsSection" native="true">
@@ -150,7 +162,7 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>226</width>
+                <width>236</width>
                 <height>98</height>
                </rect>
               </property>
@@ -311,6 +323,12 @@
    </widget>
   </widget>
   <widget class="QDockWidget" name="exporterSettingsDock">
+   <property name="contextMenuPolicy">
+    <enum>Qt::NoContextMenu</enum>
+   </property>
+   <property name="autoFillBackground">
+    <bool>true</bool>
+   </property>
    <property name="features">
     <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
    </property>
@@ -320,7 +338,7 @@
    <attribute name="dockWidgetArea">
     <number>1</number>
    </attribute>
-   <widget class="QWidget" name="dockWidgetContents_2">
+   <widget class="QWidget" name="exporterSettingsDockContents">
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -436,7 +454,11 @@
                  </widget>
                 </item>
                 <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_14"/>
+                 <widget class="QPushButton" name="previewSVGButton">
+                  <property name="text">
+                   <string>Preview SVG</string>
+                  </property>
+                 </widget>
                 </item>
                </layout>
               </item>
@@ -570,6 +592,12 @@
    </widget>
   </widget>
   <widget class="QDockWidget" name="statsDock">
+   <property name="contextMenuPolicy">
+    <enum>Qt::NoContextMenu</enum>
+   </property>
+   <property name="autoFillBackground">
+    <bool>true</bool>
+   </property>
    <property name="features">
     <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
    </property>
@@ -579,8 +607,8 @@
    <attribute name="dockWidgetArea">
     <number>4</number>
    </attribute>
-   <widget class="QWidget" name="dockWidgetContents_3">
-    <layout class="QHBoxLayout" name="horizontalLayout_18">
+   <widget class="QWidget" name="statsDockContents">
+    <layout class="QVBoxLayout" name="verticalLayout_26">
      <item>
       <layout class="QHBoxLayout" name="shapeCountLayout">
        <item>
@@ -616,6 +644,12 @@
    </widget>
   </widget>
   <widget class="QDockWidget" name="shapeSettingsDock">
+   <property name="contextMenuPolicy">
+    <enum>Qt::NoContextMenu</enum>
+   </property>
+   <property name="autoFillBackground">
+    <bool>true</bool>
+   </property>
    <property name="features">
     <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
    </property>
@@ -625,8 +659,8 @@
    <attribute name="dockWidgetArea">
     <number>8</number>
    </attribute>
-   <widget class="QWidget" name="dockWidgetContents_4">
-    <layout class="QHBoxLayout" name="horizontalLayout_6">
+   <widget class="QWidget" name="shapeSettingsDockContents">
+    <layout class="QVBoxLayout" name="verticalLayout_17">
      <item>
       <widget class="QWidget" name="shapeOpacityWidget" native="true">
        <property name="sizePolicy">
@@ -859,6 +893,12 @@
    </widget>
   </widget>
   <widget class="QDockWidget" name="targetImageSettingsDock">
+   <property name="contextMenuPolicy">
+    <enum>Qt::NoContextMenu</enum>
+   </property>
+   <property name="autoFillBackground">
+    <bool>true</bool>
+   </property>
    <property name="features">
     <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
    </property>
@@ -868,7 +908,7 @@
    <attribute name="dockWidgetArea">
     <number>4</number>
    </attribute>
-   <widget class="QWidget" name="dockWidgetContents_5">
+   <widget class="QWidget" name="targetImageSettingsDockContents">
     <layout class="QVBoxLayout" name="verticalLayout_21">
      <item>
       <widget class="QScrollArea" name="targetImageSettingsScrollArea">
@@ -892,7 +932,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>539</width>
+          <width>1025</width>
           <height>214</height>
          </rect>
         </property>
@@ -1023,8 +1063,14 @@
    </widget>
   </widget>
   <widget class="QDockWidget" name="scriptingSettingsDock">
-   <property name="floating">
+   <property name="contextMenuPolicy">
+    <enum>Qt::NoContextMenu</enum>
+   </property>
+   <property name="autoFillBackground">
     <bool>true</bool>
+   </property>
+   <property name="floating">
+    <bool>false</bool>
    </property>
    <property name="features">
     <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
@@ -1035,13 +1081,21 @@
    <attribute name="dockWidgetArea">
     <number>1</number>
    </attribute>
-   <widget class="QWidget" name="dockWidgetContents_6">
+   <widget class="QWidget" name="scriptingSettingsDockContents">
     <layout class="QVBoxLayout" name="verticalLayout_24">
      <item>
       <widget class="QCheckBox" name="scriptingModeEnabledCheckbox">
        <property name="text">
         <string>Scripts Enabled</string>
        </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="scriptingEditBoxes">
+       <property name="title">
+        <string>Script Edits</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_28"/>
       </widget>
      </item>
     </layout>

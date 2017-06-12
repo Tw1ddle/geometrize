@@ -6,6 +6,7 @@
 
 #include "analytics/analyticswrapper.h"
 #include "commandlineparser.h"
+#include "localization.h"
 #include "logmessagehandlers.h"
 #include "runguard.h"
 #include "versioninfo.h"
@@ -30,6 +31,8 @@ int main(int argc, char* argv[])
 
     qInstallMessageHandler(geometrize::log::handleLogMessages);
     QApplication app(argc, argv);
+
+    geometrize::setupLocalization(app);
 
     geometrize::analytics::AnalyticsWrapper analytics;
     analytics.startSession();

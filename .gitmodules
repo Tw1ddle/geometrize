@@ -6,7 +6,7 @@
 	url = https://github.com/ChaiScript/ChaiScript
 [submodule "lib/geometrize"]
 	path = lib/geometrize
-	url = https://bitbucket.org/Tw1ddle/geometrize-lib
+url=https://github.com/Tw1ddle/geometrize-lib
 [submodule "lib/qt_google_analytics"]
 	path = lib/qt_google_analytics
 	url = https://github.com/HSAnet/qt-google-analytics

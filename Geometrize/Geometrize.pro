@@ -80,7 +80,11 @@ SOURCES += commandlineparser.cpp \
     dialog/imagejobscene.cpp \
     dialog/collapsiblepanel.cpp \
     dialog/completionbox.cpp \
-    script/shapemutationrules.cpp
+    script/shapemutationrules.cpp \
+    localization.cpp \
+    dialog/svgpreviewview.cpp \
+    dialog/svgpreviewdialog.cpp \
+    dialog/scripteditorwidget.cpp
 
 HEADERS += commandlineparser.h \
     constants.h \
@@ -150,7 +154,11 @@ HEADERS += commandlineparser.h \
     dialog/collapsiblepanel.h \
     dialog/completionbox.h \
     script/shapemutationrules.h \
-    script/chaiscriptmathextras.h
+    script/chaiscriptmathextras.h \
+    localization.h \
+    dialog/svgpreviewview.h \
+    dialog/svgpreviewdialog.h \
+    dialog/scripteditorwidget.h
 
 FORMS += dialog/aboutdialog.ui \
     dialog/commandlineedit.ui \
@@ -163,4 +171,6 @@ FORMS += dialog/aboutdialog.ui \
     dialog/runscriptdialog.ui \
     dialog/scriptconsole.ui \
     dialog/templatebutton.ui \
-    dialog/globalpreferencesdialog.ui
+    dialog/globalpreferencesdialog.ui \
+    dialog/svgpreviewdialog.ui \
+    dialog/scripteditorwidget.ui

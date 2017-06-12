@@ -11,6 +11,7 @@
 #include "dialog/launchwindow.h"
 #include "dialog/openurldialog.h"
 #include "dialog/runscriptdialog.h"
+#include "dialog/svgpreviewdialog.h"
 
 namespace geometrize
 {
@@ -161,6 +162,12 @@ QString openLoadGlobalSettingsDialog(QWidget* parent)
 QString openSaveGlobalSettingsDialog(QWidget* parent)
 {
     return QFileDialog::getSaveFileName(parent, QWidget::tr("Save Global Settings"), "", QWidget::tr("JSON Global Settings File (*.json)"));
+}
+
+void openSVGPreviewPage(QWidget* parent)
+{
+    dialog::SvgPreviewDialog dialog(parent);
+    dialog.exec();
 }
 
 }

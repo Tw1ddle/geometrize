@@ -43,6 +43,7 @@ QString openLoadImageJobSettingsDialog(QWidget* parent);
 QString openSaveImageJobSettingsDialog(QWidget* parent);
 QString openLoadGlobalSettingsDialog(QWidget* parent);
 QString openSaveGlobalSettingsDialog(QWidget* parent);
+void openSVGPreviewPage(QWidget* parent);
 
 }
 

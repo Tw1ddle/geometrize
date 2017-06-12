@@ -26,6 +26,8 @@
 #include "dialog/collapsiblepanel.h"
 #include "dialog/imagejobpixmapgraphicsitem.h"
 #include "dialog/imagejobscene.h"
+#include "dialog/svgpreviewdialog.h"
+#include "dialog/scripteditorwidget.h"
 #include "exporter/gifexporter.h"
 #include "exporter/imageexporter.h"
 #include "exporter/canvasanimationexporter.h"
@@ -49,6 +51,8 @@ public:
         ui->setupUi(q);
 
         ui->imageView->setScene(&m_scene);
+
+        setupScriptEditPanels();
 
         connect(ui->targetOpacitySlider, &QSlider::valueChanged, [this](int value) {
             ui->targetImageOpacityValueLabel->setText(QString::number(value));
@@ -153,6 +157,11 @@ public:
         }
 
         geometrize::exporter::exportImage(m_job->getCurrent(), path.toStdString());
+    }
+
+    void previewSVG() const
+    {
+        common::ui::openSVGPreviewPage(q);
     }
 
     void saveSVG() const
@@ -364,6 +373,19 @@ private:
         // TODO apply the scripts? or better use a signal from the prefs that something changed...? also need to subscribe to that for save actions on edit boxes on the UI itself
     }
 
+    void setupScriptEditPanels()
+    {
+        // TODO set these up properly, pass a shape type, signals and slots etc
+        ui->scriptingEditBoxes->layout()->addWidget(new ScriptEditorWidget());
+        ui->scriptingEditBoxes->layout()->addWidget(new ScriptEditorWidget());
+        ui->scriptingEditBoxes->layout()->addWidget(new ScriptEditorWidget());
+        ui->scriptingEditBoxes->layout()->addWidget(new ScriptEditorWidget());
+        ui->scriptingEditBoxes->layout()->addWidget(new ScriptEditorWidget());
+        ui->scriptingEditBoxes->layout()->addWidget(new ScriptEditorWidget());
+        ui->scriptingEditBoxes->layout()->addWidget(new ScriptEditorWidget());
+        ui->scriptingEditBoxes->layout()->addWidget(new ScriptEditorWidget());
+    }
+
     std::shared_ptr<job::ImageJob> m_job;
     ImageJobWindow* q;
     ImageJobScene m_scene;
@@ -383,7 +405,6 @@ ImageJobWindow::ImageJobWindow() :
 
 ImageJobWindow::~ImageJobWindow()
 {
-
 }
 
 void ImageJobWindow::setImageJob(const std::shared_ptr<job::ImageJob>& job)
@@ -429,6 +450,11 @@ void ImageJobWindow::on_clearButton_clicked()
 void ImageJobWindow::on_saveImageButton_clicked()
 {
     d->saveImage();
+}
+
+void ImageJobWindow::on_previewSVGButton_clicked()
+{
+    d->previewSVG();
 }
 
 void ImageJobWindow::on_saveSVGButton_clicked()
