@@ -10,12 +10,14 @@ namespace geometrize
 
 void setupLocalization(QApplication& application)
 {
+    const QString locale{QLocale::system().name()};
+
     QTranslator qtTranslator;
-    qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    qtTranslator.load("qt_" + locale, QLibraryInfo::location(QLibraryInfo::TranslationsPath));
     application.installTranslator(&qtTranslator);
 
     QTranslator geometrizeTranslator;
-    geometrizeTranslator.load("geometrize_" + QLocale::system().name());
+    geometrizeTranslator.load("geometrize_" + locale); // Should fall back to filename without country suffix if necessary etc
     application.installTranslator(&geometrizeTranslator);
 }
 

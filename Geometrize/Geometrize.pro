@@ -175,4 +175,4 @@ FORMS += dialog/aboutdialog.ui \
     dialog/scriptconsole.ui \
     dialog/scripteditorwidget.ui \
     dialog/svgpreviewdialog.ui \
-    dialog/templatebutton.ui \
+    dialog/templatebutton.ui
