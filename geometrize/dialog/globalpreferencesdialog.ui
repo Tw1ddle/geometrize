@@ -134,7 +134,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="generalPreferencesPage">
        <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -484,13 +484,9 @@
            </widget>
           </item>
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout_2">
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
             <item>
-             <widget class="QGroupBox" name="availableLanguagesOptionsGroup">
-              <property name="title">
-               <string>Available Languages</string>
-              </property>
-             </widget>
+             <widget class="geometrize::dialog::LanguageSelectWidget" name="widget" native="true"/>
             </item>
            </layout>
           </item>
@@ -513,6 +509,14 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>geometrize::dialog::LanguageSelectWidget</class>
+   <extends>QWidget</extends>
+   <header>dialog/languageselectwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../resources/application_resources.qrc"/>
  </resources>

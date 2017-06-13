@@ -3,16 +3,15 @@
 # Supported languages
 LANGUAGES = de
 
+# Make the ts files show up in the Qt Creator file browser
+OTHER_FILES += $$files($$PWD/*.ts, true)
+
 # Get the TS files based on the supported languages
 defineReplace(prependAll) {
     for(a,$$1):result ''= $$2$${a}$$3
     return($$result)
 }
-
 TRANSLATIONS = $$prependAll(LANGUAGES, $$PWD/translations/app/, .ts)
-
-# Make the ts files show up in the Qt Creator file browser
-OTHER_FILES += $$files($$PWD/*.ts, true)
 
 #wd = $$replace($$_PRO_FILE_PWD_, /, $$QMAKE_DIR_SEP)
 
@@ -30,7 +29,7 @@ OTHER_FILES += $$files($$PWD/*.ts, true)
 #}
 
 # Generate qm files from the ts files for the supported languages and place them in the resources folder, ready to be bundled as resources
-# Note that qm files for new languages need to be added to the translations resource file manually (makes it easy to include/exclude languages)
+# Note that qm files for new languages need to be added to the translations resource file manually
 qtPrepareTool(LRELEASE, lrelease)
 for(langcode, LANGUAGES) {
     tsfile = $$shell_quote($$_PRO_FILE_PWD_/../translations/app/$${langcode}.ts)

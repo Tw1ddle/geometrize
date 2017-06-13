@@ -17,6 +17,8 @@ namespace dialog
  */
 class ImageJobScene : public QGraphicsScene
 {
+    Q_OBJECT
+
 public:
     explicit ImageJobScene(QObject* parent = nullptr);
     ~ImageJobScene();

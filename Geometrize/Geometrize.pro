@@ -86,7 +86,9 @@ SOURCES += commandlineparser.cpp \
     script/scriptrunner.cpp \
     script/scriptutil.cpp \
     script/shapemutationrules.cpp \
-    serialization/serializationutil.cpp
+    serialization/serializationutil.cpp \
+    dialog/languageselectwidget.cpp \
+    dialog/languageselectlist.cpp
 
 HEADERS += commandlineparser.h \
     constants.h \
@@ -161,7 +163,9 @@ HEADERS += commandlineparser.h \
     serialization/imagejobpreferencesdata.h \
     serialization/serializationutil.h \
     serialization/stringvectordata.h \
-    serialization/templatemetadata.h
+    serialization/templatemetadata.h \
+    dialog/languageselectwidget.h \
+    dialog/languageselectlist.h
 
 FORMS += dialog/aboutdialog.ui \
     dialog/commandlineedit.ui \
@@ -176,7 +180,8 @@ FORMS += dialog/aboutdialog.ui \
     dialog/scriptconsole.ui \
     dialog/scripteditorwidget.ui \
     dialog/svgpreviewdialog.ui \
-    dialog/templatebutton.ui
+    dialog/templatebutton.ui \
+    dialog/languageselectwidget.ui
 
 # Generates localization TS files and then binary QM files, which it puts into the resources folder
 include($$PWD/../translations/translations.pri)

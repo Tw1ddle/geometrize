@@ -20,17 +20,17 @@ ImageJobPixmapGraphicsItem::~ImageJobPixmapGraphicsItem()
 
 }
 
-void ImageJobPixmapGraphicsItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
+void ImageJobPixmapGraphicsItem::mousePressEvent(QGraphicsSceneMouseEvent* /*event*/)
 {
 
 }
 
-void ImageJobPixmapGraphicsItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
+void ImageJobPixmapGraphicsItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* /*event*/)
 {
 
 }
 
-void ImageJobPixmapGraphicsItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
+void ImageJobPixmapGraphicsItem::mouseMoveEvent(QGraphicsSceneMouseEvent* /*event*/)
 {
 
 }

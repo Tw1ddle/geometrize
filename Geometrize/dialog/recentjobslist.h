@@ -21,6 +21,7 @@ namespace dialog
 class RecentJobsList : public QListWidget
 {
     Q_OBJECT
+
 public:
     explicit RecentJobsList(QWidget* parent = nullptr);
 
