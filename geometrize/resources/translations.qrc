@@ -1,0 +1,47 @@
+<RCC>
+    <qresource prefix="/">
+        <file>translations/app/de.qm</file>
+        <file>translations/qt/qt_ar.qm</file>
+        <file>translations/qt/qt_ca.qm</file>
+        <file>translations/qt/qt_cs.qm</file>
+        <file>translations/qt/qt_da.qm</file>
+        <file>translations/qt/qt_de.qm</file>
+        <file>translations/qt/qt_en.qm</file>
+        <file>translations/qt/qt_es.qm</file>
+        <file>translations/qt/qt_fa.qm</file>
+        <file>translations/qt/qt_fi.qm</file>
+        <file>translations/qt/qt_fr.qm</file>
+        <file>translations/qt/qt_gl.qm</file>
+        <file>translations/qt/qt_he.qm</file>
+        <file>translations/qt/qt_hu.qm</file>
+        <file>translations/qt/qt_it.qm</file>
+        <file>translations/qt/qt_ja.qm</file>
+        <file>translations/qt/qt_ko.qm</file>
+        <file>translations/qt/qt_lt.qm</file>
+        <file>translations/qt/qt_pl.qm</file>
+        <file>translations/qt/qt_pt.qm</file>
+        <file>translations/qt/qt_ru.qm</file>
+        <file>translations/qt/qt_sk.qm</file>
+        <file>translations/qt/qt_sl.qm</file>
+        <file>translations/qt/qt_sv.qm</file>
+        <file>translations/qt/qt_uk.qm</file>
+        <file>translations/qt/qt_zh_CN.qm</file>
+        <file>translations/qt/qt_zh_TW.qm</file>
+        <file>translations/qt/qtbase_ca.qm</file>
+        <file>translations/qt/qtbase_cs.qm</file>
+        <file>translations/qt/qtbase_de.qm</file>
+        <file>translations/qt/qtbase_en.qm</file>
+        <file>translations/qt/qtbase_fi.qm</file>
+        <file>translations/qt/qtbase_fr.qm</file>
+        <file>translations/qt/qtbase_he.qm</file>
+        <file>translations/qt/qtbase_hu.qm</file>
+        <file>translations/qt/qtbase_it.qm</file>
+        <file>translations/qt/qtbase_ja.qm</file>
+        <file>translations/qt/qtbase_ko.qm</file>
+        <file>translations/qt/qtbase_lv.qm</file>
+        <file>translations/qt/qtbase_pl.qm</file>
+        <file>translations/qt/qtbase_ru.qm</file>
+        <file>translations/qt/qtbase_sk.qm</file>
+        <file>translations/qt/qtbase_uk.qm</file>
+    </qresource>
+</RCC>

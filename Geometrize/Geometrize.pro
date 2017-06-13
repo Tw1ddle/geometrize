@@ -7,7 +7,8 @@ TEMPLATE = app
 
 RC_ICONS = icon.ico
 RC_FILE = winicon.rc
-RESOURCES = resources/application_resources.qrc
+RESOURCES = resources/application_resources.qrc \
+    resources/translations.qrc
 
 msvc:QMAKE_CXXFLAGS += -bigobj
 
@@ -176,3 +177,6 @@ FORMS += dialog/aboutdialog.ui \
     dialog/scripteditorwidget.ui \
     dialog/svgpreviewdialog.ui \
     dialog/templatebutton.ui
+
+# Generates localization TS files and then binary QM files, which it puts into the resources folder
+include($$PWD/../translations/translations.pri)

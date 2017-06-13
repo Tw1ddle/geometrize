@@ -33,16 +33,17 @@ int main(int argc, char* argv[])
     qInstallMessageHandler(geometrize::log::handleLogMessages);
     QApplication app(argc, argv);
 
+    QCommandLineParser parser;
+    const geometrize::cli::CommandLineResult cliSetup{geometrize::cli::setupCommandLineParser(parser, app.arguments())};
+    const geometrize::cli::CommandLineResult options{geometrize::cli::handleArgumentPairs(parser)};
+    const geometrize::cli::CommandLineResult positionals{geometrize::cli::handlePositionalArguments(parser.positionalArguments())};
+
+    // TODO check for locale override parameter
     geometrize::setupLocalization(app, QLocale::system().name());
 
     geometrize::analytics::AnalyticsWrapper analytics;
     analytics.startSession();
     analytics.onLaunch();
-
-    QCommandLineParser parser;
-    const geometrize::cli::CommandLineResult cliSetup{geometrize::cli::setupCommandLineParser(parser, app.arguments())};
-    const geometrize::cli::CommandLineResult options{geometrize::cli::handleArgumentPairs(parser)};
-    const geometrize::cli::CommandLineResult positionals{geometrize::cli::handlePositionalArguments(parser.positionalArguments())};
 
     // Open launcher window if there isn't an instance of Geometrize already running
     geometrize::RunGuard runGuard("geometrize_run_guard_key");

@@ -16,6 +16,7 @@ namespace strings
  */
 class Strings : public QObject
 {
+    Q_OBJECT
 public:
     Strings() = delete;
     Strings& operator=(const Strings&) = delete;
