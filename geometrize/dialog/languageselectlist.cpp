@@ -1,7 +1,12 @@
 #include "languageselectlist.h"
 
+#include <QCoreApplication>
 #include <QDirIterator>
+#include <QEvent>
+#include <QListWidgetItem>
 #include <QString>
+
+#include "localization.h"
 
 namespace geometrize
 {
@@ -14,7 +19,13 @@ class LanguageSelectList::LanguageSelectListImpl
 public:
     LanguageSelectListImpl(LanguageSelectList* pQ) : q{pQ}
     {
-        populateLanguageMenu();
+        setupLanguageSelect();
+
+        q->connect(q, &QListWidget::itemPressed, [this](QListWidgetItem* item) {
+            const QString isoCode{item->data(Qt::UserRole).toString()};
+            QLocale::setDefault(QLocale(isoCode));
+            geometrize::installTranslatorsForLocale(*QCoreApplication::instance(), isoCode);
+        });
     }
 
     LanguageSelectListImpl operator=(const LanguageSelectListImpl&) = delete;
@@ -23,17 +34,34 @@ public:
     {
     }
 
+    void onLanguageChange()
+    {
+        q->clear();
+        setupLanguageSelect();
+    }
+
 private:
-    void populateLanguageMenu()
+    void setupLanguageSelect()
     {
         // TODO avoid hardcoding
         // TODO start with no items selected
-        QDirIterator it(":/translations/app/", QDirIterator::Subdirectories);
-        int i = 0;
+        QDirIterator it(":/translations/app/");
+        int idx = 0;
         while (it.hasNext()) {
-            q->insertItem(i, it.next());
-            i++;
+            it.next();
+            const QString isoCodeFromFilename{it.fileName().remove(".qm", Qt::CaseInsensitive)}; // Extract the ISO 639-1 code from the translation file filename
+            const QLocale locale{isoCodeFromFilename};
+
+            const QLocale::Language language{locale.language()};
+            const QString languageName{locale.languageToString(language)};
+
+            const QIcon icon{geometrize::getFlagIconForIsoCode(isoCodeFromFilename)};
+            QListWidgetItem* item{new QListWidgetItem(icon, languageName)};
+            item->setData(Qt::UserRole, isoCodeFromFilename);
+            q->insertItem(++idx, item);
         }
+
+        q->sortItems(Qt::AscendingOrder);
     }
 
     LanguageSelectList* q;
@@ -49,6 +77,11 @@ LanguageSelectList::~LanguageSelectList()
 
 void LanguageSelectList::changeEvent(QEvent* event)
 {
+    if (event->type() == QEvent::LanguageChange) {
+        d->onLanguageChange();
+    } else {
+        QListWidget::changeEvent(event);
+    }
 }
 
 }

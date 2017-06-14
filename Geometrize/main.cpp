@@ -6,9 +6,11 @@
 #include <QString>
 
 #include "analytics/analyticswrapper.h"
+#include "common/sharedapp.h"
 #include "commandlineparser.h"
 #include "localization.h"
 #include "logmessagehandlers.h"
+#include "preferences/globalpreferences.h"
 #include "runguard.h"
 #include "versioninfo.h"
 
@@ -33,13 +35,16 @@ int main(int argc, char* argv[])
     qInstallMessageHandler(geometrize::log::handleLogMessages);
     QApplication app(argc, argv);
 
+    // TODO sets the locale based on the global preference
+    geometrize::preferences::GlobalPreferences& prefs{geometrize::common::app::SharedApp::get().getGlobalPreferences()};
+    const std::string languageCode{prefs.getLanguageIsoCode()};
+    QLocale::setDefault(QLocale(QString::fromStdString(languageCode)));
+    geometrize::installTranslatorsForLocale(app, QLocale::system().name());
+
     QCommandLineParser parser;
     const geometrize::cli::CommandLineResult cliSetup{geometrize::cli::setupCommandLineParser(parser, app.arguments())};
     const geometrize::cli::CommandLineResult options{geometrize::cli::handleArgumentPairs(parser)};
     const geometrize::cli::CommandLineResult positionals{geometrize::cli::handlePositionalArguments(parser.positionalArguments())};
-
-    // TODO check for locale override parameter
-    geometrize::setupLocalization(app, QLocale::system().name());
 
     geometrize::analytics::AnalyticsWrapper analytics;
     analytics.startSession();

@@ -69,6 +69,18 @@ public:
      */
     void setImageJobResizeThreshold(std::uint32_t width, std::uint32_t height);
 
+    /**
+     * @brief getLanguageIsoCode Gets the ISO 639-1 language preference for the application.
+     * @return The ISO 639-1 language code.
+     */
+    std::string getLanguageIsoCode() const;
+
+    /**
+     * @brief setLanguageIsoCode Sets the ISO 639-1 language preference for the application.
+     * @param languageIsoCode The ISO 639-1 language code.
+     */
+    void setLanguageIsoCode(const std::string& languageIsoCode);
+
 private:
     class GlobalPreferencesImpl;
     std::unique_ptr<GlobalPreferencesImpl> d;

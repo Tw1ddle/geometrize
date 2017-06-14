@@ -1,7 +1,7 @@
 ## TODO NEEDS WORK
 
 # Supported languages
-LANGUAGES = de
+LANGUAGES = de fr it ja zh
 
 # Make the ts files show up in the Qt Creator file browser
 OTHER_FILES += $$files($$PWD/*.ts, true)

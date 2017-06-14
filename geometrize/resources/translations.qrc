@@ -43,5 +43,9 @@
         <file>translations/qt/qtbase_ru.qm</file>
         <file>translations/qt/qtbase_sk.qm</file>
         <file>translations/qt/qtbase_uk.qm</file>
+        <file>translations/app/fr.qm</file>
+        <file>translations/app/it.qm</file>
+        <file>translations/app/ja.qm</file>
+        <file>translations/app/zh.qm</file>
     </qresource>
 </RCC>

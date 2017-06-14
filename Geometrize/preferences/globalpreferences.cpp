@@ -35,7 +35,7 @@ public:
     {
         std::ifstream input(filePath);
         try {
-            m_data.archive(cereal::JSONInputArchive(input), m_imageJobResizeEnabled, m_imageJobResizeThreshold);
+            m_data.archive(cereal::JSONInputArchive(input), m_imageJobResizeEnabled, m_imageJobResizeThreshold, m_languageIsoCode);
         } catch(...) {
             assert(0 && "Failed to read global preferences");
         }
@@ -45,7 +45,7 @@ public:
     {
         std::ofstream output(filePath);
         try {
-            m_data.archive(cereal::JSONOutputArchive(output), m_imageJobResizeEnabled, m_imageJobResizeThreshold);
+            m_data.archive(cereal::JSONOutputArchive(output), m_imageJobResizeEnabled, m_imageJobResizeThreshold, m_languageIsoCode);
         } catch(...) {
             assert(0 && "Failed to write global preferences");
         }
@@ -72,11 +72,22 @@ public:
         m_imageJobResizeEnabled = enabled;
     }
 
+    std::string getLanguageIsoCode() const
+    {
+        return m_languageIsoCode;
+    }
+
+    void setLanguageIsoCode(const std::string& languageIsoCode)
+    {
+        m_languageIsoCode = languageIsoCode;
+    }
+
 private:
     serialization::GlobalPreferencesData m_data;
 
     bool m_imageJobResizeEnabled{false};
     std::pair<std::uint32_t, std::uint32_t> m_imageJobResizeThreshold{512, 512};
+    std::string m_languageIsoCode{"en"};
 };
 
 GlobalPreferences::GlobalPreferences(const std::string& preferencesFilePath) : d{std::make_unique<GlobalPreferences::GlobalPreferencesImpl>(preferencesFilePath)}
@@ -115,6 +126,16 @@ std::pair<std::uint32_t, std::uint32_t> GlobalPreferences::getImageJobResizeThre
 void GlobalPreferences::setImageJobResizeThreshold(const std::uint32_t width, const std::uint32_t height)
 {
     d->setImageJobResizeThreshold(width, height);
+}
+
+std::string GlobalPreferences::getLanguageIsoCode() const
+{
+    return d->getLanguageIsoCode();
+}
+
+void GlobalPreferences::setLanguageIsoCode(const std::string& languageIsoCode)
+{
+    d->setLanguageIsoCode(languageIsoCode);
 }
 
 }
