@@ -6,6 +6,8 @@
 #include <QListWidgetItem>
 #include <QString>
 
+#include "common/sharedapp.h"
+#include "preferences/globalpreferences.h"
 #include "localization.h"
 
 namespace geometrize
@@ -23,6 +25,10 @@ public:
 
         q->connect(q, &QListWidget::itemPressed, [this](QListWidgetItem* item) {
             const QString isoCode{item->data(Qt::UserRole).toString()};
+
+            geometrize::preferences::GlobalPreferences& prefs{geometrize::common::app::SharedApp::get().getGlobalPreferences()};
+            prefs.setLanguageIsoCode(isoCode.toStdString());
+
             QLocale::setDefault(QLocale(isoCode));
             geometrize::installTranslatorsForLocale(*QCoreApplication::instance(), isoCode);
         });
