@@ -173,6 +173,11 @@ int clamp(const int value, const int lower, const int upper)
     return geometrize::util::clamp(value, lower, upper);
 }
 
+std::vector<std::string> split(const std::string& s, const char delimiter)
+{
+    return geometrize::util::split(s, delimiter);
+}
+
 void setTranslatorsForLocale(const std::string& locale)
 {
     geometrize::setTranslatorsForLocale(QString::fromStdString(locale));

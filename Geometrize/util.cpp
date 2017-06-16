@@ -253,6 +253,13 @@ int clamp(const int value, const int lower, const int upper)
     return std::max(lower, std::min(value, upper));
 }
 
+std::vector<std::string> split(const std::string& s, const char delimiter)
+{
+    std::vector<std::string> elements;
+    split(s, delimiter, std::back_inserter(elements));
+    return elements;
+}
+
 }
 
 }

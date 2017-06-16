@@ -1,6 +1,8 @@
 #pragma once
 
+#include <iterator>
 #include <string>
+#include <sstream>
 #include <vector>
 
 namespace geometrize
@@ -184,6 +186,25 @@ int randomInRange(int lower, int upper);
  * @return The clamped value.
  */
 int clamp(int value, int lower, int upper);
+
+template<typename T>
+void split(const std::string& s, const char delimiter, T result)
+{
+    std::stringstream ss;
+    ss.str(s);
+    std::string item;
+    while (std::getline(ss, item, delimiter)) {
+        *(result++) = item;
+    }
+}
+
+/**
+ * @brief split Splits a given string into a vector of tokens using the given delimiter.
+ * @param s The string to split.
+ * @param delimiter The delimiter to split on.
+ * @return A vector containing the split string.
+ */
+std::vector<std::string> split(const std::string& s, char delimiter);
 
 }
 

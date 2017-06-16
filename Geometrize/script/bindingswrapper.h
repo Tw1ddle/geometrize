@@ -67,6 +67,8 @@ int randomInRange(int lower, int upper);
 
 int clamp(int value, int lower, int upper);
 
+std::vector<std::string> split(const std::string& s, const char delimiter);
+
 void setTranslatorsForLocale(const std::string& locale);
 
 }

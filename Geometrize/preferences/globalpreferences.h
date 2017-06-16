@@ -82,6 +82,18 @@ public:
     void setLanguageIsoCode(const std::string& languageIsoCode);
 
     /**
+     * @brief getScriptIsoCode Gets the ISO-15924 script code preference for the application.
+     * @return The ISO-15924 script code.
+     */
+    std::string getScriptIsoCode() const;
+
+    /**
+     * @brief setScriptIsoCode Sets the ISO-15924 script code preference for the application.
+     * @param scriptIsoCode The ISO-15924 script code.
+     */
+    void setScriptIsoCode(const std::string& scriptIsoCode);
+
+    /**
      * @brief getCountryIsoCode Gets the ISO-3166 country code preference for the application.
      * @return The ISO-3166 country code.
      */
@@ -92,6 +104,24 @@ public:
      * @param countryIsoCode The ISO-3166 country code.
      */
     void setCountryIsoCode(const std::string& countryIsoCode);
+
+    /**
+     * @brief getLocaleName Gets the locale name in the format "language[_script][_country]".
+     * language is a lowercase, two or three letter, ISO 639 language code.
+     * script is a titlecase, four-letter, ISO 15924 script code.
+     * country is an uppercase, two-letter, ISO 3166 country code (also "419" as defined by United Nations).
+     * @return The locale name.
+     */
+    std::string getLocaleName() const;
+
+    /**
+     * @brief setLocaleName Sets the locale with the specified name, which must have the format "language[_script][_country]".
+     * @param localeName The locale name in the format "language[_script][_country]".
+     * language is a lowercase, two or three letter, ISO 639 language code.
+     * script is a titlecase, four-letter, ISO 15924 script code.
+     * country is an uppercase, two-letter, ISO 3166 country code (also "419" as defined by United Nations).
+     */
+    void setLocaleName(const std::string& localeName);
 
 private:
     class GlobalPreferencesImpl;
