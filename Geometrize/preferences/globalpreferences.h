@@ -81,6 +81,18 @@ public:
      */
     void setLanguageIsoCode(const std::string& languageIsoCode);
 
+    /**
+     * @brief getCountryIsoCode Gets the ISO-3166 country code preference for the application.
+     * @return The ISO-3166 country code.
+     */
+    std::string getCountryIsoCode() const;
+
+    /**
+     * @brief setCountryIsoCode Sets the ISO-3166 country code preference for the application.
+     * @param countryIsoCode The ISO-3166 country code.
+     */
+    void setCountryIsoCode(const std::string& countryIsoCode);
+
 private:
     class GlobalPreferencesImpl;
     std::unique_ptr<GlobalPreferencesImpl> d;

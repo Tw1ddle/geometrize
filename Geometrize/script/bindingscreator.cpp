@@ -75,6 +75,8 @@ std::shared_ptr<chaiscript::Module> createBindings()
     ADD_FREE_FUN(randomInRange);
     ADD_FREE_FUN(clamp);
 
+    ADD_FREE_FUN(setTranslatorsForLocale);
+
     return module;
 }
 

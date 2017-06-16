@@ -35,7 +35,7 @@ public:
     {
         std::ifstream input(filePath);
         try {
-            m_data.archive(cereal::JSONInputArchive(input), m_imageJobResizeEnabled, m_imageJobResizeThreshold, m_languageIsoCode);
+            m_data.archive(cereal::JSONInputArchive(input), m_imageJobResizeEnabled, m_imageJobResizeThreshold, m_languageIsoCode, m_countryIsoCode);
         } catch(...) {
             assert(0 && "Failed to read global preferences");
         }
@@ -45,7 +45,7 @@ public:
     {
         std::ofstream output(filePath);
         try {
-            m_data.archive(cereal::JSONOutputArchive(output), m_imageJobResizeEnabled, m_imageJobResizeThreshold, m_languageIsoCode);
+            m_data.archive(cereal::JSONOutputArchive(output), m_imageJobResizeEnabled, m_imageJobResizeThreshold, m_languageIsoCode, m_countryIsoCode);
         } catch(...) {
             assert(0 && "Failed to write global preferences");
         }
@@ -82,12 +82,23 @@ public:
         m_languageIsoCode = languageIsoCode;
     }
 
+    std::string getCountryIsoCode() const
+    {
+        return m_countryIsoCode;
+    }
+
+    void setCountryIsoCode(const std::string& countryIsoCode)
+    {
+        m_countryIsoCode = countryIsoCode;
+    }
+
 private:
     serialization::GlobalPreferencesData m_data;
 
     bool m_imageJobResizeEnabled{false};
     std::pair<std::uint32_t, std::uint32_t> m_imageJobResizeThreshold{512, 512};
     std::string m_languageIsoCode{"en"};
+    std::string m_countryIsoCode{"US"};
 };
 
 GlobalPreferences::GlobalPreferences(const std::string& preferencesFilePath) : d{std::make_unique<GlobalPreferences::GlobalPreferencesImpl>(preferencesFilePath)}
@@ -136,6 +147,16 @@ std::string GlobalPreferences::getLanguageIsoCode() const
 void GlobalPreferences::setLanguageIsoCode(const std::string& languageIsoCode)
 {
     d->setLanguageIsoCode(languageIsoCode);
+}
+
+std::string GlobalPreferences::getCountryIsoCode() const
+{
+    return d->getCountryIsoCode();
+}
+
+void GlobalPreferences::setCountryIsoCode(const std::string& countryIsoCode)
+{
+    d->setCountryIsoCode(countryIsoCode);
 }
 
 }

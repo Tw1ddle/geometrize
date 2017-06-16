@@ -32,6 +32,16 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
+        <widget class="QLabel" name="currentLanguageLabel">
+         <property name="text">
+          <string>Current Locale</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QLabel" name="currentLanguageFlagLabel">
          <property name="text">
           <string>Current Language Flag Logo</string>
@@ -42,11 +52,11 @@
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <layout class="QVBoxLayout" name="verticalLayout_5">
          <item>
-          <widget class="QLabel" name="currentLanguageLabel">
+          <widget class="QLabel" name="currentLanguageNameLabel">
            <property name="text">
-            <string>Current:</string>
+            <string>Current Language Identifier</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -54,9 +64,9 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="currentLanguageNameLabel">
+          <widget class="QLabel" name="currentCountryNameLabel">
            <property name="text">
-            <string>Current Language Identifier</string>
+            <string>Current Country Identifier</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -72,7 +82,7 @@
    <item>
     <widget class="QGroupBox" name="availableLanguagesOptionsGroup">
      <property name="title">
-      <string>Available Languages</string>
+      <string>Available Options</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>

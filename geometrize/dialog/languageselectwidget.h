@@ -10,6 +10,9 @@ namespace geometrize
 namespace dialog
 {
 
+/**
+ * @brief The LanguageSelectWidget class implements a widget for selecting and viewing the application language/locale.
+ */
 class LanguageSelectWidget : public QWidget
 {
     Q_OBJECT

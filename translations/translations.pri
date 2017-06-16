@@ -1,7 +1,7 @@
 ## TODO NEEDS WORK
 
 # Supported languages
-LANGUAGES = de fr it ja zh
+LANGUAGES = de en fr it ja zh
 
 # Make the ts files show up in the Qt Creator file browser
 OTHER_FILES += $$files($$PWD/*.ts, true)
@@ -31,9 +31,9 @@ TRANSLATIONS = $$prependAll(LANGUAGES, $$PWD/translations/app/, .ts)
 # Generate qm files from the ts files for the supported languages and place them in the resources folder, ready to be bundled as resources
 # Note that qm files for new languages need to be added to the translations resource file manually
 qtPrepareTool(LRELEASE, lrelease)
-for(langcode, LANGUAGES) {
-    tsfile = $$shell_quote($$_PRO_FILE_PWD_/../translations/app/$${langcode}.ts)
-    qmfile = $$shell_quote($$_PRO_FILE_PWD_/resources/translations/app/$${langcode}.qm)
+for(filename, LANGUAGES) {
+    tsfile = $$shell_quote($$_PRO_FILE_PWD_/../translations/app/geometrize_$${filename}.ts)
+    qmfile = $$shell_quote($$_PRO_FILE_PWD_/resources/translations/app/geometrize_$${filename}.qm)
     qmfile ~= s,.ts$,.qm,
     qmdir = $$dirname(qmfile)
     command = $$LRELEASE -removeidentical $${tsfile} -qm $${qmfile}

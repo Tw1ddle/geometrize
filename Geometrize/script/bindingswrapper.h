@@ -67,6 +67,8 @@ int randomInRange(int lower, int upper);
 
 int clamp(int value, int lower, int upper);
 
+void setTranslatorsForLocale(const std::string& locale);
+
 }
 
 }

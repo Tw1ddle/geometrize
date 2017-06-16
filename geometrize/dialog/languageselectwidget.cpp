@@ -38,8 +38,8 @@ private:
         const geometrize::preferences::GlobalPreferences& prefs{geometrize::common::app::SharedApp::get().getGlobalPreferences()};
         const std::string languageCode{prefs.getLanguageIsoCode()};
         const QLocale locale{QString::fromStdString(languageCode)};
-
-        ui->currentLanguageNameLabel->setText(locale.languageToString(locale.language()));
+        ui->currentLanguageNameLabel->setText(locale.nativeLanguageName());
+        ui->currentCountryNameLabel->setText(locale.nativeCountryName());;
 
         const QIcon icon{geometrize::getFlagIconForIsoCode(locale.name())};
         ui->currentLanguageFlagLabel->setPixmap(icon.pixmap(icon.availableSizes().last()));
@@ -61,9 +61,9 @@ void LanguageSelectWidget::changeEvent(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange) {
         d->onLanguageChange();
-    } else {
-        QWidget::changeEvent(event);
     }
+
+    QWidget::changeEvent(event);
 }
 
 }

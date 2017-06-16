@@ -2,10 +2,11 @@
 
 #include <assert.h>
 
-#include <QList>
+#include <QString>
 
 #include "formatsupport.h"
 #include "job/jobutil.h"
+#include "localization.h"
 #include "searchpaths.h"
 #include "util.h"
 
@@ -170,6 +171,11 @@ int randomInRange(const int lower, const int upper)
 int clamp(const int value, const int lower, const int upper)
 {
     return geometrize::util::clamp(value, lower, upper);
+}
+
+void setTranslatorsForLocale(const std::string& locale)
+{
+    geometrize::setTranslatorsForLocale(QString::fromStdString(locale));
 }
 
 }

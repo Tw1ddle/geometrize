@@ -20,7 +20,7 @@ public:
         q->setTitle(title);
 
         // TODO take a chaiscript engine and the name of a function/global variable
-        // TODO when apply is clicked, validate and then offer a function back to the shape mutator
+        // TODO when apply is clicked, validate and then offer a function back to the shape mutator (defer until the next time the runner steps *if* it is running, else immediate is OK)
 
         // TODO connect things up
         ui->scriptTextEdit->insertPlainText("TODO");

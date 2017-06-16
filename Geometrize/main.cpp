@@ -35,11 +35,11 @@ int main(int argc, char* argv[])
     qInstallMessageHandler(geometrize::log::handleLogMessages);
     QApplication app(argc, argv);
 
-    // TODO sets the locale based on the global preference
+    // TODO sets the locale based on the global preference, should only use it if one is set (by default there should be no preference, so it should use the system?)
     geometrize::preferences::GlobalPreferences& prefs{geometrize::common::app::SharedApp::get().getGlobalPreferences()};
     const std::string languageCode{prefs.getLanguageIsoCode()};
     QLocale::setDefault(QLocale(QString::fromStdString(languageCode)));
-    geometrize::installTranslatorsForLocale(app, QLocale::system().name());
+    geometrize::setTranslatorsForLocale(QLocale::system().name());
 
     QCommandLineParser parser;
     const geometrize::cli::CommandLineResult cliSetup{geometrize::cli::setupCommandLineParser(parser, app.arguments())};
