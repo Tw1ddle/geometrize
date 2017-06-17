@@ -53,5 +53,6 @@
         <file>translations/qt/qtbase_ru.qm</file>
         <file>translations/qt/qtbase_sk.qm</file>
         <file>translations/qt/qtbase_uk.qm</file>
+        <file>translations/qt/qt_zh.qm</file>
     </qresource>
 </RCC>

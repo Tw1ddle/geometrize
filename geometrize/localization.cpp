@@ -84,7 +84,7 @@ void setTranslatorsForLocale(const QString& locale)
         if(translator->load(file, directory)) {
             installTranslator(application, translator);
         } else {
-            assert(0 && "Failed to load translator"); // TODO this can happen if the translator is just empty, apparently, or it doesn't do lookup
+            //assert(0 && "Failed to load translator"); // NOTE this can happen if the translator is simply empty and has no translations in it
         }
     };
     loadAndAddTranslator(qtTranslationFilePrefix + locale.toLower(), getQtTranslationResourceDirectory());

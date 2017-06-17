@@ -14,27 +14,24 @@ namespace dialog
 class ScriptEditorWidget::ScriptEditorWidgetImpl
 {
 public:
-    ScriptEditorWidgetImpl(ScriptEditorWidget* pQ, const QString& title) : q{pQ}, ui{std::make_unique<Ui::ScriptEditorWidget>()}
+    ScriptEditorWidgetImpl(ScriptEditorWidget* pQ, const QString& title, const std::string& targetName, const std::string& defaultCode) : q{pQ}, m_targetName{targetName}, m_defaultCode{defaultCode}, ui{std::make_unique<Ui::ScriptEditorWidget>()}
     {
         ui->setupUi(q);
         q->setTitle(title);
 
-        // TODO take a chaiscript engine and the name of a function/global variable
-        // TODO when apply is clicked, validate and then offer a function back to the shape mutator (defer until the next time the runner steps *if* it is running, else immediate is OK)
+        ui->scriptTextEdit->insertPlainText(QString::fromStdString(defaultCode));
 
-        // TODO connect things up
-        ui->scriptTextEdit->insertPlainText("TODO");
-
-        q->connect(ui->scriptTextEdit, &QPlainTextEdit::textChanged, []() {
-
+        q->connect(ui->scriptTextEdit, &QPlainTextEdit::textChanged, [this]() {
+            emit signal_scriptCodeChanged(q, m_targetName, m_defaultCode);
         });
 
-        q->connect(ui->applyScriptButton, &QPushButton::clicked, []() {
-            // TODO set the new function in chaiscript...
+        q->connect(ui->applyScriptButton, &QPushButton::clicked, [this]() {
+            const std::string code{ui->scriptTextEdit->toPlainText().toStdString()};
+            emit signal_scriptCommitted(q, m_targetName, code);
         });
 
-        q->connect(ui->resetToDefaultButton, &QPushButton::clicked, []() {
-            // TODO restore to the function text that was set when the widget was created?
+        q->connect(ui->resetToDefaultButton, &QPushButton::clicked, [this]() {
+            ui->scriptTextEdit->setPlainText(QString::fromStdString(m_defaultCode));
         });
     }
 
@@ -47,9 +44,11 @@ public:
 private:
     ScriptEditorWidget* q;
     std::unique_ptr<Ui::ScriptEditorWidget> ui;
+    const std::string m_targetName;
+    const std::string m_defaultCode;
 };
 
-ScriptEditorWidget::ScriptEditorWidget(const QString& title, QWidget* parent) : QGroupBox(parent), d{std::make_unique<ScriptEditorWidgetImpl>(this, title)}
+ScriptEditorWidget::ScriptEditorWidget(const QString& title, const std::string& targetName, const std::string& defaultCode, QWidget* parent) : QGroupBox(parent), d{std::make_unique<ScriptEditorWidgetImpl>(this, title, targetName, defaultCode)}
 {
 }
 

@@ -376,9 +376,17 @@ private:
 
     void setupScriptEditPanels()
     {
-        // TODO set these up properly, pass a shape type, signals and slots etc
         for(const geometrize::ShapeTypes type : geometrize::allShapes) {
-            ui->scriptingEditBoxes->layout()->addWidget(new ScriptEditorWidget(geometrize::strings::Strings::getShapeTypeNamePlural(type), nullptr)); // TODO add for named functions, not shape types?
+            ScriptEditorWidget* editor{new ScriptEditorWidget(geometrize::strings::Strings::getShapeTypeNamePlural(type), "TODO", "TODO")};
+
+            connect(editor, &ScriptEditorWidget::signal_scriptCommitted, [this](ScriptEditorWidget* self, const std::string& targetName, const std::string& scriptCode) {
+                // TODO validate code?
+                m_scriptChanges.push_back(std::make_pair(targetName, scriptCode));
+            });
+            connect(editor, &ScriptEditorWidget::signal_scriptCodeChanged, [this](ScriptEditorWidget* self, const std::string& targetName, const std::string& scriptCode) {
+                // TODO validate and indicate if it's wrong?
+            });
+            ui->scriptingEditBoxes->layout()->addWidget(editor);
         }
     }
 
@@ -389,6 +397,8 @@ private:
 
     std::unique_ptr<geometrize::Bitmap> m_initialJobImage;
     std::vector<geometrize::ShapeResult> m_shapes;
+
+    std::vector<std::pair<std::string, std::string>> m_scriptChanges; // Enqueued changes to Chaiscript global variables and code
 
     bool m_running; // Whether the model is running (automatically)
 };
