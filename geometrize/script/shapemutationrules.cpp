@@ -1,5 +1,6 @@
 #include "shapemutationrules.h"
 
+#include <map>
 #include <string>
 #include <vector>
 #include <utility>
@@ -41,15 +42,29 @@ public:
         reseatFunctions(mutator, functions);
     }
 
+    void resetScriptsToDefaults(geometrize::ShapeMutator& mutator)
+    {
+        const std::map<std::string, std::string> m{};
+        reseatFunctions(mutator, m);
+    }
+
+    void resetEngineToDefaults(geometrize::ShapeMutator& mutator)
+    {
+        m_engine = createEngine();
+        setupGlobals();
+    }
+
 private:
     std::unique_ptr<chaiscript::ChaiScript> createEngine() const
     {
         std::unique_ptr<chaiscript::ChaiScript> engine{script::createChaiScriptShapeMutator()};
-
-        // TODO
-        engine->set_global(chaiscript::var("todo"), "foo"); // set the globals that will be used
-
         return engine;
+    }
+
+    void setupGlobals()
+    {
+        // TODO
+        m_engine->set_global(chaiscript::var("todo"), "foo"); // set the globals that will be used
     }
 
     void reseatFunctions(geometrize::ShapeMutator& mutator, const std::map<std::string, std::string>& customFunctions)
@@ -127,8 +142,11 @@ private:
         return m;
     }
 
-    const QString m_scriptResourceFolder; ///< Path to the default shape scripts folder in resources
-    const std::map<std::string, std::string> m_defaultScripts;
+    const QString m_scriptResourceFolder; ///< Path to the default shape scripts folder in resources.
+    const std::map<std::string, std::string> m_defaultScripts; ///< The default functions loaded from the resources folder (function name and fields).
+
+    std::map<std::string, std::string> m_currentScripts; ///< The currently loaded functions loaded from the resources folder (function name and fields).
+
     std::unique_ptr<chaiscript::ChaiScript> m_engine;
     chaiscript::ChaiScript::State m_state;
 };
@@ -144,6 +162,16 @@ ShapeMutationRules::~ShapeMutationRules()
 void ShapeMutationRules::setupScripts(geometrize::ShapeMutator& mutator, const std::map<std::string, std::string>& functions)
 {
     d->setupScripts(mutator, functions);
+}
+
+void ShapeMutationRules::resetScriptsToDefaults(geometrize::ShapeMutator& mutator)
+{
+    d->resetScriptsToDefaults(mutator);
+}
+
+void ShapeMutationRules::resetEngineToDefaults(geometrize::ShapeMutator& mutator)
+{
+    d->resetEngineToDefaults(mutator);
 }
 
 }

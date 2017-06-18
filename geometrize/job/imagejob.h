@@ -9,6 +9,8 @@
 #include "geometrize/bitmap/bitmap.h"
 #include "geometrize/shaperesult.h"
 #include "geometrize/runner/imagerunneroptions.h"
+#include "geometrize/shape/shapemutator.h"
+
 #include "preferences/imagejobpreferences.h"
 
 namespace geometrize
@@ -46,6 +48,12 @@ public:
     Bitmap& getCurrent();
 
     /**
+     * @brief getShapeMutator Gets the current shape mutator.
+     * @return The current shape mutator.
+     */
+    ShapeMutator& getShapeMutator();
+
+    /**
      * @brief getDisplayName Gets the display name of the image job.
      * @return The display name of the image job.
      */
@@ -79,16 +87,6 @@ public:
       * @param preferences The preferences to set.
       */
      void setPreferences(preferences::ImageJobPreferences preferences);
-
-     /**
-      * @brief activateLibraryShapeMutation Uses the Geometrize library's built-in implementation for mutating shapes.
-      */
-     void activateLibraryShapeMutation();
-
-     /**
-      * @brief activateScriptedShapeMutation Uses the custom scripted implementation for mutating shapes.
-      */
-     void activateScriptedShapeMutation();
 
 signals:
      /**

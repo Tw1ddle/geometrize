@@ -44,6 +44,8 @@ SOURCES += commandlineparser.cpp \
     dialog/imagejobpixmapgraphicsitem.cpp \
     dialog/imagejobscene.cpp \
     dialog/imagejobwindow.cpp \
+    dialog/languageselectwidget.cpp \
+    dialog/languageselectlist.cpp \
     dialog/launchwindow.cpp \
     dialog/licensedialog.cpp \
     dialog/openurldialog.cpp \
@@ -81,9 +83,7 @@ SOURCES += commandlineparser.cpp \
     script/scriptrunner.cpp \
     script/scriptutil.cpp \
     script/shapemutationrules.cpp \
-    serialization/serializationutil.cpp \
-    dialog/languageselectwidget.cpp \
-    dialog/languageselectlist.cpp
+    serialization/serializationutil.cpp
 
 HEADERS += commandlineparser.h \
     constants.h \
@@ -116,6 +116,8 @@ HEADERS += commandlineparser.h \
     dialog/imagejobpixmapgraphicsitem.h \
     dialog/imagejobscene.h \
     dialog/imagejobwindow.h \
+    dialog/languageselectlist.h \
+    dialog/languageselectwidget.h \
     dialog/launchwindow.h \
     dialog/licensedialog.h \
     dialog/openurldialog.h \
@@ -158,9 +160,7 @@ HEADERS += commandlineparser.h \
     serialization/imagejobpreferencesdata.h \
     serialization/serializationutil.h \
     serialization/stringvectordata.h \
-    serialization/templatemetadata.h \
-    dialog/languageselectwidget.h \
-    dialog/languageselectlist.h
+    serialization/templatemetadata.h
 
 FORMS += dialog/aboutdialog.ui \
     dialog/commandlineedit.ui \

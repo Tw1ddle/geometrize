@@ -35,6 +35,7 @@
 #include "exporter/webglanimationexporter.h"
 #include "image/imageloader.h"
 #include "job/imagejob.h"
+#include "script/shapemutationrules.h"
 #include "strings.h"
 #include "util.h"
 
@@ -282,10 +283,42 @@ public:
         m_job->getPreferences().setScriptModeEnabled(enabled);
 
         if(enabled) {
-            m_job->activateScriptedShapeMutation();
+            activateScriptedShapeMutation();
         } else {
-            m_job->activateLibraryShapeMutation();
+            activateLibraryShapeMutation();
         }
+    }
+
+    // TODO
+    // Default to the Geometrize library default/hardcoded implementation
+    //activateLibraryShapeMutation(); ??
+
+    /**
+     * @brief activateLibraryShapeMutation Uses the Geometrize library's built-in implementation for mutating shapes.
+     */
+    void activateLibraryShapeMutation()
+    {
+        m_job->getShapeMutator().setDefaults();
+    }
+
+    /**
+     * @brief activateScriptedShapeMutation Uses the custom scripted implementation for mutating shapes.
+     */
+    void activateScriptedShapeMutation()
+    {
+        m_mutationRules.setupScripts(m_job->getShapeMutator(), {});
+    }
+
+    /**
+     * @brief setScriptFunction Adds the given script function to the engine.
+     * @param name The name of the function to add.
+     * @param code The code that defines the function.
+     */
+    void setScriptFunction(const std::string& name, const std::string& code)
+    {
+        std::map<std::string, std::string> m;
+        m[name] = code;
+        m_mutationRules.setupScripts(m_job->getShapeMutator(), m);
     }
 
     void resetShapeScriptEngine()
@@ -404,9 +437,11 @@ private:
     std::unique_ptr<geometrize::Bitmap> m_initialJobImage;
     std::vector<geometrize::ShapeResult> m_shapes;
 
-    std::vector<std::pair<std::string, std::string>> m_scriptChanges; // Enqueued changes to Chaiscript global variables and code
+    std::vector<std::pair<std::string, std::string>> m_scriptChanges; ///> Enqueued changes to Chaiscript global variables and code
 
-    bool m_running; // Whether the model is running (automatically)
+    geometrize::ShapeMutationRules m_mutationRules; ///> The shape mutation rules for the image job.
+
+    bool m_running; ///> Whether the model is running (automatically)
 };
 
 ImageJobWindow::ImageJobWindow() :

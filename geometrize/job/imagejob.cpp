@@ -12,7 +12,6 @@
 
 #include "imagejobworker.h"
 #include "preferences/imagejobpreferences.h"
-#include "script/shapemutationrules.h"
 
 namespace geometrize
 {
@@ -57,6 +56,11 @@ public:
         return m_worker.getCurrent();
     }
 
+    ShapeMutator& getShapeMutator()
+    {
+        return m_worker.getRunner().getModel().getShapeMutator();
+    }
+
     std::string getDisplayName() const
     {
         return m_displayName;
@@ -97,16 +101,6 @@ public:
         m_preferences = preferences;
     }
 
-    void activateLibraryShapeMutation()
-    {
-        m_worker.getRunner().getModel().getShapeMutator().setDefaults();
-    }
-
-    void activateScriptedShapeMutation()
-    {
-        m_mutationRules.setupScripts(m_worker.getRunner().getModel().getShapeMutator(), {});
-    }
-
 private:
     static int getId()
     {
@@ -118,9 +112,6 @@ private:
     {
         qRegisterMetaType<std::vector<geometrize::ShapeResult>>();
         qRegisterMetaType<geometrize::ImageRunnerOptions>();
-
-        // Default to the Geometrize library default/hardcoded implementation
-        activateLibraryShapeMutation();
 
         m_worker.moveToThread(&m_workerThread);
         m_workerThread.start();
@@ -137,7 +128,6 @@ private:
     const int m_id; ///> A unique id for the image job.
     QThread m_workerThread; ///> Thread that the image job worker runs on.
     ImageJobWorker m_worker; ///> The image job worker.
-    ShapeMutationRules m_mutationRules; ///> The shape mutation rules for the image job.
 };
 
 ImageJob::ImageJob(const std::string& displayName, const std::string& jobUrl, Bitmap& bitmap) :  QObject(),
@@ -158,6 +148,11 @@ Bitmap& ImageJob::getTarget()
 Bitmap& ImageJob::getCurrent()
 {
     return d->getCurrent();
+}
+
+ShapeMutator& ImageJob::getShapeMutator()
+{
+    return d->getShapeMutator();
 }
 
 std::string ImageJob::getDisplayName() const
@@ -198,16 +193,6 @@ preferences::ImageJobPreferences& ImageJob::getPreferences()
 void ImageJob::setPreferences(const preferences::ImageJobPreferences preferences)
 {
     d->setPreferences(preferences);
-}
-
-void ImageJob::activateLibraryShapeMutation()
-{
-    d->activateLibraryShapeMutation();
-}
-
-void ImageJob::activateScriptedShapeMutation()
-{
-    d->activateScriptedShapeMutation();
 }
 
 }
