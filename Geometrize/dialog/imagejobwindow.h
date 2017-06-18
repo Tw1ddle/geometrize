@@ -21,8 +21,7 @@ namespace dialog
 {
 
 /**
- * @brief The ImageJobWindow class models the UI for an image job.
- * An image job contains all the data needed for geometrizing an image.
+ * @brief The ImageJobWindow class encapsulates the UI for manipiulating, running and viewing an image job that geometrizes an image.
  */
 class ImageJobWindow : public QMainWindow
 {
@@ -46,6 +45,7 @@ private slots:
     void on_runStopButton_clicked();
     void on_stepButton_clicked();
     void on_clearButton_clicked();
+
     void on_saveImageButton_clicked();
     void on_previewSVGButton_clicked();
     void on_saveSVGButton_clicked();
