@@ -5,11 +5,6 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = Geometrize
 TEMPLATE = app
 
-RC_ICONS = icon.ico
-RC_FILE = winicon.rc
-RESOURCES = resources/application_resources.qrc \
-    resources/translations.qrc
-
 msvc:QMAKE_CXXFLAGS += -bigobj
 
 INCLUDEPATH += $$PWD/../lib/cereal/include \
@@ -185,3 +180,13 @@ FORMS += dialog/aboutdialog.ui \
 
 # Generates localization TS files and then binary QM files, which it puts into the resources folder
 include($$PWD/../translations/translations.pri)
+
+RC_ICONS = icon.ico
+RC_FILE = winicon.rc
+RESOURCES += resources/icons.qrc \
+    resources/licenses.qrc \
+    resources/misc.qrc \
+    resources/scripts.qrc \
+    resources/settings.qrc \
+    resources/translations.qrc \
+    resources/web_templates.qrc

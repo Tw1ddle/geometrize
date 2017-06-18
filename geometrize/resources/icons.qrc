@@ -1,15 +1,11 @@
 <RCC>
     <qresource prefix="/">
-        <file>licenses/chaiscript_license.txt</file>
-        <file>licenses/fatcow_icon_license.txt</file>
-        <file>licenses/flowlayout_license.txt</file>
-        <file>licenses/geometrize_license.txt</file>
-        <file>licenses/qt_license.txt</file>
-        <file>licenses/template_assets_license.txt</file>
-        <file>licenses/cereal_license.txt</file>
-        <file>licenses/rapidjson_license.txt</file>
-        <file>licenses/rapidxml_license.txt</file>
-        <file>licenses/elidedlabel_license.txt</file>
+        <file>flags/de.png</file>
+        <file>flags/en.png</file>
+        <file>flags/fr.png</file>
+        <file>flags/it.png</file>
+        <file>flags/ja.png</file>
+        <file>flags/zh.png</file>
         <file>icons/add.png</file>
         <file>icons/application_osx_terminal.png</file>
         <file>icons/application_xp_terminal.png</file>
@@ -134,6 +130,16 @@
         <file>icons/filter_clear.png</file>
         <file>icons/filter_delete.png</file>
         <file>icons/filter_reapply.png</file>
+        <file>icons/flag_finish.png</file>
+        <file>icons/flag_flyaway_blue.png</file>
+        <file>icons/flag_flyaway_green.png</file>
+        <file>icons/flag_flyaway_orange.png</file>
+        <file>icons/flag_flyaway_pink.png</file>
+        <file>icons/flag_flyaway_pointed.png</file>
+        <file>icons/flag_flyaway_purple.png</file>
+        <file>icons/flag_flyaway_red.png</file>
+        <file>icons/flag_flyaway_yellow.png</file>
+        <file>icons/flag_green.png</file>
         <file>icons/flickr.png</file>
         <file>icons/folder.png</file>
         <file>icons/folder_add.png</file>
@@ -511,36 +517,5 @@
         <file>icons/zoom_selection.png</file>
         <file>logos/logo.png</file>
         <file>logos/logo_small.png</file>
-        <file>licenses/qt_google_analytics_license.txt</file>
-        <file>licenses/geometrize_library_license.txt</file>
-        <file>licenses/giflib_license.txt</file>
-        <file>licenses/qtgifimage_license.txt</file>
-        <file>web_templates/canvas_export.html</file>
-        <file>web_templates/webgl_export.html</file>
-        <file>scripts/mutateCircle.chai</file>
-        <file>scripts/mutateEllipse.chai</file>
-        <file>scripts/mutateLine.chai</file>
-        <file>scripts/mutatePolyline.chai</file>
-        <file>scripts/mutateQuadraticBezier.chai</file>
-        <file>scripts/mutateRectangle.chai</file>
-        <file>scripts/mutateRotatedEllipse.chai</file>
-        <file>scripts/mutateRotatedRectangle.chai</file>
-        <file>scripts/mutateTriangle.chai</file>
-        <file>scripts/setupCircle.chai</file>
-        <file>scripts/setupEllipse.chai</file>
-        <file>scripts/setupLine.chai</file>
-        <file>scripts/setupPolyline.chai</file>
-        <file>scripts/setupQuadraticBezier.chai</file>
-        <file>scripts/setupRectangle.chai</file>
-        <file>scripts/setupRotatedEllipse.chai</file>
-        <file>scripts/setupRotatedRectangle.chai</file>
-        <file>scripts/setupTriangle.chai</file>
-        <file>licenses/chaiscript_extras_license.txt</file>
-        <file>flags/de.png</file>
-        <file>flags/en.png</file>
-        <file>flags/fr.png</file>
-        <file>flags/it.png</file>
-        <file>flags/ja.png</file>
-        <file>flags/zh.png</file>
     </qresource>
 </RCC>

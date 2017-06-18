@@ -1,5 +1,6 @@
 #pragma once
 
+#include <map>
 #include <memory>
 
 namespace geometrize
@@ -22,20 +23,14 @@ public:
     ~ShapeMutationRules();
 
     /**
-     * @brief setupLibraryDefaults Sets the setup and mutation rules hardcoded in the Geometrize library on the given shape mutator.
-     * Far faster than other (scripted) mutation rules, but inflexible.
+     * @brief setupScripts Sets the default scripted setup and mutation rules on the given shape mutator.
      * @param mutator The shape mutator that will use the rules.
+     * @param functions A map of function identifiers to Chaiscript code that will be added to the engine.
+     * Note that this must only be called when the
      */
-    void setupLibraryDefaults(geometrize::ShapeMutator& mutator);
+    void setupScripts(geometrize::ShapeMutator& mutator, const std::map<std::string, std::string>& functions);
 
-    /**
-     * @brief setupScriptedDefaults Sets the default scripted setup and mutation rules on the given shape mutator.
-     * @param mutator The shape mutator that will use the rules.
-     */
-    void setupScriptedDefaults(geometrize::ShapeMutator& mutator);
-
-    // TODO?
-    //void setPermittedShapeRegion() {} // TODO
+    //void setPermittedShapeRegion() {}
     //void setIntProperty(const std::string& propName, int value);
 
     // TODO override the shape orientation, force it to be a particular angle?

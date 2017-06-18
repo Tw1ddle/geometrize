@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>web_templates/canvas_export.html</file>
+        <file>web_templates/webgl_export.html</file>
+    </qresource>
+</RCC>

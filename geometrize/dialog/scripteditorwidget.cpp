@@ -22,12 +22,12 @@ public:
         ui->scriptTextEdit->insertPlainText(QString::fromStdString(defaultCode));
 
         q->connect(ui->scriptTextEdit, &QPlainTextEdit::textChanged, [this]() {
-            emit signal_scriptCodeChanged(q, m_targetName, m_defaultCode);
+            q->signal_scriptCodeChanged(q, m_targetName, m_defaultCode); // TODO does this crash in release for some reason?
         });
 
         q->connect(ui->applyScriptButton, &QPushButton::clicked, [this]() {
             const std::string code{ui->scriptTextEdit->toPlainText().toStdString()};
-            emit signal_scriptCommitted(q, m_targetName, code);
+            q->signal_scriptCommitted(q, m_targetName, code);
         });
 
         q->connect(ui->resetToDefaultButton, &QPushButton::clicked, [this]() {

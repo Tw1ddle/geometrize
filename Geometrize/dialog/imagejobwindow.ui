@@ -1084,11 +1084,22 @@
    <widget class="QWidget" name="scriptingSettingsDockContents">
     <layout class="QVBoxLayout" name="verticalLayout_24">
      <item>
-      <widget class="QCheckBox" name="scriptingModeEnabledCheckbox">
-       <property name="text">
-        <string>Scripts Enabled</string>
-       </property>
-      </widget>
+      <layout class="QHBoxLayout" name="horizontalLayout_6">
+       <item>
+        <widget class="QCheckBox" name="scriptingModeEnabledCheckbox">
+         <property name="text">
+          <string>Scripts Enabled</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="resetShapeScriptEngineButton">
+         <property name="text">
+          <string>Reset Engine</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
      <item>
       <widget class="QGroupBox" name="scriptingEditBoxes">

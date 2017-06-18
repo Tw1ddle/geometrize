@@ -1,0 +1,22 @@
+<RCC>
+    <qresource prefix="/">
+        <file>scripts/shape_defaults/mutateCircle.chai</file>
+        <file>scripts/shape_defaults/mutateEllipse.chai</file>
+        <file>scripts/shape_defaults/mutateLine.chai</file>
+        <file>scripts/shape_defaults/mutatePolyline.chai</file>
+        <file>scripts/shape_defaults/mutateQuadraticBezier.chai</file>
+        <file>scripts/shape_defaults/mutateRectangle.chai</file>
+        <file>scripts/shape_defaults/mutateRotatedEllipse.chai</file>
+        <file>scripts/shape_defaults/mutateRotatedRectangle.chai</file>
+        <file>scripts/shape_defaults/mutateTriangle.chai</file>
+        <file>scripts/shape_defaults/setupCircle.chai</file>
+        <file>scripts/shape_defaults/setupEllipse.chai</file>
+        <file>scripts/shape_defaults/setupLine.chai</file>
+        <file>scripts/shape_defaults/setupPolyline.chai</file>
+        <file>scripts/shape_defaults/setupQuadraticBezier.chai</file>
+        <file>scripts/shape_defaults/setupRectangle.chai</file>
+        <file>scripts/shape_defaults/setupRotatedEllipse.chai</file>
+        <file>scripts/shape_defaults/setupRotatedRectangle.chai</file>
+        <file>scripts/shape_defaults/setupTriangle.chai</file>
+    </qresource>
+</RCC>

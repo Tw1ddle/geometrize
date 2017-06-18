@@ -288,6 +288,12 @@ public:
         }
     }
 
+    void resetShapeScriptEngine()
+    {
+        // TODO reset the text of all the script boxes back to defaults
+        //m_job->resetShapeScriptEngine();
+    }
+
     void setShapeOpacity(const int opacity)
     {
         ui->shapeOpacityValueLabel->setText(QString::number(opacity));
@@ -546,6 +552,11 @@ void ImageJobWindow::on_usesPolylines_clicked(bool checked)
 void ImageJobWindow::on_scriptingModeEnabledCheckbox_clicked(bool checked)
 {
     d->setScriptingModeEnabled(checked);
+}
+
+void ImageJobWindow::on_resetShapeScriptEngineButton_clicked()
+{
+   d->resetShapeScriptEngine();
 }
 
 void ImageJobWindow::on_shapeOpacitySlider_valueChanged(int value)

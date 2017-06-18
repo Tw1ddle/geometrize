@@ -99,12 +99,12 @@ public:
 
     void activateLibraryShapeMutation()
     {
-        m_mutationRules.setupLibraryDefaults(m_worker.getRunner().getModel().getShapeMutator());
+        m_worker.getRunner().getModel().getShapeMutator().setDefaults();
     }
 
     void activateScriptedShapeMutation()
     {
-        m_mutationRules.setupScriptedDefaults(m_worker.getRunner().getModel().getShapeMutator());
+        m_mutationRules.setupScripts(m_worker.getRunner().getModel().getShapeMutator(), {});
     }
 
 private:
@@ -120,7 +120,7 @@ private:
         qRegisterMetaType<geometrize::ImageRunnerOptions>();
 
         // Default to the Geometrize library default/hardcoded implementation
-        m_mutationRules.setupLibraryDefaults(m_worker.getRunner().getModel().getShapeMutator());
+        activateLibraryShapeMutation();
 
         m_worker.moveToThread(&m_workerThread);
         m_workerThread.start();
