@@ -181,12 +181,13 @@ FORMS += dialog/aboutdialog.ui \
 # Generates localization TS files and then binary QM files, which it puts into the resources folder
 include($$PWD/../translations/translations.pri)
 
-RC_ICONS = icon.ico
-RC_FILE = winicon.rc
-RESOURCES += resources/icons.qrc \
-    resources/licenses.qrc \
-    resources/misc.qrc \
-    resources/scripts.qrc \
-    resources/settings.qrc \
-    resources/translations.qrc \
-    resources/web_templates.qrc
+RESOURCES += ../resources/icons.qrc \
+    ../resources/licenses.qrc \
+    ../resources/misc.qrc \
+    ../resources/scripts.qrc \
+    ../resources/settings.qrc \
+    ../resources/translations.qrc \
+    ../resources/web_templates.qrc
+
+RC_ICONS = ../app_icons/icon.ico
+RC_FILE = ../app_icons/winicon.rc
