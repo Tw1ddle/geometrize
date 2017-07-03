@@ -23,7 +23,6 @@ void runScript(const std::string& code, chaiscript::ChaiScript& runner, const ge
 
     // TODO possibly get rid of message boxes
     try {
-        //runner.parse(code); // Note parsing first to check the syntax is valid
         runner.eval(code);
     } catch (const std::string& s) {
         QMessageBox::warning(nullptr, errorTitle, errorPreamble.arg(QString::fromStdString(s)));

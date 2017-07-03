@@ -104,10 +104,13 @@ std::vector<std::string> getScriptsForPath(const std::string& dirPath)
 
 void openJob(const std::string& url, const bool addToRecents)
 {
-    const QUrl qUrl(QString::fromStdString(url));
-    if(!qUrl.isValid()) {
-        assert(0 && "Failed to validate url");
-        return;
+    // Horrible workaround because QUrl doesn't handle Qt resource file prefixes well
+    // See: https://forum.qt.io/topic/1494/universal-solution-for-resource-prefix
+    // Note this breaks QUrl validation too (QUrl isValid chokes when given this modified url)
+    QString qUrl{QString::fromStdString(url)};
+    const QString strToReplace{":/"};
+    if(qUrl.startsWith(strToReplace)) {
+        qUrl.replace(0, strToReplace.size(), "qrc:///");
     }
 
     geometrize::util::openJobs(QStringList(QString::fromStdString(url)), addToRecents);

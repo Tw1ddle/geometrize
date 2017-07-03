@@ -92,11 +92,13 @@ public:
             openTemplate();
         });
 
-        QAction openInDefaultViewer(tr("Reveal in explorer"));
-        itemContextMenu.addAction(&openInDefaultViewer);
-        connect(&openInDefaultViewer, &QAction::triggered, [this]() {
-            revealTemplateInExplorer();
-        });
+        if(!m_templateFolder.startsWith(":")) { // Only if it's not an embedded resource
+            QAction openInDefaultViewer(tr("Reveal in explorer"));
+            itemContextMenu.addAction(&openInDefaultViewer);
+            connect(&openInDefaultViewer, &QAction::triggered, [this]() {
+                revealTemplateInExplorer();
+            });
+        }
 
         itemContextMenu.exec(e->globalPos());
     }
