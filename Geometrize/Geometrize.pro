@@ -167,6 +167,7 @@ FORMS += dialog/aboutdialog.ui \
     dialog/creditsdialog.ui \
     dialog/globalpreferencesdialog.ui \
     dialog/imagejobwindow.ui \
+    dialog/languageselectwidget.ui \
     dialog/launchwindow.ui \
     dialog/licensedialog.ui \
     dialog/openurldialog.ui \
@@ -175,8 +176,7 @@ FORMS += dialog/aboutdialog.ui \
     dialog/scriptconsole.ui \
     dialog/scripteditorwidget.ui \
     dialog/svgpreviewdialog.ui \
-    dialog/templatebutton.ui \
-    dialog/languageselectwidget.ui
+    dialog/templatebutton.ui
 
 # Generates localization TS files and then binary QM files, which it puts into the resources folder
 include($$PWD/../translations/translations.pri)
