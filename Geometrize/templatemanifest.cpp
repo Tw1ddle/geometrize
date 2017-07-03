@@ -1,10 +1,13 @@
 #include "templatemanifest.h"
 
-#include <assert.h>
-#include <fstream>
+#include <cassert>
+#include <istream>
 
-#include "serialization/templatemetadata.h"
 #include "cereal/archives/json.hpp"
+#include "serialization/streamview.h"
+#include "serialization/templatemetadata.h"
+
+#include "util.h"
 
 namespace geometrize
 {
@@ -14,7 +17,9 @@ class TemplateManifest::TemplateManifestImpl
 public:
     TemplateManifestImpl(const std::string& manifestFilepath)
     {
-        std::ifstream input(manifestFilepath);
+        // Templates can be bundled into Qt resources, so we use a streamview that loads the file contents into a byte array first
+        serialization::StreamView streamView(manifestFilepath);
+        std::istream input(&streamView);
         try {
             m_data.load(cereal::JSONInputArchive(input));
         } catch(...) {

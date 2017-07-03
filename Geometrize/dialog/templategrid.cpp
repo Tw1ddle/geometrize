@@ -1,6 +1,5 @@
 #include "templategrid.h"
 
-#include <QFileSystemWatcher>
 #include <QString>
 
 #include "script/chaiscriptcreator.h"
@@ -26,13 +25,10 @@ public:
 
     void loadTemplates()
     {
-        const std::string basePath{geometrize::searchpaths::getApplicationDirectoryPath()};
         const std::vector<std::string> paths{geometrize::searchpaths::getTemplateSearchPaths()};
-        for(const std::string& path : paths) {
-            const QString fullPath{QString::fromStdString(basePath + path)};
-            m_fileWatch.addPath(fullPath);
 
-            const std::vector<std::string> templateFolders{util::getTemplateFoldersForPath(fullPath.toStdString())};
+        for(const std::string& path : paths) {
+            const std::vector<std::string> templateFolders{util::getTemplateFoldersForPath(path)};
 
             for(const std::string& folder : templateFolders) {
                 const bool result{addTemplateItem(QString::fromStdString(folder))};
@@ -84,7 +80,6 @@ private:
 
     TemplateGrid* q;
     layout::FlowLayout* m_layout;
-    QFileSystemWatcher m_fileWatch;
     std::unique_ptr<chaiscript::ChaiScript> m_templateLoader;
     std::vector<TemplateButton*> m_buttons;
 };

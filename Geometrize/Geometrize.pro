@@ -83,7 +83,8 @@ SOURCES += commandlineparser.cpp \
     script/scriptrunner.cpp \
     script/scriptutil.cpp \
     script/shapemutationrules.cpp \
-    serialization/serializationutil.cpp
+    serialization/serializationutil.cpp \
+    serialization/streamview.cpp
 
 HEADERS += commandlineparser.h \
     constants.h \
@@ -100,7 +101,6 @@ HEADERS += commandlineparser.h \
     templatemanifest.h \
     util.h \
     versioninfo.h \
-    winversioninfo.h \
     analytics/analytics.h \
     analytics/analyticswrapper.h \
     common/sharedapp.h \
@@ -160,7 +160,8 @@ HEADERS += commandlineparser.h \
     serialization/imagejobpreferencesdata.h \
     serialization/serializationutil.h \
     serialization/stringvectordata.h \
-    serialization/templatemetadata.h
+    serialization/templatemetadata.h \
+    serialization/streamview.h
 
 FORMS += dialog/aboutdialog.ui \
     dialog/commandlineedit.ui \
@@ -186,8 +187,9 @@ RESOURCES += ../resources/icons.qrc \
     ../resources/misc.qrc \
     ../resources/scripts.qrc \
     ../resources/settings.qrc \
+    ../resources/templates.qrc \
     ../resources/translations.qrc \
-    ../resources/web_templates.qrc
+    ../resources/web_export.qrc
 
 RC_ICONS = ../app_icons/icon.ico
 RC_FILE = ../app_icons/winicon.rc

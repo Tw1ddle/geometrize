@@ -13,3 +13,6 @@ url=https://github.com/Tw1ddle/geometrize-lib
 [submodule "lib/qtgifimage"]
 	path = lib/qtgifimage
 	url = https://github.com/Tw1ddle/QtGifImage
+[submodule "resources/templates"]
+	path = resources/templates
+	url = https://github.com/Tw1ddle/geometrize-templates

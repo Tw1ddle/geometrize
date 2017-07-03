@@ -15,14 +15,12 @@ std::string getApplicationDirectoryPath()
 
 std::vector<std::string> getScriptSearchPaths()
 {
-    // TODO some paths for debug builds, some for final release?
-
     return { "/../../scripts", "/scripts" };
 }
 
 std::vector<std::string> getTemplateSearchPaths()
 {
-    return { "/../../templates", "/templates" };
+    return { ":/templates/templates", "/../../templates", "/templates" };
 }
 
 }
