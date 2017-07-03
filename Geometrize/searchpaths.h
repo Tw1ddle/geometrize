@@ -16,13 +16,15 @@ namespace searchpaths
 std::string getApplicationDirectoryPath();
 
 /**
- * @brief getScriptSearchPaths Gets the directory paths (relative to the application executable directory) that the program will search for scripts.
+ * @brief getScriptSearchPaths Gets the directory paths that the program will search for scripts.
+ * These may include resources (":/resourcedir/"), relative ("../../templates"), or absolute directory paths ("C:/Users/admin/Desktop").
  * @return The vector of script search paths.
  */
 std::vector<std::string> getScriptSearchPaths();
 
 /**
- * @brief getTemplateSearchpaths Gets the directory paths (relative to the application executable directory) that the program will search for project file templates.
+ * @brief getTemplateSearchpaths Gets the directory paths that the program will search for project file templates.
+ * These may include resources (":/resourcedir/"), relative ("../../templates"), or absolute directory paths ("C:/Users/admin/Desktop").
  * @return The vector of template search paths.
  */
 std::vector<std::string> getTemplateSearchPaths();
