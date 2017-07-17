@@ -14,10 +14,22 @@ namespace script
 {
 
 /**
- * @brief createDefaultBindings Creates the Chaiscript to C++ bindings.
+ * @brief createDefaultBindings Creates the default Chaiscript to C++ bindings.
  * @return A shared pointer to a module encapsulating the bindings.
  */
 std::shared_ptr<chaiscript::Module> createDefaultBindings();
+
+/**
+ * @brief createLaunchWindowBindings Creates the Chaiscript to C++ bindings for the Geometrize launch window.
+ * @return A shared pointer to a module encapsulating the bindings.
+ */
+std::shared_ptr<chaiscript::Module> createLaunchWindowBindings();
+
+/**
+ * @brief createImageJobBindings Creates the Chaiscript to C++ bindings for Geometrize image job windows.
+ * @return A shared pointer to a module encapsulating the bindings.
+ */
+std::shared_ptr<chaiscript::Module> createImageJobBindings();
 
 /**
  * @brief createShapeMutationBindings Creates the Chaiscript to C++ bindings relating to Geometrize shape setup and mutation.

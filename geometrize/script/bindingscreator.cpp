@@ -82,6 +82,24 @@ std::shared_ptr<chaiscript::Module> createDefaultBindings()
     return module;
 }
 
+std::shared_ptr<chaiscript::Module> createLaunchWindowBindings()
+{
+    auto module{std::make_shared<chaiscript::Module>()};
+
+
+
+    return module;
+}
+
+std::shared_ptr<chaiscript::Module> createImageJobBindings()
+{
+    auto module{std::make_shared<chaiscript::Module>()};
+
+    // TODO check: https://github.com/ChaiScript/ChaiScript/issues/128#issuecomment-52424741
+
+    return module;
+}
+
 std::shared_ptr<chaiscript::Module> createShapeMutationBindings()
 {
     auto module{std::make_shared<chaiscript::Module>()};
