@@ -7,6 +7,8 @@
 
 #include "strings.h"
 #include "job/jobutil.h"
+#include "script/scriptrunner.h"
+#include "util.h"
 
 namespace geometrize
 {
@@ -36,7 +38,6 @@ CommandLineResult setupCommandLineParser(QCommandLineParser& parser, const QStri
     parser.addVersionOption();
 
     parser.addOptions({
-        {{"e", options::eval}, QCoreApplication::translate("cli", "Evaluates the ChaiScript input provided directly.")},
         {{"s", options::script}, QCoreApplication::translate("cli", "Executes the ChaiScript script file at the given path or URL.")}
     });
 
@@ -51,11 +52,13 @@ CommandLineResult setupCommandLineParser(QCommandLineParser& parser, const QStri
 
 CommandLineResult handleArgumentPairs(QCommandLineParser& parser)
 {
-    if(parser.isSet(options::eval)) {
-        //parser.value()
-    }
     if(parser.isSet(options::script)) {
-        // TODO
+        //Required arg is just the infile for the script, then whatever other args it needs
+        // TODO embedded scripts could have their own name?
+
+        // TODO attempt to read and execute script file, all other args will be injected as VAR=value globals
+        //geometrize::util::readFileAsString();
+        //geometrize::script::runScript();
     }
 
     return CommandLineResult(CommandLineError::CommandLineOk, "");

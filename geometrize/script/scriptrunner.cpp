@@ -35,7 +35,7 @@ void runScript(const std::string& code, chaiscript::ChaiScript& runner, const ge
 
 void runScript(const std::string& script, const ScriptOptions* const options)
 {
-    auto engine{createChaiScript()};
+    auto engine{createDefaultEngine()};
     runScript(script, *engine, options);
 }
 

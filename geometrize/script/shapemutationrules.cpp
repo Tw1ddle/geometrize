@@ -57,7 +57,7 @@ public:
 private:
     std::unique_ptr<chaiscript::ChaiScript> createEngine() const
     {
-        std::unique_ptr<chaiscript::ChaiScript> engine{script::createChaiScriptShapeMutator()};
+        std::unique_ptr<chaiscript::ChaiScript> engine{script::createShapeMutatorEngine()};
         return engine;
     }
 

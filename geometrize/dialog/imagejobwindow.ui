@@ -1109,6 +1109,18 @@
        <layout class="QVBoxLayout" name="verticalLayout_28"/>
       </widget>
      </item>
+     <item>
+      <widget class="QGroupBox" name="scriptingConsoleContainer">
+       <property name="title">
+        <string>Console</string>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout_14">
+        <item>
+         <widget class="geometrize::dialog::ScriptConsole" name="consoleWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
+     </item>
     </layout>
    </widget>
   </widget>
@@ -1135,6 +1147,12 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
+  <customwidget>
+   <class>geometrize::dialog::ScriptConsole</class>
+   <extends>QWidget</extends>
+   <header>dialog/scriptconsole.h</header>
+   <container>1</container>
+  </customwidget>
   <customwidget>
    <class>geometrize::dialog::ImageGraphicsView</class>
    <extends>QGraphicsView</extends>

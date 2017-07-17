@@ -12,6 +12,8 @@
 #include <QPixmap>
 #include <QSvgRenderer>
 
+#include "chaiscript/chaiscript.hpp"
+
 #include "geometrize/bitmap/bitmap.h"
 #include "geometrize/core.h"
 #include "geometrize/commonutil.h"
@@ -35,6 +37,7 @@
 #include "exporter/webglanimationexporter.h"
 #include "image/imageloader.h"
 #include "job/imagejob.h"
+#include "script/chaiscriptcreator.h"
 #include "script/shapemutationrules.h"
 #include "strings.h"
 #include "util.h"
@@ -48,7 +51,7 @@ namespace dialog
 class ImageJobWindow::ImageJobWindowImpl
 {
 public:
-    ImageJobWindowImpl(ImageJobWindow* pQ) : ui{std::make_unique<Ui::ImageJobWindow>()}, q{pQ}, m_job{nullptr}, m_running{false}, m_initialJobImage{nullptr}
+    ImageJobWindowImpl(ImageJobWindow* pQ) : ui{std::make_unique<Ui::ImageJobWindow>()}, q{pQ}, m_job{nullptr}, m_engine{script::createImageJobEngine()}, m_running{false}, m_initialJobImage{nullptr}
     {
         ui->setupUi(q);
 
@@ -61,6 +64,8 @@ public:
 
             m_scene.setTargetPixmapOpacity(value * 0.01f);
         });
+
+        ui->consoleWidget->setEngine(m_engine.get());
     }
     ImageJobWindowImpl operator=(const ImageJobWindowImpl&) = delete;
     ImageJobWindowImpl(const ImageJobWindowImpl&) = delete;
@@ -440,6 +445,8 @@ private:
     std::vector<std::pair<std::string, std::string>> m_scriptChanges; ///> Enqueued changes to Chaiscript global variables and code
 
     geometrize::ShapeMutationRules m_mutationRules; ///> The shape mutation rules for the image job.
+
+    std::unique_ptr<chaiscript::ChaiScript> m_engine;
 
     bool m_running; ///> Whether the model is running (automatically)
 };

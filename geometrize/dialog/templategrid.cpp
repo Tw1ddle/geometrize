@@ -18,7 +18,7 @@ namespace dialog
 class TemplateGrid::TemplateGridImpl
 {
 public:
-    TemplateGridImpl(TemplateGrid* pQ) : q{pQ}, m_layout{new layout::FlowLayout(24, 24, 24)}, m_templateLoader{geometrize::script::createChaiScript()}
+    TemplateGridImpl(TemplateGrid* pQ) : q{pQ}, m_layout{new layout::FlowLayout(24, 24, 24)}, m_templateLoader{geometrize::script::createDefaultEngine()}
     {
         q->setLayout(m_layout);
     }

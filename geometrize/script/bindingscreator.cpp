@@ -28,7 +28,7 @@ namespace geometrize
 namespace script
 {
 
-std::shared_ptr<chaiscript::Module> createBindings()
+std::shared_ptr<chaiscript::Module> createDefaultBindings()
 {
     auto module{std::make_shared<chaiscript::Module>()};
 

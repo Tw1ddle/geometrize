@@ -30,7 +30,7 @@ namespace dialog
 class LaunchWindow::LaunchWindowImpl
 {
 public:
-    LaunchWindowImpl(LaunchWindow* pQ) : ui{std::make_unique<Ui::LaunchWindow>()}, q{pQ}, m_engine{script::createChaiScript()}
+    LaunchWindowImpl(LaunchWindow* pQ) : ui{std::make_unique<Ui::LaunchWindow>()}, q{pQ}, m_engine{script::createLaunchWindowEngine()}
     {
         ui->setupUi(q);
         ui->consoleWidget->setVisible(false);
