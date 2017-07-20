@@ -2,7 +2,6 @@
 
 #include "chaiscript/chaiscript.hpp"
 
-#include "bindingswrapper.h"
 #include "chaiscriptmathextras.h"
 
 #include "geometrize/model.h"
@@ -16,11 +15,17 @@
 #include "geometrize/shape/rotatedrectangle.h"
 #include "geometrize/shape/triangle.h"
 
+#include "bindingswrapper.h"
+#include "dialog/launchwindow.h"
+#include "dialog/imagejobwindow.h"
+
 #define ADD_CONST_VAR(Class, Name) try { module->add(chaiscript::const_var(&Class::Name), #Name); } catch(...) { assert(0 && #Name); }
 #define ADD_FREE_FUN(Name) try { module->add(chaiscript::fun(&Name), #Name); } catch(...) { assert(0 && #Name); }
 #define ADD_MEMBER(Class, Name) try { module->add(chaiscript::fun(&Class::Name), #Name); } catch(...) { assert(0 && #Name); }
 #define ADD_CONST_REF_MEMBER(Class, Name) try { module->add(chaiscript::fun([](const Class &r) -> decltype(auto) { return (r.Name); }), #Name); } catch(...) { assert(0 && #Name); }
 #define ADD_TYPE(Class) try { module->add(chaiscript::user_type<Class>(), #Class); } catch(...) { assert(0 && #Class); }
+#define ADD_BASE_CLASS(Base, Derived) try { module->add(chaiscript::base_class<Base, Derived>()); } catch (...) { assert(0 && #Base); }
+#define ADD_CONSTRUCTOR(Class, Signature) try { module->add(chaiscript::constructor<Signature>(), #Class); } catch(...) { assert(0 && #Signature); }
 
 namespace geometrize
 {
@@ -84,15 +89,26 @@ std::shared_ptr<chaiscript::Module> createDefaultBindings()
 
 std::shared_ptr<chaiscript::Module> createLaunchWindowBindings()
 {
+    using namespace geometrize::dialog;
+
     auto module{std::make_shared<chaiscript::Module>()};
 
+    ADD_TYPE(LaunchWindow);
 
+    ADD_BASE_CLASS(QMainWindow, LaunchWindow);
+    ADD_BASE_CLASS(QWidget, LaunchWindow);
+
+    ADD_CONSTRUCTOR(LaunchWindow, LaunchWindow());
+
+    ADD_MEMBER(LaunchWindow, show);
 
     return module;
 }
 
 std::shared_ptr<chaiscript::Module> createImageJobBindings()
 {
+    using namespace geometrize::dialog;
+
     auto module{std::make_shared<chaiscript::Module>()};
 
     // TODO check: https://github.com/ChaiScript/ChaiScript/issues/128#issuecomment-52424741
