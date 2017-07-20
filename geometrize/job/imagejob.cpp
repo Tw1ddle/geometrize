@@ -1,6 +1,7 @@
 #include "imagejob.h"
 
 #include <atomic>
+#include <cassert>
 #include <vector>
 
 #include <QThread>
@@ -22,14 +23,14 @@ namespace job
 class ImageJob::ImageJobImpl
 {
 public:
-    ImageJobImpl(ImageJob* pQ, const std::string& displayName, const std::string& jobUrl, Bitmap& bitmap) :
-        q{pQ}, m_preferences{}, m_displayName{displayName}, m_jobUrl{jobUrl}, m_id{getId()}, m_worker{bitmap}
+    ImageJobImpl(ImageJob* pQ, const std::string& displayName, Bitmap& bitmap) :
+        q{pQ}, m_preferences{}, m_displayName{displayName}, m_id{getId()}, m_worker{bitmap}
     {
         init();
     }
 
-    ImageJobImpl(ImageJob* pQ, const std::string& displayName, const std::string& jobUrl, Bitmap& bitmap, const Bitmap& initial) :
-        q{pQ}, m_preferences{}, m_displayName{displayName}, m_jobUrl{jobUrl}, m_id{getId()}, m_worker{bitmap, initial}
+    ImageJobImpl(ImageJob* pQ, const std::string& displayName, Bitmap& bitmap, const Bitmap& initial) :
+        q{pQ}, m_preferences{}, m_displayName{displayName}, m_id{getId()}, m_worker{bitmap, initial}
     {
         init();
     }
@@ -64,11 +65,6 @@ public:
     std::string getDisplayName() const
     {
         return m_displayName;
-    }
-
-    std::string getJobUrl() const
-    {
-        return m_jobUrl;
     }
 
     int getJobId() const
@@ -124,19 +120,28 @@ private:
     ImageJob* q;
     preferences::ImageJobPreferences m_preferences; ///> Runtime configuration parameters for the runner.
     const std::string m_displayName; ///> The display name of the image job.
-    const std::string m_jobUrl; ///> The URL/original source of the data for the image job.
     const int m_id; ///> A unique id for the image job.
     QThread m_workerThread; ///> Thread that the image job worker runs on.
     ImageJobWorker m_worker; ///> The image job worker.
 };
 
-ImageJob::ImageJob(const std::string& displayName, const std::string& jobUrl, Bitmap& bitmap) :  QObject(),
-    d{std::make_unique<ImageJob::ImageJobImpl>(this, displayName, jobUrl, bitmap)}
+ImageJob::ImageJob(Bitmap& target) : QObject(),
+    d{std::make_unique<ImageJob::ImageJobImpl>(this, "", target)}
 {
 }
 
-ImageJob::ImageJob(const std::string& displayName, const std::string& jobUrl, Bitmap& bitmap, const Bitmap& initial) : QObject(),
-    d{std::make_unique<ImageJob::ImageJobImpl>(this, displayName, jobUrl, bitmap, initial)}
+ImageJob::ImageJob(Bitmap& target, Bitmap& background) : QObject(),
+    d{std::make_unique<ImageJob::ImageJobImpl>(this, "", target, background)}
+{
+}
+
+ImageJob::ImageJob(const std::string& displayName, Bitmap& bitmap) : QObject(),
+    d{std::make_unique<ImageJob::ImageJobImpl>(this, displayName, bitmap)}
+{
+}
+
+ImageJob::ImageJob(const std::string& displayName, Bitmap& bitmap, const Bitmap& initial) : QObject(),
+    d{std::make_unique<ImageJob::ImageJobImpl>(this, displayName, bitmap, initial)}
 {
 }
 
@@ -158,11 +163,6 @@ ShapeMutator& ImageJob::getShapeMutator()
 std::string ImageJob::getDisplayName() const
 {
     return d->getDisplayName();
-}
-
-std::string ImageJob::getJobUrl() const
-{
-    return d->getJobUrl();
 }
 
 int ImageJob::getJobId() const

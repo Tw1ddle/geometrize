@@ -68,7 +68,6 @@ SOURCES += commandlineparser.cpp \
     job/imagejob.cpp \
     job/imagejobcreator.cpp \
     job/imagejobworker.cpp \
-    job/joblookup.cpp \
     job/jobutil.cpp \
     layout/flowlayout.cpp \
     network/completionhandlers.cpp \
@@ -140,7 +139,6 @@ HEADERS += commandlineparser.h \
     job/imagejob.h \
     job/imagejobcreator.h \
     job/imagejobworker.h \
-    job/joblookup.h \
     job/jobutil.h \
     layout/flowlayout.h \
     network/completionhandlers.h \

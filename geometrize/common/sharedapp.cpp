@@ -1,7 +1,6 @@
 #include "common/sharedapp.h"
 
 #include "image/imagelookup.h"
-#include "job/joblookup.h"
 #include "preferences/globalpreferences.h"
 #include "recentitems.h"
 
@@ -35,11 +34,6 @@ public:
         return m_recentFiles;
     }
 
-    job::JobLookup& getJobLookup()
-    {
-        return m_jobLookup;
-    }
-
     image::ImageLookup& getImageLookup()
     {
         return m_imageLookup;
@@ -52,7 +46,6 @@ public:
 
 private:
     RecentItems m_recentFiles;
-    job::JobLookup m_jobLookup;
     image::ImageLookup m_imageLookup;
     preferences::GlobalPreferences m_globalPreferences;
 };
@@ -69,11 +62,6 @@ SharedApp& SharedApp::get()
 RecentItems& SharedApp::getRecentFiles()
 {
     return d->getRecentFiles();
-}
-
-job::JobLookup& SharedApp::getJobLookup()
-{
-    return d->getJobLookup();
 }
 
 image::ImageLookup& SharedApp::getImageLookup()

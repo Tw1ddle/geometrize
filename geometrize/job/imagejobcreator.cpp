@@ -1,25 +1,20 @@
 #include "imagejobcreator.h"
 
-#include <assert.h>
+#include <memory>
 
 #include <QImage>
+#include <QSize>
 
-#include "geometrize/core.h"
-
+#include "common/sharedapp.h"
 #include "dialog/imagejobwindow.h"
 #include "imagejob.h"
-#include "common/sharedapp.h"
-#include "joblookup.h"
 #include "image/imageloader.h"
 #include "preferences/globalpreferences.h"
 
-namespace geometrize
+namespace
 {
 
-namespace job
-{
-
-std::shared_ptr<ImageJob> createImageJob(const std::string& displayName, const QImage& image)
+geometrize::Bitmap imageToBitmap(const QImage& image)
 {
     QImage& im {image.copy()};
 
@@ -34,35 +29,20 @@ std::shared_ptr<ImageJob> createImageJob(const std::string& displayName, const Q
         }
     }
 
-    Bitmap bitmap(image::createBitmap(im));
-
-    std::shared_ptr<ImageJob> job{std::make_shared<ImageJob>(displayName, "", bitmap)};
-    if(!job) {
-        assert(0 && "Failed to create image job");
-        return nullptr;
-    }
-
-    common::app::SharedApp::get().getJobLookup().setImageJob(displayName, job);
-    return job;
+    return geometrize::image::createBitmap(im);
 }
 
-std::shared_ptr<ImageJob> createImageJob(const std::string& displayName, const std::string& jobUrl)
+}
+
+namespace geometrize
 {
-    const QImage image{image::loadImage(QString::fromStdString(jobUrl))};
-    if(image.isNull()) {
-        assert(0 && "Failed to load image when creating image job");
-        return nullptr;
-    }
-    return createImageJob(displayName, image);
-}
+
+namespace job
+{
 
 void createImageJobAndWindow(const std::string& displayName, const std::string& jobUrl)
 {
-    std::shared_ptr<ImageJob> job{createImageJob(displayName, jobUrl)};
-    if(!job) {
-        return;
-    }
-
+    std::shared_ptr<ImageJob> job{std::make_shared<ImageJob>(displayName, imageToBitmap(geometrize::image::loadImage(QString::fromStdString(jobUrl))))};
     dialog::ImageJobWindow* imageJobWindow{new dialog::ImageJobWindow()};
     imageJobWindow->setImageJob(job);
     imageJobWindow->show();
@@ -70,11 +50,7 @@ void createImageJobAndWindow(const std::string& displayName, const std::string& 
 
 void createImageJobAndWindow(const std::string& displayName, const QImage& image)
 {
-    std::shared_ptr<ImageJob> job{createImageJob(displayName, image)};
-    if(!job) {
-        return;
-    }
-
+    std::shared_ptr<ImageJob> job{std::make_shared<ImageJob>(displayName, imageToBitmap(image))};
     dialog::ImageJobWindow* imageJobWindow{new dialog::ImageJobWindow()};
     imageJobWindow->setImageJob(job);
     imageJobWindow->show();

@@ -1,5 +1,7 @@
 #include "script/bindingscreator.h"
 
+#include <string>
+
 #include "chaiscript/chaiscript.hpp"
 
 #include "chaiscriptmathextras.h"
@@ -17,7 +19,7 @@
 
 #include "bindingswrapper.h"
 #include "dialog/launchwindow.h"
-#include "dialog/imagejobwindow.h"
+#include "job/imagejob.h"
 
 #define ADD_CONST_VAR(Class, Name) try { module->add(chaiscript::const_var(&Class::Name), #Name); } catch(...) { assert(0 && #Name); }
 #define ADD_FREE_FUN(Name) try { module->add(chaiscript::fun(&Name), #Name); } catch(...) { assert(0 && #Name); }
@@ -107,11 +109,24 @@ std::shared_ptr<chaiscript::Module> createLaunchWindowBindings()
 
 std::shared_ptr<chaiscript::Module> createImageJobBindings()
 {
-    using namespace geometrize::dialog;
+    using namespace geometrize::job;
 
     auto module{std::make_shared<chaiscript::Module>()};
 
-    // TODO check: https://github.com/ChaiScript/ChaiScript/issues/128#issuecomment-52424741
+    ADD_TYPE(ImageJob);
+
+    //ADD_CONSTRUCTOR(ImageJob, ImageJob(const std::string&));
+
+    //Bitmap& getTarget();
+    //Bitmap& getCurrent();
+    //ShapeMutator& getShapeMutator();
+
+    ADD_MEMBER(ImageJob, getDisplayName);
+    ADD_MEMBER(ImageJob, getJobId);
+    ADD_MEMBER(ImageJob, stepModel);
+
+    //geometrize::preferences::ImageJobPreferences& getPreferences();
+    //void setPreferences(preferences::ImageJobPreferences preferences);
 
     return module;
 }

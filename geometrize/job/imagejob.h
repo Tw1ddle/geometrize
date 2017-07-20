@@ -1,9 +1,11 @@
 #pragma once
 
 #include <memory>
+#include <string>
 #include <vector>
 
 #include <QObject>
+#include <QImage>
 #include <QString>
 
 #include "geometrize/bitmap/bitmap.h"
@@ -29,8 +31,11 @@ class ImageJob : public QObject
 {
     Q_OBJECT
 public:
-    ImageJob(const std::string& displayName, const std::string& jobUrl, Bitmap& bitmap);
-    ImageJob(const std::string& displayName, const std::string& jobUrl, Bitmap& bitmap, const Bitmap& initial);
+    ImageJob(Bitmap& target);
+    ImageJob(Bitmap& target, Bitmap& background);
+    ImageJob(const std::string& displayName, Bitmap& bitmap);
+    ImageJob(const std::string& displayName, Bitmap& bitmap, const Bitmap& initial);
+
     ImageJob& operator=(const ImageJob&) = delete;
     ImageJob(const ImageJob&) = delete;
     ~ImageJob() = default;
@@ -58,12 +63,6 @@ public:
      * @return The display name of the image job.
      */
     std::string getDisplayName() const;
-
-    /**
-     * @brief getJobUrl Gets the URL of the image job.
-     * @return The URL of the image job.
-     */
-    std::string getJobUrl() const;
 
     /**
      * @brief getJobId Gets the unique id of the image job.

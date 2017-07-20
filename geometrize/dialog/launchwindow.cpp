@@ -119,7 +119,7 @@ private:
 
         geometrize::Bitmap logoBitmap{image::createBitmap(image)};
         geometrize::Bitmap initialBitmap{logoBitmap.getWidth(), logoBitmap.getHeight(), geometrize::rgba{0, 0, 0, 0}};
-        m_logoJob = std::make_unique<job::ImageJob>("Logo Image Job", "Logo (Resource File)", logoBitmap, initialBitmap);
+        m_logoJob = std::make_unique<job::ImageJob>("Logo Image Job", logoBitmap, initialBitmap);
         m_logoJob->getPreferences().setShapeTypes(geometrize::ShapeTypes::RECTANGLE);
         m_logoJob->getPreferences().setShapeAlpha(255U);
 

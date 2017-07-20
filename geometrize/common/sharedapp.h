@@ -10,11 +10,6 @@ class RecentItems;
 namespace geometrize
 {
 
-namespace job
-{
-class JobLookup;
-}
-
 namespace image
 {
 class ImageLookup;
@@ -51,12 +46,6 @@ public:
      * @return The recent files list.
      */
     RecentItems& getRecentFiles();
-
-    /**
-     * @brief getJobLookup Gets the shared job lookup object, for finding existing jobs.
-     * @return The job lookup object.
-     */
-    job::JobLookup& getJobLookup();
 
     /**
      * @brief getImageLookup Gets the shared image lookup object, for finding existing image objects.
