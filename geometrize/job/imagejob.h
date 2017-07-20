@@ -68,7 +68,7 @@ public:
      * @brief getJobId Gets the unique id of the image job.
      * @return The unique id of the image job.
      */
-     int getJobId() const;
+     std::size_t getJobId() const;
 
      /**
       * @brief stepModel Steps the internal model, typically adding a shape.

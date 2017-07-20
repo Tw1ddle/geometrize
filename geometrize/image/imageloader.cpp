@@ -41,9 +41,9 @@ QPixmap createPixmap(const Bitmap& data)
     return QPixmap::fromImage(createImage(data));
 }
 
-QImage loadImage(const QString& filePath)
+QImage loadImage(const std::string& filePath)
 {
-    const QImage image(filePath);
+    const QImage image(QString::fromStdString(filePath));
 
     if(image.isNull()) {
         assert(0 && "Bad image data");
@@ -53,7 +53,7 @@ QImage loadImage(const QString& filePath)
     return image.convertToFormat(QImage::Format_RGBA8888);
 }
 
-QPixmap loadPixmap(const QString& filePath)
+QPixmap loadPixmap(const std::string& filePath)
 {
     return QPixmap::fromImage(loadImage(filePath));
 }

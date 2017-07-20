@@ -42,7 +42,7 @@ namespace job
 
 void createImageJobAndWindow(const std::string& displayName, const std::string& jobUrl)
 {
-    std::shared_ptr<ImageJob> job{std::make_shared<ImageJob>(displayName, imageToBitmap(geometrize::image::loadImage(QString::fromStdString(jobUrl))))};
+    std::shared_ptr<ImageJob> job{std::make_shared<ImageJob>(displayName, imageToBitmap(geometrize::image::loadImage(jobUrl)))};
     dialog::ImageJobWindow* imageJobWindow{new dialog::ImageJobWindow()};
     imageJobWindow->setImageJob(job);
     imageJobWindow->show();

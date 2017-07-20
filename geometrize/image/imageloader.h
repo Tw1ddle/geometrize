@@ -1,8 +1,9 @@
 #pragma once
 
+#include <string>
+
 class QImage;
 class QPixmap;
-class QString;
 
 namespace geometrize
 {
@@ -41,14 +42,14 @@ QPixmap createPixmap(const Bitmap& data);
  * @param filePath The file path to the image.
  * @return The image loaded from the image file.
  */
-QImage loadImage(const QString& filePath);
+QImage loadImage(const std::string& filePath);
 
 /**
  * @brief loadPixmap Loads a pixmap from the image at the file path. Converts to RGBA8888 format.
  * @param filePath The file path to the pixmap.
  * @return The pixmap loaded from the image file.
  */
-QPixmap loadPixmap(const QString& filePath);
+QPixmap loadPixmap(const std::string& filePath);
 
 }
 

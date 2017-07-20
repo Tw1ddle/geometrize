@@ -163,7 +163,7 @@ public:
             return;
         }
 
-        geometrize::exporter::exportImage(m_job->getCurrent(), path.toStdString());
+        geometrize::exporter::exportBitmap(m_job->getCurrent(), path.toStdString());
     }
 
     void previewSVG() const

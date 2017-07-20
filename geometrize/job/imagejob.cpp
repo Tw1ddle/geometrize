@@ -67,7 +67,7 @@ public:
         return m_displayName;
     }
 
-    int getJobId() const
+    std::size_t getJobId() const
     {
         return m_id;
     }
@@ -98,9 +98,9 @@ public:
     }
 
 private:
-    static int getId()
+    static std::size_t getId()
     {
-        static std::atomic_int id = 0;
+        static std::atomic<std::size_t> id = 0;
         return id++;
     }
 
@@ -120,7 +120,7 @@ private:
     ImageJob* q;
     preferences::ImageJobPreferences m_preferences; ///> Runtime configuration parameters for the runner.
     const std::string m_displayName; ///> The display name of the image job.
-    const int m_id; ///> A unique id for the image job.
+    const std::size_t m_id; ///> A unique id for the image job.
     QThread m_workerThread; ///> Thread that the image job worker runs on.
     ImageJobWorker m_worker; ///> The image job worker.
 };
@@ -165,7 +165,7 @@ std::string ImageJob::getDisplayName() const
     return d->getDisplayName();
 }
 
-int ImageJob::getJobId() const
+std::size_t ImageJob::getJobId() const
 {
     return d->getJobId();
 }

@@ -51,7 +51,9 @@ std::unique_ptr<chaiscript::ChaiScript> createImageJobEngine()
     std::unique_ptr<chaiscript::ChaiScript> chai = std::make_unique<chaiscript::ChaiScript>();
 
     chai->add(createDefaultBindings());
+    chai->add(createImageBindings());
     chai->add(createImageJobBindings());
+    chai->add(createImageExportBindings());
 
     addPrintRedirect(chai);
 

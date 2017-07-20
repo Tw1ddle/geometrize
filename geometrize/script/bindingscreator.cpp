@@ -2,10 +2,13 @@
 
 #include <string>
 
+#include <QImage>
+
 #include "chaiscript/chaiscript.hpp"
 
 #include "chaiscriptmathextras.h"
 
+#include "geometrize/bitmap/bitmap.h"
 #include "geometrize/model.h"
 #include "geometrize/shape/circle.h"
 #include "geometrize/shape/ellipse.h"
@@ -19,7 +22,9 @@
 
 #include "bindingswrapper.h"
 #include "dialog/launchwindow.h"
+#include "exporter/imageexporter.h"
 #include "job/imagejob.h"
+#include "image/imageloader.h"
 
 #define ADD_CONST_VAR(Class, Name) try { module->add(chaiscript::const_var(&Class::Name), #Name); } catch(...) { assert(0 && #Name); }
 #define ADD_FREE_FUN(Name) try { module->add(chaiscript::fun(&Name), #Name); } catch(...) { assert(0 && #Name); }
@@ -103,6 +108,27 @@ std::shared_ptr<chaiscript::Module> createLaunchWindowBindings()
     ADD_CONSTRUCTOR(LaunchWindow, LaunchWindow());
 
     ADD_MEMBER(LaunchWindow, show);
+    ADD_MEMBER(LaunchWindow, hide);
+
+    return module;
+}
+
+std::shared_ptr<chaiscript::Module> createImageBindings()
+{
+    using namespace geometrize::image;
+
+    auto module{std::make_shared<chaiscript::Module>()};
+
+    ADD_TYPE(QImage);
+    ADD_MEMBER(QImage, byteCount);
+    ADD_MEMBER(QImage, isNull);
+    ADD_MEMBER(QImage, width);
+    ADD_MEMBER(QImage, height);
+
+    ADD_FREE_FUN(loadImage);
+    ADD_FREE_FUN(createBitmap);
+
+    ADD_TYPE(Bitmap);
 
     return module;
 }
@@ -115,18 +141,32 @@ std::shared_ptr<chaiscript::Module> createImageJobBindings()
 
     ADD_TYPE(ImageJob);
 
-    //ADD_CONSTRUCTOR(ImageJob, ImageJob(const std::string&));
-
-    //Bitmap& getTarget();
-    //Bitmap& getCurrent();
-    //ShapeMutator& getShapeMutator();
+    ADD_CONSTRUCTOR(ImageJob, ImageJob(Bitmap&));
+    ADD_CONSTRUCTOR(ImageJob, ImageJob(Bitmap&, Bitmap&));
 
     ADD_MEMBER(ImageJob, getDisplayName);
     ADD_MEMBER(ImageJob, getJobId);
     ADD_MEMBER(ImageJob, stepModel);
 
+    ADD_MEMBER(ImageJob, getTarget);
+    ADD_MEMBER(ImageJob, getCurrent);
+
+    //ShapeMutator& getShapeMutator();
+
     //geometrize::preferences::ImageJobPreferences& getPreferences();
     //void setPreferences(preferences::ImageJobPreferences preferences);
+
+    return module;
+}
+
+std::shared_ptr<chaiscript::Module> createImageExportBindings()
+{
+    using namespace geometrize::exporter;
+
+    auto module{std::make_shared<chaiscript::Module>()};
+
+    ADD_FREE_FUN(exportBitmap);
+    ADD_FREE_FUN(exportImage);
 
     return module;
 }

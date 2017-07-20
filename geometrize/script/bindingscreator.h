@@ -26,10 +26,22 @@ std::shared_ptr<chaiscript::Module> createDefaultBindings();
 std::shared_ptr<chaiscript::Module> createLaunchWindowBindings();
 
 /**
+ * @brief createImageBindings Creates the Chaiscript to C++ bindings for image manipulation.
+ * @return A shared pointer to a module encapsulating the bindings.
+ */
+std::shared_ptr<chaiscript::Module> createImageBindings();
+
+/**
  * @brief createImageJobBindings Creates the Chaiscript to C++ bindings for Geometrize image jobs.
  * @return A shared pointer to a module encapsulating the bindings.
  */
 std::shared_ptr<chaiscript::Module> createImageJobBindings();
+
+/**
+ * @brief createImageExportBindings Creates the Chaiscript to C++ bindings for saving images.
+ * @return A shared pointer to a module encapsulating the bindings.
+ */
+std::shared_ptr<chaiscript::Module> createImageExportBindings();
 
 /**
  * @brief createShapeMutationBindings Creates the Chaiscript to C++ bindings relating to Geometrize shape setup and mutation.
