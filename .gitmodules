@@ -19,3 +19,6 @@ url=https://github.com/Tw1ddle/geometrize-lib
 [submodule "resources/web_export"]
 	path = resources/web_export
 	url = https://github.com/Tw1ddle/geometrize-web-export
+[submodule "resources/scripts"]
+	path = resources/scripts
+	url = https://github.com/Tw1ddle/geometrize-scripts
