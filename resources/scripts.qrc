@@ -1,22 +1,22 @@
 <RCC>
     <qresource prefix="/">
-        <file>scripts/shape_defaults/mutateCircle.chai</file>
-        <file>scripts/shape_defaults/mutateEllipse.chai</file>
-        <file>scripts/shape_defaults/mutateLine.chai</file>
-        <file>scripts/shape_defaults/mutatePolyline.chai</file>
-        <file>scripts/shape_defaults/mutateQuadraticBezier.chai</file>
-        <file>scripts/shape_defaults/mutateRectangle.chai</file>
-        <file>scripts/shape_defaults/mutateRotatedEllipse.chai</file>
-        <file>scripts/shape_defaults/mutateRotatedRectangle.chai</file>
-        <file>scripts/shape_defaults/mutateTriangle.chai</file>
-        <file>scripts/shape_defaults/setupCircle.chai</file>
-        <file>scripts/shape_defaults/setupEllipse.chai</file>
-        <file>scripts/shape_defaults/setupLine.chai</file>
-        <file>scripts/shape_defaults/setupPolyline.chai</file>
-        <file>scripts/shape_defaults/setupQuadraticBezier.chai</file>
-        <file>scripts/shape_defaults/setupRectangle.chai</file>
-        <file>scripts/shape_defaults/setupRotatedEllipse.chai</file>
-        <file>scripts/shape_defaults/setupRotatedRectangle.chai</file>
-        <file>scripts/shape_defaults/setupTriangle.chai</file>
+        <file>scripts/scripts/default_shape_mutators/mutateCircle.chai</file>
+        <file>scripts/scripts/default_shape_mutators/mutateEllipse.chai</file>
+        <file>scripts/scripts/default_shape_mutators/mutateLine.chai</file>
+        <file>scripts/scripts/default_shape_mutators/mutatePolyline.chai</file>
+        <file>scripts/scripts/default_shape_mutators/mutateQuadraticBezier.chai</file>
+        <file>scripts/scripts/default_shape_mutators/mutateRectangle.chai</file>
+        <file>scripts/scripts/default_shape_mutators/mutateRotatedEllipse.chai</file>
+        <file>scripts/scripts/default_shape_mutators/mutateRotatedRectangle.chai</file>
+        <file>scripts/scripts/default_shape_mutators/mutateTriangle.chai</file>
+        <file>scripts/scripts/default_shape_mutators/setupCircle.chai</file>
+        <file>scripts/scripts/default_shape_mutators/setupEllipse.chai</file>
+        <file>scripts/scripts/default_shape_mutators/setupLine.chai</file>
+        <file>scripts/scripts/default_shape_mutators/setupPolyline.chai</file>
+        <file>scripts/scripts/default_shape_mutators/setupQuadraticBezier.chai</file>
+        <file>scripts/scripts/default_shape_mutators/setupRectangle.chai</file>
+        <file>scripts/scripts/default_shape_mutators/setupRotatedEllipse.chai</file>
+        <file>scripts/scripts/default_shape_mutators/setupRotatedRectangle.chai</file>
+        <file>scripts/scripts/default_shape_mutators/setupTriangle.chai</file>
     </qresource>
 </RCC>
