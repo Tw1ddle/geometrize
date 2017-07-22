@@ -25,6 +25,7 @@
 #include "exporter/imageexporter.h"
 #include "job/imagejob.h"
 #include "image/imageloader.h"
+#include "scriptutil.h"
 
 #define ADD_CONST_VAR(Class, Name) try { module->add(chaiscript::const_var(&Class::Name), #Name); } catch(...) { assert(0 && #Name); }
 #define ADD_FREE_FUN(Name) try { module->add(chaiscript::fun(&Name), #Name); } catch(...) { assert(0 && #Name); }
@@ -43,6 +44,8 @@ namespace script
 std::shared_ptr<chaiscript::Module> createDefaultBindings()
 {
     auto module{std::make_shared<chaiscript::Module>()};
+
+    ADD_FREE_FUN(sleep);
 
     ADD_FREE_FUN(debugBreak);
     ADD_FREE_FUN(printToConsole);
@@ -121,6 +124,8 @@ std::shared_ptr<chaiscript::Module> createImageBindings()
 
     ADD_TYPE(QImage);
     ADD_MEMBER(QImage, byteCount);
+    ADD_MEMBER(QImage, colorCount);
+    ADD_MEMBER(QImage, depth);
     ADD_MEMBER(QImage, isNull);
     ADD_MEMBER(QImage, width);
     ADD_MEMBER(QImage, height);
@@ -151,10 +156,13 @@ std::shared_ptr<chaiscript::Module> createImageJobBindings()
     ADD_MEMBER(ImageJob, getTarget);
     ADD_MEMBER(ImageJob, getCurrent);
 
-    //ShapeMutator& getShapeMutator();
+    //ADD_MEMBER(ImageJob, getShapeMutator); //ShapeMutator& getShapeMutator();
 
     //geometrize::preferences::ImageJobPreferences& getPreferences();
+    //ADD_MEMBER(ImageJob, getPreferences);
+
     //void setPreferences(preferences::ImageJobPreferences preferences);
+    //ADD_MEMBER(ImageJob, setPreferences);
 
     return module;
 }

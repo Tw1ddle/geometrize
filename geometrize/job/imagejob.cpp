@@ -37,6 +37,8 @@ public:
 
     ~ImageJobImpl()
     {
+        disconnectAll();
+
         m_workerThread.quit();
         if(!m_workerThread.wait(1000)) {
             m_workerThread.terminate();
@@ -112,9 +114,22 @@ private:
         m_worker.moveToThread(&m_workerThread);
         m_workerThread.start();
 
-        q->connect(q, &ImageJob::signal_step, &m_worker, &ImageJobWorker::step);
-        q->connect(&m_worker, &ImageJobWorker::signal_willStep, q, &ImageJob::signal_modelWillStep);
-        q->connect(&m_worker, &ImageJobWorker::signal_didStep, q, &ImageJob::signal_modelDidStep);
+        // NOTE should use direct connections for synchronous/immediate return behavior when running scripts/CLI
+        connectSignals(Qt::QueuedConnection);
+    }
+
+    void connectSignals(const Qt::ConnectionType connectionType)
+    {
+        q->connect(q, &ImageJob::signal_step, &m_worker, &ImageJobWorker::step, connectionType);
+        q->connect(&m_worker, &ImageJobWorker::signal_willStep, q, &ImageJob::signal_modelWillStep, connectionType);
+        q->connect(&m_worker, &ImageJobWorker::signal_didStep, q, &ImageJob::signal_modelDidStep, connectionType);
+    }
+
+    void disconnectAll()
+    {
+        q->disconnect(q, &ImageJob::signal_step, &m_worker, &ImageJobWorker::step);
+        q->disconnect(&m_worker, &ImageJobWorker::signal_willStep, q, &ImageJob::signal_modelWillStep);
+        q->disconnect(&m_worker, &ImageJobWorker::signal_didStep, q, &ImageJob::signal_modelDidStep);
     }
 
     ImageJob* q;

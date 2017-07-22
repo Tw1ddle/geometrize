@@ -1,5 +1,8 @@
 #include "scriptutil.h"
 
+#include <chrono>
+#include <thread>
+
 #include "chaiscript/chaiscript.hpp"
 #include "chaiscript/language/chaiscript_engine.hpp"
 
@@ -8,6 +11,11 @@ namespace geometrize
 
 namespace script
 {
+
+void sleep(const std::size_t ms)
+{
+    std::this_thread::sleep_for(std::chrono::milliseconds(ms));
+}
 
 std::vector<std::string> getEngineFunctionNames(const chaiscript::ChaiScript& engine)
 {
