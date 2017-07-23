@@ -8,16 +8,16 @@
 
 #include "chaiscript/chaiscript.hpp"
 
+#include "common/formatsupport.h"
 #include "common/sharedapp.h"
-#include "recentitems.h"
+#include "common/util.h"
 #include "job/imagejob.h"
 #include "job/imagejobcreator.h"
-#include "formatsupport.h"
 #include "network/completionhandlers.h"
 #include "network/downloader.h"
 #include "network/networkactions.h"
+#include "recents/recentitems.h"
 #include "script/scriptrunner.h"
-#include "util.h"
 
 namespace geometrize
 {

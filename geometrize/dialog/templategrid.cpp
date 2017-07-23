@@ -2,12 +2,13 @@
 
 #include <QString>
 
-#include "script/chaiscriptcreator.h"
 #include "chaiscript/chaiscript.hpp"
-#include "layout/flowlayout.h"
-#include "searchpaths.h"
+
+#include "common/searchpaths.h"
+#include "common/util.h"
 #include "dialog/templatebutton.h"
-#include "util.h"
+#include "layout/flowlayout.h"
+#include "script/chaiscriptcreator.h"
 
 namespace geometrize
 {

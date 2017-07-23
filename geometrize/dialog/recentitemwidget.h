@@ -4,7 +4,7 @@
 
 #include <QWidget>
 
-#include "recentitem.h"
+#include "recents/recentitem.h"
 
 namespace Ui
 {

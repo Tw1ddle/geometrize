@@ -37,40 +37,6 @@ QList<QUrl> getUrls(const QMimeData* const data)
     return data->urls();
 }
 
-QStringList getLocalFiles(const QMimeData* const data)
-{
-    QStringList files;
-
-    if(!data->hasUrls()) {
-        return files;
-    }
-
-    for(const QUrl& url : data->urls()) {
-        if(url.isLocalFile()) {
-            files.push_back(url.toLocalFile());
-        }
-    }
-
-    return files;
-}
-
-QList<QUrl> getRemoteUrls(const QMimeData* const data)
-{
-    QList<QUrl> urls;
-
-    if(!data->hasUrls()) {
-        return urls;
-    }
-
-    for(const QUrl& url : data->urls()) {
-        if(!url.isLocalFile()) {
-            urls.push_back(url);
-        }
-    }
-
-    return urls;
-}
-
 }
 
 }

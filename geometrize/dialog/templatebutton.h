@@ -4,7 +4,7 @@
 
 #include <QPushButton>
 
-#include "templatemanifest.h"
+#include "manifest/templatemanifest.h"
 
 class QString;
 

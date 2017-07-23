@@ -10,10 +10,11 @@
 #include <QtConcurrent/QtConcurrentRun>
 
 #include "chaiscript/chaiscript.hpp"
-#include "formatsupport.h"
+
+#include "common/formatsupport.h"
+#include "common/util.h"
 #include "job/jobutil.h"
-#include "templatemanifest.h"
-#include "util.h"
+#include "manifest/templatemanifest.h"
 
 namespace geometrize
 {

@@ -6,10 +6,10 @@
 #include <QString>
 #include <QStringList>
 
-#include "strings.h"
+#include "common/util.h"
 #include "job/jobutil.h"
+#include "localization/strings.h"
 #include "script/scriptrunner.h"
-#include "util.h"
 
 namespace
 {

@@ -7,7 +7,7 @@
 
 #include "common/sharedapp.h"
 #include "preferences/globalpreferences.h"
-#include "localization.h"
+#include "localization/localization.h"
 
 namespace geometrize
 {

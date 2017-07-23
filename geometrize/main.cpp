@@ -9,20 +9,21 @@
 #include <QStringList>
 
 #include "analytics/analyticswrapper.h"
+#include "cli/commandlineparser.h"
+#include "common/runguard.h"
 #include "common/sharedapp.h"
-#include "commandlineparser.h"
-#include "localization.h"
-#include "logmessagehandlers.h"
+#include "localization/localization.h"
+#include "logger/logmessagehandlers.h"
 #include "preferences/globalpreferences.h"
-#include "runguard.h"
-#include "versioninfo.h"
+#include "version/versioninfo.h"
 
 namespace {
 
+enum class ApplicationLaunchMode;
 void setupSettingsFields();
 void installMessageHandlers();
 void setLocale(const std::string& languageCode);
-void handleCommandLineArguments(const QStringList& arguments);
+ApplicationLaunchMode handleCommandLineArguments(const QStringList& arguments);
 void setupAnalytics();
 
 }
@@ -37,7 +38,7 @@ int main(int argc, char* argv[])
     geometrize::preferences::GlobalPreferences& prefs{geometrize::common::app::SharedApp::get().getGlobalPreferences()};
     setLocale(prefs.getLanguageIsoCode());
 
-    handleCommandLineArguments(app.arguments());
+    const ApplicationLaunchMode mode{handleCommandLineArguments(app.arguments())};
 
     setupAnalytics();
 
@@ -52,6 +53,12 @@ int main(int argc, char* argv[])
 }
 
 namespace {
+
+enum class ApplicationLaunchMode
+{
+    CONSOLE,
+    GUI
+};
 
 void setupSettingsFields()
 {
@@ -79,12 +86,14 @@ void setLocale(const std::string& languageCode)
     geometrize::setTranslatorsForLocale(QLocale::system().name());
 }
 
-void handleCommandLineArguments(const QStringList& arguments)
+ApplicationLaunchMode handleCommandLineArguments(const QStringList& arguments)
 {
     QCommandLineParser parser;
     const geometrize::cli::CommandLineResult cliSetup{geometrize::cli::setupCommandLineParser(parser, arguments)};
     const geometrize::cli::CommandLineResult options{geometrize::cli::handleArgumentPairs(parser)};
     const geometrize::cli::CommandLineResult positionals{geometrize::cli::handlePositionalArguments(parser.positionalArguments())};
+
+    return ApplicationLaunchMode::GUI;
 }
 
 void setupAnalytics()

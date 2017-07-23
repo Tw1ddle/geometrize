@@ -3,8 +3,8 @@
 
 #include "chaiscript/chaiscript.hpp"
 
-#include "logger.h"
-#include "logmessageevents.h"
+#include "logger/logger.h"
+#include "logger/logmessageevents.h"
 #include "script/scriptrunner.h"
 #include "script/scriptutil.h"
 

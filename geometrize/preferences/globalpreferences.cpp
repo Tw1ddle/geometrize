@@ -6,10 +6,10 @@
 
 #include <QCoreApplication>
 
-#include "serialization/globalpreferencesdata.h"
 #include "cereal/archives/json.hpp"
 
-#include "util.h"
+#include "common/util.h"
+#include "serialization/globalpreferencesdata.h"
 
 namespace geometrize
 {

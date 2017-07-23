@@ -6,20 +6,20 @@
 
 #include "chaiscript/chaiscript.hpp"
 
-#include "constants.h"
+#include "common/constants.h"
+#include "common/formatsupport.h"
 #include "common/sharedapp.h"
 #include "common/uiactions.h"
+#include "common/util.h"
 #include "dialog/recentitemwidget.h"
 #include "job/imagejob.h"
 #include "job/jobutil.h"
 #include "image/imageloader.h"
 #include "preferences/globalpreferences.h"
+#include "recents/recentitems.h"
 #include "script/chaiscriptcreator.h"
 #include "script/scriptrunner.h"
 #include "serialization/serializationutil.h"
-#include "formatsupport.h"
-#include "recentitems.h"
-#include "util.h"
 
 namespace geometrize
 {

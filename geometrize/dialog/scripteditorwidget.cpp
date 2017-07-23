@@ -3,7 +3,7 @@
 
 #include <cassert>
 
-#include "strings.h"
+#include "localization/strings.h"
 
 namespace geometrize
 {

@@ -2,8 +2,8 @@
 #include "ui_runscriptdialog.h"
 
 #include "common/uiactions.h"
+#include "common/util.h"
 #include "script/scriptrunner.h"
-#include "util.h"
 
 namespace geometrize
 {

@@ -2,8 +2,8 @@
 #include "ui_languageselectwidget.h"
 
 #include "common/sharedapp.h"
+#include "localization/localization.h"
 #include "preferences/globalpreferences.h"
-#include "localization.h"
 
 namespace geometrize
 {

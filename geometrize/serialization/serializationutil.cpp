@@ -1,6 +1,6 @@
 #include "serializationutil.h"
 
-#include <assert.h>
+#include <cassert>
 #include <fstream>
 
 #include <QDir>
@@ -9,7 +9,7 @@
 #include "cereal/archives/json.hpp"
 #include "cereal/types/vector.hpp"
 
-#include "../util.h"
+#include "common/util.h"
 
 namespace geometrize
 {

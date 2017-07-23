@@ -4,11 +4,11 @@
 
 #include <QString>
 
-#include "formatsupport.h"
+#include "common/formatsupport.h"
+#include "common/searchpaths.h"
+#include "common/util.h"
 #include "job/jobutil.h"
-#include "localization.h"
-#include "searchpaths.h"
-#include "util.h"
+#include "localization/localization.h"
 
 namespace geometrize
 {

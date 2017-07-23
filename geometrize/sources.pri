@@ -1,24 +1,15 @@
 INCLUDEPATH += $$PWD
 
-HEADERS += $$PWD/commandlineparser.h \
-    $$PWD/constants.h \
-    $$PWD/formatsupport.h \
-    $$PWD/localization.h \
-    $$PWD/logger.h \
-    $$PWD/logmessageevents.h \
-    $$PWD/logmessagehandlers.h \
-    $$PWD/recentitem.h \
-    $$PWD/recentitems.h \
-    $$PWD/runguard.h \
-    $$PWD/searchpaths.h \
-    $$PWD/strings.h \
-    $$PWD/templatemanifest.h \
-    $$PWD/util.h \
-    $$PWD/versioninfo.h \
-    $$PWD/analytics/analytics.h \
+HEADERS += $$PWD/analytics/analytics.h \
     $$PWD/analytics/analyticswrapper.h \
+    $$PWD/cli/commandlineparser.h \
+    $$PWD/common/constants.h \
+    $$PWD/common/formatsupport.h \
+    $$PWD/common/searchpaths.h \
     $$PWD/common/sharedapp.h \
+    $$PWD/common/runguard.h \
     $$PWD/common/uiactions.h \
+    $$PWD/common/util.h \
     $$PWD/dialog/aboutdialog.h \
     $$PWD/dialog/collapsiblepanel.h \
     $$PWD/dialog/commandlineedit.h \
@@ -56,11 +47,19 @@ HEADERS += $$PWD/commandlineparser.h \
     $$PWD/job/imagejobworker.h \
     $$PWD/job/jobutil.h \
     $$PWD/layout/flowlayout.h \
+    $$PWD/localization/localization.h \
+    $$PWD/localization/strings.h \
+    $$PWD/logger/logger.h \
+    $$PWD/logger/logmessageevents.h \
+    $$PWD/logger/logmessagehandlers.h \
+    $$PWD/manifest/templatemanifest.h \
     $$PWD/network/completionhandlers.h \
     $$PWD/network/downloader.h \
     $$PWD/network/networkactions.h \
     $$PWD/preferences/globalpreferences.h \
     $$PWD/preferences/imagejobpreferences.h \
+    $$PWD/recents/recentitem.h \
+    $$PWD/recents/recentitems.h \
     $$PWD/script/bindingscreator.h \
     $$PWD/script/bindingswrapper.h \
     $$PWD/script/chaiscriptcreator.h \
@@ -74,27 +73,19 @@ HEADERS += $$PWD/commandlineparser.h \
     $$PWD/serialization/serializationutil.h \
     $$PWD/serialization/stringvectordata.h \
     $$PWD/serialization/templatemetadata.h \
-    $$PWD/serialization/streamview.h
+    $$PWD/serialization/streamview.h \
+    $$PWD/version/versioninfo.h
 
-SOURCES += $$PWD/commandlineparser.cpp \
-    $$PWD/formatsupport.cpp \
-    $$PWD/localization.cpp \
-    $$PWD/logger.cpp \
-    $$PWD/logmessageevents.cpp \
-    $$PWD/logmessagehandlers.cpp \
-    $$PWD/main.cpp \
-    $$PWD/recentitem.cpp \
-    $$PWD/recentitems.cpp \
-    $$PWD/runguard.cpp \
-    $$PWD/searchpaths.cpp \
-    $$PWD/strings.cpp \
-    $$PWD/templatemanifest.cpp \
-    $$PWD/versioninfo.cpp \
-    $$PWD/util.cpp \
+SOURCES += $$PWD/main.cpp \
     $$PWD/analytics/analytics.cpp \
     $$PWD/analytics/analyticswrapper.cpp \
+    $$PWD/cli/commandlineparser.cpp \
+    $$PWD/common/formatsupport.cpp \
+    $$PWD/common/runguard.cpp \
+    $$PWD/common/searchpaths.cpp \
     $$PWD/common/sharedapp.cpp \
     $$PWD/common/uiactions.cpp \
+    $$PWD/common/util.cpp \
     $$PWD/dialog/aboutdialog.cpp \
     $$PWD/dialog/collapsiblepanel.cpp \
     $$PWD/dialog/commandlineedit.cpp \
@@ -132,11 +123,19 @@ SOURCES += $$PWD/commandlineparser.cpp \
     $$PWD/job/imagejobworker.cpp \
     $$PWD/job/jobutil.cpp \
     $$PWD/layout/flowlayout.cpp \
+    $$PWD/localization/localization.cpp \
+    $$PWD/localization/strings.cpp \
+    $$PWD/logger/logger.cpp \
+    $$PWD/logger/logmessageevents.cpp \
+    $$PWD/logger/logmessagehandlers.cpp \
+    $$PWD/manifest/templatemanifest.cpp \
     $$PWD/network/completionhandlers.cpp \
     $$PWD/network/downloader.cpp \
     $$PWD/network/networkactions.cpp \
     $$PWD/preferences/globalpreferences.cpp \
     $$PWD/preferences/imagejobpreferences.cpp \
+    $$PWD/recents/recentitem.cpp \
+    $$PWD/recents/recentitems.cpp \
     $$PWD/script/bindingscreator.cpp \
     $$PWD/script/bindingswrapper.cpp \
     $$PWD/script/chaiscriptcreator.cpp \
@@ -145,7 +144,8 @@ SOURCES += $$PWD/commandlineparser.cpp \
     $$PWD/script/scriptutil.cpp \
     $$PWD/script/shapemutationrules.cpp \
     $$PWD/serialization/serializationutil.cpp \
-    $$PWD/serialization/streamview.cpp
+    $$PWD/serialization/streamview.cpp \
+    $$PWD/version/versioninfo.cpp
 
 FORMS += $$PWD/dialog/aboutdialog.ui \
     $$PWD/dialog/commandlineedit.ui \

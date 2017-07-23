@@ -1,7 +1,7 @@
 #include "imagejobwindow.h"
 #include "ui_imagejobwindow.h"
 
-#include <assert.h>
+#include <cassert>
 
 #include <QCloseEvent>
 #include <QDesktopServices>
@@ -22,8 +22,9 @@
 #include "geometrize/runner/imagerunneroptions.h"
 #include "geometrize/exporter/svgexporter.h"
 
+#include "common/constants.h"
 #include "common/uiactions.h"
-#include "constants.h"
+#include "common/util.h"
 #include "dialog/aboutdialog.h"
 #include "dialog/collapsiblepanel.h"
 #include "dialog/imagejobpixmapgraphicsitem.h"
@@ -37,10 +38,9 @@
 #include "exporter/webglanimationexporter.h"
 #include "image/imageloader.h"
 #include "job/imagejob.h"
+#include "localization/strings.h"
 #include "script/chaiscriptcreator.h"
 #include "script/shapemutationrules.h"
-#include "strings.h"
-#include "util.h"
 
 namespace geometrize
 {

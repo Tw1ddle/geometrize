@@ -9,8 +9,8 @@
 #include <QMenu>
 
 #include "recentitemwidget.h"
-#include "recentitem.h"
-#include "recentitems.h"
+#include "recents/recentitem.h"
+#include "recents/recentitems.h"
 
 namespace geometrize
 {

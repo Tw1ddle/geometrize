@@ -22,9 +22,9 @@
 
 #include "chaiscript/chaiscript.hpp"
 
+#include "common/util.h"
 #include "script/chaiscriptcreator.h"
 #include "script/scriptrunner.h"
-#include "util.h"
 
 namespace geometrize
 {

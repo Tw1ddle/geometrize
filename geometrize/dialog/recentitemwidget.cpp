@@ -11,10 +11,10 @@
 
 #include "common/uiactions.h"
 #include "common/sharedapp.h"
+#include "common/util.h"
 #include "job/jobutil.h"
-#include "recentitem.h"
-#include "recentitems.h"
-#include "util.h"
+#include "recents/recentitem.h"
+#include "recents/recentitems.h"
 
 namespace geometrize
 {

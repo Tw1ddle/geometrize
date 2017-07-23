@@ -1,11 +1,11 @@
 #include "aboutdialog.h"
 #include "ui_aboutdialog.h"
 
-#include "constants.h"
-#include "strings.h"
+#include "common/constants.h"
 #include "creditsdialog.h"
 #include "licensedialog.h"
-#include "versioninfo.h"
+#include "localization/strings.h"
+#include "version/versioninfo.h"
 
 namespace geometrize
 {

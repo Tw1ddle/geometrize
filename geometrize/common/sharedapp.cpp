@@ -2,7 +2,7 @@
 
 #include "image/imagelookup.h"
 #include "preferences/globalpreferences.h"
-#include "recentitems.h"
+#include "recents/recentitems.h"
 
 namespace geometrize
 {

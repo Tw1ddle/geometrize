@@ -34,20 +34,6 @@ std::vector<std::string> getSupportedTemplateManifestFileExtensions();
  */
 QList<QUrl> getUrls(const QMimeData* const data);
 
-/**
- * @brief getLocalFiles Gets a list of local file paths from a Qt MimeData item.
- * @param data The Mime data.
- * @return List of local file paths.
- */
-QStringList getLocalFiles(const QMimeData* const data);
-
-/**
- * @brief getRemoteUrls Gets a list of remote URLs from a Qt MimeData item.
- * @param data The Mime data.
- * @return  List of remote URLs.
- */
-QList<QUrl> getRemoteUrls(const QMimeData* const data);
-
 }
 
 }

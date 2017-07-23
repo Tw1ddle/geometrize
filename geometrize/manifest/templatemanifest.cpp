@@ -4,10 +4,10 @@
 #include <istream>
 
 #include "cereal/archives/json.hpp"
+
+#include "common/util.h"
 #include "serialization/streamview.h"
 #include "serialization/templatemetadata.h"
-
-#include "util.h"
 
 namespace geometrize
 {

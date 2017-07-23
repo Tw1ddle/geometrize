@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "templatemanifest.h"
+#include "manifest/templatemanifest.h"
 
 class QImage;
 class QString;
