@@ -1,5 +1,4 @@
 #include "globalpreferencesdialog.h"
-
 #include "ui_globalpreferencesdialog.h"
 
 #include "common/sharedapp.h"

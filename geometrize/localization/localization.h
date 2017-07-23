@@ -2,7 +2,6 @@
 
 #include <QString>
 
-class QCoreApplication;
 class QIcon;
 
 namespace geometrize

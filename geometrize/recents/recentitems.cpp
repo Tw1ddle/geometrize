@@ -1,7 +1,7 @@
 #include "recentitems.h"
 
-#include <cassert>
 #include <atomic>
+#include <cassert>
 
 #include <QDateTime>
 #include <QSettings>

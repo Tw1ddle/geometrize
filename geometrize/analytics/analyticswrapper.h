@@ -32,7 +32,7 @@ public:
     /**
      * @brief onLaunch Event recorded when the app is launched.
      */
-    void onLaunch(); // TODO log mode it was launched in e.g. command line, GUI, executing script etc?
+    void onLaunch();
 
     /**
      * @brief onLogoImageJobFinished Event recorded when the image job embedded in the lauch image completes.

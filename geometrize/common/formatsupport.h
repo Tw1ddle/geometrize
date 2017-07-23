@@ -3,9 +3,8 @@
 #include <string>
 #include <vector>
 
+#include <QList>
 #include <QMimeData>
-#include <QString>
-#include <QStringList>
 #include <QUrl>
 
 namespace geometrize

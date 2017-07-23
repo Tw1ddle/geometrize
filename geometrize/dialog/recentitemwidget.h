@@ -4,11 +4,14 @@
 
 #include <QWidget>
 
-#include "recents/recentitem.h"
-
 namespace Ui
 {
 class RecentItemWidget;
+}
+
+namespace geometrize
+{
+class RecentItem;
 }
 
 namespace geometrize

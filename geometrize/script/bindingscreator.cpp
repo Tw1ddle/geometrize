@@ -6,8 +6,6 @@
 
 #include "chaiscript/chaiscript.hpp"
 
-#include "chaiscriptmathextras.h"
-
 #include "geometrize/bitmap/bitmap.h"
 #include "geometrize/model.h"
 #include "geometrize/shape/circle.h"
@@ -25,6 +23,7 @@
 #include "job/imagejob.h"
 #include "image/imageloader.h"
 #include "script/bindingswrapper.h"
+#include "script/chaiscriptmathextras.h"
 #include "script/scriptutil.h"
 
 #define ADD_CONST_VAR(Class, Name) try { module->add(chaiscript::const_var(&Class::Name), #Name); } catch(...) { assert(0 && #Name); }
