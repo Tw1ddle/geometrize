@@ -4,8 +4,6 @@
 #include <QString>
 #include <QUrl>
 
-#include "script/scriptoptions.h"
-
 class QWidget;
 
 namespace geometrize
@@ -33,7 +31,7 @@ QString openSaveCanvasAnimationPathPickerDialog(QWidget* parent);
 QString openSaveWebGLPathPickerDialog(QWidget* parent);
 QString openSaveRawImageDataPathPickerDialog(QWidget* parent);
 QUrl openGetUrlDialog(QWidget* parent);
-QPair<QString, geometrize::script::ScriptOptions> openGetScriptDialog(QWidget* parent);
+QString openGetScriptDialog(QWidget* parent);
 QString openSelectScriptDialog(QWidget* parent);
 void openTechnicalSupport();
 void openOnlineTutorials();

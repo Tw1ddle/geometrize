@@ -6,7 +6,6 @@
 #include "chaiscript/chaiscript.hpp"
 
 #include "script/chaiscriptcreator.h"
-#include "script/scriptoptions.h"
 
 namespace geometrize
 {
@@ -14,10 +13,8 @@ namespace geometrize
 namespace script
 {
 
-void runScript(const std::string& code, chaiscript::ChaiScript& runner, const geometrize::script::ScriptOptions* const options)
+void runScript(const std::string& code, chaiscript::ChaiScript& runner)
 {
-    // TODO set options on the runner?
-
     const QString errorTitle{QCoreApplication::translate("Script evaluation error dialog title", "Script evaluation failure")};
     const QString errorPreamble{QCoreApplication::translate("Script evaluation error message", "Could not evaluate script: %1")};
     const QString unknownError{QCoreApplication::translate("Script evaluation unknown error", "Unknown script evaluation error")};
@@ -34,10 +31,10 @@ void runScript(const std::string& code, chaiscript::ChaiScript& runner, const ge
     }
 }
 
-void runScript(const std::string& script, const ScriptOptions* const options)
+void runScript(const std::string& script)
 {
     auto engine{createDefaultEngine()};
-    runScript(script, *engine, options);
+    runScript(script, *engine);
 }
 
 }

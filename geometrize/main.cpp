@@ -1,5 +1,7 @@
 #include "dialog/launchwindow.h"
 
+#include <cassert>
+#include <functional>
 #include <string>
 
 #include <QApplication>
@@ -10,7 +12,6 @@
 
 #include "analytics/analyticswrapper.h"
 #include "cli/commandlineparser.h"
-#include "common/runguard.h"
 #include "common/sharedapp.h"
 #include "localization/localization.h"
 #include "logger/logmessagehandlers.h"
@@ -18,47 +19,6 @@
 #include "version/versioninfo.h"
 
 namespace {
-
-enum class ApplicationLaunchMode;
-void setupSettingsFields();
-void installMessageHandlers();
-void setLocale(const std::string& languageCode);
-ApplicationLaunchMode handleCommandLineArguments(const QStringList& arguments);
-void setupAnalytics();
-
-}
-
-int main(int argc, char* argv[])
-{
-    setupSettingsFields();
-    installMessageHandlers();
-
-    QApplication app(argc, argv);
-
-    geometrize::preferences::GlobalPreferences& prefs{geometrize::common::app::SharedApp::get().getGlobalPreferences()};
-    setLocale(prefs.getLanguageIsoCode());
-
-    const ApplicationLaunchMode mode{handleCommandLineArguments(app.arguments())};
-
-    setupAnalytics();
-
-    // Open launcher window if there isn't an instance of Geometrize already running
-    geometrize::RunGuard runGuard("geometrize_run_guard_key");
-    geometrize::dialog::LaunchWindow w;
-    if(runGuard.tryToRun()) {
-        w.show();
-    }
-
-    return app.exec();
-}
-
-namespace {
-
-enum class ApplicationLaunchMode
-{
-    CONSOLE,
-    GUI
-};
 
 void setupSettingsFields()
 {
@@ -70,8 +30,7 @@ void setupSettingsFields()
     QCoreApplication::setOrganizationDomain(ORGANIZATION_DOMAIN);
     QCoreApplication::setApplicationName(APPLICATION_NAME);
 
-    // These can change
-    QCoreApplication::setApplicationVersion(geometrize::version::getApplicationVersionString());
+    QCoreApplication::setApplicationVersion(geometrize::version::getApplicationVersionString()); // This can change
 }
 
 void installMessageHandlers()
@@ -86,16 +45,6 @@ void setLocale(const std::string& languageCode)
     geometrize::setTranslatorsForLocale(QLocale::system().name());
 }
 
-ApplicationLaunchMode handleCommandLineArguments(const QStringList& arguments)
-{
-    QCommandLineParser parser;
-    const geometrize::cli::CommandLineResult cliSetup{geometrize::cli::setupCommandLineParser(parser, arguments)};
-    const geometrize::cli::CommandLineResult options{geometrize::cli::handleArgumentPairs(parser)};
-    const geometrize::cli::CommandLineResult positionals{geometrize::cli::handlePositionalArguments(parser.positionalArguments())};
-
-    return ApplicationLaunchMode::GUI;
-}
-
 void setupAnalytics()
 {
     geometrize::analytics::AnalyticsWrapper analytics;
@@ -103,4 +52,40 @@ void setupAnalytics()
     analytics.onLaunch();
 }
 
+int runAppConsoleMode(QApplication& app)
+{
+    return geometrize::cli::runApp(app);
+}
+
+int runAppGuiMode(QApplication& app)
+{
+    geometrize::dialog::LaunchWindow w;
+    w.show();
+    return app.exec();
+}
+
+std::function<int(QApplication&)> resolveLaunchFunction(const QStringList& arguments)
+{
+    if(geometrize::cli::shouldRunInConsoleMode(arguments)) {
+        return ::runAppConsoleMode;
+    }
+    return ::runAppGuiMode;
+}
+
+}
+
+int main(int argc, char* argv[])
+{
+    setupSettingsFields();
+    installMessageHandlers();
+
+    QApplication app(argc, argv);
+
+    geometrize::preferences::GlobalPreferences& prefs{geometrize::common::app::SharedApp::get().getGlobalPreferences()};
+    setLocale(prefs.getLanguageIsoCode());
+
+    setupAnalytics();
+
+    const auto run{resolveLaunchFunction(app.arguments())};
+    return run(app);
 }

@@ -1,9 +1,8 @@
 #pragma once
 
-#include <QString>
 #include <QStringList>
 
-class QCommandLineParser;
+class QApplication;
 
 namespace geometrize
 {
@@ -11,46 +10,19 @@ namespace geometrize
 namespace cli
 {
 
-enum class CommandLineError
-{
-    CommandLineOk,
-    CommandLineSetupFailed
-};
-
-class CommandLineResult
-{
-public:
-    CommandLineResult(CommandLineError error, const QString& errorText);
-
-    CommandLineError getError() const;
-    QString getErrorText() const;
-
-private:
-    CommandLineError m_error;
-    QString m_errorText;
-};
+/**
+ * @brief shouldRunInConsoleMode Checks whether the application should run in console mode for the given arguments.
+ * @param arguments The console arguments.
+ * @return True if the application should run in console mode, else false.
+ */
+bool shouldRunInConsoleMode(const QStringList& arguments);
 
 /**
- * @brief setupCommandLineParser Sets up a command line parser to handle application arguments.
- * @param parser The parser to setup.
- * @param arguments The arguments to parse.
- * @return The result of the initial setup and parsing.
+ * @brief runApp Runs the application in console mode.
+ * @param app The application.
+ * @return 0 on success, any other number if there was an error.
  */
-CommandLineResult setupCommandLineParser(QCommandLineParser& parser, const QStringList& arguments);
-
-/**
- * @brief handleArgumentPairs Handles the argument-value pairs that were set on the parser.
- * @param parser The parser to use to use.
- * @return  The result of handling the argument-value pairs.
- */
-CommandLineResult handleArgumentPairs(QCommandLineParser& parser);
-
-/**
- * @brief handlePositionalArguments
- * @param arguments The positional arguments to handle.
- * @return The result of handling the positional arguments.
- */
-CommandLineResult handlePositionalArguments(const QStringList& arguments);
+int runApp(QApplication& app);
 
 }
 

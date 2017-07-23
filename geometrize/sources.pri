@@ -64,7 +64,6 @@ HEADERS += $$PWD/analytics/analytics.h \
     $$PWD/script/bindingswrapper.h \
     $$PWD/script/chaiscriptcreator.h \
     $$PWD/script/chaiscriptmathextras.h \
-    $$PWD/script/scriptoptions.h \
     $$PWD/script/scriptrunner.h \
     $$PWD/script/scriptutil.h \
     $$PWD/script/shapemutationrules.h \
@@ -139,7 +138,6 @@ SOURCES += $$PWD/main.cpp \
     $$PWD/script/bindingscreator.cpp \
     $$PWD/script/bindingswrapper.cpp \
     $$PWD/script/chaiscriptcreator.cpp \
-    $$PWD/script/scriptoptions.cpp \
     $$PWD/script/scriptrunner.cpp \
     $$PWD/script/scriptutil.cpp \
     $$PWD/script/shapemutationrules.cpp \

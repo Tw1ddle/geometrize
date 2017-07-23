@@ -1,14 +1,17 @@
 #include "commandlineparser.h"
 
-#include <QCoreApplication>
+#include <QApplication>
 #include <QCommandLineOption>
 #include <QCommandLineParser>
 #include <QString>
 #include <QStringList>
 
+#include "chaiscript/chaiscript.hpp"
+
 #include "common/util.h"
 #include "job/jobutil.h"
 #include "localization/strings.h"
+#include "script/chaiscriptcreator.h"
 #include "script/scriptrunner.h"
 
 namespace
@@ -22,56 +25,66 @@ namespace geometrize
 namespace cli
 {
 
-CommandLineResult::CommandLineResult(const CommandLineError error, const QString& errorText) : m_error{error}, m_errorText{errorText}
+/**
+ * @brief shouldRunInConsoleMode Determines whether the Geometrize application should run in console mode.
+ * @param arguments The arguments passed to the application on launch.
+ * @return True if the application should run in console mode, else false.
+ */
+bool shouldRunInConsoleMode(const QStringList& arguments)
 {
+    return arguments.contains(scriptFlag);
 }
 
-CommandLineError CommandLineResult::getError() const
-{
-    return m_error;
-}
-
-QString CommandLineResult::getErrorText() const
-{
-    return m_errorText;
-}
-
-CommandLineResult setupCommandLineParser(QCommandLineParser& parser, const QStringList& arguments)
+/**
+ * @brief setupCommandLineParser Sets up a command line parser to handle application arguments.
+ * @param parser The parser to setup.
+ * @param arguments The arguments to parse.
+ */
+void setupCommandLineParser(QCommandLineParser& parser, const QStringList& arguments)
 {
     parser.setApplicationDescription(geometrize::strings::Strings::getApplicationDescription());
     parser.addHelpOption();
     parser.addVersionOption();
 
     parser.addOptions({
-        {{"s", scriptFlag}, QCoreApplication::translate("cli", "Executes the ChaiScript script file at the given path or URL.")}
+        {scriptFlag, QCoreApplication::translate("cli", "Executes the ChaiScript script file at the given path or URL.")}
     });
 
     if(!parser.parse(arguments)) {
-        return CommandLineResult(CommandLineError::CommandLineSetupFailed, parser.errorText());
+        // TODO throw
+        //return CommandLineResult(CommandLineError::CommandLineSetupFailed, parser.errorText());
     }
 
     parser.process(arguments);
-
-    return CommandLineResult(CommandLineError::CommandLineOk, "");
 }
 
-CommandLineResult handleArgumentPairs(QCommandLineParser& parser)
+/**
+ * @brief handleArgumentPairs Handles the arguments that were set on the parser.
+ * @param parser The parser to use to use.
+ */
+void handleCommandLineArguments(QCommandLineParser& parser)
 {
     if(parser.isSet(scriptFlag)) {
-        //Required arg is just the infile for the script, then whatever other args it needs
-        // TODO embedded scripts could have their own name?
+        const QString scriptPath{parser.value(scriptFlag)};
 
-        // TODO attempt to read and execute script file, all other args will be injected as VAR=value globals
-        //geometrize::util::readFileAsString();
-        //geometrize::script::runScript();
+        const std::string code{geometrize::util::readFileAsString(scriptPath.toStdString())};
+
+        std::unique_ptr<chaiscript::ChaiScript> engine{geometrize::script::createImageJobEngine()};
+
+        geometrize::script::runScript(code, *engine);
     }
-
-    return CommandLineResult(CommandLineError::CommandLineOk, "");
 }
 
-CommandLineResult handlePositionalArguments(const QStringList& arguments)
+int runApp(QApplication& app)
 {
-    return CommandLineResult(CommandLineError::CommandLineOk, ""); // TODO
+    const QStringList arguments{app.arguments()};
+
+    QCommandLineParser parser;
+
+    setupCommandLineParser(parser, arguments);
+    handleCommandLineArguments(parser);
+
+    return 0;
 }
 
 }

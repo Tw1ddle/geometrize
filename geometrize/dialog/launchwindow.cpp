@@ -251,8 +251,8 @@ void LaunchWindow::on_openLinkButton_clicked()
 
 void LaunchWindow::on_runScriptButton_clicked()
 {
-    const QPair<QString, geometrize::script::ScriptOptions> result{common::ui::openGetScriptDialog(this)};
-    geometrize::script::runScript(util::readFileAsString(result.first.toStdString()), &result.second);
+    const std::string result{common::ui::openGetScriptDialog(this).toStdString()};
+    geometrize::script::runScript(util::readFileAsString(result));
 }
 
 void LaunchWindow::on_actionTutorials_triggered()

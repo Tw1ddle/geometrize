@@ -29,11 +29,6 @@ QString RunScriptDialog::getScriptFilepath()
     return ui->scriptPathEdit->text();
 }
 
-geometrize::script::ScriptOptions RunScriptDialog::getScriptOptions()
-{
-    return geometrize::script::ScriptOptions(ui->scriptFlagsEdit->text());
-}
-
 void RunScriptDialog::on_scriptFileDialogButton_clicked()
 {
     const QString scriptPath{common::ui::openSelectScriptDialog(this)};
@@ -51,7 +46,7 @@ void RunScriptDialog::on_buttonBox_accepted()
     }
 
     const std::string script{util::readFileAsString(scriptPath)};
-    geometrize::script::runScript(script, &getScriptOptions());
+    geometrize::script::runScript(script);
 }
 
 }

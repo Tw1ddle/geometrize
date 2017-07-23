@@ -2,8 +2,6 @@
 
 #include <QDialog>
 
-#include "script/scriptoptions.h"
-
 namespace Ui
 {
 class RunScriptDialog;
@@ -27,7 +25,6 @@ public:
     ~RunScriptDialog();
 
     QString getScriptFilepath();
-    geometrize::script::ScriptOptions getScriptOptions();
 
 private slots:
     void on_scriptFileDialogButton_clicked();

@@ -117,11 +117,11 @@ QUrl openGetUrlDialog(QWidget* parent)
     return dialog.getUrl();
 }
 
-QPair<QString, geometrize::script::ScriptOptions> openGetScriptDialog(QWidget* parent)
+QString openGetScriptDialog(QWidget* parent)
 {
     dialog::RunScriptDialog dialog(parent);
     dialog.exec();
-    return QPair<QString, geometrize::script::ScriptOptions>(dialog.getScriptFilepath(), dialog.getScriptOptions());
+    return dialog.getScriptFilepath();
 }
 
 QString openSelectScriptDialog(QWidget* parent)
