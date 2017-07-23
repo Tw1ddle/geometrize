@@ -32,7 +32,7 @@ namespace geometrize
 class ShapeMutationRules::ShapeMutationRulesImpl
 {
 public:
-    ShapeMutationRulesImpl() : m_scriptResourceFolder{":/scripts/shape_defaults/"}, m_defaultScripts{readDefaultScripts()}, m_engine{createEngine()}, m_state{m_engine->get_state()} {}
+    ShapeMutationRulesImpl() : m_scriptResourceFolder{":/scripts/scripts/default_shape_mutators/"}, m_defaultScripts{readDefaultScripts()}, m_engine{createEngine()}, m_state{m_engine->get_state()} {}
     ~ShapeMutationRulesImpl() = default;
     ShapeMutationRulesImpl& operator=(const ShapeMutationRulesImpl&) = default;
     ShapeMutationRulesImpl(const ShapeMutationRulesImpl&) = default;
@@ -108,6 +108,7 @@ private:
     void tryAddAndBind(geometrize::ShapeMutator& mutator, const std::string& functionName)
     {
         try {
+            // TODO add assertion if not found
             const std::string code{m_defaultScripts.find(functionName)->second};
             m_engine->eval(code);
         } catch(...) {

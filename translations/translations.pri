@@ -26,8 +26,8 @@ TRANSLATIONS = $$prependAll(LANGUAGES, $$PWD/app/, .ts)
 # Note that qm files for new languages need to be added to the translations resource file manually
 qtPrepareTool(LRELEASE, lrelease)
 for(filename, LANGUAGES) {
-    tsfile = $$shell_quote($$_PRO_FILE_PWD_/../translations/app/geometrize_$${filename}.ts)
-    qmfile = $$shell_quote($$_PRO_FILE_PWD_/../resources/translations/app/geometrize_$${filename}.qm)
+    tsfile = $$shell_quote($$PWD/app/geometrize_$${filename}.ts)
+    qmfile = $$shell_quote($$PWD/../resources/translations/app/geometrize_$${filename}.qm)
     qmfile ~= s,.ts$,.qm,
     qmdir = $$dirname(qmfile)
     command = $$LRELEASE -removeidentical $${tsfile} -qm $${qmfile}
