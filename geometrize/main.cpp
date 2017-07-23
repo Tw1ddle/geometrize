@@ -1,9 +1,12 @@
 #include "dialog/launchwindow.h"
 
+#include <string>
+
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QLocale>
 #include <QString>
+#include <QStringList>
 
 #include "analytics/analyticswrapper.h"
 #include "common/sharedapp.h"
@@ -13,6 +16,42 @@
 #include "preferences/globalpreferences.h"
 #include "runguard.h"
 #include "versioninfo.h"
+
+namespace {
+
+void setupSettingsFields();
+void installMessageHandlers();
+void setLocale(const std::string& languageCode);
+void handleCommandLineArguments(const QStringList& arguments);
+void setupAnalytics();
+
+}
+
+int main(int argc, char* argv[])
+{
+    setupSettingsFields();
+    installMessageHandlers();
+
+    QApplication app(argc, argv);
+
+    geometrize::preferences::GlobalPreferences& prefs{geometrize::common::app::SharedApp::get().getGlobalPreferences()};
+    setLocale(prefs.getLanguageIsoCode());
+
+    handleCommandLineArguments(app.arguments());
+
+    setupAnalytics();
+
+    // Open launcher window if there isn't an instance of Geometrize already running
+    geometrize::RunGuard runGuard("geometrize_run_guard_key");
+    geometrize::dialog::LaunchWindow w;
+    if(runGuard.tryToRun()) {
+        w.show();
+    }
+
+    return app.exec();
+}
+
+namespace {
 
 void setupSettingsFields()
 {
@@ -28,34 +67,31 @@ void setupSettingsFields()
     QCoreApplication::setApplicationVersion(geometrize::version::getApplicationVersionString());
 }
 
-int main(int argc, char* argv[])
+void installMessageHandlers()
 {
-    setupSettingsFields();
-
     qInstallMessageHandler(geometrize::log::handleLogMessages);
-    QApplication app(argc, argv);
+}
 
+void setLocale(const std::string& languageCode)
+{
     // TODO sets the locale based on the global preference, should only use it if one is set (by default there should be no preference, so it should use the system?)
-    geometrize::preferences::GlobalPreferences& prefs{geometrize::common::app::SharedApp::get().getGlobalPreferences()};
-    const std::string languageCode{prefs.getLanguageIsoCode()};
     QLocale::setDefault(QLocale(QString::fromStdString(languageCode)));
     geometrize::setTranslatorsForLocale(QLocale::system().name());
+}
 
+void handleCommandLineArguments(const QStringList& arguments)
+{
     QCommandLineParser parser;
-    const geometrize::cli::CommandLineResult cliSetup{geometrize::cli::setupCommandLineParser(parser, app.arguments())};
+    const geometrize::cli::CommandLineResult cliSetup{geometrize::cli::setupCommandLineParser(parser, arguments)};
     const geometrize::cli::CommandLineResult options{geometrize::cli::handleArgumentPairs(parser)};
     const geometrize::cli::CommandLineResult positionals{geometrize::cli::handlePositionalArguments(parser.positionalArguments())};
+}
 
+void setupAnalytics()
+{
     geometrize::analytics::AnalyticsWrapper analytics;
     analytics.startSession();
     analytics.onLaunch();
+}
 
-    // Open launcher window if there isn't an instance of Geometrize already running
-    geometrize::RunGuard runGuard("geometrize_run_guard_key");
-    geometrize::dialog::LaunchWindow w;
-    if(runGuard.tryToRun()) {
-        w.show();
-    }
-
-    return app.exec();
 }
