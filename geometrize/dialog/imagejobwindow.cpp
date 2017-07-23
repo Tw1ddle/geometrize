@@ -294,10 +294,6 @@ public:
         }
     }
 
-    // TODO
-    // Default to the Geometrize library default/hardcoded implementation
-    //activateLibraryShapeMutation(); ??
-
     /**
      * @brief activateLibraryShapeMutation Uses the Geometrize library's built-in implementation for mutating shapes.
      */

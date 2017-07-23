@@ -189,5 +189,5 @@ RESOURCES += ../resources/icons.qrc \
     ../resources/translations.qrc \
     ../resources/web_export.qrc
 
-RC_ICONS = ../app_icons/icon.ico
-RC_FILE = ../app_icons/winicon.rc
+RC_ICONS = ../resources/app_icons/icon.ico
+RC_FILE = ../resources/app_icons/winicon.rc
