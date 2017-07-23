@@ -4,7 +4,7 @@
 #include <QString>
 #include <QWidget>
 
-#include "logmessageevents.h"
+#include "logger/logmessageevents.h"
 
 namespace geometrize
 {

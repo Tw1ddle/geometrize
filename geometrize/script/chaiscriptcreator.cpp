@@ -2,7 +2,7 @@
 
 #include "chaiscript/chaiscript.hpp"
 
-#include "bindingscreator.h"
+#include "script/bindingscreator.h"
 
 namespace
 {

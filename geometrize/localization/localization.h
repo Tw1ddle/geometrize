@@ -8,8 +8,6 @@ class QIcon;
 namespace geometrize
 {
 
-
-
 /**
  * @brief getBinaryTranslationFileExtension Gets the file extension for Qt binary translation files.
  * @return The file extension for Qt binary file extension, including the dot prefix e.g. ".qm".

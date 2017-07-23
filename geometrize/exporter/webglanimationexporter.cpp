@@ -1,6 +1,6 @@
 #include "webglanimationexporter.h"
 
-#include <assert.h>
+#include <cassert>
 #include <string>
 #include <vector>
 

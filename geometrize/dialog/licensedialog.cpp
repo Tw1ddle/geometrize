@@ -1,7 +1,7 @@
 #include "licensedialog.h"
 #include "ui_licensedialog.h"
 
-#include <assert.h>
+#include <cassert>
 
 #include <QByteArray>
 #include <QFile>

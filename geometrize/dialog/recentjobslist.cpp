@@ -1,6 +1,6 @@
 #include "recentjobslist.h"
 
-#include "assert.h"
+#include <cassert>
 
 #include <QAction>
 #include <QApplication>
@@ -8,7 +8,7 @@
 #include <QContextMenuEvent>
 #include <QMenu>
 
-#include "recentitemwidget.h"
+#include "dialog/recentitemwidget.h"
 #include "recents/recentitem.h"
 #include "recents/recentitems.h"
 

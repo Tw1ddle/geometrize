@@ -4,6 +4,7 @@
 #include <QMessageBox>
 
 #include "chaiscript/chaiscript.hpp"
+
 #include "script/chaiscriptcreator.h"
 #include "script/scriptoptions.h"
 

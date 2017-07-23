@@ -5,7 +5,7 @@
 #include <QFileDialog>
 #include <QUrl>
 
-#include "constants.h"
+#include "common/constants.h"
 #include "dialog/aboutdialog.h"
 #include "dialog/globalpreferencesdialog.h"
 #include "dialog/launchwindow.h"

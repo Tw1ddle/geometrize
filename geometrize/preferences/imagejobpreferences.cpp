@@ -1,6 +1,6 @@
 #include "imagejobpreferences.h"
 
-#include <assert.h>
+#include <cassert>
 #include <fstream>
 #include <ostream>
 

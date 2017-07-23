@@ -20,12 +20,12 @@
 #include "geometrize/shape/rotatedrectangle.h"
 #include "geometrize/shape/triangle.h"
 
-#include "bindingswrapper.h"
 #include "dialog/launchwindow.h"
 #include "exporter/imageexporter.h"
 #include "job/imagejob.h"
 #include "image/imageloader.h"
-#include "scriptutil.h"
+#include "script/bindingswrapper.h"
+#include "script/scriptutil.h"
 
 #define ADD_CONST_VAR(Class, Name) try { module->add(chaiscript::const_var(&Class::Name), #Name); } catch(...) { assert(0 && #Name); }
 #define ADD_FREE_FUN(Name) try { module->add(chaiscript::fun(&Name), #Name); } catch(...) { assert(0 && #Name); }

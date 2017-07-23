@@ -1,6 +1,6 @@
 #include "image/imageloader.h"
 
-#include <assert.h>
+#include <cassert>
 
 #include <QImage>
 #include <QPixmap>

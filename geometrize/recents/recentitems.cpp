@@ -1,6 +1,6 @@
 #include "recentitems.h"
 
-#include <assert.h>
+#include <cassert>
 #include <atomic>
 
 #include <QDateTime>

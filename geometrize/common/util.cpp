@@ -1,6 +1,6 @@
 #include "util.h"
 
-#include <assert.h>
+#include <cassert>
 #include <fstream>
 #include <random>
 

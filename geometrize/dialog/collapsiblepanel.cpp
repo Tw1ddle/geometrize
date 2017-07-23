@@ -1,6 +1,6 @@
 #include "collapsiblepanel.h"
 
-#include <assert.h>
+#include <cassert>
 
 #include <QFrame>
 #include <QGridLayout>

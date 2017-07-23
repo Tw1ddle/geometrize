@@ -2,8 +2,8 @@
 #include "ui_aboutdialog.h"
 
 #include "common/constants.h"
-#include "creditsdialog.h"
-#include "licensedialog.h"
+#include "dialog/creditsdialog.h"
+#include "dialog/licensedialog.h"
 #include "localization/strings.h"
 #include "version/versioninfo.h"
 

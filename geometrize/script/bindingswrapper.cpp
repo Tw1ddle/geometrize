@@ -1,6 +1,6 @@
 #include "bindingswrapper.h"
 
-#include <assert.h>
+#include <cassert>
 
 #include <QString>
 

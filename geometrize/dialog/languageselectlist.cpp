@@ -6,8 +6,8 @@
 #include <QString>
 
 #include "common/sharedapp.h"
-#include "preferences/globalpreferences.h"
 #include "localization/localization.h"
+#include "preferences/globalpreferences.h"
 
 namespace geometrize
 {

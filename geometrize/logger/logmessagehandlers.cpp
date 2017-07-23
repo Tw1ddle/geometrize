@@ -5,7 +5,7 @@
 #include <QString>
 #include <QtGlobal>
 
-#include "logmessageevents.h"
+#include "logger/logmessageevents.h"
 
 namespace geometrize
 {

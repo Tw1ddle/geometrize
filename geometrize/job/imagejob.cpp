@@ -11,7 +11,7 @@
 #include "geometrize/model.h"
 #include "geometrize/shaperesult.h"
 
-#include "imagejobworker.h"
+#include "job/imagejobworker.h"
 #include "preferences/imagejobpreferences.h"
 
 namespace geometrize

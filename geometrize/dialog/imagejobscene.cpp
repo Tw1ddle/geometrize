@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "imagejobpixmapgraphicsitem.h"
+#include "dialog/imagejobpixmapgraphicsitem.h"
 
 namespace geometrize
 {
