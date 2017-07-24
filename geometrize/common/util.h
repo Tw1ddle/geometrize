@@ -11,10 +11,16 @@ namespace util
 {
 
 /**
- * @brief printToConsole A convenience function for printing a string to the command-line console
+ * @brief printToConsole A convenience function for printing a string to the command-line console.
  * @param str The string to print to the console.
  */
 void printToConsole(const std::string& str);
+
+/**
+ * @brief messageBox A convenience function for displaying a message box containing a message.
+ * @param str The string to display in the message box.
+ */
+void messageBox(const std::string& str);
 
 /**
  * @brief debugBreak Forces the debugger to break/halt the application when this is called.

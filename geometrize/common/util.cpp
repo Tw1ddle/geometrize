@@ -11,6 +11,7 @@
 #include <QDir>
 #include <QDirIterator>
 #include <QFileInfo>
+#include <QMessageBox>
 #include <QStandardPaths>
 #include <QUrl>
 
@@ -38,6 +39,13 @@ void debugBreak()
 void printToConsole(const std::string& str)
 {
     qDebug() << QString::fromStdString(str);
+}
+
+void messageBox(const std::string& str)
+{
+    QMessageBox msgBox;
+    msgBox.setText(QString::fromStdString(str));
+    msgBox.exec();
 }
 
 bool fileExists(const std::string& filePath)

@@ -19,7 +19,6 @@ void runScript(const std::string& code, chaiscript::ChaiScript& runner)
     const QString errorPreamble{QCoreApplication::translate("Script evaluation error message", "Could not evaluate script: %1")};
     const QString unknownError{QCoreApplication::translate("Script evaluation unknown error", "Unknown script evaluation error")};
 
-    // TODO possibly get rid of message boxes
     try {
         runner.eval(code);
     } catch (const std::string& s) {

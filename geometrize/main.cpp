@@ -1,11 +1,9 @@
 #include "dialog/launchwindow.h"
 
-#include <cassert>
 #include <functional>
 #include <string>
 
 #include <QApplication>
-#include <QCommandLineParser>
 #include <QLocale>
 #include <QString>
 #include <QStringList>

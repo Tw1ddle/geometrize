@@ -47,6 +47,7 @@ std::shared_ptr<chaiscript::Module> createDefaultBindings()
     ADD_FREE_FUN(sleep);
 
     ADD_FREE_FUN(debugBreak);
+    ADD_FREE_FUN(messageBox);
     ADD_FREE_FUN(printToConsole);
 
     ADD_FREE_FUN(directoryContainsFile);

@@ -26,6 +26,11 @@ void printToConsole(const std::string& str)
     geometrize::util::printToConsole(str);
 }
 
+void messageBox(const std::string& str)
+{
+    geometrize::util::messageBox(str);
+}
+
 void debugBreak()
 {
     geometrize::util::debugBreak();

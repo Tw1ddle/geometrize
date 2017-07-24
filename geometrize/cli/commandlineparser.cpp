@@ -26,16 +26,6 @@ namespace cli
 {
 
 /**
- * @brief shouldRunInConsoleMode Determines whether the Geometrize application should run in console mode.
- * @param arguments The arguments passed to the application on launch.
- * @return True if the application should run in console mode, else false.
- */
-bool shouldRunInConsoleMode(const QStringList& arguments)
-{
-    return arguments.contains(scriptFlag);
-}
-
-/**
  * @brief setupCommandLineParser Sets up a command line parser to handle application arguments.
  * @param parser The parser to setup.
  * @param arguments The arguments to parse.
@@ -46,16 +36,27 @@ void setupCommandLineParser(QCommandLineParser& parser, const QStringList& argum
     parser.addHelpOption();
     parser.addVersionOption();
 
-    parser.addOptions({
-        {scriptFlag, QCoreApplication::translate("cli", "Executes the ChaiScript script file at the given path or URL.")}
-    });
+    parser.addOption(QCommandLineOption(scriptFlag,
+                                        QCoreApplication::translate("cli", "Executes the ChaiScript script file at the given file path"),
+                                        QCoreApplication::translate("cli", "script"), ""));
 
     if(!parser.parse(arguments)) {
-        // TODO throw
-        //return CommandLineResult(CommandLineError::CommandLineSetupFailed, parser.errorText());
+        assert(0 && "Failed to parse command line arguments");
     }
 
     parser.process(arguments);
+}
+
+/**
+ * @brief shouldRunInConsoleMode Determines whether the Geometrize application should run in console mode.
+ * @param arguments The arguments passed to the application on launch.
+ * @return True if the application should run in console mode, else false.
+ */
+bool shouldRunInConsoleMode(const QStringList& arguments)
+{
+    QCommandLineParser parser;
+    setupCommandLineParser(parser, arguments);
+    return parser.isSet(scriptFlag);
 }
 
 /**
@@ -80,7 +81,6 @@ int runApp(QApplication& app)
     const QStringList arguments{app.arguments()};
 
     QCommandLineParser parser;
-
     setupCommandLineParser(parser, arguments);
     handleCommandLineArguments(parser);
 
