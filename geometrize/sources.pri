@@ -46,6 +46,7 @@ HEADERS += $$PWD/analytics/analytics.h \
     $$PWD/job/imagejobcreator.h \
     $$PWD/job/imagejobworker.h \
     $$PWD/job/jobutil.h \
+    $$PWD/job/synchronousimagejob.h \
     $$PWD/layout/flowlayout.h \
     $$PWD/localization/localization.h \
     $$PWD/localization/strings.h \
@@ -121,6 +122,7 @@ SOURCES += $$PWD/main.cpp \
     $$PWD/job/imagejobcreator.cpp \
     $$PWD/job/imagejobworker.cpp \
     $$PWD/job/jobutil.cpp \
+    $$PWD/job/synchronousimagejob.cpp \
     $$PWD/layout/flowlayout.cpp \
     $$PWD/localization/localization.cpp \
     $$PWD/localization/strings.cpp \

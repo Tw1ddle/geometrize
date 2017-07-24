@@ -5,8 +5,6 @@
 #include <vector>
 
 #include <QObject>
-#include <QImage>
-#include <QString>
 
 #include "geometrize/bitmap/bitmap.h"
 #include "geometrize/shaperesult.h"
@@ -31,10 +29,10 @@ class ImageJob : public QObject
 {
     Q_OBJECT
 public:
-    ImageJob(Bitmap& target);
-    ImageJob(Bitmap& target, Bitmap& background);
-    ImageJob(const std::string& displayName, Bitmap& bitmap);
-    ImageJob(const std::string& displayName, Bitmap& bitmap, const Bitmap& initial);
+    ImageJob(Bitmap& target, Qt::ConnectionType connectionType = Qt::AutoConnection);
+    ImageJob(Bitmap& target, Bitmap& background, Qt::ConnectionType connectionType = Qt::AutoConnection);
+    ImageJob(const std::string& displayName, Bitmap& bitmap, Qt::ConnectionType connectionType = Qt::AutoConnection);
+    ImageJob(const std::string& displayName, Bitmap& bitmap, const Bitmap& initial, Qt::ConnectionType connectionType = Qt::AutoConnection);
 
     ImageJob& operator=(const ImageJob&) = delete;
     ImageJob(const ImageJob&) = delete;

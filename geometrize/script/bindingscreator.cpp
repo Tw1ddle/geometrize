@@ -21,6 +21,7 @@
 #include "dialog/launchwindow.h"
 #include "exporter/imageexporter.h"
 #include "job/imagejob.h"
+#include "job/synchronousimagejob.h"
 #include "image/imageloader.h"
 #include "script/bindingswrapper.h"
 #include "script/chaiscriptmathextras.h"
@@ -155,6 +156,15 @@ std::shared_ptr<chaiscript::Module> createImageJobBindings()
 
     ADD_MEMBER(ImageJob, getTarget);
     ADD_MEMBER(ImageJob, getCurrent);
+
+    ADD_TYPE(SynchronousImageJob);
+
+    ADD_CONSTRUCTOR(SynchronousImageJob, SynchronousImageJob(Bitmap&));
+    ADD_CONSTRUCTOR(SynchronousImageJob, SynchronousImageJob(Bitmap&, Bitmap&));
+
+    ADD_MEMBER(SynchronousImageJob, stepModel);
+    ADD_MEMBER(SynchronousImageJob, getTarget);
+    ADD_MEMBER(SynchronousImageJob, getCurrent);
 
     //ADD_MEMBER(ImageJob, getShapeMutator); //ShapeMutator& getShapeMutator();
 
