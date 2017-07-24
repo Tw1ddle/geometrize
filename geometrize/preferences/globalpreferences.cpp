@@ -37,7 +37,8 @@ public:
     {
         std::ifstream input(filePath);
         try {
-            m_data.archive(cereal::JSONInputArchive(input), m_imageJobResizeEnabled, m_imageJobResizeThreshold, m_languageIsoCode, m_scriptIsoCode, m_countryIsoCode);
+            cereal::JSONInputArchive archive{input};
+            m_data.archive(archive, m_imageJobResizeEnabled, m_imageJobResizeThreshold, m_languageIsoCode, m_scriptIsoCode, m_countryIsoCode);
         } catch(...) {
             assert(0 && "Failed to read global preferences");
         }
@@ -47,7 +48,8 @@ public:
     {
         std::ofstream output(filePath);
         try {
-            m_data.archive(cereal::JSONOutputArchive(output), m_imageJobResizeEnabled, m_imageJobResizeThreshold, m_languageIsoCode, m_scriptIsoCode, m_countryIsoCode);
+            cereal::JSONOutputArchive archive{output};
+            m_data.archive(archive, m_imageJobResizeEnabled, m_imageJobResizeThreshold, m_languageIsoCode, m_scriptIsoCode, m_countryIsoCode);
         } catch(...) {
             assert(0 && "Failed to write global preferences");
         }

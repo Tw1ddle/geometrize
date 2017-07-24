@@ -21,7 +21,8 @@ public:
         serialization::StreamView streamView(manifestFilepath);
         std::istream input(&streamView);
         try {
-            m_data.load(cereal::JSONInputArchive(input));
+            cereal::JSONInputArchive archive{input};
+            m_data.load(archive);
         } catch(...) {
             assert(0 && "Failed to read template manifest");
         }

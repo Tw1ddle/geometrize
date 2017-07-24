@@ -16,7 +16,7 @@ namespace
 
 geometrize::Bitmap imageToBitmap(const QImage& image)
 {
-    QImage& im {image.copy()};
+    QImage im{image.copy()};
 
     const geometrize::preferences::GlobalPreferences& prefs{geometrize::common::app::SharedApp::get().getGlobalPreferences()};
     if(prefs.isImageJobImageResizeEnabled()) {
@@ -42,7 +42,8 @@ namespace job
 
 void createImageJobAndWindow(const std::string& displayName, const std::string& jobUrl)
 {
-    std::shared_ptr<ImageJob> job{std::make_shared<ImageJob>(displayName, imageToBitmap(geometrize::image::loadImage(jobUrl)))};
+    geometrize::Bitmap bitmap{imageToBitmap(geometrize::image::loadImage(jobUrl))};
+    std::shared_ptr<ImageJob> job{std::make_shared<ImageJob>(displayName, bitmap)};
     dialog::ImageJobWindow* imageJobWindow{new dialog::ImageJobWindow()};
     imageJobWindow->setImageJob(job);
     imageJobWindow->show();
@@ -50,7 +51,8 @@ void createImageJobAndWindow(const std::string& displayName, const std::string& 
 
 void createImageJobAndWindow(const std::string& displayName, const QImage& image)
 {
-    std::shared_ptr<ImageJob> job{std::make_shared<ImageJob>(displayName, imageToBitmap(image))};
+    geometrize::Bitmap bitmap{imageToBitmap(image)};
+    std::shared_ptr<ImageJob> job{std::make_shared<ImageJob>(displayName, bitmap)};
     dialog::ImageJobWindow* imageJobWindow{new dialog::ImageJobWindow()};
     imageJobWindow->setImageJob(job);
     imageJobWindow->show();

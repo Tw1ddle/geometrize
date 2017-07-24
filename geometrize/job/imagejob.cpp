@@ -23,16 +23,16 @@ namespace job
 class ImageJob::ImageJobImpl
 {
 public:
-    ImageJobImpl(ImageJob* pQ, const std::string& displayName, Bitmap& bitmap, const Qt::ConnectionType connectionType) :
+    ImageJobImpl(ImageJob* pQ, const std::string& displayName, Bitmap& bitmap) :
         q{pQ}, m_preferences{}, m_displayName{displayName}, m_id{getId()}, m_worker{bitmap}
     {
-        init(connectionType);
+        init();
     }
 
-    ImageJobImpl(ImageJob* pQ, const std::string& displayName, Bitmap& bitmap, const Bitmap& initial, const Qt::ConnectionType connectionType) :
+    ImageJobImpl(ImageJob* pQ, const std::string& displayName, Bitmap& bitmap, const Bitmap& initial) :
         q{pQ}, m_preferences{}, m_displayName{displayName}, m_id{getId()}, m_worker{bitmap, initial}
     {
-        init(connectionType);
+        init();
     }
 
     ~ImageJobImpl()
@@ -106,7 +106,7 @@ private:
         return id++;
     }
 
-    void init(const Qt::ConnectionType connectionType)
+    void init()
     {
         qRegisterMetaType<std::vector<geometrize::ShapeResult>>();
         qRegisterMetaType<geometrize::ImageRunnerOptions>();
@@ -114,8 +114,7 @@ private:
         m_worker.moveToThread(&m_workerThread);
         m_workerThread.start();
 
-        // NOTE should use direct connections for synchronous/immediate return behavior when running scripts/CLI
-        connectSignals(connectionType);
+        connectSignals(Qt::AutoConnection);
     }
 
     void connectSignals(const Qt::ConnectionType connectionType)
@@ -140,23 +139,23 @@ private:
     ImageJobWorker m_worker; ///> The image job worker.
 };
 
-ImageJob::ImageJob(Bitmap& target, const Qt::ConnectionType connectionType) : QObject(),
-    d{std::make_unique<ImageJob::ImageJobImpl>(this, "", target, connectionType)}
+ImageJob::ImageJob(Bitmap& target) : QObject(),
+    d{std::make_unique<ImageJob::ImageJobImpl>(this, "", target)}
 {
 }
 
-ImageJob::ImageJob(Bitmap& target, Bitmap& background, const Qt::ConnectionType connectionType) : QObject(),
-    d{std::make_unique<ImageJob::ImageJobImpl>(this, "", target, background, connectionType)}
+ImageJob::ImageJob(Bitmap& target, Bitmap& background) : QObject(),
+    d{std::make_unique<ImageJob::ImageJobImpl>(this, "", target, background)}
 {
 }
 
-ImageJob::ImageJob(const std::string& displayName, Bitmap& bitmap, const Qt::ConnectionType connectionType) : QObject(),
-    d{std::make_unique<ImageJob::ImageJobImpl>(this, displayName, bitmap, connectionType)}
+ImageJob::ImageJob(const std::string& displayName, Bitmap& bitmap) : QObject(),
+    d{std::make_unique<ImageJob::ImageJobImpl>(this, displayName, bitmap)}
 {
 }
 
-ImageJob::ImageJob(const std::string& displayName, Bitmap& bitmap, const Bitmap& initial, const Qt::ConnectionType connectionType) : QObject(),
-    d{std::make_unique<ImageJob::ImageJobImpl>(this, displayName, bitmap, initial, connectionType)}
+ImageJob::ImageJob(const std::string& displayName, Bitmap& bitmap, const Bitmap& initial) : QObject(),
+    d{std::make_unique<ImageJob::ImageJobImpl>(this, displayName, bitmap, initial)}
 {
 }
 

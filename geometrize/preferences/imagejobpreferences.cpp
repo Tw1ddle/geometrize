@@ -33,7 +33,8 @@ public:
     {
         std::ifstream input(filePath);
         try {
-            m_data.archive(cereal::JSONInputArchive(input), m_options, m_scriptsEnabled, m_scripts);
+            cereal::JSONInputArchive archive{input};
+            m_data.archive(archive, m_options, m_scriptsEnabled, m_scripts);
         } catch(...) {
             assert(0 && "Failed to read image preferences");
         }
@@ -43,7 +44,8 @@ public:
     {
         std::ofstream output(filePath);
         try {
-            m_data.archive(cereal::JSONOutputArchive(output), m_options, m_scriptsEnabled, m_scripts);
+            cereal::JSONOutputArchive archive{output};
+            m_data.archive(archive, m_options, m_scriptsEnabled, m_scripts);
         } catch(...) {
             assert(0 && "Failed to write image preferences");
         }
