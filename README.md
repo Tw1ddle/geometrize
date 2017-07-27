@@ -25,7 +25,7 @@ Basic usage is simple. Open an image in Geometrize, select the desired settings,
 
 ## Screenshots
 
-[![Geometrized Boreas](https://github.com/Tw1ddle/geometrize-templates/blob/master/screenshots/boreas.jpg?raw=true "Geometrized Boreas")](https://www.geometrize.co.uk/)
+[![Geometrized Boreas](https://github.com/Tw1ddle/geometrize/blob/master/screenshots/boreas.jpg?raw=true "Geometrized Boreas")](https://www.geometrize.co.uk/)
 
 ## Resources
 
