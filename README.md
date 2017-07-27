@@ -1,25 +1,31 @@
-[![Geometrize Logo](https://github.com/Tw1ddle/geometrize/blob/master/screenshots/geometrize_logo.png?raw=true "Geometrize logo")](https://www.geometrize.co.uk/)
+[![Geometrize Logo](https://github.com/Tw1ddle/geometrize/blob/master/screenshots/logo.png?raw=true "Geometrize logo")](https://www.geometrize.co.uk/)
 
 [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](https://github.com/Tw1ddle/geometrize/blob/master/LICENSE)
 
 Geometrize is an app that geometrizes images into geometric primitives. Look through the [website](http://www.geometrize.co.uk/) and [gallery](http://gallery.geometrize.co.uk/).
 
-Stable Geometrize releases are available through the Windows Store, the Mac App Store and Linux. Also try the interactive Haxe [demo](http://www.samcodes.co.uk/project/geometrize-haxe-web/).
+Stable Geometrize releases are available through the Windows Store, the Mac App Store and Linux.
+
+Also try the online web [demo](http://www.samcodes.co.uk/project/geometrize-haxe-web/).
 
 ## Features
 
  * Recreate images using geometric primitives.
- * Includes hundreds of examples with pre-tuned settings.
- * Export geometrized images as SVG, PNG, JPG or animated GIF.
+ * Try hundreds of [examples](https://github.com/Tw1ddle/geometrize-templates) with pre-tuned settings.
+ * Export geometrized images to SVG, PNG, JPG and animated GIF.
  * Export geometrized images as HTML5 canvas or WebGL webpages.
- * Export raw shape data as JSON for your custom projects or creations.
- * Control the algorithm at the core of Geometrize with ChaiScript scripts.
+ * Export shape data as JSON for use in custom projects and creations.
+ * Control the algorithm at the core of Geometrize with ChaiScript [scripts](https://github.com/Tw1ddle/geometrize-scripts).
 
 ## Usage
 
-Watch the video tutorials on how to get the most out of Geometrize [here]().
+Watch these video tutorials on how to get the most out of Geometrize [here](https://www.youtube.com/playlist?list=PLe9ogi_J4cFgcqLdpmPC7GdFV5ohJPEzN).
+
+Basic usage is simple. Open an image in Geometrize, select the desired settings, and hit start.
 
 ## Screenshots
+
+[![Geometrized Boreas](https://github.com/Tw1ddle/geometrize-templates/blob/master/screenshots/boreas.jpg?raw=true "Geometrized Boreas")](https://www.geometrize.co.uk/)
 
 ## Resources
 
@@ -29,6 +35,10 @@ Watch the video tutorials on how to get the most out of Geometrize [here]().
  * See the HaxeFlixel Geometrize [demo](http://samcodes.co.uk/project/geometrize-haxe-flixel/) and the [demo code](https://github.com/Tw1ddle/geometrize-haxe-demo/).
  * See the Primitive Go [repository](https://github.com/fogleman/primitive).
 
+## Build Status
+
+
+ 
 ## Notes
  * Geometrize was inspired by [primitive](https://github.com/fogleman/primitive), a Go library created by [Michael Fogleman](https://github.com/fogleman).
  * Got an idea or suggestion? Open an issue on GitHub, or send Sam a message on [Twitter](https://twitter.com/Sam_Twidale).
