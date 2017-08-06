@@ -142,21 +142,11 @@ std::shared_ptr<chaiscript::Module> createImageBindings()
 std::shared_ptr<chaiscript::Module> createImageJobBindings()
 {
     using namespace geometrize::job;
+    using namespace geometrize::preferences;
 
     auto module{std::make_shared<chaiscript::Module>()};
 
-    ADD_TYPE(ImageJob);
-
-    ADD_CONSTRUCTOR(ImageJob, ImageJob(Bitmap&));
-    ADD_CONSTRUCTOR(ImageJob, ImageJob(Bitmap&, Bitmap&));
-
-    ADD_MEMBER(ImageJob, getDisplayName);
-    ADD_MEMBER(ImageJob, getJobId);
-    ADD_MEMBER(ImageJob, stepModel);
-
-    ADD_MEMBER(ImageJob, getTarget);
-    ADD_MEMBER(ImageJob, getCurrent);
-
+    // Note we use synchronous-stepping image jobs for simplicity in scripts
     ADD_TYPE(SynchronousImageJob);
 
     ADD_CONSTRUCTOR(SynchronousImageJob, SynchronousImageJob(Bitmap&));
@@ -165,14 +155,41 @@ std::shared_ptr<chaiscript::Module> createImageJobBindings()
     ADD_MEMBER(SynchronousImageJob, stepModel);
     ADD_MEMBER(SynchronousImageJob, getTarget);
     ADD_MEMBER(SynchronousImageJob, getCurrent);
+    ADD_MEMBER(SynchronousImageJob, getPreferences);
+    ADD_MEMBER(SynchronousImageJob, setPreferences);
 
-    //ADD_MEMBER(ImageJob, getShapeMutator); //ShapeMutator& getShapeMutator();
+    ADD_TYPE(ImageJobPreferences);
 
-    //geometrize::preferences::ImageJobPreferences& getPreferences();
-    //ADD_MEMBER(ImageJob, getPreferences);
+    ADD_CONSTRUCTOR(ImageJobPreferences, ImageJobPreferences());
+    ADD_CONSTRUCTOR(ImageJobPreferences, ImageJobPreferences(const std::string&));
+    ADD_CONSTRUCTOR(ImageJobPreferences, ImageJobPreferences(const ImageJobPreferences&));
 
-    //void setPreferences(preferences::ImageJobPreferences preferences);
-    //ADD_MEMBER(ImageJob, setPreferences);
+    chaiscript::utility::add_class<geometrize::ShapeTypes>(*module,
+      "ShapeTypes",
+    {
+      { RECTANGLE, "RECTANGLE" },
+      { ROTATED_RECTANGLE, "ROTATED_RECTANGLE" },
+      { TRIANGLE, "TRIANGLE" },
+      { ELLIPSE, "ELLIPSE" },
+      { ROTATED_ELLIPSE, "ROTATED_ELLIPSE" },
+      { CIRCLE, "CIRCLE" },
+      { LINE, "LINE" },
+      { QUADRATIC_BEZIER, "QUADRATIC_BEZIER" },
+      { POLYLINE, "POLYLINE" }
+    });
+
+    ADD_MEMBER(ImageJobPreferences, enableShapeTypes);
+    ADD_MEMBER(ImageJobPreferences, disableShapeTypes);
+    ADD_MEMBER(ImageJobPreferences, setShapeTypes);
+    ADD_MEMBER(ImageJobPreferences, setShapeAlpha);
+    ADD_MEMBER(ImageJobPreferences, setCandidateShapeCount);
+    ADD_MEMBER(ImageJobPreferences, setMaxShapeMutations);
+    ADD_MEMBER(ImageJobPreferences, setSeed);
+    ADD_MEMBER(ImageJobPreferences, setMaxThreads);
+
+    ADD_MEMBER(ImageJobPreferences, isScriptModeEnabled);
+    ADD_MEMBER(ImageJobPreferences, setScriptModeEnabled);
+    ADD_MEMBER(ImageJobPreferences, setScript);
 
     return module;
 }
