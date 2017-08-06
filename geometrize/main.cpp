@@ -36,11 +36,21 @@ void installMessageHandlers()
     qInstallMessageHandler(geometrize::log::handleLogMessages);
 }
 
-void setLocale(const std::string& languageCode)
+void setLocale(const QStringList& arguments)
 {
-    // TODO sets the locale based on the global preference, should only use it if one is set (by default there should be no preference, so it should use the system?)
+    const std::string languageCode = [&arguments]() {
+        const std::string overrideCode{geometrize::cli::getOverrideLocaleCode(arguments)};
+        if(!overrideCode.empty()) {
+            return overrideCode;
+        }
+
+        geometrize::preferences::GlobalPreferences& prefs{geometrize::common::app::SharedApp::get().getGlobalPreferences()};
+        return prefs.getLanguageIsoCode();
+    }();
+
+    // TODO should only use this if a locale is set (by default there should be no preference, so it should use the system?)
     QLocale::setDefault(QLocale(QString::fromStdString(languageCode)));
-    geometrize::setTranslatorsForLocale(QLocale::system().name());
+    geometrize::setTranslatorsForLocale(QString::fromStdString(languageCode));
 }
 
 void setupAnalytics()
@@ -79,11 +89,12 @@ int main(int argc, char* argv[])
 
     QApplication app(argc, argv);
 
-    geometrize::preferences::GlobalPreferences& prefs{geometrize::common::app::SharedApp::get().getGlobalPreferences()};
-    setLocale(prefs.getLanguageIsoCode());
+    const QStringList arguments{app.arguments()};
 
     setupAnalytics();
 
-    const auto run{resolveLaunchFunction(app.arguments())};
+    setLocale(arguments);
+
+    const auto run{resolveLaunchFunction(arguments)};
     return run(app);
 }
