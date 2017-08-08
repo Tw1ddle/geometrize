@@ -11,8 +11,7 @@ defineReplace(prependAll) {
 }
 TRANSLATIONS = $$prependAll(LANGUAGES, $${PWD}/app/, .ts)
 
-# TODO needs fixing for mingw
-# TODO need to run: lupdate "C:\Users\admin\Desktop\Cpp Coding\geometrize\geometrize\geometrize.pro" # -ts "C:\Users\admin\Desktop\Cpp Coding\geometrize\geometrize\translations\de_untranslated.ts" for each language?
+# TODO need to run: lupdate "C:\Users\admin\Desktop\Cpp Coding\geometrize\geometrize\geometrize.pro" # -ts "C:\Users\admin\Desktop\Cpp Coding\geometrize\geometrize\translations\de_untranslated.ts" for each language
 # Automatically update the ts files for the given languages
 #qtPrepareTool(LUPDATE, lupdate)
 #LUPDATE += -locations relative -no-ui-lines

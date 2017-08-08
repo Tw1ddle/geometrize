@@ -5,6 +5,9 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = Geometrize
 TEMPLATE = app
 
+# Enable C++14 features
+CONFIG += c++14
+
 # Flag for ChaiScript linking
 msvc:QMAKE_CXXFLAGS += -bigobj
 

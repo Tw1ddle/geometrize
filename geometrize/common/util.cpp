@@ -1,6 +1,7 @@
 #include "util.h"
 
 #include <cassert>
+#include <csignal>
 #include <fstream>
 #include <random>
 
@@ -31,6 +32,9 @@ void debugBreak()
 {
 #ifdef _MSC_VER
     __debugbreak();
+#elif __MINGW32__
+    // Not sure how to break here...
+    assert(0 && "Mingw32 debug break");
 #else
     raise(SIGTRAP);
 #endif

@@ -13,14 +13,14 @@
 
 #include "preferences/imagejobpreferences.h"
 
+Q_DECLARE_METATYPE(std::vector<geometrize::ShapeResult>) ///< Shape data passed around by the image job worker thread.
+Q_DECLARE_METATYPE(geometrize::ImageRunnerOptions) ///< Image runner options passed to the image job worker thread.
+
 namespace geometrize
 {
 
 namespace job
 {
-
-Q_DECLARE_METATYPE(std::vector<geometrize::ShapeResult>) ///< Shape data passed around by the image job worker thread.
-Q_DECLARE_METATYPE(geometrize::ImageRunnerOptions) ///< Image runner options passed to the image job worker thread.
 
 /**
  * @brief The ImageJob class transforms a source image into a collection of shapes approximating the source image.
@@ -36,7 +36,7 @@ public:
 
     ImageJob& operator=(const ImageJob&) = delete;
     ImageJob(const ImageJob&) = delete;
-    ~ImageJob() = default;
+    ~ImageJob();
 
     /**
      * @brief getTarget Gets the target bitmap.

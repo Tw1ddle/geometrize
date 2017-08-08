@@ -102,7 +102,7 @@ public:
 private:
     static std::size_t getId()
     {
-        static std::atomic<std::size_t> id = 0;
+        static std::atomic<std::size_t> id{0U};
         return id++;
     }
 
@@ -156,6 +156,10 @@ ImageJob::ImageJob(const std::string& displayName, Bitmap& bitmap) : QObject(),
 
 ImageJob::ImageJob(const std::string& displayName, Bitmap& bitmap, const Bitmap& initial) : QObject(),
     d{std::make_unique<ImageJob::ImageJobImpl>(this, displayName, bitmap, initial)}
+{
+}
+
+ImageJob::~ImageJob()
 {
 }
 

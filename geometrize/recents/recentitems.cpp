@@ -1,6 +1,7 @@
 #include "recentitems.h"
 
 #include <atomic>
+#include <cstdint>
 #include <cassert>
 
 #include <QDateTime>
@@ -147,7 +148,7 @@ private:
 
     static QString getId()
     {
-        static std::atomic_int id = 0;
+        static std::atomic<std::size_t> id{0U};
         return QString::number(id++);
     }
 
