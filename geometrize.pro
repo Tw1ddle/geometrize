@@ -21,5 +21,6 @@ include($$PWD/geometrize/sources.pri)
 # Generate localization TS files and then binary QM files, which it puts into the resources folder
 include($$PWD/translations/translations.pri)
 
-# Include resources that Geometrize needs, such as icons, images and scripts
+# Include resources that Geometrize requires, such as icons, images and scripts
+# Note this must come last, as .qrc resource files are automatically generated
 include($$PWD/resources/resources.pri)

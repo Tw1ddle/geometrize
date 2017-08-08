@@ -18,5 +18,6 @@
         <file>scripts/scripts/default_shape_mutators/setupRotatedEllipse.chai</file>
         <file>scripts/scripts/default_shape_mutators/setupRotatedRectangle.chai</file>
         <file>scripts/scripts/default_shape_mutators/setupTriangle.chai</file>
+        <file>scripts/scripts/misc/imagejob.chai</file>
     </qresource>
 </RCC>

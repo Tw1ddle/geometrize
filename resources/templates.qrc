@@ -116,14 +116,14 @@
         <file>templates/templates/fencers_sparring/fencers_sparring.jpeg</file>
         <file>templates/templates/fencers_sparring/manifest.json</file>
         <file>templates/templates/fencers_sparring/settings.json</file>
-        <file>templates/templates/fire_whirl/activate.chai</file>
-        <file>templates/templates/fire_whirl/fire_whirl.png</file>
-        <file>templates/templates/fire_whirl/manifest.json</file>
-        <file>templates/templates/fire_whirl/settings.json</file>
         <file>templates/templates/firework_spinning/activate.chai</file>
         <file>templates/templates/firework_spinning/firework_spinning.jpeg</file>
         <file>templates/templates/firework_spinning/manifest.json</file>
         <file>templates/templates/firework_spinning/settings.json</file>
+        <file>templates/templates/fire_whirl/activate.chai</file>
+        <file>templates/templates/fire_whirl/fire_whirl.png</file>
+        <file>templates/templates/fire_whirl/manifest.json</file>
+        <file>templates/templates/fire_whirl/settings.json</file>
         <file>templates/templates/foal/activate.chai</file>
         <file>templates/templates/foal/foal.png</file>
         <file>templates/templates/foal/manifest.json</file>
@@ -236,10 +236,6 @@
         <file>templates/templates/kite_bird/kite_bird.png</file>
         <file>templates/templates/kite_bird/manifest.json</file>
         <file>templates/templates/kite_bird/settings.json</file>
-        <file>templates/templates/le_desespere/activate.chai</file>
-        <file>templates/templates/le_desespere/le_desespere.jpg</file>
-        <file>templates/templates/le_desespere/manifest.json</file>
-        <file>templates/templates/le_desespere/settings.json</file>
         <file>templates/templates/leafy_railroad/activate.chai</file>
         <file>templates/templates/leafy_railroad/leafy_railroad.jpg</file>
         <file>templates/templates/leafy_railroad/manifest.json</file>
@@ -248,6 +244,10 @@
         <file>templates/templates/lemon/lemon.jpg</file>
         <file>templates/templates/lemon/manifest.json</file>
         <file>templates/templates/lemon/settings.json</file>
+        <file>templates/templates/le_desespere/activate.chai</file>
+        <file>templates/templates/le_desespere/le_desespere.jpg</file>
+        <file>templates/templates/le_desespere/manifest.json</file>
+        <file>templates/templates/le_desespere/settings.json</file>
         <file>templates/templates/lotus_flower/activate.chai</file>
         <file>templates/templates/lotus_flower/lotus_flower.jpg</file>
         <file>templates/templates/lotus_flower/manifest.json</file>
@@ -272,14 +272,14 @@
         <file>templates/templates/mixed_peppers/manifest.json</file>
         <file>templates/templates/mixed_peppers/mixed_peppers.jpg</file>
         <file>templates/templates/mixed_peppers/settings.json</file>
-        <file>templates/templates/mona_lisa/activate.chai</file>
-        <file>templates/templates/mona_lisa/manifest.json</file>
-        <file>templates/templates/mona_lisa/mona_lisa.png</file>
-        <file>templates/templates/mona_lisa/settings.json</file>
         <file>templates/templates/monarch_butterfly/activate.chai</file>
         <file>templates/templates/monarch_butterfly/manifest.json</file>
         <file>templates/templates/monarch_butterfly/monarch_butterfly.jpg</file>
         <file>templates/templates/monarch_butterfly/settings.json</file>
+        <file>templates/templates/mona_lisa/activate.chai</file>
+        <file>templates/templates/mona_lisa/manifest.json</file>
+        <file>templates/templates/mona_lisa/mona_lisa.png</file>
+        <file>templates/templates/mona_lisa/settings.json</file>
         <file>templates/templates/muffin/activate.chai</file>
         <file>templates/templates/muffin/manifest.json</file>
         <file>templates/templates/muffin/muffin.jpeg</file>

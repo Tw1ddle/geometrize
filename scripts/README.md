@@ -1,0 +1,1 @@
+This folder contains scripts that help in the build process for Geometrize.

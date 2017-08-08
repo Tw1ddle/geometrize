@@ -127,7 +127,7 @@
                  <string notr="true"/>
                 </property>
                 <property name="pixmap">
-                 <pixmap resource="../resources/application_resources.qrc">:/logos/logo_small.png</pixmap>
+                 <pixmap resource="../../resources/logos.qrc">:/logos/logo_small.png</pixmap>
                 </property>
                </widget>
               </item>
@@ -220,7 +220,7 @@
                    <string>Open Image</string>
                   </property>
                   <property name="icon">
-                   <iconset resource="../resources/application_resources.qrc">
+                   <iconset resource="../../resources/icons.qrc">
                     <normaloff>:/icons/folder_image.png</normaloff>:/icons/folder_image.png</iconset>
                   </property>
                   <property name="iconSize">
@@ -252,7 +252,7 @@
                    <string>Open Link</string>
                   </property>
                   <property name="icon">
-                   <iconset resource="../resources/application_resources.qrc">
+                   <iconset resource="../../resources/icons.qrc">
                     <normaloff>:/icons/globe_network.png</normaloff>:/icons/globe_network.png</iconset>
                   </property>
                   <property name="iconSize">
@@ -281,7 +281,7 @@
                    <string>Run Script</string>
                   </property>
                   <property name="icon">
-                   <iconset resource="../resources/application_resources.qrc">
+                   <iconset resource="../../resources/icons.qrc">
                     <normaloff>:/icons/script_go.png</normaloff>:/icons/script_go.png</iconset>
                   </property>
                   <property name="iconSize">
@@ -640,7 +640,8 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../resources/application_resources.qrc"/>
+  <include location="../../resources/icons.qrc"/>
+  <include location="../../resources/logos.qrc"/>
  </resources>
  <connections/>
 </ui>

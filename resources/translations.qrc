@@ -1,11 +1,31 @@
 <RCC>
     <qresource prefix="/">
         <file>translations/app/geometrize_de.qm</file>
+        <file>translations/app/geometrize_en.qm</file>
         <file>translations/app/geometrize_fr.qm</file>
         <file>translations/app/geometrize_it.qm</file>
         <file>translations/app/geometrize_ja.qm</file>
         <file>translations/app/geometrize_zh.qm</file>
-        <file>translations/app/geometrize_en.qm</file>
+        <file>translations/qt/qtbase_bg.qm</file>
+        <file>translations/qt/qtbase_ca.qm</file>
+        <file>translations/qt/qtbase_cs.qm</file>
+        <file>translations/qt/qtbase_da.qm</file>
+        <file>translations/qt/qtbase_de.qm</file>
+        <file>translations/qt/qtbase_en.qm</file>
+        <file>translations/qt/qtbase_es.qm</file>
+        <file>translations/qt/qtbase_fi.qm</file>
+        <file>translations/qt/qtbase_fr.qm</file>
+        <file>translations/qt/qtbase_gd.qm</file>
+        <file>translations/qt/qtbase_he.qm</file>
+        <file>translations/qt/qtbase_hu.qm</file>
+        <file>translations/qt/qtbase_it.qm</file>
+        <file>translations/qt/qtbase_ja.qm</file>
+        <file>translations/qt/qtbase_ko.qm</file>
+        <file>translations/qt/qtbase_lv.qm</file>
+        <file>translations/qt/qtbase_pl.qm</file>
+        <file>translations/qt/qtbase_ru.qm</file>
+        <file>translations/qt/qtbase_sk.qm</file>
+        <file>translations/qt/qtbase_uk.qm</file>
         <file>translations/qt/qt_ar.qm</file>
         <file>translations/qt/qt_bg.qm</file>
         <file>translations/qt/qt_ca.qm</file>
@@ -31,28 +51,8 @@
         <file>translations/qt/qt_sl.qm</file>
         <file>translations/qt/qt_sv.qm</file>
         <file>translations/qt/qt_uk.qm</file>
+        <file>translations/qt/qt_zh.qm</file>
         <file>translations/qt/qt_zh_CN.qm</file>
         <file>translations/qt/qt_zh_TW.qm</file>
-        <file>translations/qt/qtbase_bg.qm</file>
-        <file>translations/qt/qtbase_ca.qm</file>
-        <file>translations/qt/qtbase_cs.qm</file>
-        <file>translations/qt/qtbase_da.qm</file>
-        <file>translations/qt/qtbase_de.qm</file>
-        <file>translations/qt/qtbase_en.qm</file>
-        <file>translations/qt/qtbase_es.qm</file>
-        <file>translations/qt/qtbase_fi.qm</file>
-        <file>translations/qt/qtbase_fr.qm</file>
-        <file>translations/qt/qtbase_gd.qm</file>
-        <file>translations/qt/qtbase_he.qm</file>
-        <file>translations/qt/qtbase_hu.qm</file>
-        <file>translations/qt/qtbase_it.qm</file>
-        <file>translations/qt/qtbase_ja.qm</file>
-        <file>translations/qt/qtbase_ko.qm</file>
-        <file>translations/qt/qtbase_lv.qm</file>
-        <file>translations/qt/qtbase_pl.qm</file>
-        <file>translations/qt/qtbase_ru.qm</file>
-        <file>translations/qt/qtbase_sk.qm</file>
-        <file>translations/qt/qtbase_uk.qm</file>
-        <file>translations/qt/qt_zh.qm</file>
     </qresource>
 </RCC>

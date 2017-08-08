@@ -1,3 +1,5 @@
 <RCC>
-    <qresource prefix="/"/>
+    <qresource prefix="/">
+        <file>settings/placeholder.json</file>
+    </qresource>
 </RCC>
