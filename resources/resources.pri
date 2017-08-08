@@ -4,8 +4,7 @@
     error("Python cannot be found. Will fail to automatically generate .qrc resources. Is Python in the path?")
 }
 
-QRC_GENERATION_SCRIPT_PATH = $$shell_quote($${PWD}/../scripts/generate_geometrize_qrcs.py)
-QRC_GENERATION_COMMAND = python $${QRC_GENERATION_SCRIPT_PATH}
+QRC_GENERATION_COMMAND = python ../scripts/generate_geometrize_qrcs.py
 
 system($${QRC_GENERATION_COMMAND})|error("Automatic qrc resource file generation failed. Try running the Python build scripts manually.")
 
