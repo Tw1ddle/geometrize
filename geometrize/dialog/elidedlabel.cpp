@@ -101,6 +101,10 @@ ElidedLabel::ElidedLabel(const QString& text, const Qt::TextElideMode elideMode,
 {
 }
 
+ElidedLabel::~ElidedLabel()
+{
+}
+
 Qt::TextElideMode ElidedLabel::getElideMode() const
 {
     return d->getElideMode();

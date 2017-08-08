@@ -116,6 +116,10 @@ CollapsiblePanel::CollapsiblePanel(QWidget* parent) :
 {
 }
 
+CollapsiblePanel::~CollapsiblePanel()
+{
+}
+
 void CollapsiblePanel::setup(const QString& title)
 {
     d->setup(title);

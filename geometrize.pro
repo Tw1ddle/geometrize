@@ -8,6 +8,9 @@ TEMPLATE = app
 # Enable C++14 features
 CONFIG += c++14
 
+# Option for embedding many resources without massive heap allocations that breaks mingw32 builds
+CONFIG += resources_big
+
 # Flag for ChaiScript linking
 msvc:QMAKE_CXXFLAGS += -bigobj
 

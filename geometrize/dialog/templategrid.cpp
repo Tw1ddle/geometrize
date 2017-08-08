@@ -91,6 +91,10 @@ TemplateGrid::TemplateGrid(QWidget* parent) :
 {
 }
 
+TemplateGrid::~TemplateGrid()
+{
+}
+
 void TemplateGrid::loadTemplates()
 {
     d->loadTemplates();

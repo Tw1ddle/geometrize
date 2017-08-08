@@ -52,6 +52,10 @@ Downloader::Downloader(const QUrl& url, const std::function<void(Downloader*, QN
 {
 }
 
+Downloader::~Downloader()
+{
+}
+
 QByteArray Downloader::getDownloadedData() const
 {
     return d->getDownloadedData();

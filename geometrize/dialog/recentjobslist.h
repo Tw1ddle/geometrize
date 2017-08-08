@@ -24,6 +24,7 @@ class RecentJobsList : public QListWidget
 
 public:
     explicit RecentJobsList(QWidget* parent = nullptr);
+    ~RecentJobsList();
 
     /**
      * @brief setRecentItems Sets the items that the list will keep track of.

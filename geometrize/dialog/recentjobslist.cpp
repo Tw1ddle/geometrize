@@ -155,6 +155,10 @@ RecentJobsList::RecentJobsList(QWidget* parent) : QListWidget(parent), d{std::ma
 {
 }
 
+RecentJobsList::~RecentJobsList()
+{
+}
+
 void RecentJobsList::setRecentItems(RecentItems* recents)
 {
     d->setRecentItems(recents);

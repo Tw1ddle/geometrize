@@ -26,7 +26,7 @@ public:
      * @param onDownloaded The callback triggered when the download completes.
      */
     explicit Downloader(const QUrl& url, const std::function<void(Downloader*, QNetworkReply::NetworkError)>& onDownloaded);
-    virtual ~Downloader() = default;
+    virtual ~Downloader();
     Downloader& operator=(const Downloader&) = delete;
     Downloader(const Downloader&) = delete;
 

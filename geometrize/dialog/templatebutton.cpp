@@ -124,6 +124,10 @@ TemplateButton::TemplateButton(chaiscript::ChaiScript* const templateLoader, con
 {
 }
 
+TemplateButton::~TemplateButton()
+{
+}
+
 void TemplateButton::contextMenuEvent(QContextMenuEvent* e)
 {
     d->showContextMenu(e);

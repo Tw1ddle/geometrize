@@ -54,6 +54,7 @@ public:
     explicit ElidedLabel(QWidget* parent = nullptr, Qt::WindowFlags flags = 0);
     ElidedLabel(const QString& text, QWidget* parent = nullptr, Qt::WindowFlags flags = 0);
     ElidedLabel(const QString& text, Qt::TextElideMode elideMode, ElidedLabel::TrimMode trimMode, QWidget* parent = nullptr, Qt::WindowFlags flags = 0);
+    ~ElidedLabel();
 
     /**
      * @brief getElideMode Get the elide mode currently used when displaying text.

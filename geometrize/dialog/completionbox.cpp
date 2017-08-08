@@ -49,7 +49,10 @@ private:
 
 CompletionBox::CompletionBox(QWidget* parent) : QLineEdit(parent), d{std::make_unique<CompletionBox::CompletionBoxImpl>(this)}
 {
+}
 
+CompletionBox::~CompletionBox()
+{
 }
 
 void CompletionBox::setCompletionList(const QStringList& completionList)

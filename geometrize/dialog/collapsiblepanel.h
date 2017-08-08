@@ -2,9 +2,7 @@
 
 #include <memory>
 
-#include <QGroupBox>
-
-class QLayout;
+#include <QFrame>
 
 namespace geometrize
 {
@@ -21,6 +19,7 @@ class CollapsiblePanel : public QFrame
 
 public:
     CollapsiblePanel(QWidget* parent = nullptr);
+    ~CollapsiblePanel();
 
     void setup(const QString& title);
 

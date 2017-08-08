@@ -20,6 +20,7 @@ class CompletionBox : public QLineEdit
 
 public:
     explicit CompletionBox(QWidget* parent = nullptr);
+    ~CompletionBox();
 
     void setCompletionList(const QStringList& completionList);
     void addToCompletionList(const QString& item);
