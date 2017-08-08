@@ -4,11 +4,11 @@ LANGUAGES = de en fr it ja zh
 # Make the ts files show up in the Qt Creator file browser
 OTHER_FILES += $$files($${PWD}/*.ts, true)
 
+# Set the ts file paths based on the specified supported languages
 defineReplace(prependAll) {
     for(a,$$1):result ''= $$2$${a}$$3
     return($$result)
 }
-# Get the ts file paths based on the specified supported languages
 TRANSLATIONS = $$prependAll(LANGUAGES, $${PWD}/app/, .ts)
 
 # TODO needs fixing for mingw
@@ -25,11 +25,9 @@ TRANSLATIONS = $$prependAll(LANGUAGES, $${PWD}/app/, .ts)
 
 # Generate qm files from the ts files for the supported languages and place them in the resources folder, ready to be bundled as resources
 qtPrepareTool(LRELEASE, lrelease)
-for(filename, LANGUAGES) {
-    tsfile = $$shell_quote($$PWD/app/geometrize_$${filename}.ts)
-    qmfile = $$shell_quote($$PWD/../resources/translations/app/geometrize_$${filename}.qm)
-    qmfile ~= s,.ts$,.qm,
-    qmdir = $$dirname(qmfile)
-    command = $$shell_path($$LRELEASE) -removeidentical $${tsfile} -qm $${qmfile}
-    system($${command})|error("Failed to run: $$command")
+for(language, LANGUAGES) {
+    tsfile = $$shell_path($$shell_quote($${PWD}/app/geometrize_$${language}.ts))
+    qmfile = $$shell_path($$shell_quote($${PWD}/../resources/translations/app/geometrize_$${language}.qm))
+    command = $$shell_path($$shell_quote($${LRELEASE})) -removeidentical $${tsfile} -qm $${qmfile}
+    system($${command})|error("Failed to generate qm file")
 }
