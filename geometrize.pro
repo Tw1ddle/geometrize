@@ -9,6 +9,7 @@ TEMPLATE = app
 CONFIG += c++14
 
 # Option for embedding many resources without massive heap allocations that breaks mingw32 builds
+# Note that mingw32 builds may not work with the compiled-in stdlib because of a "too many sections error" due to Chaiscript
 CONFIG += resources_big
 
 # Flag for ChaiScript linking

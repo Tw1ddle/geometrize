@@ -29,6 +29,9 @@ def generate_qrc(input_directory, output_file, prefix = '/', include_pattern = '
     # Write .qrc file contents
     out.write('<RCC>\n')
     out.write('    <qresource prefix="/">\n')
+
+    respaths = []
+
     for (dirpath, dirnames, filenames) in os.walk(input_directory):
         for f in filenames:
             # Note we save forward slashes instead of backslashes, for cross-platform consistency
@@ -36,6 +39,11 @@ def generate_qrc(input_directory, output_file, prefix = '/', include_pattern = '
             relpath = (prefix + "/" + os.path.relpath(filepath, input_directory)).replace("\\","/")
             if include_regex.search(relpath):
                 out.write('        <file>' + relpath + '</file>\n')
+
+    respaths.sort() # Alphabetically sort the paths, for cross-platform/machine consistency
+    for path in respaths:
+        out.write('        <file>' + path + '</file>\n')
+
     out.write('    </qresource>\n')
     out.write('</RCC>')
 
