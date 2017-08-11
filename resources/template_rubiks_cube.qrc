@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/rubiks_cube/activate.chai</file>
+        <file>templates/templates/rubiks_cube/manifest.json</file>
+        <file>templates/templates/rubiks_cube/rubiks_cube.jpeg</file>
+        <file>templates/templates/rubiks_cube/settings.json</file>
+    </qresource>
+</RCC>

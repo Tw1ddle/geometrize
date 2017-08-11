@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/gray_squirrel_another/activate.chai</file>
+        <file>templates/templates/gray_squirrel_another/gray_squirrel_another.jpeg</file>
+        <file>templates/templates/gray_squirrel_another/manifest.json</file>
+        <file>templates/templates/gray_squirrel_another/settings.json</file>
+    </qresource>
+</RCC>

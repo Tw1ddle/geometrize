@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/nosy_sheep/activate.chai</file>
+        <file>templates/templates/nosy_sheep/manifest.json</file>
+        <file>templates/templates/nosy_sheep/nosy_sheep.png</file>
+        <file>templates/templates/nosy_sheep/settings.json</file>
+    </qresource>
+</RCC>

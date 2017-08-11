@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/spacex_falcon_dragon_launches/activate.chai</file>
+        <file>templates/templates/spacex_falcon_dragon_launches/manifest.json</file>
+        <file>templates/templates/spacex_falcon_dragon_launches/settings.json</file>
+        <file>templates/templates/spacex_falcon_dragon_launches/spacex_falcon_dragon_launches.png</file>
+    </qresource>
+</RCC>

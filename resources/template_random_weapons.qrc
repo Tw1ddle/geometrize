@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/random_weapons/8_ball_face.jpg</file>
+        <file>templates/templates/random_weapons/activate.chai</file>
+        <file>templates/templates/random_weapons/manifest.json</file>
+        <file>templates/templates/random_weapons/settings.json</file>
+    </qresource>
+</RCC>

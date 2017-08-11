@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/sunrise_at_sea/activate.chai</file>
+        <file>templates/templates/sunrise_at_sea/manifest.json</file>
+        <file>templates/templates/sunrise_at_sea/settings.json</file>
+        <file>templates/templates/sunrise_at_sea/sunrise_at_sea.png</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/puffin/activate.chai</file>
+        <file>templates/templates/puffin/manifest.json</file>
+        <file>templates/templates/puffin/puffin.jpg</file>
+        <file>templates/templates/puffin/settings.json</file>
+    </qresource>
+</RCC>

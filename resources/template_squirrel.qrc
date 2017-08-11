@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/squirrel/activate.chai</file>
+        <file>templates/templates/squirrel/manifest.json</file>
+        <file>templates/templates/squirrel/settings.json</file>
+        <file>templates/templates/squirrel/squirrel.jpeg</file>
+    </qresource>
+</RCC>

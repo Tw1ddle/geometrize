@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/jammy_biscuit/activate.chai</file>
+        <file>templates/templates/jammy_biscuit/jammy_biscuit.jpeg</file>
+        <file>templates/templates/jammy_biscuit/manifest.json</file>
+        <file>templates/templates/jammy_biscuit/settings.json</file>
+    </qresource>
+</RCC>

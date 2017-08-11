@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/pomegranate_splitting/activate.chai</file>
+        <file>templates/templates/pomegranate_splitting/manifest.json</file>
+        <file>templates/templates/pomegranate_splitting/pomegranate_splitting.jpeg</file>
+        <file>templates/templates/pomegranate_splitting/settings.json</file>
+    </qresource>
+</RCC>

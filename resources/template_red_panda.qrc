@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/red_panda/activate.chai</file>
+        <file>templates/templates/red_panda/manifest.json</file>
+        <file>templates/templates/red_panda/red_panda.jpeg</file>
+        <file>templates/templates/red_panda/settings.json</file>
+    </qresource>
+</RCC>

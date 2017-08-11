@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/two_seagulls/activate.chai</file>
+        <file>templates/templates/two_seagulls/manifest.json</file>
+        <file>templates/templates/two_seagulls/settings.json</file>
+        <file>templates/templates/two_seagulls/two_seagulls.png</file>
+    </qresource>
+</RCC>

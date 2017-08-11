@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/sliced_fruit/activate.chai</file>
+        <file>templates/templates/sliced_fruit/manifest.json</file>
+        <file>templates/templates/sliced_fruit/settings.json</file>
+        <file>templates/templates/sliced_fruit/sliced_fruit.jpeg</file>
+    </qresource>
+</RCC>

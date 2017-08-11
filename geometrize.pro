@@ -9,10 +9,10 @@ TEMPLATE = app
 CONFIG += c++14
 
 # Option for embedding many resources without massive heap allocations that breaks mingw32 builds
-# Note that mingw32 builds may not work with the compiled-in stdlib because of a "too many sections error" due to Chaiscript
 CONFIG += resources_big
 
 # Flag for ChaiScript linking
+# Note that mingw32 builds may not work with the compiled-in stdlib because of a "too many sections error" with Chaiscript
 msvc:QMAKE_CXXFLAGS += -bigobj
 
 # Include library dependencies
@@ -29,5 +29,5 @@ include($$PWD/geometrize/sources.pri)
 include($$PWD/translations/translations.pri)
 
 # Include resources that Geometrize requires, such as icons, images and scripts
-# Note this must come last, as .qrc resource files are automatically generated
+# Note this must come last, as resource files are automatically generated
 include($$PWD/resources/resources.pri)

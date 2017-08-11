@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/owl/activate.chai</file>
+        <file>templates/templates/owl/manifest.json</file>
+        <file>templates/templates/owl/owl.jpeg</file>
+        <file>templates/templates/owl/settings.json</file>
+    </qresource>
+</RCC>

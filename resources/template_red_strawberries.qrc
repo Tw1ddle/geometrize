@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/red_strawberries/activate.chai</file>
+        <file>templates/templates/red_strawberries/manifest.json</file>
+        <file>templates/templates/red_strawberries/red_strawberries.jpeg</file>
+        <file>templates/templates/red_strawberries/settings.json</file>
+    </qresource>
+</RCC>

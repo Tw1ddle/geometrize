@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/the_lady_of_shalott/activate.chai</file>
+        <file>templates/templates/the_lady_of_shalott/manifest.json</file>
+        <file>templates/templates/the_lady_of_shalott/settings.json</file>
+        <file>templates/templates/the_lady_of_shalott/the_lady_of_shalott.png</file>
+    </qresource>
+</RCC>

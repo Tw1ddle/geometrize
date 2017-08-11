@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/hoarfrost_branches/activate.chai</file>
+        <file>templates/templates/hoarfrost_branches/hoarfrost_branches.jpeg</file>
+        <file>templates/templates/hoarfrost_branches/manifest.json</file>
+        <file>templates/templates/hoarfrost_branches/settings.json</file>
+    </qresource>
+</RCC>

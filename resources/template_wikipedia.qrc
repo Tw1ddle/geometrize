@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/wikipedia/activate.chai</file>
+        <file>templates/templates/wikipedia/manifest.json</file>
+        <file>templates/templates/wikipedia/settings.json</file>
+        <file>templates/templates/wikipedia/wikipedia.png</file>
+    </qresource>
+</RCC>

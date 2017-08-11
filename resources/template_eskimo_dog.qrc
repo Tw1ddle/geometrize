@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/eskimo_dog/activate.chai</file>
+        <file>templates/templates/eskimo_dog/eskimo_dog.png</file>
+        <file>templates/templates/eskimo_dog/manifest.json</file>
+        <file>templates/templates/eskimo_dog/settings.json</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/donkey_at_fence/activate.chai</file>
+        <file>templates/templates/donkey_at_fence/donkey_at_fence.jpeg</file>
+        <file>templates/templates/donkey_at_fence/manifest.json</file>
+        <file>templates/templates/donkey_at_fence/settings.json</file>
+    </qresource>
+</RCC>

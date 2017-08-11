@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/california_spring/activate.chai</file>
+        <file>templates/templates/california_spring/california_spring.png</file>
+        <file>templates/templates/california_spring/manifest.json</file>
+        <file>templates/templates/california_spring/settings.json</file>
+    </qresource>
+</RCC>

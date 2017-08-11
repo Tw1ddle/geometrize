@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/cat_sitting/activate.chai</file>
+        <file>templates/templates/cat_sitting/cat_sitting.png</file>
+        <file>templates/templates/cat_sitting/manifest.json</file>
+        <file>templates/templates/cat_sitting/settings.json</file>
+    </qresource>
+</RCC>

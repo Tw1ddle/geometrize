@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/pansies/activate.chai</file>
+        <file>templates/templates/pansies/manifest.json</file>
+        <file>templates/templates/pansies/pansies.jpeg</file>
+        <file>templates/templates/pansies/settings.json</file>
+    </qresource>
+</RCC>

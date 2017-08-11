@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/beach_lifeguard_station/activate.chai</file>
+        <file>templates/templates/beach_lifeguard_station/beach_lifeguard_station.jpg</file>
+        <file>templates/templates/beach_lifeguard_station/manifest.json</file>
+        <file>templates/templates/beach_lifeguard_station/settings.json</file>
+    </qresource>
+</RCC>

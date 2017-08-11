@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/pink_lotus_flower/activate.chai</file>
+        <file>templates/templates/pink_lotus_flower/manifest.json</file>
+        <file>templates/templates/pink_lotus_flower/pink_lotus_flower.jpeg</file>
+        <file>templates/templates/pink_lotus_flower/settings.json</file>
+    </qresource>
+</RCC>

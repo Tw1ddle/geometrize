@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/venetian_mask_wearer/activate.chai</file>
+        <file>templates/templates/venetian_mask_wearer/manifest.json</file>
+        <file>templates/templates/venetian_mask_wearer/settings.json</file>
+        <file>templates/templates/venetian_mask_wearer/venetian_mask_wearer.jpeg</file>
+    </qresource>
+</RCC>

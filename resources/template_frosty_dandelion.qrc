@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/frosty_dandelion/activate.chai</file>
+        <file>templates/templates/frosty_dandelion/frosty_dandelion.jpg</file>
+        <file>templates/templates/frosty_dandelion/manifest.json</file>
+        <file>templates/templates/frosty_dandelion/settings.json</file>
+    </qresource>
+</RCC>

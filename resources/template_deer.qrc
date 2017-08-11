@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/deer/activate.chai</file>
+        <file>templates/templates/deer/deer.jpeg</file>
+        <file>templates/templates/deer/manifest.json</file>
+        <file>templates/templates/deer/settings.json</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/papillon_dog/activate.chai</file>
+        <file>templates/templates/papillon_dog/manifest.json</file>
+        <file>templates/templates/papillon_dog/papillon_dog.jpeg</file>
+        <file>templates/templates/papillon_dog/settings.json</file>
+    </qresource>
+</RCC>

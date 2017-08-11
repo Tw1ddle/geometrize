@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/cinderella/activate.chai</file>
+        <file>templates/templates/cinderella/cinderella.png</file>
+        <file>templates/templates/cinderella/manifest.json</file>
+        <file>templates/templates/cinderella/settings.json</file>
+    </qresource>
+</RCC>

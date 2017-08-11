@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/azure_grotto/activate.chai</file>
+        <file>templates/templates/azure_grotto/azure_grotto.png</file>
+        <file>templates/templates/azure_grotto/manifest.json</file>
+        <file>templates/templates/azure_grotto/settings.json</file>
+    </qresource>
+</RCC>

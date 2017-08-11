@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/guinea_pig/activate.chai</file>
+        <file>templates/templates/guinea_pig/guinea_pig.jpeg</file>
+        <file>templates/templates/guinea_pig/manifest.json</file>
+        <file>templates/templates/guinea_pig/settings.json</file>
+    </qresource>
+</RCC>

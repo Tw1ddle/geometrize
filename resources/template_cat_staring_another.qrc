@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/cat_staring_another/activate.chai</file>
+        <file>templates/templates/cat_staring_another/cat_staring_another.jpeg</file>
+        <file>templates/templates/cat_staring_another/manifest.json</file>
+        <file>templates/templates/cat_staring_another/settings.json</file>
+    </qresource>
+</RCC>

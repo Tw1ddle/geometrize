@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/road_bridge/activate.chai</file>
+        <file>templates/templates/road_bridge/manifest.json</file>
+        <file>templates/templates/road_bridge/road_bridge.jpeg</file>
+        <file>templates/templates/road_bridge/settings.json</file>
+    </qresource>
+</RCC>

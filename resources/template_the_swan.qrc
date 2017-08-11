@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/the_swan/activate.chai</file>
+        <file>templates/templates/the_swan/manifest.json</file>
+        <file>templates/templates/the_swan/settings.json</file>
+        <file>templates/templates/the_swan/the_swan.png</file>
+    </qresource>
+</RCC>

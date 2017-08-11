@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/lynx_staring/activate.chai</file>
+        <file>templates/templates/lynx_staring/lynx_staring.jpeg</file>
+        <file>templates/templates/lynx_staring/manifest.json</file>
+        <file>templates/templates/lynx_staring/settings.json</file>
+    </qresource>
+</RCC>

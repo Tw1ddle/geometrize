@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/dahlia_flower/activate.chai</file>
+        <file>templates/templates/dahlia_flower/dahlia_flower.jpeg</file>
+        <file>templates/templates/dahlia_flower/manifest.json</file>
+        <file>templates/templates/dahlia_flower/settings.json</file>
+    </qresource>
+</RCC>

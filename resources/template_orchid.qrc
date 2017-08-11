@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/orchid/activate.chai</file>
+        <file>templates/templates/orchid/manifest.json</file>
+        <file>templates/templates/orchid/orchid.jpg</file>
+        <file>templates/templates/orchid/settings.json</file>
+    </qresource>
+</RCC>

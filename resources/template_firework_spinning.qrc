@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/firework_spinning/activate.chai</file>
+        <file>templates/templates/firework_spinning/firework_spinning.jpeg</file>
+        <file>templates/templates/firework_spinning/manifest.json</file>
+        <file>templates/templates/firework_spinning/settings.json</file>
+    </qresource>
+</RCC>
