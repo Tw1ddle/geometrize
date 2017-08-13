@@ -40,7 +40,7 @@ namespace geometrize
 namespace layout
 {
 
-FlowLayout::FlowLayout(const int margin = -1, const int hSpacing = -1, const int vSpacing = -1) : m_hSpace(hSpacing), m_vSpace(vSpacing)
+FlowLayout::FlowLayout(const int margin, const int hSpacing, const int vSpacing) : m_hSpace(hSpacing), m_vSpace(vSpacing)
 {
     setContentsMargins(margin, margin, margin, margin);
 }

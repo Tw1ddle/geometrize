@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iosfwd>
+#include <streambuf>
 #include <string>
 
 #include <QByteArray>

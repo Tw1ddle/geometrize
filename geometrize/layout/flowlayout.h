@@ -52,7 +52,7 @@ namespace layout
 class FlowLayout : public QLayout
 {
 public:
-    explicit FlowLayout(int margin, int hSpacing, int vSpacing);
+    explicit FlowLayout(const int margin = -1, const int hSpacing = -1, const int vSpacing = -1);
     ~FlowLayout();
 
     int horizontalSpacing() const;

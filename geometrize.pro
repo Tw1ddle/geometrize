@@ -8,6 +8,9 @@ TEMPLATE = app
 # Enable C++14 features
 CONFIG += c++14
 
+# Disable assertions in release builds (for gcc, clang etc builds)
+CONFIG(release, debug|release): DEFINES += NDEBUG
+
 # Flag for ChaiScript linking
 # Note that mingw32 builds may not work with the compiled-in stdlib because of a "too many sections error" with Chaiscript
 msvc:QMAKE_CXXFLAGS += -bigobj
