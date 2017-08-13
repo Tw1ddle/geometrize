@@ -1,11 +1,10 @@
-# This is the project file for the Universal Windows Platform version of Geometrize.
+# Options for the Universal Windows Platform versions of Geometrize
 
 CONFIG += windeployqt
 
-# Run the regular Geometrize build
-include(geometrize.pro)
+OTHER_FILES += $$PWD/*.*
 
-# TODO
+# Configure the UWP package manifest
 WINRT_MANIFEST.background = white
 WINRT_MANIFEST.description = Geometrize, the app for geometrizing images into geometric primitives
 WINRT_MANIFEST.foreground = light
@@ -28,3 +27,9 @@ WINRT_MANIFEST.logo_480x800 = uwp/logo_480x800.png
 #WINRT_MANIFEST.logo_wide = uwp/logo_wide.png
 WINRT_MANIFEST.name = Geometrize
 WINRT_MANIFEST.publisher = Sam Twidale
+
+winphone {
+    WINRT_MANIFEST = winrt/WinPhone8.Package.appxmanifest
+} else {
+    WINRT_MANIFEST = winrt/WinRT10.Package.appxmanifest
+}

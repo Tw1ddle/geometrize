@@ -12,6 +12,11 @@ CONFIG += c++14
 # Note that mingw32 builds may not work with the compiled-in stdlib because of a "too many sections error" with Chaiscript
 msvc:QMAKE_CXXFLAGS += -bigobj
 
+# Options for the Universal Windows Platform version of Geometrize
+winrt|wince {
+    include($$PWD/uwp/geometrize_uwp.pri)
+}
+
 # Include library dependencies
 INCLUDEPATH += $$PWD/lib/cereal/include \
     $$PWD/lib/chaiscript/include

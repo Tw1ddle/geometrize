@@ -1,7 +1,13 @@
 # Automatically generates resource files
-# Requires a Python installation in the path
-!system(where python) {
-    error("Python cannot be found. Will fail to automatically generate .qrc resources. Is Python in the path?")
+
+win32 {
+    PYTHON_EXISTS_CHECK = where python
+} else {
+    PYTHON_EXISTS_CHECK = whereis python
+}
+
+!system($${PYTHON_EXISTS_CHECK}) {
+    error("Failed to check existence of Python, or Python cannot be found. Will fail to automatically generate .qrc resources. Is Python in the path?")
 }
 
 QRC_GENERATION_COMMAND = python ../scripts/generate_geometrize_qrcs.py
