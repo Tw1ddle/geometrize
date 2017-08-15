@@ -2,6 +2,7 @@
 
 #include <QLibraryInfo>
 #include <QSysInfo>
+#include <QtGlobal>
 
 namespace geometrize
 {
@@ -38,13 +39,17 @@ QString getBuildOperatingSystemName()
 {
 #ifdef Q_OS_WIN
     return "Windows";
-#elif Q_OS_OSX
-    return "OSX";
-#elif Q_OS_LINUX
-    return "Linux";
-#else
-    static_assert(false, "Unrecognized OS, implement operating system name code for this target");
 #endif
+
+#ifdef Q_OS_MAC
+    return "OSX";
+#endif
+
+#ifdef Q_OS_LINUX
+    return "Linux";
+#endif
+
+    return "Unknown";
 }
 
 QString getBuildAbiName()
