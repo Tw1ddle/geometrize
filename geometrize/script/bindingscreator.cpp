@@ -7,7 +7,14 @@
 #include "chaiscript/chaiscript.hpp"
 
 #include "geometrize/bitmap/bitmap.h"
-#include "geometrize/model.h"
+#include "geometrize/bitmap/rgba.h"
+#include "geometrize/exporter/bitmapdataexporter.h"
+#include "geometrize/exporter/bitmapexporter.h"
+#include "geometrize/exporter/shapearrayexporter.h"
+#include "geometrize/exporter/shapejsonexporter.h"
+#include "geometrize/exporter/svgexporter.h"
+#include "geometrize/runner/imagerunner.h"
+#include "geometrize/runner/imagerunneroptions.h"
 #include "geometrize/shape/circle.h"
 #include "geometrize/shape/ellipse.h"
 #include "geometrize/shape/line.h"
@@ -16,7 +23,13 @@
 #include "geometrize/shape/rectangle.h"
 #include "geometrize/shape/rotatedellipse.h"
 #include "geometrize/shape/rotatedrectangle.h"
+#include "geometrize/shape/shapefactory.h"
+#include "geometrize/shape/shapemutator.h"
+#include "geometrize/shape/shapetypes.h"
 #include "geometrize/shape/triangle.h"
+#include "geometrize/commonutil.h"
+#include "geometrize/model.h"
+#include "geometrize/shaperesult.h"
 
 #include "dialog/launchwindow.h"
 #include "exporter/imageexporter.h"
@@ -134,8 +147,6 @@ std::shared_ptr<chaiscript::Module> createImageBindings()
     ADD_FREE_FUN(loadImage);
     ADD_FREE_FUN(createBitmap);
 
-    ADD_TYPE(Bitmap);
-
     return module;
 }
 
@@ -164,20 +175,6 @@ std::shared_ptr<chaiscript::Module> createImageJobBindings()
     ADD_CONSTRUCTOR(ImageJobPreferences, ImageJobPreferences(const std::string&));
     ADD_CONSTRUCTOR(ImageJobPreferences, ImageJobPreferences(const ImageJobPreferences&));
 
-    chaiscript::utility::add_class<geometrize::ShapeTypes>(*module,
-      "ShapeTypes",
-    {
-      { RECTANGLE, "RECTANGLE" },
-      { ROTATED_RECTANGLE, "ROTATED_RECTANGLE" },
-      { TRIANGLE, "TRIANGLE" },
-      { ELLIPSE, "ELLIPSE" },
-      { ROTATED_ELLIPSE, "ROTATED_ELLIPSE" },
-      { CIRCLE, "CIRCLE" },
-      { LINE, "LINE" },
-      { QUADRATIC_BEZIER, "QUADRATIC_BEZIER" },
-      { POLYLINE, "POLYLINE" }
-    });
-
     ADD_MEMBER(ImageJobPreferences, enableShapeTypes);
     ADD_MEMBER(ImageJobPreferences, disableShapeTypes);
     ADD_MEMBER(ImageJobPreferences, setShapeTypes);
@@ -202,17 +199,48 @@ std::shared_ptr<chaiscript::Module> createImageExportBindings()
 
     ADD_FREE_FUN(exportBitmap);
     ADD_FREE_FUN(exportImage);
+    ADD_FREE_FUN(exportRasterizedSvg);
 
     return module;
 }
 
-std::shared_ptr<chaiscript::Module> createShapeMutationBindings()
+std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
 {
     auto module{std::make_shared<chaiscript::Module>()};
 
-    ADD_TYPE(Model);
-    ADD_MEMBER(Model, getWidth);
-    ADD_MEMBER(Model, getHeight);
+    ADD_TYPE(Bitmap);
+    ADD_CONSTRUCTOR(Bitmap, Bitmap(std::uint32_t, std::uint32_t, geometrize::rgba));
+    ADD_CONSTRUCTOR(Bitmap, Bitmap(std::uint32_t, std::uint32_t, const std::vector<std::uint8_t>& data));
+    ADD_CONSTRUCTOR(Bitmap, Bitmap(const geometrize::Bitmap&));
+    ADD_MEMBER(Bitmap, getWidth);
+    ADD_MEMBER(Bitmap, getHeight);
+    ADD_MEMBER(Bitmap, copyData);
+    ADD_MEMBER(Bitmap, getDataRef);
+    ADD_MEMBER(Bitmap, getPixel);
+    ADD_MEMBER(Bitmap, setPixel);
+    ADD_MEMBER(Bitmap, fill);
+
+    ADD_TYPE(rgba);
+    ADD_MEMBER(rgba, r);
+    ADD_MEMBER(rgba, g);
+    ADD_MEMBER(rgba, b);
+    ADD_MEMBER(rgba, a);
+
+    using namespace geometrize::exporter;
+
+    ADD_FREE_FUN(exportBitmapData);
+    ADD_FREE_FUN(exportBitmap);
+    ADD_FREE_FUN(exportShapeArray);
+    ADD_FREE_FUN(exportShapeJson);
+    ADD_FREE_FUN(exportSVG);
+
+    ADD_TYPE(ImageRunner);
+    ADD_CONSTRUCTOR(ImageRunner, ImageRunner(const geometrize::Bitmap&));
+    ADD_CONSTRUCTOR(ImageRunner, ImageRunner(const geometrize::Bitmap&, const geometrize::Bitmap&));
+    ADD_MEMBER(ImageRunner, step);
+    ADD_MEMBER(ImageRunner, getCurrent);
+    ADD_MEMBER(ImageRunner, getTarget);
+    ADD_MEMBER(ImageRunner, getModel);
 
     ADD_TYPE(Circle);
     ADD_CONST_REF_MEMBER(Circle, m_model);
@@ -278,6 +306,40 @@ std::shared_ptr<chaiscript::Module> createShapeMutationBindings()
     ADD_MEMBER(Triangle, m_y2);
     ADD_MEMBER(Triangle, m_x3);
     ADD_MEMBER(Triangle, m_y3);
+
+    ADD_TYPE(ShapeMutator);
+
+    chaiscript::utility::add_class<geometrize::ShapeTypes>(*module,
+      "ShapeTypes",
+    {
+      { RECTANGLE, "RECTANGLE" },
+      { ROTATED_RECTANGLE, "ROTATED_RECTANGLE" },
+      { TRIANGLE, "TRIANGLE" },
+      { ELLIPSE, "ELLIPSE" },
+      { ROTATED_ELLIPSE, "ROTATED_ELLIPSE" },
+      { CIRCLE, "CIRCLE" },
+      { LINE, "LINE" },
+      { QUADRATIC_BEZIER, "QUADRATIC_BEZIER" },
+      { POLYLINE, "POLYLINE" }
+    });
+
+    using namespace geometrize::commonutil;
+
+    ADD_FREE_FUN(seedRandomGenerator);
+    ADD_FREE_FUN(getAverageImageColor);
+
+    ADD_TYPE(Model);
+    ADD_CONSTRUCTOR(Model, Model(const geometrize::Bitmap&, geometrize::rgba));
+    ADD_CONSTRUCTOR(Model, Model(const geometrize::Bitmap&, const geometrize::Bitmap&));
+    ADD_MEMBER(Model, reset);
+    ADD_MEMBER(Model, getWidth);
+    ADD_MEMBER(Model, getHeight);
+    ADD_MEMBER(Model, step);
+    //ADD_MEMBER(Model, drawShape);
+    ADD_MEMBER(Model, getCurrent);
+    ADD_MEMBER(Model, getTarget);
+    ADD_MEMBER(Model, setSeed);
+    //ADD_MEMBER(Model, getShapeMutator);
 
     return module;
 }

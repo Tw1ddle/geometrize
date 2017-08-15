@@ -41,7 +41,6 @@ HEADERS += $$PWD/analytics/analytics.h \
     $$PWD/exporter/shapedataexporter.h \
     $$PWD/exporter/webglanimationexporter.h \
     $$PWD/image/imageloader.h \
-    $$PWD/image/imagelookup.h \
     $$PWD/job/imagejob.h \
     $$PWD/job/imagejobcreator.h \
     $$PWD/job/imagejobworker.h \
@@ -117,7 +116,6 @@ SOURCES += $$PWD/main.cpp \
     $$PWD/exporter/shapedataexporter.cpp \
     $$PWD/exporter/webglanimationexporter.cpp \
     $$PWD/image/imageloader.cpp \
-    $$PWD/image/imagelookup.cpp \
     $$PWD/job/imagejob.cpp \
     $$PWD/job/imagejobcreator.cpp \
     $$PWD/job/imagejobworker.cpp \

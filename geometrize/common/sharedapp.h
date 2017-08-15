@@ -10,11 +10,6 @@ class RecentItems;
 namespace geometrize
 {
 
-namespace image
-{
-class ImageLookup;
-}
-
 namespace preferences
 {
 class GlobalPreferences;
@@ -46,12 +41,6 @@ public:
      * @return The recent files list.
      */
     RecentItems& getRecentFiles();
-
-    /**
-     * @brief getImageLookup Gets the shared image lookup object, for finding existing image objects.
-     * @return The image lookup object.
-     */
-    image::ImageLookup& getImageLookup();
 
     /**
      * @brief getGlobalPreferences Gets the shared global preferences object, which stores global application preferences.

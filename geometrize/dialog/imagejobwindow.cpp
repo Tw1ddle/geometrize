@@ -192,25 +192,7 @@ public:
         const int width{ui->svgImageWidthSpinBox->value()};
         const int height{ui->svgImageHeightSpinBox->value()};
 
-        const std::string data{geometrize::exporter::exportSVG(m_shapes, m_job->getCurrent().getWidth(), m_job->getCurrent().getHeight(), geometrize::commonutil::getAverageImageColor(m_job->getTarget()))};
-        const QByteArray arrayData(data.c_str(), static_cast<int>(data.length()));
-        QSvgRenderer renderer;
-        renderer.load(arrayData);
-
-        if(!renderer.isValid()) {
-            assert(0 && "SVG renderer has invalid state");
-            return;
-        }
-
-        QPainter painter;
-        QImage image(width, height, QImage::Format_RGBA8888);
-        image.fill(0);
-
-        painter.begin(&image);
-        renderer.render(&painter);
-        painter.end();
-
-        geometrize::exporter::exportImage(image, path.toStdString());
+        geometrize::exporter::exportRasterizedSvg(m_shapes, m_job->getCurrent().getWidth(), m_job->getCurrent().getHeight(), width, height, geometrize::commonutil::getAverageImageColor(m_job->getTarget()), path.toStdString());
     }
 
     void saveGeometryData() const

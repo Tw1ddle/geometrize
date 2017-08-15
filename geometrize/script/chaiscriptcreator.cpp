@@ -51,6 +51,8 @@ std::unique_ptr<chaiscript::ChaiScript> createImageJobEngine()
     std::unique_ptr<chaiscript::ChaiScript> chai = std::make_unique<chaiscript::ChaiScript>();
 
     chai->add(createDefaultBindings());
+    chai->add(createGeometrizeLibraryBindings());
+
     chai->add(createImageBindings());
     chai->add(createImageJobBindings());
     chai->add(createImageExportBindings());
@@ -65,7 +67,7 @@ std::unique_ptr<chaiscript::ChaiScript> createShapeMutatorEngine()
     std::unique_ptr<chaiscript::ChaiScript> chai = std::make_unique<chaiscript::ChaiScript>();
 
     chai->add(createDefaultBindings());
-    chai->add(createShapeMutationBindings());
+    chai->add(createGeometrizeLibraryBindings());
     chai->add(createMathBindings());
 
     return chai;

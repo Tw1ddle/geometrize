@@ -1,6 +1,5 @@
 #include "common/sharedapp.h"
 
-#include "image/imagelookup.h"
 #include "preferences/globalpreferences.h"
 #include "recents/recentitems.h"
 
@@ -34,11 +33,6 @@ public:
         return m_recentFiles;
     }
 
-    image::ImageLookup& getImageLookup()
-    {
-        return m_imageLookup;
-    }
-
     preferences::GlobalPreferences& getGlobalPreferences()
     {
         return m_globalPreferences;
@@ -46,7 +40,6 @@ public:
 
 private:
     RecentItems m_recentFiles;
-    image::ImageLookup m_imageLookup;
     preferences::GlobalPreferences m_globalPreferences;
 };
 
@@ -62,11 +55,6 @@ SharedApp& SharedApp::get()
 RecentItems& SharedApp::getRecentFiles()
 {
     return d->getRecentFiles();
-}
-
-image::ImageLookup& SharedApp::getImageLookup()
-{
-    return d->getImageLookup();
 }
 
 preferences::GlobalPreferences& SharedApp::getGlobalPreferences()
