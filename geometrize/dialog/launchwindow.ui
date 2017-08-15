@@ -10,10 +10,16 @@
     <height>720</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="minimumSize">
    <size>
-    <width>800</width>
-    <height>640</height>
+    <width>0</width>
+    <height>0</height>
    </size>
   </property>
   <property name="acceptDrops">
@@ -29,11 +35,17 @@
    <bool>true</bool>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout_5">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_5">
     <item>
      <widget class="QSplitter" name="centralSplitter">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -67,10 +79,16 @@
         <item>
          <widget class="QSplitter" name="templateRecentsSplitter">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>800</width>
+            <height>400</height>
+           </size>
           </property>
           <property name="styleSheet">
            <string notr="true">QSplitter::handle
@@ -98,7 +116,7 @@
           </property>
           <widget class="QWidget" name="recentsWidget" native="true">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
@@ -191,16 +209,16 @@
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout">
                 <property name="spacing">
-                 <number>10</number>
+                 <number>15</number>
                 </property>
                 <property name="leftMargin">
-                 <number>10</number>
+                 <number>15</number>
                 </property>
                 <property name="topMargin">
                  <number>10</number>
                 </property>
                 <property name="rightMargin">
-                 <number>10</number>
+                 <number>15</number>
                 </property>
                 <property name="bottomMargin">
                  <number>10</number>
@@ -344,7 +362,7 @@
           </widget>
           <widget class="QWidget" name="templatesWidget" native="true">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
              <horstretch>1</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
@@ -470,7 +488,7 @@
                  <x>0</x>
                  <y>0</y>
                  <width>834</width>
-                 <height>549</height>
+                 <height>546</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -512,7 +530,7 @@
         <bool>true</bool>
        </property>
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -640,8 +658,8 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../resources/icons.qrc"/>
   <include location="../../resources/logos.qrc"/>
+  <include location="../../resources/icons.qrc"/>
  </resources>
  <connections/>
 </ui>
