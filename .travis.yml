@@ -1,0 +1,14 @@
+os: linux
+
+# Install Travis so we can get the token from Travis
+before_script:
+  - gem install travis
+
+# Do nothing
+script:
+  -
+
+# Tell downstream repositories that the Geometrize app has been updated
+after_script:
+  - chmod +x trigger_travis.sh
+  - ./trigger_travis.sh Tw1ddle geometrize-installer master $TRAVIS_ACCESS_TOKEN_GEOMETRIZE_APP_INSTALLER_TRIGGER
