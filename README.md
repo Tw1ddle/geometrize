@@ -1,4 +1,4 @@
-[![Geometrize Logo](https://github.com/Tw1ddle/geometrize/blob/master/screenshots/logo.png?raw=true "Geometrize logo")](https://www.geometrize.co.uk/)
+[![Geometrize Logo](https://github.com/Tw1ddle/geometrize/blob/master/screenshots/logo.png?raw=true "Geometrize logo")](http://www.geometrize.co.uk/)
 
 [![License](https://img.shields.io/badge/License-GPL%20v3-blue.svg?style=flat-square)](https://github.com/Tw1ddle/geometrize/blob/master/LICENSE)
 
@@ -23,7 +23,7 @@ Basic usage is simple. Open an image in Geometrize, select the desired settings,
 
 ## Screenshots
 
-[![Geometrized Boreas](https://github.com/Tw1ddle/geometrize/blob/master/screenshots/boreas.jpg?raw=true "Geometrized Boreas")](https://www.geometrize.co.uk/)
+[![Geometrized Boreas](https://github.com/Tw1ddle/geometrize/blob/master/screenshots/boreas.jpg?raw=true "Geometrized Boreas")](http://www.geometrize.co.uk/)
 
 ## Resources
 
