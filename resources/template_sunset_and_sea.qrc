@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/sunset_and_sea/activate.chai</file>
+        <file>templates/templates/sunset_and_sea/manifest.json</file>
+        <file>templates/templates/sunset_and_sea/settings.json</file>
+        <file>templates/templates/sunset_and_sea/tree_sunset.jpg</file>
+    </qresource>
+</RCC>

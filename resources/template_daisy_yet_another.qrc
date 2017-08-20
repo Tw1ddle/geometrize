@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/daisy_yet_another/activate.chai</file>
+        <file>templates/templates/daisy_yet_another/daisy_blooming.jpeg</file>
+        <file>templates/templates/daisy_yet_another/manifest.json</file>
+        <file>templates/templates/daisy_yet_another/settings.json</file>
+    </qresource>
+</RCC>

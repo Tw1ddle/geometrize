@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/aurora_borealis/activate.chai</file>
+        <file>templates/templates/aurora_borealis/aurora_borealis_edwin_church.jpg</file>
+        <file>templates/templates/aurora_borealis/manifest.json</file>
+        <file>templates/templates/aurora_borealis/settings.json</file>
+    </qresource>
+</RCC>

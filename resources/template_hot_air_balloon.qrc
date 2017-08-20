@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/hot_air_balloon/activate.chai</file>
+        <file>templates/templates/hot_air_balloon/hot_air_balloon.jpeg</file>
+        <file>templates/templates/hot_air_balloon/manifest.json</file>
+        <file>templates/templates/hot_air_balloon/settings.json</file>
+    </qresource>
+</RCC>

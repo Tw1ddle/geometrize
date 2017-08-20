@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/random_sandwiches/8_ball_face.jpg</file>
-        <file>templates/templates/random_sandwiches/activate.chai</file>
-        <file>templates/templates/random_sandwiches/manifest.json</file>
-        <file>templates/templates/random_sandwiches/settings.json</file>
-    </qresource>
-</RCC>

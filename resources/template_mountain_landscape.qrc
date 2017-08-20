@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/mountain_landscape/activate.chai</file>
+        <file>templates/templates/mountain_landscape/manifest.json</file>
+        <file>templates/templates/mountain_landscape/mountain_green_landscape.jpeg</file>
+        <file>templates/templates/mountain_landscape/settings.json</file>
+    </qresource>
+</RCC>

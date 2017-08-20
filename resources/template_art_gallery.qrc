@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/art_gallery/activate.chai</file>
+        <file>templates/templates/art_gallery/art_gallery.jpg</file>
+        <file>templates/templates/art_gallery/manifest.json</file>
+        <file>templates/templates/art_gallery/settings.json</file>
+    </qresource>
+</RCC>

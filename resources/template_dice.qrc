@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/dice/activate.chai</file>
+        <file>templates/templates/dice/dice.jpeg</file>
+        <file>templates/templates/dice/manifest.json</file>
+        <file>templates/templates/dice/settings.json</file>
+    </qresource>
+</RCC>

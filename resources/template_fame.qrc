@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/fame/activate.chai</file>
+        <file>templates/templates/fame/fame.jpg</file>
+        <file>templates/templates/fame/manifest.json</file>
+        <file>templates/templates/fame/settings.json</file>
+    </qresource>
+</RCC>

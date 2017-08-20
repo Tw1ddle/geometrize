@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/sicilean_sea/activate.chai</file>
+        <file>templates/templates/sicilean_sea/manifest.json</file>
+        <file>templates/templates/sicilean_sea/settings.json</file>
+        <file>templates/templates/sicilean_sea/sicilean_sea.jpeg</file>
+    </qresource>
+</RCC>

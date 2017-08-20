@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/random_fish/8_ball_face.jpg</file>
-        <file>templates/templates/random_fish/activate.chai</file>
-        <file>templates/templates/random_fish/manifest.json</file>
-        <file>templates/templates/random_fish/settings.json</file>
-    </qresource>
-</RCC>

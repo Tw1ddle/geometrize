@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/fruit_and_cream/activate.chai</file>
+        <file>templates/templates/fruit_and_cream/fruit_and_cream.jpeg</file>
+        <file>templates/templates/fruit_and_cream/manifest.json</file>
+        <file>templates/templates/fruit_and_cream/settings.json</file>
+    </qresource>
+</RCC>

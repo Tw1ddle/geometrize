@@ -46,8 +46,6 @@ public:
             const QString name{tr("Name: %1").arg(QString::fromStdString(m_manifest.getName()))};
             const QString license{tr("License: %2").arg(QString::fromStdString(m_manifest.getLicense()))};
             q->setToolTip(name + "<br>" + license);
-
-            ui->titleLabel->setText(QString::fromStdString(m_manifest.getName()));
         });
 
         const QString firstImageFile{QString::fromStdString(util::getFirstFileWithExtensions(m_templateFolder.toStdString(), format::getReadableImageFileExtensions(false)))};

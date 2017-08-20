@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/pamukkale_hot_springs/activate.chai</file>
+        <file>templates/templates/pamukkale_hot_springs/manifest.json</file>
+        <file>templates/templates/pamukkale_hot_springs/pamukkale_hot_springs.jpeg</file>
+        <file>templates/templates/pamukkale_hot_springs/settings.json</file>
+    </qresource>
+</RCC>

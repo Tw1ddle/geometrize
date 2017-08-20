@@ -13,7 +13,7 @@ QString Strings::getApplicationName()
 
 QString Strings::getApplicationDescription()
 {
-    return tr("A tool for reproducing media as animated geometric primitives.", "This is a short description of what this application does.");
+    return tr("A tool for recreating media using geometric primitives.", "This is a short description of what this application is and does.");
 }
 
 QString Strings::getCopyrightNotice()

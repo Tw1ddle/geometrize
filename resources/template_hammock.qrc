@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/hammock/activate.chai</file>
+        <file>templates/templates/hammock/hammock_sunset.jpeg</file>
+        <file>templates/templates/hammock/manifest.json</file>
+        <file>templates/templates/hammock/settings.json</file>
+    </qresource>
+</RCC>

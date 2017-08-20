@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/pyramids/activate.chai</file>
+        <file>templates/templates/pyramids/manifest.json</file>
+        <file>templates/templates/pyramids/pyramids.jpeg</file>
+        <file>templates/templates/pyramids/settings.json</file>
+    </qresource>
+</RCC>

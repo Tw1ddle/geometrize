@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/metal_pans/activate.chai</file>
+        <file>templates/templates/metal_pans/manifest.json</file>
+        <file>templates/templates/metal_pans/metal_pans.jpeg</file>
+        <file>templates/templates/metal_pans/settings.json</file>
+    </qresource>
+</RCC>

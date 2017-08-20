@@ -89,31 +89,6 @@ QPushButton:focus:pressed{ background-color: #969696; }</string>
      </property>
     </widget>
    </item>
-   <item>
-    <widget class="QLabel" name="titleLabel">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string notr="true">Template Title</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
-     <property name="margin">
-      <number>4</number>
-     </property>
-     <property name="textInteractionFlags">
-      <set>Qt::NoTextInteraction</set>
-     </property>
-    </widget>
-   </item>
   </layout>
  </widget>
  <resources/>

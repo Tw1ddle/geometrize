@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/boat_trip/activate.chai</file>
+        <file>templates/templates/boat_trip/boat_trip.jpeg</file>
+        <file>templates/templates/boat_trip/manifest.json</file>
+        <file>templates/templates/boat_trip/settings.json</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/templates/sun_at_the_docks/activate.chai</file>
+        <file>templates/templates/sun_at_the_docks/manifest.json</file>
+        <file>templates/templates/sun_at_the_docks/settings.json</file>
+        <file>templates/templates/sun_at_the_docks/sun_at_the_docks.jpeg</file>
+    </qresource>
+</RCC>
