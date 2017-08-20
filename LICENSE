@@ -1,4 +1,13 @@
-Copyright (C) Sam Twidale, All Rights Reserved.
-Unauthorized use, copying or transmission of content in this repository via any medium is strictly prohibited.
-Proprietary and confidential.
-Written by Sam Twidale (http://samcodes.co.uk/), 2016.
+Geometrize is an app for geometrizing images into geometric primitives.
+
+Geometrize is copyright (c) 2017 Sam Twidale (http://samcodes.co.uk/)
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
