@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/bottles/activate.chai</file>
-        <file>templates/templates/bottles/bottles_still_life.jpg</file>
-        <file>templates/templates/bottles/manifest.json</file>
-        <file>templates/templates/bottles/settings.json</file>
-    </qresource>
-</RCC>

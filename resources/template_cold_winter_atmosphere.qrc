@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/cold_winter_atmosphere/activate.chai</file>
-        <file>templates/templates/cold_winter_atmosphere/cold_winter_atmosphere.jpeg</file>
-        <file>templates/templates/cold_winter_atmosphere/manifest.json</file>
-        <file>templates/templates/cold_winter_atmosphere/settings.json</file>
-    </qresource>
-</RCC>

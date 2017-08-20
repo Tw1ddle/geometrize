@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/horse_chestnuts/activate.chai</file>
-        <file>templates/templates/horse_chestnuts/horse_chestnuts.jpeg</file>
-        <file>templates/templates/horse_chestnuts/manifest.json</file>
-        <file>templates/templates/horse_chestnuts/settings.json</file>
-    </qresource>
-</RCC>

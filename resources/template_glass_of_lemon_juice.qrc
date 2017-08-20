@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/glass_of_lemon_juice/activate.chai</file>
-        <file>templates/templates/glass_of_lemon_juice/glass_of_lemon_juice.jpeg</file>
-        <file>templates/templates/glass_of_lemon_juice/manifest.json</file>
-        <file>templates/templates/glass_of_lemon_juice/settings.json</file>
-    </qresource>
-</RCC>

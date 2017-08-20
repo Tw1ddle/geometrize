@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/lake_and_mountains/activate.chai</file>
-        <file>templates/templates/lake_and_mountains/lake_and_mountain_landscape.jpeg</file>
-        <file>templates/templates/lake_and_mountains/manifest.json</file>
-        <file>templates/templates/lake_and_mountains/settings.json</file>
-    </qresource>
-</RCC>

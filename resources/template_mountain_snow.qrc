@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/mountain_snow/activate.chai</file>
-        <file>templates/templates/mountain_snow/manifest.json</file>
-        <file>templates/templates/mountain_snow/mountain_snowy_landscape.jpeg</file>
-        <file>templates/templates/mountain_snow/settings.json</file>
-    </qresource>
-</RCC>

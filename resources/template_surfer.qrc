@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/surfer/activate.chai</file>
-        <file>templates/templates/surfer/manifest.json</file>
-        <file>templates/templates/surfer/settings.json</file>
-        <file>templates/templates/surfer/surfer.jpeg</file>
-    </qresource>
-</RCC>

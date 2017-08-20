@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/yui_hirasawa_figure/activate.chai</file>
-        <file>templates/templates/yui_hirasawa_figure/manifest.json</file>
-        <file>templates/templates/yui_hirasawa_figure/settings.json</file>
-        <file>templates/templates/yui_hirasawa_figure/yui_hirasawa_figure.jpeg</file>
-    </qresource>
-</RCC>

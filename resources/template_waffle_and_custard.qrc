@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/waffle_and_custard/activate.chai</file>
-        <file>templates/templates/waffle_and_custard/manifest.json</file>
-        <file>templates/templates/waffle_and_custard/settings.json</file>
-        <file>templates/templates/waffle_and_custard/waffle_and_custard.jpeg</file>
-    </qresource>
-</RCC>

@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/blueberry_raspberry_pies/activate.chai</file>
-        <file>templates/templates/blueberry_raspberry_pies/blueberry_raspberry_pies.jpeg</file>
-        <file>templates/templates/blueberry_raspberry_pies/manifest.json</file>
-        <file>templates/templates/blueberry_raspberry_pies/settings.json</file>
-    </qresource>
-</RCC>

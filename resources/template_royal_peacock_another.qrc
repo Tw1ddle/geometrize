@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/royal_peacock_another/activate.chai</file>
-        <file>templates/templates/royal_peacock_another/manifest.json</file>
-        <file>templates/templates/royal_peacock_another/peacock_another.jpg</file>
-        <file>templates/templates/royal_peacock_another/settings.json</file>
-    </qresource>
-</RCC>

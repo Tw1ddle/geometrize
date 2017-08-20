@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/ask_me_no_more/activate.chai</file>
-        <file>templates/templates/ask_me_no_more/ask_me_no_more.png</file>
-        <file>templates/templates/ask_me_no_more/manifest.json</file>
-        <file>templates/templates/ask_me_no_more/settings.json</file>
-    </qresource>
-</RCC>

@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/lake/activate.chai</file>
-        <file>templates/templates/lake/lake.jpeg</file>
-        <file>templates/templates/lake/manifest.json</file>
-        <file>templates/templates/lake/settings.json</file>
-    </qresource>
-</RCC>

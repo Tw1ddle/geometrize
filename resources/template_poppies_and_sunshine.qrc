@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/poppies_and_sunshine/activate.chai</file>
-        <file>templates/templates/poppies_and_sunshine/manifest.json</file>
-        <file>templates/templates/poppies_and_sunshine/poppies_and_sunshine.jpeg</file>
-        <file>templates/templates/poppies_and_sunshine/settings.json</file>
-    </qresource>
-</RCC>

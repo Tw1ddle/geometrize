@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/vulture/activate.chai</file>
-        <file>templates/templates/vulture/manifest.json</file>
-        <file>templates/templates/vulture/settings.json</file>
-        <file>templates/templates/vulture/vulture.jpeg</file>
-    </qresource>
-</RCC>

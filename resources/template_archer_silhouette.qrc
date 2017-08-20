@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/archer_silhouette/activate.chai</file>
-        <file>templates/templates/archer_silhouette/archer_silhouette.jpeg</file>
-        <file>templates/templates/archer_silhouette/manifest.json</file>
-        <file>templates/templates/archer_silhouette/settings.json</file>
-    </qresource>
-</RCC>

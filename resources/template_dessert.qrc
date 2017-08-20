@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/dessert/activate.chai</file>
-        <file>templates/templates/dessert/dessert.jpeg</file>
-        <file>templates/templates/dessert/manifest.json</file>
-        <file>templates/templates/dessert/settings.json</file>
-    </qresource>
-</RCC>

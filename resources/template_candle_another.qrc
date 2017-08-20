@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/candle_another/activate.chai</file>
-        <file>templates/templates/candle_another/candle_another.jpeg</file>
-        <file>templates/templates/candle_another/manifest.json</file>
-        <file>templates/templates/candle_another/settings.json</file>
-    </qresource>
-</RCC>

@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/moth/activate.chai</file>
-        <file>templates/templates/moth/manifest.json</file>
-        <file>templates/templates/moth/moth.jpeg</file>
-        <file>templates/templates/moth/settings.json</file>
-    </qresource>
-</RCC>

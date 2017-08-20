@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/midsummer_eve/activate.chai</file>
-        <file>templates/templates/midsummer_eve/manifest.json</file>
-        <file>templates/templates/midsummer_eve/midsummer_eve.png</file>
-        <file>templates/templates/midsummer_eve/settings.json</file>
-    </qresource>
-</RCC>

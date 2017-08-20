@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/windswept/activate.chai</file>
-        <file>templates/templates/windswept/manifest.json</file>
-        <file>templates/templates/windswept/settings.json</file>
-        <file>templates/templates/windswept/windswept.png</file>
-    </qresource>
-</RCC>

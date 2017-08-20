@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/niagara_falls/activate.chai</file>
-        <file>templates/templates/niagara_falls/manifest.json</file>
-        <file>templates/templates/niagara_falls/niagara_falls.png</file>
-        <file>templates/templates/niagara_falls/settings.json</file>
-    </qresource>
-</RCC>

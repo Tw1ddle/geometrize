@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/hummingbird/activate.chai</file>
-        <file>templates/templates/hummingbird/hummingbird.jpg</file>
-        <file>templates/templates/hummingbird/manifest.json</file>
-        <file>templates/templates/hummingbird/settings.json</file>
-    </qresource>
-</RCC>

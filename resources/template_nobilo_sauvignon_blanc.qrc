@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/nobilo_sauvignon_blanc/activate.chai</file>
-        <file>templates/templates/nobilo_sauvignon_blanc/manifest.json</file>
-        <file>templates/templates/nobilo_sauvignon_blanc/nobilo_sauvignon_blanc.jpeg</file>
-        <file>templates/templates/nobilo_sauvignon_blanc/settings.json</file>
-    </qresource>
-</RCC>

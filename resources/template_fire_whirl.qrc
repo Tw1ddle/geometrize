@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/fire_whirl/activate.chai</file>
-        <file>templates/templates/fire_whirl/fire_whirl.png</file>
-        <file>templates/templates/fire_whirl/manifest.json</file>
-        <file>templates/templates/fire_whirl/settings.json</file>
-    </qresource>
-</RCC>

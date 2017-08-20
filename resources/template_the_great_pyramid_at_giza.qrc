@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/the_great_pyramid_at_giza/activate.chai</file>
-        <file>templates/templates/the_great_pyramid_at_giza/manifest.json</file>
-        <file>templates/templates/the_great_pyramid_at_giza/settings.json</file>
-        <file>templates/templates/the_great_pyramid_at_giza/the_great_pyramid_at_giza.png</file>
-    </qresource>
-</RCC>

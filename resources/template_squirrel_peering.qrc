@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/squirrel_peering/activate.chai</file>
-        <file>templates/templates/squirrel_peering/manifest.json</file>
-        <file>templates/templates/squirrel_peering/settings.json</file>
-        <file>templates/templates/squirrel_peering/squirrel_peering.png</file>
-    </qresource>
-</RCC>

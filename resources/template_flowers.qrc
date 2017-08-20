@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/flowers/activate.chai</file>
-        <file>templates/templates/flowers/flowers.jpeg</file>
-        <file>templates/templates/flowers/manifest.json</file>
-        <file>templates/templates/flowers/settings.json</file>
-    </qresource>
-</RCC>

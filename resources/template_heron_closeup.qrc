@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/heron_closeup/activate.chai</file>
-        <file>templates/templates/heron_closeup/heron_closeup.png</file>
-        <file>templates/templates/heron_closeup/manifest.json</file>
-        <file>templates/templates/heron_closeup/settings.json</file>
-    </qresource>
-</RCC>

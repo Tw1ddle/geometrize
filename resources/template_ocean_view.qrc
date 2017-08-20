@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/ocean_view/activate.chai</file>
-        <file>templates/templates/ocean_view/manifest.json</file>
-        <file>templates/templates/ocean_view/ocean_view.jpeg</file>
-        <file>templates/templates/ocean_view/settings.json</file>
-    </qresource>
-</RCC>

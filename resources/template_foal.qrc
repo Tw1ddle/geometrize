@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/foal/activate.chai</file>
-        <file>templates/templates/foal/foal.png</file>
-        <file>templates/templates/foal/manifest.json</file>
-        <file>templates/templates/foal/settings.json</file>
-    </qresource>
-</RCC>

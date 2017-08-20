@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/railway_bridge/activate.chai</file>
-        <file>templates/templates/railway_bridge/manifest.json</file>
-        <file>templates/templates/railway_bridge/railway_bridge.jpg</file>
-        <file>templates/templates/railway_bridge/settings.json</file>
-    </qresource>
-</RCC>

@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/gray_hedgehog/activate.chai</file>
-        <file>templates/templates/gray_hedgehog/gray_hedgehog.jpg</file>
-        <file>templates/templates/gray_hedgehog/manifest.json</file>
-        <file>templates/templates/gray_hedgehog/settings.json</file>
-    </qresource>
-</RCC>

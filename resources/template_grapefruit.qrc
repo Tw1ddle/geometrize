@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/grapefruit/activate.chai</file>
-        <file>templates/templates/grapefruit/grapefruit.jpeg</file>
-        <file>templates/templates/grapefruit/manifest.json</file>
-        <file>templates/templates/grapefruit/settings.json</file>
-    </qresource>
-</RCC>

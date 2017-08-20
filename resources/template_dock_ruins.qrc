@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/dock_ruins/activate.chai</file>
-        <file>templates/templates/dock_ruins/manifest.json</file>
-        <file>templates/templates/dock_ruins/ruined_dock_silhouette.jpeg</file>
-        <file>templates/templates/dock_ruins/settings.json</file>
-    </qresource>
-</RCC>

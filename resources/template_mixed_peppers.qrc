@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/mixed_peppers/activate.chai</file>
-        <file>templates/templates/mixed_peppers/manifest.json</file>
-        <file>templates/templates/mixed_peppers/mixed_peppers.jpg</file>
-        <file>templates/templates/mixed_peppers/settings.json</file>
-    </qresource>
-</RCC>

@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/chocolate_cake/activate.chai</file>
-        <file>templates/templates/chocolate_cake/chocolate_cake.png</file>
-        <file>templates/templates/chocolate_cake/manifest.json</file>
-        <file>templates/templates/chocolate_cake/settings.json</file>
-    </qresource>
-</RCC>

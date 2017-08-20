@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/open_road_another/activate.chai</file>
-        <file>templates/templates/open_road_another/manifest.json</file>
-        <file>templates/templates/open_road_another/open_road_another.jpeg</file>
-        <file>templates/templates/open_road_another/settings.json</file>
-    </qresource>
-</RCC>

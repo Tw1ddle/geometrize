@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/zebra_finch/activate.chai</file>
-        <file>templates/templates/zebra_finch/manifest.json</file>
-        <file>templates/templates/zebra_finch/settings.json</file>
-        <file>templates/templates/zebra_finch/zebra_finch.png</file>
-    </qresource>
-</RCC>

@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/tomatoes_oil_and_pepper/activate.chai</file>
-        <file>templates/templates/tomatoes_oil_and_pepper/manifest.json</file>
-        <file>templates/templates/tomatoes_oil_and_pepper/settings.json</file>
-        <file>templates/templates/tomatoes_oil_and_pepper/tomatoes_oil_and_pepper.jpeg</file>
-    </qresource>
-</RCC>

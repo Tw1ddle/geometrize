@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/sunflower_another/activate.chai</file>
-        <file>templates/templates/sunflower_another/manifest.json</file>
-        <file>templates/templates/sunflower_another/settings.json</file>
-        <file>templates/templates/sunflower_another/sunflower_another.jpeg</file>
-    </qresource>
-</RCC>

@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/canal_city/activate.chai</file>
-        <file>templates/templates/canal_city/canal_city.jpeg</file>
-        <file>templates/templates/canal_city/manifest.json</file>
-        <file>templates/templates/canal_city/settings.json</file>
-    </qresource>
-</RCC>

@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/easter_fire/activate.chai</file>
-        <file>templates/templates/easter_fire/easter_fire.png</file>
-        <file>templates/templates/easter_fire/manifest.json</file>
-        <file>templates/templates/easter_fire/settings.json</file>
-    </qresource>
-</RCC>

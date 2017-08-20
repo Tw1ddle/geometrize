@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/bridge_wooden/activate.chai</file>
-        <file>templates/templates/bridge_wooden/manifest.json</file>
-        <file>templates/templates/bridge_wooden/settings.json</file>
-        <file>templates/templates/bridge_wooden/wooden_bridge.jpeg</file>
-    </qresource>
-</RCC>

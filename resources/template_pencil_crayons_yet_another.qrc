@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/pencil_crayons_yet_another/activate.chai</file>
-        <file>templates/templates/pencil_crayons_yet_another/manifest.json</file>
-        <file>templates/templates/pencil_crayons_yet_another/pencil_crayons_another.jpeg</file>
-        <file>templates/templates/pencil_crayons_yet_another/settings.json</file>
-    </qresource>
-</RCC>

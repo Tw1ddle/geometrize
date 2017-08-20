@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/cross/activate.chai</file>
-        <file>templates/templates/cross/cross.jpeg</file>
-        <file>templates/templates/cross/manifest.json</file>
-        <file>templates/templates/cross/settings.json</file>
-    </qresource>
-</RCC>

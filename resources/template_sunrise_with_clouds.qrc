@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/sunrise_with_clouds/activate.chai</file>
-        <file>templates/templates/sunrise_with_clouds/manifest.json</file>
-        <file>templates/templates/sunrise_with_clouds/settings.json</file>
-        <file>templates/templates/sunrise_with_clouds/sunrise_with_clouds.jpeg</file>
-    </qresource>
-</RCC>

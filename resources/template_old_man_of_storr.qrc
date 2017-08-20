@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/old_man_of_storr/activate.chai</file>
-        <file>templates/templates/old_man_of_storr/manifest.json</file>
-        <file>templates/templates/old_man_of_storr/old_man_of_storr.jpeg</file>
-        <file>templates/templates/old_man_of_storr/settings.json</file>
-    </qresource>
-</RCC>

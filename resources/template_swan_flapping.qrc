@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/swan_flapping/activate.chai</file>
-        <file>templates/templates/swan_flapping/manifest.json</file>
-        <file>templates/templates/swan_flapping/settings.json</file>
-        <file>templates/templates/swan_flapping/swan_flapping.jpeg</file>
-    </qresource>
-</RCC>

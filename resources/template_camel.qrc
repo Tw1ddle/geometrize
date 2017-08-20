@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/camel/activate.chai</file>
-        <file>templates/templates/camel/camel.jpg</file>
-        <file>templates/templates/camel/manifest.json</file>
-        <file>templates/templates/camel/settings.json</file>
-    </qresource>
-</RCC>

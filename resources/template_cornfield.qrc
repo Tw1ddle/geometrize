@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/cornfield/activate.chai</file>
-        <file>templates/templates/cornfield/cornfield.jpg</file>
-        <file>templates/templates/cornfield/manifest.json</file>
-        <file>templates/templates/cornfield/settings.json</file>
-    </qresource>
-</RCC>

@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/paintbrushes/activate.chai</file>
-        <file>templates/templates/paintbrushes/manifest.json</file>
-        <file>templates/templates/paintbrushes/paintbrushes.png</file>
-        <file>templates/templates/paintbrushes/settings.json</file>
-    </qresource>
-</RCC>

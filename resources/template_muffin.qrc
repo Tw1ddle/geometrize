@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/muffin/activate.chai</file>
-        <file>templates/templates/muffin/manifest.json</file>
-        <file>templates/templates/muffin/muffin.jpeg</file>
-        <file>templates/templates/muffin/settings.json</file>
-    </qresource>
-</RCC>

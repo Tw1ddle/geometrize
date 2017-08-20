@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/highland_cow/activate.chai</file>
-        <file>templates/templates/highland_cow/highland_cow.jpeg</file>
-        <file>templates/templates/highland_cow/manifest.json</file>
-        <file>templates/templates/highland_cow/settings.json</file>
-    </qresource>
-</RCC>

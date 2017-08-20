@@ -1,5 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>settings/placeholder.json</file>
-    </qresource>
-</RCC>

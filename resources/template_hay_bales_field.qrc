@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/hay_bales_field/activate.chai</file>
-        <file>templates/templates/hay_bales_field/hay_bales_field.jpg</file>
-        <file>templates/templates/hay_bales_field/manifest.json</file>
-        <file>templates/templates/hay_bales_field/settings.json</file>
-    </qresource>
-</RCC>

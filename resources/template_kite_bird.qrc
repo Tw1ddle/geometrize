@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/kite_bird/activate.chai</file>
-        <file>templates/templates/kite_bird/kite_bird.png</file>
-        <file>templates/templates/kite_bird/manifest.json</file>
-        <file>templates/templates/kite_bird/settings.json</file>
-    </qresource>
-</RCC>

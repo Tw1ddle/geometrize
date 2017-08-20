@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/goat_eating_grass/activate.chai</file>
-        <file>templates/templates/goat_eating_grass/goat_eating_grass.jpeg</file>
-        <file>templates/templates/goat_eating_grass/manifest.json</file>
-        <file>templates/templates/goat_eating_grass/settings.json</file>
-    </qresource>
-</RCC>

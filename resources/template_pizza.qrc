@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/pizza/activate.chai</file>
-        <file>templates/templates/pizza/manifest.json</file>
-        <file>templates/templates/pizza/pizza.jpg</file>
-        <file>templates/templates/pizza/settings.json</file>
-    </qresource>
-</RCC>

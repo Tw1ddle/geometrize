@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/rhea_bird/activate.chai</file>
-        <file>templates/templates/rhea_bird/manifest.json</file>
-        <file>templates/templates/rhea_bird/rhea_bird.jpeg</file>
-        <file>templates/templates/rhea_bird/settings.json</file>
-    </qresource>
-</RCC>

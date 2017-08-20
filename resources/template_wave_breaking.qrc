@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/wave_breaking/activate.chai</file>
-        <file>templates/templates/wave_breaking/breaking_wave.jpeg</file>
-        <file>templates/templates/wave_breaking/manifest.json</file>
-        <file>templates/templates/wave_breaking/settings.json</file>
-    </qresource>
-</RCC>

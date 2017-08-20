@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/eiffel_tower/activate.chai</file>
-        <file>templates/templates/eiffel_tower/eiffel_tower.jpeg</file>
-        <file>templates/templates/eiffel_tower/manifest.json</file>
-        <file>templates/templates/eiffel_tower/settings.json</file>
-    </qresource>
-</RCC>

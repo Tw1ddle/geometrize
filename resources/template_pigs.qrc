@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/pigs/activate.chai</file>
-        <file>templates/templates/pigs/manifest.json</file>
-        <file>templates/templates/pigs/pigs.jpeg</file>
-        <file>templates/templates/pigs/settings.json</file>
-    </qresource>
-</RCC>

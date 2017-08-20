@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/circe_invidiosa/activate.chai</file>
-        <file>templates/templates/circe_invidiosa/circe_invidiosa.png</file>
-        <file>templates/templates/circe_invidiosa/manifest.json</file>
-        <file>templates/templates/circe_invidiosa/settings.json</file>
-    </qresource>
-</RCC>

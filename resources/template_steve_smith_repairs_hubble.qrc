@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/steve_smith_repairs_hubble/activate.chai</file>
-        <file>templates/templates/steve_smith_repairs_hubble/manifest.json</file>
-        <file>templates/templates/steve_smith_repairs_hubble/settings.json</file>
-        <file>templates/templates/steve_smith_repairs_hubble/steve_smith_repairs_hubble.png</file>
-    </qresource>
-</RCC>

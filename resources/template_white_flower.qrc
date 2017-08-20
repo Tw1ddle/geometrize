@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/white_flower/activate.chai</file>
-        <file>templates/templates/white_flower/manifest.json</file>
-        <file>templates/templates/white_flower/settings.json</file>
-        <file>templates/templates/white_flower/white_flower.jpg</file>
-    </qresource>
-</RCC>

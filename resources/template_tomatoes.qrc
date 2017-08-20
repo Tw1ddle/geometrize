@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/tomatoes/activate.chai</file>
-        <file>templates/templates/tomatoes/manifest.json</file>
-        <file>templates/templates/tomatoes/settings.json</file>
-        <file>templates/templates/tomatoes/tomatoes.jpeg</file>
-    </qresource>
-</RCC>

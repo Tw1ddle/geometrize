@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/plums_and_jam/activate.chai</file>
-        <file>templates/templates/plums_and_jam/manifest.json</file>
-        <file>templates/templates/plums_and_jam/plums_and_jam.jpeg</file>
-        <file>templates/templates/plums_and_jam/settings.json</file>
-    </qresource>
-</RCC>

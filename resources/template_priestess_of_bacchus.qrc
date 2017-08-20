@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/priestess_of_bacchus/activate.chai</file>
-        <file>templates/templates/priestess_of_bacchus/manifest.json</file>
-        <file>templates/templates/priestess_of_bacchus/priestess_of_bacchus.png</file>
-        <file>templates/templates/priestess_of_bacchus/settings.json</file>
-    </qresource>
-</RCC>

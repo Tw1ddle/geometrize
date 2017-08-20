@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/fish/activate.chai</file>
-        <file>templates/templates/fish/fish.jpeg</file>
-        <file>templates/templates/fish/manifest.json</file>
-        <file>templates/templates/fish/settings.json</file>
-    </qresource>
-</RCC>

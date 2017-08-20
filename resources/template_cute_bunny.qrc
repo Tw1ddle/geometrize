@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/cute_bunny/activate.chai</file>
-        <file>templates/templates/cute_bunny/cute_bunny.png</file>
-        <file>templates/templates/cute_bunny/manifest.json</file>
-        <file>templates/templates/cute_bunny/settings.json</file>
-    </qresource>
-</RCC>

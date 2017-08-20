@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/fencers_sparring/activate.chai</file>
-        <file>templates/templates/fencers_sparring/fencers_sparring.jpeg</file>
-        <file>templates/templates/fencers_sparring/manifest.json</file>
-        <file>templates/templates/fencers_sparring/settings.json</file>
-    </qresource>
-</RCC>

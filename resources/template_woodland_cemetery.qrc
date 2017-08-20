@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/woodland_cemetery/activate.chai</file>
-        <file>templates/templates/woodland_cemetery/manifest.json</file>
-        <file>templates/templates/woodland_cemetery/settings.json</file>
-        <file>templates/templates/woodland_cemetery/woodland_cemetery.png</file>
-    </qresource>
-</RCC>

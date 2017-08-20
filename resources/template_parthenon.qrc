@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/parthenon/activate.chai</file>
-        <file>templates/templates/parthenon/manifest.json</file>
-        <file>templates/templates/parthenon/parthenon_edwin_church.jpg</file>
-        <file>templates/templates/parthenon/settings.json</file>
-    </qresource>
-</RCC>

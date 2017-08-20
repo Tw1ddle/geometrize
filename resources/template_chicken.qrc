@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/chicken/activate.chai</file>
-        <file>templates/templates/chicken/chicken.png</file>
-        <file>templates/templates/chicken/manifest.json</file>
-        <file>templates/templates/chicken/settings.json</file>
-    </qresource>
-</RCC>

@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/sunset/activate.chai</file>
-        <file>templates/templates/sunset/manifest.json</file>
-        <file>templates/templates/sunset/settings.json</file>
-        <file>templates/templates/sunset/sunset.jpeg</file>
-    </qresource>
-</RCC>

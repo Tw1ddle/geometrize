@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/mona_lisa/activate.chai</file>
-        <file>templates/templates/mona_lisa/manifest.json</file>
-        <file>templates/templates/mona_lisa/mona_lisa.png</file>
-        <file>templates/templates/mona_lisa/settings.json</file>
-    </qresource>
-</RCC>

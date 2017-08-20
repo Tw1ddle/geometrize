@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/bridge/activate.chai</file>
-        <file>templates/templates/bridge/bridge.jpeg</file>
-        <file>templates/templates/bridge/manifest.json</file>
-        <file>templates/templates/bridge/settings.json</file>
-    </qresource>
-</RCC>

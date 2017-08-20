@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>templates/templates/sparkler/activate.chai</file>
-        <file>templates/templates/sparkler/manifest.json</file>
-        <file>templates/templates/sparkler/settings.json</file>
-        <file>templates/templates/sparkler/sparkler.jpg</file>
-    </qresource>
-</RCC>
