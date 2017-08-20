@@ -1,12 +1,10 @@
 [![Geometrize Logo](https://github.com/Tw1ddle/geometrize/blob/master/screenshots/logo.png?raw=true "Geometrize logo")](https://www.geometrize.co.uk/)
 
-[![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](https://github.com/Tw1ddle/geometrize/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/License-GPL%20v3-blue.svg?style=flat-square)](https://github.com/Tw1ddle/geometrize/blob/master/LICENSE)
 
-Geometrize is an app that geometrizes images into geometric primitives. Look through the [website](http://www.geometrize.co.uk/) and [gallery](http://gallery.geometrize.co.uk/).
+WORK IN PROGRESS.
 
-Stable Geometrize releases are available through the Windows Store, the Mac App Store and Linux.
-
-Also try the online web [demo](http://www.samcodes.co.uk/project/geometrize-haxe-web/).
+Geometrize is an app that geometrizes images into geometric primitives. See the [website](http://www.geometrize.co.uk/) and [gallery](http://gallery.geometrize.co.uk/).
 
 ## Features
 
@@ -19,7 +17,7 @@ Also try the online web [demo](http://www.samcodes.co.uk/project/geometrize-haxe
 
 ## Usage
 
-Watch these video tutorials on how to get the most out of Geometrize [here](https://www.youtube.com/playlist?list=PLe9ogi_J4cFgcqLdpmPC7GdFV5ohJPEzN).
+Video tutorials will be posted on how to get the most out of Geometrize [here](https://www.youtube.com/playlist?list=PLe9ogi_J4cFgcqLdpmPC7GdFV5ohJPEzN).
 
 Basic usage is simple. Open an image in Geometrize, select the desired settings, and hit start.
 
