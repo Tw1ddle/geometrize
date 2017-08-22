@@ -5,8 +5,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = Geometrize
 TEMPLATE = app
 
-# Enable C++11 features
-CONFIG += c++11
+# Enable C++14 features
+CONFIG += c++14
 
 # Disable assertions in release builds (for gcc, clang etc builds)
 CONFIG(release, debug|release): DEFINES += NDEBUG
