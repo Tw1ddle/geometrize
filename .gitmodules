@@ -22,3 +22,6 @@ url=https://github.com/Tw1ddle/geometrize-lib
 [submodule "resources/scripts"]
 	path = resources/scripts
 	url = https://github.com/Tw1ddle/geometrize-scripts
+[submodule "translations"]
+	path = translations
+	url = https://github.com/Tw1ddle/geometrize-translations
