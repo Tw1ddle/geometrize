@@ -34,7 +34,7 @@ namespace cli
  */
 void setupCommandLineParser(QCommandLineParser& parser, const QStringList& arguments)
 {
-    parser.setApplicationDescription(geometrize::strings::Strings::getApplicationDescription());
+    parser.setApplicationDescription(geometrize::strings::Strings::getShortApplicationDescription());
     parser.addHelpOption();
     parser.addVersionOption();
 

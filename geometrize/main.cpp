@@ -89,10 +89,9 @@ int main(int argc, char* argv[])
 
     QApplication app(argc, argv);
 
-    const QStringList arguments{app.arguments()};
-
     setupAnalytics();
 
+    const QStringList arguments{app.arguments()};
     setLocale(arguments);
 
     const auto run{resolveLaunchFunction(arguments)};

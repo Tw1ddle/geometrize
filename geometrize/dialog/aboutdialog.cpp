@@ -23,7 +23,7 @@ AboutDialog::AboutDialog(QWidget* parent) :
     setWindowTitle(tr("About %1", "The title of the 'about' page with information about the application").arg(geometrize::strings::Strings::getApplicationName()));
 
     ui->nameAndVersion->setText(geometrize::strings::Strings::getApplicationName() + " " + geometrize::version::getApplicationVersionString());
-    ui->appShortDescription->setText(geometrize::strings::Strings::getApplicationDescription());
+    ui->appShortDescription->setText(geometrize::strings::Strings::getShortApplicationDescription());
 
     ui->buildInfo->setText(tr("Build Info:", "Technical information about the way the software was built follows") +
                            " " + geometrize::version::getBuildAbiName() +

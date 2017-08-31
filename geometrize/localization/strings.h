@@ -32,7 +32,13 @@ public:
      * @brief getApplicationDescription Gets a short description of the application.
      * @return Short description of the application.
      */
-    static QString getApplicationDescription();
+    static QString getShortApplicationDescription();
+
+    /**
+     * @brief getLongApplicationDescription Gets a long description of the application and the main features.
+     * @return Long description of the application.
+     */
+    static QString getLongApplicationDescription();
 
     /**
      * @brief getCopyrightNotice Gets a copyright notice for the application.
