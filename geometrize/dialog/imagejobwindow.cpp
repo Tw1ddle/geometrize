@@ -46,6 +46,26 @@ namespace geometrize
 namespace dialog
 {
 
+// Utility function for destroying an image job set on a window.
+// We may need to defer job deletion until it is finished working.
+void destroyJob(job::ImageJob* job)
+{
+    if(job == nullptr) {
+        return;
+    }
+
+    if(job->isStepping()) {
+        // Wait until the job finishes stepping before disposing of it
+        // Otherwise it will probably crash as the Geometrize library will be working with deleted data
+        job->connect(job, &job::ImageJob::signal_modelDidStep, [job](std::vector<geometrize::ShapeResult>) {
+            job->deleteLater();
+        });
+    } else {
+        delete job;
+        job = nullptr;
+    }
+}
+
 class ImageJobWindow::ImageJobWindowImpl
 {
 public:
@@ -56,6 +76,8 @@ public:
         m_jobSteppedConnection{},
         m_running{false}
     {
+        q->setAttribute(Qt::WA_DeleteOnClose);
+
         ui->setupUi(q);
         q->tabifyDockWidget(ui->runnerSettingsDock, ui->exporterSettingsDock);
         q->tabifyDockWidget(ui->runnerSettingsDock, ui->targetImageSettingsDock);
@@ -71,7 +93,11 @@ public:
     }
     ImageJobWindowImpl operator=(const ImageJobWindowImpl&) = delete;
     ImageJobWindowImpl(const ImageJobWindowImpl&) = delete;
-    ~ImageJobWindowImpl() = default;
+    ~ImageJobWindowImpl()
+    {
+        disconnectJob();
+        destroyJob(m_job);
+    }
 
     void close()
     {
@@ -80,23 +106,8 @@ public:
 
     void setImageJob(job::ImageJob* job)
     {
-        if(m_jobSteppedConnection) {
-            disconnect(m_jobSteppedConnection);
-        }
-
-        if(m_job) {
-            job::ImageJob* oldJob = m_job;
-            if(oldJob->isStepping()) {
-                // Wait until the job finishes stepping before disposing of it
-                // Otherwise it will probably crash as the Geometrize library will be working with deleted data
-                connect(m_job, &job::ImageJob::signal_modelDidStep, [oldJob](std::vector<geometrize::ShapeResult>) {
-                    oldJob->deleteLater();
-                });
-            } else {
-                delete oldJob;
-                oldJob = nullptr;
-            }
-        }
+        disconnectJob();
+        destroyJob(m_job);
 
         m_job = job;
 
@@ -385,6 +396,13 @@ private:
     void setWindowTitle(const QString& displayName)
     {
         q->setWindowTitle(tr("Geometrize - Image - %1").arg(displayName));
+    }
+
+    void disconnectJob()
+    {
+        if(m_jobSteppedConnection) {
+            disconnect(m_jobSteppedConnection);
+        }
     }
 
     void updateWorkingImage()
