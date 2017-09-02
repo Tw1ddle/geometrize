@@ -51,10 +51,11 @@ namespace dialog
 class ImageJobWindow::ImageJobWindowImpl
 {
 public:
-    ImageJobWindowImpl(ImageJobWindow* pQ) : ui{std::make_unique<Ui::ImageJobWindow>()}, q{pQ}, m_job{nullptr}, m_engine{script::createImageJobEngine()}, m_running{false}, m_initialJobImage{nullptr}
+    ImageJobWindowImpl(ImageJobWindow* pQ) : ui{std::make_unique<Ui::ImageJobWindow>()}, q{pQ}, m_job{nullptr}, m_engine{script::createImageJobEngine()}, m_running{false}
     {
         ui->setupUi(q);
-
+        q->tabifyDockWidget(ui->runnerSettingsDock, ui->exporterSettingsDock);
+        q->tabifyDockWidget(ui->runnerSettingsDock, ui->targetImageSettingsDock);
         ui->imageView->setScene(&m_scene);
 
         setupScriptEditPanels();
@@ -80,8 +81,6 @@ public:
     {
         m_job = job;
 
-        m_initialJobImage = std::make_unique<geometrize::Bitmap>(m_job->getCurrent());
-
         setupOverlayImages();
         updateWorkingImage();
 
@@ -99,6 +98,8 @@ public:
             std::copy(shapes.begin(), shapes.end(), std::back_inserter(m_shapes));
             ui->shapeCountValueLabel->setText(QString::number(m_shapes.size()));
         });
+
+        m_job->drawBackgroundRectangle();
     }
 
     void toggleRunning()
@@ -156,16 +157,6 @@ public:
         m_job->getPreferences().save(path.toStdString());
     }
 
-    void saveImage() const
-    {
-        const QString path{common::ui::openSaveImagePathPickerDialog(q)};
-        if(path.isEmpty()) {
-            return;
-        }
-
-        geometrize::exporter::exportBitmap(m_job->getCurrent(), path.toStdString());
-    }
-
     void previewSVG() const
     {
         common::ui::openSVGPreviewPage(q);
@@ -178,7 +169,7 @@ public:
             return;
         }
 
-        const std::string data{geometrize::exporter::exportSVG(m_shapes, m_job->getCurrent().getWidth(), m_job->getCurrent().getHeight(), geometrize::commonutil::getAverageImageColor(m_job->getTarget()))};
+        const std::string data{geometrize::exporter::exportSVG(m_shapes, m_job->getCurrent().getWidth(), m_job->getCurrent().getHeight())};
         util::writeStringToFile(data, path.toStdString());
     }
 
@@ -189,10 +180,39 @@ public:
             return;
         }
 
-        const int width{ui->svgImageWidthSpinBox->value()};
-        const int height{ui->svgImageHeightSpinBox->value()};
+        // Rasterize as x3 normal size and downscale for less jaggy result
+        const std::uint32_t scaleFactor{3};
+        const std::uint32_t width{m_job->getCurrent().getWidth()};
+        const std::uint32_t height{m_job->getCurrent().getHeight()};
+        geometrize::exporter::exportRasterizedSvg(
+                    m_shapes,
+                    width,
+                    height,
+                    width * scaleFactor,
+                    height * scaleFactor,
+                    path.toStdString());
+    }
 
-        geometrize::exporter::exportRasterizedSvg(m_shapes, m_job->getCurrent().getWidth(), m_job->getCurrent().getHeight(), width, height, geometrize::commonutil::getAverageImageColor(m_job->getTarget()), path.toStdString());
+    void saveRasterizedSVGs() const
+    {
+        const QString path{common::ui::openSaveRasterizedSVGsPathPickerDialog(q)};
+        if(path.isEmpty()) {
+            return;
+        }
+
+        // Rasterize as x3 normal size and downscale for less jaggy result
+        const std::uint32_t scaleFactor{3};
+        const std::uint32_t width{m_job->getCurrent().getWidth()};
+        const std::uint32_t height{m_job->getCurrent().getHeight()};
+        geometrize::exporter::exportRasterizedSvgs(
+                    m_shapes,
+                    width,
+                    height,
+                    width * scaleFactor,
+                    height * scaleFactor,
+                    path.toStdString(),
+                    "exported_image",
+                    ".png");
     }
 
     void saveGeometryData() const
@@ -220,7 +240,17 @@ public:
             return;
         }
 
-        geometrize::exporter::exportGIF(*m_initialJobImage, m_job->getTarget(), m_shapes, path.toStdString());
+        // Rasterize as x3 normal size and downscale for less jaggy result
+        const std::uint32_t scaleFactor{3};
+        const std::uint32_t width{m_job->getCurrent().getWidth()};
+        const std::uint32_t height{m_job->getCurrent().getHeight()};
+        geometrize::exporter::exportGIF(
+            m_shapes,
+            width,
+            height,
+            width * scaleFactor,
+            height * scaleFactor,
+            path.toStdString());
     }
 
     void saveCanvasAnimation() const
@@ -243,17 +273,6 @@ public:
 
         const std::string pageSource{geometrize::exporter::exportWebGLAnimation(m_shapes)};
         util::writeStringToFile(pageSource, path.toStdString());
-    }
-
-    void saveRawImageDataButton() const
-    {
-        const QString path{common::ui::openSaveRawImageDataPathPickerDialog(q)};
-        if(path.isEmpty()) {
-            return;
-        }
-
-        const std::string bitmapData{geometrize::exporter::exportBitmapData(m_job->getCurrent())};
-        util::writeStringToFile(bitmapData, path.toStdString());
     }
 
     void setShapes(const geometrize::ShapeTypes shapeTypes, const bool enable)
@@ -417,7 +436,6 @@ private:
     ImageJobScene m_scene;
     std::unique_ptr<Ui::ImageJobWindow> ui;
 
-    std::unique_ptr<geometrize::Bitmap> m_initialJobImage;
     std::vector<geometrize::ShapeResult> m_shapes;
 
     std::vector<std::pair<std::string, std::string>> m_scriptChanges; ///> Enqueued changes to Chaiscript global variables and code
@@ -481,7 +499,12 @@ void ImageJobWindow::on_clearButton_clicked()
 
 void ImageJobWindow::on_saveImageButton_clicked()
 {
-    d->saveImage();
+    d->saveRasterizedSVG();
+}
+
+void ImageJobWindow::on_saveImagesButton_clicked()
+{
+    d->saveRasterizedSVGs();
 }
 
 void ImageJobWindow::on_previewSVGButton_clicked()
@@ -492,11 +515,6 @@ void ImageJobWindow::on_previewSVGButton_clicked()
 void ImageJobWindow::on_saveSVGButton_clicked()
 {
     d->saveSVG();
-}
-
-void ImageJobWindow::on_saveRasterizedSVGButton_clicked()
-{
-    d->saveRasterizedSVG();
 }
 
 void ImageJobWindow::on_saveGeometryDataButton_clicked()
@@ -517,11 +535,6 @@ void ImageJobWindow::on_saveCanvasAnimationButton_clicked()
 void ImageJobWindow::on_saveWebGLButton_clicked()
 {
     d->saveWebGLAnimation();
-}
-
-void ImageJobWindow::on_saveRawImageDataButton_clicked()
-{
-    d->saveRawImageDataButton();
 }
 
 void ImageJobWindow::on_usesRectangles_clicked(bool checked)

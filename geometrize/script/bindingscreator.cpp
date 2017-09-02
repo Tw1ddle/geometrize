@@ -329,7 +329,7 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
     ADD_FREE_FUN(getAverageImageColor);
 
     ADD_TYPE(Model);
-    ADD_CONSTRUCTOR(Model, Model(const geometrize::Bitmap&, geometrize::rgba));
+    ADD_CONSTRUCTOR(Model, Model(const geometrize::Bitmap&));
     ADD_CONSTRUCTOR(Model, Model(const geometrize::Bitmap&, const geometrize::Bitmap&));
     ADD_MEMBER(Model, reset);
     ADD_MEMBER(Model, getWidth);

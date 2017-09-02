@@ -18,6 +18,7 @@
 #include "geometrize/shaperesult.h"
 
 #include "image/imageloader.h"
+#include "imageexporter.h"
 
 namespace geometrize
 {
@@ -25,24 +26,29 @@ namespace geometrize
 namespace exporter
 {
 
-bool exportGIF(const geometrize::Bitmap& backgroundBitmap, const geometrize::Bitmap& targetBitmap, const std::vector<geometrize::ShapeResult>& data, const std::string& filePath)
+bool exportGIF(
+        const std::vector<geometrize::ShapeResult>& data,
+        std::uint32_t inputWidth,
+        std::uint32_t inputHeight,
+        std::uint32_t outputWidth,
+        std::uint32_t outputHeight,
+        const std::string& filePath)
 {
     QGifImage gif;
 
-    // Create an array of all the frames.
-    // Start from the initial bitmap, drawing all the shapes on.
-    std::vector<geometrize::Bitmap> bitmaps;
-    bitmaps.push_back(backgroundBitmap);
-    geometrize::Bitmap baseBitmap(backgroundBitmap);
-    for(const geometrize::ShapeResult& shapeResult : data) {
-        geometrize::drawLines(baseBitmap, shapeResult.color, shapeResult.shape->rasterize());
-        bitmaps.push_back(geometrize::Bitmap(baseBitmap));
+    std::vector<QImage> images;
+    for(std::size_t i = 0; i < data.size(); i++) {
+        const std::vector<geometrize::ShapeResult> shapes(data.begin(), data.begin() + i);
+        images.emplace_back(geometrize::exporter::renderSvgShapeDataToImage(shapes, inputWidth, inputHeight, outputWidth, outputHeight));
     }
 
     // TODO implement shape/frame skip and other options to limit size
-    for(std::uint32_t i = 0; i < bitmaps.size(); i++) {
-        const std::int32_t delayMs = std::max(20, static_cast<std::int32_t>(1000 / (i + 1)));
-        gif.addFrame(image::createImage(bitmaps[i]), QPoint(0, 0), delayMs);
+    for(std::uint32_t i = 0; i < images.size(); i++) {
+        std::int32_t delayMs = std::max(20, static_cast<std::int32_t>(1000 / (i + 1)));
+        if(i == images.size() - 1U) {
+            delayMs = 2000; // Extra delay at end of animation
+        }
+        gif.addFrame(images[i], QPoint(0, 0), delayMs);
     }
 
     return gif.save(QString::fromStdString(filePath));

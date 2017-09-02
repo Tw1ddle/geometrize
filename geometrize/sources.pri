@@ -16,6 +16,7 @@ HEADERS += $$PWD/analytics/analytics.h \
     $$PWD/dialog/completionbox.h \
     $$PWD/dialog/creditsdialog.h \
     $$PWD/dialog/elidedlabel.h \
+    $$PWD/dialog/folderselectionwidget.h \
     $$PWD/dialog/globalpreferencesdialog.h \
     $$PWD/dialog/imagegraphicsview.h \
     $$PWD/dialog/imagejobpixmapgraphicsitem.h \
@@ -91,6 +92,7 @@ SOURCES += $$PWD/main.cpp \
     $$PWD/dialog/completionbox.cpp \
     $$PWD/dialog/creditsdialog.cpp \
     $$PWD/dialog/elidedlabel.cpp \
+    $$PWD/dialog/folderselectionwidget.cpp \
     $$PWD/dialog/globalpreferencesdialog.cpp \
     $$PWD/dialog/imagegraphicsview.cpp \
     $$PWD/dialog/imagejobpixmapgraphicsitem.cpp \
@@ -148,6 +150,7 @@ SOURCES += $$PWD/main.cpp \
 FORMS += $$PWD/dialog/aboutdialog.ui \
     $$PWD/dialog/commandlineedit.ui \
     $$PWD/dialog/creditsdialog.ui \
+    $$PWD/dialog/folderselectionwidget.ui \
     $$PWD/dialog/globalpreferencesdialog.ui \
     $$PWD/dialog/imagejobwindow.ui \
     $$PWD/dialog/languageselectwidget.ui \

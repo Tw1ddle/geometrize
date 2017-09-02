@@ -28,7 +28,18 @@ public:
     ImageJobWorker(const ImageJobWorker&) = delete;
     ~ImageJobWorker() = default;
 
+    /**
+     * @brief step Steps the image job worker. Emits the willStep signal when called, and didStep signal on completion.
+     * @param options The options to provide the image runner when stepping.
+     */
     void step(geometrize::ImageRunnerOptions options);
+
+    /**
+     * @brief drawShape Draws a shape with the given color to the image job. Emits the willStep signal when called, and didStep signal on completion.
+     * @param shape The shape to draw.
+     * @param color The color of the shape to draw.
+     */
+    void drawShape(std::shared_ptr<geometrize::Shape> shape, geometrize::rgba color);
 
     geometrize::Bitmap& getCurrent();
     geometrize::Bitmap& getTarget();

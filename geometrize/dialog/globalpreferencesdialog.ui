@@ -36,7 +36,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QSplitter" name="splitter">
+    <widget class="QSplitter" name="preferencesSplitter">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
@@ -91,7 +91,7 @@
         <string>General</string>
        </property>
        <property name="icon">
-        <iconset resource="../resources/application_resources.qrc">
+        <iconset resource="../../resources/icons.qrc">
          <normaloff>:/icons/wrench.png</normaloff>:/icons/wrench.png</iconset>
        </property>
       </item>
@@ -100,7 +100,7 @@
         <string>Display</string>
        </property>
        <property name="icon">
-        <iconset resource="../resources/application_resources.qrc">
+        <iconset resource="../../resources/icons.qrc">
          <normaloff>:/icons/monitor_edit.png</normaloff>:/icons/monitor_edit.png</iconset>
        </property>
       </item>
@@ -109,7 +109,7 @@
         <string>File Paths</string>
        </property>
        <property name="icon">
-        <iconset resource="../resources/application_resources.qrc">
+        <iconset resource="../../resources/icons.qrc">
          <normaloff>:/icons/folders.png</normaloff>:/icons/folders.png</iconset>
        </property>
       </item>
@@ -118,7 +118,7 @@
         <string>Performance</string>
        </property>
        <property name="icon">
-        <iconset resource="../resources/application_resources.qrc">
+        <iconset resource="../../resources/icons.qrc">
          <normaloff>:/icons/processor.png</normaloff>:/icons/processor.png</iconset>
        </property>
       </item>
@@ -127,7 +127,7 @@
         <string>Language</string>
        </property>
        <property name="icon">
-        <iconset resource="../resources/application_resources.qrc">
+        <iconset resource="../../resources/icons.qrc">
          <normaloff>:/icons/locate.png</normaloff>:/icons/locate.png</iconset>
        </property>
       </item>
@@ -140,7 +140,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="generalPreferencesPage">
        <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -173,6 +173,7 @@
               <property name="title">
                <string>Start Up</string>
               </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_5"/>
              </widget>
             </item>
             <item>
@@ -180,6 +181,15 @@
               <property name="title">
                <string>Misc</string>
               </property>
+              <layout class="QVBoxLayout" name="verticalLayout_26">
+               <item>
+                <widget class="QCheckBox" name="checkBox">
+                 <property name="text">
+                  <string>Geometrize Application Logo On Launch</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </widget>
             </item>
            </layout>
@@ -225,23 +235,9 @@
               <property name="title">
                <string>Launch Page Display</string>
               </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QGroupBox" name="imageJobDisplayOptionsGroup">
-              <property name="title">
-               <string>Image Geometrize Display</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QGroupBox" name="groupBox">
-              <property name="title">
-               <string>Console Display</string>
-              </property>
-              <layout class="QVBoxLayout" name="verticalLayout_24">
+              <layout class="QVBoxLayout" name="verticalLayout_22">
                <item>
-                <layout class="QVBoxLayout" name="verticalLayout_23">
+                <layout class="QVBoxLayout" name="verticalLayout_3">
                  <item>
                   <widget class="QCheckBox" name="showLaunchWindowConsoleByDefault">
                    <property name="text">
@@ -249,10 +245,30 @@
                    </property>
                   </widget>
                  </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="imageJobDisplayOptionsGroup">
+              <property name="title">
+               <string>Image Geometrize Display</string>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_6">
+               <item>
+                <layout class="QVBoxLayout" name="verticalLayout_2">
                  <item>
                   <widget class="QCheckBox" name="showImageJobConsoleByDefault">
                    <property name="text">
                     <string>Show Image Geometrizing Console By Default</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="showScriptEditorsByDefault">
+                   <property name="text">
+                    <string>Show Script Editors By Default</string>
                    </property>
                   </widget>
                  </item>
@@ -298,6 +314,14 @@
               <property name="title">
                <string>Default Load Paths</string>
               </property>
+              <layout class="QVBoxLayout" name="verticalLayout_23">
+               <item>
+                <widget class="geometrize::dialog::FolderSelectionWidget" name="widget_2" native="true"/>
+               </item>
+               <item>
+                <widget class="geometrize::dialog::FolderSelectionWidget" name="widget_4" native="true"/>
+               </item>
+              </layout>
              </widget>
             </item>
             <item>
@@ -305,6 +329,14 @@
               <property name="title">
                <string>Default Save Paths</string>
               </property>
+              <layout class="QVBoxLayout" name="verticalLayout_24">
+               <item>
+                <widget class="geometrize::dialog::FolderSelectionWidget" name="widget_3" native="true"/>
+               </item>
+               <item>
+                <widget class="geometrize::dialog::FolderSelectionWidget" name="widget_5" native="true"/>
+               </item>
+              </layout>
              </widget>
             </item>
             <item>
@@ -312,6 +344,11 @@
               <property name="title">
                <string>Template Paths</string>
               </property>
+              <layout class="QVBoxLayout" name="verticalLayout_25">
+               <item>
+                <widget class="geometrize::dialog::FolderSelectionWidget" name="widget_6" native="true"/>
+               </item>
+              </layout>
              </widget>
             </item>
            </layout>
@@ -445,9 +482,6 @@
                    </item>
                   </layout>
                  </item>
-                 <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_5"/>
-                 </item>
                 </layout>
                </item>
               </layout>
@@ -504,7 +538,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QDialogButtonBox" name="buttonBox">
+    <widget class="QDialogButtonBox" name="closeButtonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
@@ -522,13 +556,19 @@
    <header>dialog/languageselectwidget.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>geometrize::dialog::FolderSelectionWidget</class>
+   <extends>QWidget</extends>
+   <header>dialog/folderselectionwidget.h</header>
+   <container>1</container>
+  </customwidget>
  </customwidgets>
  <resources>
-  <include location="../resources/application_resources.qrc"/>
+  <include location="../../resources/icons.qrc"/>
  </resources>
  <connections>
   <connection>
-   <sender>buttonBox</sender>
+   <sender>closeButtonBox</sender>
    <signal>accepted()</signal>
    <receiver>GlobalPreferencesDialog</receiver>
    <slot>accept()</slot>
@@ -544,7 +584,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>buttonBox</sender>
+   <sender>closeButtonBox</sender>
    <signal>rejected()</signal>
    <receiver>GlobalPreferencesDialog</receiver>
    <slot>reject()</slot>

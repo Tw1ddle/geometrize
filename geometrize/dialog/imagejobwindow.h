@@ -47,14 +47,13 @@ private slots:
     void on_clearButton_clicked();
 
     void on_saveImageButton_clicked();
+    void on_saveImagesButton_clicked();
     void on_previewSVGButton_clicked();
     void on_saveSVGButton_clicked();
-    void on_saveRasterizedSVGButton_clicked();
     void on_saveGeometryDataButton_clicked();
     void on_saveGIFButton_clicked();
     void on_saveCanvasAnimationButton_clicked();
     void on_saveWebGLButton_clicked();
-    void on_saveRawImageDataButton_clicked();
 
     void on_usesRectangles_clicked(bool checked);
     void on_usesRotatedRectangles_clicked(bool checked);

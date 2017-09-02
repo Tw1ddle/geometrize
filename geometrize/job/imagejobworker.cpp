@@ -1,6 +1,8 @@
 #include "imagejobworker.h"
 
 #include "geometrize/bitmap/bitmap.h"
+#include "geometrize/bitmap/rgba.h"
+#include "geometrize/model.h"
 #include "geometrize/runner/imagerunner.h"
 #include "geometrize/shaperesult.h"
 
@@ -23,6 +25,13 @@ void ImageJobWorker::step(const geometrize::ImageRunnerOptions options)
     emit signal_willStep();
     const std::vector<geometrize::ShapeResult> results{m_runner.step(options)};
     emit signal_didStep(results);
+}
+
+void ImageJobWorker::drawShape(std::shared_ptr<geometrize::Shape> shape, geometrize::rgba color)
+{
+    emit signal_willStep();
+    const geometrize::ShapeResult result{m_runner.getModel().drawShape(shape, color)};
+    emit signal_didStep({ result });
 }
 
 geometrize::Bitmap& ImageJobWorker::getCurrent()

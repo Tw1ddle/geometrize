@@ -80,6 +80,11 @@ QString openSaveRasterizedSVGPathPickerDialog(QWidget* parent)
     return QFileDialog::getSaveFileName(parent, QWidget::tr("Save Rasterized SVG Image"), "", QWidget::tr("Image Files (*.jpg *.jpeg *.png *.bmp)", ""));
 }
 
+QString openSaveRasterizedSVGsPathPickerDialog(QWidget* parent)
+{
+    return QFileDialog::getExistingDirectory(parent, QWidget::tr("Save Rasterized SVG Images"), "");
+}
+
 QString openSaveBitmapPathPickerDialog(QWidget* parent)
 {
     return QFileDialog::getSaveFileName(parent, QWidget::tr("Save Bitmap Image"), "", QWidget::tr("BMP Image (*.bmp)"));
@@ -103,11 +108,6 @@ QString openSaveCanvasAnimationPathPickerDialog(QWidget* parent)
 QString openSaveWebGLPathPickerDialog(QWidget* parent)
 {
     return QFileDialog::getSaveFileName(parent, QWidget::tr("Save WebGL Animation"), "", QWidget::tr("HTML Webpage (*.html)"));
-}
-
-QString openSaveRawImageDataPathPickerDialog(QWidget* parent)
-{
-    return QFileDialog::getSaveFileName(parent, QWidget::tr("Save Raw Image Data"));
 }
 
 QUrl openGetUrlDialog(QWidget* parent)

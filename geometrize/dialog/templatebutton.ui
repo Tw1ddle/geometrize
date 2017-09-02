@@ -61,7 +61,7 @@ QPushButton:focus:pressed{ background-color: #969696; }</string>
       <bool>false</bool>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: #ffffff;</string>
+      <string notr="true"/>
      </property>
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>

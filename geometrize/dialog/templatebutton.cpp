@@ -65,7 +65,7 @@ public:
     {
         const QImage thumbnail(imageFilepath);
         if(!thumbnail.isNull()) {
-            const QSize size{180, 150};
+            const QSize size{180, 180};
             return thumbnail.scaled(size, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
         }
         return thumbnail;

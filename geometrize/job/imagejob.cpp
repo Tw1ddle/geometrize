@@ -6,10 +6,12 @@
 
 #include <QThread>
 
+#include "geometrize/commonutil.h"
 #include "geometrize/bitmap/bitmap.h"
 #include "geometrize/runner/imagerunner.h"
 #include "geometrize/model.h"
 #include "geometrize/shaperesult.h"
+#include "geometrize/shape/rectangle.h"
 
 #include "job/imagejobworker.h"
 #include "preferences/imagejobpreferences.h"
@@ -79,6 +81,22 @@ public:
         emit q->signal_step(m_preferences.getImageRunnerOptions());
     }
 
+    void drawShape(std::shared_ptr<geometrize::Shape> shape, const geometrize::rgba color)
+    {
+        emit q->signal_drawShape(shape, color);
+    }
+
+    void drawBackgroundRectangle()
+    {
+        const geometrize::rgba color{geometrize::commonutil::getAverageImageColor(m_worker.getRunner().getTarget())};
+        const std::shared_ptr<geometrize::Rectangle> rectangle = std::make_shared<geometrize::Rectangle>(m_worker.getRunner().getModel());
+        rectangle->m_x1 = 0;
+        rectangle->m_x2 = m_worker.getTarget().getWidth();
+        rectangle->m_y1 = 0;
+        rectangle->m_y2 = m_worker.getTarget().getHeight();
+        emit q->signal_drawShape(rectangle, color);
+    }
+
     void modelWillStep()
     {
         emit q->signal_modelWillStep();
@@ -110,6 +128,8 @@ private:
     {
         qRegisterMetaType<std::vector<geometrize::ShapeResult>>();
         qRegisterMetaType<geometrize::ImageRunnerOptions>();
+        qRegisterMetaType<std::shared_ptr<geometrize::Shape>>();
+        qRegisterMetaType<geometrize::rgba>();
 
         m_worker.moveToThread(&m_workerThread);
         m_workerThread.start();
@@ -120,6 +140,7 @@ private:
     void connectSignals(const Qt::ConnectionType connectionType)
     {
         q->connect(q, &ImageJob::signal_step, &m_worker, &ImageJobWorker::step, connectionType);
+        q->connect(q, &ImageJob::signal_drawShape, &m_worker, &ImageJobWorker::drawShape, connectionType);
         q->connect(&m_worker, &ImageJobWorker::signal_willStep, q, &ImageJob::signal_modelWillStep, connectionType);
         q->connect(&m_worker, &ImageJobWorker::signal_didStep, q, &ImageJob::signal_modelDidStep, connectionType);
     }
@@ -127,6 +148,7 @@ private:
     void disconnectAll()
     {
         q->disconnect(q, &ImageJob::signal_step, &m_worker, &ImageJobWorker::step);
+        q->disconnect(q, &ImageJob::signal_drawShape, &m_worker, &ImageJobWorker::drawShape);
         q->disconnect(&m_worker, &ImageJobWorker::signal_willStep, q, &ImageJob::signal_modelWillStep);
         q->disconnect(&m_worker, &ImageJobWorker::signal_didStep, q, &ImageJob::signal_modelDidStep);
     }
@@ -191,6 +213,16 @@ std::size_t ImageJob::getJobId() const
 void ImageJob::stepModel()
 {
     d->stepModel();
+}
+
+void ImageJob::drawShape(std::shared_ptr<geometrize::Shape> shape, const geometrize::rgba color)
+{
+    d->drawShape(shape, color);
+}
+
+void ImageJob::drawBackgroundRectangle()
+{
+    d->drawBackgroundRectangle();
 }
 
 void ImageJob::modelWillStep()
