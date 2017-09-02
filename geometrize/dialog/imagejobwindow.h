@@ -33,9 +33,9 @@ public:
 
     /**
      * @brief setImageJob Sets the current image job shown by the window.
-     * @param job The image job to set on the image job window.
+     * @param job The image job to set on the image job window. The window takes ownership of the image job.
      */
-    void setImageJob(const std::shared_ptr<job::ImageJob>& job);
+    void setImageJob(job::ImageJob* job);
 
 private slots:
     void on_actionExit_triggered();

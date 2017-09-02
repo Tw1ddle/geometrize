@@ -16,7 +16,7 @@ namespace job
 {
 
 /**
- * @brief The ImageJobWorker class transforms a source image into a collection of shapes. Made to be run on a separate thread to avoid blocking.
+ * @brief The ImageJobWorker class transforms a source image into a collection of shapes. Made to be run on a separate thread to avoid blocking UI.
  */
 class ImageJobWorker : public QObject
 {
@@ -26,7 +26,7 @@ public:
     ImageJobWorker(Bitmap& bitmap, const Bitmap& initial);
     ImageJobWorker& operator=(const ImageJobWorker&) = delete;
     ImageJobWorker(const ImageJobWorker&) = delete;
-    ~ImageJobWorker() = default;
+    ~ImageJobWorker();
 
     /**
      * @brief step Steps the image job worker. Emits the willStep signal when called, and didStep signal on completion.
@@ -35,14 +35,30 @@ public:
     void step(geometrize::ImageRunnerOptions options);
 
     /**
+     * @brief isStepping Returns true if the internal model is currently stepping.
+     * @return True if the internal model is currently stepping, else false.
+     */
+    bool isStepping() const;
+
+    /**
      * @brief drawShape Draws a shape with the given color to the image job. Emits the willStep signal when called, and didStep signal on completion.
      * @param shape The shape to draw.
      * @param color The color of the shape to draw.
      */
     void drawShape(std::shared_ptr<geometrize::Shape> shape, geometrize::rgba color);
 
+    /**
+     * @brief getCurrent Gets the current working bitmap.
+     * @return The current working bitmap.
+     */
     geometrize::Bitmap& getCurrent();
+
+    /**
+     * @brief getTarget Gets the current target bitmap.
+     * @return The current target bitmap.
+     */
     geometrize::Bitmap& getTarget();
+
     ImageRunner& getRunner();
 
 signals:
@@ -51,6 +67,7 @@ signals:
 
 private:
     ImageRunner m_runner;
+    std::atomic_bool m_working;
 };
 
 }

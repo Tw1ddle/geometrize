@@ -7,6 +7,8 @@
 
 #include <QDirIterator>
 
+#include "chaiscript/chaiscript.hpp"
+
 #include "geometrize/commonutil.h"
 #include "geometrize/model.h"
 #include "geometrize/shape/circle.h"
@@ -19,8 +21,6 @@
 #include "geometrize/shape/rotatedrectangle.h"
 #include "geometrize/shape/triangle.h"
 #include "geometrize/shape/shapemutator.h"
-
-#include "chaiscript/chaiscript.hpp"
 
 #include "common/util.h"
 #include "script/chaiscriptcreator.h"
@@ -36,6 +36,11 @@ public:
     ~ShapeMutationRulesImpl() = default;
     ShapeMutationRulesImpl& operator=(const ShapeMutationRulesImpl&) = default;
     ShapeMutationRulesImpl(const ShapeMutationRulesImpl&) = default;
+
+    chaiscript::ChaiScript* getEngine()
+    {
+        return m_engine.get();
+    }
 
     void setupScripts(geometrize::ShapeMutator& mutator, const std::map<std::string, std::string>& functions)
     {
@@ -158,6 +163,11 @@ ShapeMutationRules::ShapeMutationRules() : d{std::make_unique<ShapeMutationRules
 
 ShapeMutationRules::~ShapeMutationRules()
 {
+}
+
+chaiscript::ChaiScript* ShapeMutationRules::getEngine()
+{
+    return d->getEngine();
 }
 
 void ShapeMutationRules::setupScripts(geometrize::ShapeMutator& mutator, const std::map<std::string, std::string>& functions)

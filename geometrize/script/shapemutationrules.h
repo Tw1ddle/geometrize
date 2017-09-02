@@ -3,6 +3,11 @@
 #include <map>
 #include <memory>
 
+namespace chaiscript
+{
+class ChaiScript;
+}
+
 namespace geometrize
 {
 class ShapeMutator;
@@ -21,6 +26,12 @@ public:
     ShapeMutationRules& operator=(const ShapeMutationRules&) = delete;
     ShapeMutationRules(const ShapeMutationRules&) = delete;
     ~ShapeMutationRules();
+
+    /**
+     * @brief getEngine Gets a pointer to the engine used by the shape mutation rules.
+     * @return A pointer to the engine used by the shape mutation rules.
+     */
+    chaiscript::ChaiScript* getEngine();
 
     /**
      * @brief setupScripts Sets the default scripted setup and mutation rules on the given shape mutator.

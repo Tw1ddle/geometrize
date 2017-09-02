@@ -12,25 +12,33 @@ namespace geometrize
 namespace job
 {
 
-ImageJobWorker::ImageJobWorker(Bitmap& bitmap) : QObject(), m_runner{bitmap}
+ImageJobWorker::ImageJobWorker(Bitmap& bitmap) : QObject(), m_runner{bitmap}, m_working{false}
 {
 }
 
-ImageJobWorker::ImageJobWorker(Bitmap& bitmap, const Bitmap& initial) : QObject(), m_runner{bitmap, initial}
+ImageJobWorker::ImageJobWorker(Bitmap& bitmap, const Bitmap& initial) : QObject(), m_runner{bitmap, initial}, m_working{false}
+{
+}
+
+ImageJobWorker::~ImageJobWorker()
 {
 }
 
 void ImageJobWorker::step(const geometrize::ImageRunnerOptions options)
 {
     emit signal_willStep();
+    m_working = true;
     const std::vector<geometrize::ShapeResult> results{m_runner.step(options)};
+    m_working = false;
     emit signal_didStep(results);
 }
 
 void ImageJobWorker::drawShape(std::shared_ptr<geometrize::Shape> shape, geometrize::rgba color)
 {
     emit signal_willStep();
+    m_working = true;
     const geometrize::ShapeResult result{m_runner.getModel().drawShape(shape, color)};
+    m_working = false;
     emit signal_didStep({ result });
 }
 
@@ -47,6 +55,11 @@ geometrize::Bitmap& ImageJobWorker::getTarget()
 geometrize::ImageRunner& ImageJobWorker::getRunner()
 {
     return m_runner;
+}
+
+bool ImageJobWorker::isStepping() const
+{
+    return m_working;
 }
 
 }

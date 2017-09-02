@@ -39,8 +39,6 @@
 #include "image/imageloader.h"
 #include "job/imagejob.h"
 #include "localization/strings.h"
-#include "script/chaiscriptcreator.h"
-#include "script/shapemutationrules.h"
 
 namespace geometrize
 {
@@ -51,7 +49,12 @@ namespace dialog
 class ImageJobWindow::ImageJobWindowImpl
 {
 public:
-    ImageJobWindowImpl(ImageJobWindow* pQ) : ui{std::make_unique<Ui::ImageJobWindow>()}, q{pQ}, m_job{nullptr}, m_engine{script::createImageJobEngine()}, m_running{false}
+    ImageJobWindowImpl(ImageJobWindow* pQ) :
+        ui{std::make_unique<Ui::ImageJobWindow>()},
+        q{pQ},
+        m_job{nullptr},
+        m_jobSteppedConnection{},
+        m_running{false}
     {
         ui->setupUi(q);
         q->tabifyDockWidget(ui->runnerSettingsDock, ui->exporterSettingsDock);
@@ -65,8 +68,6 @@ public:
 
             m_scene.setTargetPixmapOpacity(value * 0.01f);
         });
-
-        ui->consoleWidget->setEngine(m_engine.get());
     }
     ImageJobWindowImpl operator=(const ImageJobWindowImpl&) = delete;
     ImageJobWindowImpl(const ImageJobWindowImpl&) = delete;
@@ -77,18 +78,29 @@ public:
         q->close();
     }
 
-    void setImageJob(const std::shared_ptr<job::ImageJob>& job)
+    void setImageJob(job::ImageJob* job)
     {
+        if(m_jobSteppedConnection) {
+            disconnect(m_jobSteppedConnection);
+        }
+
+        if(m_job) {
+            job::ImageJob* oldJob = m_job;
+            if(oldJob->isStepping()) {
+                // Wait until the job finishes stepping before disposing of it
+                // Otherwise it will probably crash as the Geometrize library will be working with deleted data
+                connect(m_job, &job::ImageJob::signal_modelDidStep, [oldJob](std::vector<geometrize::ShapeResult>) {
+                    oldJob->deleteLater();
+                });
+            } else {
+                delete oldJob;
+                oldJob = nullptr;
+            }
+        }
+
         m_job = job;
 
-        setupOverlayImages();
-        updateWorkingImage();
-
-        setDisplayName(QString::fromStdString(m_job->getDisplayName()));
-
-        syncUserInterfaceWithOptions();
-
-        connect(job.get(), &job::ImageJob::signal_modelDidStep, [this](std::vector<geometrize::ShapeResult> shapes) {
+        m_jobSteppedConnection = connect(m_job, &job::ImageJob::signal_modelDidStep, [this](std::vector<geometrize::ShapeResult> shapes) {
             updateWorkingImage();
 
             if(m_running) {
@@ -99,7 +111,16 @@ public:
             ui->shapeCountValueLabel->setText(QString::number(m_shapes.size()));
         });
 
+        setWindowTitle(QString::fromStdString(m_job->getDisplayName()));
+
+        m_shapes.clear();
+
+        setupOverlayImages();
+        updateWorkingImage();
         m_job->drawBackgroundRectangle();
+        syncUserInterfaceWithOptions();
+
+        ui->consoleWidget->setEngine(m_job->getEngine());
     }
 
     void toggleRunning()
@@ -121,9 +142,9 @@ public:
 
     void clearModel()
     {
-        // TODO reset or recreate the runner i.e. ensure the runner stops/the next shape produced is not added dispose of shapes
-        // TODO reset the current image to whatever the target image is
-        setImageJob(m_job); // TODO
+        auto job = new geometrize::job::ImageJob(m_job->getDisplayName(), m_job->getTarget());
+        job->setPreferences(m_job->getPreferences());
+        setImageJob(job);
     }
 
     void revealLaunchWindow()
@@ -300,7 +321,7 @@ public:
      */
     void activateLibraryShapeMutation()
     {
-        m_job->getShapeMutator().setDefaults();
+        //m_job->getShapeMutator().setDefaults();
     }
 
     /**
@@ -308,7 +329,7 @@ public:
      */
     void activateScriptedShapeMutation()
     {
-        m_mutationRules.setupScripts(m_job->getShapeMutator(), {});
+        //m_mutationRules.setupScripts(m_job->getShapeMutator(), {});
     }
 
     /**
@@ -318,9 +339,9 @@ public:
      */
     void setScriptFunction(const std::string& name, const std::string& code)
     {
-        std::map<std::string, std::string> m;
-        m[name] = code;
-        m_mutationRules.setupScripts(m_job->getShapeMutator(), m);
+        //std::map<std::string, std::string> m;
+        //m[name] = code;
+        //m_job->getShapeMutationRules().setupScripts(m_job->getShapeMutator(), m);
     }
 
     void resetShapeScriptEngine()
@@ -361,7 +382,7 @@ public:
     }
 
 private:
-    void setDisplayName(const QString& displayName)
+    void setWindowTitle(const QString& displayName)
     {
         q->setWindowTitle(tr("Geometrize - Image - %1").arg(displayName));
     }
@@ -431,7 +452,9 @@ private:
         }
     }
 
-    std::shared_ptr<job::ImageJob> m_job;
+    job::ImageJob* m_job;
+    QMetaObject::Connection m_jobSteppedConnection;
+
     ImageJobWindow* q;
     ImageJobScene m_scene;
     std::unique_ptr<Ui::ImageJobWindow> ui;
@@ -439,10 +462,6 @@ private:
     std::vector<geometrize::ShapeResult> m_shapes;
 
     std::vector<std::pair<std::string, std::string>> m_scriptChanges; ///> Enqueued changes to Chaiscript global variables and code
-
-    geometrize::ShapeMutationRules m_mutationRules; ///> The shape mutation rules for the image job.
-
-    std::unique_ptr<chaiscript::ChaiScript> m_engine;
 
     bool m_running; ///> Whether the model is running (automatically)
 };
@@ -457,7 +476,7 @@ ImageJobWindow::~ImageJobWindow()
 {
 }
 
-void ImageJobWindow::setImageJob(const std::shared_ptr<job::ImageJob>& job)
+void ImageJobWindow::setImageJob(job::ImageJob* job)
 {
     d->setImageJob(job);
 }

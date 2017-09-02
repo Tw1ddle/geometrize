@@ -14,6 +14,11 @@
 
 #include "preferences/imagejobpreferences.h"
 
+namespace chaiscript
+{
+class ChaiScript;
+}
+
 Q_DECLARE_METATYPE(std::vector<geometrize::ShapeResult>) ///< Shape data passed around by the image job worker thread.
 Q_DECLARE_METATYPE(geometrize::ImageRunnerOptions) ///< Image runner options passed to the image job worker thread.
 Q_DECLARE_METATYPE(std::shared_ptr<geometrize::Shape>) ///< Shape passed to the image job worker thread.
@@ -42,6 +47,12 @@ public:
     ~ImageJob();
 
     /**
+     * @brief getEngine Gets a pointer to the engine used by the image job's shape mutator.
+     * @return A pointer to the engine used by the image job's shape mutator.
+     */
+    chaiscript::ChaiScript* getEngine();
+
+    /**
      * @brief getTarget Gets the target bitmap.
      * @return The target bitmap.
      */
@@ -54,12 +65,6 @@ public:
     Bitmap& getCurrent();
 
     /**
-     * @brief getShapeMutator Gets the current shape mutator.
-     * @return The current shape mutator.
-     */
-    ShapeMutator& getShapeMutator();
-
-    /**
      * @brief getDisplayName Gets the display name of the image job.
      * @return The display name of the image job.
      */
@@ -70,6 +75,12 @@ public:
      * @return The unique id of the image job.
      */
      std::size_t getJobId() const;
+
+     /**
+      * @brief isStepping Returns true if the internal model is currently stepping.
+      * @return True if the internal model is currently stepping, else false.
+      */
+     bool isStepping() const;
 
      /**
       * @brief stepModel Steps the internal model, typically adding a shape.

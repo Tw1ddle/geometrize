@@ -15,6 +15,7 @@
 
 #include "job/imagejobworker.h"
 #include "preferences/imagejobpreferences.h"
+#include "script/shapemutationrules.h"
 
 namespace geometrize
 {
@@ -51,6 +52,11 @@ public:
     ImageJobImpl& operator=(const ImageJobImpl&) = delete;
     ImageJobImpl(const ImageJobImpl&) = delete;
 
+    chaiscript::ChaiScript* getEngine()
+    {
+        return m_mutationRules.getEngine();
+    }
+
     Bitmap& getTarget()
     {
         return m_worker.getTarget();
@@ -74,6 +80,11 @@ public:
     std::size_t getJobId() const
     {
         return m_id;
+    }
+
+    bool isStepping() const
+    {
+        return m_worker.isStepping();
     }
 
     void stepModel()
@@ -155,6 +166,7 @@ private:
 
     ImageJob* q;
     preferences::ImageJobPreferences m_preferences; ///> Runtime configuration parameters for the runner.
+    geometrize::ShapeMutationRules m_mutationRules; ///> The shape mutation rules for the image job.
     const std::string m_displayName; ///> The display name of the image job.
     const std::size_t m_id; ///> A unique id for the image job.
     QThread m_workerThread; ///> Thread that the image job worker runs on.
@@ -185,6 +197,11 @@ ImageJob::~ImageJob()
 {
 }
 
+chaiscript::ChaiScript* ImageJob::getEngine()
+{
+    return d->getEngine();
+}
+
 Bitmap& ImageJob::getTarget()
 {
     return d->getTarget();
@@ -195,11 +212,6 @@ Bitmap& ImageJob::getCurrent()
     return d->getCurrent();
 }
 
-ShapeMutator& ImageJob::getShapeMutator()
-{
-    return d->getShapeMutator();
-}
-
 std::string ImageJob::getDisplayName() const
 {
     return d->getDisplayName();
@@ -208,6 +220,11 @@ std::string ImageJob::getDisplayName() const
 std::size_t ImageJob::getJobId() const
 {
     return d->getJobId();
+}
+
+bool ImageJob::isStepping() const
+{
+    return d->isStepping();
 }
 
 void ImageJob::stepModel()

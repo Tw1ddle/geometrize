@@ -1,7 +1,5 @@
 #include "imagejobcreator.h"
 
-#include <memory>
-
 #include <QImage>
 #include <QSize>
 
@@ -43,7 +41,7 @@ namespace job
 void createImageJobAndWindow(const std::string& displayName, const std::string& jobUrl)
 {
     geometrize::Bitmap bitmap{imageToBitmap(geometrize::image::loadImage(jobUrl))};
-    std::shared_ptr<ImageJob> job{std::make_shared<ImageJob>(displayName, bitmap)};
+    ImageJob* job{new ImageJob(displayName, bitmap)};
     dialog::ImageJobWindow* imageJobWindow{new dialog::ImageJobWindow()};
     imageJobWindow->setImageJob(job);
     imageJobWindow->show();
@@ -52,7 +50,7 @@ void createImageJobAndWindow(const std::string& displayName, const std::string& 
 void createImageJobAndWindow(const std::string& displayName, const QImage& image)
 {
     geometrize::Bitmap bitmap{imageToBitmap(image)};
-    std::shared_ptr<ImageJob> job{std::make_shared<ImageJob>(displayName, bitmap)};
+    ImageJob* job{new ImageJob(displayName, bitmap)};
     dialog::ImageJobWindow* imageJobWindow{new dialog::ImageJobWindow()};
     imageJobWindow->setImageJob(job);
     imageJobWindow->show();
