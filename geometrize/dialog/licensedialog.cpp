@@ -50,7 +50,14 @@ LicenseDialog::LicenseDialog(QWidget* parent) :
     const auto setLicenseText{[&readLicenseFile](QTextBrowser* textBrowser, const QString& licenseFilePath) {
         textBrowser->setText(readLicenseFile(":/licenses/" + licenseFilePath));
     }};
+
+#ifdef MAC_APPSTORE_LICENSE
+    // Special license for Mac appstore builds
+    setLicenseText(ui->geometrizeLicense, "geometrize_mac_appstore_build_license.txt");
+#else
     setLicenseText(ui->geometrizeLicense, "geometrize_license.txt");
+#endif
+
     setLicenseText(ui->geometrizeLibraryLicense, "geometrize_library_license.txt");
     setLicenseText(ui->qtLicense, "qt_license.txt");
     setLicenseText(ui->chaiScriptLicense, "chaiscript_license.txt");

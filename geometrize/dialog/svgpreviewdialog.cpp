@@ -13,8 +13,8 @@ SvgPreviewDialog::SvgPreviewDialog(const std::vector<geometrize::ShapeResult>& s
     QDialog(parent),
     ui(new Ui::SvgPreviewDialog)
 {
-    ui->setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint); // Remove question mark from title bar
+    ui->setupUi(this);
 
     ui->graphicsView->drawSvg(shapes);
 }

@@ -20,6 +20,11 @@ winrt|wince {
     include($$PWD/uwp/geometrize_uwp.pri)
 }
 
+# Uncomment this to use the special license for the Mac App Store (because I think their DRM is incompatible with the GPL)
+macx {
+    DEFINES += MAC_APPSTORE_LICENSE
+}
+
 # Include library dependencies
 INCLUDEPATH += $$PWD/lib/cereal/include \
     $$PWD/lib/chaiscript/include
