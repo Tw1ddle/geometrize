@@ -1,6 +1,13 @@
 #pragma once
 
+#include <vector>
+
 #include <QDialog>
+
+namespace geometrize
+{
+struct ShapeResult;
+}
 
 namespace Ui
 {
@@ -21,7 +28,7 @@ class SvgPreviewDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit SvgPreviewDialog(QWidget *parent = 0);
+    explicit SvgPreviewDialog(const std::vector<geometrize::ShapeResult>& shapes, QWidget *parent = 0);
     ~SvgPreviewDialog();
 
 private:

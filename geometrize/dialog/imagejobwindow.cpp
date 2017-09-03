@@ -214,7 +214,7 @@ public:
 
     void previewSVG() const
     {
-        common::ui::openSVGPreviewPage(q);
+        common::ui::openSVGPreviewPage(m_shapes, q);
     }
 
     void saveSVG() const

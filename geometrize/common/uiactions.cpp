@@ -164,9 +164,9 @@ QString openSaveGlobalSettingsDialog(QWidget* parent)
     return QFileDialog::getSaveFileName(parent, QWidget::tr("Save Global Settings"), "", QWidget::tr("JSON Global Settings File (*.json)"));
 }
 
-void openSVGPreviewPage(QWidget* parent)
+void openSVGPreviewPage(const std::vector<geometrize::ShapeResult>& shapes, QWidget* parent)
 {
-    dialog::SvgPreviewDialog dialog(parent);
+    dialog::SvgPreviewDialog dialog(shapes, parent);
     dialog.exec();
 }
 

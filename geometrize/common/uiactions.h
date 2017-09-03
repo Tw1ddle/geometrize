@@ -1,8 +1,15 @@
 #pragma once
 
+#include <vector>
+
 #include <QPair>
 #include <QString>
 #include <QUrl>
+
+namespace geometrize
+{
+struct ShapeResult;
+}
 
 class QWidget;
 
@@ -41,7 +48,7 @@ QString openLoadImageJobSettingsDialog(QWidget* parent);
 QString openSaveImageJobSettingsDialog(QWidget* parent);
 QString openLoadGlobalSettingsDialog(QWidget* parent);
 QString openSaveGlobalSettingsDialog(QWidget* parent);
-void openSVGPreviewPage(QWidget* parent);
+void openSVGPreviewPage(const std::vector<geometrize::ShapeResult>& shapes, QWidget* parent);
 
 }
 

@@ -1,9 +1,12 @@
 #pragma once
 
 #include <memory>
+#include <vector>
 
 #include <QGraphicsView>
 #include <QObject>
+
+#include "geometrize/shaperesult.h"
 
 class QWheelEvent;
 
@@ -23,6 +26,8 @@ class SvgPreviewView : public QGraphicsView
 public:
     explicit SvgPreviewView(QWidget* parent = nullptr);
     ~SvgPreviewView();
+
+    void drawSvg(const std::vector<geometrize::ShapeResult>& shapes);
 
 private:
     void wheelEvent(QWheelEvent* event) override;
