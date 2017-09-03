@@ -29,6 +29,7 @@
 #include "dialog/collapsiblepanel.h"
 #include "dialog/imagejobpixmapgraphicsitem.h"
 #include "dialog/imagejobscene.h"
+#include "dialog/imagejobscriptingpanel.h"
 #include "dialog/svgpreviewdialog.h"
 #include "dialog/scripteditorwidget.h"
 #include "exporter/gifexporter.h"
@@ -79,9 +80,12 @@ public:
         q->setAttribute(Qt::WA_DeleteOnClose);
 
         ui->setupUi(q);
+
         q->tabifyDockWidget(ui->runnerSettingsDock, ui->exporterSettingsDock);
         q->tabifyDockWidget(ui->runnerSettingsDock, ui->targetImageSettingsDock);
         ui->imageView->setScene(&m_scene);
+
+        ui->consoleWidget->setVisible(false);
 
         setupScriptEditPanels();
 
@@ -165,6 +169,25 @@ public:
         } else {
             common::ui::openLaunchWindow();
         }
+    }
+
+    void revealScriptEditor()
+    {
+        auto existingPanel = q->findChild<geometrize::dialog::ImageJobScriptingPanel*>();
+        if(existingPanel) {
+            existingPanel->setWindowState(existingPanel->windowState() & ~Qt::WindowMinimized);
+            QApplication::setActiveWindow(existingPanel);
+            existingPanel->raise();
+            return;
+        }
+
+        auto scriptingPanel = new geometrize::dialog::ImageJobScriptingPanel(q);
+        scriptingPanel->show();
+    }
+
+    void setConsoleVisibility(const bool visible)
+    {
+        ui->consoleWidget->setVisible(visible);
     }
 
     void loadSettingsTemplate()
@@ -448,7 +471,7 @@ private:
         ui->maxThreadsSpinBox->setValue(opts.maxThreads);
 
         const bool scriptModeEnabled{prefs.isScriptModeEnabled()};
-        ui->scriptingModeEnabledCheckbox->setChecked(scriptModeEnabled);
+        //ui->scriptingModeEnabledCheckbox->setChecked(scriptModeEnabled);
 
         const std::map<std::string, std::string> scripts{prefs.getScripts()};
         // TODO apply the scripts? or better use a signal from the prefs that something changed...? also need to subscribe to that for save actions on edit boxes on the UI itself
@@ -466,7 +489,6 @@ private:
             connect(editor, &ScriptEditorWidget::signal_scriptCodeChanged, [this](ScriptEditorWidget* self, const std::string& targetName, const std::string& scriptCode) {
                 // TODO validate and indicate if it's wrong?
             });
-            ui->scriptingEditBoxes->layout()->addWidget(editor);
         }
     }
 
@@ -517,6 +539,16 @@ void ImageJobWindow::on_actionSave_Settings_Template_triggered()
 void ImageJobWindow::on_actionReveal_Launch_Window_triggered()
 {
     d->revealLaunchWindow();
+}
+
+void ImageJobWindow::on_actionReveal_Script_Editor_triggered()
+{
+    d->revealScriptEditor();
+}
+
+void ImageJobWindow::on_actionScript_Console_toggled(const bool checked)
+{
+    d->setConsoleVisibility(checked);
 }
 
 void ImageJobWindow::on_runStopButton_clicked()

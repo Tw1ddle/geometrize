@@ -42,6 +42,8 @@ private slots:
     void on_actionLoad_Settings_Template_triggered();
     void on_actionSave_Settings_Template_triggered();
     void on_actionReveal_Launch_Window_triggered();
+    void on_actionReveal_Script_Editor_triggered();
+    void on_actionScript_Console_toggled(bool checked);
     void on_runStopButton_clicked();
     void on_stepButton_clicked();
     void on_clearButton_clicked();
