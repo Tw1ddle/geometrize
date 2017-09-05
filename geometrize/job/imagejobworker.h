@@ -59,6 +59,18 @@ public:
      */
     geometrize::Bitmap& getTarget();
 
+    /**
+     * @brief getCurrent Gets the current working bitmap, const-edition.
+     * @return The current working bitmap.
+     */
+    const geometrize::Bitmap& getCurrent() const;
+
+    /**
+     * @brief getTarget Gets the current target bitmap, const-edition.
+     * @return The current target bitmap.
+     */
+    const geometrize::Bitmap& getTarget() const;
+
     ImageRunner& getRunner();
 
 signals:

@@ -1,4 +1,4 @@
-#include "imagejobscene.h"
+#include "imagejobpixmapscene.h"
 
 #include <memory>
 
@@ -10,17 +10,17 @@ namespace geometrize
 namespace dialog
 {
 
-class ImageJobScene::ImageJobSceneImpl
+class ImageJobPixmapScene::ImageJobPixmapSceneImpl
 {
 public:
-    ImageJobSceneImpl(ImageJobScene* pQ) : q{pQ}
+    ImageJobPixmapSceneImpl(ImageJobPixmapScene* pQ) : q{pQ}
     {
         q->addItem(&m_workingPixmapItem);
         q->addItem(&m_targetPixmapItem);
     }
-    ImageJobSceneImpl operator=(const ImageJobSceneImpl&) = delete;
-    ImageJobSceneImpl(const ImageJobSceneImpl&) = delete;
-    ~ImageJobSceneImpl() = default;
+    ImageJobPixmapSceneImpl operator=(const ImageJobPixmapSceneImpl&) = delete;
+    ImageJobPixmapSceneImpl(const ImageJobPixmapSceneImpl&) = delete;
+    ~ImageJobPixmapSceneImpl() = default;
 
     void setTargetPixmapOpacity(const float opacity)
     {
@@ -38,31 +38,31 @@ public:
     }
 
 private:
-    ImageJobScene* q;
+    ImageJobPixmapScene* q;
 
     ImageJobPixmapGraphicsItem m_workingPixmapItem;
     ImageJobPixmapGraphicsItem m_targetPixmapItem;
 };
 
-ImageJobScene::ImageJobScene(QObject* parent) : QGraphicsScene{parent}, d{std::make_unique<ImageJobScene::ImageJobSceneImpl>(this)}
+ImageJobPixmapScene::ImageJobPixmapScene(QObject* parent) : QGraphicsScene{parent}, d{std::make_unique<ImageJobPixmapScene::ImageJobPixmapSceneImpl>(this)}
 {
 }
 
-ImageJobScene::~ImageJobScene()
+ImageJobPixmapScene::~ImageJobPixmapScene()
 {
 }
 
-void ImageJobScene::setTargetPixmapOpacity(const float opacity)
+void ImageJobPixmapScene::setTargetPixmapOpacity(const float opacity)
 {
     d->setTargetPixmapOpacity(opacity);
 }
 
-void ImageJobScene::setWorkingPixmap(const QPixmap& pixmap)
+void ImageJobPixmapScene::setWorkingPixmap(const QPixmap& pixmap)
 {
     d->setWorkingPixmap(pixmap);
 }
 
-void ImageJobScene::setTargetPixmap(const QPixmap& pixmap)
+void ImageJobPixmapScene::setTargetPixmap(const QPixmap& pixmap)
 {
     d->setTargetPixmap(pixmap);
 }

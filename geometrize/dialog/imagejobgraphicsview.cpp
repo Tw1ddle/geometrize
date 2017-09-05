@@ -1,4 +1,4 @@
-#include "imagegraphicsview.h"
+#include "imagejobgraphicsview.h"
 
 #include <QWheelEvent>
 
@@ -8,18 +8,17 @@ namespace geometrize
 namespace dialog
 {
 
-ImageGraphicsView::ImageGraphicsView(QWidget* parent) : QGraphicsView(parent)
+ImageJobGraphicsView::ImageJobGraphicsView(QWidget* parent) : QGraphicsView(parent)
 {
+    setMouseTracking(true);
+    setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
+    setDragMode(QGraphicsView::ScrollHandDrag);
+    setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     setMouseTracking(true);
 }
 
-void ImageGraphicsView::wheelEvent(QWheelEvent* e)
+void ImageJobGraphicsView::wheelEvent(QWheelEvent* e)
 {
-    if (Qt::ControlModifier != (e->modifiers() & Qt::ControlModifier)) {
-        QGraphicsView::wheelEvent(e);
-        return;
-    }
-
     if (e->angleDelta().x() == 0) {
         const QPoint pos{e->pos()};
         const QPointF posf{mapToScene(pos)};
@@ -51,7 +50,7 @@ void ImageGraphicsView::wheelEvent(QWheelEvent* e)
     }
 }
 
-void ImageGraphicsView::mouseMoveEvent(QMouseEvent* event)
+void ImageJobGraphicsView::mouseMoveEvent(QMouseEvent* event)
 {
     QGraphicsView::mouseMoveEvent(event);
 }

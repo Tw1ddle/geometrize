@@ -52,6 +52,16 @@ geometrize::Bitmap& ImageJobWorker::getTarget()
     return m_runner.getTarget();
 }
 
+const geometrize::Bitmap& ImageJobWorker::getCurrent() const
+{
+    return m_runner.getCurrent();
+}
+
+const geometrize::Bitmap& ImageJobWorker::getTarget() const
+{
+    return m_runner.getTarget();
+}
+
 geometrize::ImageRunner& ImageJobWorker::getRunner()
 {
     return m_runner;

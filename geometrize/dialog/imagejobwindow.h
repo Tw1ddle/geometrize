@@ -37,6 +37,31 @@ public:
      */
     void setImageJob(job::ImageJob* job);
 
+signals:
+    /**
+     * @brief willSetImageJob Signal dispatched immediately before an image job is set on the image job window.
+     * @param lastJob The last job (if any) set on the window, that will be replaced by the nextJob.
+     * @param nextJob The next job (if any) that will be set on the window.
+     */
+    void willSetImageJob(job::ImageJob* lastJob, job::ImageJob* nextJob);
+
+    /**
+     * @brief didSetImageJob Signal dispatched immediately after an image job is set on the image job window.
+     * @param lastJob The last job (if any) set on the window, that was replaced by the nextJob.
+     * @param currentJob The job (if any) that was set on the window.
+     */
+    void didSetImageJob(job::ImageJob* lastJob, job::ImageJob* currentJob);
+
+    /**
+     * @brief didLoadSettingsTemplate Signal dispatched immediately after a settings template is applied to the image job set on the window.
+     */
+    void didLoadSettingsTemplate();
+
+    /**
+     * @brief didSaveSettingsTemplate Signal dispatched immediately after a settings template based on the current image job settings is saved.
+     */
+    void didSaveSettingsTemplate();
+
 private slots:
     void on_actionExit_triggered();
     void on_actionLoad_Settings_Template_triggered();
@@ -44,37 +69,8 @@ private slots:
     void on_actionReveal_Launch_Window_triggered();
     void on_actionReveal_Script_Editor_triggered();
     void on_actionScript_Console_toggled(bool checked);
-    void on_runStopButton_clicked();
-    void on_stepButton_clicked();
-    void on_clearButton_clicked();
-
-    void on_saveImageButton_clicked();
-    void on_saveImagesButton_clicked();
-    void on_previewSVGButton_clicked();
-    void on_saveSVGButton_clicked();
-    void on_saveGeometryDataButton_clicked();
-    void on_saveGIFButton_clicked();
-    void on_saveCanvasAnimationButton_clicked();
-    void on_saveWebGLButton_clicked();
-
-    void on_usesRectangles_clicked(bool checked);
-    void on_usesRotatedRectangles_clicked(bool checked);
-    void on_usesTriangles_clicked(bool checked);
-    void on_usesEllipses_clicked(bool checked);
-    void on_usesRotatedEllipses_clicked(bool checked);
-    void on_usesCircles_clicked(bool checked);
-    void on_usesLines_clicked(bool checked);
-    void on_usesQuadraticBeziers_clicked(bool checked);
-    void on_usesPolylines_clicked(bool checked);
-
-    void on_scriptingModeEnabledCheckbox_clicked(bool checked);
-    void on_resetShapeScriptEngineButton_clicked();
-
-    void on_shapeOpacitySlider_valueChanged(int value);
-    void on_candidateShapesPerStepSlider_valueChanged(int value);
-    void on_mutationsPerCandidateShapeSlider_valueChanged(int value);
-    void on_randomSeedSpinBox_valueChanged(int value);
-    void on_maxThreadsSpinBox_valueChanged(int value);
+    void on_actionPixmap_Results_View_toggled(bool checked);
+    void on_actionVector_Results_View_toggled(bool checked);
 
 private:
     class ImageJobWindowImpl;

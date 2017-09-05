@@ -12,14 +12,14 @@ namespace dialog
 {
 
 /**
- * @brief The ImageGraphicsView class models a graphics view for viewing image jobs.
+ * @brief The ImageJobGraphicsView class models a graphics view for viewing the images and shapes used and/or produced by image jobs.
  */
-class ImageGraphicsView : public QGraphicsView
+class ImageJobGraphicsView : public QGraphicsView
 {
     Q_OBJECT
 
 public:
-    explicit ImageGraphicsView(QWidget* parent = nullptr);
+    explicit ImageJobGraphicsView(QWidget* parent = nullptr);
 
 private:
     void wheelEvent(QWheelEvent* event) override;

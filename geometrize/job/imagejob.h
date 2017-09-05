@@ -65,6 +65,30 @@ public:
     Bitmap& getCurrent();
 
     /**
+     * @brief getTarget Gets the target bitmap, const-edition.
+     * @return The target bitmap.
+     */
+    const Bitmap& getTarget() const;
+
+    /**
+     * @brief getCurrent Gets the current bitmap, const-edition.
+     * @return The current bitmap.
+     */
+    const Bitmap& getCurrent() const;
+
+    /**
+     * @brief getWidth Gets the width of the images used by the image job.
+     * @return The width of the images used by the image job.
+     */
+    std::uint32_t getWidth() const;
+
+    /**
+     * @brief getHeight Gets the height of the images used by the image job.
+     * @return The height of the images used by the image job.
+     */
+    std::uint32_t getHeight() const;
+
+    /**
      * @brief getDisplayName Gets the display name of the image job.
      * @return The display name of the image job.
      */

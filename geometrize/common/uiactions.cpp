@@ -11,7 +11,6 @@
 #include "dialog/launchwindow.h"
 #include "dialog/openurldialog.h"
 #include "dialog/runscriptdialog.h"
-#include "dialog/svgpreviewdialog.h"
 
 namespace geometrize
 {
@@ -100,14 +99,14 @@ QString openSaveGIFPathPickerDialog(QWidget* parent)
     return QFileDialog::getSaveFileName(parent, QWidget::tr("Save Animated GIF"), "", QWidget::tr("GIF Animation (*.gif)"));
 }
 
-QString openSaveCanvasAnimationPathPickerDialog(QWidget* parent)
+QString openSaveCanvasPathPickerDialog(QWidget* parent)
 {
-    return QFileDialog::getSaveFileName(parent, QWidget::tr("Save Canvas Animation"), "", QWidget::tr("HTML Webpage (*.html)"));
+    return QFileDialog::getSaveFileName(parent, QWidget::tr("Save HTML5 Canvas Webpage"), "", QWidget::tr("HTML Webpage (*.html)"));
 }
 
 QString openSaveWebGLPathPickerDialog(QWidget* parent)
 {
-    return QFileDialog::getSaveFileName(parent, QWidget::tr("Save WebGL Animation"), "", QWidget::tr("HTML Webpage (*.html)"));
+    return QFileDialog::getSaveFileName(parent, QWidget::tr("Save WebGL Webpage"), "", QWidget::tr("HTML Webpage (*.html)"));
 }
 
 QUrl openGetUrlDialog(QWidget* parent)
@@ -164,10 +163,9 @@ QString openSaveGlobalSettingsDialog(QWidget* parent)
     return QFileDialog::getSaveFileName(parent, QWidget::tr("Save Global Settings"), "", QWidget::tr("JSON Global Settings File (*.json)"));
 }
 
-void openSVGPreviewPage(const std::vector<geometrize::ShapeResult>& shapes, QWidget* parent)
+QString openTargetImagePickerDialog(QWidget* parent)
 {
-    dialog::SvgPreviewDialog dialog(shapes, parent);
-    dialog.exec();
+    return QFileDialog::getOpenFileName(parent, QWidget::tr("Select Target Image"), "", QWidget::tr("Image Files (*.jpg *.jpeg *.png *.bmp)", ""));
 }
 
 }

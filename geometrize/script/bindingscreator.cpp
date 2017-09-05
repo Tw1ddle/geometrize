@@ -238,8 +238,8 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
     ADD_CONSTRUCTOR(ImageRunner, ImageRunner(const geometrize::Bitmap&));
     ADD_CONSTRUCTOR(ImageRunner, ImageRunner(const geometrize::Bitmap&, const geometrize::Bitmap&));
     ADD_MEMBER(ImageRunner, step);
-    ADD_MEMBER(ImageRunner, getCurrent);
-    ADD_MEMBER(ImageRunner, getTarget);
+    //ADD_MEMBER(ImageRunner, getCurrent);
+    //ADD_MEMBER(ImageRunner, getTarget);
     ADD_MEMBER(ImageRunner, getModel);
 
     ADD_TYPE(Circle);
@@ -336,8 +336,8 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
     ADD_MEMBER(Model, getHeight);
     ADD_MEMBER(Model, step);
     //ADD_MEMBER(Model, drawShape);
-    ADD_MEMBER(Model, getCurrent);
-    ADD_MEMBER(Model, getTarget);
+    //ADD_MEMBER(Model, getCurrent);
+    //ADD_MEMBER(Model, getTarget);
     ADD_MEMBER(Model, setSeed);
     //ADD_MEMBER(Model, getShapeMutator);
 

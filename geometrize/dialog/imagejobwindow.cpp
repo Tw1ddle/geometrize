@@ -3,43 +3,23 @@
 
 #include <cassert>
 
-#include <QCloseEvent>
-#include <QDesktopServices>
-#include <QFileDialog>
-#include <QGraphicsPixmapItem>
 #include <QMessageBox>
-#include <QPainter>
 #include <QPixmap>
-#include <QSvgRenderer>
-
-#include "chaiscript/chaiscript.hpp"
+#include <QTimer>
 
 #include "geometrize/bitmap/bitmap.h"
-#include "geometrize/core.h"
-#include "geometrize/commonutil.h"
-#include "geometrize/exporter/bitmapdataexporter.h"
-#include "geometrize/exporter/bitmapexporter.h"
 #include "geometrize/runner/imagerunneroptions.h"
-#include "geometrize/exporter/svgexporter.h"
 
-#include "common/constants.h"
 #include "common/uiactions.h"
 #include "common/util.h"
-#include "dialog/aboutdialog.h"
-#include "dialog/collapsiblepanel.h"
-#include "dialog/imagejobpixmapgraphicsitem.h"
-#include "dialog/imagejobscene.h"
+#include "dialog/imagejobgraphicsview.h"
+#include "dialog/imagejobpixmapscene.h"
 #include "dialog/imagejobscriptingpanel.h"
-#include "dialog/svgpreviewdialog.h"
+#include "dialog/imagejobsvgscene.h"
+#include "dialog/imagejobtargetimagewidget.h"
 #include "dialog/scripteditorwidget.h"
-#include "exporter/gifexporter.h"
-#include "exporter/imageexporter.h"
-#include "exporter/canvasanimationexporter.h"
-#include "exporter/shapedataexporter.h"
-#include "exporter/webglanimationexporter.h"
 #include "image/imageloader.h"
 #include "job/imagejob.h"
-#include "localization/strings.h"
 
 namespace geometrize
 {
@@ -48,7 +28,7 @@ namespace dialog
 {
 
 // Utility function for destroying an image job set on a window.
-// We may need to defer job deletion until it is finished working.
+// This is a special case because we may need to defer job deletion until the job is finished working.
 void destroyJob(job::ImageJob* job)
 {
     if(job == nullptr) {
@@ -73,26 +53,130 @@ public:
     ImageJobWindowImpl(ImageJobWindow* pQ) :
         ui{std::make_unique<Ui::ImageJobWindow>()},
         q{pQ},
+        m_currentImageView{nullptr},
+        m_svgImageView{nullptr},
         m_job{nullptr},
-        m_jobSteppedConnection{},
-        m_running{false}
+        m_jobWillStepConnection{},
+        m_jobDidStepConnection{},
+        m_running{false},
+        m_timeRunning{0.0f},
+        m_timeRunningResolutionMs{100.0f}
     {
         q->setAttribute(Qt::WA_DeleteOnClose);
-
         ui->setupUi(q);
 
-        q->tabifyDockWidget(ui->runnerSettingsDock, ui->exporterSettingsDock);
+        q->tabifyDockWidget(ui->runnerSettingsDock, ui->exporterDock);
         q->tabifyDockWidget(ui->runnerSettingsDock, ui->targetImageSettingsDock);
-        ui->imageView->setScene(&m_scene);
+        ui->runnerSettingsDock->raise(); // Make sure runner settings dock is selected
 
-        ui->consoleWidget->setVisible(false);
+        ui->consoleWidget->setVisible(false); // Make sure console widget is hidden by default
 
-        setupScriptEditPanels();
+        m_currentImageView = new geometrize::dialog::ImageJobGraphicsView(ui->imageViewContainer);
+        m_currentImageView->setScene(&m_currentImageScene);
+        m_currentImageView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        m_currentImageView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        ui->imageViewContainer->layout()->addWidget(m_currentImageView);
 
-        connect(ui->targetOpacitySlider, &QSlider::valueChanged, [this](int value) {
-            ui->targetImageOpacityValueLabel->setText(QString::number(value));
+        m_svgImageView = new geometrize::dialog::ImageJobGraphicsView(ui->imageViewContainer);
+        m_svgImageView->setScene(&m_currentSvgScene);
+        m_svgImageView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        m_svgImageView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        ui->imageViewContainer->layout()->addWidget(m_svgImageView);
 
-            m_scene.setTargetPixmapOpacity(value * 0.01f);
+        // Used to track how long the job has been in the running state
+        connect(&m_timeRunningTimer, &QTimer::timeout, [this]() {
+            if(m_running) {
+                m_timeRunning += m_timeRunningResolutionMs;
+                updateStats();
+            }
+        });
+        m_timeRunningTimer.start(m_timeRunningResolutionMs);
+
+        connect(ui->imageJobTargetImageWidget, &ImageJobTargetImageWidget::targetImageOpacityChanged, [this](const unsigned int value) {
+            const float opacity{value * (1.0f / 255.0f)};
+            m_currentImageScene.setTargetPixmapOpacity(opacity);
+            m_currentSvgScene.setTargetPixmapOpacity(opacity);
+        });
+        const float initialTargetImageOpacity{10};
+        ui->imageJobTargetImageWidget->setTargetImageOpacity(initialTargetImageOpacity);
+
+        connect(ui->imageJobTargetImageWidget, &ImageJobTargetImageWidget::targetImageSelected, [this](const QImage& image) {
+            assert(!image.isNull());
+
+            const geometrize::Bitmap& target{m_job->getTarget()};
+            const auto targetWidth{target.getWidth()};
+            const auto targetHeight{target.getHeight()};
+            if(targetWidth != image.width() || targetHeight != image.height()) {
+                const QString selectedImageSize(tr("%1x%2").arg(image.width()).arg(image.height()));
+                const QString targetImageSize(tr("%1x%2").arg(targetWidth).arg(targetHeight));
+                QMessageBox::warning(
+                            q,
+                            tr("Failed to set target image"),
+                            tr("Selected image must have the same dimensions as the current target image. Size was %1, but should have been %2").arg(selectedImageSize).arg(targetImageSize));
+
+                return;
+            }
+
+            ui->imageJobTargetImageWidget->setTargetImage(image);
+        });
+
+        connect(ui->imageJobTargetImageWidget, &ImageJobTargetImageWidget::targetImageSet, [this](const QImage& image) {
+            // TODO throw away current job, clone and continue? or possibly defer until next step *if* already running
+        });
+
+        connect(ui->imageJobRunnerWidget, &ImageJobRunnerWidget::runStopButtonClicked, [this]() {
+            toggleRunning();
+        });
+        connect(ui->imageJobRunnerWidget, &ImageJobRunnerWidget::stepButtonClicked, [this]() {
+            stepModel();
+        });
+        connect(ui->imageJobRunnerWidget, &ImageJobRunnerWidget::clearButtonClicked, [this]() {
+            clearModel();
+        });
+
+        connect(q, &ImageJobWindow::willSetImageJob, [this](job::ImageJob* lastJob, job::ImageJob*) {
+            // NOTE we disconnect and destroy the last image job, which will soon be replaced by the next image job
+            // This means that any job set on the window is destroyed after it is replaced
+            disconnectJob();
+            destroyJob(lastJob);
+
+            m_shapes.clear();
+        });
+
+        connect(q, &ImageJobWindow::didSetImageJob, [this](job::ImageJob*, job::ImageJob* currentJob) {
+            ui->imageJobExportWidget->setImageJob(currentJob, &m_shapes);
+            ui->imageJobRunnerWidget->setImageJob(currentJob);
+
+            m_jobWillStepConnection = connect(currentJob, &job::ImageJob::signal_modelWillStep, [this]() {
+                ui->statsDockContents->setCurrentStatus(geometrize::dialog::ImageJobStatsWidget::RUNNING);
+            });
+
+            m_jobDidStepConnection = connect(currentJob, &job::ImageJob::signal_modelDidStep, [this](std::vector<geometrize::ShapeResult> shapes) {
+                std::copy(shapes.begin(), shapes.end(), std::back_inserter(m_shapes));
+
+                updateWorkingImage();
+                updateStats();
+
+                if(m_running) {
+                    stepModel();
+                }
+            });
+
+            q->setWindowTitle(tr("Geometrize - Image - %1").arg(QString::fromStdString(currentJob->getDisplayName())));
+
+            setupOverlayImages();
+            updateWorkingImage();
+            currentJob->drawBackgroundRectangle();
+
+            ui->consoleWidget->setEngine(currentJob->getEngine());
+            ui->imageJobRunnerWidget->syncUserInterface();
+            ui->imageJobTargetImageWidget->setTargetImage(image::createImage(currentJob->getTarget()));
+
+            m_timeRunning = 0.0f;
+        });
+
+        connect(q, &ImageJobWindow::didLoadSettingsTemplate, [this]() {
+            ui->imageJobRunnerWidget->syncUserInterface();
         });
     }
     ImageJobWindowImpl operator=(const ImageJobWindowImpl&) = delete;
@@ -110,56 +194,11 @@ public:
 
     void setImageJob(job::ImageJob* job)
     {
-        disconnectJob();
-        destroyJob(m_job);
-
+        job::ImageJob* lastJob{m_job};
+        job::ImageJob* nextJob{job};
+        q->willSetImageJob(lastJob, nextJob);
         m_job = job;
-
-        m_jobSteppedConnection = connect(m_job, &job::ImageJob::signal_modelDidStep, [this](std::vector<geometrize::ShapeResult> shapes) {
-            updateWorkingImage();
-
-            if(m_running) {
-                stepModel();
-            }
-
-            std::copy(shapes.begin(), shapes.end(), std::back_inserter(m_shapes));
-            ui->shapeCountValueLabel->setText(QString::number(m_shapes.size()));
-        });
-
-        setWindowTitle(QString::fromStdString(m_job->getDisplayName()));
-
-        m_shapes.clear();
-
-        setupOverlayImages();
-        updateWorkingImage();
-        m_job->drawBackgroundRectangle();
-        syncUserInterfaceWithOptions();
-
-        ui->consoleWidget->setEngine(m_job->getEngine());
-    }
-
-    void toggleRunning()
-    {
-        m_running = !m_running;
-
-        if(m_running) {
-            stepModel();
-            ui->runStopButton->setText(tr("Stop"));
-        } else {
-            ui->runStopButton->setText(tr("Run"));
-        }
-    }
-
-    void stepModel()
-    {
-        m_job->stepModel();
-    }
-
-    void clearModel()
-    {
-        auto job = new geometrize::job::ImageJob(m_job->getDisplayName(), m_job->getTarget());
-        job->setPreferences(m_job->getPreferences());
-        setImageJob(job);
+        q->didSetImageJob(lastJob, nextJob);
     }
 
     void revealLaunchWindow()
@@ -180,7 +219,6 @@ public:
             existingPanel->raise();
             return;
         }
-
         auto scriptingPanel = new geometrize::dialog::ImageJobScriptingPanel(q);
         scriptingPanel->show();
     }
@@ -190,16 +228,25 @@ public:
         ui->consoleWidget->setVisible(visible);
     }
 
+    void setPixmapViewVisibility(const bool visible)
+    {
+        m_currentImageView->setVisible(visible);
+    }
+
+    void setVectorViewVisibility(const bool visible)
+    {
+        m_svgImageView->setVisible(visible);
+    }
+
     void loadSettingsTemplate()
     {
         const QString path{common::ui::openLoadImageJobSettingsDialog(q)};
         if(path.isEmpty()) {
             return;
         }
-
         m_job->getPreferences().load(path.toStdString());
 
-        syncUserInterfaceWithOptions();
+        emit q->didLoadSettingsTemplate();
     }
 
     void saveSettingsTemplate() const
@@ -208,302 +255,92 @@ public:
         if(path.isEmpty()) {
             return;
         }
-
         m_job->getPreferences().save(path.toStdString());
-    }
 
-    void previewSVG() const
-    {
-        common::ui::openSVGPreviewPage(m_shapes, q);
-    }
-
-    void saveSVG() const
-    {
-        const QString path{common::ui::openSaveSVGPathPickerDialog(q)};
-        if(path.isEmpty()) {
-            return;
-        }
-
-        const std::string data{geometrize::exporter::exportSVG(m_shapes, m_job->getCurrent().getWidth(), m_job->getCurrent().getHeight())};
-        util::writeStringToFile(data, path.toStdString());
-    }
-
-    void saveRasterizedSVG() const
-    {
-        const QString path{common::ui::openSaveRasterizedSVGPathPickerDialog(q)};
-        if(path.isEmpty()) {
-            return;
-        }
-
-        // Rasterize as x3 normal size and downscale for less jaggy result
-        const std::uint32_t scaleFactor{3};
-        const std::uint32_t width{m_job->getCurrent().getWidth()};
-        const std::uint32_t height{m_job->getCurrent().getHeight()};
-        geometrize::exporter::exportRasterizedSvg(
-                    m_shapes,
-                    width,
-                    height,
-                    width * scaleFactor,
-                    height * scaleFactor,
-                    path.toStdString());
-    }
-
-    void saveRasterizedSVGs() const
-    {
-        const QString path{common::ui::openSaveRasterizedSVGsPathPickerDialog(q)};
-        if(path.isEmpty()) {
-            return;
-        }
-
-        // Rasterize as x3 normal size and downscale for less jaggy result
-        const std::uint32_t scaleFactor{3};
-        const std::uint32_t width{m_job->getCurrent().getWidth()};
-        const std::uint32_t height{m_job->getCurrent().getHeight()};
-        geometrize::exporter::exportRasterizedSvgs(
-                    m_shapes,
-                    width,
-                    height,
-                    width * scaleFactor,
-                    height * scaleFactor,
-                    path.toStdString(),
-                    "exported_image",
-                    ".png");
-    }
-
-    void saveGeometryData() const
-    {
-        const QString path{common::ui::openSaveGeometryDataPathPickerDialog(q)};
-        if(path.isEmpty()) {
-            return;
-        }
-
-        geometrize::exporter::ShapeDataFormat format = exporter::ShapeDataFormat::JSON;
-        if(path.endsWith("json")) {
-            format = geometrize::exporter::ShapeDataFormat::JSON;
-        } else if(path.endsWith("txt")) {
-            format = geometrize::exporter::ShapeDataFormat::CUSTOM_ARRAY;
-        }
-
-        const std::string data{geometrize::exporter::exportShapeData(m_shapes, format)};
-        util::writeStringToFile(data, path.toStdString());
-    }
-
-    void saveGIF() const
-    {
-        const QString path{common::ui::openSaveGIFPathPickerDialog(q)};
-        if(path.isEmpty()) {
-            return;
-        }
-
-        // Rasterize as x3 normal size and downscale for less jaggy result
-        const std::uint32_t scaleFactor{3};
-        const std::uint32_t width{m_job->getCurrent().getWidth()};
-        const std::uint32_t height{m_job->getCurrent().getHeight()};
-        geometrize::exporter::exportGIF(
-            m_shapes,
-            width,
-            height,
-            width * scaleFactor,
-            height * scaleFactor,
-            path.toStdString());
-    }
-
-    void saveCanvasAnimation() const
-    {
-        const QString path{common::ui::openSaveCanvasAnimationPathPickerDialog(q)};
-        if(path.isEmpty()) {
-            return;
-        }
-
-        const std::string pageSource{geometrize::exporter::exportCanvasAnimation(m_shapes)};
-        util::writeStringToFile(pageSource, path.toStdString());
-    }
-
-    void saveWebGLAnimation() const
-    {
-        const QString path{common::ui::openSaveWebGLPathPickerDialog(q)};
-        if(path.isEmpty()) {
-            return;
-        }
-
-        const std::string pageSource{geometrize::exporter::exportWebGLAnimation(m_shapes)};
-        util::writeStringToFile(pageSource, path.toStdString());
-    }
-
-    void setShapes(const geometrize::ShapeTypes shapeTypes, const bool enable)
-    {
-        if(enable) {
-            m_job->getPreferences().enableShapeTypes(shapeTypes);
-        } else {
-            m_job->getPreferences().disableShapeTypes(shapeTypes);
-        }
-    }
-
-    void setScriptingModeEnabled(const bool enabled)
-    {
-        m_job->getPreferences().setScriptModeEnabled(enabled);
-
-        if(enabled) {
-            activateScriptedShapeMutation();
-        } else {
-            activateLibraryShapeMutation();
-        }
-    }
-
-    /**
-     * @brief activateLibraryShapeMutation Uses the Geometrize library's built-in implementation for mutating shapes.
-     */
-    void activateLibraryShapeMutation()
-    {
-        //m_job->getShapeMutator().setDefaults();
-    }
-
-    /**
-     * @brief activateScriptedShapeMutation Uses the custom scripted implementation for mutating shapes.
-     */
-    void activateScriptedShapeMutation()
-    {
-        //m_mutationRules.setupScripts(m_job->getShapeMutator(), {});
-    }
-
-    /**
-     * @brief setScriptFunction Adds the given script function to the engine.
-     * @param name The name of the function to add.
-     * @param code The code that defines the function.
-     */
-    void setScriptFunction(const std::string& name, const std::string& code)
-    {
-        //std::map<std::string, std::string> m;
-        //m[name] = code;
-        //m_job->getShapeMutationRules().setupScripts(m_job->getShapeMutator(), m);
-    }
-
-    void resetShapeScriptEngine()
-    {
-        // TODO reset the text of all the script boxes back to defaults
-        //m_job->resetShapeScriptEngine();
-    }
-
-    void setShapeOpacity(const int opacity)
-    {
-        ui->shapeOpacityValueLabel->setText(QString::number(opacity));
-
-        m_job->getPreferences().setShapeAlpha(opacity);
-    }
-
-    void setCandidateShapesPerStep(const int value)
-    {
-        ui->candidateShapesPerStepCountLabel->setText(QString::number(value));
-
-        m_job->getPreferences().setCandidateShapeCount(value);
-    }
-
-    void setMutationsPerCandidateShape(const int value)
-    {
-        ui->mutationsPerCandidateShapeCountLabel->setText(QString::number(value));
-
-        m_job->getPreferences().setMaxShapeMutations(value);
-    }
-
-    void setRandomSeed(const int value)
-    {
-        m_job->getPreferences().setSeed(value);
-    }
-
-    void setMaxThreads(const int value)
-    {
-        m_job->getPreferences().setMaxThreads(value);
+        emit q->didSaveSettingsTemplate();
     }
 
 private:
-    void setWindowTitle(const QString& displayName)
+    void toggleRunning()
     {
-        q->setWindowTitle(tr("Geometrize - Image - %1").arg(displayName));
+        m_running = !m_running;
+
+        if(!m_running) {
+            ui->imageJobRunnerWidget->setRunStopButtonText(tr("Start"));
+        } else {
+            stepModel();
+            ui->imageJobRunnerWidget->setRunStopButtonText(tr("Stop"));
+        }
+    }
+
+    void stepModel()
+    {
+        m_job->stepModel();
+    }
+
+    void clearModel()
+    {
+        auto job = new geometrize::job::ImageJob(m_job->getDisplayName(), m_job->getTarget());
+        job->setPreferences(m_job->getPreferences());
+        setImageJob(job);
+    }
+
+    void updateStats()
+    {
+        if(!m_running) {
+            ui->statsDockContents->setCurrentStatus(geometrize::dialog::ImageJobStatsWidget::STOPPED);
+        }
+
+        ui->statsDockContents->setShapeCount(m_shapes.size());
+
+        if(!m_shapes.empty()) {
+            ui->statsDockContents->setSimilarity(m_shapes.back().score * 100.0f);
+        }
+
+        ui->statsDockContents->setTimeRunning(m_timeRunning);
     }
 
     void disconnectJob()
     {
-        if(m_jobSteppedConnection) {
-            disconnect(m_jobSteppedConnection);
+        if(m_jobWillStepConnection) {
+            disconnect(m_jobWillStepConnection);
+        }
+        if(m_jobDidStepConnection) {
+            disconnect(m_jobDidStepConnection);
         }
     }
 
     void updateWorkingImage()
     {
         const QPixmap pixmap{image::createPixmap(m_job->getCurrent())};
-        m_scene.setWorkingPixmap(pixmap);
+        m_currentImageScene.setWorkingPixmap(pixmap);
+        m_currentSvgScene.drawSvg(m_shapes, pixmap.size().width(), pixmap.size().height());
     }
 
     void setupOverlayImages()
     {
         const QPixmap target{image::createPixmap(m_job->getTarget())};
-        m_scene.setTargetPixmap(target);
+        m_currentImageScene.setTargetPixmap(target);
+        m_currentSvgScene.setTargetPixmap(target);
     }
 
-    void syncUserInterfaceWithOptions()
-    {
-        geometrize::preferences::ImageJobPreferences& prefs{m_job->getPreferences()};
-
-        const float startingTargetOpacity{10};
-        ui->targetOpacitySlider->setValue(startingTargetOpacity);
-
-        const geometrize::ImageRunnerOptions opts{prefs.getImageRunnerOptions()}; // Geometrize library options
-
-        const auto usesShape = [&opts](const geometrize::ShapeTypes type) -> bool {
-            const std::uint32_t shapes{static_cast<std::uint32_t>(opts.shapeTypes)};
-            return shapes & type;
-        };
-
-        ui->usesRectangles->setChecked(usesShape(geometrize::RECTANGLE));
-        ui->usesRotatedRectangles->setChecked(usesShape(geometrize::ROTATED_RECTANGLE));
-        ui->usesTriangles->setChecked(usesShape(geometrize::TRIANGLE));
-        ui->usesEllipses->setChecked(usesShape(geometrize::ELLIPSE));
-        ui->usesRotatedEllipses->setChecked(usesShape(geometrize::ROTATED_ELLIPSE));
-        ui->usesCircles->setChecked(usesShape(geometrize::CIRCLE));
-        ui->usesLines->setChecked(usesShape(geometrize::LINE));
-        ui->usesQuadraticBeziers->setChecked(usesShape(geometrize::QUADRATIC_BEZIER));
-        ui->usesPolylines->setChecked(usesShape(geometrize::POLYLINE));
-
-        ui->shapeOpacitySlider->setValue(opts.alpha);
-        ui->candidateShapesPerStepSlider->setValue(opts.shapeCount);
-        ui->mutationsPerCandidateShapeSlider->setValue(opts.maxShapeMutations);
-        ui->randomSeedSpinBox->setValue(opts.seed);
-        ui->maxThreadsSpinBox->setValue(opts.maxThreads);
-
-        const bool scriptModeEnabled{prefs.isScriptModeEnabled()};
-        //ui->scriptingModeEnabledCheckbox->setChecked(scriptModeEnabled);
-
-        const std::map<std::string, std::string> scripts{prefs.getScripts()};
-        // TODO apply the scripts? or better use a signal from the prefs that something changed...? also need to subscribe to that for save actions on edit boxes on the UI itself
-    }
-
-    void setupScriptEditPanels()
-    {
-        for(const geometrize::ShapeTypes type : geometrize::allShapes) {
-            ScriptEditorWidget* editor{new ScriptEditorWidget(geometrize::strings::Strings::getShapeTypeNamePlural(type), "TODO", "TODO")};
-
-            connect(editor, &ScriptEditorWidget::signal_scriptCommitted, [this](ScriptEditorWidget* self, const std::string& targetName, const std::string& scriptCode) {
-                // TODO validate code?
-                m_scriptChanges.push_back(std::make_pair(targetName, scriptCode));
-            });
-            connect(editor, &ScriptEditorWidget::signal_scriptCodeChanged, [this](ScriptEditorWidget* self, const std::string& targetName, const std::string& scriptCode) {
-                // TODO validate and indicate if it's wrong?
-            });
-        }
-    }
+    std::unique_ptr<Ui::ImageJobWindow> ui;
+    ImageJobWindow* q;
 
     job::ImageJob* m_job;
-    QMetaObject::Connection m_jobSteppedConnection;
-
-    ImageJobWindow* q;
-    ImageJobScene m_scene;
-    std::unique_ptr<Ui::ImageJobWindow> ui;
-
+    QMetaObject::Connection m_jobWillStepConnection;
+    QMetaObject::Connection m_jobDidStepConnection;
     std::vector<geometrize::ShapeResult> m_shapes;
 
-    std::vector<std::pair<std::string, std::string>> m_scriptChanges; ///> Enqueued changes to Chaiscript global variables and code
+    ImageJobPixmapScene m_currentImageScene;
+    ImageJobSvgScene m_currentSvgScene;
+    geometrize::dialog::ImageJobGraphicsView* m_currentImageView;
+    geometrize::dialog::ImageJobGraphicsView* m_svgImageView;
 
     bool m_running; ///> Whether the model is running (automatically)
+    QTimer m_timeRunningTimer; ///> Timer used to keep track of how long the image job has been in the "running" state
+    float m_timeRunning; ///> Total time that the image job has been in the "running" state
+    const float m_timeRunningResolutionMs; ///> Resolution of the time running timer
 };
 
 ImageJobWindow::ImageJobWindow() :
@@ -551,139 +388,14 @@ void ImageJobWindow::on_actionScript_Console_toggled(const bool checked)
     d->setConsoleVisibility(checked);
 }
 
-void ImageJobWindow::on_runStopButton_clicked()
+void ImageJobWindow::on_actionPixmap_Results_View_toggled(const bool checked)
 {
-    d->toggleRunning();
+    d->setPixmapViewVisibility(checked);
 }
 
-void ImageJobWindow::on_stepButton_clicked()
+void ImageJobWindow::on_actionVector_Results_View_toggled(const bool checked)
 {
-    d->stepModel();
-}
-
-void ImageJobWindow::on_clearButton_clicked()
-{
-    d->clearModel();
-}
-
-void ImageJobWindow::on_saveImageButton_clicked()
-{
-    d->saveRasterizedSVG();
-}
-
-void ImageJobWindow::on_saveImagesButton_clicked()
-{
-    d->saveRasterizedSVGs();
-}
-
-void ImageJobWindow::on_previewSVGButton_clicked()
-{
-    d->previewSVG();
-}
-
-void ImageJobWindow::on_saveSVGButton_clicked()
-{
-    d->saveSVG();
-}
-
-void ImageJobWindow::on_saveGeometryDataButton_clicked()
-{
-    d->saveGeometryData();
-}
-
-void ImageJobWindow::on_saveGIFButton_clicked()
-{
-    d->saveGIF();
-}
-
-void ImageJobWindow::on_saveCanvasAnimationButton_clicked()
-{
-    d->saveCanvasAnimation();
-}
-
-void ImageJobWindow::on_saveWebGLButton_clicked()
-{
-    d->saveWebGLAnimation();
-}
-
-void ImageJobWindow::on_usesRectangles_clicked(bool checked)
-{
-    d->setShapes(geometrize::RECTANGLE, checked);
-}
-
-void ImageJobWindow::on_usesRotatedRectangles_clicked(bool checked)
-{
-    d->setShapes(geometrize::ROTATED_RECTANGLE, checked);
-}
-
-void ImageJobWindow::on_usesTriangles_clicked(bool checked)
-{
-    d->setShapes(geometrize::TRIANGLE, checked);
-}
-
-void ImageJobWindow::on_usesEllipses_clicked(bool checked)
-{
-    d->setShapes(geometrize::ELLIPSE, checked);
-}
-
-void ImageJobWindow::on_usesRotatedEllipses_clicked(bool checked)
-{
-    d->setShapes(geometrize::ROTATED_ELLIPSE, checked);
-}
-
-void ImageJobWindow::on_usesCircles_clicked(bool checked)
-{
-    d->setShapes(geometrize::CIRCLE, checked);
-}
-
-void ImageJobWindow::on_usesLines_clicked(bool checked)
-{
-    d->setShapes(geometrize::LINE, checked);
-}
-
-void ImageJobWindow::on_usesQuadraticBeziers_clicked(bool checked)
-{
-    d->setShapes(geometrize::QUADRATIC_BEZIER, checked);
-}
-
-void ImageJobWindow::on_usesPolylines_clicked(bool checked)
-{
-    d->setShapes(geometrize::POLYLINE, checked);
-}
-
-void ImageJobWindow::on_scriptingModeEnabledCheckbox_clicked(bool checked)
-{
-    d->setScriptingModeEnabled(checked);
-}
-
-void ImageJobWindow::on_resetShapeScriptEngineButton_clicked()
-{
-   d->resetShapeScriptEngine();
-}
-
-void ImageJobWindow::on_shapeOpacitySlider_valueChanged(int value)
-{
-    d->setShapeOpacity(value);
-}
-
-void ImageJobWindow::on_candidateShapesPerStepSlider_valueChanged(int value)
-{
-    d->setCandidateShapesPerStep(value);
-}
-
-void ImageJobWindow::on_mutationsPerCandidateShapeSlider_valueChanged(int value)
-{
-    d->setMutationsPerCandidateShape(value);
-}
-
-void ImageJobWindow::on_randomSeedSpinBox_valueChanged(int value)
-{
-    d->setRandomSeed(value);
-}
-
-void ImageJobWindow::on_maxThreadsSpinBox_valueChanged(int value)
-{
-    d->setMaxThreads(value);
+    d->setVectorViewVisibility(checked);
 }
 
 }

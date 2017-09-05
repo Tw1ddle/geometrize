@@ -67,6 +67,26 @@ public:
         return m_worker.getCurrent();
     }
 
+    const Bitmap& getTarget() const
+    {
+        return m_worker.getTarget();
+    }
+
+    const Bitmap& getCurrent() const
+    {
+        return m_worker.getCurrent();
+    }
+
+    std::uint32_t getWidth() const
+    {
+        return m_worker.getCurrent().getWidth();
+    }
+
+    std::uint32_t getHeight() const
+    {
+        return m_worker.getCurrent().getHeight();
+    }
+
     ShapeMutator& getShapeMutator()
     {
         return m_worker.getRunner().getModel().getShapeMutator();
@@ -210,6 +230,26 @@ Bitmap& ImageJob::getTarget()
 Bitmap& ImageJob::getCurrent()
 {
     return d->getCurrent();
+}
+
+const Bitmap& ImageJob::getTarget() const
+{
+    return d->getTarget();
+}
+
+const Bitmap& ImageJob::getCurrent() const
+{
+    return d->getCurrent();
+}
+
+std::uint32_t ImageJob::getWidth() const
+{
+    return d->getWidth();
+}
+
+std::uint32_t ImageJob::getHeight() const
+{
+    return d->getHeight();
 }
 
 std::string ImageJob::getDisplayName() const

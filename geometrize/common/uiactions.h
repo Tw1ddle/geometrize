@@ -6,11 +6,6 @@
 #include <QString>
 #include <QUrl>
 
-namespace geometrize
-{
-struct ShapeResult;
-}
-
 class QWidget;
 
 namespace geometrize
@@ -35,7 +30,7 @@ QString openSaveRasterizedSVGsPathPickerDialog(QWidget* parent);
 QString openSaveBitmapPathPickerDialog(QWidget* parent);
 QString openSaveGeometryDataPathPickerDialog(QWidget* parent);
 QString openSaveGIFPathPickerDialog(QWidget* parent);
-QString openSaveCanvasAnimationPathPickerDialog(QWidget* parent);
+QString openSaveCanvasPathPickerDialog(QWidget* parent);
 QString openSaveWebGLPathPickerDialog(QWidget* parent);
 QUrl openGetUrlDialog(QWidget* parent);
 QString openGetScriptDialog(QWidget* parent);
@@ -48,7 +43,7 @@ QString openLoadImageJobSettingsDialog(QWidget* parent);
 QString openSaveImageJobSettingsDialog(QWidget* parent);
 QString openLoadGlobalSettingsDialog(QWidget* parent);
 QString openSaveGlobalSettingsDialog(QWidget* parent);
-void openSVGPreviewPage(const std::vector<geometrize::ShapeResult>& shapes, QWidget* parent);
+QString openTargetImagePickerDialog(QWidget* parent);
 
 }
 

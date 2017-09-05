@@ -2,7 +2,6 @@
 #include "ui_launchwindow.h"
 
 #include <QCloseEvent>
-#include <QDialog>
 
 #include "chaiscript/chaiscript.hpp"
 
@@ -11,7 +10,6 @@
 #include "common/sharedapp.h"
 #include "common/uiactions.h"
 #include "common/util.h"
-#include "dialog/recentitemwidget.h"
 #include "job/imagejob.h"
 #include "job/jobutil.h"
 #include "image/imageloader.h"

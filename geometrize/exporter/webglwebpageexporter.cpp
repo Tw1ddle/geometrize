@@ -1,4 +1,4 @@
-#include "canvasanimationexporter.h"
+#include "webglwebpageexporter.h"
 
 #include <cassert>
 #include <string>
@@ -19,9 +19,9 @@ namespace exporter
 
 const QString SHAPE_DATA_TAG = "::SHAPE_DATA_TAG::";
 
-std::string exportCanvasAnimation(const std::vector<geometrize::ShapeResult>& data)
+std::string exportWebGLWebpage(const std::vector<geometrize::ShapeResult>& data)
 {
-    QFile file{":/web_templates/canvas_export.html"};
+    QFile file{":/web_templates/webgl_export.html"};
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         assert(0 && "Failed to open WebGL template");
         return "";

@@ -8,7 +8,7 @@ namespace dialog
 
 ImageJobPixmapGraphicsItem::ImageJobPixmapGraphicsItem() : QGraphicsPixmapItem()
 {
-    setFlag(ItemIsMovable, true);
+    setFlag(ItemIsMovable, false);
 }
 
 ImageJobPixmapGraphicsItem::ImageJobPixmapGraphicsItem(const QPixmap& pixmap) : QGraphicsPixmapItem(pixmap)
@@ -17,22 +17,21 @@ ImageJobPixmapGraphicsItem::ImageJobPixmapGraphicsItem(const QPixmap& pixmap) : 
 
 ImageJobPixmapGraphicsItem::~ImageJobPixmapGraphicsItem()
 {
-
 }
 
-void ImageJobPixmapGraphicsItem::mousePressEvent(QGraphicsSceneMouseEvent* /*event*/)
+void ImageJobPixmapGraphicsItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
-
+    QGraphicsPixmapItem::mousePressEvent(event);
 }
 
-void ImageJobPixmapGraphicsItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* /*event*/)
+void ImageJobPixmapGraphicsItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
-
+    QGraphicsPixmapItem::mouseReleaseEvent(event);
 }
 
-void ImageJobPixmapGraphicsItem::mouseMoveEvent(QGraphicsSceneMouseEvent* /*event*/)
+void ImageJobPixmapGraphicsItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
-
+    QGraphicsPixmapItem::mouseMoveEvent(event);
 }
 
 }

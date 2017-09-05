@@ -13,15 +13,15 @@ namespace dialog
 {
 
 /**
- * @brief The ImageJobScene class models a graphics scene for viewing image jobs.
+ * @brief The ImageJobPixmapScene class models a graphics scene for viewing the pixmap-based results of image jobs.
  */
-class ImageJobScene : public QGraphicsScene
+class ImageJobPixmapScene : public QGraphicsScene
 {
     Q_OBJECT
 
 public:
-    explicit ImageJobScene(QObject* parent = nullptr);
-    ~ImageJobScene();
+    explicit ImageJobPixmapScene(QObject* parent = nullptr);
+    ~ImageJobPixmapScene();
 
     /**
      * @brief setTargetPixmapOpacity Sets the opacity of the target pixmap.
@@ -42,8 +42,8 @@ public:
     void setTargetPixmap(const QPixmap& pixmap);
 
 private:
-    class ImageJobSceneImpl;
-    std::unique_ptr<ImageJobSceneImpl> d;
+    class ImageJobPixmapSceneImpl;
+    std::unique_ptr<ImageJobPixmapSceneImpl> d;
 };
 
 }
