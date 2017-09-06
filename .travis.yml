@@ -4,6 +4,10 @@ compiler: gcc
 sudo: required
 dist: trusty
 
+# Install Travis so we can get the token from Travis
+before_script:
+  - gem install travis
+
 # Add encrypted API key
 env:
   global:
