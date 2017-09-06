@@ -83,6 +83,9 @@ public:
         m_svgImageView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         ui->imageViewContainer->layout()->addWidget(m_svgImageView);
 
+        m_currentImageView->setVisible(false); // Make sure the image view is hidden by default (we prefer the SVG view)
+        m_svgImageView->setVisible(true);
+
         // Used to track how long the job has been in the running state
         connect(&m_timeRunningTimer, &QTimer::timeout, [this]() {
             if(m_running) {
@@ -154,7 +157,7 @@ public:
             m_jobDidStepConnection = connect(currentJob, &job::ImageJob::signal_modelDidStep, [this](std::vector<geometrize::ShapeResult> shapes) {
                 std::copy(shapes.begin(), shapes.end(), std::back_inserter(m_shapes));
 
-                updateWorkingImage();
+                updateCurrentGraphics(shapes);
                 updateStats();
 
                 if(m_running) {
@@ -165,7 +168,7 @@ public:
             q->setWindowTitle(tr("Geometrize - Image - %1").arg(QString::fromStdString(currentJob->getDisplayName())));
 
             setupOverlayImages();
-            updateWorkingImage();
+            updateCurrentGraphics(m_shapes);
             currentJob->drawBackgroundRectangle();
 
             ui->consoleWidget->setEngine(currentJob->getEngine());
@@ -261,6 +264,13 @@ public:
     }
 
 private:
+    void updateCurrentGraphics(const std::vector<geometrize::ShapeResult>& shapes)
+    {
+        const QPixmap pixmap{image::createPixmap(m_job->getCurrent())};
+        m_currentImageScene.setWorkingPixmap(pixmap);
+        m_currentSvgScene.drawSvg(shapes, pixmap.size().width(), pixmap.size().height());
+    }
+
     void toggleRunning()
     {
         m_running = !m_running;
@@ -310,13 +320,6 @@ private:
         }
     }
 
-    void updateWorkingImage()
-    {
-        const QPixmap pixmap{image::createPixmap(m_job->getCurrent())};
-        m_currentImageScene.setWorkingPixmap(pixmap);
-        m_currentSvgScene.drawSvg(m_shapes, pixmap.size().width(), pixmap.size().height());
-    }
-
     void setupOverlayImages()
     {
         const QPixmap target{image::createPixmap(m_job->getTarget())};
@@ -336,6 +339,8 @@ private:
     ImageJobSvgScene m_currentSvgScene;
     geometrize::dialog::ImageJobGraphicsView* m_currentImageView;
     geometrize::dialog::ImageJobGraphicsView* m_svgImageView;
+
+
 
     bool m_running; ///> Whether the model is running (automatically)
     QTimer m_timeRunningTimer; ///> Timer used to keep track of how long the image job has been in the "running" state

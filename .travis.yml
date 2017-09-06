@@ -31,3 +31,4 @@ script:
 after_script:
   - chmod +x trigger_travis.sh
   - ./trigger_travis.sh Tw1ddle geometrize-installer master $TRAVIS_ACCESS_TOKEN_GEOMETRIZE_APP_INSTALLER_TRIGGER
+  - ./trigger_travis.sh Tw1ddle geometrize-docs master $TRAVIS_ACCESS_TOKEN_GEOMETRIZE_APP_DOCS_TRIGGER

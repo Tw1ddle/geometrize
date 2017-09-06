@@ -30,6 +30,8 @@ public:
     void setCurrentStatus(ImageJobStatus status);
     void setShapeCount(std::size_t shapeCount);
     void setSimilarity(float similarity);
+    void setImageDimensions(std::uint32_t width, std::uint32_t height);
+    void setSVGDataSize(float kilobytes);
 
 private:
     class ImageJobStatsWidgetImpl;

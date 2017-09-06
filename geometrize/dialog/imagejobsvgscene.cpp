@@ -55,19 +55,19 @@ public:
         q->clear();
 
         q->addItem(m_targetPixmapItem);
+        m_targetPixmapItem->setZValue(1);
 
         if(shapes.empty()) {
             return;
         }
 
-        // NOTE passing 0, 0 in here happens to work - should really use background size (probably first shape) or bounding box of all shapes
         const QByteArray svgData{QByteArray::fromStdString(geometrize::exporter::exportSVG(shapes, width, height))};
-
         m_svgItem = new SvgItem(svgData);
         m_svgItem->setFlags(QGraphicsItem::ItemClipsToShape);
         m_svgItem->setCacheMode(QGraphicsItem::NoCache);
 
         q->addItem(m_svgItem);
+        m_svgItem->setZValue(0);
     }
 
 private:

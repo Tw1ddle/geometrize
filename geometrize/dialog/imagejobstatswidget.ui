@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>150</width>
+    <width>200</width>
     <height>300</height>
    </rect>
   </property>
@@ -89,6 +89,43 @@
     </layout>
    </item>
    <item>
+    <layout class="QHBoxLayout" name="targetSimilarityLayout">
+     <item>
+      <widget class="QLabel" name="targetSimilarityLabel">
+       <property name="text">
+        <string>Similarity Score</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::MinimumExpanding</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="targetSimilarityValueLabel">
+       <property name="text">
+        <string notr="true">0</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
     <layout class="QHBoxLayout" name="shapeCountLayout">
      <item>
       <widget class="QLabel" name="shapeCountLabel">
@@ -126,37 +163,62 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="targetSimilarityLayout">
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
-      <widget class="QLabel" name="targetSimilarityLabel">
+      <widget class="QLabel" name="svgDataSizeLabel">
        <property name="text">
-        <string>Similarity Score</string>
+        <string>SVG Data Size</string>
        </property>
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacer">
+      <spacer name="horizontalSpacer_5">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::MinimumExpanding</enum>
-       </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>20</width>
+         <width>40</width>
          <height>20</height>
         </size>
        </property>
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="targetSimilarityValueLabel">
+      <widget class="QLabel" name="svgDataSizeValueLabel">
        <property name="text">
         <string notr="true">0</string>
        </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <widget class="QLabel" name="imageDimensionsLabel">
+       <property name="text">
+        <string>Image Dimensions</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_6">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="imageDimensionsValueLabel">
+       <property name="text">
+        <string notr="true">0x0</string>
        </property>
       </widget>
      </item>

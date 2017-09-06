@@ -55,6 +55,19 @@ public:
         ui->targetSimilarityValueLabel->setText(similarityValue);
     }
 
+    void setImageDimensions(const std::uint32_t width, const std::uint32_t height)
+    {
+        const QString imageDimensionsText{tr("%1x%2").arg(width).arg(height)};
+        ui->imageDimensionsValueLabel->setText(imageDimensionsText);
+    }
+
+    void setSVGDataSize(const float kilobytes)
+    {
+        const QString dataSizeString{QString::number(kilobytes, 'f', 2)};
+        const QString dataSizeText{tr("%1%2").arg(dataSizeString).arg(tr("KB"))};
+        ui->svgDataSizeValueLabel->setText(dataSizeText);
+    }
+
 private:
     ImageJobStatsWidget* q;
     std::unique_ptr<Ui::ImageJobStatsWidget> ui;
@@ -88,6 +101,16 @@ void ImageJobStatsWidget::setCurrentStatus(const ImageJobStatus status)
 void ImageJobStatsWidget::setSimilarity(const float similarity)
 {
     d->setSimilarity(similarity);
+}
+
+void ImageJobStatsWidget::setImageDimensions(const std::uint32_t width, const std::uint32_t height)
+{
+    d->setImageDimensions(width, height);
+}
+
+void ImageJobStatsWidget::setSVGDataSize(const float kilobytes)
+{
+    d->setSVGDataSize(kilobytes);
 }
 
 }
