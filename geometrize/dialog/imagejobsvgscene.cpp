@@ -34,6 +34,8 @@ class ImageJobSvgScene::ImageJobSvgSceneImpl
 public:
     ImageJobSvgSceneImpl(ImageJobSvgScene* pQ) : q{pQ}, m_targetPixmapItem{new ImageJobPixmapGraphicsItem()}
     {
+        m_targetPixmapItem->setZValue(1);
+        q->addItem(m_targetPixmapItem);
     }
     ImageJobSvgSceneImpl operator=(const ImageJobSvgSceneImpl&) = delete;
     ImageJobSvgSceneImpl(const ImageJobSvgSceneImpl&) = delete;
@@ -51,29 +53,21 @@ public:
 
     void drawSvg(const std::vector<geometrize::ShapeResult>& shapes, const std::uint32_t width, const std::uint32_t height)
     {
-        q->removeItem(m_targetPixmapItem);
-        q->clear();
-
-        q->addItem(m_targetPixmapItem);
-        m_targetPixmapItem->setZValue(1);
-
         if(shapes.empty()) {
             return;
         }
 
         const QByteArray svgData{QByteArray::fromStdString(geometrize::exporter::exportSVG(shapes, width, height))};
-        m_svgItem = new SvgItem(svgData);
-        m_svgItem->setFlags(QGraphicsItem::ItemClipsToShape);
-        m_svgItem->setCacheMode(QGraphicsItem::NoCache);
-
-        q->addItem(m_svgItem);
-        m_svgItem->setZValue(0);
+        auto svgItem = new SvgItem(svgData);
+        svgItem->setFlags(QGraphicsItem::ItemClipsToShape);
+        svgItem->setCacheMode(QGraphicsItem::NoCache);
+        q->addItem(svgItem);
+        svgItem->setZValue(0);
     }
 
 private:
     ImageJobSvgScene* q;
     ImageJobPixmapGraphicsItem* m_targetPixmapItem;
-    SvgItem* m_svgItem;
 };
 
 ImageJobSvgScene::ImageJobSvgScene() : QGraphicsScene(), d{std::make_unique<ImageJobSvgScene::ImageJobSvgSceneImpl>(this)}

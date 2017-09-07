@@ -7,15 +7,73 @@
     <x>0</x>
     <y>0</y>
     <width>200</width>
-    <height>300</height>
+    <height>200</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>8</number>
+   </property>
+   <property name="leftMargin">
+    <number>12</number>
+   </property>
+   <property name="topMargin">
+    <number>12</number>
+   </property>
+   <property name="rightMargin">
+    <number>12</number>
+   </property>
+   <property name="bottomMargin">
+    <number>12</number>
+   </property>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_5">
+     <property name="spacing">
+      <number>8</number>
+     </property>
+     <item>
+      <widget class="QLabel" name="jobIdLabel">
+       <property name="text">
+        <string>Job Id</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_7">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="jobIdValueLabel">
+       <property name="text">
+        <string notr="true">-</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="spacing">
+      <number>8</number>
+     </property>
      <item>
       <widget class="QLabel" name="timeRunningLabel">
        <property name="text">
@@ -53,6 +111,9 @@
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <property name="spacing">
+      <number>8</number>
+     </property>
      <item>
       <widget class="QLabel" name="currentStateLabel">
        <property name="text">
@@ -90,6 +151,9 @@
    </item>
    <item>
     <layout class="QHBoxLayout" name="targetSimilarityLayout">
+     <property name="spacing">
+      <number>8</number>
+     </property>
      <item>
       <widget class="QLabel" name="targetSimilarityLabel">
        <property name="text">
@@ -127,6 +191,9 @@
    </item>
    <item>
     <layout class="QHBoxLayout" name="shapeCountLayout">
+     <property name="spacing">
+      <number>8</number>
+     </property>
      <item>
       <widget class="QLabel" name="shapeCountLabel">
        <property name="text">
@@ -163,38 +230,10 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
-     <item>
-      <widget class="QLabel" name="svgDataSizeLabel">
-       <property name="text">
-        <string>SVG Data Size</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_5">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="svgDataSizeValueLabel">
-       <property name="text">
-        <string notr="true">0</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
     <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <property name="spacing">
+      <number>8</number>
+     </property>
      <item>
       <widget class="QLabel" name="imageDimensionsLabel">
        <property name="text">
@@ -223,19 +262,6 @@
       </widget>
      </item>
     </layout>
-   </item>
-   <item>
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>253</height>
-      </size>
-     </property>
-    </spacer>
    </item>
   </layout>
  </widget>

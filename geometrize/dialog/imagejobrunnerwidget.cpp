@@ -3,9 +3,12 @@
 
 #include <memory>
 
+#include <QHBoxLayout>
+#include <QObjectList>
 #include <QString>
 
 #include "job/imagejob.h"
+#include "layout/flowlayout.h"
 
 namespace geometrize
 {
@@ -19,6 +22,25 @@ public:
     ImageJobRunnerWidgetImpl(ImageJobRunnerWidget* pQ) : q{pQ}, ui{std::make_unique<Ui::ImageJobRunnerWidget>()}
     {
         ui->setupUi(q);
+
+        auto shapeLayout = new geometrize::layout::FlowLayout();
+        shapeLayout->addWidget(ui->usesCircles);
+        shapeLayout->addWidget(ui->usesEllipses);
+        shapeLayout->addWidget(ui->usesLines);
+        shapeLayout->addWidget(ui->usesPolylines);
+        shapeLayout->addWidget(ui->usesQuadraticBeziers);
+        shapeLayout->addWidget(ui->usesRectangles);
+        shapeLayout->addWidget(ui->usesRotatedEllipses);
+        shapeLayout->addWidget(ui->usesRotatedRectangles);
+        shapeLayout->addWidget(ui->usesTriangles);
+        ui->shapeTypesContainer->setLayout(shapeLayout);
+
+        auto runnerButtonsLayout = new geometrize::layout::FlowLayout();
+        runnerButtonsLayout->addWidget(ui->runStopButton);
+        runnerButtonsLayout->addWidget(ui->stepButton);
+        runnerButtonsLayout->addWidget(ui->clearButton);
+
+        ui->bottomButtonsContainer->setLayout(runnerButtonsLayout);
     }
     ~ImageJobRunnerWidgetImpl() = default;
     ImageJobRunnerWidgetImpl operator=(const ImageJobRunnerWidgetImpl&) = delete;

@@ -47,14 +47,26 @@
    <layout class="QVBoxLayout" name="verticalLayout_15">
     <item>
      <widget class="QSplitter" name="splitter">
+      <property name="styleSheet">
+       <string notr="true">QSplitter::handle
+{
+    background-color: rgba(255, 255, 255, 80);
+}</string>
+      </property>
       <property name="orientation">
        <enum>Qt::Vertical</enum>
+      </property>
+      <property name="handleWidth">
+       <number>10</number>
+      </property>
+      <property name="childrenCollapsible">
+       <bool>false</bool>
       </property>
       <widget class="QWidget" name="imageViewContainer" native="true">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
          <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
+         <verstretch>2</verstretch>
         </sizepolicy>
        </property>
        <property name="minimumSize">
@@ -121,8 +133,14 @@
    <addaction name="menuView"/>
   </widget>
   <widget class="QDockWidget" name="statsDock">
+   <property name="maximumSize">
+    <size>
+     <width>600</width>
+     <height>800</height>
+    </size>
+   </property>
    <property name="contextMenuPolicy">
-    <enum>Qt::NoContextMenu</enum>
+    <enum>Qt::PreventContextMenu</enum>
    </property>
    <property name="autoFillBackground">
     <bool>true</bool>
@@ -144,6 +162,21 @@
    </widget>
   </widget>
   <widget class="QDockWidget" name="targetImageSettingsDock">
+   <property name="minimumSize">
+    <size>
+     <width>300</width>
+     <height>300</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>800</width>
+     <height>1350</height>
+    </size>
+   </property>
+   <property name="contextMenuPolicy">
+    <enum>Qt::PreventContextMenu</enum>
+   </property>
    <property name="features">
     <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
    </property>
@@ -166,6 +199,9 @@
        <property name="frameShadow">
         <enum>QFrame::Plain</enum>
        </property>
+       <property name="horizontalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
+       </property>
        <property name="widgetResizable">
         <bool>true</bool>
        </property>
@@ -174,8 +210,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>49</width>
-          <height>231</height>
+          <width>288</width>
+          <height>271</height>
          </rect>
         </property>
        </widget>
@@ -185,6 +221,21 @@
    </widget>
   </widget>
   <widget class="QDockWidget" name="exporterDock">
+   <property name="minimumSize">
+    <size>
+     <width>300</width>
+     <height>300</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>800</width>
+     <height>1350</height>
+    </size>
+   </property>
+   <property name="contextMenuPolicy">
+    <enum>Qt::PreventContextMenu</enum>
+   </property>
    <property name="features">
     <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
    </property>
@@ -201,11 +252,20 @@
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
       <widget class="QScrollArea" name="exporterScrollArea">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="frameShape">
         <enum>QFrame::NoFrame</enum>
        </property>
        <property name="frameShadow">
         <enum>QFrame::Plain</enum>
+       </property>
+       <property name="horizontalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
        </property>
        <property name="widgetResizable">
         <bool>true</bool>
@@ -215,8 +275,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>49</width>
-          <height>232</height>
+          <width>288</width>
+          <height>271</height>
          </rect>
         </property>
        </widget>
@@ -226,6 +286,21 @@
    </widget>
   </widget>
   <widget class="QDockWidget" name="runnerSettingsDock">
+   <property name="minimumSize">
+    <size>
+     <width>300</width>
+     <height>300</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>800</width>
+     <height>1350</height>
+    </size>
+   </property>
+   <property name="contextMenuPolicy">
+    <enum>Qt::PreventContextMenu</enum>
+   </property>
    <property name="features">
     <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
    </property>
@@ -254,6 +329,9 @@
        <property name="frameShadow">
         <enum>QFrame::Plain</enum>
        </property>
+       <property name="horizontalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
+       </property>
        <property name="widgetResizable">
         <bool>true</bool>
        </property>
@@ -262,8 +340,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>49</width>
-          <height>231</height>
+          <width>288</width>
+          <height>271</height>
          </rect>
         </property>
        </widget>

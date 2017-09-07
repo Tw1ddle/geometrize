@@ -9,9 +9,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>500</width>
+    <height>770</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>500</width>
+    <height>770</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>2560</width>
+    <height>1600</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Scripting Panel</string>
@@ -27,8 +39,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>386</width>
-        <height>286</height>
+        <width>486</width>
+        <height>756</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -44,7 +56,7 @@
           <item>
            <widget class="QCheckBox" name="scriptsEnabledButton">
             <property name="text">
-             <string>Scripts Enabled</string>
+             <string>Scripting Engine Enabled</string>
             </property>
            </widget>
           </item>

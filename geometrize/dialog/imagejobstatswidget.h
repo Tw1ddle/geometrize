@@ -26,12 +26,12 @@ public:
     ImageJobStatsWidget(QWidget* parent = nullptr);
     ~ImageJobStatsWidget();
 
+    void setJobId(std::size_t id);
     void setTimeRunning(int millis);
     void setCurrentStatus(ImageJobStatus status);
     void setShapeCount(std::size_t shapeCount);
     void setSimilarity(float similarity);
     void setImageDimensions(std::uint32_t width, std::uint32_t height);
-    void setSVGDataSize(float kilobytes);
 
 private:
     class ImageJobStatsWidgetImpl;

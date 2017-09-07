@@ -23,6 +23,11 @@ public:
     ImageJobStatsWidgetImpl operator=(const ImageJobStatsWidgetImpl&) = delete;
     ImageJobStatsWidgetImpl(const ImageJobStatsWidgetImpl&) = delete;
 
+    void setJobId(std::size_t id)
+    {
+        ui->jobIdValueLabel->setText(QString::number(id));
+    }
+
     void setTimeRunning(const int millis)
     {
         QTime time(0, 0);
@@ -61,13 +66,6 @@ public:
         ui->imageDimensionsValueLabel->setText(imageDimensionsText);
     }
 
-    void setSVGDataSize(const float kilobytes)
-    {
-        const QString dataSizeString{QString::number(kilobytes, 'f', 2)};
-        const QString dataSizeText{tr("%1%2").arg(dataSizeString).arg(tr("KB"))};
-        ui->svgDataSizeValueLabel->setText(dataSizeText);
-    }
-
 private:
     ImageJobStatsWidget* q;
     std::unique_ptr<Ui::ImageJobStatsWidget> ui;
@@ -81,6 +79,11 @@ ImageJobStatsWidget::ImageJobStatsWidget(QWidget* parent) :
 
 ImageJobStatsWidget::~ImageJobStatsWidget()
 {
+}
+
+void ImageJobStatsWidget::setJobId(const std::size_t id)
+{
+    d->setJobId(id);
 }
 
 void ImageJobStatsWidget::setShapeCount(const std::size_t shapeCount)
@@ -106,11 +109,6 @@ void ImageJobStatsWidget::setSimilarity(const float similarity)
 void ImageJobStatsWidget::setImageDimensions(const std::uint32_t width, const std::uint32_t height)
 {
     d->setImageDimensions(width, height);
-}
-
-void ImageJobStatsWidget::setSVGDataSize(const float kilobytes)
-{
-    d->setSVGDataSize(kilobytes);
 }
 
 }

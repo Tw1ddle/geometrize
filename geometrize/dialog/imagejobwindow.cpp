@@ -3,8 +3,10 @@
 
 #include <cassert>
 
+#include <QMargins>
 #include <QMessageBox>
 #include <QPixmap>
+#include <QRectF>
 #include <QTimer>
 
 #include "geometrize/bitmap/bitmap.h"
@@ -65,8 +67,8 @@ public:
         q->setAttribute(Qt::WA_DeleteOnClose);
         ui->setupUi(q);
 
-        q->tabifyDockWidget(ui->runnerSettingsDock, ui->exporterDock);
         q->tabifyDockWidget(ui->runnerSettingsDock, ui->targetImageSettingsDock);
+        q->tabifyDockWidget(ui->runnerSettingsDock, ui->exporterDock);
         ui->runnerSettingsDock->raise(); // Make sure runner settings dock is selected
 
         ui->consoleWidget->setVisible(false); // Make sure console widget is hidden by default
@@ -125,6 +127,7 @@ public:
 
         connect(ui->imageJobTargetImageWidget, &ImageJobTargetImageWidget::targetImageSet, [this](const QImage& image) {
             // TODO throw away current job, clone and continue? or possibly defer until next step *if* already running
+            fitScenesInViews();
         });
 
         connect(ui->imageJobRunnerWidget, &ImageJobRunnerWidget::runStopButtonClicked, [this]() {
@@ -297,6 +300,9 @@ private:
 
     void updateStats()
     {
+        ui->statsDockContents->setJobId(m_job->getJobId());
+        ui->statsDockContents->setImageDimensions(m_job->getWidth(), m_job->getHeight());
+
         if(!m_running) {
             ui->statsDockContents->setCurrentStatus(geometrize::dialog::ImageJobStatsWidget::STOPPED);
         }
@@ -327,6 +333,17 @@ private:
         m_currentSvgScene.setTargetPixmap(target);
     }
 
+    void fitScenesInViews()
+    {
+        const float margin{10.0f}; // Leaves some space around the edges
+
+        const QRectF imageViewRect{m_currentImageScene.itemsBoundingRect().marginsAdded(QMarginsF(margin, margin, margin, margin))};
+        m_currentImageView->fitInView(imageViewRect, Qt::KeepAspectRatio);
+
+        const QRectF svgRect{m_currentSvgScene.itemsBoundingRect().marginsAdded(QMarginsF(margin, margin, margin, margin))};
+        m_svgImageView->fitInView(svgRect, Qt::KeepAspectRatio);
+    }
+
     std::unique_ptr<Ui::ImageJobWindow> ui;
     ImageJobWindow* q;
 
@@ -339,8 +356,6 @@ private:
     ImageJobSvgScene m_currentSvgScene;
     geometrize::dialog::ImageJobGraphicsView* m_currentImageView;
     geometrize::dialog::ImageJobGraphicsView* m_svgImageView;
-
-
 
     bool m_running; ///> Whether the model is running (automatically)
     QTimer m_timeRunningTimer; ///> Timer used to keep track of how long the image job has been in the "running" state

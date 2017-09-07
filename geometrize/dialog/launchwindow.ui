@@ -43,7 +43,7 @@
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_5">
     <item>
-     <widget class="QSplitter" name="centralSplitter">
+     <widget class="QSplitter" name="consoleMainContainerSplitter">
       <property name="sizePolicy">
        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
         <horstretch>0</horstretch>
@@ -488,7 +488,7 @@
                  <x>0</x>
                  <y>0</y>
                  <width>834</width>
-                 <height>546</height>
+                 <height>549</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -635,6 +635,12 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>geometrize::dialog::ScriptConsole</class>
+   <extends>QWidget</extends>
+   <header>dialog/scriptconsole.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>geometrize::dialog::RecentJobsList</class>
    <extends>QListWidget</extends>
    <header>dialog/recentjobslist.h</header>
@@ -643,12 +649,6 @@
    <class>geometrize::dialog::TemplateGrid</class>
    <extends>QWidget</extends>
    <header>dialog/templategrid.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>geometrize::dialog::ScriptConsole</class>
-   <extends>QWidget</extends>
-   <header>dialog/scriptconsole.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
