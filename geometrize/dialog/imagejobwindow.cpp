@@ -2,8 +2,10 @@
 #include "ui_imagejobwindow.h"
 
 #include <cassert>
+#include <functional>
+#include <vector>
 
-#include <QMargins>
+#include <QMarginsF>
 #include <QMessageBox>
 #include <QPixmap>
 #include <QRectF>
@@ -18,7 +20,7 @@
 #include "dialog/imagejobpixmapscene.h"
 #include "dialog/imagejobscriptingpanel.h"
 #include "dialog/imagejobsvgscene.h"
-#include "dialog/imagejobtargetimagewidget.h"
+#include "dialog/imagejobimagewidget.h"
 #include "dialog/scripteditorwidget.h"
 #include "image/imageloader.h"
 #include "job/imagejob.h"
@@ -34,6 +36,7 @@ namespace dialog
 void destroyJob(job::ImageJob* job)
 {
     if(job == nullptr) {
+        assert(0 && "Attempted to destroy an image job that was already null");
         return;
     }
 
@@ -54,25 +57,18 @@ class ImageJobWindow::ImageJobWindowImpl
 public:
     ImageJobWindowImpl(ImageJobWindow* pQ) :
         ui{std::make_unique<Ui::ImageJobWindow>()},
-        q{pQ},
-        m_currentImageView{nullptr},
-        m_svgImageView{nullptr},
-        m_job{nullptr},
-        m_jobWillStepConnection{},
-        m_jobDidStepConnection{},
-        m_running{false},
-        m_timeRunning{0.0f},
-        m_timeRunningResolutionMs{100.0f}
+        q{pQ}
     {
         q->setAttribute(Qt::WA_DeleteOnClose);
         ui->setupUi(q);
 
-        q->tabifyDockWidget(ui->runnerSettingsDock, ui->targetImageSettingsDock);
+        // Set up the dock widgets
         q->tabifyDockWidget(ui->runnerSettingsDock, ui->exporterDock);
         ui->runnerSettingsDock->raise(); // Make sure runner settings dock is selected
 
         ui->consoleWidget->setVisible(false); // Make sure console widget is hidden by default
 
+        // Set up the image job geometrization views
         m_currentImageView = new geometrize::dialog::ImageJobGraphicsView(ui->imageViewContainer);
         m_currentImageView->setScene(&m_currentImageScene);
         m_currentImageView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -88,26 +84,66 @@ public:
         m_currentImageView->setVisible(false); // Make sure the image view is hidden by default (we prefer the SVG view)
         m_svgImageView->setVisible(true);
 
-        // Used to track how long the job has been in the running state
-        connect(&m_timeRunningTimer, &QTimer::timeout, [this]() {
-            if(m_running) {
-                m_timeRunning += m_timeRunningResolutionMs;
-                updateStats();
-            }
-        });
-        m_timeRunningTimer.start(m_timeRunningResolutionMs);
+        // Handle request to set the image job on the job window
+        connect(q, &ImageJobWindow::willSwitchImageJob, [this](job::ImageJob* lastJob, job::ImageJob*) {
+            // NOTE we disconnect and destroy the last image job, which will soon be replaced by the next image job
+            // This means that any job set on the window is destroyed after it is replaced
+            disconnectJob();
+            destroyJob(lastJob);
 
-        connect(ui->imageJobTargetImageWidget, &ImageJobTargetImageWidget::targetImageOpacityChanged, [this](const unsigned int value) {
+            m_shapes.clear();
+        });
+        connect(q, &ImageJobWindow::didSwitchImageJob, [this](job::ImageJob*, job::ImageJob* currentJob) {
+            ui->imageJobExportWidget->setImageJob(currentJob, &m_shapes);
+            ui->imageJobRunnerWidget->setImageJob(currentJob);
+
+            m_jobWillStepConnection = connect(currentJob, &job::ImageJob::signal_modelWillStep, [this]() {
+                ui->statsDockContents->setCurrentStatus(geometrize::dialog::ImageJobStatsWidget::RUNNING);
+            });
+
+            m_jobDidStepConnection = connect(currentJob, &job::ImageJob::signal_modelDidStep, [this](std::vector<geometrize::ShapeResult> shapes) {
+                processPostStepCbs();
+
+                updateCurrentGraphics(shapes);
+                // If the first shape added background rectangle then fit the scenes to it
+                if(m_shapes.size() == 0) {
+                    fitScenesInViews();
+                }
+                std::copy(shapes.begin(), shapes.end(), std::back_inserter(m_shapes));
+
+                updateStats();
+
+                if(isRunning()) {
+                    stepModel();
+                }
+            });
+
+            q->setWindowTitle(tr("Geometrize - Image - %1").arg(QString::fromStdString(currentJob->getDisplayName())));
+
+            setupOverlayImages();
+            currentJob->drawBackgroundRectangle();
+
+            ui->consoleWidget->setEngine(currentJob->getEngine());
+            ui->imageJobRunnerWidget->syncUserInterface();
+
+            ui->imageJobImageWidget->setBaseImage(image::createImage(currentJob->getCurrent()));
+            ui->imageJobImageWidget->setTargetImage(image::createImage(currentJob->getTarget()));
+
+            m_timeRunning = 0.0f;
+        });
+
+        // Handle requested target image overlay opacity changes
+        connect(ui->imageJobImageWidget, &ImageJobImageWidget::targetImageOpacityChanged, [this](const unsigned int value) {
             const float opacity{value * (1.0f / 255.0f)};
             m_currentImageScene.setTargetPixmapOpacity(opacity);
             m_currentSvgScene.setTargetPixmapOpacity(opacity);
         });
-        const float initialTargetImageOpacity{10};
-        ui->imageJobTargetImageWidget->setTargetImageOpacity(initialTargetImageOpacity);
 
-        connect(ui->imageJobTargetImageWidget, &ImageJobTargetImageWidget::targetImageSelected, [this](const QImage& image) {
+        // Handle a request to change the target image
+        connect(ui->imageJobImageWidget, &ImageJobImageWidget::targetImageSelected, [this](const QImage& image) {
             assert(!image.isNull());
 
+            // Validate the target image size
             const geometrize::Bitmap& target{m_job->getTarget()};
             const auto targetWidth{target.getWidth()};
             const auto targetHeight{target.getHeight()};
@@ -122,16 +158,78 @@ public:
                 return;
             }
 
-            ui->imageJobTargetImageWidget->setTargetImage(image);
+            setTargetImage(image);
         });
 
-        connect(ui->imageJobTargetImageWidget, &ImageJobTargetImageWidget::targetImageSet, [this](const QImage& image) {
-            // TODO throw away current job, clone and continue? or possibly defer until next step *if* already running
-            fitScenesInViews();
+        // Handle a request to change the current image
+        connect(ui->imageJobImageWidget, &ImageJobImageWidget::baseImageSelected, [this](const QImage& image) {
+            assert(!image.isNull());
+
+            // Validate the current image size
+            const geometrize::Bitmap& current{m_job->getCurrent()};
+            const auto currentWidth{current.getWidth()};
+            const auto currentHeight{current.getHeight()};
+
+            if(currentWidth != image.width() || currentHeight != image.height()) {
+                const QString selectedImageSize(tr("%1x%2").arg(image.width()).arg(image.height()));
+                const QString currentImageSize(tr("%1x%2").arg(currentWidth).arg(currentHeight));
+                QMessageBox::warning(
+                            q,
+                            tr("Failed to set current image"),
+                            tr("Selected image must have the same dimensions as the base image. Size was %1, but should have been %2").arg(selectedImageSize).arg(currentImageSize));
+
+                return;
+            }
+
+            setBaseImage(image);
         });
 
+        // Handle a request to change the target image that has passed size checks and validation
+        connect(ui->imageJobImageWidget, &ImageJobImageWidget::targetImageSet, [this](const QImage& image) {
+            // If the job is running then defer the target image change to the next step, else do it immediately
+            if(isRunning()) {
+                const QImage imageCopy{image.copy()};
+                addPostStepCb([this, imageCopy]() {
+                    Bitmap target = geometrize::image::createBitmap(imageCopy);
+                    switchTargetImage(target);
+                });
+            } else {
+                Bitmap target = geometrize::image::createBitmap(image);
+                switchTargetImage(target);
+            }
+        });
+
+        // Handle a request to change the current image that has passed size checks and validation
+        connect(ui->imageJobImageWidget, &ImageJobImageWidget::baseImageSet, [this](const QImage& image) {
+            // If the job is running then defer the target image change to the next step, else do it immediately
+            if(isRunning()) {
+                const QImage imageCopy{image.copy()};
+                addPostStepCb([this, imageCopy]() {
+                    Bitmap current = geometrize::image::createBitmap(imageCopy);
+                    switchCurrentImage(current);
+                });
+            } else {
+                Bitmap current = geometrize::image::createBitmap(image);
+                switchCurrentImage(current);
+            }
+        });
+
+        // Handle a new set of image job-specific settings being loaded
+        connect(q, &ImageJobWindow::didLoadSettingsTemplate, [this]() {
+            ui->imageJobRunnerWidget->syncUserInterface();
+        });
+
+        // Handle runner button presses
         connect(ui->imageJobRunnerWidget, &ImageJobRunnerWidget::runStopButtonClicked, [this]() {
-            toggleRunning();
+            setRunning(!isRunning());
+
+            // Toggle running button text and request another image job step if running started
+            if(!isRunning()) {
+                ui->imageJobRunnerWidget->setRunStopButtonText(tr("Start"));
+            } else {
+                stepModel();
+                ui->imageJobRunnerWidget->setRunStopButtonText(tr("Stop"));
+            }
         });
         connect(ui->imageJobRunnerWidget, &ImageJobRunnerWidget::stepButtonClicked, [this]() {
             stepModel();
@@ -140,50 +238,20 @@ public:
             clearModel();
         });
 
-        connect(q, &ImageJobWindow::willSetImageJob, [this](job::ImageJob* lastJob, job::ImageJob*) {
-            // NOTE we disconnect and destroy the last image job, which will soon be replaced by the next image job
-            // This means that any job set on the window is destroyed after it is replaced
-            disconnectJob();
-            destroyJob(lastJob);
-
-            m_shapes.clear();
-        });
-
-        connect(q, &ImageJobWindow::didSetImageJob, [this](job::ImageJob*, job::ImageJob* currentJob) {
-            ui->imageJobExportWidget->setImageJob(currentJob, &m_shapes);
-            ui->imageJobRunnerWidget->setImageJob(currentJob);
-
-            m_jobWillStepConnection = connect(currentJob, &job::ImageJob::signal_modelWillStep, [this]() {
-                ui->statsDockContents->setCurrentStatus(geometrize::dialog::ImageJobStatsWidget::RUNNING);
-            });
-
-            m_jobDidStepConnection = connect(currentJob, &job::ImageJob::signal_modelDidStep, [this](std::vector<geometrize::ShapeResult> shapes) {
-                std::copy(shapes.begin(), shapes.end(), std::back_inserter(m_shapes));
-
-                updateCurrentGraphics(shapes);
+        // Track how long the job has been in the running state
+        connect(&m_timeRunningTimer, &QTimer::timeout, [this]() {
+            if(isRunning()) {
+                m_timeRunning += m_timeRunningResolutionMs;
                 updateStats();
-
-                if(m_running) {
-                    stepModel();
-                }
-            });
-
-            q->setWindowTitle(tr("Geometrize - Image - %1").arg(QString::fromStdString(currentJob->getDisplayName())));
-
-            setupOverlayImages();
-            updateCurrentGraphics(m_shapes);
-            currentJob->drawBackgroundRectangle();
-
-            ui->consoleWidget->setEngine(currentJob->getEngine());
-            ui->imageJobRunnerWidget->syncUserInterface();
-            ui->imageJobTargetImageWidget->setTargetImage(image::createImage(currentJob->getTarget()));
-
-            m_timeRunning = 0.0f;
+            }
         });
 
-        connect(q, &ImageJobWindow::didLoadSettingsTemplate, [this]() {
-            ui->imageJobRunnerWidget->syncUserInterface();
-        });
+        // Start the timer used to track how long the image job has been in the running state
+        m_timeRunningTimer.start(m_timeRunningResolutionMs);
+
+        // Set initial target image opacity
+        const float initialTargetImageOpacity{10};
+        ui->imageJobImageWidget->setTargetImageOpacity(initialTargetImageOpacity);
     }
     ImageJobWindowImpl operator=(const ImageJobWindowImpl&) = delete;
     ImageJobWindowImpl(const ImageJobWindowImpl&) = delete;
@@ -202,9 +270,9 @@ public:
     {
         job::ImageJob* lastJob{m_job};
         job::ImageJob* nextJob{job};
-        q->willSetImageJob(lastJob, nextJob);
-        m_job = job;
-        q->didSetImageJob(lastJob, nextJob);
+        q->willSwitchImageJob(lastJob, nextJob);
+        m_job = nextJob;
+        q->didSwitchImageJob(lastJob, nextJob);
     }
 
     void revealLaunchWindow()
@@ -237,11 +305,17 @@ public:
     void setPixmapViewVisibility(const bool visible)
     {
         m_currentImageView->setVisible(visible);
+        if(visible) {
+            fitImageSceneInView();
+        }
     }
 
     void setVectorViewVisibility(const bool visible)
     {
         m_svgImageView->setVisible(visible);
+        if(visible) {
+            fitVectorSceneInView();
+        }
     }
 
     void loadSettingsTemplate()
@@ -274,16 +348,14 @@ private:
         m_currentSvgScene.drawSvg(shapes, pixmap.size().width(), pixmap.size().height());
     }
 
-    void toggleRunning()
+    bool isRunning() const
     {
-        m_running = !m_running;
+        return m_running;
+    }
 
-        if(!m_running) {
-            ui->imageJobRunnerWidget->setRunStopButtonText(tr("Start"));
-        } else {
-            stepModel();
-            ui->imageJobRunnerWidget->setRunStopButtonText(tr("Stop"));
-        }
+    void setRunning(const bool running)
+    {
+        m_running = running;
     }
 
     void stepModel()
@@ -298,12 +370,24 @@ private:
         setImageJob(job);
     }
 
+    void switchTargetImage(Bitmap& bitmap)
+    {
+        Bitmap& targetBitmap{m_job->getTarget()};
+        targetBitmap = bitmap;
+    }
+
+    void switchCurrentImage(Bitmap& bitmap)
+    {
+        Bitmap& currentBitmap{m_job->getCurrent()};
+        currentBitmap = bitmap;
+    }
+
     void updateStats()
     {
         ui->statsDockContents->setJobId(m_job->getJobId());
         ui->statsDockContents->setImageDimensions(m_job->getWidth(), m_job->getHeight());
 
-        if(!m_running) {
+        if(!isRunning()) {
             ui->statsDockContents->setCurrentStatus(geometrize::dialog::ImageJobStatsWidget::STOPPED);
         }
 
@@ -333,38 +417,78 @@ private:
         m_currentSvgScene.setTargetPixmap(target);
     }
 
-    void fitScenesInViews()
+    void fitImageSceneInView()
     {
-        const float margin{10.0f}; // Leaves some space around the edges
-
+        const float margin{m_defaultViewMargins};
         const QRectF imageViewRect{m_currentImageScene.itemsBoundingRect().marginsAdded(QMarginsF(margin, margin, margin, margin))};
         m_currentImageView->fitInView(imageViewRect, Qt::KeepAspectRatio);
+    }
 
+    void fitVectorSceneInView()
+    {
+        const float margin{m_defaultViewMargins};
         const QRectF svgRect{m_currentSvgScene.itemsBoundingRect().marginsAdded(QMarginsF(margin, margin, margin, margin))};
         m_svgImageView->fitInView(svgRect, Qt::KeepAspectRatio);
     }
 
-    std::unique_ptr<Ui::ImageJobWindow> ui;
-    ImageJobWindow* q;
+    void fitScenesInViews()
+    {
+        fitImageSceneInView();
+        fitVectorSceneInView();
+    }
 
-    job::ImageJob* m_job;
-    QMetaObject::Connection m_jobWillStepConnection;
-    QMetaObject::Connection m_jobDidStepConnection;
-    std::vector<geometrize::ShapeResult> m_shapes;
+    void setBaseImage(const QImage& image)
+    {
+        ui->imageJobImageWidget->setBaseImage(image);
+    }
 
-    ImageJobPixmapScene m_currentImageScene;
-    ImageJobSvgScene m_currentSvgScene;
-    geometrize::dialog::ImageJobGraphicsView* m_currentImageView;
-    geometrize::dialog::ImageJobGraphicsView* m_svgImageView;
+    void setTargetImage(const QImage& image)
+    {
+        ui->imageJobImageWidget->setTargetImage(image);
+    }
 
-    bool m_running; ///> Whether the model is running (automatically)
+    void addPostStepCb(const std::function<void()>& f)
+    {
+        m_onPostStepCbs.push_back(f);
+    }
+
+    void clearPostStepCbs()
+    {
+        m_onPostStepCbs.clear();
+    }
+
+    void processPostStepCbs()
+    {
+        for(const auto& f : m_onPostStepCbs) {
+            f();
+        }
+        clearPostStepCbs();
+    }
+
+    std::unique_ptr<Ui::ImageJobWindow> ui{nullptr};
+    ImageJobWindow* q{nullptr};
+
+    job::ImageJob* m_job{nullptr}; ///> The image job currently set and manipulated via this window
+    QMetaObject::Connection m_jobWillStepConnection{}; ///> Connection for the window to do work just prior the image job starts a step
+    QMetaObject::Connection m_jobDidStepConnection{}; ///> Connection for the window to do work just after the image job finishes a step
+    std::vector<std::function<void()>> m_onPostStepCbs; ///> One-shot callbacks triggered when the image job finishes a step
+
+    std::vector<geometrize::ShapeResult> m_shapes; ///> The shapes and score results created by the image job
+
+    ImageJobPixmapScene m_currentImageScene; ///> The scene containing the raster/pixel-based representation of the shapes
+    ImageJobSvgScene m_currentSvgScene; ///> The scene containing the vector-based representation of the shapes
+    const float m_defaultViewMargins{20.0f}; ///> Margins around the graphics shown in the views
+    geometrize::dialog::ImageJobGraphicsView* m_currentImageView{nullptr}; ///> The view that holds the raster/pixel-based scene
+    geometrize::dialog::ImageJobGraphicsView* m_svgImageView{nullptr}; ///> The view that holds the vector-based scene
+
+    bool m_running{false}; ///> Whether the model is running (automatically)
     QTimer m_timeRunningTimer; ///> Timer used to keep track of how long the image job has been in the "running" state
-    float m_timeRunning; ///> Total time that the image job has been in the "running" state
-    const float m_timeRunningResolutionMs; ///> Resolution of the time running timer
+    float m_timeRunning{0.0f}; ///> Total time that the image job has been in the "running" state
+    const float m_timeRunningResolutionMs{100.0f}; ///> Resolution of the time running timer
 };
 
 ImageJobWindow::ImageJobWindow() :
-    QMainWindow(nullptr),
+    QMainWindow{nullptr},
     d{std::make_unique<ImageJobWindow::ImageJobWindowImpl>(this)}
 {
 }

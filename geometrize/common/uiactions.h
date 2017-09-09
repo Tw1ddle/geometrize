@@ -20,6 +20,7 @@ namespace ui
 void openLaunchWindow();
 bool isLaunchWindowOpen();
 void bringLaunchWindowToFront();
+void openWelcomePage(QWidget* parent);
 void openAboutPage(QWidget* parent);
 void openGlobalPreferences(QWidget* parent);
 QString openImagePathPickerDialog(QWidget* parent);
@@ -43,6 +44,7 @@ QString openLoadImageJobSettingsDialog(QWidget* parent);
 QString openSaveImageJobSettingsDialog(QWidget* parent);
 QString openLoadGlobalSettingsDialog(QWidget* parent);
 QString openSaveGlobalSettingsDialog(QWidget* parent);
+QString openBaseImagePickerDialog(QWidget* parent);
 QString openTargetImagePickerDialog(QWidget* parent);
 
 }

@@ -13,15 +13,15 @@ namespace dialog
 {
 
 /**
- * @brief The ImageJobTargetImageWidget implements a widget for viewing and manipulating the image that an image job reproduces using shapes.
+ * @brief The ImageJobImageWidget implements a widget for viewing and manipulating the images that an image job works with.
  */
-class ImageJobTargetImageWidget : public QWidget
+class ImageJobImageWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    ImageJobTargetImageWidget(QWidget* parent = nullptr);
-    ~ImageJobTargetImageWidget();
+    ImageJobImageWidget(QWidget* parent = nullptr);
+    ~ImageJobImageWidget();
 
     /**
      * @brief setTargetImageOpacity Sets the opacity of the target image.
@@ -34,6 +34,12 @@ public:
      * @param image The target image to set on this widget.
      */
     void setTargetImage(const QImage& image);
+
+    /**
+     * @brief setBaseImage Sets the base image, which is made visible in this widget. Must be a valid (non-null) image.
+     * @param image The base image to set on this widget.
+     */
+    void setBaseImage(const QImage& image);
 
 signals:
     /**
@@ -54,9 +60,21 @@ signals:
      */
     void targetImageSet(const QImage& image);
 
+    /**
+     * @brief baseImageSelected Signal dispatched when a candidate base image is selected, typically by the user.
+     * @param image The image the user picked.
+     */
+    void baseImageSelected(const QImage& image);
+
+    /**
+     * @brief baseImageSet Signal dispatched when the base image is set and made visible in this widget (and is probably going to be used by the image job).
+     * @param image The image that was set on the base image widget.
+     */
+    void baseImageSet(const QImage& image);
+
 private:
-    class ImageJobTargetImageWidgetImpl;
-    std::unique_ptr<ImageJobTargetImageWidgetImpl> d;
+    class ImageJobImageWidgetImpl;
+    std::unique_ptr<ImageJobImageWidgetImpl> d;
 };
 
 }

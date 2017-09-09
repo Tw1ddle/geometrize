@@ -187,7 +187,7 @@
     <string>Target Image</string>
    </property>
    <attribute name="dockWidgetArea">
-    <number>2</number>
+    <number>1</number>
    </attribute>
    <widget class="QWidget" name="targetImageSettingsDockContents">
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -205,13 +205,13 @@
        <property name="widgetResizable">
         <bool>true</bool>
        </property>
-       <widget class="geometrize::dialog::ImageJobTargetImageWidget" name="imageJobTargetImageWidget">
+       <widget class="geometrize::dialog::ImageJobImageWidget" name="imageJobImageWidget">
         <property name="geometry">
          <rect>
           <x>0</x>
           <y>0</y>
           <width>288</width>
-          <height>271</height>
+          <height>676</height>
          </rect>
         </property>
        </widget>
@@ -276,7 +276,7 @@
           <x>0</x>
           <y>0</y>
           <width>288</width>
-          <height>271</height>
+          <height>362</height>
          </rect>
         </property>
        </widget>
@@ -341,7 +341,7 @@
           <x>0</x>
           <y>0</y>
           <width>288</width>
-          <height>271</height>
+          <height>362</height>
          </rect>
         </property>
        </widget>
@@ -421,9 +421,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>geometrize::dialog::ImageJobTargetImageWidget</class>
+   <class>geometrize::dialog::ImageJobImageWidget</class>
    <extends>QWidget</extends>
-   <header>dialog/imagejobtargetimagewidget.h</header>
+   <header>dialog/imagejobimagewidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

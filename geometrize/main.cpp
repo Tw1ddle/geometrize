@@ -10,6 +10,7 @@
 
 #include "analytics/analyticswrapper.h"
 #include "cli/commandlineparser.h"
+#include "common/uiactions.h"
 #include "common/sharedapp.h"
 #include "localization/localization.h"
 #include "logger/logmessagehandlers.h"
@@ -69,6 +70,7 @@ int runAppGuiMode(QApplication& app)
 {
     geometrize::dialog::LaunchWindow w;
     w.show();
+    geometrize::common::ui::openWelcomePage(&w);
     return app.exec();
 }
 

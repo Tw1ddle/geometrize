@@ -11,6 +11,7 @@
 #include "dialog/launchwindow.h"
 #include "dialog/openurldialog.h"
 #include "dialog/runscriptdialog.h"
+#include "dialog/welcomedialog.h"
 
 namespace geometrize
 {
@@ -45,6 +46,12 @@ void bringLaunchWindowToFront()
     firstLauncher->show();
     firstLauncher->raise();
     QApplication::setActiveWindow(firstLauncher);
+}
+
+void openWelcomePage(QWidget* parent)
+{
+    dialog::WelcomeDialog dialog(parent);
+    dialog.exec();
 }
 
 void openAboutPage(QWidget* parent)
@@ -161,6 +168,11 @@ QString openLoadGlobalSettingsDialog(QWidget* parent)
 QString openSaveGlobalSettingsDialog(QWidget* parent)
 {
     return QFileDialog::getSaveFileName(parent, QWidget::tr("Save Global Settings"), "", QWidget::tr("JSON Global Settings File (*.json)"));
+}
+
+QString openBaseImagePickerDialog(QWidget* parent)
+{
+    return QFileDialog::getOpenFileName(parent, QWidget::tr("Select Base Image"), "", QWidget::tr("Image Files (*.jpg *.jpeg *.png *.bmp)", ""));
 }
 
 QString openTargetImagePickerDialog(QWidget* parent)

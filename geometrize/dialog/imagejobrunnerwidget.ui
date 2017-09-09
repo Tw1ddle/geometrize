@@ -392,6 +392,19 @@
     </widget>
    </item>
    <item>
+    <widget class="QPushButton" name="runStopButton">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>Run</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QPushButton" name="stepButton">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -414,19 +427,6 @@
      </property>
      <property name="text">
       <string>Clear</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPushButton" name="runStopButton">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string>Run</string>
      </property>
     </widget>
    </item>

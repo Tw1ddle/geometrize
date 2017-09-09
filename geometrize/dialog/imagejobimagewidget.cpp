@@ -1,5 +1,5 @@
-#include "imagejobtargetimagewidget.h"
-#include "ui_imagejobtargetimagewidget.h"
+#include "imagejobimagewidget.h"
+#include "ui_imagejobimagewidget.h"
 
 #include <cassert>
 #include <memory>
@@ -15,10 +15,10 @@ namespace geometrize
 namespace dialog
 {
 
-class ImageJobTargetImageWidget::ImageJobTargetImageWidgetImpl
+class ImageJobImageWidget::ImageJobImageWidgetImpl
 {
 public:
-    ImageJobTargetImageWidgetImpl(ImageJobTargetImageWidget* pQ) : q{pQ}, ui{std::make_unique<Ui::ImageJobTargetImageWidget>()}
+    ImageJobImageWidgetImpl(ImageJobImageWidget* pQ) : q{pQ}, ui{std::make_unique<Ui::ImageJobImageWidget>()}
     {
         ui->setupUi(q);
 
@@ -40,10 +40,24 @@ public:
 
             emit q->targetImageSelected(image);
         });
+
+        q->connect(ui->pickBaseImageButton, &QPushButton::clicked, [this]() {
+            const QString imagePath{geometrize::common::ui::openBaseImagePickerDialog(q)};
+            if(imagePath.isEmpty()) {
+                return;
+            }
+
+            const QImage image{geometrize::image::loadImage(imagePath.toStdString())};
+            if(image.isNull()) {
+                return;
+            }
+
+            emit q->baseImageSelected(image);
+        });
     }
-    ~ImageJobTargetImageWidgetImpl() = default;
-    ImageJobTargetImageWidgetImpl operator=(const ImageJobTargetImageWidgetImpl&) = delete;
-    ImageJobTargetImageWidgetImpl(const ImageJobTargetImageWidgetImpl&) = delete;
+    ~ImageJobImageWidgetImpl() = default;
+    ImageJobImageWidgetImpl operator=(const ImageJobImageWidgetImpl&) = delete;
+    ImageJobImageWidgetImpl(const ImageJobImageWidgetImpl&) = delete;
 
     void setTargetImageOpacity(const unsigned int opacity)
     {
@@ -64,6 +78,16 @@ public:
         emit q->targetImageSet(image);
     }
 
+    void setBaseImage(const QImage& image)
+    {
+        assert(!image.isNull() && "Attempting to set a bad base image");
+
+        const int thumbnailSize{400};
+        ui->baseImageLabel->setPixmap(QPixmap::fromImage(image.scaled(thumbnailSize, thumbnailSize, Qt::KeepAspectRatio)));
+
+        emit q->baseImageSet(image);
+    }
+
 private:
     void updateTargetImageOpacity(const unsigned int opacity)
     {
@@ -71,26 +95,31 @@ private:
         ui->targetImageOpacityValueLabel->setText(QString::number(opacity));
     }
 
-    ImageJobTargetImageWidget* q;
-    std::unique_ptr<Ui::ImageJobTargetImageWidget> ui;
+    ImageJobImageWidget* q;
+    std::unique_ptr<Ui::ImageJobImageWidget> ui;
 };
 
-ImageJobTargetImageWidget::ImageJobTargetImageWidget(QWidget* parent) :
+ImageJobImageWidget::ImageJobImageWidget(QWidget* parent) :
     QWidget{parent},
-    d{std::make_unique<ImageJobTargetImageWidget::ImageJobTargetImageWidgetImpl>(this)}
+    d{std::make_unique<ImageJobImageWidget::ImageJobImageWidgetImpl>(this)}
 {
 }
 
-ImageJobTargetImageWidget::~ImageJobTargetImageWidget()
+ImageJobImageWidget::~ImageJobImageWidget()
 {
 }
 
-void ImageJobTargetImageWidget::setTargetImageOpacity(const unsigned int opacity)
+void ImageJobImageWidget::setTargetImageOpacity(const unsigned int opacity)
 {
     d->setTargetImageOpacity(opacity);
 }
 
-void ImageJobTargetImageWidget::setTargetImage(const QImage& image)
+void ImageJobImageWidget::setBaseImage(const QImage& image)
+{
+    d->setBaseImage(image);
+}
+
+void ImageJobImageWidget::setTargetImage(const QImage& image)
 {
     d->setTargetImage(image);
 }
