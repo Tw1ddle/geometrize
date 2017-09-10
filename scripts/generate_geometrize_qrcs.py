@@ -43,7 +43,6 @@ generate_geometrize_qrc("icons", ".*")
 generate_geometrize_qrc("licenses", ".*\.txt")
 generate_geometrize_qrc("logos", ".*")
 generate_geometrize_qrc("scripts", ".*\.chai")
-generate_geometrize_qrc("settings", ".*\.json")
 
 generate_geometrize_template_qrcs("templates/templates", ".*")
 

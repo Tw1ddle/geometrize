@@ -97,7 +97,7 @@ public:
         if(path.isEmpty()) {
             return;
         }
-        geometrize::common::app::SharedApp::get().getGlobalPreferences().load(path.toStdString());
+        geometrize::preferences::getGlobalPreferences().load(path.toStdString());
     }
 
     void saveGlobalSettingsTemplate() const
@@ -106,7 +106,7 @@ public:
         if(path.isEmpty()) {
             return;
         }
-        geometrize::common::app::SharedApp::get().getGlobalPreferences().save(path.toStdString());
+        geometrize::preferences::getGlobalPreferences().save(path.toStdString());
     }
 
 private:

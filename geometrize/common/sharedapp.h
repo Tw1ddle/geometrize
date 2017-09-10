@@ -10,16 +10,6 @@ class RecentItems;
 namespace geometrize
 {
 
-namespace preferences
-{
-class GlobalPreferences;
-}
-
-}
-
-namespace geometrize
-{
-
 namespace common
 {
 
@@ -41,12 +31,6 @@ public:
      * @return The recent files list.
      */
     RecentItems& getRecentFiles();
-
-    /**
-     * @brief getGlobalPreferences Gets the shared global preferences object, which stores global application preferences.
-     * @return The global preferences object.
-     */
-    preferences::GlobalPreferences& getGlobalPreferences();
 
 private:
     class SharedAppImpl;

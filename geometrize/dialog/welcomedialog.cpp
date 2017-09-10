@@ -5,13 +5,27 @@
 #include <QUrl>
 
 #include "common/constants.h"
+#include "common/sharedapp.h"
 #include "localization/strings.h"
+#include "preferences/globalpreferences.h"
 
 namespace geometrize
 {
 
 namespace dialog
 {
+
+bool shouldShowWelcomeOnLaunch()
+{
+    auto& prefs{geometrize::preferences::getGlobalPreferences()};
+    return prefs.shouldShowWelcomeScreenOnLaunch();
+}
+
+void setShouldShowWelcomeOnLaunch(const bool show)
+{
+    auto& prefs{geometrize::preferences::getGlobalPreferences()};
+    prefs.setShouldShowWelcomeScreenOnLaunch(show);
+}
 
 WelcomeDialog::WelcomeDialog(QWidget* parent) :
     QDialog(parent),
@@ -21,6 +35,8 @@ WelcomeDialog::WelcomeDialog(QWidget* parent) :
     ui->setupUi(this);
 
     ui->welcomeTitleLabel->setText(tr("Welcome To %1", "A subtitle on the 'tutorial' page welcoming the user to the software").arg(geometrize::strings::Strings::getApplicationName()));
+
+    ui->showOnLaunchCheckbox->setChecked(shouldShowWelcomeOnLaunch());
 }
 
 WelcomeDialog::~WelcomeDialog()
@@ -36,6 +52,11 @@ void WelcomeDialog::on_closeButton_released()
 void WelcomeDialog::on_videoTutorialsButton_released()
 {
     QDesktopServices::openUrl(QUrl(constants::VIDEO_TUTORIAL_URL));
+}
+
+void WelcomeDialog::on_showOnLaunchCheckbox_clicked(const bool checked)
+{
+    setShouldShowWelcomeOnLaunch(checked);
 }
 
 }

@@ -13,10 +13,9 @@
 
 #include "common/uiactions.h"
 #include "common/util.h"
-#include "exporter/canvaswebpageexporter.h"
 #include "exporter/gifexporter.h"
 #include "exporter/imageexporter.h"
-#include "exporter/webglwebpageexporter.h"
+#include "exporter/webpageexporter.h"
 #include "job/imagejob.h"
 
 namespace geometrize

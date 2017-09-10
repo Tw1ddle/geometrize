@@ -12,10 +12,26 @@ namespace geometrize
 
 namespace preferences
 {
+class GlobalPreferences;
+}
+
+}
+
+namespace geometrize
+{
+
+namespace preferences
+{
 
 /**
- * @brief getGlobalPreferencesConfigPath Gets the absolute path to the global preferences config file.
- * @return A path to the global preferences config file.
+ * @brief getGlobalPreferences Shorthand function that gets a reference to the shared global preferences object, which stores global application preferences.
+ * @return The global preferences object.
+ */
+geometrize::preferences::GlobalPreferences& getGlobalPreferences();
+
+/**
+ * @brief getGlobalPreferencesConfigPath Gets the absolute path to where the global preferences config file should be read/written.
+ * @return The absolute path to the global preferences config file.
  */
 std::string getGlobalPreferencesConfigPath();
 
@@ -27,7 +43,7 @@ class GlobalPreferences : public QObject
 {
     Q_OBJECT
 public:
-    GlobalPreferences(const std::string& preferencesFilePath);
+    GlobalPreferences();
     GlobalPreferences& operator=(const GlobalPreferences&) = delete;
     GlobalPreferences(const GlobalPreferences&) = delete;
     ~GlobalPreferences();
@@ -35,14 +51,28 @@ public:
     /**
      * @brief load Loads the global preferences from a file.
      * @param filePath The path to the global preferences file.
+     * @return True if loading succeeded, else false.
      */
-    void load(const std::string& filePath);
+    bool load(const std::string& filePath);
 
     /**
      * @brief save Saves the global preferences to a file.
      * @param filePath The path to the global preferences file.
+     * @return True if saving succeeded, else false.
      */
-    void save(const std::string& filePath);
+    bool save(const std::string& filePath);
+
+    /**
+     * @brief shouldShowWelcomeScreenOnLaunch Gets the preference for whether the welcome screen should be displayed on launch.
+     * @return True if the welcome screen should be shown on launch.
+     */
+    bool shouldShowWelcomeScreenOnLaunch() const;
+
+    /**
+     * @brief setShouldShowWelcomeScreenOnLaunch Sets the preference for whether the welcome screen should be displayed on launch.
+     * @param show Whether to show the welcome screen on launch.
+     */
+    void setShouldShowWelcomeScreenOnLaunch(bool show);
 
     /**
      * @brief isImageJobImageResizeEnabled Gets the preference for whether image jobs should resize images that are too large.

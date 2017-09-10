@@ -4,7 +4,9 @@
 #include <fstream>
 #include <ostream>
 
-#include <QCoreApplication>
+#include <QDir>
+#include <QFileInfo>
+#include <QStandardPaths>
 
 #include "cereal/archives/json.hpp"
 
@@ -19,40 +21,84 @@ namespace preferences
 
 std::string getGlobalPreferencesConfigPath()
 {
-    return QCoreApplication::applicationDirPath().toStdString().append("/config/global_preferences.json");
+    const QString configFilename{"global_preferences.json"};
+    const QString globalPreferencesFolder{QStandardPaths::writableLocation(QStandardPaths::StandardLocation::AppDataLocation)};
+    const QString globalPreferencesPath{QDir(globalPreferencesFolder).filePath(configFilename)};
+    const std::string globalPreferencesPathStr{globalPreferencesPath.toStdString()};
+    return globalPreferencesPathStr;
+}
+
+geometrize::preferences::GlobalPreferences& getGlobalPreferences()
+{
+    static geometrize::preferences::GlobalPreferences prefs{};
+    return prefs;
 }
 
 class GlobalPreferences::GlobalPreferencesImpl
 {
 public:
-    GlobalPreferencesImpl(const std::string& filePath)
+    GlobalPreferencesImpl()
     {
-        load(filePath);
+        load(getGlobalPreferencesConfigPath());
     }
-    ~GlobalPreferencesImpl() = default;
+
+    ~GlobalPreferencesImpl()
+    {
+        // NOTE this should really be done after everything else is done writing to preferences
+        save(getGlobalPreferencesConfigPath());
+    }
+
     GlobalPreferencesImpl& operator=(const GlobalPreferencesImpl&) = default;
     GlobalPreferencesImpl(const GlobalPreferencesImpl&) = default;
 
-    void load(const std::string& filePath)
+    bool load(const std::string& filePath)
     {
         std::ifstream input(filePath);
         try {
             cereal::JSONInputArchive archive{input};
-            m_data.archive(archive, m_imageJobResizeEnabled, m_imageJobResizeThreshold, m_languageIsoCode, m_scriptIsoCode, m_countryIsoCode);
+            m_data.archive(archive,
+                           m_shouldShowWelcomeScreenOnLaunch,
+                           m_imageJobResizeEnabled,
+                           m_imageJobResizeThreshold,
+                           m_languageIsoCode,
+                           m_scriptIsoCode,
+                           m_countryIsoCode);
         } catch(...) {
             assert(0 && "Failed to read global preferences");
+            return false;
         }
+
+        return true;
     }
 
-    void save(const std::string& filePath)
+    bool save(const std::string& filePath)
     {
         std::ofstream output(filePath);
         try {
             cereal::JSONOutputArchive archive{output};
-            m_data.archive(archive, m_imageJobResizeEnabled, m_imageJobResizeThreshold, m_languageIsoCode, m_scriptIsoCode, m_countryIsoCode);
+            m_data.archive(archive,
+                           m_shouldShowWelcomeScreenOnLaunch,
+                           m_imageJobResizeEnabled,
+                           m_imageJobResizeThreshold,
+                           m_languageIsoCode,
+                           m_scriptIsoCode,
+                           m_countryIsoCode);
         } catch(...) {
             assert(0 && "Failed to write global preferences");
+            return false;
         }
+
+        return true;
+    }
+
+    bool shouldShowWelcomeScreenOnLaunch() const
+    {
+        return m_shouldShowWelcomeScreenOnLaunch;
+    }
+
+    void setShouldShowWelcomeScreenOnLaunch(const bool show)
+    {
+        m_shouldShowWelcomeScreenOnLaunch = show;
     }
 
     void setImageJobResizeThreshold(const std::uint32_t width, const std::uint32_t height)
@@ -159,6 +205,7 @@ public:
 private:
     serialization::GlobalPreferencesData m_data;
 
+    bool m_shouldShowWelcomeScreenOnLaunch{true};
     bool m_imageJobResizeEnabled{false};
     std::pair<std::uint32_t, std::uint32_t> m_imageJobResizeThreshold{512, 512};
 
@@ -167,7 +214,7 @@ private:
     std::string m_countryIsoCode{"US"};
 };
 
-GlobalPreferences::GlobalPreferences(const std::string& preferencesFilePath) : d{std::make_unique<GlobalPreferences::GlobalPreferencesImpl>(preferencesFilePath)}
+GlobalPreferences::GlobalPreferences() : d{std::make_unique<GlobalPreferences::GlobalPreferencesImpl>()}
 {
 }
 
@@ -175,14 +222,24 @@ GlobalPreferences::~GlobalPreferences()
 {
 }
 
-void GlobalPreferences::load(const std::string& filePath)
+bool GlobalPreferences::load(const std::string& filePath)
 {
-    d->load(filePath);
+    return d->load(filePath);
 }
 
-void GlobalPreferences::save(const std::string& filePath)
+bool GlobalPreferences::save(const std::string& filePath)
 {
-    d->save(filePath);
+    return d->save(filePath);
+}
+
+bool GlobalPreferences::shouldShowWelcomeScreenOnLaunch() const
+{
+    return d->shouldShowWelcomeScreenOnLaunch();
+}
+
+void GlobalPreferences::setShouldShowWelcomeScreenOnLaunch(const bool show)
+{
+    d->setShouldShowWelcomeScreenOnLaunch(show);
 }
 
 bool GlobalPreferences::isImageJobImageResizeEnabled() const

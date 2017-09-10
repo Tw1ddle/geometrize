@@ -26,7 +26,7 @@ class TemplateButton::TemplateButtonImpl
 {
 public:
     TemplateButtonImpl(TemplateButton* pQ, chaiscript::ChaiScript* const templateLoader, const QString& templateFolder) :
-        ui(new Ui::TemplateButton),
+        ui(std::make_unique<Ui::TemplateButton>()),
         q{pQ},
         m_templateLoader{templateLoader},
         m_templateFolder{templateFolder},
@@ -55,7 +55,6 @@ public:
 
     ~TemplateButtonImpl()
     {
-        delete ui;
     }
 
     TemplateButtonImpl operator=(const TemplateButtonImpl&) = delete;
@@ -111,7 +110,7 @@ private:
     chaiscript::ChaiScript* const m_templateLoader;
     const QString m_templateFolder;
     const TemplateManifest m_manifest;
-    Ui::TemplateButton* ui;
+    std::unique_ptr<Ui::TemplateButton> ui;
     TemplateButton* q;
     QFutureWatcher<QImage> m_thumbnailLoaderWatcher;
 };

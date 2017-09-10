@@ -27,6 +27,7 @@ public:
 public slots:
     void on_closeButton_released();
     void on_videoTutorialsButton_released();
+    void on_showOnLaunchCheckbox_clicked(bool checked);
 
 private:
     Ui::WelcomeDialog* ui;

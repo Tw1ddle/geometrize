@@ -16,7 +16,7 @@ geometrize::Bitmap imageToBitmap(const QImage& image)
 {
     QImage im{image.copy()};
 
-    const geometrize::preferences::GlobalPreferences& prefs{geometrize::common::app::SharedApp::get().getGlobalPreferences()};
+    const geometrize::preferences::GlobalPreferences& prefs{geometrize::preferences::getGlobalPreferences()};
     if(prefs.isImageJobImageResizeEnabled()) {
         const std::pair<std::uint32_t, std::uint32_t> sizeThreshold{prefs.getImageJobResizeThreshold()};
         const QSize imageSize{im.size()};

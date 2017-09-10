@@ -1,7 +1,6 @@
 #include "globalpreferencesdialog.h"
 #include "ui_globalpreferencesdialog.h"
 
-#include "common/sharedapp.h"
 #include "preferences/globalpreferences.h"
 
 namespace geometrize
@@ -55,7 +54,7 @@ public:
 private:
     geometrize::preferences::GlobalPreferences& getPrefs()
     {
-        return geometrize::common::app::SharedApp::get().getGlobalPreferences();
+        return geometrize::preferences::getGlobalPreferences();
     }
 
     void syncUiWithPreferences()

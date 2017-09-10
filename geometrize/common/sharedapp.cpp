@@ -1,6 +1,5 @@
 #include "common/sharedapp.h"
 
-#include "preferences/globalpreferences.h"
 #include "recents/recentitems.h"
 
 namespace geometrize
@@ -19,8 +18,7 @@ class SharedApp::SharedAppImpl : public QObject
 {
 public:
     SharedAppImpl() :
-        m_recentFiles{RecentItems::RECENTLY_OPENED_ITEMS_SETTINGS_GROUP, RecentItems::MAX_RECENTLY_OPENED_ITEMS_COUNT},
-        m_globalPreferences{preferences::getGlobalPreferencesConfigPath()}
+        m_recentFiles{RecentItems::RECENTLY_OPENED_ITEMS_SETTINGS_GROUP, RecentItems::MAX_RECENTLY_OPENED_ITEMS_COUNT}
     {
     }
 
@@ -33,14 +31,8 @@ public:
         return m_recentFiles;
     }
 
-    preferences::GlobalPreferences& getGlobalPreferences()
-    {
-        return m_globalPreferences;
-    }
-
 private:
     RecentItems m_recentFiles;
-    preferences::GlobalPreferences m_globalPreferences;
 };
 
 SharedApp::SharedApp() : d{std::make_unique<geometrize::common::app::SharedApp::SharedAppImpl>()} {}
@@ -55,11 +47,6 @@ SharedApp& SharedApp::get()
 RecentItems& SharedApp::getRecentFiles()
 {
     return d->getRecentFiles();
-}
-
-preferences::GlobalPreferences& SharedApp::getGlobalPreferences()
-{
-    return d->getGlobalPreferences();
 }
 
 }

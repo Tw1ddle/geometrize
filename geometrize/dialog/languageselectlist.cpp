@@ -29,7 +29,7 @@ public:
 
             const QString isoCode{current->data(Qt::UserRole).toString()};
 
-            geometrize::preferences::GlobalPreferences& prefs{geometrize::common::app::SharedApp::get().getGlobalPreferences()};
+            geometrize::preferences::GlobalPreferences& prefs{geometrize::preferences::getGlobalPreferences()};
             prefs.setLanguageIsoCode(isoCode.toStdString());
 
             QLocale::setDefault(QLocale(isoCode));

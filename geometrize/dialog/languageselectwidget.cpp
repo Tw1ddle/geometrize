@@ -35,7 +35,7 @@ public:
 private:
     void setup()
     {
-        const geometrize::preferences::GlobalPreferences& prefs{geometrize::common::app::SharedApp::get().getGlobalPreferences()};
+        const geometrize::preferences::GlobalPreferences& prefs{geometrize::preferences::getGlobalPreferences()};
         const std::string languageCode{prefs.getLanguageIsoCode()};
         const QLocale locale{QString::fromStdString(languageCode)};
         ui->currentLanguageNameLabel->setText(locale.nativeLanguageName());

@@ -19,8 +19,15 @@ class GlobalPreferencesData
 {
 public:
     template<class Archive>
-    void archive(Archive& ar, bool& imageJobImageResizeEnabled, std::pair<std::uint32_t, std::uint32_t>& imageJobImageResizeThreshold, std::string& isoLanguageCode, std::string& isoScriptCode, std::string& isoCountryCode)
+    void archive(Archive& ar,
+                 bool& shouldShowWelcomeScreenOnLaunch,
+                 bool& imageJobImageResizeEnabled,
+                 std::pair<std::uint32_t, std::uint32_t>& imageJobImageResizeThreshold,
+                 std::string& isoLanguageCode,
+                 std::string& isoScriptCode,
+                 std::string& isoCountryCode)
     {
+        ar(cereal::make_nvp(shouldShowWelcomeScreenOnLaunchKey, shouldShowWelcomeScreenOnLaunch));
         ar(cereal::make_nvp(imageJobImageResizeEnabledKey, imageJobImageResizeEnabled));
         ar(cereal::make_nvp(imageJobImageResizeThresholdKey, imageJobImageResizeThreshold));
         ar(cereal::make_nvp(isoLanguageCodeKey, isoLanguageCode));
@@ -29,6 +36,7 @@ public:
     }
 
 private:
+    const std::string shouldShowWelcomeScreenOnLaunchKey{"shouldShowWelcomeScreenOnLaunch"};
     const std::string imageJobImageResizeEnabledKey{"imageJobImageResizeEnabled"};
     const std::string imageJobImageResizeThresholdKey{"imageJobImageResizeThreshold"};
     const std::string isoLanguageCodeKey{"isoLanguageCode"};

@@ -18,8 +18,8 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>800</width>
-    <height>640</height>
+    <width>1024</width>
+    <height>800</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -37,8 +37,8 @@
    </property>
    <property name="minimumSize">
     <size>
-     <width>300</width>
-     <height>300</height>
+     <width>400</width>
+     <height>400</height>
     </size>
    </property>
    <property name="autoFillBackground">
@@ -161,7 +161,7 @@
     <layout class="QVBoxLayout" name="verticalLayout_26"/>
    </widget>
   </widget>
-  <widget class="QDockWidget" name="targetImageSettingsDock">
+  <widget class="QDockWidget" name="imageSettingsDock">
    <property name="minimumSize">
     <size>
      <width>300</width>
@@ -184,7 +184,7 @@
     <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
    </property>
    <property name="windowTitle">
-    <string>Target Image</string>
+    <string>Image Settings</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>1</number>

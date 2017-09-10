@@ -19,7 +19,7 @@
 
 namespace {
 
-void setupSettingsFields()
+void setApplicationSettingsFields()
 {
     // Do not modify these
     const QString ORGANIZATION_NAME{"Sam Twidale"}; // The development organization's name.
@@ -45,7 +45,7 @@ void setLocale(const QStringList& arguments)
             return overrideCode;
         }
 
-        geometrize::preferences::GlobalPreferences& prefs{geometrize::common::app::SharedApp::get().getGlobalPreferences()};
+        const auto& prefs{geometrize::preferences::getGlobalPreferences()};
         return prefs.getLanguageIsoCode();
     }();
 
@@ -70,7 +70,12 @@ int runAppGuiMode(QApplication& app)
 {
     geometrize::dialog::LaunchWindow w;
     w.show();
-    geometrize::common::ui::openWelcomePage(&w);
+
+    const auto& prefs{geometrize::preferences::getGlobalPreferences()};
+    if(prefs.shouldShowWelcomeScreenOnLaunch()) {
+        geometrize::common::ui::openWelcomePage(&w);
+    }
+
     return app.exec();
 }
 
@@ -86,7 +91,7 @@ std::function<int(QApplication&)> resolveLaunchFunction(const QStringList& argum
 
 int main(int argc, char* argv[])
 {
-    setupSettingsFields();
+    setApplicationSettingsFields();
     installMessageHandlers();
 
     QApplication app(argc, argv);

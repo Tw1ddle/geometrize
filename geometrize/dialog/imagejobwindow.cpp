@@ -89,7 +89,10 @@ public:
             // NOTE we disconnect and destroy the last image job, which will soon be replaced by the next image job
             // This means that any job set on the window is destroyed after it is replaced
             disconnectJob();
-            destroyJob(lastJob);
+
+            if(lastJob) {
+                destroyJob(lastJob);
+            }
 
             m_shapes.clear();
         });
@@ -350,7 +353,7 @@ private:
 
     bool isRunning() const
     {
-        return m_running;
+        return m_running; // TODO this is buggy, need to synch up whether the job is running or not in a better way
     }
 
     void setRunning(const bool running)
