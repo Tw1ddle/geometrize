@@ -35,12 +35,6 @@ public:
     static QString getShortApplicationDescription();
 
     /**
-     * @brief getLongApplicationDescription Gets a long description of the application and the main features.
-     * @return Long description of the application.
-     */
-    static QString getLongApplicationDescription();
-
-    /**
      * @brief getCopyrightNotice Gets a copyright notice for the application.
      * @return The copyright notice for the application.
      */
@@ -59,9 +53,6 @@ public:
      * @return The name of the shape for the given shape type e.g. RECTANGLE type returns "Rectangles".
      */
     static QString getShapeTypeNamePlural(geometrize::ShapeTypes shapeType);
-
-private:
-
 };
 
 }

@@ -23,12 +23,21 @@ public:
     explicit GlobalPreferencesDialog(QWidget* parent = nullptr);
     ~GlobalPreferencesDialog();
 
-private slots:
-    void on_imageResizeCheckbox_toggled(bool checked);
-    void on_resizeWidthSpinBox_valueChanged(int value);
-    void on_resizeHeightSpinBox_valueChanged(int value);
+private slots:    
+    void on_geometrizeLogo_toggled(bool checked);
+    void on_populateRecents_toggled(bool checked);
+    void on_populateTemplates_toggled(bool checked);
 
-    void on_maxThreadsPerImageJobSpinBox_valueChanged(int value);
+    void on_showLaunchWindowConsoleByDefault_toggled(bool checked);
+    void on_showVectorResultsByDefault_toggled(bool checked);
+    void on_showPixmapResultsByDefault_toggled(bool checked);
+    void on_showImageJobConsoleByDefault_toggled(bool checked);
+    void on_showScriptEditorsByDefault_toggled(bool checked);
+
+    void on_imageResize_toggled(bool checked);
+    void on_resizeWidth_valueChanged(int value);
+    void on_resizeHeight_valueChanged(int value);
+    void on_maxThreadsPerImageJob_valueChanged(int value);
 
 private:
     class GlobalPreferencesDialogImpl;

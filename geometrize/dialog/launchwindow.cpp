@@ -40,9 +40,14 @@ public:
         const QString tutorialsLabel{tr("Video tutorials")};
         ui->tutorialsLink->setText(R"(<a href=")" + constants::VIDEO_TUTORIAL_URL + R"(" style="text-decoration:none;">)" + tutorialsLabel + R"(</a>)");
 
-        ui->recentsList->setRecentItems(&common::app::SharedApp::get().getRecentFiles());
+        if(preferences::getGlobalPreferences().shouldPopulateRecentItemsOnLaunch()) {
+            ui->recentsList->setRecentItems(&common::app::SharedApp::get().getRecentFiles());
+        }
 
         loadConsoleHistory();
+        connect(ui->actionScript_Console, &QAction::toggled, [this](const bool checked) {
+            setConsoleVisibility(checked);
+        });
 
         connect(ui->templateGrid, &dialog::TemplateGrid::signal_templateLoaded, [this](const QString& templateFolder, const bool /*success*/) {
             ui->templatesSearchEdit->addToCompletionList(QString::fromStdString(util::getTemplateManifest(templateFolder.toStdString()).getName()));
@@ -52,9 +57,15 @@ public:
             ui->templateGrid->setItemFilter(text);
         });
 
-        ui->templateGrid->loadTemplates();
+        if(preferences::getGlobalPreferences().shouldPopulateTemplatesOnLaunch()) {
+            ui->templateGrid->loadTemplates();
+        }
 
-        setupLogoImageJob();
+        if(preferences::getGlobalPreferences().shouldShowLaunchConsoleByDefault()) {
+            setConsoleVisibility(true);
+        }
+
+        setupLogo();
     }
     LaunchWindowImpl operator=(const LaunchWindowImpl&) = delete;
     LaunchWindowImpl(const LaunchWindowImpl&) = delete;
@@ -76,6 +87,9 @@ public:
 
     void setConsoleVisibility(const bool visible)
     {
+        if(ui->actionScript_Console->isChecked() != visible) {
+            ui->actionScript_Console->setChecked(visible);
+        }
         ui->consoleWidget->setVisible(visible);
     }
 
@@ -110,34 +124,40 @@ public:
     }
 
 private:
-    void setupLogoImageJob()
+    void setupLogo()
     {
-        QImage image(":/logos/logo_small.png");
-        image = image.convertToFormat(QImage::Format_RGBA8888); // Note doing this to guarantee format is RGBA8888
+        const QString logoPath{":/logos/logo_small.png"};
 
-        geometrize::Bitmap logoBitmap{image::createBitmap(image)};
-        geometrize::Bitmap initialBitmap{logoBitmap.getWidth(), logoBitmap.getHeight(), geometrize::rgba{0, 0, 0, 0}};
-        m_logoJob = std::make_unique<job::ImageJob>("Logo Image Job", logoBitmap, initialBitmap);
-        m_logoJob->getPreferences().setShapeTypes(geometrize::ShapeTypes::RECTANGLE);
-        m_logoJob->getPreferences().setShapeAlpha(255U);
+        if(!geometrize::preferences::getGlobalPreferences().shouldGeometrizeAppLogoOnLaunch()) {
+            ui->logoLabel->setPixmap(logoPath);
+        } else {
+            QImage image(logoPath);
+            image = image.convertToFormat(QImage::Format_RGBA8888); // Note doing this to guarantee format is RGBA8888
 
-        ui->logoLabel->setPixmap(image::createPixmap(m_logoJob->getCurrent()));
+            geometrize::Bitmap logoBitmap{image::createBitmap(image)};
+            geometrize::Bitmap initialBitmap{logoBitmap.getWidth(), logoBitmap.getHeight(), geometrize::rgba{0, 0, 0, 0}};
+            m_logoJob = std::make_unique<job::ImageJob>("Logo Image Job", logoBitmap, initialBitmap);
+            m_logoJob->getPreferences().setShapeTypes(geometrize::ShapeTypes::RECTANGLE);
+            m_logoJob->getPreferences().setShapeAlpha(255U);
 
-        connect(m_logoJob.get(), &job::ImageJob::signal_modelDidStep, [this](std::vector<geometrize::ShapeResult> results) {
-            const QPixmap pixmap{image::createPixmap(m_logoJob->getCurrent())};
-            ui->logoLabel->setPixmap(pixmap);
+            ui->logoLabel->setPixmap(image::createPixmap(m_logoJob->getCurrent()));
 
-            m_logoJobShapeCount += results.size();
-            m_logoJobStepCount += 1;
-            const QString logoToolTip{tr("Logo: %1 shapes added in %2 steps").arg(QString::number(m_logoJobShapeCount)).arg(m_logoJobStepCount)};
-            ui->logoLabel->setToolTip(logoToolTip);
+            connect(m_logoJob.get(), &job::ImageJob::signal_modelDidStep, [this](std::vector<geometrize::ShapeResult> results) {
+                const QPixmap pixmap{image::createPixmap(m_logoJob->getCurrent())};
+                ui->logoLabel->setPixmap(pixmap);
 
-            m_logoJobSteps++;
-            if(m_logoJobSteps < m_maxLogoJobSteps) {
-                m_logoJob->stepModel();
-            }
-        });
-        m_logoJob->stepModel();
+                m_logoJobShapeCount += results.size();
+                m_logoJobStepCount += 1;
+                const QString logoToolTip{tr("Logo: %1 shapes added in %2 steps").arg(QString::number(m_logoJobShapeCount)).arg(m_logoJobStepCount)};
+                ui->logoLabel->setToolTip(logoToolTip);
+
+                m_logoJobSteps++;
+                if(m_logoJobSteps < m_maxLogoJobSteps) {
+                    m_logoJob->stepModel();
+                }
+            });
+            m_logoJob->stepModel();
+        }
     }
 
     std::unique_ptr<Ui::LaunchWindow> ui;
@@ -266,11 +286,6 @@ void LaunchWindow::on_actionSupport_triggered()
 void LaunchWindow::on_actionAbout_triggered()
 {
     common::ui::openAboutPage(this);
-}
-
-void LaunchWindow::on_actionScript_Console_toggled(const bool checked)
-{
-    d->setConsoleVisibility(checked);
 }
 
 }

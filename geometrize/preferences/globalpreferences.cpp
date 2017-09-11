@@ -56,18 +56,11 @@ public:
         std::ifstream input(filePath);
         try {
             cereal::JSONInputArchive archive{input};
-            m_data.archive(archive,
-                           m_shouldShowWelcomeScreenOnLaunch,
-                           m_imageJobResizeEnabled,
-                           m_imageJobResizeThreshold,
-                           m_languageIsoCode,
-                           m_scriptIsoCode,
-                           m_countryIsoCode);
+            performArchival(archive);
         } catch(...) {
             assert(0 && "Failed to read global preferences");
             return false;
         }
-
         return true;
     }
 
@@ -76,18 +69,11 @@ public:
         std::ofstream output(filePath);
         try {
             cereal::JSONOutputArchive archive{output};
-            m_data.archive(archive,
-                           m_shouldShowWelcomeScreenOnLaunch,
-                           m_imageJobResizeEnabled,
-                           m_imageJobResizeThreshold,
-                           m_languageIsoCode,
-                           m_scriptIsoCode,
-                           m_countryIsoCode);
+            performArchival(archive);
         } catch(...) {
             assert(0 && "Failed to write global preferences");
             return false;
         }
-
         return true;
     }
 
@@ -99,6 +85,86 @@ public:
     void setShouldShowWelcomeScreenOnLaunch(const bool show)
     {
         m_shouldShowWelcomeScreenOnLaunch = show;
+    }
+
+    bool shouldGeometrizeAppLogoOnLaunch() const
+    {
+        return m_shouldGeometrizeAppLogoOnLaunch;
+    }
+
+    void setShouldGeometrizeAppLogoOnLaunch(const bool geometrizeLogo)
+    {
+        m_shouldGeometrizeAppLogoOnLaunch = geometrizeLogo;
+    }
+
+    bool shouldPopulateRecentItemsOnLaunch() const
+    {
+        return m_shouldPopulateRecentItemsOnLaunch;
+    }
+
+    void setShouldPopulateRecentItemsOnLaunch(const bool populateRecents)
+    {
+        m_shouldPopulateRecentItemsOnLaunch = populateRecents;
+    }
+
+    bool shouldPopulateTemplatesOnLaunch() const
+    {
+        return m_shouldPopulateTemplatesOnLaunch;
+    }
+
+    void setShouldPopulateTemplatesOnLaunch(const bool populateTemplates)
+    {
+        m_shouldPopulateTemplatesOnLaunch = populateTemplates;
+    }
+
+    bool shouldShowLaunchConsoleByDefault() const
+    {
+        return m_shouldShowLaunchConsoleByDefault;
+    }
+
+    void setShouldShowLaunchConsoleByDefault(const bool showConsole)
+    {
+        m_shouldShowLaunchConsoleByDefault = showConsole;
+    }
+
+    bool shouldShowImageJobVectorViewByDefault() const
+    {
+        return m_shouldShowImageJobVectorViewByDefault;
+    }
+
+    void setShouldShowImageJobVectorViewByDefault(const bool showVectorView)
+    {
+        m_shouldShowImageJobVectorViewByDefault = showVectorView;
+    }
+
+    bool shouldShowImageJobConsoleByDefault() const
+    {
+        return m_shouldShowImageJobConsoleByDefault;
+    }
+
+    void setShouldShowImageJobConsoleByDefault(const bool showConsole)
+    {
+        m_shouldShowImageJobConsoleByDefault = showConsole;
+    }
+
+    bool shouldShowImageJobScriptEditorByDefault() const
+    {
+        return m_shouldShowImageJobScriptEditorByDefault;
+    }
+
+    void setShouldShowImageJobScriptEditorByDefault(const bool showScriptEditor)
+    {
+        m_shouldShowImageJobScriptEditorByDefault = showScriptEditor;
+    }
+
+    bool shouldShowImageJobPixmapViewByDefault() const
+    {
+        return m_shouldShowImageJobPixmapViewByDefault;
+    }
+
+    void setShouldShowImageJobPixmapViewByDefault(const bool showPixmapView)
+    {
+        m_shouldShowImageJobPixmapViewByDefault = showPixmapView;
     }
 
     void setImageJobResizeThreshold(const std::uint32_t width, const std::uint32_t height)
@@ -120,6 +186,16 @@ public:
     void setImageJobImageResizeEnabled(const bool enabled)
     {
         m_imageJobResizeEnabled = enabled;
+    }
+
+    std::uint32_t getImageJobMaxThreads() const
+    {
+        return m_imageJobMaxThreads;
+    }
+
+    void setImageJobMaxThreads(const std::uint32_t maxThreads)
+    {
+        m_imageJobMaxThreads = maxThreads;
     }
 
     std::string getLanguageIsoCode() const
@@ -203,15 +279,53 @@ public:
     }
 
 private:
+    template <typename T>
+    void performArchival(T& archive)
+    {
+        m_data.archive(archive,
+           m_shouldShowWelcomeScreenOnLaunch,
+
+           m_shouldGeometrizeAppLogoOnLaunch,
+           m_shouldPopulateRecentItemsOnLaunch,
+           m_shouldPopulateTemplatesOnLaunch,
+
+           m_shouldShowLaunchConsoleByDefault,
+           m_shouldShowImageJobVectorViewByDefault,
+           m_shouldShowImageJobConsoleByDefault,
+           m_shouldShowImageJobScriptEditorByDefault,
+           m_shouldShowImageJobPixmapViewByDefault,
+
+           m_imageJobResizeEnabled,
+           m_imageJobResizeThreshold,
+           m_imageJobMaxThreads,
+
+           m_languageIsoCode,
+           m_scriptIsoCode,
+           m_countryIsoCode);
+    }
+
     serialization::GlobalPreferencesData m_data;
 
     bool m_shouldShowWelcomeScreenOnLaunch{true};
+
+    bool m_shouldGeometrizeAppLogoOnLaunch{true};
+    bool m_shouldPopulateRecentItemsOnLaunch{true};
+    bool m_shouldPopulateTemplatesOnLaunch{true};
+
+    bool m_shouldShowLaunchConsoleByDefault{false};
+    bool m_shouldShowImageJobVectorViewByDefault{true};
+    bool m_shouldShowImageJobConsoleByDefault{false};
+    bool m_shouldShowImageJobScriptEditorByDefault{false};
+    bool m_shouldShowImageJobPixmapViewByDefault{false};
+
     bool m_imageJobResizeEnabled{false};
     std::pair<std::uint32_t, std::uint32_t> m_imageJobResizeThreshold{512, 512};
+    std::uint32_t m_imageJobMaxThreads{0};
 
     std::string m_languageIsoCode{"en"};
     std::string m_scriptIsoCode{"Latn"};
     std::string m_countryIsoCode{"US"};
+
 };
 
 GlobalPreferences::GlobalPreferences() : d{std::make_unique<GlobalPreferences::GlobalPreferencesImpl>()}
@@ -242,6 +356,86 @@ void GlobalPreferences::setShouldShowWelcomeScreenOnLaunch(const bool show)
     d->setShouldShowWelcomeScreenOnLaunch(show);
 }
 
+bool GlobalPreferences::shouldGeometrizeAppLogoOnLaunch() const
+{
+    return d->shouldGeometrizeAppLogoOnLaunch();
+}
+
+void GlobalPreferences::setShouldGeometrizeAppLogoOnLaunch(const bool geometrizeLogo)
+{
+    d->setShouldGeometrizeAppLogoOnLaunch(geometrizeLogo);
+}
+
+bool GlobalPreferences::shouldPopulateRecentItemsOnLaunch() const
+{
+    return d->shouldPopulateRecentItemsOnLaunch();
+}
+
+void GlobalPreferences::setShouldPopulateRecentItemsOnLaunch(const bool populateRecents)
+{
+    d->setShouldPopulateRecentItemsOnLaunch(populateRecents);
+}
+
+bool GlobalPreferences::shouldPopulateTemplatesOnLaunch() const
+{
+    return d->shouldPopulateTemplatesOnLaunch();
+}
+
+void GlobalPreferences::setShouldPopulateTemplatesOnLaunch(const bool populateTemplates)
+{
+    d->setShouldPopulateTemplatesOnLaunch(populateTemplates);
+}
+
+bool GlobalPreferences::shouldShowLaunchConsoleByDefault() const
+{
+    return d->shouldShowLaunchConsoleByDefault();
+}
+
+void GlobalPreferences::setShouldShowLaunchConsoleByDefault(const bool showConsole)
+{
+    d->setShouldShowLaunchConsoleByDefault(showConsole);
+}
+
+bool GlobalPreferences::shouldShowImageJobVectorViewByDefault() const
+{
+    return d->shouldShowImageJobVectorViewByDefault();
+}
+
+void GlobalPreferences::setShouldShowImageJobVectorViewByDefault(const bool showVectorView)
+{
+    d->setShouldShowImageJobVectorViewByDefault(showVectorView);
+}
+
+bool GlobalPreferences::shouldShowImageJobConsoleByDefault() const
+{
+    return d->shouldShowImageJobConsoleByDefault();
+}
+
+void GlobalPreferences::setShouldShowImageJobConsoleByDefault(const bool showConsole)
+{
+    d->setShouldShowImageJobConsoleByDefault(showConsole);
+}
+
+bool GlobalPreferences::shouldShowImageJobScriptEditorByDefault() const
+{
+    return d->shouldShowImageJobScriptEditorByDefault();
+}
+
+void GlobalPreferences::setShouldShowImageJobScriptEditorByDefault(const bool showScriptEditor)
+{
+    d->setShouldShowImageJobScriptEditorByDefault(showScriptEditor);
+}
+
+bool GlobalPreferences::shouldShowImageJobPixmapViewByDefault() const
+{
+    return d->shouldShowImageJobPixmapViewByDefault();
+}
+
+void GlobalPreferences::setShouldShowImageJobPixmapViewByDefault(const bool showPixmapView)
+{
+    d->setShouldShowImageJobPixmapViewByDefault(showPixmapView);
+}
+
 bool GlobalPreferences::isImageJobImageResizeEnabled() const
 {
     return d->isImageJobImageResizeEnabled();
@@ -260,6 +454,16 @@ std::pair<std::uint32_t, std::uint32_t> GlobalPreferences::getImageJobResizeThre
 void GlobalPreferences::setImageJobResizeThreshold(const std::uint32_t width, const std::uint32_t height)
 {
     d->setImageJobResizeThreshold(width, height);
+}
+
+std::uint32_t GlobalPreferences::getImageJobMaxThreads() const
+{
+    return d->getImageJobMaxThreads();
+}
+
+void GlobalPreferences::setImageJobMaxThreads(const std::uint32_t maxThreads)
+{
+    d->setImageJobMaxThreads(maxThreads);
 }
 
 std::string GlobalPreferences::getLanguageIsoCode() const

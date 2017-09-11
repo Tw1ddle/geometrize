@@ -68,9 +68,6 @@ private slots:
     void on_actionSave_Settings_Template_triggered();
     void on_actionReveal_Launch_Window_triggered();
     void on_actionReveal_Script_Editor_triggered();
-    void on_actionScript_Console_toggled(bool checked);
-    void on_actionPixmap_Results_View_toggled(bool checked);
-    void on_actionVector_Results_View_toggled(bool checked);
 
 private:
     class ImageJobWindowImpl;

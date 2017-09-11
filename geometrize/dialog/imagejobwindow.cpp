@@ -24,6 +24,7 @@
 #include "dialog/scripteditorwidget.h"
 #include "image/imageloader.h"
 #include "job/imagejob.h"
+#include "preferences/globalpreferences.h"
 
 namespace geometrize
 {
@@ -83,6 +84,17 @@ public:
 
         m_currentImageView->setVisible(false); // Make sure the image view is hidden by default (we prefer the SVG view)
         m_svgImageView->setVisible(true);
+
+        // Handle clicks on checkable title bar items
+        connect(ui->actionScript_Console, &QAction::toggled, [this](const bool checked) {
+            setConsoleVisibility(checked);
+        });
+        connect(ui->actionPixmap_Results_View, &QAction::toggled, [this](const bool checked) {
+            setPixmapViewVisibility(checked);
+        });
+        connect(ui->actionVector_Results_View, &QAction::toggled, [this](const bool checked) {
+            setVectorViewVisibility(checked);
+        });
 
         // Handle request to set the image job on the job window
         connect(q, &ImageJobWindow::willSwitchImageJob, [this](job::ImageJob* lastJob, job::ImageJob*) {
@@ -255,6 +267,15 @@ public:
         // Set initial target image opacity
         const float initialTargetImageOpacity{10};
         ui->imageJobImageWidget->setTargetImageOpacity(initialTargetImageOpacity);
+
+        // Set initial view visibility
+        const geometrize::preferences::GlobalPreferences& prefs{geometrize::preferences::getGlobalPreferences()};
+        setConsoleVisibility(prefs.shouldShowImageJobConsoleByDefault());
+        setPixmapViewVisibility(prefs.shouldShowImageJobPixmapViewByDefault());
+        setVectorViewVisibility(prefs.shouldShowImageJobVectorViewByDefault());
+        if(prefs.shouldShowImageJobScriptEditorByDefault()) {
+            revealScriptEditor();
+        }
     }
     ImageJobWindowImpl operator=(const ImageJobWindowImpl&) = delete;
     ImageJobWindowImpl(const ImageJobWindowImpl&) = delete;
@@ -302,11 +323,18 @@ public:
 
     void setConsoleVisibility(const bool visible)
     {
+        if(ui->actionScript_Console->isChecked() != visible) {
+            ui->actionScript_Console->setChecked(visible);
+        }
         ui->consoleWidget->setVisible(visible);
     }
 
     void setPixmapViewVisibility(const bool visible)
     {
+        if(ui->actionPixmap_Results_View->isChecked() != visible) {
+            ui->actionPixmap_Results_View->setChecked(visible);
+        }
+
         m_currentImageView->setVisible(visible);
         if(visible) {
             fitImageSceneInView();
@@ -315,6 +343,10 @@ public:
 
     void setVectorViewVisibility(const bool visible)
     {
+        if(ui->actionVector_Results_View->isChecked() != visible) {
+            ui->actionVector_Results_View->setChecked(visible);
+        }
+
         m_svgImageView->setVisible(visible);
         if(visible) {
             fitVectorSceneInView();
@@ -528,21 +560,6 @@ void ImageJobWindow::on_actionReveal_Launch_Window_triggered()
 void ImageJobWindow::on_actionReveal_Script_Editor_triggered()
 {
     d->revealScriptEditor();
-}
-
-void ImageJobWindow::on_actionScript_Console_toggled(const bool checked)
-{
-    d->setConsoleVisibility(checked);
-}
-
-void ImageJobWindow::on_actionPixmap_Results_View_toggled(const bool checked)
-{
-    d->setPixmapViewVisibility(checked);
-}
-
-void ImageJobWindow::on_actionVector_Results_View_toggled(const bool checked)
-{
-    d->setVectorViewVisibility(checked);
 }
 
 }

@@ -16,20 +16,6 @@ QString Strings::getShortApplicationDescription()
     return tr("Geometrize recreates your photos using simple geometric shapes, transforming them into unique artwork.", "This is a short description of what this application is and does.");
 }
 
-QString Strings::getLongApplicationDescription()
-{
-    return tr("Geometrize transforms images into shapes, producing unique artistic effects."
-    "Any image it is given gets reconstructed using simple shapes like rectangles, triangles, lines and ellipses, one geometric primitive at a time."
-    "\n"
-    "The resulting geometric primitives are inherently vector based, and are used to produce infinitely scalable images without loss of quality."
-    "Geometrize saves the results as SVGs, regular JPEG and PNG images, animated GIFs, and even as canvas/WebGL webpages."
-    "\n"
-    "Geometrize comes bundled with hundreds of curated examples, complete with pre-tuned settings."
-    "All of the key features and usages discovered are covered by comprehensive video tutorials."
-    "The program gives you full creative control over the geometrization process, with intuitive settings for the types of geometric primitive to use, shape opacity, areas to focus, and more.",
-    "This is a long description of what this application is and does.");
-}
-
 QString Strings::getCopyrightNotice()
 {
     return tr("Copyright 2015-2017 Sam Twidale", "This is the copyright notice of the application.");

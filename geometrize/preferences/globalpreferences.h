@@ -75,6 +75,102 @@ public:
     void setShouldShowWelcomeScreenOnLaunch(bool show);
 
     /**
+     * @brief shouldGeometrizeAppLogoOnLaunch Gets the preference for whether the app logo on the launch window should be geometrized on launch.
+     * @return Whether the app logo on the launch window should be geometrized on launch.
+     */
+    bool shouldGeometrizeAppLogoOnLaunch() const;
+
+    /**
+     * @brief setShouldGeometrizeAppLogoOnLaunch Sets the preference for whether to geometrize the app logo on the launch window on launch.
+     * @param geometrizeLogo Whether to geometrize the app logo on the launch window on launch.
+     */
+    void setShouldGeometrizeAppLogoOnLaunch(bool geometrizeLogo);
+
+    /**
+     * @brief shouldPopulateRecentItemsOnLaunch Gets the preference for whether the recent items list should be populated on launch.
+     * @return Whether to populate the recent items list on launch.
+     */
+    bool shouldPopulateRecentItemsOnLaunch() const;
+
+    /**
+     * @brief setShouldPopulateRecentItemsOnLaunch Sets the preference for whether the recent items list should be populated on launch.
+     * @param populateRecents Whether to populate the recent items list on launch.
+     */
+    void setShouldPopulateRecentItemsOnLaunch(bool populateRecents);
+
+    /**
+     * @brief shouldPopulateTemplatesOnLaunch Gets the preference for whether to populate the job templates on the launch window on launch.
+     * @return Whether to populate the job templates on the launch window on launch.
+     */
+    bool shouldPopulateTemplatesOnLaunch() const;
+
+    /**
+     * @brief setShouldPopulateTemplatesOnLaunch Sets the preference for whether to populate the job templates on the launch window on launch.
+     * @param populateTemplates Whether to populate the job templates on the launch window on app launch.
+     */
+    void setShouldPopulateTemplatesOnLaunch(bool populateTemplates);
+
+    /**
+     * @brief shouldShowLaunchConsoleByDefault Gets the preference for whether to show the console on the launch window when the window is opened.
+     * @return Whether to show the console on the launch window when the window is opened.
+     */
+    bool shouldShowLaunchConsoleByDefault() const;
+
+    /**
+     * @brief setShouldShowLaunchConsoleByDefault Sets the preference for whether to show the console on the launch window when the window is opened.
+     * @param showConsole Whether to show the show the console on the launch window when the window is opened.
+     */
+    void setShouldShowLaunchConsoleByDefault(bool showConsole);
+
+    /**
+     * @brief shouldShowImageJobVectorViewByDefault Gets the preference for whether to show the image job vector/SVG view when the window is opened.
+     * @return Whether to show the image job vector/SVG view when the window is opened.
+     */
+    bool shouldShowImageJobVectorViewByDefault() const;
+
+    /**
+     * @brief setShouldShowImageJobVectorViewByDefault Sets the preference for whether to show the image job vector/SVG view when the window is opened.
+     * @param showVectorView Whether to show the image job vector/SVG view when the window is opened.
+     */
+    void setShouldShowImageJobVectorViewByDefault(bool showVectorView);
+
+    /**
+     * @brief shouldShowImageJobConsoleByDefault Gets the preference for whether to show the console on the image job window when the window is opened.
+     * @return Whether to show the console on the image job window when the window is opened.
+     */
+    bool shouldShowImageJobConsoleByDefault() const;
+
+    /**
+     * @brief setShouldShowImageJobConsoleByDefault Sets the preference for whether to show the console on the image job window when the window is opened.
+     * @param showConsole Whether to show the console on the image job window when the window is opened.
+     */
+    void setShouldShowImageJobConsoleByDefault(bool showConsole);
+
+    /**
+     * @brief shouldShowImageJobScriptEditorByDefault Gets the preference for whether to open the script editor when an image job window is opened.
+     * @return Whether to open the script editor when the image job window is opened.
+     */
+    bool shouldShowImageJobScriptEditorByDefault() const;
+
+    /**
+     * @brief setShouldShowImageJobScriptEditorByDefault Sets the preference for whether to open the script editor when an image job window is opened.
+     * @param showScriptEditor Whether to open the script editor when an image job window is opened.
+     */
+    void setShouldShowImageJobScriptEditorByDefault(bool showScriptEditor);
+
+    /**
+     * @brief shouldShowImageJobPixmapViewByDefault Gets the preference for whether to show the image job pixmap/raster view when the window is opened.
+     * @return Whether to show the image job pixmap/raster view when the window is opened.
+     */
+    bool shouldShowImageJobPixmapViewByDefault() const;
+
+    /**
+     * @brief setShouldShowImageJobPixmapViewByDefault Sets the preference for whether to show the image job pixmap/raster view when the window is opened.
+     * @param showPixmapView Whether to show the image job pixmap/raster view when the window is opened.
+     */
+    void setShouldShowImageJobPixmapViewByDefault(bool showPixmapView);
+
+    /**
      * @brief isImageJobImageResizeEnabled Gets the preference for whether image jobs should resize images that are too large.
      * @return True if the image job image resizing is enabled.
      */
@@ -98,6 +194,18 @@ public:
      * @param height The maximum height of an image.
      */
     void setImageJobResizeThreshold(std::uint32_t width, std::uint32_t height);
+
+    /**
+     * @brief getImageJobMaxThreads Gets the maximum number of threads the image job should use.
+     * @return The maximum number of threads the image job should use.
+     */
+    std::uint32_t getImageJobMaxThreads() const;
+
+    /**
+     * @brief setImageJobMaxThreads Sets the maximum number of threads the image job should use.
+     * @param maxThreads The maximum number of threads the image job should use.
+     */
+    void setImageJobMaxThreads(std::uint32_t maxThreads);
 
     /**
      * @brief getLanguageIsoCode Gets the ISO 639-1 language preference for the application.

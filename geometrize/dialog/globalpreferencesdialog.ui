@@ -279,6 +279,13 @@
                 </widget>
                </item>
                <item>
+                <widget class="QCheckBox" name="showPixmapResultsByDefault">
+                 <property name="text">
+                  <string>Show pixmap results view by default</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
                 <widget class="QCheckBox" name="showImageJobConsoleByDefault">
                  <property name="text">
                   <string>Show image geometrizing console by default</string>
@@ -289,13 +296,6 @@
                 <widget class="QCheckBox" name="showScriptEditorsByDefault">
                  <property name="text">
                   <string>Show script editor panel by default</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QCheckBox" name="showPixmapResultsByDefault">
-                 <property name="text">
-                  <string>Show pixmap results view by default</string>
                  </property>
                 </widget>
                </item>
@@ -467,7 +467,7 @@
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout">
                  <item>
-                  <widget class="QCheckBox" name="imageResizeCheckbox">
+                  <widget class="QCheckBox" name="imageResize">
                    <property name="text">
                     <string>Enabled</string>
                    </property>
@@ -502,7 +502,7 @@
                       </widget>
                      </item>
                      <item row="0" column="1">
-                      <widget class="QSpinBox" name="resizeWidthSpinBox">
+                      <widget class="QSpinBox" name="resizeWidth">
                        <property name="maximum">
                         <number>65536</number>
                        </property>
@@ -516,7 +516,7 @@
                       </widget>
                      </item>
                      <item row="1" column="1">
-                      <widget class="QSpinBox" name="resizeHeightSpinBox">
+                      <widget class="QSpinBox" name="resizeHeight">
                        <property name="maximum">
                         <number>65536</number>
                        </property>
@@ -549,7 +549,7 @@
                     </widget>
                    </item>
                    <item>
-                    <widget class="QSpinBox" name="maxThreadsPerImageJobSpinBox">
+                    <widget class="QSpinBox" name="maxThreadsPerImageJob">
                      <property name="maximum">
                       <number>128</number>
                      </property>

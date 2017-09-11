@@ -9,6 +9,7 @@
 
 #include "job/imagejob.h"
 #include "layout/flowlayout.h"
+#include "preferences/globalpreferences.h"
 
 namespace geometrize
 {
@@ -81,6 +82,10 @@ public:
         ui->candidateShapesPerStepSlider->setValue(opts.shapeCount);
         ui->mutationsPerCandidateShapeSlider->setValue(opts.maxShapeMutations);
         ui->randomSeedSpinBox->setValue(opts.seed);
+
+        // Constrain max threads based on global settings
+        ui->maxThreadsSpinBox->setMaximum(geometrize::preferences::getGlobalPreferences().getImageJobMaxThreads());
+
         ui->maxThreadsSpinBox->setValue(opts.maxThreads);
     }
 
