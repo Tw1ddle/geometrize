@@ -3,6 +3,9 @@
 
 #include <cassert>
 
+#include <QFontMetrics>
+#include <QSize>
+
 #include "localization/strings.h"
 
 namespace geometrize
@@ -14,24 +17,28 @@ namespace dialog
 class ScriptEditorWidget::ScriptEditorWidgetImpl
 {
 public:
-    ScriptEditorWidgetImpl(ScriptEditorWidget* pQ, const QString& title, const std::string& targetName, const std::string& defaultCode) : q{pQ}, m_targetName{targetName}, m_defaultCode{defaultCode}, ui{std::make_unique<Ui::ScriptEditorWidget>()}
+    ScriptEditorWidgetImpl(ScriptEditorWidget* pQ, const std::string& title, const std::string& functionName, const std::string& defaultCode) : q{pQ}, m_functionName{functionName}, m_defaultCode{defaultCode}, ui{std::make_unique<Ui::ScriptEditorWidget>()}
     {
         ui->setupUi(q);
-        q->setTitle(title);
 
-        ui->scriptTextEdit->insertPlainText(QString::fromStdString(defaultCode));
+        q->setTitle(QString::fromStdString(title));
 
-        q->connect(ui->scriptTextEdit, &QPlainTextEdit::textChanged, [this]() {
-            q->signal_scriptCodeChanged(q, m_targetName, m_defaultCode); // TODO does this crash in release for some reason?
-        });
+        const QString contents{QString::fromStdString(defaultCode)};
+        ui->scriptTextEdit->insertPlainText(contents);
+
+        QFontMetrics metrics(ui->scriptTextEdit->font());
+        const QSize size{metrics.size(0, contents)};
+        const int padding = 30;
+        ui->scriptTextEdit->setMinimumSize(ui->scriptTextEdit->width() + padding, size.height() + padding);
 
         q->connect(ui->applyScriptButton, &QPushButton::clicked, [this]() {
             const std::string code{ui->scriptTextEdit->toPlainText().toStdString()};
-            q->signal_scriptCommitted(q, m_targetName, code);
+            q->signal_scriptApplied(q, code);
         });
 
         q->connect(ui->resetToDefaultButton, &QPushButton::clicked, [this]() {
             ui->scriptTextEdit->setPlainText(QString::fromStdString(m_defaultCode));
+            q->signal_scriptReset(q, m_defaultCode);
         });
     }
 
@@ -44,11 +51,11 @@ public:
 private:
     ScriptEditorWidget* q;
     std::unique_ptr<Ui::ScriptEditorWidget> ui;
-    const std::string m_targetName;
+    const std::string m_functionName;
     const std::string m_defaultCode;
 };
 
-ScriptEditorWidget::ScriptEditorWidget(const QString& title, const std::string& targetName, const std::string& defaultCode, QWidget* parent) : QGroupBox(parent), d{std::make_unique<ScriptEditorWidgetImpl>(this, title, targetName, defaultCode)}
+ScriptEditorWidget::ScriptEditorWidget(const std::string& title, const std::string& functionName, const std::string& defaultCode, QWidget* parent) : QGroupBox(parent), d{std::make_unique<ScriptEditorWidgetImpl>(this, title, functionName, defaultCode)}
 {
 }
 

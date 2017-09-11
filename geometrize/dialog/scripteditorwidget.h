@@ -19,25 +19,23 @@ class ScriptEditorWidget : public QGroupBox
     Q_OBJECT
 
 public:
-    explicit ScriptEditorWidget(const QString& title, const std::string& targetName, const std::string& defaultCode, QWidget* parent = nullptr);
+    explicit ScriptEditorWidget(const std::string& title, const std::string& functionName, const std::string& defaultCode, QWidget* parent = nullptr);
     ~ScriptEditorWidget();
 
 signals:
     /**
-     * @brief signal_scriptCodeChanged Signal emitted when the code in the editor changes e.g. the user edits the code.
+     * @brief signal_scriptApplied Signal emitted when the user commits to a script code change e.g. presses an "apply" button.
      * @param self The widget emitting this signal.
-     * @param targetName The name of the Chaiscript global to set.
      * @param code The new Chaiscript code.
      */
-    void signal_scriptCodeChanged(ScriptEditorWidget* self, const std::string& targetName, const std::string& code);
+    void signal_scriptApplied(ScriptEditorWidget* self, const std::string& code);
 
     /**
-     * @brief signal_scriptCommitted Signal emitted when the user commits to a script code change e.g. presses an "apply" button.
+     * @brief signal_scriptReset Signal emitted when the user hits the reset button, expecting the script to be reset to some default code.
      * @param self The widget emitting this signal.
-     * @param targetName The name of the Chaiscript global to set.
-     * @param code The new Chaiscript code.
+     * @param code The default Chaiscript code.
      */
-    void signal_scriptCommitted(ScriptEditorWidget* self, const std::string& targetName, const std::string& code);
+    void signal_scriptReset(ScriptEditorWidget* self, const std::string& code);
 
 private:
     class ScriptEditorWidgetImpl;

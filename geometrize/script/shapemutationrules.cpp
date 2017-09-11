@@ -25,6 +25,7 @@
 #include "common/util.h"
 #include "script/chaiscriptcreator.h"
 #include "script/scriptrunner.h"
+#include "script/scriptutil.h"
 
 namespace geometrize
 {
@@ -32,7 +33,7 @@ namespace geometrize
 class ShapeMutationRules::ShapeMutationRulesImpl
 {
 public:
-    ShapeMutationRulesImpl() : m_scriptResourceFolder{":/scripts/scripts/default_shape_mutators/"}, m_defaultScripts{readDefaultScripts()}, m_engine{createEngine()}, m_state{m_engine->get_state()} {}
+    ShapeMutationRulesImpl() : m_defaultScripts{geometrize::script::getDefaultScripts()}, m_engine{createEngine()}, m_state{m_engine->get_state()} {}
     ~ShapeMutationRulesImpl() = default;
     ShapeMutationRulesImpl& operator=(const ShapeMutationRulesImpl&) = default;
     ShapeMutationRulesImpl(const ShapeMutationRulesImpl&) = default;
@@ -133,25 +134,8 @@ private:
         }
     }
 
-    std::map<std::string, std::string> readDefaultScripts()
-    {
-        std::map<std::string, std::string> m;
-
-        QDirIterator it(m_scriptResourceFolder);
-        while(it.hasNext()) {
-            it.next();
-            const std::string fileName{it.fileName().toStdString()};
-            const std::string functionName{fileName.substr(0, fileName.size() - 5)}; // Remove ".chai"
-            m[functionName] = util::readFileAsString(it.filePath().toStdString());
-        }
-
-        return m;
-    }
-
-    const QString m_scriptResourceFolder; ///< Path to the default shape scripts folder in resources.
     const std::map<std::string, std::string> m_defaultScripts; ///< The default functions loaded from the resources folder (function name and fields).
-
-    std::map<std::string, std::string> m_currentScripts; ///< The currently loaded functions loaded from the resources folder (function name and fields).
+    std::map<std::string, std::string> m_currentScripts; ///< The currently loaded functions (function name and fields).
 
     std::unique_ptr<chaiscript::ChaiScript> m_engine;
     chaiscript::ChaiScript::State m_state;

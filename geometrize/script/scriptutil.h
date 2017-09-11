@@ -1,5 +1,6 @@
 #pragma once
 
+#include <map>
 #include <string>
 #include <vector>
 
@@ -26,6 +27,12 @@ void sleep(std::size_t ms);
  * @return The names registered with the given engine.
  */
 std::vector<std::string> getEngineFunctionNames(const chaiscript::ChaiScript& engine);
+
+/**
+ * @brief getDefaultScripts Gets a map of the default scripts used for shape creation and mutation in image jobs.
+ * @return A map of Chaiscript script function names to function bodies.
+ */
+std::map<std::string, std::string> getDefaultScripts();
 
 }
 

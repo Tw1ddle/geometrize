@@ -319,8 +319,8 @@ private:
     bool m_shouldShowImageJobPixmapViewByDefault{false};
 
     bool m_imageJobResizeEnabled{false};
-    std::pair<std::uint32_t, std::uint32_t> m_imageJobResizeThreshold{512, 512};
-    std::uint32_t m_imageJobMaxThreads{0};
+    std::pair<std::uint32_t, std::uint32_t> m_imageJobResizeThreshold{384, 384};
+    std::uint32_t m_imageJobMaxThreads{16};
 
     std::string m_languageIsoCode{"en"};
     std::string m_scriptIsoCode{"Latn"};

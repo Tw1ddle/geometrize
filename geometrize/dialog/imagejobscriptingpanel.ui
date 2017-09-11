@@ -9,14 +9,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>500</width>
-    <height>770</height>
+    <width>1080</width>
+    <height>800</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>500</width>
-    <height>770</height>
+    <width>1080</width>
+    <height>800</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -25,6 +25,12 @@
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
     <widget class="QScrollArea" name="scrollArea">
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
+     </property>
      <property name="widgetResizable">
       <bool>true</bool>
      </property>
@@ -33,8 +39,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>486</width>
-        <height>756</height>
+        <width>1068</width>
+        <height>788</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -78,15 +84,7 @@
         </widget>
        </item>
        <item>
-        <layout class="QVBoxLayout" name="scriptEditorsContainer">
-         <item>
-          <widget class="QGroupBox" name="scriptEditGroupBox">
-           <property name="title">
-            <string>Script Editors</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <layout class="QVBoxLayout" name="scriptEditorsContainer"/>
        </item>
       </layout>
      </widget>
