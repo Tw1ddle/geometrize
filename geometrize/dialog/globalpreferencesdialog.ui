@@ -84,7 +84,7 @@
        <bool>false</bool>
       </property>
       <property name="currentRow">
-       <number>0</number>
+       <number>-1</number>
       </property>
       <item>
        <property name="text">
@@ -102,15 +102,6 @@
        <property name="icon">
         <iconset resource="../../resources/icons.qrc">
          <normaloff>:/icons/monitor_edit.png</normaloff>:/icons/monitor_edit.png</iconset>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>File Paths</string>
-       </property>
-       <property name="icon">
-        <iconset resource="../../resources/icons.qrc">
-         <normaloff>:/icons/folders.png</normaloff>:/icons/folders.png</iconset>
        </property>
       </item>
       <item>
@@ -318,117 +309,6 @@
            </size>
           </property>
          </spacer>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="filePathPreferencesPage">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout_13">
-        <item>
-         <layout class="QVBoxLayout" name="verticalLayout_9">
-          <item>
-           <widget class="QLabel" name="filePathsTitle">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>File Paths</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="Line" name="filePathsTitleSpacer">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_12">
-            <item>
-             <widget class="QGroupBox" name="defaultLoadPathOptionsGroup">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="title">
-               <string>Default Load Paths</string>
-              </property>
-              <layout class="QVBoxLayout" name="verticalLayout_23">
-               <item>
-                <widget class="geometrize::dialog::FolderSelectionWidget" name="widget_2" native="true"/>
-               </item>
-               <item>
-                <widget class="geometrize::dialog::FolderSelectionWidget" name="widget_4" native="true"/>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item>
-             <widget class="QGroupBox" name="defaultSavePathOptionsGroup">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="title">
-               <string>Default Save Paths</string>
-              </property>
-              <layout class="QVBoxLayout" name="verticalLayout_24">
-               <item>
-                <widget class="geometrize::dialog::FolderSelectionWidget" name="widget_3" native="true"/>
-               </item>
-               <item>
-                <widget class="geometrize::dialog::FolderSelectionWidget" name="widget_5" native="true"/>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item>
-             <widget class="QGroupBox" name="templatePathOptionsGroup">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="title">
-               <string>Template Paths</string>
-              </property>
-              <layout class="QVBoxLayout" name="verticalLayout_25">
-               <item>
-                <widget class="geometrize::dialog::FolderSelectionWidget" name="widget_6" native="true"/>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item>
-             <spacer name="verticalSpacer">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>40</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-         </layout>
         </item>
        </layout>
       </widget>
@@ -642,12 +522,6 @@
    <class>geometrize::dialog::LanguageSelectWidget</class>
    <extends>QWidget</extends>
    <header>dialog/languageselectwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>geometrize::dialog::FolderSelectionWidget</class>
-   <extends>QWidget</extends>
-   <header>dialog/folderselectionwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
