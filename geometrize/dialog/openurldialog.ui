@@ -26,12 +26,15 @@
    <item>
     <widget class="QLabel" name="instructionText">
      <property name="text">
-      <string>Enter the URL to check. Media found at the URL will be downloaded and opened:</string>
+      <string extracomment="Message that explains how the user can enter a web address in the current dialog. The app automatically opens images it finds at the web address">Enter the URL to check. Images found at the URL will be downloaded and opened:</string>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QLineEdit" name="urlLineEdit">
+     <property name="text">
+      <string notr="true"/>
+     </property>
      <property name="placeholderText">
       <string notr="true">http://www.geometrize.co.uk/</string>
      </property>

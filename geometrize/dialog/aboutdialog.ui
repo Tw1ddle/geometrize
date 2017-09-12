@@ -59,10 +59,10 @@
       <number>0</number>
      </property>
      <property name="text">
-      <string/>
+      <string notr="true"/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../resources/application_resources.qrc">:/logos/logo_small.png</pixmap>
+      <pixmap resource="../../resources/logos.qrc">:/logos/logo_small.png</pixmap>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -303,7 +303,7 @@
         </sizepolicy>
        </property>
        <property name="text">
-        <string>Credits</string>
+        <string extracomment="Text on a button that opens the credits page, which contains the names of people who contributed to creating the app">Credits</string>
        </property>
       </widget>
      </item>
@@ -316,7 +316,7 @@
         </sizepolicy>
        </property>
        <property name="text">
-        <string>License</string>
+        <string extracomment="Text on a button that opens the licenses page, which contains the legal text about the license the app is provided under">License</string>
        </property>
       </widget>
      </item>
@@ -329,7 +329,7 @@
         </sizepolicy>
        </property>
        <property name="text">
-        <string>Close</string>
+        <string extracomment="Text on a button that closes the dialog when pressed">Close</string>
        </property>
        <property name="default">
         <bool>true</bool>
@@ -341,7 +341,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../resources/application_resources.qrc"/>
+  <include location="../../resources/logos.qrc"/>
  </resources>
  <connections/>
 </ui>

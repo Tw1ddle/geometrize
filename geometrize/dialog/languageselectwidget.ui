@@ -46,7 +46,7 @@
              <item>
               <widget class="QLabel" name="currentLocaleTitleLabel">
                <property name="text">
-                <string>Locale Identifier</string>
+                <string extracomment="A text label next to an item containing the technical locale code the app is running under (such as en_US for US English)">Locale Identifier</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -159,7 +159,7 @@
       </sizepolicy>
      </property>
      <property name="title">
-      <string>Available Options</string>
+      <string extracomment="The title of a section containing the language selection options for the app">Options</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>

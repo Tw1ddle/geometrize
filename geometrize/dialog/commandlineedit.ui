@@ -44,7 +44,7 @@
       <string notr="true"/>
      </property>
      <property name="placeholderText">
-      <string>Input commands...</string>
+      <string extracomment="Text shown in a command-line style text box. Prompts the user to type something">Type a command...</string>
      </property>
      <property name="clearButtonEnabled">
       <bool>false</bool>

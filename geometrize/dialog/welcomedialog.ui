@@ -41,7 +41,7 @@
       <number>0</number>
      </property>
      <property name="text">
-      <string/>
+      <string notr="true"/>
      </property>
      <property name="pixmap">
       <pixmap resource="../../resources/logos.qrc">:/logos/logo_small.png</pixmap>
@@ -94,7 +94,7 @@
     </spacer>
    </item>
    <item>
-    <widget class="QLabel" name="label">
+    <widget class="QLabel" name="welcomeToGeometrizeMessage">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -102,47 +102,12 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Welcome to Geometrize. Watch the video tutorials below to get started.</string>
+      <string extracomment="Message that welcomes users to the application">Welcome to Geometrize. Watch the video tutorials below to learn the basics.</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="gettingStartedText">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string>Or simply select a sample image and hit the start button to begin geometrizing.</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-     <property name="wordWrap">
-      <bool>false</bool>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <spacer name="upperSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>8</height>
-      </size>
-     </property>
-    </spacer>
    </item>
    <item>
     <spacer name="verticalSpacer_2">
@@ -177,7 +142,7 @@
         <enum>Qt::LeftToRight</enum>
        </property>
        <property name="text">
-        <string>Close</string>
+        <string extracomment="Text on a button in a dialog. Pressing the button closes the dialog.">Close</string>
        </property>
        <property name="default">
         <bool>true</bool>
@@ -209,7 +174,7 @@
         </sizepolicy>
        </property>
        <property name="text">
-        <string>Video Tutorials</string>
+        <string extracomment="Text on a button that opens a website containing tutorial videos when pressed">Video Tutorials</string>
        </property>
       </widget>
      </item>
@@ -237,7 +202,7 @@
       <enum>Qt::RightToLeft</enum>
      </property>
      <property name="text">
-      <string>Show On Launch</string>
+      <string extracomment="Text next to a checkbox that controls whether a window will be displayed every time the application is launched">Show On Launch</string>
      </property>
      <property name="checked">
       <bool>false</bool>

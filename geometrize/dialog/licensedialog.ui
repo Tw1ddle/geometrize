@@ -83,7 +83,7 @@
      </widget>
      <widget class="QWidget" name="ChaiScriptExtras">
       <attribute name="title">
-       <string>ChaiScript Extras</string>
+       <string notr="true">ChaiScript Extras</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_14">
        <item>

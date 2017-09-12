@@ -35,11 +35,11 @@
       <enum>Qt::LeftToRight</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="Developers">
       <attribute name="title">
-       <string>Developers</string>
+       <string extracomment="Title of a page listing the names of programmers who developed the app">Developers</string>
       </attribute>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
@@ -49,7 +49,7 @@
      </widget>
      <widget class="QWidget" name="Translators">
       <attribute name="title">
-       <string>Translators</string>
+       <string extracomment="Title of a page listing the names of translators who worked on the app">Translators</string>
       </attribute>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
@@ -59,7 +59,7 @@
      </widget>
      <widget class="QWidget" name="Artwork">
       <attribute name="title">
-       <string>Artists</string>
+       <string extracomment="Title of a page listing the names of artists who worked on the app">Artists</string>
       </attribute>
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
@@ -69,7 +69,7 @@
      </widget>
      <widget class="QWidget" name="Acknowledgements">
       <attribute name="title">
-       <string>Acknowledgements</string>
+       <string extracomment="Title of a page acknowledging and giving special thanks to people and companies who helped to create the app">Acknowledgements</string>
       </attribute>
       <layout class="QHBoxLayout" name="horizontalLayout_4">
        <item>
@@ -81,6 +81,9 @@
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="whatsThis">
+      <string/>
+     </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>

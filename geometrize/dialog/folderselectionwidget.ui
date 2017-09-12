@@ -23,7 +23,7 @@
    <item>
     <widget class="QLabel" name="folderNameLabel">
      <property name="text">
-      <string>Folder Name</string>
+      <string extracomment="A text label next to a button that opens a dialog which allows the user to select a folder">Folder Name</string>
      </property>
     </widget>
    </item>
@@ -46,7 +46,7 @@
    <item>
     <widget class="QPushButton" name="folderSelectButton">
      <property name="text">
-      <string>Select Folder</string>
+      <string extracomment="Text on a button that opens a folder selection dialog">Select Folder</string>
      </property>
     </widget>
    </item>

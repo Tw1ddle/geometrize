@@ -69,7 +69,7 @@
              </sizepolicy>
             </property>
             <property name="text">
-             <string>Script Filepath</string>
+             <string extracomment="Text on a label next to an item that contains the path to a file">Filepath</string>
             </property>
            </widget>
           </item>
@@ -98,7 +98,7 @@
        <item>
         <widget class="QPushButton" name="scriptFileDialogButton">
          <property name="text">
-          <string>Browse Files</string>
+          <string extracomment="Text on a button that opens a dialog for selecting a file when pressed">Select File</string>
          </property>
         </widget>
        </item>
@@ -133,7 +133,7 @@
              </sizepolicy>
             </property>
             <property name="text">
-             <string>Script Flags</string>
+             <string extracomment="Text on a label next to an item containing script settings and option flags">Options</string>
             </property>
            </widget>
           </item>
