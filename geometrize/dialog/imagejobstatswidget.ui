@@ -43,7 +43,7 @@
      <item>
       <widget class="QLabel" name="jobIdLabel">
        <property name="text">
-        <string>Job Id</string>
+        <string extracomment="Text in a label next to a value that identifies the current task (an id)">Id</string>
        </property>
       </widget>
      </item>
@@ -77,7 +77,7 @@
      <item>
       <widget class="QLabel" name="timeRunningLabel">
        <property name="text">
-        <string>Time Running</string>
+        <string extracomment="Text in a label next to the length of time a task has been running">Time Running</string>
        </property>
       </widget>
      </item>
@@ -117,7 +117,7 @@
      <item>
       <widget class="QLabel" name="currentStateLabel">
        <property name="text">
-        <string>Current State</string>
+        <string extracomment="Text in a label next to a value that describes the current status of a task (e.g. busy, paused, stopped)">Current Status</string>
        </property>
       </widget>
      </item>
@@ -157,7 +157,7 @@
      <item>
       <widget class="QLabel" name="targetSimilarityLabel">
        <property name="text">
-        <string>Similarity Score</string>
+        <string extracomment="Text in a label next to a number that describes how similar two images are to each other (the image similarity value)">Similarity Score</string>
        </property>
       </widget>
      </item>
@@ -197,7 +197,7 @@
      <item>
       <widget class="QLabel" name="shapeCountLabel">
        <property name="text">
-        <string>Shape Count</string>
+        <string extracomment="Text in a label next to a value indicating the number of geometric shapes created by a task">Shape Count</string>
        </property>
       </widget>
      </item>
@@ -237,7 +237,7 @@
      <item>
       <widget class="QLabel" name="imageDimensionsLabel">
        <property name="text">
-        <string>Image Dimensions</string>
+        <string extracomment="Text in a label next to another label that describes the resolution of an image">Image Dimensions</string>
        </property>
       </widget>
      </item>

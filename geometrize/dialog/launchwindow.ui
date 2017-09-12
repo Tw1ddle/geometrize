@@ -235,7 +235,7 @@
                    <string notr="true">padding: 5px;</string>
                   </property>
                   <property name="text">
-                   <string>Open Image</string>
+                   <string extracomment="Text on a button that opens an image selection dialog when it is pressed">Open Image</string>
                   </property>
                   <property name="icon">
                    <iconset resource="../../resources/icons.qrc">
@@ -267,7 +267,7 @@
                    <string notr="true">padding: 5px;</string>
                   </property>
                   <property name="text">
-                   <string>Open Link</string>
+                   <string extracomment="Text on a button that opens a dialog that allows the user to enter a website link, which is then downloaded">Open Link</string>
                   </property>
                   <property name="icon">
                    <iconset resource="../../resources/icons.qrc">
@@ -296,7 +296,7 @@
                    <string notr="true">padding: 5px;</string>
                   </property>
                   <property name="text">
-                   <string>Run Script</string>
+                   <string extracomment="Text on a button that opens a dialog that allows the user to select and run a script file">Run Script</string>
                   </property>
                   <property name="icon">
                    <iconset resource="../../resources/icons.qrc">
@@ -331,7 +331,7 @@
                </font>
               </property>
               <property name="text">
-               <string>Recent</string>
+               <string extracomment="Title of a section that contains a list of files and items the user recently opened">Recent</string>
               </property>
              </widget>
             </item>
@@ -392,7 +392,7 @@
                    </font>
                   </property>
                   <property name="text">
-                   <string>Templates &amp; Samples</string>
+                   <string extracomment="Title of a section that contains specially prepared template or sample images and photographs">Sample Images</string>
                   </property>
                  </widget>
                 </item>
@@ -402,7 +402,7 @@
                    <string notr="true" extracomment="The contents of the search box the user can type in to search for recent demo projects"/>
                   </property>
                   <property name="placeholderText">
-                   <string>Search templates and samples...</string>
+                   <string extracomment="Placeholder text in a search box, telling the user to type in the box to find sample/test images">Search sample images...</string>
                   </property>
                  </widget>
                 </item>
@@ -586,7 +586,7 @@
   </widget>
   <action name="actionClear_Recents">
    <property name="text">
-    <string>Clear Recents</string>
+    <string>Clear Recent Items</string>
    </property>
   </action>
   <action name="actionExit">
@@ -635,6 +635,11 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>geometrize::dialog::CompletionBox</class>
+   <extends>QLineEdit</extends>
+   <header>dialog/completionbox.h</header>
+  </customwidget>
+  <customwidget>
    <class>geometrize::dialog::ScriptConsole</class>
    <extends>QWidget</extends>
    <header>dialog/scriptconsole.h</header>
@@ -651,15 +656,10 @@
    <header>dialog/templategrid.h</header>
    <container>1</container>
   </customwidget>
-  <customwidget>
-   <class>geometrize::dialog::CompletionBox</class>
-   <extends>QLineEdit</extends>
-   <header>dialog/completionbox.h</header>
-  </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../resources/logos.qrc"/>
   <include location="../../resources/icons.qrc"/>
+  <include location="../../resources/logos.qrc"/>
  </resources>
  <connections/>
 </ui>

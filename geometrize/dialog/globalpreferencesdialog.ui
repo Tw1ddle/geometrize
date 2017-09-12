@@ -90,6 +90,9 @@
        <property name="text">
         <string>General</string>
        </property>
+       <property name="toolTip">
+        <string extracomment="Title of the general or miscellaneous options in the app settings"/>
+       </property>
        <property name="icon">
         <iconset resource="../../resources/icons.qrc">
          <normaloff>:/icons/wrench.png</normaloff>:/icons/wrench.png</iconset>
@@ -98,6 +101,9 @@
       <item>
        <property name="text">
         <string>Display</string>
+       </property>
+       <property name="toolTip">
+        <string extracomment="Title of the display-related settings section - the window size, text size, screen size options in the app settings"/>
        </property>
        <property name="icon">
         <iconset resource="../../resources/icons.qrc">
@@ -108,6 +114,9 @@
        <property name="text">
         <string>Performance</string>
        </property>
+       <property name="toolTip">
+        <string extracomment="Title of the performance related options in the app settings"/>
+       </property>
        <property name="icon">
         <iconset resource="../../resources/icons.qrc">
          <normaloff>:/icons/processor.png</normaloff>:/icons/processor.png</iconset>
@@ -116,6 +125,9 @@
       <item>
        <property name="text">
         <string>Language</string>
+       </property>
+       <property name="toolTip">
+        <string extracomment="Title of the language and locale related options in the app settings"/>
        </property>
        <property name="icon">
         <iconset resource="../../resources/icons.qrc">
@@ -146,7 +158,7 @@
              </sizepolicy>
             </property>
             <property name="text">
-             <string>General</string>
+             <string extracomment="Title text for a general app preferences or settings section">General</string>
             </property>
            </widget>
           </item>
@@ -162,27 +174,27 @@
             <item>
              <widget class="QGroupBox" name="startupOptionsGroup">
               <property name="title">
-               <string>Start Up</string>
+               <string extracomment="Title for the on startup section of app settings. Settings in this section are applied when the app launches or first starts up">Start Up Settings</string>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_27">
                <item>
                 <widget class="QCheckBox" name="geometrizeLogo">
                  <property name="text">
-                  <string>Geometrize app logo on launch</string>
+                  <string extracomment="Label text for a checkbox option that controls whether the app icon is animated (geometrized) when the app is launched">Animate app logo on launch</string>
                  </property>
                 </widget>
                </item>
                <item>
                 <widget class="QCheckBox" name="populateRecents">
                  <property name="text">
-                  <string>Populate recent items list on launch</string>
+                  <string extracomment="Label text for a checkbox option that controls whether the list of recent files or items is filled up when the app is launched">Load recent items list</string>
                  </property>
                 </widget>
                </item>
                <item>
                 <widget class="QCheckBox" name="populateTemplates">
                  <property name="text">
-                  <string>Populate templates and samples on launch</string>
+                  <string extracomment="Label text for a checkbox option that controls whether a list of sample images is loaded up when the app is launched">Load sample images</string>
                  </property>
                 </widget>
                </item>
@@ -221,7 +233,7 @@
              </sizepolicy>
             </property>
             <property name="text">
-             <string>Display</string>
+             <string extracomment="Title text for a display-related, that is screen-size, font size etc, app preferences or settings section">Display</string>
             </property>
            </widget>
           </item>
@@ -249,7 +261,7 @@
                <item>
                 <widget class="QCheckBox" name="showLaunchWindowConsoleByDefault">
                  <property name="text">
-                  <string>Show launch console by default</string>
+                  <string>Show script console</string>
                  </property>
                 </widget>
                </item>
@@ -265,28 +277,28 @@
                <item>
                 <widget class="QCheckBox" name="showVectorResultsByDefault">
                  <property name="text">
-                  <string>Show vector results view by default</string>
+                  <string>Show vector results view</string>
                  </property>
                 </widget>
                </item>
                <item>
                 <widget class="QCheckBox" name="showPixmapResultsByDefault">
                  <property name="text">
-                  <string>Show pixmap results view by default</string>
+                  <string>Show pixmap results view</string>
                  </property>
                 </widget>
                </item>
                <item>
                 <widget class="QCheckBox" name="showImageJobConsoleByDefault">
                  <property name="text">
-                  <string>Show image geometrizing console by default</string>
+                  <string>Show script console</string>
                  </property>
                 </widget>
                </item>
                <item>
                 <widget class="QCheckBox" name="showScriptEditorsByDefault">
                  <property name="text">
-                  <string>Show script editor panel by default</string>
+                  <string>Show script editor panel</string>
                  </property>
                 </widget>
                </item>

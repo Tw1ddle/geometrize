@@ -56,7 +56,7 @@
           <item>
            <widget class="QCheckBox" name="scriptsEnabledButton">
             <property name="text">
-             <string>Scripting Engine Enabled</string>
+             <string extracomment="Text next to a checkbox that enables or disables the scripting engine when pressed">Scripting Engine Enabled</string>
             </property>
            </widget>
           </item>
@@ -76,7 +76,7 @@
           <item>
            <widget class="QPushButton" name="resetScriptEngineButton">
             <property name="text">
-             <string>Reset Engine</string>
+             <string extracomment="Text on a button that resets the scripting system to default settings when pressed">Reset Scripting Engine</string>
             </property>
            </widget>
           </item>
