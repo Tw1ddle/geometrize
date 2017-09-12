@@ -49,6 +49,7 @@ public:
     }
 
 private:
+    // Iterate over all of the embedded qm files and extract the ISO codes from the filenames
     void setupLanguageSelect()
     {
         QDirIterator it(geometrize::getAppTranslationResourceDirectory());
@@ -56,22 +57,22 @@ private:
         while (it.hasNext()) {
             it.next();
             QString fileName{it.fileName()};
-            const QString isoCode{fileName.remove("geometrize_").remove(geometrize::getBinaryTranslationFileExtension())}; // TODO // Extract the ISO 639-1 code from the translation file filename
-            addItemAtIndex(++idx, isoCode);
+            const QString localeCode{fileName.remove("geometrize_").remove(geometrize::getBinaryTranslationFileExtension())};
+            addItemAtIndex(++idx, localeCode);
         }
 
         q->sortItems(Qt::AscendingOrder);
     }
 
-    void addItemAtIndex(const int i, const QString isoCode)
+    void addItemAtIndex(const int i, const QString localeCode)
     {
-        const QLocale locale{isoCode};
+        const QLocale locale{localeCode};
         const QLocale::Language language{locale.language()};
         const QString languageName{locale.languageToString(language)};
-        const QIcon icon{geometrize::getFlagIconForIsoCode(isoCode)};
+        const QIcon icon{geometrize::getFlagIconForLocaleCode(localeCode)};
 
         QListWidgetItem* const item{new QListWidgetItem(icon, languageName)};
-        item->setData(Qt::UserRole, isoCode);
+        item->setData(Qt::UserRole, localeCode);
         q->insertItem(i, item);
     }
 
@@ -91,7 +92,6 @@ void LanguageSelectList::changeEvent(QEvent* event)
     if (event->type() == QEvent::LanguageChange) {
         d->onLanguageChange();
     }
-
     QWidget::changeEvent(event);
 }
 

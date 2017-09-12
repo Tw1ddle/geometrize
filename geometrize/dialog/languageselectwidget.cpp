@@ -1,6 +1,11 @@
 #include "languageselectwidget.h"
 #include "ui_languageselectwidget.h"
 
+#include <cassert>
+
+#include <QList>
+#include <QIcon>
+
 #include "common/sharedapp.h"
 #include "localization/localization.h"
 #include "preferences/globalpreferences.h"
@@ -36,13 +41,21 @@ private:
     void setup()
     {
         const geometrize::preferences::GlobalPreferences& prefs{geometrize::preferences::getGlobalPreferences()};
-        const std::string languageCode{prefs.getLanguageIsoCode()};
-        const QLocale locale{QString::fromStdString(languageCode)};
+        const std::string localeName{prefs.getLocaleName()};
+        const QLocale locale{QString::fromStdString(localeName)};
         ui->currentLanguageNameLabel->setText(locale.nativeLanguageName());
-        ui->currentCountryNameLabel->setText(locale.nativeCountryName());;
+        ui->currentCountryNameLabel->setText(locale.nativeCountryName());
 
-        const QIcon icon{geometrize::getFlagIconForIsoCode(locale.name())};
-        ui->currentLanguageFlagLabel->setPixmap(icon.pixmap(icon.availableSizes().last()));
+        const QString extractedLocaleName{locale.name()};
+        const QIcon icon{geometrize::getFlagIconForLocaleCode(extractedLocaleName)};
+        assert(!icon.isNull());
+        assert(!icon.availableSizes().empty());
+        if(!icon.isNull() && !icon.availableSizes().empty()) {
+            ui->currentLanguageFlagLabel->setPixmap(icon.pixmap(icon.availableSizes().last()));
+        }
+
+        ui->currentLocaleIconLabel->setPixmap(QPixmap(":/icons/locate.png"));
+        ui->currentLocaleNameLabel->setText(locale.name());
     }
 
     LanguageSelectWidget* q;

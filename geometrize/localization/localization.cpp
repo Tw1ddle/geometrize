@@ -4,10 +4,12 @@
 #include <vector>
 
 #include <QApplication>
+#include <QFileInfo>
 #include <QIcon>
 #include <QLibraryInfo>
 #include <QLocale>
 #include <QString>
+#include <QStringList>
 #include <QTranslator>
 
 namespace geometrize
@@ -27,7 +29,7 @@ void installTranslator(QCoreApplication* application, QTranslator* translator)
 {
     std::vector<QTranslator*>& translators{getTranslators()};
     const bool installedTranslator{application->installTranslator(translator)};
-    assert(installedTranslator);
+    //assert(installedTranslator); // NOTE this can fail if the translator had no translations in it and so failed to load initially...
     translators.push_back(translator);
 }
 
@@ -81,33 +83,60 @@ void setTranslatorsForLocale(const QString& locale)
     // Install the new translators
     const auto loadAndAddTranslator = [&application](const QString& file, const QString& directory) {
         QTranslator* translator{new QTranslator()};
-        if(translator->load(file, directory)) {
-            installTranslator(application, translator);
-        } else {
-            //assert(0 && "Failed to load translator"); // NOTE this can happen if the translator is simply empty and has no translations in it
-        }
+        translator->load(file, directory);
+        installTranslator(application, translator);
     };
-    loadAndAddTranslator(qtTranslationFilePrefix + locale.toLower(), getQtTranslationResourceDirectory());
-    loadAndAddTranslator(qtBaseTranslationFilePrefix + locale.toLower(), getQtTranslationResourceDirectory());
-    loadAndAddTranslator(geometrizeTranslationFilePrefix + locale.toLower(), getAppTranslationResourceDirectory());
+    loadAndAddTranslator(qtTranslationFilePrefix + locale.toLower() + geometrize::getBinaryTranslationFileExtension(), getQtTranslationResourceDirectory());
+    loadAndAddTranslator(qtBaseTranslationFilePrefix + locale.toLower() + geometrize::getBinaryTranslationFileExtension(), getQtTranslationResourceDirectory());
+    loadAndAddTranslator(geometrizeTranslationFilePrefix + locale.toLower() + geometrize::getBinaryTranslationFileExtension(), getAppTranslationResourceDirectory());
 }
 
-QIcon getFlagIconForIsoCode(const QString& isoCode)
+QIcon getFlagIconForLocaleCode(const QString& localeCode)
 {
     static const QIcon errorIcon{errorFlagResourcePath};
+    assert(!errorIcon.isNull());
 
-    QString code{isoCode};
-    if(code.length() < 2) {
+    // Should start with a minimum-two digit language code
+    if(localeCode.length() < 2) {
         return errorIcon;
     }
 
-    if(code.length() > 2) {
-        code.truncate(2); // For now only look at the language code (for now)
-    }
+    const auto iconExists = [](const QString& file) {
+        const QString path{flagIconResourceDirectory + file + flagIconFileExtension};
+        const QFileInfo info(path);
+        return info.exists() && info.isFile();
+    };
 
-    const QIcon languageIcon{flagIconResourceDirectory + code + flagIconFileExtension};
-    if(!languageIcon.isNull()) {
-        return languageIcon;
+    const auto makeIcon = [](const QString& file) {
+        const QIcon icon(flagIconResourceDirectory + file + flagIconFileExtension);
+        assert(!icon.isNull());
+        return icon;
+    };
+
+    // Try to find flag for locale code, with fallback
+    // If "language_country_locale" fails, then "language_country" and lastly "language" will be tried
+    const auto makeIconPaths = [](const QString& localeCode) {
+        const QString separator{"_"};
+        const QStringList parts{localeCode.split(separator, QString::SkipEmptyParts)};
+
+        QStringList paths;
+        if(parts.length() >= 3) {
+            paths.push_back(parts[0] + "_" + parts[1] + "_" + parts[2]);
+        }
+        if(parts.length() >= 2) {
+            paths.push_back(parts[0] + "_" + parts[1]);
+        }
+        if(parts.length() >= 1) {
+            paths.push_back(parts[0]);
+        }
+        return paths;
+    };
+
+    const QStringList paths{makeIconPaths(localeCode)};
+    for(const auto& path : paths) {
+        if(iconExists(path)) {
+            return makeIcon(path);
+        }
     }
 
     return errorIcon;

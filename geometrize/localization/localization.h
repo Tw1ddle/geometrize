@@ -33,10 +33,10 @@ QString getQtTranslationResourceDirectory();
 void setTranslatorsForLocale(const QString& locale);
 
 /**
- * @brief getFlagIconForIsoCode Gets a representative national flag for the given ISO 639-1 language code.
- * @param isoCode The ISO 639-1 language code.
+ * @brief getFlagIconForLocaleCode Gets a representative national flag for the given locale code.
+ * @param localeCode A string in the form language_country_locale.
  * @return An icon for the code, or an error symbol if no suitable icon could be found.
  */
-QIcon getFlagIconForIsoCode(const QString& isoCode);
+QIcon getFlagIconForLocaleCode(const QString& localeCode);
 
 }
