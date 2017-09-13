@@ -152,12 +152,12 @@ void openMoreResourcesPage()
 
 QString openLoadImageJobSettingsDialog(QWidget* parent)
 {
-    return QFileDialog::getOpenFileName(parent, QWidget::tr("Load Image Job Settings"), "", QWidget::tr("JSON Image Job Settings File (*.json)"));
+    return QFileDialog::getOpenFileName(parent, QWidget::tr("Load Image Task Settings"), "", QWidget::tr("JSON Image Task Settings File (*.json)"));
 }
 
 QString openSaveImageJobSettingsDialog(QWidget* parent)
 {
-    return QFileDialog::getSaveFileName(parent, QWidget::tr("Save Image Job Settings"), "", QWidget::tr("JSON Image Job Settings File (*.json)"));
+    return QFileDialog::getSaveFileName(parent, QWidget::tr("Save Image Task Settings"), "", QWidget::tr("JSON Image Task Settings File (*.json)"));
 }
 
 QString openLoadGlobalSettingsDialog(QWidget* parent)
