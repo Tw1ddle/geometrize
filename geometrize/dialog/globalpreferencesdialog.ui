@@ -26,7 +26,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Global Preferences</string>
+   <string extracomment="Title of the window that contains the preferences and settings that affect the entire app (global settings)">Global Preferences</string>
   </property>
   <property name="sizeGripEnabled">
    <bool>true</bool>
@@ -143,7 +143,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="generalPreferencesPage">
        <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -233,7 +233,7 @@
              </sizepolicy>
             </property>
             <property name="text">
-             <string extracomment="Title text for a display-related, that is screen-size, font size etc, app preferences or settings section">Display</string>
+             <string extracomment="Title text for a display-related (screen-size, font size etc) app preferences or settings section">Display</string>
             </property>
            </widget>
           </item>
@@ -255,13 +255,13 @@
             <item>
              <widget class="QGroupBox" name="launchPageDisplayOptionsGroup">
               <property name="title">
-               <string>Launch Page Display</string>
+               <string extracomment="Title for the app settings section that contains options that affect the launch or launcher page of the app">Launch Page Settings</string>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_22">
                <item>
                 <widget class="QCheckBox" name="showLaunchWindowConsoleByDefault">
                  <property name="text">
-                  <string>Show script console</string>
+                  <string extracomment="Label text next to a checkbox that controls whether a script console window will be shown or hidden">Show script console</string>
                  </property>
                 </widget>
                </item>
@@ -271,34 +271,34 @@
             <item>
              <widget class="QGroupBox" name="imageJobDisplayOptionsGroup">
               <property name="title">
-               <string>Image Geometrize Display</string>
+               <string extracomment="Title for the app settings section that contains options that affect the area of the app that turns images into shapes (the image geometrizer)">Image Geometrizer Settings</string>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_3">
                <item>
                 <widget class="QCheckBox" name="showVectorResultsByDefault">
                  <property name="text">
-                  <string>Show vector results view</string>
+                  <string extracomment="Label text next to a checkbox that controls whether a vector-based (SVG-based) image is shown or hidden">Show vector image view</string>
                  </property>
                 </widget>
                </item>
                <item>
                 <widget class="QCheckBox" name="showPixmapResultsByDefault">
                  <property name="text">
-                  <string>Show pixmap results view</string>
+                  <string extracomment="Label text next to a checkbox that controls whether a raster-based (pixmap-based) image is shown or hidden">Show raster image view</string>
                  </property>
                 </widget>
                </item>
                <item>
                 <widget class="QCheckBox" name="showImageJobConsoleByDefault">
                  <property name="text">
-                  <string>Show script console</string>
+                  <string extracomment="Label text next to a checkbox that controls whether a script console window will be shown or hidden">Show script console</string>
                  </property>
                 </widget>
                </item>
                <item>
                 <widget class="QCheckBox" name="showScriptEditorsByDefault">
                  <property name="text">
-                  <string>Show script editor panel</string>
+                  <string extracomment="Label text next to a checkbox that controls whether a window containing controls for editing and manipulating script files is shown or hidden">Show script editor window</string>
                  </property>
                 </widget>
                </item>
@@ -337,7 +337,7 @@
              </sizepolicy>
             </property>
             <property name="text">
-             <string>Performance</string>
+             <string extracomment="Title text for performance-related (processing speed) app preferences or settings section">Performance</string>
             </property>
            </widget>
           </item>
@@ -353,7 +353,7 @@
             <item>
              <widget class="QGroupBox" name="imageResizingGroup">
               <property name="title">
-               <string>Image Downscaling</string>
+               <string extracomment="Title text for a group of settings that control how images are scaled down or made smaller (downscaled)">Image Downscaling</string>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_17">
                <item>
@@ -361,7 +361,7 @@
                  <item>
                   <widget class="QCheckBox" name="imageResize">
                    <property name="text">
-                    <string>Enabled</string>
+                    <string extracomment="Label text next to a checkbox that controls whether an app feature is enabled or disabled">Enabled</string>
                    </property>
                   </widget>
                  </item>
@@ -375,7 +375,7 @@
                     <string>Images larger than this will be scaled down</string>
                    </property>
                    <property name="text">
-                    <string>Resize Threshold</string>
+                    <string extracomment="A text label next to a pair of values that describe the maximum size an image can be without the image having to be scaled down and made smaller">Resize Threshold</string>
                    </property>
                   </widget>
                  </item>
@@ -389,7 +389,7 @@
                      <item row="0" column="0">
                       <widget class="QLabel" name="resizeWidthLabel">
                        <property name="text">
-                        <string>Width</string>
+                        <string extracomment="Label text next to a value that indicates the maximum allowed width of an image in pixels">Max Width</string>
                        </property>
                       </widget>
                      </item>
@@ -403,7 +403,7 @@
                      <item row="1" column="0">
                       <widget class="QLabel" name="resizeHeightLabel">
                        <property name="text">
-                        <string>Height</string>
+                        <string extracomment="Label text next to a value that indicates the maximum allowed height of an image in pixels">Max Height</string>
                        </property>
                       </widget>
                      </item>
@@ -426,7 +426,7 @@
             <item>
              <widget class="QGroupBox" name="threadingOptionsGroup">
               <property name="title">
-               <string>Multithreading</string>
+               <string extracomment="Title text for a group of multithreading-related settings. This is threading in the sense of CPU threads (not clothes!)">Multithreading</string>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_21">
                <item>
@@ -436,7 +436,7 @@
                    <item>
                     <widget class="QLabel" name="threadsPerImageJobLabel">
                      <property name="text">
-                      <string>Max Threads Per Image Job</string>
+                      <string extracomment="A text label next to a value that describes the maximum number of CPU threads the computer can use when recreating an image using shapes">Max Threads Per Image</string>
                      </property>
                     </widget>
                    </item>
@@ -486,7 +486,7 @@
              </sizepolicy>
             </property>
             <property name="text">
-             <string>Language</string>
+             <string extracomment="Title text for a language and locale app settings section">Language</string>
             </property>
            </widget>
           </item>

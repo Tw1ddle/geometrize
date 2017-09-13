@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Geometrize</string>
+   <string notr="true"/>
   </property>
   <property name="unifiedTitleAndToolBarOnMac">
    <bool>true</bool>
@@ -113,7 +113,7 @@
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>File</string>
+     <string extracomment="The title of the File menu that contains commands relating to the handling of files, such as open, save, print, etc">File</string>
     </property>
     <addaction name="actionLoad_Settings_Template"/>
     <addaction name="actionSave_Settings_Template"/>
@@ -121,7 +121,7 @@
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
-     <string>View</string>
+     <string extracomment="The title of the View menu that contains commands relating to the handling of visual elements, such as the size and visibility of windows and dialogs within the app">View</string>
     </property>
     <addaction name="actionReveal_Launch_Window"/>
     <addaction name="actionReveal_Script_Editor"/>
@@ -152,7 +152,7 @@
     <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
    </property>
    <property name="windowTitle">
-    <string>Stats</string>
+    <string extracomment="Title of a section that contains statistics about a task, such as the length of time a task has been running">Stats</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>1</number>
@@ -184,7 +184,7 @@
     <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
    </property>
    <property name="windowTitle">
-    <string>Image Settings</string>
+    <string extracomment="Title of a section that contains settings that affect the image that the app will transform into shapes">Image Settings</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>1</number>
@@ -243,7 +243,7 @@
     <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
    </property>
    <property name="windowTitle">
-    <string>Exporters</string>
+    <string extracomment="Title of a section that contains preferences and settings for and saving and exporting results data and images">Exporters</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>2</number>
@@ -308,7 +308,7 @@
     <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
    </property>
    <property name="windowTitle">
-    <string>Runner Settings</string>
+    <string extracomment="Title of a section that contains preferences and settings that affect the image geometrizing job/task">Task Settings</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>2</number>
@@ -352,22 +352,22 @@
   </widget>
   <action name="actionExit">
    <property name="text">
-    <string>Exit</string>
+    <string extracomment="Text on a menu item that closes the window when pressed">Close</string>
    </property>
   </action>
   <action name="actionSave_Settings_Template">
    <property name="text">
-    <string>Save Settings Template</string>
+    <string extracomment="Text on a menu item that opens a file saving dialog, allowing the user to select a location to save a settings file">Save Settings File</string>
    </property>
   </action>
   <action name="actionReveal_Launch_Window">
    <property name="text">
-    <string>Reveal Launch Window</string>
+    <string extracomment="Text on a menu item that opens or reveals the main launch window of the app when pressed">Show Launch Window</string>
    </property>
   </action>
   <action name="actionLoad_Settings_Template">
    <property name="text">
-    <string>Load Settings Template</string>
+    <string extracomment="Text on a menu item that opens a file selection dialog, allowing the user to select a settings file to load">Load Settings File</string>
    </property>
   </action>
   <action name="actionScript_Console">
@@ -375,12 +375,12 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Script Console</string>
+    <string extracomment="Text on a menu item that shows or hides the script console when pressed">Script Console</string>
    </property>
   </action>
   <action name="actionReveal_Script_Editor">
    <property name="text">
-    <string>Reveal Script Editor</string>
+    <string extracomment="Text on a menu item that opens or reveals the script editor panel when pressed">Reveal Script Editor</string>
    </property>
   </action>
   <action name="actionPixmap_Results_View">
@@ -391,7 +391,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Pixmap Results View</string>
+    <string extracomment="Text on a menu item that shows or hides a window containing a pixmap/bitmap/raster drawing of the shapes the app has created">Pixmap Image View</string>
    </property>
   </action>
   <action name="actionVector_Results_View">
@@ -402,7 +402,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Vector Results View</string>
+    <string extracomment="Text on a menu item that shows or hides a window containing a vector-based (SVG) graphic of the shapes the app has created">Vector Graphics View</string>
    </property>
   </action>
  </widget>

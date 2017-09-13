@@ -35,12 +35,6 @@ public:
      */
     void setTargetImage(const QImage& image);
 
-    /**
-     * @brief setBaseImage Sets the base image, which is made visible in this widget. Must be a valid (non-null) image.
-     * @param image The base image to set on this widget.
-     */
-    void setBaseImage(const QImage& image);
-
 signals:
     /**
      * @brief targetImageOpacityChanged Signal dispatched when the target image opacity is changed.
@@ -65,12 +59,6 @@ signals:
      * @param image The image the user picked.
      */
     void baseImageSelected(const QImage& image);
-
-    /**
-     * @brief baseImageSet Signal dispatched when the base image is set and made visible in this widget (and is probably going to be used by the image job).
-     * @param image The image that was set on the base image widget.
-     */
-    void baseImageSet(const QImage& image);
 
 private:
     class ImageJobImageWidgetImpl;

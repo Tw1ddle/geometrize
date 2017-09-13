@@ -20,7 +20,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>License Information</string>
+   <string extracomment="Title of the window that contains legal/license information about the software">License Information</string>
   </property>
   <property name="sizeGripEnabled">
    <bool>true</bool>

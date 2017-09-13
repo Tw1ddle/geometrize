@@ -40,20 +40,6 @@ public:
 
             emit q->targetImageSelected(image);
         });
-
-        q->connect(ui->pickBaseImageButton, &QPushButton::clicked, [this]() {
-            const QString imagePath{geometrize::common::ui::openBaseImagePickerDialog(q)};
-            if(imagePath.isEmpty()) {
-                return;
-            }
-
-            const QImage image{geometrize::image::loadImage(imagePath.toStdString())};
-            if(image.isNull()) {
-                return;
-            }
-
-            emit q->baseImageSelected(image);
-        });
     }
     ~ImageJobImageWidgetImpl() = default;
     ImageJobImageWidgetImpl operator=(const ImageJobImageWidgetImpl&) = delete;
@@ -76,16 +62,6 @@ public:
         ui->targetImageLabel->setPixmap(QPixmap::fromImage(image.scaled(thumbnailSize, thumbnailSize, Qt::KeepAspectRatio)));
 
         emit q->targetImageSet(image);
-    }
-
-    void setBaseImage(const QImage& image)
-    {
-        assert(!image.isNull() && "Attempting to set a bad base image");
-
-        const int thumbnailSize{400};
-        ui->baseImageLabel->setPixmap(QPixmap::fromImage(image.scaled(thumbnailSize, thumbnailSize, Qt::KeepAspectRatio)));
-
-        emit q->baseImageSet(image);
     }
 
 private:
@@ -112,11 +88,6 @@ ImageJobImageWidget::~ImageJobImageWidget()
 void ImageJobImageWidget::setTargetImageOpacity(const unsigned int opacity)
 {
     d->setTargetImageOpacity(opacity);
-}
-
-void ImageJobImageWidget::setBaseImage(const QImage& image)
-{
-    d->setBaseImage(image);
 }
 
 void ImageJobImageWidget::setTargetImage(const QImage& image)

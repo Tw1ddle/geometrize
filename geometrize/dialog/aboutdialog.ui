@@ -32,7 +32,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>About</string>
+   <string extracomment="Title of the About page of the app, containing general info about the app such as the app name, version and copyright notices">About</string>
   </property>
   <property name="autoFillBackground">
    <bool>false</bool>

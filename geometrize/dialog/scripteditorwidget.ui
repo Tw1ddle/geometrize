@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Title</string>
+   <string notr="true"/>
   </property>
   <property name="title">
    <string notr="true">Editor</string>

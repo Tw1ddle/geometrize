@@ -26,7 +26,7 @@
    <bool>true</bool>
   </property>
   <property name="windowTitle">
-   <string>Geometrize Launcher</string>
+   <string extracomment="Title of the main window of the app. It is the launcher window - so called because it is mainly used to launch other tasks">Geometrize Launcher</string>
   </property>
   <property name="dockNestingEnabled">
    <bool>true</bool>

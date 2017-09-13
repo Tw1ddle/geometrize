@@ -23,26 +23,26 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Exporters</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QGroupBox" name="exportImagesGroupBox">
      <property name="title">
-      <string>Export Image</string>
+      <string extracomment="Title text above a group of controls related to exporting and saving images">Export Image</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
        <widget class="QPushButton" name="saveImageButton">
         <property name="text">
-         <string>Save Image</string>
+         <string extracomment="Text on a button that opens a dialog that allows the user to save an image file">Save Image</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="saveImagesButton">
         <property name="text">
-         <string>Save Images</string>
+         <string extracomment="Text on a button that opens a dialog that allows a user to save multiple image files">Save Images</string>
         </property>
        </widget>
       </item>
@@ -52,13 +52,13 @@
    <item>
     <widget class="QGroupBox" name="exportSVGGroupBox">
      <property name="title">
-      <string>Export SVG</string>
+      <string extracomment="Title text above a group of controls related to exporting and saving vector-based SVG images">Export SVG</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
        <widget class="QPushButton" name="saveSVGButton">
         <property name="text">
-         <string>Save SVG</string>
+         <string extracomment="Text on a button that opens a dialog that allows a user to save a vector-based SVG image file">Save SVG</string>
         </property>
        </widget>
       </item>
@@ -68,13 +68,13 @@
    <item>
     <widget class="QGroupBox" name="exportAnimatedGIFGroupbox">
      <property name="title">
-      <string>Export Animated GIF</string>
+      <string extracomment="Title text above a group of controls related to exporting and saving animated GIF images">Export Animated GIF</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_4">
       <item>
        <widget class="QPushButton" name="saveGIFButton">
         <property name="text">
-         <string>Save GIF</string>
+         <string extracomment="Text on a button that opens a dialog that allows a user to save a GIF animation image file">Save GIF</string>
         </property>
        </widget>
       </item>
@@ -84,20 +84,20 @@
    <item>
     <widget class="QGroupBox" name="exportWebpageGroupBox">
      <property name="title">
-      <string>Export Webpage</string>
+      <string extracomment="Title text above a group of controls related to exporting and saving webpages">Export Webpage</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_5">
       <item>
        <widget class="QPushButton" name="saveHTML5WebpageButton">
         <property name="text">
-         <string>Save HTML5 Webpage</string>
+         <string extracomment="Text on a button that opens a dialog that allows a user to save a webpage that uses HTML5 web technology">Save HTML5 Webpage</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="saveWebGLWebpageButton">
         <property name="text">
-         <string>Save WebGL Webpage</string>
+         <string extracomment="Text on a button that opens a dialog that allows a user to save a webpage that uses WebGL technology">Save WebGL Webpage</string>
         </property>
        </widget>
       </item>
@@ -107,7 +107,7 @@
    <item>
     <widget class="QGroupBox" name="exportGeometryDataGroupBox">
      <property name="title">
-      <string>Export Geometry Data</string>
+      <string extracomment="Title text above a group of controls related to exporting and saving geometric shape data">Export Geometry Data</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_6">
       <item>

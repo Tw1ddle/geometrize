@@ -24,6 +24,7 @@
 #include "dialog/scripteditorwidget.h"
 #include "image/imageloader.h"
 #include "job/imagejob.h"
+#include "localization/strings.h"
 #include "preferences/globalpreferences.h"
 
 namespace geometrize
@@ -62,6 +63,7 @@ public:
     {
         q->setAttribute(Qt::WA_DeleteOnClose);
         ui->setupUi(q);
+        q->setWindowTitle(geometrize::strings::Strings::getApplicationName());
 
         // Set up the dock widgets
         q->tabifyDockWidget(ui->runnerSettingsDock, ui->exporterDock);
@@ -141,7 +143,6 @@ public:
             ui->consoleWidget->setEngine(currentJob->getEngine());
             ui->imageJobRunnerWidget->syncUserInterface();
 
-            ui->imageJobImageWidget->setBaseImage(image::createImage(currentJob->getCurrent()));
             ui->imageJobImageWidget->setTargetImage(image::createImage(currentJob->getTarget()));
 
             m_timeRunning = 0.0f;
@@ -176,29 +177,6 @@ public:
             setTargetImage(image);
         });
 
-        // Handle a request to change the current image
-        connect(ui->imageJobImageWidget, &ImageJobImageWidget::baseImageSelected, [this](const QImage& image) {
-            assert(!image.isNull());
-
-            // Validate the current image size
-            const geometrize::Bitmap& current{m_job->getCurrent()};
-            const auto currentWidth{current.getWidth()};
-            const auto currentHeight{current.getHeight()};
-
-            if(currentWidth != image.width() || currentHeight != image.height()) {
-                const QString selectedImageSize(tr("%1x%2").arg(image.width()).arg(image.height()));
-                const QString currentImageSize(tr("%1x%2").arg(currentWidth).arg(currentHeight));
-                QMessageBox::warning(
-                            q,
-                            tr("Failed to set current image"),
-                            tr("Selected image must have the same dimensions as the base image. Size was %1, but should have been %2").arg(selectedImageSize).arg(currentImageSize));
-
-                return;
-            }
-
-            setBaseImage(image);
-        });
-
         // Handle a request to change the target image that has passed size checks and validation
         connect(ui->imageJobImageWidget, &ImageJobImageWidget::targetImageSet, [this](const QImage& image) {
             // If the job is running then defer the target image change to the next step, else do it immediately
@@ -211,21 +189,6 @@ public:
             } else {
                 Bitmap target = geometrize::image::createBitmap(image);
                 switchTargetImage(target);
-            }
-        });
-
-        // Handle a request to change the current image that has passed size checks and validation
-        connect(ui->imageJobImageWidget, &ImageJobImageWidget::baseImageSet, [this](const QImage& image) {
-            // If the job is running then defer the target image change to the next step, else do it immediately
-            if(isRunning()) {
-                const QImage imageCopy{image.copy()};
-                addPostStepCb([this, imageCopy]() {
-                    Bitmap current = geometrize::image::createBitmap(imageCopy);
-                    switchCurrentImage(current);
-                });
-            } else {
-                Bitmap current = geometrize::image::createBitmap(image);
-                switchCurrentImage(current);
             }
         });
 
@@ -470,11 +433,6 @@ private:
     {
         fitImageSceneInView();
         fitVectorSceneInView();
-    }
-
-    void setBaseImage(const QImage& image)
-    {
-        ui->imageJobImageWidget->setBaseImage(image);
     }
 
     void setTargetImage(const QImage& image)

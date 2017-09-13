@@ -20,7 +20,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Open Webpage</string>
+   <string extracomment="Title of the window that allows the user to download the images and media on a webpage into the app">Download Webpage</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>

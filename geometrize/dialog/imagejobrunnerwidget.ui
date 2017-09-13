@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -33,7 +33,7 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>Shapes Per Step</string>
+          <string extracomment="Label text next to a slider that allows the user to control the number of geometric shapes the app creates each time it updates">Shapes Per Update</string>
          </property>
         </widget>
        </item>
@@ -76,7 +76,7 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>Max Mutations</string>
+          <string extracomment="Label text next to a slider that allows the user to control the maximum number of times a shape is modified (mutated) each time it updates">Max Shape Mutations</string>
          </property>
         </widget>
        </item>
@@ -119,7 +119,7 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>Shape Opacity</string>
+          <string extracomment="Label text next to a slider that allows the user to control opacity/transparency of the geometric shapes that are created">Shape Opacity</string>
          </property>
         </widget>
        </item>
@@ -168,7 +168,7 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>Random Seed</string>
+          <string extracomment="Label text next to the seed value of a random number generator. The seed number is a mathematical term - not like the seed of a plant!">Random Seed</string>
          </property>
         </widget>
        </item>
@@ -207,7 +207,7 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>Max Threads</string>
+          <string extracomment="A text label next to a value that describes the maximum number of CPU threads the computer can use when recreating an image using shapes">Max Threads</string>
          </property>
         </widget>
        </item>
@@ -275,7 +275,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Rotated Rectangles</string>
+       <string extracomment="Plural form of rectangle geometric shape. These rectangles are rotated through an angle (0-360 degrees)">Rotated Rectangles</string>
       </property>
      </widget>
      <widget class="QCheckBox" name="usesCircles">
@@ -288,7 +288,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Circles</string>
+       <string extracomment="Plural form of circle/circular geometric shape">Circles</string>
       </property>
      </widget>
      <widget class="QCheckBox" name="usesQuadraticBeziers">
@@ -327,7 +327,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Triangles</string>
+       <string extracomment="Plural form of triangle geometric shape">Triangles</string>
       </property>
      </widget>
      <widget class="QCheckBox" name="usesRectangles">
@@ -340,7 +340,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Rectangles</string>
+       <string extracomment="Plural form of rectangle geometric shape">Rectangles</string>
       </property>
      </widget>
      <widget class="QCheckBox" name="usesLines">
@@ -353,7 +353,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Lines</string>
+       <string extracomment="Plural form of the simple line geometric shape">Lines</string>
       </property>
      </widget>
      <widget class="QCheckBox" name="usesRotatedEllipses">
@@ -366,7 +366,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Rotated Ellipses</string>
+       <string extracomment="Plural form of ellipse geometric shape. These ellipses are rotated through an angle (0-360 degrees)">Rotated Ellipses</string>
       </property>
      </widget>
      <widget class="QCheckBox" name="usesPolylines">
@@ -379,7 +379,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Polylines</string>
+       <string extracomment="Plural form of the polyline geometric shape (multiple line segments joined together)">Polylines</string>
       </property>
      </widget>
     </widget>
@@ -400,7 +400,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Run</string>
+      <string notr="true">Run</string>
      </property>
     </widget>
    </item>
@@ -413,7 +413,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Step</string>
+      <string extracomment="Text on a button that updates (steps) a task once when pressed">Step</string>
      </property>
     </widget>
    </item>
@@ -426,7 +426,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Clear</string>
+      <string extracomment="Text on a button that clears/resets the results of a task back to a starting value when pressed">Clear</string>
      </property>
     </widget>
    </item>

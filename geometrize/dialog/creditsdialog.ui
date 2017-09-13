@@ -20,7 +20,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Credits</string>
+   <string extracomment="Title of the window containing credits, naming the individuals who contributed to the software">Credits</string>
   </property>
   <property name="modal">
    <bool>true</bool>
