@@ -6,6 +6,7 @@
 
 #include "manifest/templatemanifest.h"
 
+class QEvent;
 class QString;
 
 namespace chaiscript
@@ -35,6 +36,9 @@ public:
      * @return The template manifest data this item corresponds to.
      */
     TemplateManifest getTemplateManifest() const;
+
+protected:
+    void changeEvent(QEvent*) override;
 
 private:
     virtual void contextMenuEvent(QContextMenuEvent* e) override;

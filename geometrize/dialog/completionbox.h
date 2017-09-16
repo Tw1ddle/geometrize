@@ -5,6 +5,8 @@
 #include <QLineEdit>
 #include <QStringList>
 
+class QEvent;
+
 namespace geometrize
 {
 
@@ -24,6 +26,9 @@ public:
 
     void setCompletionList(const QStringList& completionList);
     void addToCompletionList(const QString& item);
+
+protected:
+    void changeEvent(QEvent*) override;
 
 private:
     class CompletionBoxImpl;

@@ -5,6 +5,7 @@
 #include <functional>
 #include <vector>
 
+#include <QEvent>
 #include <QMarginsF>
 #include <QMessageBox>
 #include <QPixmap>
@@ -203,11 +204,9 @@ public:
             setRunning(!isRunning());
 
             // Toggle running button text and request another image task step if running started
-            if(!isRunning()) {
-                ui->imageTaskRunnerWidget->setRunStopButtonText(tr("Start", "Text on a button that the user presses to make the app start/begin transforming an image into shapes"));
-            } else {
+            updateStartStopButtonText();
+            if(isRunning()) {
                 stepModel();
-                ui->imageTaskRunnerWidget->setRunStopButtonText(tr("Stop", "Text on a button that the user presses to make the app stop/pause transforming an image into shapes"));
             }
         });
         connect(ui->imageTaskRunnerWidget, &ImageTaskRunnerWidget::stepButtonClicked, [this]() {
@@ -339,7 +338,27 @@ public:
         emit q->didSaveSettingsTemplate();
     }
 
+    void onLanguageChange()
+    {
+        ui->retranslateUi(q);
+        populateUi();
+    }
+
 private:
+    void populateUi()
+    {
+        updateStartStopButtonText();
+    }
+
+    void updateStartStopButtonText()
+    {
+        if(!isRunning()) {
+            ui->imageTaskRunnerWidget->setRunStopButtonText(tr("Start", "Text on a button that the user presses to make the app start/begin transforming an image into shapes"));
+        } else {
+            ui->imageTaskRunnerWidget->setRunStopButtonText(tr("Stop", "Text on a button that the user presses to make the app stop/pause transforming an image into shapes"));
+        }
+    }
+
     void updateCurrentGraphics(const std::vector<geometrize::ShapeResult>& shapes)
     {
         const QPixmap pixmap{image::createPixmap(m_task->getCurrent())};
@@ -519,6 +538,14 @@ void ImageTaskWindow::on_actionReveal_Launch_Window_triggered()
 void ImageTaskWindow::on_actionReveal_Script_Editor_triggered()
 {
     d->revealScriptEditor();
+}
+
+void ImageTaskWindow::changeEvent(QEvent* event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        d->onLanguageChange();
+    }
+    QMainWindow::changeEvent(event);
 }
 
 }

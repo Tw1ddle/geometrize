@@ -4,6 +4,7 @@
 #include <cassert>
 #include <memory>
 
+#include <QEvent>
 #include <QTime>
 
 namespace geometrize
@@ -18,6 +19,7 @@ public:
     ImageTaskStatsWidgetImpl(ImageTaskStatsWidget* pQ) : q{pQ}, ui{std::make_unique<Ui::ImageTaskStatsWidget>()}
     {
         ui->setupUi(q);
+        populateUi();
     }
     ~ImageTaskStatsWidgetImpl() = default;
     ImageTaskStatsWidgetImpl operator=(const ImageTaskStatsWidgetImpl&) = delete;
@@ -36,16 +38,8 @@ public:
 
     void setCurrentStatus(const ImageTaskStatsWidget::ImageTaskStatus status)
     {
-        switch(status) {
-        case ImageTaskStatsWidget::ImageTaskStatus::STOPPED:
-            ui->currentStateValueLabel->setText(tr("Idle", "Text shown on a button when the app is not actively turning images into shapes. That is, the app is idle/not doing anything"));
-            break;
-        case ImageTaskStatsWidget::ImageTaskStatus::RUNNING:
-            ui->currentStateValueLabel->setText(tr("Running", "Text shown on a button when the app is actively turning images into shapes. That is, the app is running in the sense of being busy working/processing"));
-            break;
-        default:
-            assert(0 && "Unknown image task status set");
-        }
+        m_status = status;
+        setCurrentStatusText();
     }
 
     void setShapeCount(const std::size_t shapeCount)
@@ -61,11 +55,48 @@ public:
 
     void setImageDimensions(const std::uint32_t width, const std::uint32_t height)
     {
-        const QString imageDimensionsText{tr("%1x%2", "Dimensions of an image e.g. width-x-height, 1024x800").arg(width).arg(height)};
-        ui->imageDimensionsValueLabel->setText(imageDimensionsText);
+        m_width = width;
+        m_height = height;
+        setImageDimensionsText();
+    }
+
+    void onLanguageChange()
+    {
+        ui->retranslateUi(q);
+        populateUi();
     }
 
 private:
+    void populateUi()
+    {
+        setImageDimensionsText();
+        setCurrentStatusText();
+    }
+
+    void setImageDimensionsText()
+    {
+        const QString imageDimensionsText{tr("%1x%2", "Dimensions of an image e.g. width-x-height, 1024x800").arg(m_width).arg(m_height)};
+        ui->imageDimensionsValueLabel->setText(imageDimensionsText);
+    }
+
+    void setCurrentStatusText()
+    {
+        switch(m_status) {
+        case ImageTaskStatsWidget::ImageTaskStatus::STOPPED:
+            ui->currentStateValueLabel->setText(tr("Idle", "Text shown on a button when the app is not actively turning images into shapes. That is, the app is idle/not doing anything"));
+            break;
+        case ImageTaskStatsWidget::ImageTaskStatus::RUNNING:
+            ui->currentStateValueLabel->setText(tr("Running", "Text shown on a button when the app is actively turning images into shapes. That is, the app is running in the sense of being busy working/processing"));
+            break;
+        default:
+            assert(0 && "Unknown image task status set");
+        }
+    }
+
+    ImageTaskStatsWidget::ImageTaskStatus m_status{ImageTaskStatsWidget::ImageTaskStatus::STOPPED};
+    std::uint32_t m_width{0};
+    std::uint32_t m_height{0};
+
     ImageTaskStatsWidget* q;
     std::unique_ptr<Ui::ImageTaskStatsWidget> ui;
 };
@@ -108,6 +139,14 @@ void ImageTaskStatsWidget::setSimilarity(const float similarity)
 void ImageTaskStatsWidget::setImageDimensions(const std::uint32_t width, const std::uint32_t height)
 {
     d->setImageDimensions(width, height);
+}
+
+void ImageTaskStatsWidget::changeEvent(QEvent* event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        d->onLanguageChange();
+    }
+    QWidget::changeEvent(event);
 }
 
 }

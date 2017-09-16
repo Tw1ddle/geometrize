@@ -2,6 +2,8 @@
 
 #include <QDialog>
 
+class QEvent;
+
 namespace Ui
 {
 class OpenUrlDialog;
@@ -30,11 +32,16 @@ public:
      */
     QUrl getUrl() const;
 
+protected:
+    void changeEvent(QEvent*) override;
+
 private slots:
     void on_buttonBox_accepted();
     void on_buttonBox_rejected();
 
 private:
+    void populateUi();
+
     Ui::OpenUrlDialog* ui;
 };
 

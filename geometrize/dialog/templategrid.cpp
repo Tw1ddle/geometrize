@@ -1,5 +1,6 @@
 #include "templategrid.h"
 
+#include <QEvent>
 #include <QString>
 
 #include "chaiscript/chaiscript.hpp"
@@ -22,6 +23,7 @@ public:
     TemplateGridImpl(TemplateGrid* pQ) : q{pQ}, m_layout{new layout::FlowLayout(24, 24, 24)}, m_templateLoader{geometrize::script::createDefaultEngine()}
     {
         q->setLayout(m_layout);
+        populateUi();
     }
 
     void loadTemplates()
@@ -70,7 +72,16 @@ public:
     TemplateGridImpl(const TemplateGridImpl&) = delete;
     ~TemplateGridImpl() = default;
 
+    void onLanguageChange()
+    {
+        populateUi();
+    }
+
 private:
+    void populateUi()
+    {
+    }
+
     bool addTemplateItem(const QString& templateFolder)
     {
         TemplateButton* item{new TemplateButton(m_templateLoader.get(), templateFolder)};
@@ -103,6 +114,14 @@ void TemplateGrid::loadTemplates()
 void TemplateGrid::setItemFilter(const QString& filter)
 {
     d->setItemFilter(filter);
+}
+
+void TemplateGrid::changeEvent(QEvent* event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        d->onLanguageChange();
+    }
+    QWidget::changeEvent(event);
 }
 
 }

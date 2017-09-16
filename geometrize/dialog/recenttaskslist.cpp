@@ -6,6 +6,7 @@
 #include <QApplication>
 #include <QClipboard>
 #include <QContextMenuEvent>
+#include <QEvent>
 #include <QMenu>
 
 #include "dialog/recentitemwidget.h"
@@ -25,6 +26,7 @@ public:
     {
         q->setSizeAdjustPolicy(QListWidget::AdjustToContents);
         q->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        populateUi();
     }
 
     RecentTasksListImpl operator=(const RecentTasksListImpl&) = delete;
@@ -73,7 +75,17 @@ public:
         }
     }
 
+    void onLanguageChange()
+    {
+        populateUi();
+    }
+
 private:
+    void populateUi()
+    {
+
+    }
+
     void loadExistingItems()
     {
         if(m_recents == nullptr) {
@@ -184,6 +196,14 @@ void RecentTasksList::keyPressEvent(QKeyEvent* e)
     } else if(e->key() == Qt::Key_Delete || e->key() == Qt::Key_Backspace) {
         d->removeItemDataAndMenuItems(items);
     }
+}
+
+void RecentTasksList::changeEvent(QEvent* event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        d->onLanguageChange();
+    }
+    QWidget::changeEvent(event);
 }
 
 }

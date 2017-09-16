@@ -4,6 +4,7 @@
 #include <cassert>
 #include <memory>
 
+#include <QEvent>
 #include <QImage>
 
 #include "common/uiactions.h"
@@ -40,6 +41,8 @@ public:
 
             emit q->targetImageSelected(image);
         });
+
+        populateUi();
     }
     ~ImageTaskImageWidgetImpl() = default;
     ImageTaskImageWidgetImpl operator=(const ImageTaskImageWidgetImpl&) = delete;
@@ -64,7 +67,17 @@ public:
         emit q->targetImageSet(image);
     }
 
+    void onLanguageChange()
+    {
+        ui->retranslateUi(q);
+        populateUi();
+    }
+
 private:
+    void populateUi()
+    {
+    }
+
     void updateTargetImageOpacity(const unsigned int opacity)
     {
         ui->targetImageOpacitySlider->setValue(opacity);
@@ -93,6 +106,14 @@ void ImageTaskImageWidget::setTargetImageOpacity(const unsigned int opacity)
 void ImageTaskImageWidget::setTargetImage(const QImage& image)
 {
     d->setTargetImage(image);
+}
+
+void ImageTaskImageWidget::changeEvent(QEvent* event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        d->onLanguageChange();
+    }
+    QWidget::changeEvent(event);
 }
 
 }

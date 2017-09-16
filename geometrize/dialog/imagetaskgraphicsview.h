@@ -3,6 +3,7 @@
 #include <QGraphicsView>
 #include <QObject>
 
+class QEvent;
 class QWheelEvent;
 
 namespace geometrize
@@ -21,7 +22,12 @@ class ImageTaskGraphicsView : public QGraphicsView
 public:
     explicit ImageTaskGraphicsView(QWidget* parent = nullptr);
 
+protected:
+    void changeEvent(QEvent*) override;
+
 private:
+    void populateUi();
+
     void wheelEvent(QWheelEvent* event) override;
     void mouseMoveEvent(QMouseEvent* event) override;
 };

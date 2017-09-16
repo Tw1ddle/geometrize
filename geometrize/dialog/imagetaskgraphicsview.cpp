@@ -1,5 +1,6 @@
 #include "imagetaskgraphicsview.h"
 
+#include <QEvent>
 #include <QWheelEvent>
 
 namespace geometrize
@@ -15,6 +16,8 @@ ImageTaskGraphicsView::ImageTaskGraphicsView(QWidget* parent) : QGraphicsView(pa
     setDragMode(QGraphicsView::ScrollHandDrag);
     setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     setMouseTracking(true);
+
+    populateUi();
 }
 
 void ImageTaskGraphicsView::wheelEvent(QWheelEvent* e)
@@ -53,6 +56,19 @@ void ImageTaskGraphicsView::wheelEvent(QWheelEvent* e)
 void ImageTaskGraphicsView::mouseMoveEvent(QMouseEvent* event)
 {
     QGraphicsView::mouseMoveEvent(event);
+}
+
+void ImageTaskGraphicsView::changeEvent(QEvent* event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        populateUi();
+    }
+    QGraphicsView::changeEvent(event);
+}
+
+void ImageTaskGraphicsView::populateUi()
+{
+
 }
 
 }

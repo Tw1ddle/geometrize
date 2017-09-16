@@ -3,6 +3,7 @@
 
 #include <QAction>
 #include <QContextMenuEvent>
+#include <QEvent>
 #include <QFuture>
 #include <QFutureWatcher>
 #include <QImage>
@@ -104,7 +105,18 @@ public:
         geometrize::util::openTasks({m_item.getKey()}, false);
     }
 
+    void onLanguageChange()
+    {
+        ui->retranslateUi(q);
+        populateUi();
+    }
+
 private:
+    void populateUi()
+    {
+
+    }
+
     QImage setupThumbnail(const QString& itemPath, const RecentItem::Type type)
     {
         switch(type) {
@@ -167,6 +179,14 @@ void RecentItemWidget::mouseReleaseEvent(QMouseEvent* e)
     d->onMouseReleaseEvent(e);
 
     QWidget::mouseReleaseEvent(e);
+}
+
+void RecentItemWidget::changeEvent(QEvent* event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        d->onLanguageChange();
+    }
+    QWidget::changeEvent(event);
 }
 
 }

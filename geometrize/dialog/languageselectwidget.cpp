@@ -3,6 +3,7 @@
 
 #include <cassert>
 
+#include <QEvent>
 #include <QList>
 #include <QIcon>
 
@@ -22,7 +23,7 @@ public:
     {
         ui->setupUi(q);
 
-        setup();
+        populateUi();
     }
 
     LanguageSelectWidgetImpl operator=(const LanguageSelectWidgetImpl&) = delete;
@@ -33,11 +34,12 @@ public:
 
     void onLanguageChange()
     {
-        setup();
+        ui->retranslateUi(q);
+        populateUi();
     }
 
 private:
-    void setup()
+    void populateUi()
     {
         const geometrize::preferences::GlobalPreferences& prefs{geometrize::preferences::getGlobalPreferences()};
         const std::string localeName{prefs.getLocaleName()};
@@ -74,7 +76,6 @@ void LanguageSelectWidget::changeEvent(QEvent* event)
     if (event->type() == QEvent::LanguageChange) {
         d->onLanguageChange();
     }
-
     QWidget::changeEvent(event);
 }
 

@@ -5,6 +5,8 @@
 #include <QString>
 #include <QWidget>
 
+class QEvent;
+
 namespace geometrize
 {
 
@@ -32,6 +34,9 @@ public:
      * @param filter The filter string.
      */
     void setItemFilter(const QString& filter);
+
+protected:
+    void changeEvent(QEvent*) override;
 
 signals:
     void signal_templateLoaded(QString, bool);

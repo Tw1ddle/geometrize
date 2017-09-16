@@ -2,6 +2,8 @@
 
 #include <QWidget>
 
+class QEvent;
+
 namespace Ui
 {
 class FolderSelectionWidget;
@@ -26,6 +28,12 @@ public:
 signals:
 
 public slots:
+
+protected:
+    void changeEvent(QEvent*) override;
+
+private:
+    void populateUi();
 
 private:
     Ui::FolderSelectionWidget* ui;

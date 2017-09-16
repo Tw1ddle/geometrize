@@ -4,6 +4,8 @@
 
 #include <QMainWindow>
 
+class QEvent;
+
 namespace geometrize
 {
 
@@ -61,6 +63,9 @@ signals:
      * @brief didSaveSettingsTemplate Signal dispatched immediately after a settings template based on the current image task settings is saved.
      */
     void didSaveSettingsTemplate();
+
+protected:
+    void changeEvent(QEvent*) override;
 
 private slots:
     void on_actionExit_triggered();

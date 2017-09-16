@@ -5,6 +5,8 @@
 
 #include <QWidget>
 
+class QEvent;
+
 namespace chaiscript
 {
 class ChaiScript;
@@ -60,6 +62,9 @@ signals:
      * @brief signal_historyStepped is fired when the user steps through the command line history (e.g. when pressing the up arrow).
      */
     void signal_historyStepped(const std::string&);
+
+protected:
+    void changeEvent(QEvent*) override;
 
 private:
     virtual void keyPressEvent(QKeyEvent* e) override;

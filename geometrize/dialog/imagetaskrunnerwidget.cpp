@@ -3,6 +3,7 @@
 
 #include <memory>
 
+#include <QEvent>
 #include <QHBoxLayout>
 #include <QObjectList>
 #include <QString>
@@ -42,6 +43,8 @@ public:
         runnerButtonsLayout->addWidget(ui->clearButton);
 
         ui->bottomButtonsContainer->setLayout(runnerButtonsLayout);
+
+        populateUi();
     }
     ~ImageTaskRunnerWidgetImpl() = default;
     ImageTaskRunnerWidgetImpl operator=(const ImageTaskRunnerWidgetImpl&) = delete;
@@ -144,7 +147,18 @@ public:
         m_task->getPreferences().setMaxThreads(value);
     }
 
+    void onLanguageChange()
+    {
+        ui->retranslateUi(q);
+        populateUi();
+    }
+
 private:
+    void populateUi()
+    {
+
+    }
+
     geometrize::task::ImageTask* m_task;
     ImageTaskRunnerWidget* q;
     std::unique_ptr<Ui::ImageTaskRunnerWidget> ui;
@@ -258,6 +272,14 @@ void ImageTaskRunnerWidget::on_randomSeedSpinBox_valueChanged(int value)
 void ImageTaskRunnerWidget::on_maxThreadsSpinBox_valueChanged(int value)
 {
     d->setMaxThreads(value);
+}
+
+void ImageTaskRunnerWidget::changeEvent(QEvent* event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        d->onLanguageChange();
+    }
+    QWidget::changeEvent(event);
 }
 
 }

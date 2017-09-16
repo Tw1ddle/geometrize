@@ -2,6 +2,8 @@
 
 #include <QDialog>
 
+class QEvent;
+
 namespace Ui
 {
 class LicenseDialog;
@@ -24,7 +26,12 @@ public:
     explicit LicenseDialog(QWidget* parent = nullptr);
     ~LicenseDialog();
 
+protected:
+    void changeEvent(QEvent*) override;
+
 private:
+    void populateUi();
+
     Ui::LicenseDialog* ui;
 };
 

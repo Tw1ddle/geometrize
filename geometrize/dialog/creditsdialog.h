@@ -2,6 +2,8 @@
 
 #include <QDialog>
 
+class QEvent;
+
 namespace Ui
 {
 class CreditsDialog;
@@ -24,7 +26,12 @@ public:
     explicit CreditsDialog(QWidget* parent = nullptr);
     ~CreditsDialog();
 
+protected:
+    void changeEvent(QEvent*) override;
+
 private:
+    void populateUi();
+
     Ui::CreditsDialog* ui;
 };
 

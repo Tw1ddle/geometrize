@@ -4,6 +4,8 @@
 
 #include <QWidget>
 
+class QEvent;
+
 namespace Ui
 {
 class RecentItemWidget;
@@ -30,6 +32,9 @@ class RecentItemWidget : public QWidget
 public:
     explicit RecentItemWidget(const RecentItem& item);
     ~RecentItemWidget();
+
+protected:
+    void changeEvent(QEvent*) override;
 
 private:
     virtual void contextMenuEvent(QContextMenuEvent* e) override;

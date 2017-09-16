@@ -3,6 +3,8 @@
 
 #include <cassert>
 
+#include <QEvent>
+
 #include "preferences/globalpreferences.h"
 
 namespace geometrize
@@ -23,6 +25,7 @@ public:
             ui->preferencePageStack->setCurrentIndex(currentRow);
         });
 
+        populateUi();
         syncUiWithPreferences();
     }
     GlobalPreferencesDialogImpl operator=(const GlobalPreferencesDialogImpl&) = delete;
@@ -93,7 +96,17 @@ public:
         getPrefs().setImageTaskMaxThreads(static_cast<unsigned int>(value));
     }
 
+    void onLanguageChange()
+    {
+        populateUi();
+        ui->retranslateUi(q);
+    }
+
 private:
+    void populateUi()
+    {
+    }
+
     geometrize::preferences::GlobalPreferences& getPrefs()
     {
         return geometrize::preferences::getGlobalPreferences();
@@ -189,6 +202,14 @@ void GlobalPreferencesDialog::on_resizeHeight_valueChanged(const int value)
 void GlobalPreferencesDialog::on_maxThreadsPerImageTask_valueChanged(const int value)
 {
     d->setMaxThreadsPerImageTask(value);
+}
+
+void GlobalPreferencesDialog::changeEvent(QEvent* event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        d->onLanguageChange();
+    }
+    QDialog::changeEvent(event);
 }
 
 }

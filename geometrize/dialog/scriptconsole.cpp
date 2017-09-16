@@ -1,6 +1,8 @@
 #include "scriptconsole.h"
 #include "ui_scriptconsole.h"
 
+#include <QEvent>
+
 #include "chaiscript/chaiscript.hpp"
 
 #include "logger/logger.h"
@@ -20,9 +22,9 @@ public:
     ScriptConsoleImpl(ScriptConsole* pQ) : q{pQ}, ui{std::make_unique<Ui::ScriptConsole>()}, m_engine{nullptr}
     {
         ui->setupUi(q);
-
         ui->outputView->append("ChaiScript " + QString(chaiscript::compiler_name));
-        ui->outputView->append(tr("Type 'help' in console for a list of commands", "Instructional text shown in the command/scripting console"));
+        ui->outputView->append(tr("Type 'help' in console for a list of commands", "Instructional text shown in the command/scripting console. The 'help' string should not be translated"));
+        populateUi();
 
         connect(ui->commandLine, &geometrize::dialog::CommandLineEdit::signal_commandSubmitted, [this](const std::string& command) {
 
@@ -82,7 +84,18 @@ public:
         ui->outputView->append(message);
     }
 
+    void onLanguageChange()
+    {
+        ui->retranslateUi(q);
+        populateUi();
+    }
+
 private:
+    void populateUi()
+    {
+
+    }
+
     void setCompletionList(chaiscript::ChaiScript* engine)
     {
         if(m_engine == nullptr) {
@@ -130,6 +143,14 @@ bool ScriptConsole::event(QEvent* event)
     } else {
         return QWidget::event(event);
     }
+}
+
+void ScriptConsole::changeEvent(QEvent* event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        d->onLanguageChange();
+    }
+    QWidget::changeEvent(event);
 }
 
 const std::string ScriptConsole::launchConsoleHistoryFilename = "launch_console_command_history.json";

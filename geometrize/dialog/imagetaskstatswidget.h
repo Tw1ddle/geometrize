@@ -4,6 +4,8 @@
 
 #include <QWidget>
 
+class QEvent;
+
 namespace geometrize
 {
 
@@ -32,6 +34,9 @@ public:
     void setShapeCount(std::size_t shapeCount);
     void setSimilarity(float similarity);
     void setImageDimensions(std::uint32_t width, std::uint32_t height);
+
+protected:
+    void changeEvent(QEvent*) override;
 
 private:
     class ImageTaskStatsWidgetImpl;

@@ -6,6 +6,8 @@
 
 #include <QWidget>
 
+class QEvent;
+
 namespace chaiscript
 {
 class ChaiScript;
@@ -35,6 +37,9 @@ public:
     void setHistory(const std::vector<std::string>& history);
 
     virtual bool event(QEvent* event) override;
+
+protected:
+    void changeEvent(QEvent*) override;
 
 private:
     class ScriptConsoleImpl;

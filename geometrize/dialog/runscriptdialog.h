@@ -2,6 +2,8 @@
 
 #include <QDialog>
 
+class QEvent;
+
 namespace Ui
 {
 class RunScriptDialog;
@@ -26,11 +28,16 @@ public:
 
     QString getScriptFilepath();
 
+protected:
+    void changeEvent(QEvent*) override;
+
 private slots:
     void on_scriptFileDialogButton_clicked();
     void on_buttonBox_accepted();
 
 private:
+    void populateUi();
+
     Ui::RunScriptDialog* ui;
 };
 

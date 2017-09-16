@@ -4,6 +4,8 @@
 
 #include <QWidget>
 
+class QEvent;
+
 namespace geometrize
 {
 
@@ -36,6 +38,9 @@ signals:
 
     void setupScriptChangeApplied(ScriptEditorWidget* editor);
     void mutationScriptChangeApplied(ScriptEditorWidget* editor);
+
+protected:
+    void changeEvent(QEvent*) override;
 
 private:
     class ImageTaskScriptingPanelImpl;

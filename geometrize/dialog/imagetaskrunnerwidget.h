@@ -5,6 +5,8 @@
 #include <QString>
 #include <QWidget>
 
+class QEvent;
+
 namespace geometrize
 {
 
@@ -55,6 +57,9 @@ signals:
     void runStopButtonClicked();
     void stepButtonClicked();
     void clearButtonClicked();
+
+protected:
+    void changeEvent(QEvent*) override;
 
 private slots:
     void on_runStopButton_clicked();

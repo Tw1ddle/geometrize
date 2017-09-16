@@ -1,6 +1,7 @@
 #include "openurldialog.h"
 #include "ui_openurldialog.h"
 
+#include <QEvent>
 #include <QLineEdit>
 #include <QString>
 #include <QUrl>
@@ -17,6 +18,7 @@ OpenUrlDialog::OpenUrlDialog(QWidget* parent) :
 {
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint); // Remove question mark from title bar
     ui->setupUi(this);
+    populateUi();
 }
 
 OpenUrlDialog::~OpenUrlDialog()
@@ -43,6 +45,20 @@ void OpenUrlDialog::on_buttonBox_accepted()
 void OpenUrlDialog::on_buttonBox_rejected()
 {
     close();
+}
+
+void OpenUrlDialog::changeEvent(QEvent* event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        ui->retranslateUi(this);
+        populateUi();
+    }
+    QDialog::changeEvent(event);
+}
+
+void OpenUrlDialog::populateUi()
+{
+
 }
 
 }

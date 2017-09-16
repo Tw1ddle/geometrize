@@ -5,6 +5,8 @@
 
 #include <QWidget>
 
+class QEvent;
+
 namespace geometrize
 {
 struct ShapeResult;
@@ -43,6 +45,9 @@ public:
      * @param shapes A non-owning pointer to the shape data produced by the image task.
      */
     void setImageTask(const task::ImageTask* task, const std::vector<geometrize::ShapeResult>* shapes);
+
+protected:
+    void changeEvent(QEvent*) override;
 
 private slots:
     void on_saveImageButton_clicked();

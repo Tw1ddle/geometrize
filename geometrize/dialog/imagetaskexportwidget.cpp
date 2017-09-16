@@ -30,6 +30,7 @@ public:
     ImageTaskExportWidgetImpl(ImageTaskExportWidget* pQ) : m_task{nullptr}, m_shapes{nullptr}, q{pQ}, ui{std::make_unique<Ui::ImageTaskExportWidget>()}
     {
         ui->setupUi(q);
+        populateUi();
     }
     ~ImageTaskExportWidgetImpl() = default;
     ImageTaskExportWidgetImpl operator=(const ImageTaskExportWidgetImpl&) = delete;
@@ -189,7 +190,17 @@ public:
         util::writeStringToFile(pageSource, path.toStdString());
     }
 
+    void onLanguageChange()
+    {
+        ui->retranslateUi(q);
+        populateUi();
+    }
+
 private:
+    void populateUi()
+    {
+    }
+
     void showExportMisconfiguredMessage() const
     {
         QMessageBox::warning(q, tr("Failed to run exporter", "Title of error message shown when an attempt to save/export a file failed"),
@@ -251,6 +262,14 @@ void ImageTaskExportWidget::on_saveHTML5WebpageButton_clicked()
 void ImageTaskExportWidget::on_saveWebGLWebpageButton_clicked()
 {
     d->saveWebGLWebpageButton();
+}
+
+void ImageTaskExportWidget::changeEvent(QEvent* event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        d->onLanguageChange();
+    }
+    QWidget::changeEvent(event);
 }
 
 }

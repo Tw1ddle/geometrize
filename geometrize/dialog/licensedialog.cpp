@@ -4,6 +4,7 @@
 #include <cassert>
 
 #include <QByteArray>
+#include <QEvent>
 #include <QFile>
 
 namespace geometrize
@@ -18,6 +19,7 @@ LicenseDialog::LicenseDialog(QWidget* parent) :
 {
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint); // Remove question mark from title bar
     ui->setupUi(this);
+    populateUi();
 
     const auto readLicenseFile = [](const QString& resourcePath) -> QString {
         QFile file{resourcePath};
@@ -77,6 +79,20 @@ LicenseDialog::LicenseDialog(QWidget* parent) :
 LicenseDialog::~LicenseDialog()
 {
     delete ui;
+}
+
+void LicenseDialog::changeEvent(QEvent* event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        ui->retranslateUi(this);
+        populateUi();
+    }
+    QDialog::changeEvent(event);
+}
+
+void LicenseDialog::populateUi()
+{
+
 }
 
 }

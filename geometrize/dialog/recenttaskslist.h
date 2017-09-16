@@ -4,6 +4,8 @@
 
 #include <QListWidget>
 
+class QEvent;
+
 namespace geometrize
 {
 class RecentItems;
@@ -38,6 +40,9 @@ public:
      * @return A display name for the task, suitable for showing to the user in the recent tasks list.
      */
     static QString getDisplayNameForTaskPath(const QUrl& url);
+
+protected:
+    void changeEvent(QEvent*) override;
 
 private:
     virtual void keyPressEvent(QKeyEvent* e) override;

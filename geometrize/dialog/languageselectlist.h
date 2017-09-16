@@ -4,6 +4,8 @@
 
 #include <QListWidget>
 
+class QEvent;
+
 namespace geometrize
 {
 

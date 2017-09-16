@@ -2,6 +2,7 @@
 #include "ui_templatebutton.h"
 
 #include <QContextMenuEvent>
+#include <QEvent>
 #include <QFuture>
 #include <QFutureWatcher>
 #include <QMenu>
@@ -33,6 +34,7 @@ public:
         m_manifest{util::getTemplateManifest(m_templateFolder.toStdString())}
     {
         ui->setupUi(q);
+        populateUi();
 
         q->connect(q, &TemplateButton::clicked, [this]() {
             openTemplate();
@@ -43,9 +45,7 @@ public:
 
             ui->imageLabel->setPixmap(QPixmap::fromImage(thumbnail));
 
-            const QString name{tr("Name: %1", "Text on a label containing the name of an item, usually an image e.g. Name: The Mona Lisa").arg(QString::fromStdString(m_manifest.getName()))};
-            const QString license{tr("License: %2", "Text on a label containing the legal license a piece of media is under, usually an image e.g. License: Public Domain").arg(QString::fromStdString(m_manifest.getLicense()))};
-            q->setToolTip(name + "<br>" + license);
+            setButtonToolTipText();
         });
 
         const QString firstImageFile{QString::fromStdString(util::getFirstFileWithExtensions(m_templateFolder.toStdString(), format::getReadableImageFileExtensions(false)))};
@@ -106,7 +106,25 @@ public:
         return m_manifest;
     }
 
+    void onLanguageChange()
+    {
+        ui->retranslateUi(q);
+        populateUi();
+    }
+
 private:
+    void populateUi()
+    {
+        setButtonToolTipText();
+    }
+
+    void setButtonToolTipText()
+    {
+        const QString name{tr("Name: %1", "Text on a label containing the name of an item, usually an image e.g. Name: The Mona Lisa").arg(QString::fromStdString(m_manifest.getName()))};
+        const QString license{tr("License: %2", "Text on a label containing the legal license a piece of media is under, usually an image e.g. License: Public Domain").arg(QString::fromStdString(m_manifest.getLicense()))};
+        q->setToolTip(name + "<br>" + license);
+    }
+
     chaiscript::ChaiScript* const m_templateLoader;
     const QString m_templateFolder;
     const TemplateManifest m_manifest;
@@ -133,6 +151,14 @@ void TemplateButton::contextMenuEvent(QContextMenuEvent* e)
 TemplateManifest TemplateButton::getTemplateManifest() const
 {
     return d->getTemplateManifest();
+}
+
+void TemplateButton::changeEvent(QEvent* event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        d->onLanguageChange();
+    }
+    QPushButton::changeEvent(event);
 }
 
 }

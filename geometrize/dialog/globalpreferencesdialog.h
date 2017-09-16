@@ -5,6 +5,8 @@
 #include <QCloseEvent>
 #include <QDialog>
 
+class QEvent;
+
 namespace geometrize
 {
 
@@ -23,6 +25,9 @@ public:
     explicit GlobalPreferencesDialog(QWidget* parent = nullptr);
     ~GlobalPreferencesDialog();
 
+protected:
+    void changeEvent(QEvent*) override;
+
 private slots:    
     void on_geometrizeLogo_toggled(bool checked);
     void on_populateRecents_toggled(bool checked);
@@ -40,6 +45,8 @@ private slots:
     void on_maxThreadsPerImageTask_valueChanged(int value);
 
 private:
+    void populateUi();
+
     class GlobalPreferencesDialogImpl;
     std::unique_ptr<GlobalPreferencesDialogImpl> d;
 };

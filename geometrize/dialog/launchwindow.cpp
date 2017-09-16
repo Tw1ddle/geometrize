@@ -2,6 +2,7 @@
 #include "ui_launchwindow.h"
 
 #include <QCloseEvent>
+#include <QEvent>
 
 #include "chaiscript/chaiscript.hpp"
 
@@ -30,14 +31,10 @@ public:
     LaunchWindowImpl(LaunchWindow* pQ) : ui{std::make_unique<Ui::LaunchWindow>()}, q{pQ}, m_engine{script::createLaunchWindowEngine()}
     {
         ui->setupUi(q);
+        populateUi();
+
         ui->consoleWidget->setVisible(false);
         ui->consoleWidget->setEngine(m_engine.get());
-
-        const QString moreResourcesLabel{tr("Get more online", "Text on a button the user presses to open a page containing more resources for using the app, such as extra images, information and help")};
-        ui->moreResourcesLink->setText(R"(<a href=")" + constants::MORE_RESOURCES_URL + R"(" style="text-decoration:none;">)" + moreResourcesLabel + R"(</a>)");
-
-        const QString tutorialsLabel{tr("Video tutorials", "Text on a button the user presses to open a page containing video tutorials explaining how to use the app")};
-        ui->tutorialsLink->setText(R"(<a href=")" + constants::VIDEO_TUTORIAL_URL + R"(" style="text-decoration:none;">)" + tutorialsLabel + R"(</a>)");
 
         if(preferences::getGlobalPreferences().shouldPopulateRecentItemsOnLaunch()) {
             ui->recentsList->setRecentItems(&geometrize::getRecentItems());
@@ -122,7 +119,30 @@ public:
         geometrize::preferences::getGlobalPreferences().save(path.toStdString());
     }
 
+    void onLanguageChange()
+    {
+        ui->retranslateUi(q);
+        populateUi();
+    }
+
 private:
+    void populateUi()
+    {
+        const QString moreResourcesLabel{tr("Get more online", "Text on a button the user presses to open a page containing more resources for using the app, such as extra images, information and help")};
+        ui->moreResourcesLink->setText(R"(<a href=")" + constants::MORE_RESOURCES_URL + R"(" style="text-decoration:none;">)" + moreResourcesLabel + R"(</a>)");
+
+        const QString tutorialsLabel{tr("Video tutorials", "Text on a button the user presses to open a page containing video tutorials explaining how to use the app")};
+        ui->tutorialsLink->setText(R"(<a href=")" + constants::VIDEO_TUTORIAL_URL + R"(" style="text-decoration:none;">)" + tutorialsLabel + R"(</a>)");
+
+        updateLogoTaskProgress();
+    }
+
+    void updateLogoTaskProgress()
+    {
+        const QString logoToolTip{tr("%1/%2 shapes", "Text showing the number of shapes that have been created to replicate an image so far e.g. 230/300 shapes").arg(QString::number(m_logoTaskShapeCount)).arg(m_logoTaskStepCount)};
+        ui->logoLabel->setToolTip(logoToolTip);
+    }
+
     void setupLogo()
     {
         const QString logoPath{":/logos/logo_small.png"};
@@ -147,8 +167,7 @@ private:
 
                 m_logoTaskShapeCount += results.size();
                 m_logoTaskStepCount += 1;
-                const QString logoToolTip{tr("%1/%2 shapes", "Text showing the number of shapes that have been created to replicate an image so far e.g. 230/300 shapes").arg(QString::number(m_logoTaskShapeCount)).arg(m_logoTaskStepCount)};
-                ui->logoLabel->setToolTip(logoToolTip);
+                updateLogoTaskProgress();
 
                 m_logoTaskSteps++;
                 if(m_logoTaskSteps < m_maxLogoTaskSteps) {
@@ -285,6 +304,14 @@ void LaunchWindow::on_actionSupport_triggered()
 void LaunchWindow::on_actionAbout_triggered()
 {
     common::ui::openAboutPage(this);
+}
+
+void LaunchWindow::changeEvent(QEvent* event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        d->onLanguageChange();
+    }
+    QMainWindow::changeEvent(event);
 }
 
 }

@@ -4,6 +4,7 @@
 
 #include <QWidget>
 
+class QEvent;
 class QImage;
 
 namespace geometrize
@@ -59,6 +60,9 @@ signals:
      * @param image The image the user picked.
      */
     void baseImageSelected(const QImage& image);
+
+protected:
+    void changeEvent(QEvent*) override;
 
 private:
     class ImageTaskImageWidgetImpl;

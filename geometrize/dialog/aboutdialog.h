@@ -7,6 +7,8 @@ namespace Ui
 class AboutDialog;
 }
 
+class QEvent;
+
 namespace geometrize
 {
 
@@ -29,7 +31,12 @@ public slots:
     void on_licenseButton_released();
     void on_creditsButton_released();
 
+protected:
+    void changeEvent(QEvent*) override;
+
 private:
+    void populateUi();
+
     Ui::AboutDialog* ui;
 };
 

@@ -1,6 +1,8 @@
 #include "runscriptdialog.h"
 #include "ui_runscriptdialog.h"
 
+#include <QEvent>
+
 #include "common/uiactions.h"
 #include "common/util.h"
 #include "script/scriptrunner.h"
@@ -17,6 +19,7 @@ RunScriptDialog::RunScriptDialog(QWidget* parent) :
 {
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint); // Remove question mark from title bar
     ui->setupUi(this);
+    populateUi();
 }
 
 RunScriptDialog::~RunScriptDialog()
@@ -47,6 +50,20 @@ void RunScriptDialog::on_buttonBox_accepted()
 
     const std::string script{util::readFileAsString(scriptPath)};
     geometrize::script::runScript(script);
+}
+
+void RunScriptDialog::changeEvent(QEvent* event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        ui->retranslateUi(this);
+        populateUi();
+    }
+    QDialog::changeEvent(event);
+}
+
+void RunScriptDialog::populateUi()
+{
+
 }
 
 }

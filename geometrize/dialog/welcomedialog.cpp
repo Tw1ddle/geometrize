@@ -2,6 +2,7 @@
 #include "ui_welcomedialog.h"
 
 #include <QDesktopServices>
+#include <QEvent>
 #include <QUrl>
 
 #include "common/constants.h"
@@ -32,8 +33,7 @@ WelcomeDialog::WelcomeDialog(QWidget* parent) :
 {
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint); // Remove question mark from title bar
     ui->setupUi(this);
-
-    ui->welcomeTitleLabel->setText(tr("Welcome To %1", "A subtitle on the 'tutorial' page welcoming the user to the software").arg(geometrize::strings::Strings::getApplicationName()));
+    populateUi();
 
     ui->showOnLaunchCheckbox->setChecked(shouldShowWelcomeOnLaunch());
 }
@@ -56,6 +56,20 @@ void WelcomeDialog::on_videoTutorialsButton_released()
 void WelcomeDialog::on_showOnLaunchCheckbox_clicked(const bool checked)
 {
     setShouldShowWelcomeOnLaunch(checked);
+}
+
+void WelcomeDialog::changeEvent(QEvent* event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        ui->retranslateUi(this);
+        populateUi();
+    }
+    QDialog::changeEvent(event);
+}
+
+void WelcomeDialog::populateUi()
+{
+    ui->welcomeTitleLabel->setText(tr("Welcome To %1", "A subtitle on the 'tutorial' page welcoming the user to the software").arg(geometrize::strings::Strings::getApplicationName()));
 }
 
 }

@@ -1,6 +1,7 @@
 #include "completionbox.h"
 
 #include <QCompleter>
+#include <QEvent>
 #include <QStringListModel>
 
 namespace geometrize
@@ -28,6 +29,8 @@ public:
         m_completer.setFilterMode(Qt::MatchStartsWith);
         m_completer.setModel(&m_model);
         q->setCompleter(&m_completer);
+
+        populateUi();
     }
 
     void addToCompletionList(const QString& item)
@@ -41,7 +44,16 @@ public:
         m_model.setStringList(completionList);
     }
 
+    void onLanguageChange()
+    {
+        populateUi();
+    }
+
 private:
+    void populateUi()
+    {
+    }
+
     QCompleter m_completer;
     StringListModel m_model;
     CompletionBox* q;
@@ -63,6 +75,14 @@ void CompletionBox::setCompletionList(const QStringList& completionList)
 void CompletionBox::addToCompletionList(const QString& item)
 {
     d->addToCompletionList(item);
+}
+
+void CompletionBox::changeEvent(QEvent* event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        d->onLanguageChange();
+    }
+    QLineEdit::changeEvent(event);
 }
 
 }

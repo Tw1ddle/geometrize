@@ -5,6 +5,8 @@
 
 #include <QMainWindow>
 
+class QEvent;
+
 namespace geometrize
 {
 
@@ -30,6 +32,9 @@ public:
 
     virtual void dragEnterEvent(QDragEnterEvent* event) override;
     virtual void dropEvent(QDropEvent* event) override;
+
+protected:
+    void changeEvent(QEvent*) override;
 
 private slots:
     void on_actionGlobal_Preferences_triggered();

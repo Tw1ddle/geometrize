@@ -18,6 +18,7 @@ public:
     CommandLineEditImpl(CommandLineEdit* pQ) : q{pQ}, ui{std::make_unique<Ui::CommandLineEdit>()}, m_historyIndex{0}
     {
         ui->setupUi(q);
+        populateUi();
     }
     CommandLineEditImpl operator=(const CommandLineEditImpl&) = delete;
     CommandLineEditImpl(const CommandLineEditImpl&) = delete;
@@ -103,7 +104,18 @@ public:
 
     }
 
+    void onLanguageChange()
+    {
+        populateUi();
+        ui->retranslateUi(q);
+    }
+
 private:
+    void populateUi()
+    {
+
+    }
+
     std::string getCurrentCommand() const
     {
         return ui->lineEdit->text().toStdString();
@@ -174,6 +186,14 @@ bool CommandLineEdit::focusNextPrevChild(const bool /*next*/)
 void CommandLineEdit::mouseDoubleClickEvent(QMouseEvent* /*event*/)
 {
     d->mouseDoubleClickEvent();
+}
+
+void CommandLineEdit::changeEvent(QEvent* event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        d->onLanguageChange();
+    }
+    QWidget::changeEvent(event);
 }
 
 }

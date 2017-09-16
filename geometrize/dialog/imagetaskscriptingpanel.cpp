@@ -4,6 +4,8 @@
 #include <memory>
 #include <string>
 
+#include <QEvent>
+
 #include "geometrize/shape/shapetypes.h"
 
 #include "dialog/scripteditorwidget.h"
@@ -43,7 +45,18 @@ public:
     ImageTaskScriptingPanelImpl operator=(const ImageTaskScriptingPanelImpl&) = delete;
     ImageTaskScriptingPanelImpl(const ImageTaskScriptingPanelImpl&) = delete;
 
+    void onLanguageChange()
+    {
+        ui->retranslateUi(q);
+        populateUi();
+    }
+
 private:
+    void populateUi()
+    {
+
+    }
+
     ImageTaskScriptingPanel* q;
     std::unique_ptr<Ui::ImageTaskScriptPanel> ui;
 };
@@ -56,6 +69,14 @@ ImageTaskScriptingPanel::ImageTaskScriptingPanel(QWidget* parent) :
 
 ImageTaskScriptingPanel::~ImageTaskScriptingPanel()
 {
+}
+
+void ImageTaskScriptingPanel::changeEvent(QEvent* event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        d->onLanguageChange();
+    }
+    QWidget::changeEvent(event);
 }
 
 }

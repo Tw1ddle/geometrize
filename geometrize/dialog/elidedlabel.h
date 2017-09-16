@@ -29,6 +29,8 @@
 
 #include <QLabel>
 
+class QEvent;
+
 namespace geometrize
 {
 
@@ -74,10 +76,11 @@ public:
     void setText(const QString&);
 
 protected:
+    void changeEvent(QEvent*) override;
     void paintEvent(QPaintEvent*) override;
     void resizeEvent(QResizeEvent*) override;
 
-private:
+private:    
     class ElidedLabelImpl;
     std::unique_ptr<ElidedLabelImpl> d;
 };

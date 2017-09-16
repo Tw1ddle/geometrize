@@ -25,6 +25,7 @@
 
 #include "elidedlabel.h"
 
+#include <QEvent>
 #include <QPainter>
 #include <QRegularExpression>
 #include <QResizeEvent>
@@ -41,6 +42,7 @@ public:
     ElidedLabelImpl(ElidedLabel* pQ, const Qt::TextElideMode elideMode = Qt::ElideLeft, const ElidedLabel::TrimMode trimMode = TrimMode::None) :
         q{pQ}, m_elideMode{elideMode}, m_trimMode{trimMode}
     {
+        populateUi();
     }
 
     Qt::TextElideMode getElideMode() const
@@ -76,7 +78,17 @@ public:
         m_elidedText = elidedText;
     }
 
+    void onLanguageChange()
+    {
+        populateUi();
+    }
+
 private:
+    void populateUi()
+    {
+
+    }
+
     Qt::TextElideMode m_elideMode; ///< The current elision mode.
     ElidedLabel::TrimMode m_trimMode; ///< The current post-elision trim mode.
     QString m_elidedText; ///< The cached elided text.
@@ -135,6 +147,14 @@ void ElidedLabel::paintEvent(QPaintEvent* e)
         QPainter p(this);
         p.drawText(0, 0, geometry().width(), geometry().height(), alignment(), d->getElidedText(), nullptr);
     }
+}
+
+void ElidedLabel::changeEvent(QEvent* event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        d->onLanguageChange();
+    }
+    QLabel::changeEvent(event);
 }
 
 }

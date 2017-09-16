@@ -14,6 +14,25 @@ CreditsDialog::CreditsDialog(QWidget* parent) :
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint); // Remove question mark from title bar
     ui->setupUi(this);
 
+    populateUi();
+}
+
+CreditsDialog::~CreditsDialog()
+{
+    delete ui;
+}
+
+void CreditsDialog::changeEvent(QEvent* event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        populateUi();
+        ui->retranslateUi(this);
+    }
+    QDialog::changeEvent(event);
+}
+
+void CreditsDialog::populateUi()
+{
     ui->developerText->setText("Sam Twidale");
     ui->artistText->setText("");
     ui->translatorText->setText("");
@@ -21,11 +40,6 @@ CreditsDialog::CreditsDialog(QWidget* parent) :
     const QString acknowledgementText{tr("Special thanks to: %1", "Message that thanks contributors to the project. A list of names of people who contributed to the project follows this.")
                                      .arg("\n Michael Fogleman \n Harish Persad")};
     ui->acknowledgementText->setText(acknowledgementText);
-}
-
-CreditsDialog::~CreditsDialog()
-{
-    delete ui;
 }
 
 }

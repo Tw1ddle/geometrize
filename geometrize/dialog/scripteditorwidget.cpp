@@ -3,6 +3,7 @@
 
 #include <cassert>
 
+#include <QEvent>
 #include <QFontMetrics>
 #include <QSize>
 
@@ -20,6 +21,7 @@ public:
     ScriptEditorWidgetImpl(ScriptEditorWidget* pQ, const std::string& title, const std::string& functionName, const std::string& defaultCode) : q{pQ}, m_functionName{functionName}, m_defaultCode{defaultCode}, ui{std::make_unique<Ui::ScriptEditorWidget>()}
     {
         ui->setupUi(q);
+        populateUi();
 
         q->setTitle(QString::fromStdString(title));
 
@@ -48,7 +50,18 @@ public:
     {
     }
 
+    void onLanguageChange()
+    {
+        ui->retranslateUi(q);
+        populateUi();
+    }
+
 private:
+    void populateUi()
+    {
+
+    }
+
     ScriptEditorWidget* q;
     std::unique_ptr<Ui::ScriptEditorWidget> ui;
     const std::string m_functionName;
@@ -61,6 +74,14 @@ ScriptEditorWidget::ScriptEditorWidget(const std::string& title, const std::stri
 
 ScriptEditorWidget::~ScriptEditorWidget()
 {
+}
+
+void ScriptEditorWidget::changeEvent(QEvent* event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        d->onLanguageChange();
+    }
+    QGroupBox::changeEvent(event);
 }
 
 }

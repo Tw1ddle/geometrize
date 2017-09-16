@@ -5,6 +5,8 @@
 #include <QGroupBox>
 #include <QString>
 
+class QEvent;
+
 namespace geometrize
 {
 
@@ -36,6 +38,9 @@ signals:
      * @param code The default Chaiscript code.
      */
     void signal_scriptReset(ScriptEditorWidget* self, const std::string& code);
+
+protected:
+    void changeEvent(QEvent*) override;
 
 private:
     class ScriptEditorWidgetImpl;
