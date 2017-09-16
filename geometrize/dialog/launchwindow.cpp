@@ -33,10 +33,10 @@ public:
         ui->consoleWidget->setVisible(false);
         ui->consoleWidget->setEngine(m_engine.get());
 
-        const QString moreResourcesLabel{tr("Get more online")};
+        const QString moreResourcesLabel{tr("Get more online", "Text on a button the user presses to open a page containing more resources for using the app, such as extra images, information and help")};
         ui->moreResourcesLink->setText(R"(<a href=")" + constants::MORE_RESOURCES_URL + R"(" style="text-decoration:none;">)" + moreResourcesLabel + R"(</a>)");
 
-        const QString tutorialsLabel{tr("Video tutorials")};
+        const QString tutorialsLabel{tr("Video tutorials", "Text on a button the user presses to open a page containing video tutorials explaining how to use the app")};
         ui->tutorialsLink->setText(R"(<a href=")" + constants::VIDEO_TUTORIAL_URL + R"(" style="text-decoration:none;">)" + tutorialsLabel + R"(</a>)");
 
         if(preferences::getGlobalPreferences().shouldPopulateRecentItemsOnLaunch()) {
@@ -147,7 +147,7 @@ private:
 
                 m_logoTaskShapeCount += results.size();
                 m_logoTaskStepCount += 1;
-                const QString logoToolTip{tr("Logo: %1 shapes added in %2 steps").arg(QString::number(m_logoTaskShapeCount)).arg(m_logoTaskStepCount)};
+                const QString logoToolTip{tr("%1/%2 shapes", "Text showing the number of shapes that have been created to replicate an image so far e.g. 230/300 shapes").arg(QString::number(m_logoTaskShapeCount)).arg(m_logoTaskStepCount)};
                 ui->logoLabel->setToolTip(logoToolTip);
 
                 m_logoTaskSteps++;

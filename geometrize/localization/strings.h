@@ -41,13 +41,6 @@ public:
     static QString getCopyrightNotice();
 
     /**
-     * @brief getShapeTypeNameSingular Gets the singular name of the shape for the given shape type.
-     * @param shapeType The type of shape whose name will be returned.
-     * @return The name of the shape for the given shape type e.g. RECTANGLE type returns "Rectangle".
-     */
-    static QString getShapeTypeNameSingular(geometrize::ShapeTypes shapeType);
-
-    /**
      * @brief getShapeTypeNamePlural Gets the plural name of the shape for the given shape type.
      * @param shapeType The type of shape whose name will be returned.
      * @return The name of the shape for the given shape type e.g. RECTANGLE type returns "Rectangles".

@@ -15,9 +15,9 @@ namespace script
 
 void runScript(const std::string& code, chaiscript::ChaiScript& runner)
 {
-    const QString errorTitle{QCoreApplication::translate("Script evaluation error dialog title", "Script evaluation failure")};
-    const QString errorPreamble{QCoreApplication::translate("Script evaluation error message", "Could not evaluate script: %1")};
-    const QString unknownError{QCoreApplication::translate("Script evaluation unknown error", "Unknown script evaluation error")};
+    const QString errorTitle{QCoreApplication::translate("Script evaluation error dialog title", "Script evaluation failure", "Title of an error message dialog shown when the app fails to run a script")};
+    const QString errorPreamble{QCoreApplication::translate("Script evaluation error message", "Could not evaluate script: %1", "Error message text shown when the app fails to run a script")};
+    const QString unknownError{QCoreApplication::translate("Script evaluation unknown error", "Unknown script evaluation error", "Error message shown when the app fails to run a script, and has no additional information about the error")};
 
     try {
         runner.eval(code);

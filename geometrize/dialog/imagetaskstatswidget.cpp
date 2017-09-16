@@ -38,14 +38,13 @@ public:
     {
         switch(status) {
         case ImageTaskStatsWidget::ImageTaskStatus::STOPPED:
-            ui->currentStateValueLabel->setText(tr("Idle"));
+            ui->currentStateValueLabel->setText(tr("Idle", "Text shown on a button when the app is not actively turning images into shapes. That is, the app is idle/not doing anything"));
             break;
         case ImageTaskStatsWidget::ImageTaskStatus::RUNNING:
-            ui->currentStateValueLabel->setText(tr("Running"));
+            ui->currentStateValueLabel->setText(tr("Running", "Text shown on a button when the app is actively turning images into shapes. That is, the app is running in the sense of being busy working/processing"));
             break;
         default:
             assert(0 && "Unknown image task status set");
-            ui->currentStateValueLabel->setText(tr("Unknown"));
         }
     }
 
@@ -62,7 +61,7 @@ public:
 
     void setImageDimensions(const std::uint32_t width, const std::uint32_t height)
     {
-        const QString imageDimensionsText{tr("%1x%2").arg(width).arg(height)};
+        const QString imageDimensionsText{tr("%1x%2", "Dimensions of an image e.g. width-x-height, 1024x800").arg(width).arg(height)};
         ui->imageDimensionsValueLabel->setText(imageDimensionsText);
     }
 

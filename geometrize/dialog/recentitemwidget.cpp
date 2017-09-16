@@ -53,31 +53,31 @@ public:
     {
         QMenu itemContextMenu;
 
-        QAction openAction(tr("Open"));
+        QAction openAction(tr("Open", "Text on a menu item the user presses to open a file/image"));
         itemContextMenu.addAction(&openAction);
         connect(&openAction, &QAction::triggered, [this]() {
             geometrize::util::openTasks({m_item.getKey()}, false);
         });
 
-        QAction openInDefaultViewer(tr("Open in viewer"));
+        QAction openInDefaultViewer(tr("Open in viewer", "Text on a menu item the user presses to open an image/piece of media in a viewer"));
         itemContextMenu.addAction(&openInDefaultViewer);
         connect(&openInDefaultViewer, &QAction::triggered, [this]() {
             geometrize::util::openInDefaultApplication(m_item.getKey().toStdString());
         });
 
-        QAction revealInDefaultExplorer(tr("Reveal in explorer"));
+        QAction revealInDefaultExplorer(tr("Reveal in file explorer", "Text on a menu item the user presses to open an image/piece of media in a file viewer/explorer"));
         itemContextMenu.addAction(&revealInDefaultExplorer);
         connect(&revealInDefaultExplorer, &QAction::triggered, [this]() {
             geometrize::util::revealInDefaultApplication(m_item.getKey().toStdString());
         });
 
-        QAction copyToClipboard(tr("Copy path to clipboard"));
+        QAction copyToClipboard(tr("Copy file path to clipboard", "Text on a menu item the user selects to copy a file path to the copy-paste clipboard"));
         itemContextMenu.addAction(&copyToClipboard);
         connect(&copyToClipboard, &QAction::triggered, [this]() {
             geometrize::util::setGlobalClipboardText(m_item.getKey().toStdString());
         });
 
-        QAction removalAction(tr("Remove from list"));
+        QAction removalAction(tr("Remove from list", "Text on a menu item the user presses to remove an item from a list of items"));
         itemContextMenu.addAction(&removalAction);
         connect(&removalAction, &QAction::triggered, [this]() {
             geometrize::getRecentItems().remove(m_item.getKey());

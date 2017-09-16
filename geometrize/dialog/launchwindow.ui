@@ -488,7 +488,7 @@
                  <x>0</x>
                  <y>0</y>
                  <width>834</width>
-                 <height>549</height>
+                 <height>548</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -558,7 +558,7 @@
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>File</string>
+     <string extracomment="The title of the File menu that contains commands relating to the handling of files, such as open, save, print, etc">File</string>
     </property>
     <addaction name="actionClear_Recents"/>
     <addaction name="actionGlobal_Preferences"/>
@@ -568,7 +568,7 @@
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
-     <string>Help</string>
+     <string extracomment="The title of the Help menu that contains links to content to help users, such as tutorial videos">Help</string>
     </property>
     <addaction name="actionTutorials"/>
     <addaction name="actionSupport"/>
@@ -576,7 +576,7 @@
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
-     <string>View</string>
+     <string extracomment="The title of the View menu that contains commands relating to the handling of visual elements, such as the size and visibility of windows and dialogs within the app">View</string>
     </property>
     <addaction name="actionScript_Console"/>
    </widget>
@@ -586,27 +586,27 @@
   </widget>
   <action name="actionClear_Recents">
    <property name="text">
-    <string>Clear Recent Items</string>
+    <string extracomment="Text on a menu item that clears a list of recently loaded files when pressed">Clear Recent Items</string>
    </property>
   </action>
   <action name="actionExit">
    <property name="text">
-    <string>Exit</string>
+    <string extracomment="Text on a menu item that closes the window when pressed">Exit</string>
    </property>
   </action>
   <action name="actionTutorials">
    <property name="text">
-    <string>Tutorials</string>
+    <string extracomment="Text on a menu item that opens the tutorials page when pressed">Tutorials</string>
    </property>
   </action>
   <action name="actionSupport">
    <property name="text">
-    <string>Support</string>
+    <string extracomment="Text on a menu item that opens the customer support/help page when pressed">Support</string>
    </property>
   </action>
   <action name="actionAbout">
    <property name="text">
-    <string>About</string>
+    <string extracomment="Text on a menu item that opens the About page with information about the app when pressed">About</string>
    </property>
   </action>
   <action name="actionScript_Console">
@@ -614,22 +614,22 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Script Console</string>
+    <string extracomment="Text on a menu item that shows or hides the script console when pressed">Script Console</string>
    </property>
   </action>
   <action name="actionGlobal_Preferences">
    <property name="text">
-    <string>Global Preferences</string>
+    <string extracomment="Text on a menu item that opens the application-wide/global preferences page">Global Preferences</string>
    </property>
   </action>
   <action name="actionLoad_Global_Preferences">
    <property name="text">
-    <string>Load Global Preferences</string>
+    <string extracomment="Text on a menu item that opens a dialog that allows the user to load a file containing application-wide/global preferences page">Load Global Preferences</string>
    </property>
   </action>
   <action name="actionSave_Global_Preferences">
    <property name="text">
-    <string>Save Global Preferences</string>
+    <string extracomment="Text on a menu item that opens a dialog that allows the user to save a file containing the current application-wide/global preferences page">Save Global Preferences</string>
    </property>
   </action>
  </widget>
@@ -658,8 +658,8 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../resources/icons.qrc"/>
   <include location="../../resources/logos.qrc"/>
+  <include location="../../resources/icons.qrc"/>
  </resources>
  <connections/>
 </ui>

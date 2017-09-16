@@ -13,7 +13,7 @@ QString Strings::getApplicationName()
 
 QString Strings::getShortApplicationDescription()
 {
-    return tr("Geometrize recreates your photos using simple geometric shapes, transforming them into unique artwork.", "This is a short description of what this application is and does.");
+    return tr("Geometrize recreates your photos using simple geometric shapes, transforming them into unique artwork.", "This is a short description for what this application is and what it does.");
 }
 
 QString Strings::getCopyrightNotice()
@@ -21,55 +21,29 @@ QString Strings::getCopyrightNotice()
     return tr("Copyright 2015-2017 Sam Twidale", "This is the copyright notice of the application.");
 }
 
-QString Strings::getShapeTypeNameSingular(const geometrize::ShapeTypes shapeType)
-{
-    switch(shapeType) {
-    case geometrize::ShapeTypes::RECTANGLE:
-        return tr("Rectangle");
-    case geometrize::ShapeTypes::ROTATED_RECTANGLE:
-        return tr("Rotated Rectangle");
-    case geometrize::ShapeTypes::TRIANGLE:
-        return tr("Triangle");
-    case geometrize::ShapeTypes::ELLIPSE:
-        return tr("Ellipse");
-    case geometrize::ShapeTypes::ROTATED_ELLIPSE:
-        return tr("Rotated Ellipse");
-    case geometrize::ShapeTypes::CIRCLE:
-        return tr("Circle");
-    case geometrize::ShapeTypes::LINE:
-        return tr("Line");
-    case geometrize::ShapeTypes::QUADRATIC_BEZIER:
-        return tr("Quadratic Bezier");
-    case geometrize::ShapeTypes::POLYLINE:
-        return tr("Polyline");
-    default:
-        return tr("Unknown Shape");
-    }
-}
-
 QString Strings::getShapeTypeNamePlural(const geometrize::ShapeTypes shapeType)
 {
     switch(shapeType) {
     case geometrize::ShapeTypes::RECTANGLE:
-        return tr("Rectangles");
+        return tr("Rectangles", "Plural form of rectangle geometric shape");
     case geometrize::ShapeTypes::ROTATED_RECTANGLE:
-        return tr("Rotated Rectangles");
+        return tr("Rotated Rectangles", "Plural form of rectangle geometric shape. These rectangles are rotated through an angle (0-360 degrees)");
     case geometrize::ShapeTypes::TRIANGLE:
-        return tr("Triangles");
+        return tr("Triangles", "Plural form of triangle geometric shape");
     case geometrize::ShapeTypes::ELLIPSE:
-        return tr("Ellipses");
+        return tr("Ellipses", "Plural form of ellipse/ellipsoid geometric shape");
     case geometrize::ShapeTypes::ROTATED_ELLIPSE:
-        return tr("Rotated Ellipses");
+        return tr("Rotated Ellipses", "Plural form of ellipse geometric shape. These ellipses are rotated through an angle (0-360 degrees)");
     case geometrize::ShapeTypes::CIRCLE:
-        return tr("Circles");
+        return tr("Circles", "Plural form of circle/circular geometric shape");
     case geometrize::ShapeTypes::LINE:
-        return tr("Lines");
+        return tr("Lines", "Plural form of the simple line geometric shape");
     case geometrize::ShapeTypes::QUADRATIC_BEZIER:
-        return tr("Quadratic Beziers");
+        return tr("Quadratic Beziers", "Plural form of quadratic bezier curve geometric shape");
     case geometrize::ShapeTypes::POLYLINE:
-        return tr("Polylines");
+        return tr("Polylines", "Plural form of the polyline geometric shape (multiple line segments joined together)");
     default:
-        return tr("Unknown Shapes");
+        return tr("Unknown Shapes", "Plural form of an unknown type of shapes");
     }
 }
 

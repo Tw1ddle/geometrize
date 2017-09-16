@@ -28,7 +28,6 @@ QString openSaveImagePathPickerDialog(QWidget* parent);
 QString openSaveSVGPathPickerDialog(QWidget* parent);
 QString openSaveRasterizedSVGPathPickerDialog(QWidget* parent);
 QString openSaveRasterizedSVGsPathPickerDialog(QWidget* parent);
-QString openSaveBitmapPathPickerDialog(QWidget* parent);
 QString openSaveGeometryDataPathPickerDialog(QWidget* parent);
 QString openSaveGIFPathPickerDialog(QWidget* parent);
 QString openSaveCanvasPathPickerDialog(QWidget* parent);
@@ -44,7 +43,6 @@ QString openLoadImageTaskSettingsDialog(QWidget* parent);
 QString openSaveImageTaskSettingsDialog(QWidget* parent);
 QString openLoadGlobalSettingsDialog(QWidget* parent);
 QString openSaveGlobalSettingsDialog(QWidget* parent);
-QString openBaseImagePickerDialog(QWidget* parent);
 QString openTargetImagePickerDialog(QWidget* parent);
 
 }

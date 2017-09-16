@@ -22,10 +22,9 @@ public:
         ui->setupUi(q);
 
         ui->outputView->append("ChaiScript " + QString(chaiscript::compiler_name));
-        ui->outputView->append(tr("Type 'help' for a list of commands"));
+        ui->outputView->append(tr("Type 'help' in console for a list of commands", "Instructional text shown in the command/scripting console"));
 
         connect(ui->commandLine, &geometrize::dialog::CommandLineEdit::signal_commandSubmitted, [this](const std::string& command) {
-            // TODO refactor so the real CLI uses this function with a REPL-like setup
 
             ui->outputView->append(QString::fromStdString(command));
 

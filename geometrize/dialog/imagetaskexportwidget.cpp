@@ -192,7 +192,8 @@ public:
 private:
     void showExportMisconfiguredMessage() const
     {
-        QMessageBox::warning(q, q->tr("Export failed"), q->tr("Failed to run exporter. Exporter was misconfigured."));
+        QMessageBox::warning(q, tr("Failed to run exporter", "Title of error message shown when an attempt to save/export a file failed"),
+                             tr("Failed to run exporter. Exporter was misconfigured.", "Error message text shown when an attempt to save/export a file failed"));
     }
 
     const geometrize::task::ImageTask* m_task;

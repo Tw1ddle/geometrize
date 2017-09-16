@@ -135,7 +135,7 @@ public:
                 }
             });
 
-            q->setWindowTitle(tr("Geometrize - Image - %1").arg(QString::fromStdString(currentTask->getDisplayName())));
+            q->setWindowTitle(geometrize::strings::Strings::getApplicationName().append(" ").append(QString::fromStdString(currentTask->getDisplayName())));
 
             setupOverlayImages();
             currentTask->drawBackgroundRectangle();
@@ -164,12 +164,13 @@ public:
             const auto targetWidth{target.getWidth()};
             const auto targetHeight{target.getHeight()};
             if(targetWidth != image.width() || targetHeight != image.height()) {
-                const QString selectedImageSize(tr("%1x%2").arg(image.width()).arg(image.height()));
-                const QString targetImageSize(tr("%1x%2").arg(targetWidth).arg(targetHeight));
+                const QString selectedImageSize(tr("%1x%2", "Dimensions of an image e.g. width-x-height, 1024x800").arg(image.width()).arg(image.height()));
+                const QString targetImageSize(tr("%1x%2", "Dimensions of an image e.g. width-x-height, 1024x800").arg(targetWidth).arg(targetHeight));
                 QMessageBox::warning(
                             q,
-                            tr("Failed to set target image"),
-                            tr("Selected image must have the same dimensions as the current target image. Size was %1, but should have been %2").arg(selectedImageSize).arg(targetImageSize));
+                            tr("Image has incorrect dimensions", "Title of an error dialog shown when the user selects an image that was the wrong resolution/size"),
+                            tr("Selected image must have the same dimensions as the current target image. Size was %1, but should have been %2",
+                               "Error message shown when the user selects an image that was the wrong resolution/size").arg(selectedImageSize).arg(targetImageSize));
 
                 return;
             }
@@ -203,10 +204,10 @@ public:
 
             // Toggle running button text and request another image task step if running started
             if(!isRunning()) {
-                ui->imageTaskRunnerWidget->setRunStopButtonText(tr("Start"));
+                ui->imageTaskRunnerWidget->setRunStopButtonText(tr("Start", "Text on a button that the user presses to make the app start/begin transforming an image into shapes"));
             } else {
                 stepModel();
-                ui->imageTaskRunnerWidget->setRunStopButtonText(tr("Stop"));
+                ui->imageTaskRunnerWidget->setRunStopButtonText(tr("Stop", "Text on a button that the user presses to make the app stop/pause transforming an image into shapes"));
             }
         });
         connect(ui->imageTaskRunnerWidget, &ImageTaskRunnerWidget::stepButtonClicked, [this]() {

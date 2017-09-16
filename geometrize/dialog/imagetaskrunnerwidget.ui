@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>299</width>
-    <height>366</height>
+    <height>414</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -59,7 +59,7 @@
        <item>
         <widget class="QLabel" name="candidateShapesPerStepCountLabel">
          <property name="text">
-          <string>0</string>
+          <string notr="true">0</string>
          </property>
         </widget>
        </item>
@@ -102,7 +102,7 @@
        <item>
         <widget class="QLabel" name="mutationsPerCandidateShapeCountLabel">
          <property name="text">
-          <string>0</string>
+          <string notr="true">0</string>
          </property>
         </widget>
        </item>
@@ -151,7 +151,7 @@
        <item>
         <widget class="QLabel" name="shapeOpacityValueLabel">
          <property name="text">
-          <string>0</string>
+          <string notr="true">0</string>
          </property>
         </widget>
        </item>
@@ -301,7 +301,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Quadratic Beziers</string>
+       <string extracomment="Plural form of quadratic bezier curve geometric shape">Quadratic Beziers</string>
       </property>
      </widget>
      <widget class="QCheckBox" name="usesEllipses">
@@ -314,7 +314,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Ellipses</string>
+       <string extracomment="Plural form of ellipse/ellipsoid geometric shape">Ellipses</string>
       </property>
      </widget>
      <widget class="QCheckBox" name="usesTriangles">

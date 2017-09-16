@@ -198,7 +198,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Copyright Notice</string>
+      <string notr="true">Copyright Notice</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>

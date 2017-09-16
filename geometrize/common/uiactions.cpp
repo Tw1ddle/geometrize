@@ -68,52 +68,72 @@ void openGlobalPreferences(QWidget* parent)
 
 QString openImagePathPickerDialog(QWidget* parent)
 {
-    return QFileDialog::getOpenFileName(parent, QWidget::tr("Open Image"), "", QWidget::tr("Image Files (*.jpg *.jpeg *.png *.bmp)", ""));
+    return QFileDialog::getOpenFileName(parent,
+                                        QWidget::tr("Open Image", "Title on a dialog that allows the user to open an image file"),
+                                        "",
+                                        QWidget::tr("Image Files (*.jpg *.jpeg *.png *.bmp)", "List of supported image file formats. The text in the parentheses must not be changed"));
 }
 
 QString openSaveImagePathPickerDialog(QWidget* parent)
 {
-    return QFileDialog::getSaveFileName(parent, QWidget::tr("Save Image"), "", QWidget::tr("JPEG Image (*.jpg *.jpeg);;PNG Image (*.png);;BMP Image (*.bmp);;PPM Image (*.ppm)"));
+    return QFileDialog::getSaveFileName(parent,
+                                        QWidget::tr("Save Image", "Title on a dialog that allows the user to save an image file"),
+                                        "",
+                                        QWidget::tr("JPEG Image (*.jpg *.jpeg);;PNG Image (*.png);;BMP Image (*.bmp);;PPM Image (*.ppm)", "List of supported image file formats. Semicolons and text in the parentheses must not be changed"));
 }
 
 QString openSaveSVGPathPickerDialog(QWidget* parent)
 {
-    return QFileDialog::getSaveFileName(parent, QWidget::tr("Save SVG Image"), "", QWidget::tr("SVG Image (*.svg)"));
+    return QFileDialog::getSaveFileName(parent,
+                                        QWidget::tr("Save SVG Image", "Title on a dialog that allows the user to save an SVG (scalable vector graphics) image file"),
+                                        "",
+                                        QWidget::tr("SVG Image (*.svg)", "List of supported vector-based image formats. The text in the parentheses must not be changed"));
 }
 
 QString openSaveRasterizedSVGPathPickerDialog(QWidget* parent)
 {
-    return QFileDialog::getSaveFileName(parent, QWidget::tr("Save Rasterized SVG Image"), "", QWidget::tr("Image Files (*.jpg *.jpeg *.png *.bmp)", ""));
+    return QFileDialog::getSaveFileName(parent,
+                                        QWidget::tr("Save Image", "Title on a dialog that allows the user to save an image file"),
+                                        "",
+                                        QWidget::tr("Image Files (*.jpg *.jpeg *.png *.bmp)", "List of supported image file formats. The text in the parentheses must not be changed"));
 }
 
 QString openSaveRasterizedSVGsPathPickerDialog(QWidget* parent)
 {
-    return QFileDialog::getExistingDirectory(parent, QWidget::tr("Save Rasterized SVG Images"), "");
-}
-
-QString openSaveBitmapPathPickerDialog(QWidget* parent)
-{
-    return QFileDialog::getSaveFileName(parent, QWidget::tr("Save Bitmap Image"), "", QWidget::tr("BMP Image (*.bmp)"));
+    return QFileDialog::getExistingDirectory(parent,
+                                             QWidget::tr("Save Images", "Title on a dialog that allows the user to save image files"));
 }
 
 QString openSaveGeometryDataPathPickerDialog(QWidget* parent)
 {
-    return QFileDialog::getSaveFileName(parent, QWidget::tr("Save Geometry Data"), "", QWidget::tr("JSON Data (*.json);;Text Array (*.txt)"));
+    return QFileDialog::getSaveFileName(parent,
+                                        QWidget::tr("Save Geometry Data", "Title on a dialog that allows the user to save geometric primitive data"),
+                                        "",
+                                        QWidget::tr("JSON Data (*.json);;Text Array (*.txt)", "List of supported data file formats. Semicolons and text in the parentheses must not be changed"));
 }
 
 QString openSaveGIFPathPickerDialog(QWidget* parent)
 {
-    return QFileDialog::getSaveFileName(parent, QWidget::tr("Save Animated GIF"), "", QWidget::tr("GIF Animation (*.gif)"));
+    return QFileDialog::getSaveFileName(parent,
+                                        QWidget::tr("Save Animated GIF", "Title on a dialog that allows the user to save an animated GIF file"),
+                                        "",
+                                        QWidget::tr("GIF Animation (*.gif)", "List of supported GIF file formats. The text in the parentheses must not be changed"));
 }
 
 QString openSaveCanvasPathPickerDialog(QWidget* parent)
 {
-    return QFileDialog::getSaveFileName(parent, QWidget::tr("Save HTML5 Canvas Webpage"), "", QWidget::tr("HTML Webpage (*.html)"));
+    return QFileDialog::getSaveFileName(parent,
+                                        QWidget::tr("Save HTML5 Webpage", "Title on a dialog that allows the user to save a HTML5-based webpage"),
+                                        "",
+                                        QWidget::tr("HTML Webpage (*.html)", "List of supported webpage formats. The text in the parentheses must not be changed"));
 }
 
 QString openSaveWebGLPathPickerDialog(QWidget* parent)
 {
-    return QFileDialog::getSaveFileName(parent, QWidget::tr("Save WebGL Webpage"), "", QWidget::tr("HTML Webpage (*.html)"));
+    return QFileDialog::getSaveFileName(parent,
+                                        QWidget::tr("Save WebGL Webpage", "Title on a dialog that allows the user to save a WebGL-based webpage"),
+                                        "",
+                                        QWidget::tr("HTML Webpage (*.html)", "List of supported webpage formats. The text in the parentheses must not be changed"));
 }
 
 QUrl openGetUrlDialog(QWidget* parent)
@@ -132,7 +152,10 @@ QString openGetScriptDialog(QWidget* parent)
 
 QString openSelectScriptDialog(QWidget* parent)
 {
-    return QFileDialog::getOpenFileName(parent, QWidget::tr("Select Script"), "", QWidget::tr("ChaiScript Files (*.chai)", ""));
+    return QFileDialog::getOpenFileName(parent,
+                                        QWidget::tr("Select Script", "Title on a dialog that allows the user to select a script file"),
+                                        "",
+                                        QWidget::tr("ChaiScript Files (*.chai)", "List of supported script file formats. The text in the parentheses must not be changed"));
 }
 
 void openTechnicalSupport()
@@ -152,32 +175,42 @@ void openMoreResourcesPage()
 
 QString openLoadImageTaskSettingsDialog(QWidget* parent)
 {
-    return QFileDialog::getOpenFileName(parent, QWidget::tr("Load Image Task Settings"), "", QWidget::tr("JSON Image Task Settings File (*.json)"));
+    return QFileDialog::getOpenFileName(parent,
+                                        QWidget::tr("Load Settings", "Title on a dialog that allows the user to select a settings file"),
+                                        "",
+                                        QWidget::tr("JSON Settings File (*.json)", "List of supported settings file formats. The text in the parentheses must not be changed"));
 }
 
 QString openSaveImageTaskSettingsDialog(QWidget* parent)
 {
-    return QFileDialog::getSaveFileName(parent, QWidget::tr("Save Image Task Settings"), "", QWidget::tr("JSON Image Task Settings File (*.json)"));
+    return QFileDialog::getSaveFileName(parent,
+                                        QWidget::tr("Save Settings", "Title on a dialog that allows the user to save a settings file"),
+                                        "",
+                                        QWidget::tr("JSON Settings File (*.json)", "List of supported settings file formats. The text in the parentheses must not be changed"));
 }
 
 QString openLoadGlobalSettingsDialog(QWidget* parent)
 {
-    return QFileDialog::getOpenFileName(parent, QWidget::tr("Load Global Settings"), "", QWidget::tr("JSON Global Settings File (*.json)"));
+    return QFileDialog::getOpenFileName(parent,
+                                        QWidget::tr("Load Settings", "Title on a dialog that allows the user to select a settings file"),
+                                        "",
+                                        QWidget::tr("JSON Settings File (*.json)", "List of supported settings file formats. The text in the parentheses must not be changed"));
 }
 
 QString openSaveGlobalSettingsDialog(QWidget* parent)
 {
-    return QFileDialog::getSaveFileName(parent, QWidget::tr("Save Global Settings"), "", QWidget::tr("JSON Global Settings File (*.json)"));
-}
-
-QString openBaseImagePickerDialog(QWidget* parent)
-{
-    return QFileDialog::getOpenFileName(parent, QWidget::tr("Select Base Image"), "", QWidget::tr("Image Files (*.jpg *.jpeg *.png *.bmp)", ""));
+    return QFileDialog::getSaveFileName(parent,
+                                        QWidget::tr("Save Settings", "Title on a dialog that allows the user to save a settings file"),
+                                        "",
+                                        QWidget::tr("JSON Settings File (*.json)", "List of supported settings file formats. The text in the parentheses must not be changed"));
 }
 
 QString openTargetImagePickerDialog(QWidget* parent)
 {
-    return QFileDialog::getOpenFileName(parent, QWidget::tr("Select Target Image"), "", QWidget::tr("Image Files (*.jpg *.jpeg *.png *.bmp)", ""));
+    return QFileDialog::getOpenFileName(parent,
+                                        QWidget::tr("Select Image", "Title on a dialog that allows the user to select an image file"),
+                                        "",
+                                        QWidget::tr("Image Files (*.jpg *.jpeg *.png *.bmp)", "List of supported image file formats. The text in the parentheses must not be changed"));
 }
 
 }

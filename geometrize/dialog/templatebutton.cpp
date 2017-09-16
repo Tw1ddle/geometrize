@@ -43,8 +43,8 @@ public:
 
             ui->imageLabel->setPixmap(QPixmap::fromImage(thumbnail));
 
-            const QString name{tr("Name: %1").arg(QString::fromStdString(m_manifest.getName()))};
-            const QString license{tr("License: %2").arg(QString::fromStdString(m_manifest.getLicense()))};
+            const QString name{tr("Name: %1", "Text on a label containing the name of an item, usually an image e.g. Name: The Mona Lisa").arg(QString::fromStdString(m_manifest.getName()))};
+            const QString license{tr("License: %2", "Text on a label containing the legal license a piece of media is under, usually an image e.g. License: Public Domain").arg(QString::fromStdString(m_manifest.getLicense()))};
             q->setToolTip(name + "<br>" + license);
         });
 
@@ -84,14 +84,14 @@ public:
     {
         QMenu itemContextMenu;
 
-        QAction openAction(tr("Open"));
+        QAction openAction(tr("Open", "Text on a menu item the user presses to open a file/image"));
         itemContextMenu.addAction(&openAction);
         connect(&openAction, &QAction::triggered, [this]() {
             openTemplate();
         });
 
         if(!m_templateFolder.startsWith(":")) { // Only if it's not an embedded resource
-            QAction openInDefaultViewer(tr("Reveal in explorer"));
+            QAction openInDefaultViewer(tr("Reveal in file explorer", "Text on a menu item the user presses to open an image/piece of media in a file viewer/explorer"));
             itemContextMenu.addAction(&openInDefaultViewer);
             connect(&openInDefaultViewer, &QAction::triggered, [this]() {
                 revealTemplateInExplorer();

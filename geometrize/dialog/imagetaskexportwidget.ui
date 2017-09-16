@@ -113,7 +113,7 @@
       <item>
        <widget class="QPushButton" name="saveGeometryDataButton">
         <property name="text">
-         <string>Save Geometry Data</string>
+         <string extracomment="Text on a button that opens a dialog that allows the user to save geometric shape data directly to a text file">Save Geometry Data</string>
         </property>
        </widget>
       </item>

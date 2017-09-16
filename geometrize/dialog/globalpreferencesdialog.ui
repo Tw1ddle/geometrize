@@ -143,7 +143,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="generalPreferencesPage">
        <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -372,7 +372,7 @@
                  <item>
                   <widget class="QLabel" name="resizeThresholdLabel">
                    <property name="toolTip">
-                    <string>Images larger than this will be scaled down</string>
+                    <string/>
                    </property>
                    <property name="text">
                     <string extracomment="A text label next to a pair of values that describe the maximum size an image can be without the image having to be scaled down and made smaller">Resize Threshold</string>

@@ -34,7 +34,7 @@ public:
     static QString getDisplayNameForTaskPath(const QUrl& url)
     {
         if(url.isEmpty()) {
-            return tr("Empty URL");
+            return "";
         }
 
         // Look for a filename first
