@@ -10,9 +10,6 @@
 namespace geometrize
 {
 
-const QString RecentItems::RECENTLY_OPENED_ITEMS_SETTINGS_GROUP = "recently_opened_items";
-const unsigned int RecentItems::MAX_RECENTLY_OPENED_ITEMS_COUNT = 75;
-
 class RecentItems::RecentItemsImpl
 {
 public:
@@ -221,6 +218,19 @@ void RecentItems::clear()
 {
     d->clearItems();
     emit signal_cleared();
+}
+
+/**
+ * @brief getRecentItems Gets a reference to the recent files list.
+ * @return The recent files list.
+ */
+RecentItems& getRecentItems()
+{
+    const QString recentlyOpenedItemsSettingsGroup = "recently_opened_items";
+    const unsigned int maxRecentlyOpenedItems = 75;
+
+    static geometrize::RecentItems items{recentlyOpenedItemsSettingsGroup, maxRecentlyOpenedItems};
+    return items;
 }
 
 }

@@ -5,7 +5,6 @@
 #include <QUrl>
 
 #include "common/constants.h"
-#include "common/sharedapp.h"
 #include "localization/strings.h"
 #include "preferences/globalpreferences.h"
 

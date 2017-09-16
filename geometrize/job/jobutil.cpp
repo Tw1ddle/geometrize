@@ -9,7 +9,6 @@
 #include "chaiscript/chaiscript.hpp"
 
 #include "common/formatsupport.h"
-#include "common/sharedapp.h"
 #include "common/util.h"
 #include "job/imagejob.h"
 #include "job/imagejobcreator.h"
@@ -33,7 +32,7 @@ void openJobs(const QStringList& urls, const bool addToRecents)
 
     if(addToRecents) {
         for(const QString& url : urls) {
-            common::app::SharedApp::get().getRecentFiles().add(url, url);
+            geometrize::getRecentItems().add(url, url);
         }
     }
 

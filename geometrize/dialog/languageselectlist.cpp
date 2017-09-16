@@ -5,7 +5,6 @@
 #include <QListWidgetItem>
 #include <QString>
 
-#include "common/sharedapp.h"
 #include "localization/localization.h"
 #include "preferences/globalpreferences.h"
 

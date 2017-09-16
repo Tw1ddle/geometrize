@@ -7,7 +7,6 @@
 
 #include "common/constants.h"
 #include "common/formatsupport.h"
-#include "common/sharedapp.h"
 #include "common/uiactions.h"
 #include "common/util.h"
 #include "job/imagejob.h"
@@ -41,7 +40,7 @@ public:
         ui->tutorialsLink->setText(R"(<a href=")" + constants::VIDEO_TUTORIAL_URL + R"(" style="text-decoration:none;">)" + tutorialsLabel + R"(</a>)");
 
         if(preferences::getGlobalPreferences().shouldPopulateRecentItemsOnLaunch()) {
-            ui->recentsList->setRecentItems(&common::app::SharedApp::get().getRecentFiles());
+            ui->recentsList->setRecentItems(&geometrize::getRecentItems());
         }
 
         loadConsoleHistory();
@@ -239,7 +238,7 @@ void LaunchWindow::on_actionSave_Global_Preferences_triggered()
 
 void LaunchWindow::on_actionClear_Recents_triggered()
 {
-    common::app::SharedApp::get().getRecentFiles().clear();
+    geometrize::getRecentItems().clear();
 }
 
 void LaunchWindow::on_actionExit_triggered()

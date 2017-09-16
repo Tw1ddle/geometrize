@@ -11,7 +11,6 @@
 #include "analytics/analyticswrapper.h"
 #include "cli/commandlineparser.h"
 #include "common/uiactions.h"
-#include "common/sharedapp.h"
 #include "localization/localization.h"
 #include "logger/logmessagehandlers.h"
 #include "preferences/globalpreferences.h"

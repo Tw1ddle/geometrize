@@ -10,7 +10,6 @@
 #include <QtConcurrent/QtConcurrentRun>
 
 #include "common/uiactions.h"
-#include "common/sharedapp.h"
 #include "common/util.h"
 #include "job/jobutil.h"
 #include "recents/recentitem.h"
@@ -81,7 +80,7 @@ public:
         QAction removalAction(tr("Remove from list"));
         itemContextMenu.addAction(&removalAction);
         connect(&removalAction, &QAction::triggered, [this]() {
-            geometrize::common::app::SharedApp::get().getRecentFiles().remove(m_item.getKey());
+            geometrize::getRecentItems().remove(m_item.getKey());
         });
 
         itemContextMenu.exec(e->globalPos());

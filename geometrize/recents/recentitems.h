@@ -17,9 +17,6 @@ class RecentItems : public QObject
 {
     Q_OBJECT
 public:
-    static const QString RECENTLY_OPENED_ITEMS_SETTINGS_GROUP; ///< The base path group for keeping track of recently opened items.
-    static const unsigned int MAX_RECENTLY_OPENED_ITEMS_COUNT; ///< The maximum number of recently opened items to keep track of.
-
     /**
      * @brief RecentItems Creates a new RecentItems instance.
      * @param group The base path group to use for storing the recent items in settings e.g. "recent_image_paths", "recent_video_names" etc.
@@ -80,5 +77,11 @@ private:
     class RecentItemsImpl;
     std::unique_ptr<RecentItemsImpl> d;
 };
+
+/**
+ * @brief getRecentItems Gets a reference to the app's recently opened files.
+ * @return A reference to the app's recently opened files.
+ */
+RecentItems& getRecentItems();
 
 }

@@ -3,7 +3,6 @@
 #include <QImage>
 #include <QSize>
 
-#include "common/sharedapp.h"
 #include "dialog/imagejobwindow.h"
 #include "imagejob.h"
 #include "image/imageloader.h"
