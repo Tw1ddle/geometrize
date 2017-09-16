@@ -352,7 +352,7 @@
              </spacer>
             </item>
             <item>
-             <widget class="geometrize::dialog::RecentJobsList" name="recentsList">
+             <widget class="geometrize::dialog::RecentTasksList" name="recentsList">
               <property name="sortingEnabled">
                <bool>true</bool>
               </property>
@@ -646,9 +646,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>geometrize::dialog::RecentJobsList</class>
+   <class>geometrize::dialog::RecentTasksList</class>
    <extends>QListWidget</extends>
-   <header>dialog/recentjobslist.h</header>
+   <header>dialog/recenttaskslist.h</header>
   </customwidget>
   <customwidget>
    <class>geometrize::dialog::TemplateGrid</class>

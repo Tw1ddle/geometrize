@@ -54,43 +54,43 @@ public:
 
     void setShowVectorResultsByDefault(const bool enabled)
     {
-        getPrefs().setShouldShowImageJobVectorViewByDefault(enabled);
+        getPrefs().setShouldShowImageTaskVectorViewByDefault(enabled);
     }
 
     void setShowPixmapResultsByDefault(const bool enabled)
     {
-        getPrefs().setShouldShowImageJobPixmapViewByDefault(enabled);
+        getPrefs().setShouldShowImageTaskPixmapViewByDefault(enabled);
     }
 
-    void setShowImageJobConsoleByDefault(const bool enabled)
+    void setShowImageTaskConsoleByDefault(const bool enabled)
     {
-        getPrefs().setShouldShowImageJobConsoleByDefault(enabled);
+        getPrefs().setShouldShowImageTaskConsoleByDefault(enabled);
     }
 
     void setShowScriptEditorsByDefault(const bool enabled)
     {
-        getPrefs().setShouldShowImageJobScriptEditorByDefault(enabled);
+        getPrefs().setShouldShowImageTaskScriptEditorByDefault(enabled);
     }
 
-    void setImageJobImageResize(const bool enabled)
+    void setImageTaskImageResize(const bool enabled)
     {
-        getPrefs().setImageJobImageResizeEnabled(enabled);
+        getPrefs().setImageTaskImageResizeEnabled(enabled);
     }
 
-    void setImageJobImageResizeThresholdWidth(const int width)
+    void setImageTaskImageResizeThresholdWidth(const int width)
     {
-        getPrefs().setImageJobResizeThreshold(width, getPrefs().getImageJobResizeThreshold().second);
+        getPrefs().setImageTaskResizeThreshold(width, getPrefs().getImageTaskResizeThreshold().second);
     }
 
-    void setImageJobImageResizeThresholdHeight(const int height)
+    void setImageTaskImageResizeThresholdHeight(const int height)
     {
-        getPrefs().setImageJobResizeThreshold(getPrefs().getImageJobResizeThreshold().first, height);
+        getPrefs().setImageTaskResizeThreshold(getPrefs().getImageTaskResizeThreshold().first, height);
     }
 
-    void setMaxThreadsPerImageJob(const int value)
+    void setMaxThreadsPerImageTask(const int value)
     {
         assert(value >= 0);
-        getPrefs().setImageJobMaxThreads(static_cast<unsigned int>(value));
+        getPrefs().setImageTaskMaxThreads(static_cast<unsigned int>(value));
     }
 
 private:
@@ -108,15 +108,15 @@ private:
         ui->populateTemplates->setChecked(prefs.shouldPopulateTemplatesOnLaunch());
 
         ui->showLaunchWindowConsoleByDefault->setChecked(prefs.shouldShowLaunchConsoleByDefault());
-        ui->showVectorResultsByDefault->setChecked(prefs.shouldShowImageJobVectorViewByDefault());
-        ui->showPixmapResultsByDefault->setChecked(prefs.shouldShowImageJobPixmapViewByDefault());
-        ui->showImageJobConsoleByDefault->setChecked(prefs.shouldShowImageJobConsoleByDefault());
-        ui->showScriptEditorsByDefault->setChecked(prefs.shouldShowImageJobScriptEditorByDefault());
+        ui->showVectorResultsByDefault->setChecked(prefs.shouldShowImageTaskVectorViewByDefault());
+        ui->showPixmapResultsByDefault->setChecked(prefs.shouldShowImageTaskPixmapViewByDefault());
+        ui->showImageTaskConsoleByDefault->setChecked(prefs.shouldShowImageTaskConsoleByDefault());
+        ui->showScriptEditorsByDefault->setChecked(prefs.shouldShowImageTaskScriptEditorByDefault());
 
-        ui->imageResize->setChecked(prefs.isImageJobImageResizeEnabled());
-        ui->resizeWidth->setValue(prefs.getImageJobResizeThreshold().first);
-        ui->resizeHeight->setValue(prefs.getImageJobResizeThreshold().second);
-        ui->maxThreadsPerImageJob->setValue(prefs.getImageJobMaxThreads());
+        ui->imageResize->setChecked(prefs.isImageTaskImageResizeEnabled());
+        ui->resizeWidth->setValue(prefs.getImageTaskResizeThreshold().first);
+        ui->resizeHeight->setValue(prefs.getImageTaskResizeThreshold().second);
+        ui->maxThreadsPerImageTask->setValue(prefs.getImageTaskMaxThreads());
     }
 
     GlobalPreferencesDialog* q;
@@ -161,9 +161,9 @@ void GlobalPreferencesDialog::on_showPixmapResultsByDefault_toggled(const bool c
     d->setShowPixmapResultsByDefault(checked);
 }
 
-void GlobalPreferencesDialog::on_showImageJobConsoleByDefault_toggled(const bool checked)
+void GlobalPreferencesDialog::on_showImageTaskConsoleByDefault_toggled(const bool checked)
 {
-    d->setShowImageJobConsoleByDefault(checked);
+    d->setShowImageTaskConsoleByDefault(checked);
 }
 
 void GlobalPreferencesDialog::on_showScriptEditorsByDefault_toggled(const bool checked)
@@ -173,22 +173,22 @@ void GlobalPreferencesDialog::on_showScriptEditorsByDefault_toggled(const bool c
 
 void GlobalPreferencesDialog::on_imageResize_toggled(const bool checked)
 {
-    d->setImageJobImageResize(checked);
+    d->setImageTaskImageResize(checked);
 }
 
 void GlobalPreferencesDialog::on_resizeWidth_valueChanged(const int value)
 {
-    d->setImageJobImageResizeThresholdWidth(value);
+    d->setImageTaskImageResizeThresholdWidth(value);
 }
 
 void GlobalPreferencesDialog::on_resizeHeight_valueChanged(const int value)
 {
-    d->setImageJobImageResizeThresholdHeight(value);
+    d->setImageTaskImageResizeThresholdHeight(value);
 }
 
-void GlobalPreferencesDialog::on_maxThreadsPerImageJob_valueChanged(const int value)
+void GlobalPreferencesDialog::on_maxThreadsPerImageTask_valueChanged(const int value)
 {
-    d->setMaxThreadsPerImageJob(value);
+    d->setMaxThreadsPerImageTask(value);
 }
 
 }

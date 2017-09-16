@@ -35,9 +35,9 @@ public:
     void onLaunch();
 
     /**
-     * @brief onLogoImageJobFinished Event recorded when the image job embedded in the lauch image completes.
+     * @brief onLogoImageTaskFinished Event recorded when the image task embedded in the lauch image completes.
      */
-    void onLogoImageJobFinished(int shapeCount, float durationMs);
+    void onLogoImageTaskFinished(int shapeCount, float durationMs);
 
 private:
     Analytics m_analytics;

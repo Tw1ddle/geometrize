@@ -46,7 +46,7 @@ std::unique_ptr<chaiscript::ChaiScript> createLaunchWindowEngine()
     return chai;
 }
 
-std::unique_ptr<chaiscript::ChaiScript> createImageJobEngine()
+std::unique_ptr<chaiscript::ChaiScript> createImageTaskEngine()
 {
     std::unique_ptr<chaiscript::ChaiScript> chai = std::make_unique<chaiscript::ChaiScript>();
 
@@ -54,7 +54,7 @@ std::unique_ptr<chaiscript::ChaiScript> createImageJobEngine()
     chai->add(createGeometrizeLibraryBindings());
 
     chai->add(createImageBindings());
-    chai->add(createImageJobBindings());
+    chai->add(createImageTaskBindings());
     chai->add(createImageExportBindings());
 
     addPrintRedirect(chai);

@@ -29,7 +29,7 @@ void sleep(std::size_t ms);
 std::vector<std::string> getEngineFunctionNames(const chaiscript::ChaiScript& engine);
 
 /**
- * @brief getDefaultScripts Gets a map of the default scripts used for shape creation and mutation in image jobs.
+ * @brief getDefaultScripts Gets a map of the default scripts used for shape creation and mutation in image tasks.
  * @return A map of Chaiscript script function names to function bodies.
  */
 std::map<std::string, std::string> getDefaultScripts();

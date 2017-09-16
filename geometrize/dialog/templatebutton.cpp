@@ -13,8 +13,8 @@
 
 #include "common/formatsupport.h"
 #include "common/util.h"
-#include "job/jobutil.h"
 #include "manifest/templatemanifest.h"
+#include "task/taskutil.h"
 
 namespace geometrize
 {

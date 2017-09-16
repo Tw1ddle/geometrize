@@ -9,10 +9,10 @@
 #include "chaiscript/chaiscript.hpp"
 
 #include "common/util.h"
-#include "job/jobutil.h"
 #include "localization/strings.h"
 #include "script/chaiscriptcreator.h"
 #include "script/scriptrunner.h"
+#include "task/taskutil.h"
 
 namespace
 {
@@ -67,12 +67,12 @@ void handleCommandLineArguments(QCommandLineParser& parser)
         const QString scriptPath{parser.value(scriptFileFlag)};
         const std::string code{geometrize::util::readFileAsString(scriptPath.toStdString())};
 
-        std::unique_ptr<chaiscript::ChaiScript> engine{geometrize::script::createImageJobEngine()};
+        std::unique_ptr<chaiscript::ChaiScript> engine{geometrize::script::createImageTaskEngine()};
         geometrize::script::runScript(code, *engine);
     } else if(parser.isSet(scriptSourceFlag)) {
         const std::string code{parser.value(scriptSourceFlag).toStdString()};
 
-        std::unique_ptr<chaiscript::ChaiScript> engine{geometrize::script::createImageJobEngine()};
+        std::unique_ptr<chaiscript::ChaiScript> engine{geometrize::script::createImageTaskEngine()};
         geometrize::script::runScript(code, *engine);
     }
 }

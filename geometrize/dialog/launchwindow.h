@@ -12,7 +12,7 @@ namespace dialog
 {
 
 /**
- * @brief The LaunchWindow class models the UI for a launchpad for opening new job templates and recent jobs.
+ * @brief The LaunchWindow class models the UI for a launchpad for opening new task templates and recent tasks.
  */
 class LaunchWindow : public QMainWindow
 {

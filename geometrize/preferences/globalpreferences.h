@@ -99,14 +99,14 @@ public:
     void setShouldPopulateRecentItemsOnLaunch(bool populateRecents);
 
     /**
-     * @brief shouldPopulateTemplatesOnLaunch Gets the preference for whether to populate the job templates on the launch window on launch.
-     * @return Whether to populate the job templates on the launch window on launch.
+     * @brief shouldPopulateTemplatesOnLaunch Gets the preference for whether to populate the task templates on the launch window on launch.
+     * @return Whether to populate the task templates on the launch window on launch.
      */
     bool shouldPopulateTemplatesOnLaunch() const;
 
     /**
-     * @brief setShouldPopulateTemplatesOnLaunch Sets the preference for whether to populate the job templates on the launch window on launch.
-     * @param populateTemplates Whether to populate the job templates on the launch window on app launch.
+     * @brief setShouldPopulateTemplatesOnLaunch Sets the preference for whether to populate the task templates on the launch window on launch.
+     * @param populateTemplates Whether to populate the task templates on the launch window on app launch.
      */
     void setShouldPopulateTemplatesOnLaunch(bool populateTemplates);
 
@@ -123,89 +123,89 @@ public:
     void setShouldShowLaunchConsoleByDefault(bool showConsole);
 
     /**
-     * @brief shouldShowImageJobVectorViewByDefault Gets the preference for whether to show the image job vector/SVG view when the window is opened.
-     * @return Whether to show the image job vector/SVG view when the window is opened.
+     * @brief shouldShowImageTaskVectorViewByDefault Gets the preference for whether to show the image task vector/SVG view when the window is opened.
+     * @return Whether to show the image task vector/SVG view when the window is opened.
      */
-    bool shouldShowImageJobVectorViewByDefault() const;
+    bool shouldShowImageTaskVectorViewByDefault() const;
 
     /**
-     * @brief setShouldShowImageJobVectorViewByDefault Sets the preference for whether to show the image job vector/SVG view when the window is opened.
-     * @param showVectorView Whether to show the image job vector/SVG view when the window is opened.
+     * @brief setShouldShowImageTaskVectorViewByDefault Sets the preference for whether to show the image task vector/SVG view when the window is opened.
+     * @param showVectorView Whether to show the image task vector/SVG view when the window is opened.
      */
-    void setShouldShowImageJobVectorViewByDefault(bool showVectorView);
+    void setShouldShowImageTaskVectorViewByDefault(bool showVectorView);
 
     /**
-     * @brief shouldShowImageJobConsoleByDefault Gets the preference for whether to show the console on the image job window when the window is opened.
-     * @return Whether to show the console on the image job window when the window is opened.
+     * @brief shouldShowImageTaskConsoleByDefault Gets the preference for whether to show the console on the image task window when the window is opened.
+     * @return Whether to show the console on the image task window when the window is opened.
      */
-    bool shouldShowImageJobConsoleByDefault() const;
+    bool shouldShowImageTaskConsoleByDefault() const;
 
     /**
-     * @brief setShouldShowImageJobConsoleByDefault Sets the preference for whether to show the console on the image job window when the window is opened.
-     * @param showConsole Whether to show the console on the image job window when the window is opened.
+     * @brief setShouldShowImageTaskConsoleByDefault Sets the preference for whether to show the console on the image task window when the window is opened.
+     * @param showConsole Whether to show the console on the image task window when the window is opened.
      */
-    void setShouldShowImageJobConsoleByDefault(bool showConsole);
+    void setShouldShowImageTaskConsoleByDefault(bool showConsole);
 
     /**
-     * @brief shouldShowImageJobScriptEditorByDefault Gets the preference for whether to open the script editor when an image job window is opened.
-     * @return Whether to open the script editor when the image job window is opened.
+     * @brief shouldShowImageTaskScriptEditorByDefault Gets the preference for whether to open the script editor when an image task window is opened.
+     * @return Whether to open the script editor when the image task window is opened.
      */
-    bool shouldShowImageJobScriptEditorByDefault() const;
+    bool shouldShowImageTaskScriptEditorByDefault() const;
 
     /**
-     * @brief setShouldShowImageJobScriptEditorByDefault Sets the preference for whether to open the script editor when an image job window is opened.
-     * @param showScriptEditor Whether to open the script editor when an image job window is opened.
+     * @brief setShouldShowImageTaskScriptEditorByDefault Sets the preference for whether to open the script editor when an image task window is opened.
+     * @param showScriptEditor Whether to open the script editor when an image task window is opened.
      */
-    void setShouldShowImageJobScriptEditorByDefault(bool showScriptEditor);
+    void setShouldShowImageTaskScriptEditorByDefault(bool showScriptEditor);
 
     /**
-     * @brief shouldShowImageJobPixmapViewByDefault Gets the preference for whether to show the image job pixmap/raster view when the window is opened.
-     * @return Whether to show the image job pixmap/raster view when the window is opened.
+     * @brief shouldShowImageTaskPixmapViewByDefault Gets the preference for whether to show the image task pixmap/raster view when the window is opened.
+     * @return Whether to show the image task pixmap/raster view when the window is opened.
      */
-    bool shouldShowImageJobPixmapViewByDefault() const;
+    bool shouldShowImageTaskPixmapViewByDefault() const;
 
     /**
-     * @brief setShouldShowImageJobPixmapViewByDefault Sets the preference for whether to show the image job pixmap/raster view when the window is opened.
-     * @param showPixmapView Whether to show the image job pixmap/raster view when the window is opened.
+     * @brief setShouldShowImageTaskPixmapViewByDefault Sets the preference for whether to show the image task pixmap/raster view when the window is opened.
+     * @param showPixmapView Whether to show the image task pixmap/raster view when the window is opened.
      */
-    void setShouldShowImageJobPixmapViewByDefault(bool showPixmapView);
+    void setShouldShowImageTaskPixmapViewByDefault(bool showPixmapView);
 
     /**
-     * @brief isImageJobImageResizeEnabled Gets the preference for whether image jobs should resize images that are too large.
-     * @return True if the image job image resizing is enabled.
+     * @brief isImageTaskImageResizeEnabled Gets the preference for whether image tasks should resize images that are too large.
+     * @return True if the image task image resizing is enabled.
      */
-    bool isImageJobImageResizeEnabled() const;
+    bool isImageTaskImageResizeEnabled() const;
 
     /**
-     * @brief setImageJobImageResizeEnabled Sets the preference for whether image jobs should resize images that are too large.
+     * @brief setImageTaskImageResizeEnabled Sets the preference for whether image tasks should resize images that are too large.
      * @param enabled Whether to enable or disable the resizing.
      */
-    void setImageJobImageResizeEnabled(bool enabled);
+    void setImageTaskImageResizeEnabled(bool enabled);
 
     /**
-     * @brief getImageJobResizeThreshold Gets the maximum dimensions of an image that can be used in an image job without resizing.
-     * @return The maximum width and height of the image job image that can be used without the image being resized.
+     * @brief getImageTaskResizeThreshold Gets the maximum dimensions of an image that can be used in an image task without resizing.
+     * @return The maximum width and height of the image task image that can be used without the image being resized.
      */
-    std::pair<std::uint32_t, std::uint32_t> getImageJobResizeThreshold() const;
+    std::pair<std::uint32_t, std::uint32_t> getImageTaskResizeThreshold() const;
 
     /**
-     * @brief setImageJobResizeThreshold Sets the maximum dimensions of an image that can be used in an image job without resizing.
+     * @brief setImageTaskResizeThreshold Sets the maximum dimensions of an image that can be used in an image task without resizing.
      * @param width The maximum width of an image.
      * @param height The maximum height of an image.
      */
-    void setImageJobResizeThreshold(std::uint32_t width, std::uint32_t height);
+    void setImageTaskResizeThreshold(std::uint32_t width, std::uint32_t height);
 
     /**
-     * @brief getImageJobMaxThreads Gets the maximum number of threads the image job should use.
-     * @return The maximum number of threads the image job should use.
+     * @brief getImageTaskMaxThreads Gets the maximum number of threads the image task should use.
+     * @return The maximum number of threads the image task should use.
      */
-    std::uint32_t getImageJobMaxThreads() const;
+    std::uint32_t getImageTaskMaxThreads() const;
 
     /**
-     * @brief setImageJobMaxThreads Sets the maximum number of threads the image job should use.
-     * @param maxThreads The maximum number of threads the image job should use.
+     * @brief setImageTaskMaxThreads Sets the maximum number of threads the image task should use.
+     * @param maxThreads The maximum number of threads the image task should use.
      */
-    void setImageJobMaxThreads(std::uint32_t maxThreads);
+    void setImageTaskMaxThreads(std::uint32_t maxThreads);
 
     /**
      * @brief getLanguageIsoCode Gets the ISO 639-1 language preference for the application.

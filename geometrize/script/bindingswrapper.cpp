@@ -7,8 +7,8 @@
 #include "common/formatsupport.h"
 #include "common/searchpaths.h"
 #include "common/util.h"
-#include "job/jobutil.h"
 #include "localization/localization.h"
+#include "task/taskutil.h"
 
 namespace geometrize
 {
@@ -107,7 +107,7 @@ std::vector<std::string> getScriptsForPath(const std::string& dirPath)
     return geometrize::util::getScriptsForPath(dirPath);
 }
 
-void openJob(const std::string& url, const bool addToRecents)
+void openTask(const std::string& url, const bool addToRecents)
 {
     // Horrible workaround because QUrl doesn't handle Qt resource file prefixes well
     // See: https://forum.qt.io/topic/1494/universal-solution-for-resource-prefix
@@ -118,7 +118,7 @@ void openJob(const std::string& url, const bool addToRecents)
         qUrl.replace(0, strToReplace.size(), "qrc:///");
     }
 
-    geometrize::util::openJobs(QStringList(QString::fromStdString(url)), addToRecents);
+    geometrize::util::openTasks(QStringList(QString::fromStdString(url)), addToRecents);
 }
 
 bool openInDefaultApplication(const std::string& path)

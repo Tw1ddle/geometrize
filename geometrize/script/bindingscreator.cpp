@@ -33,12 +33,12 @@
 
 #include "dialog/launchwindow.h"
 #include "exporter/imageexporter.h"
-#include "job/imagejob.h"
-#include "job/synchronousimagejob.h"
 #include "image/imageloader.h"
 #include "script/bindingswrapper.h"
 #include "script/chaiscriptmathextras.h"
 #include "script/scriptutil.h"
+#include "task/imagetask.h"
+#include "task/synchronousimagetask.h"
 
 #define ADD_CONST_VAR(Class, Name) try { module->add(chaiscript::const_var(&Class::Name), #Name); } catch(...) { assert(0 && #Name); }
 #define ADD_FREE_FUN(Name) try { module->add(chaiscript::fun(&Name), #Name); } catch(...) { assert(0 && #Name); }
@@ -83,7 +83,7 @@ std::shared_ptr<chaiscript::Module> createDefaultBindings()
 
     ADD_FREE_FUN(getSupportedImageFileExtensions);
 
-    ADD_FREE_FUN(openJob);
+    ADD_FREE_FUN(openTask);
 
     ADD_FREE_FUN(openInDefaultApplication);
     ADD_FREE_FUN(revealInDefaultApplication);
@@ -150,43 +150,43 @@ std::shared_ptr<chaiscript::Module> createImageBindings()
     return module;
 }
 
-std::shared_ptr<chaiscript::Module> createImageJobBindings()
+std::shared_ptr<chaiscript::Module> createImageTaskBindings()
 {
-    using namespace geometrize::job;
+    using namespace geometrize::task;
     using namespace geometrize::preferences;
 
     auto module{std::make_shared<chaiscript::Module>()};
 
-    // Note we use synchronous-stepping image jobs for simplicity in scripts
-    ADD_TYPE(SynchronousImageJob);
+    // Note we use synchronous-stepping image tasks for simplicity in scripts
+    ADD_TYPE(SynchronousImageTask);
 
-    ADD_CONSTRUCTOR(SynchronousImageJob, SynchronousImageJob(Bitmap&));
-    ADD_CONSTRUCTOR(SynchronousImageJob, SynchronousImageJob(Bitmap&, Bitmap&));
+    ADD_CONSTRUCTOR(SynchronousImageTask, SynchronousImageTask(Bitmap&));
+    ADD_CONSTRUCTOR(SynchronousImageTask, SynchronousImageTask(Bitmap&, Bitmap&));
 
-    ADD_MEMBER(SynchronousImageJob, stepModel);
-    ADD_MEMBER(SynchronousImageJob, getTarget);
-    ADD_MEMBER(SynchronousImageJob, getCurrent);
-    ADD_MEMBER(SynchronousImageJob, getPreferences);
-    ADD_MEMBER(SynchronousImageJob, setPreferences);
+    ADD_MEMBER(SynchronousImageTask, stepModel);
+    ADD_MEMBER(SynchronousImageTask, getTarget);
+    ADD_MEMBER(SynchronousImageTask, getCurrent);
+    ADD_MEMBER(SynchronousImageTask, getPreferences);
+    ADD_MEMBER(SynchronousImageTask, setPreferences);
 
-    ADD_TYPE(ImageJobPreferences);
+    ADD_TYPE(ImageTaskPreferences);
 
-    ADD_CONSTRUCTOR(ImageJobPreferences, ImageJobPreferences());
-    ADD_CONSTRUCTOR(ImageJobPreferences, ImageJobPreferences(const std::string&));
-    ADD_CONSTRUCTOR(ImageJobPreferences, ImageJobPreferences(const ImageJobPreferences&));
+    ADD_CONSTRUCTOR(ImageTaskPreferences, ImageTaskPreferences());
+    ADD_CONSTRUCTOR(ImageTaskPreferences, ImageTaskPreferences(const std::string&));
+    ADD_CONSTRUCTOR(ImageTaskPreferences, ImageTaskPreferences(const ImageTaskPreferences&));
 
-    ADD_MEMBER(ImageJobPreferences, enableShapeTypes);
-    ADD_MEMBER(ImageJobPreferences, disableShapeTypes);
-    ADD_MEMBER(ImageJobPreferences, setShapeTypes);
-    ADD_MEMBER(ImageJobPreferences, setShapeAlpha);
-    ADD_MEMBER(ImageJobPreferences, setCandidateShapeCount);
-    ADD_MEMBER(ImageJobPreferences, setMaxShapeMutations);
-    ADD_MEMBER(ImageJobPreferences, setSeed);
-    ADD_MEMBER(ImageJobPreferences, setMaxThreads);
+    ADD_MEMBER(ImageTaskPreferences, enableShapeTypes);
+    ADD_MEMBER(ImageTaskPreferences, disableShapeTypes);
+    ADD_MEMBER(ImageTaskPreferences, setShapeTypes);
+    ADD_MEMBER(ImageTaskPreferences, setShapeAlpha);
+    ADD_MEMBER(ImageTaskPreferences, setCandidateShapeCount);
+    ADD_MEMBER(ImageTaskPreferences, setMaxShapeMutations);
+    ADD_MEMBER(ImageTaskPreferences, setSeed);
+    ADD_MEMBER(ImageTaskPreferences, setMaxThreads);
 
-    ADD_MEMBER(ImageJobPreferences, isScriptModeEnabled);
-    ADD_MEMBER(ImageJobPreferences, setScriptModeEnabled);
-    ADD_MEMBER(ImageJobPreferences, setScript);
+    ADD_MEMBER(ImageTaskPreferences, isScriptModeEnabled);
+    ADD_MEMBER(ImageTaskPreferences, setScriptModeEnabled);
+    ADD_MEMBER(ImageTaskPreferences, setScript);
 
     return module;
 }

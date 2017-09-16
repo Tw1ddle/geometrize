@@ -143,7 +143,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="generalPreferencesPage">
        <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -269,7 +269,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QGroupBox" name="imageJobDisplayOptionsGroup">
+             <widget class="QGroupBox" name="imageTaskDisplayOptionsGroup">
               <property name="title">
                <string extracomment="Title for the app settings section that contains options that affect the area of the app that turns images into shapes (the image geometrizer)">Image Geometrizer Settings</string>
               </property>
@@ -289,7 +289,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QCheckBox" name="showImageJobConsoleByDefault">
+                <widget class="QCheckBox" name="showImageTaskConsoleByDefault">
                  <property name="text">
                   <string extracomment="Label text next to a checkbox that controls whether a script console window will be shown or hidden">Show script console</string>
                  </property>
@@ -434,14 +434,14 @@
                  <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_4">
                    <item>
-                    <widget class="QLabel" name="threadsPerImageJobLabel">
+                    <widget class="QLabel" name="threadsPerImageTaskLabel">
                      <property name="text">
                       <string extracomment="A text label next to a value that describes the maximum number of CPU threads the computer can use when recreating an image using shapes">Max Threads Per Image</string>
                      </property>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QSpinBox" name="maxThreadsPerImageJob">
+                    <widget class="QSpinBox" name="maxThreadsPerImageTask">
                      <property name="maximum">
                       <number>128</number>
                      </property>

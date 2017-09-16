@@ -8,7 +8,7 @@ namespace geometrize
 {
 
 /**
- * @brief The TemplateManifest class represents the metadata for a job template.
+ * @brief The TemplateManifest class represents the metadata for a task template.
  */
 class TemplateManifest
 {

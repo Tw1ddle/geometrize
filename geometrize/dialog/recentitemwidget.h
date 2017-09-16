@@ -21,7 +21,7 @@ namespace dialog
 {
 
 /**
- * @brief The RecentItemWidget class is a button that opens a recent job when pressed, like a recently opened image.
+ * @brief The RecentItemWidget class is a button that opens a recent task when pressed, like a recently opened image.
  */
 class RecentItemWidget : public QWidget
 {

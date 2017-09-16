@@ -11,9 +11,9 @@
 
 #include "common/uiactions.h"
 #include "common/util.h"
-#include "job/jobutil.h"
 #include "recents/recentitem.h"
 #include "recents/recentitems.h"
+#include "task/taskutil.h"
 
 namespace geometrize
 {
@@ -56,7 +56,7 @@ public:
         QAction openAction(tr("Open"));
         itemContextMenu.addAction(&openAction);
         connect(&openAction, &QAction::triggered, [this]() {
-            geometrize::util::openJobs({m_item.getKey()}, false);
+            geometrize::util::openTasks({m_item.getKey()}, false);
         });
 
         QAction openInDefaultViewer(tr("Open in viewer"));
@@ -92,7 +92,7 @@ public:
             return;
         }
 
-        geometrize::util::openJobs({m_item.getKey()}, false);
+        geometrize::util::openTasks({m_item.getKey()}, false);
     }
 
     void onKeyPressEvent(QKeyEvent* e)
@@ -101,7 +101,7 @@ public:
             return;
         }
 
-        geometrize::util::openJobs({m_item.getKey()}, false);
+        geometrize::util::openTasks({m_item.getKey()}, false);
     }
 
 private:

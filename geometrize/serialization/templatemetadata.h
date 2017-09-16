@@ -13,7 +13,7 @@ namespace serialization
 {
 
 /**
- * @brief The TemplateMetadata struct represents the metadata (such as license information) for a job template.
+ * @brief The TemplateMetadata struct represents the metadata (such as license information) for a task template.
  */
 struct TemplateMetadata
 {

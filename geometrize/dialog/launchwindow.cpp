@@ -9,14 +9,14 @@
 #include "common/formatsupport.h"
 #include "common/uiactions.h"
 #include "common/util.h"
-#include "job/imagejob.h"
-#include "job/jobutil.h"
 #include "image/imageloader.h"
 #include "preferences/globalpreferences.h"
 #include "recents/recentitems.h"
 #include "script/chaiscriptcreator.h"
 #include "script/scriptrunner.h"
 #include "serialization/serializationutil.h"
+#include "task/imagetask.h"
+#include "task/taskutil.h"
 
 namespace geometrize
 {
@@ -135,27 +135,27 @@ private:
 
             geometrize::Bitmap logoBitmap{image::createBitmap(image)};
             geometrize::Bitmap initialBitmap{logoBitmap.getWidth(), logoBitmap.getHeight(), geometrize::rgba{0, 0, 0, 0}};
-            m_logoJob = std::make_unique<job::ImageJob>("Logo Image Job", logoBitmap, initialBitmap);
-            m_logoJob->getPreferences().setShapeTypes(geometrize::ShapeTypes::RECTANGLE);
-            m_logoJob->getPreferences().setShapeAlpha(255U);
+            m_logoTask = std::make_unique<task::ImageTask>("Logo Image Task", logoBitmap, initialBitmap);
+            m_logoTask->getPreferences().setShapeTypes(geometrize::ShapeTypes::RECTANGLE);
+            m_logoTask->getPreferences().setShapeAlpha(255U);
 
-            ui->logoLabel->setPixmap(image::createPixmap(m_logoJob->getCurrent()));
+            ui->logoLabel->setPixmap(image::createPixmap(m_logoTask->getCurrent()));
 
-            connect(m_logoJob.get(), &job::ImageJob::signal_modelDidStep, [this](std::vector<geometrize::ShapeResult> results) {
-                const QPixmap pixmap{image::createPixmap(m_logoJob->getCurrent())};
+            connect(m_logoTask.get(), &task::ImageTask::signal_modelDidStep, [this](std::vector<geometrize::ShapeResult> results) {
+                const QPixmap pixmap{image::createPixmap(m_logoTask->getCurrent())};
                 ui->logoLabel->setPixmap(pixmap);
 
-                m_logoJobShapeCount += results.size();
-                m_logoJobStepCount += 1;
-                const QString logoToolTip{tr("Logo: %1 shapes added in %2 steps").arg(QString::number(m_logoJobShapeCount)).arg(m_logoJobStepCount)};
+                m_logoTaskShapeCount += results.size();
+                m_logoTaskStepCount += 1;
+                const QString logoToolTip{tr("Logo: %1 shapes added in %2 steps").arg(QString::number(m_logoTaskShapeCount)).arg(m_logoTaskStepCount)};
                 ui->logoLabel->setToolTip(logoToolTip);
 
-                m_logoJobSteps++;
-                if(m_logoJobSteps < m_maxLogoJobSteps) {
-                    m_logoJob->stepModel();
+                m_logoTaskSteps++;
+                if(m_logoTaskSteps < m_maxLogoTaskSteps) {
+                    m_logoTask->stepModel();
                 }
             });
-            m_logoJob->stepModel();
+            m_logoTask->stepModel();
         }
     }
 
@@ -163,11 +163,11 @@ private:
     LaunchWindow* q;
     std::unique_ptr<chaiscript::ChaiScript> m_engine;
 
-    std::unique_ptr<job::ImageJob> m_logoJob;
-    std::size_t m_logoJobShapeCount{0};
-    std::size_t m_logoJobStepCount{0};
-    const std::size_t m_maxLogoJobSteps{300};
-    std::atomic_int m_logoJobSteps{0};
+    std::unique_ptr<task::ImageTask> m_logoTask;
+    std::size_t m_logoTaskShapeCount{0};
+    std::size_t m_logoTaskStepCount{0};
+    const std::size_t m_maxLogoTaskSteps{300};
+    std::atomic_int m_logoTaskSteps{0};
 };
 
 LaunchWindow::LaunchWindow() :
@@ -194,14 +194,14 @@ void LaunchWindow::dropEvent(QDropEvent* event)
 {
     const QList<QUrl> urls{geometrize::format::getUrls(event->mimeData())};
     QStringList scripts;
-    QStringList jobs;
+    QStringList tasks;
     for(const QUrl& url : urls) {
         const QString urlString{url.toString()};
 
         if(urlString.endsWith(".chai") && url.isLocalFile()) {
             scripts.push_back(url.toLocalFile());
         } else {
-            jobs.push_back(urlString);
+            tasks.push_back(urlString);
         }
     }
 
@@ -211,8 +211,8 @@ void LaunchWindow::dropEvent(QDropEvent* event)
         }
     }
 
-    if(!jobs.empty()) {
-        util::openJobs(jobs, true);
+    if(!tasks.empty()) {
+        util::openTasks(tasks, true);
     }
 }
 
@@ -253,7 +253,7 @@ void LaunchWindow::on_openImageButton_clicked()
         return;
     }
 
-    geometrize::util::openJobs({ imagePath }, true);
+    geometrize::util::openTasks({ imagePath }, true);
 }
 
 void LaunchWindow::on_openLinkButton_clicked()
@@ -263,7 +263,7 @@ void LaunchWindow::on_openLinkButton_clicked()
         return;
     }
 
-    geometrize::util::openJobs({ url.toString() }, true);
+    geometrize::util::openTasks({ url.toString() }, true);
 }
 
 void LaunchWindow::on_runScriptButton_clicked()

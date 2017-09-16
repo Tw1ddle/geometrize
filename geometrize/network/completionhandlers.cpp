@@ -6,11 +6,11 @@
 #include <QRegExp>
 #include <QString>
 
-#include "job/imagejob.h"
-#include "job/imagejobcreator.h"
-#include "job/jobutil.h"
 #include "network/downloader.h"
 #include "network/networkactions.h"
+#include "task/imagetask.h"
+#include "task/imagetaskcreator.h"
+#include "task/taskutil.h"
 
 namespace geometrize
 {
@@ -45,7 +45,7 @@ void onImageDownloadComplete(network::Downloader* self, const QNetworkReply::Net
         return;
     }
 
-    job::createImageJobAndWindow(url.toString().toStdString(), image);
+    task::createImageTaskAndWindow(url.toString().toStdString(), image);
 }
 
 void onWebpageDownloadComplete(network::Downloader* self, const QNetworkReply::NetworkError error)

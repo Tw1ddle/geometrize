@@ -12,7 +12,7 @@ namespace dialog
 {
 
 /**
- * @brief The CompletionBox class is a line edit that facilitates searching job templates with an autocomplete drop-down list.
+ * @brief The CompletionBox class is a line edit that facilitates searching task templates with an autocomplete drop-down list.
  */
 class CompletionBox : public QLineEdit
 {

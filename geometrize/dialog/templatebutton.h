@@ -20,7 +20,7 @@ namespace dialog
 {
 
 /**
- * @brief The TemplateButton class is a button that opens a job template when clicked.
+ * @brief The TemplateButton class is a button that opens a task template when clicked.
  */
 class TemplateButton : public QPushButton
 {

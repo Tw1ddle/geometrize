@@ -28,14 +28,14 @@ public:
                  bool& shouldPopulateTemplatesOnLaunch,
 
                  bool& shouldShowLaunchConsoleByDefault,
-                 bool& shouldShowImageJobVectorViewByDefault,
-                 bool& shouldShowImageJobConsoleByDefault,
-                 bool& shouldShowImageJobScriptEditorByDefault,
-                 bool& shouldShowImageJobPixmapViewByDefault,
+                 bool& shouldShowImageTaskVectorViewByDefault,
+                 bool& shouldShowImageTaskConsoleByDefault,
+                 bool& shouldShowImageTaskScriptEditorByDefault,
+                 bool& shouldShowImageTaskPixmapViewByDefault,
 
-                 bool& imageJobImageResizeEnabled,
-                 std::pair<std::uint32_t, std::uint32_t>& imageJobImageResizeThreshold,
-                 std::uint32_t& imageJobMaxThreads,
+                 bool& imageTaskImageResizeEnabled,
+                 std::pair<std::uint32_t, std::uint32_t>& imageTaskImageResizeThreshold,
+                 std::uint32_t& imageTaskMaxThreads,
 
                  std::string& isoLanguageCode,
                  std::string& isoScriptCode,
@@ -48,14 +48,14 @@ public:
         ar(cereal::make_nvp(shouldPopulateTemplatesOnLaunchKey, shouldPopulateTemplatesOnLaunch));
 
         ar(cereal::make_nvp(shouldShowLaunchConsoleByDefaultKey, shouldShowLaunchConsoleByDefault));
-        ar(cereal::make_nvp(shouldShowImageJobVectorViewByDefaultKey, shouldShowImageJobVectorViewByDefault));
-        ar(cereal::make_nvp(shouldShowImageJobConsoleByDefaultKey, shouldShowImageJobConsoleByDefault));
-        ar(cereal::make_nvp(shouldShowImageJobScriptEditorByDefaultKey, shouldShowImageJobScriptEditorByDefault));
-        ar(cereal::make_nvp(shouldShowImageJobPixmapViewByDefaultKey, shouldShowImageJobPixmapViewByDefault));
+        ar(cereal::make_nvp(shouldShowImageTaskVectorViewByDefaultKey, shouldShowImageTaskVectorViewByDefault));
+        ar(cereal::make_nvp(shouldShowImageTaskConsoleByDefaultKey, shouldShowImageTaskConsoleByDefault));
+        ar(cereal::make_nvp(shouldShowImageTaskScriptEditorByDefaultKey, shouldShowImageTaskScriptEditorByDefault));
+        ar(cereal::make_nvp(shouldShowImageTaskPixmapViewByDefaultKey, shouldShowImageTaskPixmapViewByDefault));
 
-        ar(cereal::make_nvp(imageJobImageResizeEnabledKey, imageJobImageResizeEnabled));
-        ar(cereal::make_nvp(imageJobImageResizeThresholdKey, imageJobImageResizeThreshold));
-        ar(cereal::make_nvp(imageJobMaxThreadsKey, imageJobMaxThreads));
+        ar(cereal::make_nvp(imageTaskImageResizeEnabledKey, imageTaskImageResizeEnabled));
+        ar(cereal::make_nvp(imageTaskImageResizeThresholdKey, imageTaskImageResizeThreshold));
+        ar(cereal::make_nvp(imageTaskMaxThreadsKey, imageTaskMaxThreads));
 
         ar(cereal::make_nvp(isoLanguageCodeKey, isoLanguageCode));
         ar(cereal::make_nvp(isoScriptCodeKey, isoScriptCode));
@@ -70,14 +70,14 @@ private:
     const std::string shouldPopulateTemplatesOnLaunchKey{"shouldPopulateTemplatesOnLaunch"};
 
     const std::string shouldShowLaunchConsoleByDefaultKey{"shouldShowLaunchConsoleByDefault"};
-    const std::string shouldShowImageJobVectorViewByDefaultKey{"shouldShowImageJobVectorViewByDefault"};
-    const std::string shouldShowImageJobConsoleByDefaultKey{"shouldShowImageJobConsoleByDefault"};
-    const std::string shouldShowImageJobScriptEditorByDefaultKey{"shouldShowImageJobScriptEditorByDefault"};
-    const std::string shouldShowImageJobPixmapViewByDefaultKey{"shouldShowImageJobPixmapViewByDefault"};
+    const std::string shouldShowImageTaskVectorViewByDefaultKey{"shouldShowImageTaskVectorViewByDefault"};
+    const std::string shouldShowImageTaskConsoleByDefaultKey{"shouldShowImageTaskConsoleByDefault"};
+    const std::string shouldShowImageTaskScriptEditorByDefaultKey{"shouldShowImageTaskScriptEditorByDefault"};
+    const std::string shouldShowImageTaskPixmapViewByDefaultKey{"shouldShowImageTaskPixmapViewByDefault"};
 
-    const std::string imageJobImageResizeEnabledKey{"imageJobImageResizeEnabled"};
-    const std::string imageJobImageResizeThresholdKey{"imageJobImageResizeThreshold"};
-    const std::string imageJobMaxThreadsKey{"imageJobMaxThreadsKey"};
+    const std::string imageTaskImageResizeEnabledKey{"imageTaskImageResizeEnabled"};
+    const std::string imageTaskImageResizeThresholdKey{"imageTaskImageResizeThreshold"};
+    const std::string imageTaskMaxThreadsKey{"imageTaskMaxThreadsKey"};
 
     const std::string isoLanguageCodeKey{"isoLanguageCode"};
     const std::string isoScriptCodeKey{"isoScriptCode"};

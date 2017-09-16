@@ -127,75 +127,75 @@ public:
         m_shouldShowLaunchConsoleByDefault = showConsole;
     }
 
-    bool shouldShowImageJobVectorViewByDefault() const
+    bool shouldShowImageTaskVectorViewByDefault() const
     {
-        return m_shouldShowImageJobVectorViewByDefault;
+        return m_shouldShowImageTaskVectorViewByDefault;
     }
 
-    void setShouldShowImageJobVectorViewByDefault(const bool showVectorView)
+    void setShouldShowImageTaskVectorViewByDefault(const bool showVectorView)
     {
-        m_shouldShowImageJobVectorViewByDefault = showVectorView;
+        m_shouldShowImageTaskVectorViewByDefault = showVectorView;
     }
 
-    bool shouldShowImageJobConsoleByDefault() const
+    bool shouldShowImageTaskConsoleByDefault() const
     {
-        return m_shouldShowImageJobConsoleByDefault;
+        return m_shouldShowImageTaskConsoleByDefault;
     }
 
-    void setShouldShowImageJobConsoleByDefault(const bool showConsole)
+    void setShouldShowImageTaskConsoleByDefault(const bool showConsole)
     {
-        m_shouldShowImageJobConsoleByDefault = showConsole;
+        m_shouldShowImageTaskConsoleByDefault = showConsole;
     }
 
-    bool shouldShowImageJobScriptEditorByDefault() const
+    bool shouldShowImageTaskScriptEditorByDefault() const
     {
-        return m_shouldShowImageJobScriptEditorByDefault;
+        return m_shouldShowImageTaskScriptEditorByDefault;
     }
 
-    void setShouldShowImageJobScriptEditorByDefault(const bool showScriptEditor)
+    void setShouldShowImageTaskScriptEditorByDefault(const bool showScriptEditor)
     {
-        m_shouldShowImageJobScriptEditorByDefault = showScriptEditor;
+        m_shouldShowImageTaskScriptEditorByDefault = showScriptEditor;
     }
 
-    bool shouldShowImageJobPixmapViewByDefault() const
+    bool shouldShowImageTaskPixmapViewByDefault() const
     {
-        return m_shouldShowImageJobPixmapViewByDefault;
+        return m_shouldShowImageTaskPixmapViewByDefault;
     }
 
-    void setShouldShowImageJobPixmapViewByDefault(const bool showPixmapView)
+    void setShouldShowImageTaskPixmapViewByDefault(const bool showPixmapView)
     {
-        m_shouldShowImageJobPixmapViewByDefault = showPixmapView;
+        m_shouldShowImageTaskPixmapViewByDefault = showPixmapView;
     }
 
-    void setImageJobResizeThreshold(const std::uint32_t width, const std::uint32_t height)
+    void setImageTaskResizeThreshold(const std::uint32_t width, const std::uint32_t height)
     {
-        m_imageJobResizeThreshold.first = width;
-        m_imageJobResizeThreshold.second = height;
+        m_imageTaskResizeThreshold.first = width;
+        m_imageTaskResizeThreshold.second = height;
     }
 
-    std::pair<std::uint32_t, std::uint32_t> getImageJobResizeThreshold() const
+    std::pair<std::uint32_t, std::uint32_t> getImageTaskResizeThreshold() const
     {
-        return m_imageJobResizeThreshold;
+        return m_imageTaskResizeThreshold;
     }
 
-    bool isImageJobImageResizeEnabled() const
+    bool isImageTaskImageResizeEnabled() const
     {
-        return m_imageJobResizeEnabled;
+        return m_imageTaskResizeEnabled;
     }
 
-    void setImageJobImageResizeEnabled(const bool enabled)
+    void setImageTaskImageResizeEnabled(const bool enabled)
     {
-        m_imageJobResizeEnabled = enabled;
+        m_imageTaskResizeEnabled = enabled;
     }
 
-    std::uint32_t getImageJobMaxThreads() const
+    std::uint32_t getImageTaskMaxThreads() const
     {
-        return m_imageJobMaxThreads;
+        return m_imageTaskMaxThreads;
     }
 
-    void setImageJobMaxThreads(const std::uint32_t maxThreads)
+    void setImageTaskMaxThreads(const std::uint32_t maxThreads)
     {
-        m_imageJobMaxThreads = maxThreads;
+        m_imageTaskMaxThreads = maxThreads;
     }
 
     std::string getLanguageIsoCode() const
@@ -290,14 +290,14 @@ private:
            m_shouldPopulateTemplatesOnLaunch,
 
            m_shouldShowLaunchConsoleByDefault,
-           m_shouldShowImageJobVectorViewByDefault,
-           m_shouldShowImageJobConsoleByDefault,
-           m_shouldShowImageJobScriptEditorByDefault,
-           m_shouldShowImageJobPixmapViewByDefault,
+           m_shouldShowImageTaskVectorViewByDefault,
+           m_shouldShowImageTaskConsoleByDefault,
+           m_shouldShowImageTaskScriptEditorByDefault,
+           m_shouldShowImageTaskPixmapViewByDefault,
 
-           m_imageJobResizeEnabled,
-           m_imageJobResizeThreshold,
-           m_imageJobMaxThreads,
+           m_imageTaskResizeEnabled,
+           m_imageTaskResizeThreshold,
+           m_imageTaskMaxThreads,
 
            m_languageIsoCode,
            m_scriptIsoCode,
@@ -313,14 +313,14 @@ private:
     bool m_shouldPopulateTemplatesOnLaunch{true};
 
     bool m_shouldShowLaunchConsoleByDefault{false};
-    bool m_shouldShowImageJobVectorViewByDefault{true};
-    bool m_shouldShowImageJobConsoleByDefault{false};
-    bool m_shouldShowImageJobScriptEditorByDefault{false};
-    bool m_shouldShowImageJobPixmapViewByDefault{false};
+    bool m_shouldShowImageTaskVectorViewByDefault{true};
+    bool m_shouldShowImageTaskConsoleByDefault{false};
+    bool m_shouldShowImageTaskScriptEditorByDefault{false};
+    bool m_shouldShowImageTaskPixmapViewByDefault{false};
 
-    bool m_imageJobResizeEnabled{false};
-    std::pair<std::uint32_t, std::uint32_t> m_imageJobResizeThreshold{384, 384};
-    std::uint32_t m_imageJobMaxThreads{16};
+    bool m_imageTaskResizeEnabled{false};
+    std::pair<std::uint32_t, std::uint32_t> m_imageTaskResizeThreshold{384, 384};
+    std::uint32_t m_imageTaskMaxThreads{16};
 
     std::string m_languageIsoCode{"en"};
     std::string m_scriptIsoCode{"Latn"};
@@ -396,74 +396,74 @@ void GlobalPreferences::setShouldShowLaunchConsoleByDefault(const bool showConso
     d->setShouldShowLaunchConsoleByDefault(showConsole);
 }
 
-bool GlobalPreferences::shouldShowImageJobVectorViewByDefault() const
+bool GlobalPreferences::shouldShowImageTaskVectorViewByDefault() const
 {
-    return d->shouldShowImageJobVectorViewByDefault();
+    return d->shouldShowImageTaskVectorViewByDefault();
 }
 
-void GlobalPreferences::setShouldShowImageJobVectorViewByDefault(const bool showVectorView)
+void GlobalPreferences::setShouldShowImageTaskVectorViewByDefault(const bool showVectorView)
 {
-    d->setShouldShowImageJobVectorViewByDefault(showVectorView);
+    d->setShouldShowImageTaskVectorViewByDefault(showVectorView);
 }
 
-bool GlobalPreferences::shouldShowImageJobConsoleByDefault() const
+bool GlobalPreferences::shouldShowImageTaskConsoleByDefault() const
 {
-    return d->shouldShowImageJobConsoleByDefault();
+    return d->shouldShowImageTaskConsoleByDefault();
 }
 
-void GlobalPreferences::setShouldShowImageJobConsoleByDefault(const bool showConsole)
+void GlobalPreferences::setShouldShowImageTaskConsoleByDefault(const bool showConsole)
 {
-    d->setShouldShowImageJobConsoleByDefault(showConsole);
+    d->setShouldShowImageTaskConsoleByDefault(showConsole);
 }
 
-bool GlobalPreferences::shouldShowImageJobScriptEditorByDefault() const
+bool GlobalPreferences::shouldShowImageTaskScriptEditorByDefault() const
 {
-    return d->shouldShowImageJobScriptEditorByDefault();
+    return d->shouldShowImageTaskScriptEditorByDefault();
 }
 
-void GlobalPreferences::setShouldShowImageJobScriptEditorByDefault(const bool showScriptEditor)
+void GlobalPreferences::setShouldShowImageTaskScriptEditorByDefault(const bool showScriptEditor)
 {
-    d->setShouldShowImageJobScriptEditorByDefault(showScriptEditor);
+    d->setShouldShowImageTaskScriptEditorByDefault(showScriptEditor);
 }
 
-bool GlobalPreferences::shouldShowImageJobPixmapViewByDefault() const
+bool GlobalPreferences::shouldShowImageTaskPixmapViewByDefault() const
 {
-    return d->shouldShowImageJobPixmapViewByDefault();
+    return d->shouldShowImageTaskPixmapViewByDefault();
 }
 
-void GlobalPreferences::setShouldShowImageJobPixmapViewByDefault(const bool showPixmapView)
+void GlobalPreferences::setShouldShowImageTaskPixmapViewByDefault(const bool showPixmapView)
 {
-    d->setShouldShowImageJobPixmapViewByDefault(showPixmapView);
+    d->setShouldShowImageTaskPixmapViewByDefault(showPixmapView);
 }
 
-bool GlobalPreferences::isImageJobImageResizeEnabled() const
+bool GlobalPreferences::isImageTaskImageResizeEnabled() const
 {
-    return d->isImageJobImageResizeEnabled();
+    return d->isImageTaskImageResizeEnabled();
 }
 
-void GlobalPreferences::setImageJobImageResizeEnabled(const bool enabled)
+void GlobalPreferences::setImageTaskImageResizeEnabled(const bool enabled)
 {
-    d->setImageJobImageResizeEnabled(enabled);
+    d->setImageTaskImageResizeEnabled(enabled);
 }
 
-std::pair<std::uint32_t, std::uint32_t> GlobalPreferences::getImageJobResizeThreshold() const
+std::pair<std::uint32_t, std::uint32_t> GlobalPreferences::getImageTaskResizeThreshold() const
 {
-    return d->getImageJobResizeThreshold();
+    return d->getImageTaskResizeThreshold();
 }
 
-void GlobalPreferences::setImageJobResizeThreshold(const std::uint32_t width, const std::uint32_t height)
+void GlobalPreferences::setImageTaskResizeThreshold(const std::uint32_t width, const std::uint32_t height)
 {
-    d->setImageJobResizeThreshold(width, height);
+    d->setImageTaskResizeThreshold(width, height);
 }
 
-std::uint32_t GlobalPreferences::getImageJobMaxThreads() const
+std::uint32_t GlobalPreferences::getImageTaskMaxThreads() const
 {
-    return d->getImageJobMaxThreads();
+    return d->getImageTaskMaxThreads();
 }
 
-void GlobalPreferences::setImageJobMaxThreads(const std::uint32_t maxThreads)
+void GlobalPreferences::setImageTaskMaxThreads(const std::uint32_t maxThreads)
 {
-    d->setImageJobMaxThreads(maxThreads);
+    d->setImageTaskMaxThreads(maxThreads);
 }
 
 std::string GlobalPreferences::getLanguageIsoCode() const
