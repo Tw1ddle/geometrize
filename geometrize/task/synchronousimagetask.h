@@ -1,14 +1,17 @@
 #pragma once
 
+#include <memory>
 #include <vector>
 
-#include "geometrize/bitmap/bitmap.h"
-#include "geometrize/shaperesult.h"
-#include "geometrize/runner/imagerunner.h"
-#include "geometrize/runner/imagerunneroptions.h"
-#include "geometrize/shape/shapemutator.h"
+#include <QObject>
 
 #include "preferences/imagetaskpreferences.h"
+
+namespace geometrize
+{
+class Bitmap;
+struct ShapeResult;
+}
 
 namespace geometrize
 {
@@ -18,19 +21,17 @@ namespace task
 
 /**
  * @brief The SynchronousImageTask class transforms a source image into a collection of shapes approximating the source image.
- * Unlike the ImageTask class, it returns shape results directly when stepped, rather than doing the work in another thread.
- * Note that the shape stepping is still asynchronous multithreaded, but the direct calls on this class are synchronous.
- * This is essentially a simple implementation for use in scripts and console programs.
+ * A wrapper around the asynchronous ImageTask class, this blocks when stepping the model.
+ * This is a convenience class for use in scripts and console programs where we would rather block/wait when geometrizing something.
  */
-class SynchronousImageTask
+class SynchronousImageTask : public QObject
 {
+    Q_OBJECT
 public:
     SynchronousImageTask(Bitmap& target);
-    SynchronousImageTask(Bitmap& target, Bitmap& background);
-
+    ~SynchronousImageTask();
     SynchronousImageTask& operator=(const SynchronousImageTask&) = delete;
     SynchronousImageTask(const SynchronousImageTask&) = delete;
-    ~SynchronousImageTask() = default;
 
     /**
      * @brief getTarget Gets the target bitmap.
@@ -44,17 +45,15 @@ public:
      */
     Bitmap& getCurrent();
 
-    /**
-     * @brief getShapeMutator Gets the current shape mutator.
-     * @return The current shape mutator.
-     */
-    ShapeMutator& getShapeMutator();
-
      /**
       * @brief stepModel Steps the internal model, typically adding a shape.
-      * @return A vector of shape results produced when stepping the model.
       */
-     std::vector<geometrize::ShapeResult> stepModel();
+     void stepModel();
+
+     /**
+      * @brief drawBackgroundRectangle Convenience function that draws a background rectangle shape using the target image's background color.
+      */
+     void drawBackgroundRectangle();
 
      /**
       * @brief getPreferences Gets a reference to the current preferences of this task.
@@ -68,9 +67,15 @@ public:
       */
      void setPreferences(preferences::ImageTaskPreferences preferences);
 
+     /**
+      * @brief getShapes Gets a vector of shapes generated so far by this task.
+      * @return The vector of shapes generated so far by this task.
+      */
+     std::vector<geometrize::ShapeResult> getShapes() const;
+
 private:
-    geometrize::ImageRunner m_runner;
-    preferences::ImageTaskPreferences m_preferences;
+     class SynchronousImageTaskImpl;
+     std::unique_ptr<SynchronousImageTaskImpl> d;
 };
 
 }

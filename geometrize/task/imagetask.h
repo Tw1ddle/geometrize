@@ -47,10 +47,10 @@ class ImageTask : public QObject
 {
     Q_OBJECT
 public:
-    ImageTask(Bitmap& target);
-    ImageTask(Bitmap& target, Bitmap& background);
-    ImageTask(const std::string& displayName, Bitmap& bitmap);
-    ImageTask(const std::string& displayName, Bitmap& bitmap, const Bitmap& initial);
+    ImageTask(Bitmap& target, Qt::ConnectionType workerConnectionType = Qt::AutoConnection);
+    ImageTask(Bitmap& target, Bitmap& background, Qt::ConnectionType workerConnectionType = Qt::AutoConnection);
+    ImageTask(const std::string& displayName, Bitmap& bitmap, Qt::ConnectionType workerConnectionType = Qt::AutoConnection);
+    ImageTask(const std::string& displayName, Bitmap& bitmap, const Bitmap& initial, Qt::ConnectionType workerConnectionType = Qt::AutoConnection);
 
     ImageTask& operator=(const ImageTask&) = delete;
     ImageTask(const ImageTask&) = delete;

@@ -161,13 +161,14 @@ std::shared_ptr<chaiscript::Module> createImageTaskBindings()
     ADD_TYPE(SynchronousImageTask);
 
     ADD_CONSTRUCTOR(SynchronousImageTask, SynchronousImageTask(Bitmap&));
-    ADD_CONSTRUCTOR(SynchronousImageTask, SynchronousImageTask(Bitmap&, Bitmap&));
 
     ADD_MEMBER(SynchronousImageTask, stepModel);
+    ADD_MEMBER(SynchronousImageTask, drawBackgroundRectangle);
     ADD_MEMBER(SynchronousImageTask, getTarget);
     ADD_MEMBER(SynchronousImageTask, getCurrent);
     ADD_MEMBER(SynchronousImageTask, getPreferences);
     ADD_MEMBER(SynchronousImageTask, setPreferences);
+    ADD_MEMBER(SynchronousImageTask, getShapes);
 
     ADD_TYPE(ImageTaskPreferences);
 

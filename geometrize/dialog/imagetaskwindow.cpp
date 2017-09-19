@@ -1,6 +1,7 @@
 #include "imagetaskwindow.h"
 #include "ui_imagetaskwindow.h"
 
+#include <algorithm>
 #include <cassert>
 #include <functional>
 #include <vector>

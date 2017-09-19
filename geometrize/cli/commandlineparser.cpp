@@ -39,9 +39,9 @@ void setupCommandLineParser(QCommandLineParser& parser, const QStringList& argum
     parser.addVersionOption();
 
     // NOTE left these untranslated
-    parser.addOption(QCommandLineOption(scriptFileFlag, "Executes the ChaiScript script file at the given file path"));
-    parser.addOption(QCommandLineOption(scriptSourceFlag, "Executes the inline ChaiScript source code unmodified"));
-    parser.addOption(QCommandLineOption(localeOverrideFlag, "Overrides the locale and translation that the application launches with"));
+    parser.addOption(QCommandLineOption(scriptFileFlag, "Executes the ChaiScript script file at the given file path", "File path to ChaiScript script file"));
+    parser.addOption(QCommandLineOption(scriptSourceFlag, "Executes the inline ChaiScript source code unmodified", "Inline ChaiScript source code"));
+    parser.addOption(QCommandLineOption(localeOverrideFlag, "Overrides the locale and translation that the application launches with", "Locale code"));
 
     if(!parser.parse(arguments)) {
         assert(0 && "Failed to parse command line arguments");

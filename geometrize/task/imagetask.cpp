@@ -26,16 +26,16 @@ namespace task
 class ImageTask::ImageTaskImpl
 {
 public:
-    ImageTaskImpl(ImageTask* pQ, const std::string& displayName, Bitmap& bitmap) :
+    ImageTaskImpl(ImageTask* pQ, const std::string& displayName, Bitmap& bitmap, Qt::ConnectionType workerConnectionType) :
         q{pQ}, m_preferences{}, m_displayName{displayName}, m_id{getId()}, m_worker{bitmap}
     {
-        init();
+        init(workerConnectionType);
     }
 
-    ImageTaskImpl(ImageTask* pQ, const std::string& displayName, Bitmap& bitmap, const Bitmap& initial) :
+    ImageTaskImpl(ImageTask* pQ, const std::string& displayName, Bitmap& bitmap, const Bitmap& initial, Qt::ConnectionType workerConnectionType) :
         q{pQ}, m_preferences{}, m_displayName{displayName}, m_id{getId()}, m_worker{bitmap, initial}
     {
-        init();
+        init(workerConnectionType);
     }
 
     ~ImageTaskImpl()
@@ -155,7 +155,7 @@ private:
         return id++;
     }
 
-    void init()
+    void init(const Qt::ConnectionType connectionType)
     {
         m_geometrizer.setMutator(&m_worker.getRunner().getModel().getShapeMutator());
 
@@ -167,7 +167,7 @@ private:
         m_worker.moveToThread(&m_workerThread);
         m_workerThread.start();
 
-        connectSignals(Qt::AutoConnection);
+        connectSignals(connectionType);
     }
 
     void connectSignals(const Qt::ConnectionType connectionType)
@@ -195,23 +195,23 @@ private:
     geometrize::script::GeometrizerEngine m_geometrizer; ///> The script-based geometrizer for the image task.
 };
 
-ImageTask::ImageTask(Bitmap& target) : QObject(),
-    d{std::make_unique<ImageTask::ImageTaskImpl>(this, "", target)}
+ImageTask::ImageTask(Bitmap& target, Qt::ConnectionType workerConnectionType) : QObject(),
+    d{std::make_unique<ImageTask::ImageTaskImpl>(this, "", target, workerConnectionType)}
 {
 }
 
-ImageTask::ImageTask(Bitmap& target, Bitmap& background) : QObject(),
-    d{std::make_unique<ImageTask::ImageTaskImpl>(this, "", target, background)}
+ImageTask::ImageTask(Bitmap& target, Bitmap& background, Qt::ConnectionType workerConnectionType) : QObject(),
+    d{std::make_unique<ImageTask::ImageTaskImpl>(this, "", target, background, workerConnectionType)}
 {
 }
 
-ImageTask::ImageTask(const std::string& displayName, Bitmap& bitmap) : QObject(),
-    d{std::make_unique<ImageTask::ImageTaskImpl>(this, displayName, bitmap)}
+ImageTask::ImageTask(const std::string& displayName, Bitmap& bitmap, Qt::ConnectionType workerConnectionType) : QObject(),
+    d{std::make_unique<ImageTask::ImageTaskImpl>(this, displayName, bitmap, workerConnectionType)}
 {
 }
 
-ImageTask::ImageTask(const std::string& displayName, Bitmap& bitmap, const Bitmap& initial) : QObject(),
-    d{std::make_unique<ImageTask::ImageTaskImpl>(this, displayName, bitmap, initial)}
+ImageTask::ImageTask(const std::string& displayName, Bitmap& bitmap, const Bitmap& initial, Qt::ConnectionType workerConnectionType) : QObject(),
+    d{std::make_unique<ImageTask::ImageTaskImpl>(this, displayName, bitmap, initial, workerConnectionType)}
 {
 }
 

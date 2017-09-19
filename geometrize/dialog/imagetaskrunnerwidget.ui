@@ -232,6 +232,17 @@
        </item>
       </layout>
      </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QCheckBox" name="regionOfInterestCheckbox">
+         <property name="text">
+          <string>Region Of Interest Enabled</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
     </layout>
    </item>
    <item>
@@ -382,25 +393,17 @@
        <string extracomment="Plural form of the polyline geometric shape (multiple line segments joined together)">Polylines</string>
       </property>
      </widget>
+     <zorder>usesRotatedRectangles</zorder>
+     <zorder>usesCircles</zorder>
+     <zorder>usesQuadraticBeziers</zorder>
+     <zorder>usesEllipses</zorder>
+     <zorder>usesTriangles</zorder>
+     <zorder>usesRectangles</zorder>
+     <zorder>usesLines</zorder>
+     <zorder>usesRotatedEllipses</zorder>
+     <zorder>usesPolylines</zorder>
+     <zorder>regionOfInterestCheckbox</zorder>
     </widget>
-   </item>
-   <item>
-    <widget class="Line" name="line_2">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QCheckBox" name="regionOfInterestCheckbox">
-       <property name="text">
-        <string>Region Of Interest</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
    </item>
    <item>
     <widget class="Line" name="line_3">

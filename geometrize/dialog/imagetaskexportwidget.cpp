@@ -8,13 +8,13 @@
 
 #include "geometrize/shaperesult.h"
 #include "geometrize/exporter/shapearrayexporter.h"
-#include "geometrize/exporter/shapedataexporter.h"
 #include "geometrize/exporter/svgexporter.h"
 
 #include "common/uiactions.h"
 #include "common/util.h"
 #include "exporter/gifexporter.h"
 #include "exporter/imageexporter.h"
+#include "exporter/shapedataexporter.h"
 #include "exporter/webpageexporter.h"
 #include "task/imagetask.h"
 
