@@ -50,6 +50,27 @@ public:
     {
     }
 
+    void resetCodeToDefault()
+    {
+        ui->scriptTextEdit->clear();
+        ui->scriptTextEdit->appendPlainText(QString::fromStdString(m_defaultCode));
+    }
+
+    std::string getFunctionName() const
+    {
+        return m_functionName;
+    }
+
+    std::string getDefaultCode() const
+    {
+        return m_defaultCode;
+    }
+
+    std::string getCurrentCode() const
+    {
+        return ui->scriptTextEdit->toPlainText().toStdString();
+    }
+
     void onLanguageChange()
     {
         ui->retranslateUi(q);
@@ -82,6 +103,26 @@ void ScriptEditorWidget::changeEvent(QEvent* event)
         d->onLanguageChange();
     }
     QGroupBox::changeEvent(event);
+}
+
+void ScriptEditorWidget::resetCodeToDefault()
+{
+    d->resetCodeToDefault();
+}
+
+std::string ScriptEditorWidget::getFunctionName() const
+{
+    return d->getFunctionName();
+}
+
+std::string ScriptEditorWidget::getDefaultCode() const
+{
+    return d->getDefaultCode();
+}
+
+std::string ScriptEditorWidget::getCurrentCode() const
+{
+    return d->getCurrentCode();
 }
 
 }

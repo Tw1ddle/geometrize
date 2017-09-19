@@ -26,17 +26,15 @@
 #include "image/imageloader.h"
 #include "localization/strings.h"
 #include "preferences/globalpreferences.h"
+#include "script/geometrizerengine.h"
 #include "task/imagetask.h"
 
-namespace geometrize
-{
-
-namespace dialog
+namespace
 {
 
 // Utility function for destroying an image task set on a window.
 // This is a special case because we may need to defer task deletion until the task is finished working.
-void destroyTask(task::ImageTask* task)
+void destroyTask(geometrize::task::ImageTask* task)
 {
     if(task == nullptr) {
         assert(0 && "Attempted to destroy an image task that was already null");
@@ -46,7 +44,7 @@ void destroyTask(task::ImageTask* task)
     if(task->isStepping()) {
         // Wait until the task finishes stepping before disposing of it
         // Otherwise it will probably crash as the Geometrize library will be working with deleted data
-        task->connect(task, &task::ImageTask::signal_modelDidStep, [task](std::vector<geometrize::ShapeResult>) {
+        task->connect(task, &geometrize::task::ImageTask::signal_modelDidStep, [task](std::vector<geometrize::ShapeResult>) {
             task->deleteLater();
         });
     } else {
@@ -54,6 +52,14 @@ void destroyTask(task::ImageTask* task)
         task = nullptr;
     }
 }
+
+}
+
+namespace geometrize
+{
+
+namespace dialog
+{
 
 class ImageTaskWindow::ImageTaskWindowImpl
 {
@@ -141,7 +147,7 @@ public:
             setupOverlayImages();
             currentTask->drawBackgroundRectangle();
 
-            ui->consoleWidget->setEngine(currentTask->getEngine());
+            ui->consoleWidget->setEngine(currentTask->getGeometrizer().getEngine());
             ui->imageTaskRunnerWidget->syncUserInterface();
 
             ui->imageTaskImageWidget->setTargetImage(image::createImage(currentTask->getTarget()));
@@ -271,19 +277,6 @@ public:
         }
     }
 
-    void revealScriptEditor()
-    {
-        auto existingPanel = q->findChild<geometrize::dialog::ImageTaskScriptingPanel*>();
-        if(existingPanel) {
-            existingPanel->setWindowState(existingPanel->windowState() & ~Qt::WindowMinimized);
-            QApplication::setActiveWindow(existingPanel);
-            existingPanel->raise();
-            return;
-        }
-        auto scriptingPanel = new geometrize::dialog::ImageTaskScriptingPanel(q);
-        scriptingPanel->show();
-    }
-
     void setConsoleVisibility(const bool visible)
     {
         if(ui->actionScript_Console->isChecked() != visible) {
@@ -342,6 +335,64 @@ public:
     {
         ui->retranslateUi(q);
         populateUi();
+    }
+
+    // Utility function used to create and display the script editor for the given image task window
+    void revealScriptEditor()
+    {
+        auto existingPanel = q->findChild<geometrize::dialog::ImageTaskScriptingPanel*>();
+        if(existingPanel) {
+            existingPanel->setWindowState(existingPanel->windowState() & ~Qt::WindowMinimized);
+            QApplication::setActiveWindow(existingPanel);
+            existingPanel->raise();
+            return;
+        }
+        auto scriptingPanel = new geometrize::dialog::ImageTaskScriptingPanel(q);
+
+        // NOTE these do a lot more work than really necessary
+        // TODO instead of writing to the geometrizer, just write to preferences. Geometrizer can pick up settings from preferences each time it steps...
+        connect(scriptingPanel, &geometrize::dialog::ImageTaskScriptingPanel::signal_scriptReset, [scriptingPanel, this](geometrize::dialog::ScriptEditorWidget* /*widget*/) {
+            if(m_task->isStepping()) {
+                addPostStepCb([this, &scriptingPanel]() { m_task->getGeometrizer().setupScripts(scriptingPanel->getScripts()); });
+            } else {
+                m_task->getGeometrizer().setupScripts(scriptingPanel->getScripts());
+            }
+
+            m_task->getPreferences().setScripts(scriptingPanel->getScripts());
+        });
+        connect(scriptingPanel, &geometrize::dialog::ImageTaskScriptingPanel::signal_scriptApplied, [scriptingPanel, this](geometrize::dialog::ScriptEditorWidget* /*widget*/) {
+            if(m_task->isStepping()) {
+                addPostStepCb([this, &scriptingPanel]() { m_task->getGeometrizer().setupScripts(scriptingPanel->getScripts()); });
+            } else {
+                m_task->getGeometrizer().setupScripts(scriptingPanel->getScripts());
+            }
+
+            m_task->getPreferences().setScripts(scriptingPanel->getScripts());
+        });
+        connect(scriptingPanel, &geometrize::dialog::ImageTaskScriptingPanel::signal_scriptingToggled, [scriptingPanel, this](const bool enableScripting) {
+            if(m_task->isStepping()) {
+                addPostStepCb([this, enableScripting]() { m_task->getGeometrizer().setEnabled(enableScripting); });
+            } else {
+                m_task->getGeometrizer().setEnabled(enableScripting);
+            }
+
+            if(enableScripting) {
+                m_task->getPreferences().setScripts(scriptingPanel->getScripts());
+            } else {
+                m_task->getPreferences().setScripts({});
+            }
+        });
+        connect(scriptingPanel, &geometrize::dialog::ImageTaskScriptingPanel::signal_scriptsReset, [scriptingPanel, this]() {
+            if(m_task->isStepping()) {
+                addPostStepCb([this, &scriptingPanel]() { m_task->getGeometrizer().setupScripts(scriptingPanel->getScripts()); });
+            } else {
+                m_task->getGeometrizer().setupScripts(scriptingPanel->getScripts());
+            }
+
+            m_task->getPreferences().setScripts(scriptingPanel->getScripts());
+        });
+
+        scriptingPanel->show();
     }
 
 private:

@@ -1,6 +1,8 @@
 #pragma once
 
+#include <map>
 #include <memory>
+#include <string>
 
 #include <QWidget>
 
@@ -33,11 +35,18 @@ public:
     explicit ImageTaskScriptingPanel(QWidget* parent = nullptr);
     ~ImageTaskScriptingPanel();
 
-signals:
-    void scriptingEnabledToggled(bool enabled);
+    /**
+     * @brief getScripts Gets the map of script function names and code within this scripting panel.
+     * @return A map of script function names and code within this scripting panel.
+     */
+    std::map<std::string, std::string> getScripts() const;
 
-    void setupScriptChangeApplied(ScriptEditorWidget* editor);
-    void mutationScriptChangeApplied(ScriptEditorWidget* editor);
+signals:
+    void signal_scriptingToggled(bool enabled);
+    void signal_scriptsReset();
+
+    void signal_scriptReset(ScriptEditorWidget* editor);
+    void signal_scriptApplied(ScriptEditorWidget* editor);
 
 protected:
     void changeEvent(QEvent*) override;

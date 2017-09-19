@@ -14,6 +14,16 @@
 
 #include "preferences/imagetaskpreferences.h"
 
+namespace geometrize
+{
+
+namespace script
+{
+class GeometrizerEngine;
+}
+
+}
+
 namespace chaiscript
 {
 class ChaiScript;
@@ -47,10 +57,10 @@ public:
     ~ImageTask();
 
     /**
-     * @brief getEngine Gets a pointer to the engine used by the image task's shape mutator.
-     * @return A pointer to the engine used by the image task's shape mutator.
+     * @brief getGeometrizer Gets a reference to the script-based engine used to turn images into shapes.
+     * @return The script-based engine used to turn images into shapes.
      */
-    chaiscript::ChaiScript* getEngine();
+    geometrize::script::GeometrizerEngine& getGeometrizer();
 
     /**
      * @brief getTarget Gets the target bitmap.

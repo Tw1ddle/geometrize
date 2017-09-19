@@ -58,6 +58,7 @@ public:
     bool isScriptModeEnabled() const;
     void setScriptModeEnabled(bool enabled);
     void setScript(const std::string& scriptName, const std::string& code);
+    void setScripts(const std::map<std::string, std::string>& scripts);
     std::map<std::string, std::string> getScripts() const;
 
 private:

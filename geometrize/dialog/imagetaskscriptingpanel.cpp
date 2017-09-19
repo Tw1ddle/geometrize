@@ -32,14 +32,26 @@ public:
 
         for(const auto& item : scriptDefaults) {
             ScriptEditorWidget* editor{new ScriptEditorWidget(item.first, item.first, item.second)};
-            connect(editor, &ScriptEditorWidget::signal_scriptApplied, [this](ScriptEditorWidget* self, const std::string& scriptCode) {
-
+            m_editors.push_back(editor);
+            connect(editor, &ScriptEditorWidget::signal_scriptApplied, [this](ScriptEditorWidget* self, const std::string&) {
+                emit q->signal_scriptApplied(self);
             });
-            connect(editor, &ScriptEditorWidget::signal_scriptReset, [this](ScriptEditorWidget* self, const std::string& scriptCode) {
-
+            connect(editor, &ScriptEditorWidget::signal_scriptReset, [this](ScriptEditorWidget* self, const std::string&) {
+                emit q->signal_scriptReset(self);
             });
             ui->scriptEditorsContainer->addWidget(editor);
         }
+
+        connect(ui->scriptsEnabledButton, &QCheckBox::toggled, [this](const bool enabled) {
+            emit q->signal_scriptingToggled(enabled);
+        });
+        connect(ui->resetScriptEngineButton, &QPushButton::pressed, [this]() {
+            for(ScriptEditorWidget* editor : m_editors) {
+                editor->resetCodeToDefault();
+            }
+
+            emit q->signal_scriptsReset();
+        });
     }
     ~ImageTaskScriptingPanelImpl() = default;
     ImageTaskScriptingPanelImpl operator=(const ImageTaskScriptingPanelImpl&) = delete;
@@ -51,12 +63,22 @@ public:
         populateUi();
     }
 
+    std::map<std::string, std::string> getScripts() const
+    {
+        std::map<std::string, std::string> m;
+        for(ScriptEditorWidget* editor : m_editors) {
+            m[editor->getFunctionName()] = editor->getCurrentCode();
+        }
+        return m;
+    }
+
 private:
     void populateUi()
     {
 
     }
 
+    std::vector<ScriptEditorWidget*> m_editors;
     ImageTaskScriptingPanel* q;
     std::unique_ptr<Ui::ImageTaskScriptPanel> ui;
 };
@@ -77,6 +99,11 @@ void ImageTaskScriptingPanel::changeEvent(QEvent* event)
         d->onLanguageChange();
     }
     QWidget::changeEvent(event);
+}
+
+std::map<std::string, std::string> ImageTaskScriptingPanel::getScripts() const
+{
+    return d->getScripts();
 }
 
 }

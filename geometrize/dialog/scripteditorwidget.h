@@ -24,6 +24,12 @@ public:
     explicit ScriptEditorWidget(const std::string& title, const std::string& functionName, const std::string& defaultCode, QWidget* parent = nullptr);
     ~ScriptEditorWidget();
 
+    std::string getFunctionName() const;
+    std::string getDefaultCode() const;
+    std::string getCurrentCode() const;
+
+    void resetCodeToDefault();
+
 signals:
     /**
      * @brief signal_scriptApplied Signal emitted when the user commits to a script code change e.g. presses an "apply" button.

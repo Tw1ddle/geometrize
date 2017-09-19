@@ -111,6 +111,11 @@ public:
         m_scripts[scriptName] = code;
     }
 
+    void setScripts(const std::map<std::string, std::string>& scripts)
+    {
+        m_scripts = scripts;
+    }
+
     std::map<std::string, std::string> getScripts() const
     {
         return m_scripts;
@@ -214,6 +219,11 @@ bool ImageTaskPreferences::isScriptModeEnabled() const
 void ImageTaskPreferences::setScript(const std::string& scriptName, const std::string& code)
 {
     d->setScript(scriptName, code);
+}
+
+void ImageTaskPreferences::setScripts(const std::map<std::string, std::string>& scripts)
+{
+    d->setScripts(scripts);
 }
 
 std::map<std::string, std::string> ImageTaskPreferences::getScripts() const

@@ -14,7 +14,7 @@
 #include "geometrize/shape/rectangle.h"
 
 #include "preferences/imagetaskpreferences.h"
-#include "script/shapemutationrules.h"
+#include "script/geometrizerengine.h"
 #include "task/imagetaskworker.h"
 
 namespace geometrize
@@ -52,9 +52,9 @@ public:
     ImageTaskImpl& operator=(const ImageTaskImpl&) = delete;
     ImageTaskImpl(const ImageTaskImpl&) = delete;
 
-    chaiscript::ChaiScript* getEngine()
+    geometrize::script::GeometrizerEngine& getGeometrizer()
     {
-        return m_mutationRules.getEngine();
+        return m_geometrizer;
     }
 
     Bitmap& getTarget()
@@ -157,6 +157,8 @@ private:
 
     void init()
     {
+        m_geometrizer.setMutator(&m_worker.getRunner().getModel().getShapeMutator());
+
         qRegisterMetaType<std::vector<geometrize::ShapeResult>>();
         qRegisterMetaType<geometrize::ImageRunnerOptions>();
         qRegisterMetaType<std::shared_ptr<geometrize::Shape>>();
@@ -186,11 +188,11 @@ private:
 
     ImageTask* q;
     preferences::ImageTaskPreferences m_preferences; ///> Runtime configuration parameters for the runner.
-    geometrize::ShapeMutationRules m_mutationRules; ///> The shape mutation rules for the image task.
     const std::string m_displayName; ///> The display name of the image task.
     const std::size_t m_id; ///> A unique id for the image task.
     QThread m_workerThread; ///> Thread that the image task worker runs on.
     ImageTaskWorker m_worker; ///> The image task worker.
+    geometrize::script::GeometrizerEngine m_geometrizer; ///> The script-based geometrizer for the image task.
 };
 
 ImageTask::ImageTask(Bitmap& target) : QObject(),
@@ -215,11 +217,6 @@ ImageTask::ImageTask(const std::string& displayName, Bitmap& bitmap, const Bitma
 
 ImageTask::~ImageTask()
 {
-}
-
-chaiscript::ChaiScript* ImageTask::getEngine()
-{
-    return d->getEngine();
 }
 
 Bitmap& ImageTask::getTarget()
@@ -300,6 +297,11 @@ preferences::ImageTaskPreferences& ImageTask::getPreferences()
 void ImageTask::setPreferences(const preferences::ImageTaskPreferences preferences)
 {
     d->setPreferences(preferences);
+}
+
+geometrize::script::GeometrizerEngine& ImageTask::getGeometrizer()
+{
+    return d->getGeometrizer();
 }
 
 }
