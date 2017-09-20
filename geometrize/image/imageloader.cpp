@@ -53,6 +53,11 @@ QImage loadImage(const std::string& filePath)
     return image.convertToFormat(QImage::Format_RGBA8888);
 }
 
+QImage convertImageToRgba8888(const QImage& image)
+{
+    return image.convertToFormat(QImage::Format_RGBA8888);
+}
+
 QPixmap loadPixmap(const std::string& filePath)
 {
     return QPixmap::fromImage(loadImage(filePath));

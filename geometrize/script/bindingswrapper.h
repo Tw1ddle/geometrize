@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 
+#include <QImage>
+
 namespace geometrize
 {
 

@@ -3,6 +3,7 @@
 #include <string>
 
 #include <QImage>
+#include <Qt>
 
 #include "chaiscript/chaiscript.hpp"
 
@@ -47,6 +48,7 @@
 #define ADD_TYPE(Class) try { module->add(chaiscript::user_type<Class>(), #Class); } catch(...) { assert(0 && #Class); }
 #define ADD_BASE_CLASS(Base, Derived) try { module->add(chaiscript::base_class<Base, Derived>()); } catch (...) { assert(0 && #Base); }
 #define ADD_CONSTRUCTOR(Class, Signature) try { module->add(chaiscript::constructor<Signature>(), #Class); } catch(...) { assert(0 && #Signature); }
+#define ADD_GLOBAL_CONST(Name, Value) try { module->add_global_const(chaiscript::const_var(Value), Name); } catch (...) { assert(0 && Name); }
 
 namespace geometrize
 {
@@ -137,6 +139,7 @@ std::shared_ptr<chaiscript::Module> createImageBindings()
     auto module{std::make_shared<chaiscript::Module>()};
 
     ADD_TYPE(QImage);
+
     ADD_MEMBER(QImage, byteCount);
     ADD_MEMBER(QImage, colorCount);
     ADD_MEMBER(QImage, depth);
@@ -144,7 +147,17 @@ std::shared_ptr<chaiscript::Module> createImageBindings()
     ADD_MEMBER(QImage, width);
     ADD_MEMBER(QImage, height);
 
+    chaiscript::utility::add_class<Qt::TransformationMode>(*module,
+      "TransformationMode",
+    {
+      { Qt::FastTransformation, "QtFastTransformation" },
+      { Qt::SmoothTransformation, "QtSmoothTransformation" }
+    });
+    ADD_MEMBER(QImage, scaledToWidth);
+    ADD_MEMBER(QImage, scaledToHeight);
+
     ADD_FREE_FUN(loadImage);
+    ADD_FREE_FUN(convertImageToRgba8888);
     ADD_FREE_FUN(createBitmap);
 
     return module;

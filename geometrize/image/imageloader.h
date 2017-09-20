@@ -45,6 +45,13 @@ QPixmap createPixmap(const Bitmap& data);
 QImage loadImage(const std::string& filePath);
 
 /**
+ * @brief convertImageToRgba8888 Returns a copy of the image in the RGBA8888 format.
+ * @param image The image to convert.
+ * @return A copy of the given image in RGBA8888 format.
+ */
+QImage convertImageToRgba8888(const QImage& image);
+
+/**
  * @brief loadPixmap Loads a pixmap from the image at the file path. Converts to RGBA8888 format.
  * @param filePath The file path to the pixmap.
  * @return The pixmap loaded from the image file.
