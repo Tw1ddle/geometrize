@@ -67,13 +67,13 @@ int runAppConsoleMode(QApplication& app)
 
 int runAppGuiMode(QApplication& app)
 {
-    geometrize::dialog::LaunchWindow w;
-    w.show();
-
     const auto& prefs{geometrize::preferences::getGlobalPreferences()};
     if(prefs.shouldShowWelcomeScreenOnLaunch()) {
-        geometrize::common::ui::openWelcomePage(&w);
+        geometrize::common::ui::openWelcomePage(nullptr);
     }
+
+    geometrize::dialog::LaunchWindow w;
+    w.show();
 
     return app.exec();
 }

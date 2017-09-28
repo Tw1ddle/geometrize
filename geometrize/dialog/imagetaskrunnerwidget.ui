@@ -391,7 +391,6 @@
      <zorder>usesLines</zorder>
      <zorder>usesRotatedEllipses</zorder>
      <zorder>usesPolylines</zorder>
-     <zorder>regionOfInterestCheckbox</zorder>
     </widget>
    </item>
    <item>
