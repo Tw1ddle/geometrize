@@ -11,6 +11,7 @@
 #include "common/uiactions.h"
 #include "common/util.h"
 #include "image/imageloader.h"
+#include "localization/strings.h"
 #include "preferences/globalpreferences.h"
 #include "recents/recentitems.h"
 #include "script/chaiscriptcreator.h"
@@ -128,6 +129,9 @@ public:
 private:
     void populateUi()
     {
+        const QString windowTitle{geometrize::strings::Strings::getApplicationName()};
+        q->setWindowTitle(windowTitle);
+
         const QString moreResourcesLabel{tr("Get more online", "Text on a button the user presses to open a page containing more resources for using the app, such as extra images, information and help")};
         ui->moreResourcesLink->setText(R"(<a href=")" + constants::MORE_RESOURCES_URL + R"(" style="text-decoration:none;">)" + moreResourcesLabel + R"(</a>)");
 

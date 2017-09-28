@@ -26,7 +26,7 @@
    <bool>true</bool>
   </property>
   <property name="windowTitle">
-   <string extracomment="Title of the main window of the app. It is the launcher window - so called because it is mainly used to launch other tasks">Geometrize Launcher</string>
+   <string notr="true"/>
   </property>
   <property name="dockNestingEnabled">
    <bool>true</bool>
@@ -658,8 +658,8 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../resources/logos.qrc"/>
   <include location="../../resources/icons.qrc"/>
+  <include location="../../resources/logos.qrc"/>
  </resources>
  <connections/>
 </ui>
