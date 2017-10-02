@@ -20,7 +20,7 @@ namespace ui
 void openLaunchWindow();
 bool isLaunchWindowOpen();
 void bringLaunchWindowToFront();
-void openWelcomePage(QWidget* parent);
+void openWelcomePage();
 void openAboutPage(QWidget* parent);
 void openGlobalPreferences(QWidget* parent);
 QString openImagePathPickerDialog(QWidget* parent);

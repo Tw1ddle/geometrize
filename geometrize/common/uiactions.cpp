@@ -11,7 +11,7 @@
 #include "dialog/launchwindow.h"
 #include "dialog/openurldialog.h"
 #include "dialog/runscriptdialog.h"
-#include "dialog/welcomedialog.h"
+#include "dialog/welcomewindow.h"
 
 namespace geometrize
 {
@@ -24,8 +24,8 @@ namespace ui
 
 void openLaunchWindow()
 {
-    dialog::LaunchWindow launcher;
-    launcher.show();
+    dialog::LaunchWindow* launcher{new dialog::LaunchWindow()};
+    launcher->show();
 }
 
 bool isLaunchWindowOpen()
@@ -48,10 +48,10 @@ void bringLaunchWindowToFront()
     QApplication::setActiveWindow(firstLauncher);
 }
 
-void openWelcomePage(QWidget* parent)
+void openWelcomePage()
 {
-    dialog::WelcomeDialog dialog(parent);
-    dialog.exec();
+    dialog::WelcomeWindow* window = new dialog::WelcomeWindow();
+    window->show();
 }
 
 void openAboutPage(QWidget* parent)

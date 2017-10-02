@@ -11,6 +11,8 @@
 #include "analytics/analyticswrapper.h"
 #include "cli/commandlineparser.h"
 #include "common/uiactions.h"
+#include "dialog/launchwindow.h"
+#include "dialog/welcomewindow.h"
 #include "localization/localization.h"
 #include "logger/logmessagehandlers.h"
 #include "preferences/globalpreferences.h"
@@ -67,13 +69,12 @@ int runAppConsoleMode(QApplication& app)
 
 int runAppGuiMode(QApplication& app)
 {
-    const auto& prefs{geometrize::preferences::getGlobalPreferences()};
-    if(prefs.shouldShowWelcomeScreenOnLaunch()) {
-        geometrize::common::ui::openWelcomePage(nullptr);
+	const auto& prefs{ geometrize::preferences::getGlobalPreferences() };
+	if (prefs.shouldShowWelcomeScreenOnLaunch()) {
+        geometrize::common::ui::openWelcomePage(); // Opens launch window on close
+    } else {
+        geometrize::common::ui::openLaunchWindow();
     }
-
-    geometrize::dialog::LaunchWindow w;
-    w.show();
 
     return app.exec();
 }

@@ -31,6 +31,7 @@ class LaunchWindow::LaunchWindowImpl
 public:
     LaunchWindowImpl(LaunchWindow* pQ) : ui{std::make_unique<Ui::LaunchWindow>()}, q{pQ}, m_engine{script::createLaunchWindowEngine()}
     {
+        q->setAttribute(Qt::WA_DeleteOnClose);
         ui->setupUi(q);
         populateUi();
 

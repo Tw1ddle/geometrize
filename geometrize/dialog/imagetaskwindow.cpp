@@ -69,9 +69,9 @@ public:
         ui{std::make_unique<Ui::ImageTaskWindow>()},
         q{pQ}
     {
-        q->setAttribute(Qt::WA_DeleteOnClose);
         ui->setupUi(q);
-        q->setWindowTitle(geometrize::strings::Strings::getApplicationName());
+        populateUi();
+        q->setAttribute(Qt::WA_DeleteOnClose);
 
         // Set up the dock widgets
         q->tabifyDockWidget(ui->runnerSettingsDock, ui->exporterDock);
@@ -400,6 +400,7 @@ private:
     void populateUi()
     {
         updateStartStopButtonText();
+        q->setWindowTitle(geometrize::strings::Strings::getApplicationName());
     }
 
     void updateStartStopButtonText()

@@ -1,11 +1,12 @@
-#include "welcomedialog.h"
-#include "ui_welcomedialog.h"
+#include "welcomewindow.h"
+#include "ui_welcomewindow.h"
 
 #include <QDesktopServices>
 #include <QEvent>
 #include <QUrl>
 
 #include "common/constants.h"
+#include "common/uiactions.h"
 #include "localization/strings.h"
 #include "preferences/globalpreferences.h"
 
@@ -27,49 +28,58 @@ void setShouldShowWelcomeOnLaunch(const bool show)
     prefs.setShouldShowWelcomeScreenOnLaunch(show);
 }
 
-WelcomeDialog::WelcomeDialog(QWidget* parent) :
-    QDialog(parent),
-    ui(new Ui::WelcomeDialog)
+WelcomeWindow::WelcomeWindow() :
+    ui(new Ui::WelcomeWindow)
 {
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint); // Remove question mark from title bar
+    setAttribute(Qt::WA_DeleteOnClose);
     ui->setupUi(this);
     populateUi();
 
     ui->showOnLaunchCheckbox->setChecked(shouldShowWelcomeOnLaunch());
 }
 
-WelcomeDialog::~WelcomeDialog()
+WelcomeWindow::~WelcomeWindow()
 {
     delete ui;
 }
 
-void WelcomeDialog::on_closeButton_released()
+void WelcomeWindow::on_closeButton_released()
 {
     close();
 }
 
-void WelcomeDialog::on_videoTutorialsButton_released()
+void WelcomeWindow::on_videoTutorialsButton_released()
 {
     QDesktopServices::openUrl(QUrl(constants::VIDEO_TUTORIAL_URL));
 }
 
-void WelcomeDialog::on_showOnLaunchCheckbox_clicked(const bool checked)
+void WelcomeWindow::on_showOnLaunchCheckbox_clicked(const bool checked)
 {
     setShouldShowWelcomeOnLaunch(checked);
 }
 
-void WelcomeDialog::changeEvent(QEvent* event)
+void WelcomeWindow::closeEvent (QCloseEvent* event)
+{
+    geometrize::common::ui::openLaunchWindow();
+
+    QMainWindow::closeEvent(event);
+}
+
+void WelcomeWindow::changeEvent(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange) {
         ui->retranslateUi(this);
         populateUi();
     }
-    QDialog::changeEvent(event);
+    QMainWindow::changeEvent(event);
 }
 
-void WelcomeDialog::populateUi()
+void WelcomeWindow::populateUi()
 {
-    ui->welcomeTitleLabel->setText(tr("Welcome To %1", "A subtitle on the 'tutorial' page welcoming the user to the software").arg(geometrize::strings::Strings::getApplicationName()));
+    const QString welcomeText{tr("Welcome To %1", "A subtitle on the 'tutorial' page welcoming the user to the software").arg(geometrize::strings::Strings::getApplicationName())};
+
+    ui->welcomeTitleLabel->setText(welcomeText);
+    setWindowTitle(welcomeText);
 }
 
 }

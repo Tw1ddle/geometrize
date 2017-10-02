@@ -207,7 +207,7 @@
             <item>
              <layout class="QVBoxLayout" name="verticalLayout">
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout">
+               <layout class="QVBoxLayout" name="verticalLayout_5">
                 <property name="spacing">
                  <number>15</number>
                 </property>
@@ -248,7 +248,7 @@
                    </size>
                   </property>
                   <property name="toolButtonStyle">
-                   <enum>Qt::ToolButtonTextUnderIcon</enum>
+                   <enum>Qt::ToolButtonTextBesideIcon</enum>
                   </property>
                   <property name="arrowType">
                    <enum>Qt::NoArrow</enum>
@@ -280,7 +280,7 @@
                    </size>
                   </property>
                   <property name="toolButtonStyle">
-                   <enum>Qt::ToolButtonTextUnderIcon</enum>
+                   <enum>Qt::ToolButtonTextBesideIcon</enum>
                   </property>
                  </widget>
                 </item>
@@ -309,7 +309,7 @@
                    </size>
                   </property>
                   <property name="toolButtonStyle">
-                   <enum>Qt::ToolButtonTextUnderIcon</enum>
+                   <enum>Qt::ToolButtonTextBesideIcon</enum>
                   </property>
                  </widget>
                 </item>
@@ -488,7 +488,7 @@
                  <x>0</x>
                  <y>0</y>
                  <width>834</width>
-                 <height>548</height>
+                 <height>549</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -658,8 +658,8 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../resources/icons.qrc"/>
   <include location="../../resources/logos.qrc"/>
+  <include location="../../resources/icons.qrc"/>
  </resources>
  <connections/>
 </ui>

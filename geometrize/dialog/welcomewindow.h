@@ -1,12 +1,12 @@
 #pragma once
 
-#include <QDialog>
+#include <QMainWindow>
 
 class QEvent;
 
 namespace Ui
 {
-class WelcomeDialog;
+class WelcomeWindow;
 }
 
 namespace geometrize
@@ -16,17 +16,18 @@ namespace dialog
 {
 
 /**
- * @brief The WelcomeDialog class models the UI for a quickstart tutorial/welcome page shown to users on first launch.
+ * @brief The WelcomeWindow class models the UI for a quickstart tutorial/welcome page shown to users on first launch.
  */
-class WelcomeDialog : public QDialog
+class WelcomeWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit WelcomeDialog(QWidget* parent = nullptr);
-    ~WelcomeDialog();
+    explicit WelcomeWindow();
+    ~WelcomeWindow();
 
 protected:
+    virtual void closeEvent (QCloseEvent* event) override;
     void changeEvent(QEvent*) override;
 
 public slots:
@@ -37,7 +38,7 @@ public slots:
 private:
     void populateUi();
 
-    Ui::WelcomeDialog* ui;
+    Ui::WelcomeWindow* ui;
 };
 
 }
