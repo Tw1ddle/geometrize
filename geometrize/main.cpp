@@ -67,7 +67,13 @@ int runAppConsoleMode(QApplication& app)
     return geometrize::cli::runApp(app);
 }
 
-int runAppGuiMode(QApplication& app)
+int runAppGuiModeUwp(QApplication& app)
+{
+    geometrize::common::ui::openLaunchWindow(); // No welcome screen in the UWP build
+    return app.exec();
+}
+
+int runAppGuiModeDesktop(QApplication& app)
 {
 	const auto& prefs{ geometrize::preferences::getGlobalPreferences() };
 	if (prefs.shouldShowWelcomeScreenOnLaunch()) {
@@ -84,7 +90,12 @@ std::function<int(QApplication&)> resolveLaunchFunction(const QStringList& argum
     if(geometrize::cli::shouldRunInConsoleMode(arguments)) {
         return ::runAppConsoleMode;
     }
-    return ::runAppGuiMode;
+
+#ifdef Q_OS_WINRT
+    return ::runAppGuiModeUwp;
+#else
+    return ::runAppGuiModeDesktop;
+#endif
 }
 
 }

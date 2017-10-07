@@ -1,5 +1,6 @@
 #pragma once
 
+#include <atomic>
 #include <memory>
 
 #include <QObject>
@@ -79,7 +80,7 @@ signals:
 
 private:
     ImageRunner m_runner;
-    std::atomic_bool m_working;
+    std::atomic<bool> m_working;
 };
 
 }

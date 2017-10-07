@@ -1,7 +1,5 @@
 QT += core gui network svg
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
 TARGET = Geometrize
 TEMPLATE = app
 
@@ -16,7 +14,7 @@ CONFIG(release, debug|release): DEFINES += NDEBUG
 msvc:QMAKE_CXXFLAGS += -bigobj
 
 # Options for the Universal Windows Platform version of Geometrize
-winrt|wince {
+winrt {
     include($$PWD/uwp/geometrize_uwp.pri)
 }
 
