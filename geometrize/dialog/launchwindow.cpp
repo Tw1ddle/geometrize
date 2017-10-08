@@ -173,7 +173,7 @@ private:
                 updateLogoTaskProgress();
 
                 m_logoTaskSteps++;
-                if(m_logoTaskSteps < m_maxLogoTaskSteps) {
+                if(m_logoTaskSteps <= m_maxLogoTaskSteps) {
                     m_logoTask->stepModel();
                 }
             });
