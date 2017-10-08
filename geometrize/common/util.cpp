@@ -224,7 +224,7 @@ bool stringEndsWith(const std::string& str, const std::string& suffix)
 
 std::string getAppDataLocation()
 {
-    return QStandardPaths::writableLocation(QStandardPaths::AppDataLocation).toStdString();
+    return QStandardPaths::writableLocation(QStandardPaths::DataLocation).toStdString();
 }
 
 bool writeStringToFile(const std::string& str, const std::string& path)
@@ -250,7 +250,8 @@ bool writeStringToFile(const std::string& str, const std::string& path)
 std::string percentEncode(const std::string& str)
 {
     const QString s{QString::fromStdString(str)};
-    return QUrl::toPercentEncoding(s).toStdString();
+    const QString percentEncoded{QUrl::toPercentEncoding(s)};
+    return percentEncoded.toStdString();
 }
 
 int randomInRange(const int lower, const int upper)
