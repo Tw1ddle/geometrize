@@ -1,6 +1,3 @@
-language: cpp
-os: linux
-compiler: gcc
 sudo: required
 dist: trusty
 
@@ -13,26 +10,166 @@ env:
   global:
     - secure: BW4/YkeASJvNCwSiyoeIhEbhsmR15Tk2mSlvqqRK/rLnWjb0iQqdfw2apAHkxql96RjTTfzHRIzneWDxTkjh1OComuzG7ik1szak35lW/mfy6SNNYnmi8h98+88+i8RFYtrx47J5qmJ9/v9lRhFG/5yhXbg14b8RN36EdynBVOiNdsYquRzJ7MFzBTzbB9hCtBDgAhsz0wBdTkEFLCEbDsmXIaK74QLDZN6iSgxZz5qlTy4EDv467O+3MVUcGeJlGSeoBUxgHEVslAqpyxqPOAoi0INxH/iIzBvljQNU9XjE8mdsgaL5uOOfdwImYsQYTSwg/LlEDJcXxrgOyQKDHeJK4xrRFAZwy2lF07T5JXh++XSzoGoXl/jSZKejw43+QS2hV8OdD8YTXRyWcU/guoPshabnPBAgAIBt9vubaUNtksqWazqEJNAEG9hHWNAwdu4xMbBM/AxsHj7xP4TZKu89vyoeJ6202iVyTe15yEbOI/AjtNhNGBzmNtc8OZ/ULFHuHrrWgQ2/Mfov0Nv6dItYcEFMSvFaKaGMbWUsQKdER19WxLUvCfsHyhlqyckHJP7m9K0c4NjXMfkds9QqHo/sfmbjCmBKbcLENaMXSH7jKLD07jUsWvdw1gA3ApGQ6T2E9QQHyB1d6F8LrqPQ8MUJWFKseD3pZWrnEObnQVY=
 
+# Setup build matrix
+matrix:
+  include:
+  - os: linux
+    addons:
+      apt:
+        sources:
+        - ubuntu-toolchain-r-test
+        packages:
+        - g++-4.9
+    env:
+    - MATRIX_EVAL="CC=gcc-4.9 && CXX=g++-4.9"
+    - TRIGGER_DOWNSTREAM_BUILDS="yes"
+
+  - os: linux
+    addons:
+      apt:
+        sources:
+        - ubuntu-toolchain-r-test
+        packages:
+        - g++-5
+    env:
+    - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
+
+  - os: linux
+    addons:
+      apt:
+        sources:
+        - ubuntu-toolchain-r-test
+        packages:
+        - g++-6
+    env:
+    - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
+
+  - os: linux
+    addons:
+      apt:
+        sources:
+        - ubuntu-toolchain-r-test
+        packages:
+        - g++-7
+    env:
+    - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
+
+  - os: linux
+    addons:
+      apt:
+        sources:
+        - ubuntu-toolchain-r-test
+        - llvm-toolchain-precise-3.6
+        packages:
+        - clang-3.6
+    env:
+    - MATRIX_EVAL="CC=clang-3.6 && CXX=clang++-3.6"
+
+  - os: linux
+    addons:
+      apt:
+        sources:
+        - ubuntu-toolchain-r-test
+        - llvm-toolchain-precise-3.7
+        packages:
+        - clang-3.7
+    env:
+    - MATRIX_EVAL="CC=clang-3.7 && CXX=clang++-3.7"
+
+  - os: linux
+    addons:
+      apt:
+        sources:
+        - ubuntu-toolchain-r-test
+        - llvm-toolchain-precise-3.8
+        packages:
+        - clang-3.8
+    env:
+    - MATRIX_EVAL="CC=clang-3.8 && CXX=clang++-3.8"
+
+  - os: linux
+    addons:
+      apt:
+        sources:
+        - llvm-toolchain-trusty-3.9
+        packages:
+        - clang-3.9
+    env:
+    - MATRIX_EVAL="CC=clang-3.9 && CXX=clang++-3.9"
+
+  - os: linux
+    addons:
+      apt:
+        sources:
+        - llvm-toolchain-trusty-4.0
+        packages:
+        - clang-4.0
+    env:
+    - MATRIX_EVAL="CC=clang-4.0 && CXX=clang++-4.0"
+
+  - os: linux
+    addons:
+      apt:
+        sources:
+        - llvm-toolchain-trusty-5.0
+        packages:
+        - clang-5.0
+    env:
+    - MATRIX_EVAL="CC=clang-5.0 && CXX=clang++-5.0"
+
+  - os: osx
+    osx_image: xcode8
+    env:
+    - MATRIX_EVAL="CC=clang && CXX=clang++"
+    - OSX_IMAGE_NAME="xcode_8_0"
+
+  - os: osx
+    osx_image: xcode8.1
+    env:
+    - MATRIX_EVAL="CC=clang && CXX=clang++"
+    - OSX_IMAGE_NAME="xcode_8_1"
+
+  - os: osx
+    osx_image: xcode8.2
+    env:
+    - MATRIX_EVAL="CC=clang && CXX=clang++"
+    - OSX_IMAGE_NAME="xcode_8_2"
+
+  - os: osx
+    osx_image: xcode8.3
+    env:
+    - MATRIX_EVAL="CC=clang && CXX=clang++"
+    - OSX_IMAGE_NAME="xcode_8_3"
+
+  - os: osx
+    osx_image: xcode9
+    env:
+    - MATRIX_EVAL="CC=clang && CXX=clang++"
+    - OSX_IMAGE_NAME="xcode_9_0"
+
 before_install:
-  # Add ppa for testing Ubuntu packages
-  - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-  - sudo apt-get update -qq
   # Get the latest versions of the submodules, and push to the remotes (if necessary)
   - chmod +x ./travis_update_submodules.sh
   - ./travis_update_submodules.sh
 
-install:
-  - sudo apt-get install -qq g++-5
-  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-5 90
-  - sudo apt-get install -y qt5-default qttools5-dev-tools libqt5svg5*
+  # Set compilers
+  - eval "${MATRIX_EVAL}"
+  - echo $CC
+  - echo $CXX
 
+install:
+  # Get Qt
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install qt ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew link --force qt ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -y qt5-default qttools5-dev-tools libqt5svg5* ; fi
+
+# Build the Geometrize app
 script:
-  # Build the Geometrize app
   - qmake geometrize.pro
-  - make
+  - make CC=${CC} CXX=${CXX} LINK=${CXX}
 
 # Tell downstream repositories that the Geometrize app has been updated
 after_script:
-  - chmod +x trigger_travis.sh
-  - ./trigger_travis.sh Tw1ddle geometrize-installer master $TRAVIS_ACCESS_TOKEN_GEOMETRIZE_APP_INSTALLER_TRIGGER
-  - ./trigger_travis.sh Tw1ddle geometrize-docs master $TRAVIS_ACCESS_TOKEN_GEOMETRIZE_APP_DOCS_TRIGGER
+  - if [[ -z "${TRIGGER_DOWNSTREAM_BUILDS}" ]]; then chmod +x trigger_travis.sh ; fi
+  - if [[ -z "${TRIGGER_DOWNSTREAM_BUILDS}" ]]; then ./trigger_travis.sh Tw1ddle geometrize-installer master $TRAVIS_ACCESS_TOKEN_GEOMETRIZE_APP_INSTALLER_TRIGGER ; fi
+  - if [[ -z "${TRIGGER_DOWNSTREAM_BUILDS}" ]]; then ./trigger_travis.sh Tw1ddle geometrize-docs master $TRAVIS_ACCESS_TOKEN_GEOMETRIZE_APP_DOCS_TRIGGER ; fi
