@@ -1,10 +1,18 @@
 # Define the compiler versions we wish to build the installer against
 environment:
   matrix:
+    - QTDIR: C:\Qt\5.7\mingw53_32
+      MINGW: C:\Qt\Tools\mingw53_32
+    - QTDIR: C:\Qt\5.8\mingw53_32
+      MINGW: C:\Qt\Tools\mingw53_32
     - QTDIR: C:\Qt\5.9.1\mingw53_32
       MINGW: C:\Qt\Tools\mingw53_32
     - QTDIR: C:\Qt\5.7\msvc2015
     - QTDIR: C:\Qt\5.7\msvc2015_64
+    - QTDIR: C:\Qt\5.8\msvc2015
+    - QTDIR: C:\Qt\5.8\msvc2015_64
+    - QTDIR: C:\Qt\5.9.1\msvc2015
+    - QTDIR: C:\Qt\5.9.1\msvc2015_64
 
 configuration:
   - debug
@@ -26,9 +34,11 @@ install:
 # Run qmake
 before_build:
   - cd %APPVEYOR_BUILD_FOLDER%
-  - qmake -Wall geometrize.pro
+  - qmake geometrize.pro
 
 # Build the projects
 build_script:
   - cd %APPVEYOR_BUILD_FOLDER%
   - '%make%'
+
+# Note, the downstream installer CI etc builds and deploys Geometrize
