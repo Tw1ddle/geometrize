@@ -82,7 +82,7 @@ std::string readFileAsString(const std::string& filePath)
     QFile file(QString::fromStdString(filePath));
 
     if(file.exists() && file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        return file.readAll().toStdString();
+        return QString(file.readAll()).toStdString();
     }
 
     return "";
