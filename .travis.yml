@@ -170,6 +170,6 @@ script:
 
 # Tell downstream repositories that the Geometrize app has been updated
 after_script:
-  - if [[ -z "${TRIGGER_DOWNSTREAM_BUILDS}" ]]; then chmod +x trigger_travis.sh ; fi
-  - if [[ -z "${TRIGGER_DOWNSTREAM_BUILDS}" ]]; then ./trigger_travis.sh Tw1ddle geometrize-installer master $TRAVIS_ACCESS_TOKEN_GEOMETRIZE_APP_INSTALLER_TRIGGER ; fi
-  - if [[ -z "${TRIGGER_DOWNSTREAM_BUILDS}" ]]; then ./trigger_travis.sh Tw1ddle geometrize-docs master $TRAVIS_ACCESS_TOKEN_GEOMETRIZE_APP_DOCS_TRIGGER ; fi
+  - if [[ $TRIGGER_DOWNSTREAM_BUILDS ]]; then chmod +x trigger_travis.sh ; fi
+  - if [[ $TRIGGER_DOWNSTREAM_BUILDS ]]; then ./trigger_travis.sh Tw1ddle geometrize-installer master $TRAVIS_ACCESS_TOKEN_GEOMETRIZE_APP_INSTALLER_TRIGGER ; fi
+  - if [[ $TRIGGER_DOWNSTREAM_BUILDS ]]; then ./trigger_travis.sh Tw1ddle geometrize-docs master $TRAVIS_ACCESS_TOKEN_GEOMETRIZE_APP_DOCS_TRIGGER ; fi
