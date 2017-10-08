@@ -67,11 +67,15 @@ int runAppConsoleMode(QApplication& app)
     return geometrize::cli::runApp(app);
 }
 
+#ifdef Q_OS_WINRT
+
 int runAppGuiModeUwp(QApplication& app)
 {
     geometrize::common::ui::openLaunchWindow(); // No welcome screen in the UWP build
     return app.exec();
 }
+
+#endif
 
 int runAppGuiModeDesktop(QApplication& app)
 {

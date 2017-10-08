@@ -132,8 +132,8 @@ private:
         ui->maxThreadsPerImageTask->setValue(prefs.getImageTaskMaxThreads());
     }
 
-    GlobalPreferencesDialog* q;
     std::unique_ptr<Ui::GlobalPreferencesDialog> ui;
+    GlobalPreferencesDialog* q;
 };
 
 GlobalPreferencesDialog::GlobalPreferencesDialog(QWidget* parent) : QDialog(parent), d{std::make_unique<GlobalPreferencesDialog::GlobalPreferencesDialogImpl>(this)}

@@ -5,8 +5,6 @@
 #include <memory>
 #include <string>
 
-#include <QObject>
-
 #include "geometrize/runner/imagerunneroptions.h"
 
 namespace geometrize
@@ -18,9 +16,8 @@ namespace preferences
 /**
  * @brief The ImageTaskPreferences class models the preferences associated with an image task.
  */
-class ImageTaskPreferences : public QObject
+class ImageTaskPreferences
 {
-    Q_OBJECT
 public:
     ImageTaskPreferences();
     ImageTaskPreferences(const std::string& filePath);

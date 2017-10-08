@@ -89,10 +89,10 @@ private:
 
     }
 
+    ElidedLabel* q;
     Qt::TextElideMode m_elideMode; ///< The current elision mode.
     ElidedLabel::TrimMode m_trimMode; ///< The current post-elision trim mode.
     QString m_elidedText; ///< The cached elided text.
-    ElidedLabel* q;
 };
 
 ElidedLabel::ElidedLabel(QWidget* parent, const Qt::WindowFlags flags) :

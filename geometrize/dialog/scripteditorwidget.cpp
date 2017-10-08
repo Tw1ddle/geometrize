@@ -18,7 +18,7 @@ namespace dialog
 class ScriptEditorWidget::ScriptEditorWidgetImpl
 {
 public:
-    ScriptEditorWidgetImpl(ScriptEditorWidget* pQ, const std::string& title, const std::string& functionName, const std::string& defaultCode) : q{pQ}, m_functionName{functionName}, m_defaultCode{defaultCode}, ui{std::make_unique<Ui::ScriptEditorWidget>()}
+    ScriptEditorWidgetImpl(ScriptEditorWidget* pQ, const std::string& title, const std::string& functionName, const std::string& defaultCode) : q{pQ}, ui{std::make_unique<Ui::ScriptEditorWidget>()}, m_functionName{functionName}, m_defaultCode{defaultCode}
     {
         ui->setupUi(q);
         populateUi();

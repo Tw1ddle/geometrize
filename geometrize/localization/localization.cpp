@@ -28,8 +28,7 @@ std::vector<QTranslator*>& getTranslators()
 void installTranslator(QCoreApplication* application, QTranslator* translator)
 {
     std::vector<QTranslator*>& translators{getTranslators()};
-    const bool installedTranslator{application->installTranslator(translator)};
-    //assert(installedTranslator); // NOTE this can fail if the translator had no translations in it and so failed to load initially...
+    application->installTranslator(translator);
     translators.push_back(translator);
 }
 

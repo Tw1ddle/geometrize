@@ -117,7 +117,7 @@ private:
 
     }
 
-    QImage setupThumbnail(const QString& itemPath, const RecentItem::Type type)
+    QImage setupThumbnail(const QString& /*itemPath*/, const RecentItem::Type type)
     {
         switch(type) {
             case RecentItem::Type::LOCAL_IMAGE:

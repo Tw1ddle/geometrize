@@ -50,7 +50,7 @@ public:
 
     void setTargetImageOpacity(const unsigned int opacity)
     {
-        if(opacity == ui->targetImageOpacitySlider->value()) {
+        if(static_cast<int>(opacity) == ui->targetImageOpacitySlider->value()) {
             return;
         }
         updateTargetImageOpacity(opacity);

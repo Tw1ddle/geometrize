@@ -125,11 +125,11 @@ private:
         q->setToolTip(name + "<br>" + license);
     }
 
+    std::unique_ptr<Ui::TemplateButton> ui;
+    TemplateButton* q;
     chaiscript::ChaiScript* const m_templateLoader;
     const QString m_templateFolder;
     const TemplateManifest m_manifest;
-    std::unique_ptr<Ui::TemplateButton> ui;
-    TemplateButton* q;
     QFutureWatcher<QImage> m_thumbnailLoaderWatcher;
 };
 

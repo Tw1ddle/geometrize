@@ -144,7 +144,7 @@ private:
 
     void updateLogoTaskProgress()
     {
-        const QString logoToolTip{tr("%1/%2 shapes", "Text showing the number of shapes that have been created to replicate an image so far e.g. 230/300 shapes").arg(QString::number(m_logoTaskShapeCount)).arg(m_logoTaskStepCount)};
+        const QString logoToolTip{tr("%1/%2 shapes", "Text showing the number of shapes that have been created to replicate an image so far e.g. 230/300 shapes").arg(QString::number(m_logoTaskSteps)).arg(m_maxLogoTaskSteps)};
         ui->logoLabel->setToolTip(logoToolTip);
     }
 
@@ -160,18 +160,16 @@ private:
 
             geometrize::Bitmap logoBitmap{image::createBitmap(image)};
             geometrize::Bitmap initialBitmap{logoBitmap.getWidth(), logoBitmap.getHeight(), geometrize::rgba{0, 0, 0, 0}};
-            m_logoTask = std::make_unique<task::ImageTask>("Logo Image Task", logoBitmap, initialBitmap);
+            m_logoTask = std::make_unique<task::ImageTask>(logoBitmap, initialBitmap, Qt::QueuedConnection);
             m_logoTask->getPreferences().setShapeTypes(geometrize::ShapeTypes::RECTANGLE);
             m_logoTask->getPreferences().setShapeAlpha(255U);
 
             ui->logoLabel->setPixmap(image::createPixmap(m_logoTask->getCurrent()));
 
-            connect(m_logoTask.get(), &task::ImageTask::signal_modelDidStep, [this](std::vector<geometrize::ShapeResult> results) {
+            connect(m_logoTask.get(), &task::ImageTask::signal_modelDidStep, [this](std::vector<geometrize::ShapeResult> /*results*/) {
                 const QPixmap pixmap{image::createPixmap(m_logoTask->getCurrent())};
                 ui->logoLabel->setPixmap(pixmap);
 
-                m_logoTaskShapeCount += results.size();
-                m_logoTaskStepCount += 1;
                 updateLogoTaskProgress();
 
                 m_logoTaskSteps++;
@@ -188,10 +186,8 @@ private:
     std::unique_ptr<chaiscript::ChaiScript> m_engine;
 
     std::unique_ptr<task::ImageTask> m_logoTask;
-    std::size_t m_logoTaskShapeCount{0};
-    std::size_t m_logoTaskStepCount{0};
-    const std::size_t m_maxLogoTaskSteps{300};
-    std::atomic_int m_logoTaskSteps{0};
+    const std::size_t m_maxLogoTaskSteps{300ULL};
+    std::size_t m_logoTaskSteps{0};
 };
 
 LaunchWindow::LaunchWindow() :

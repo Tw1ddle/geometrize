@@ -150,7 +150,7 @@ public:
         m_task->getPreferences().setMaxThreads(value);
     }
 
-    void setRegionOfInterestEnabled(const bool enabled)
+    void setRegionOfInterestEnabled(const bool /*enabled*/)
     {
         // TODO
         //m_task->getPreferences().setRegionOfInterestEnabled(enabled);

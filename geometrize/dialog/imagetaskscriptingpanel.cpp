@@ -79,8 +79,8 @@ private:
     }
 
     std::vector<ScriptEditorWidget*> m_editors;
-    ImageTaskScriptingPanel* q;
     std::unique_ptr<Ui::ImageTaskScriptPanel> ui;
+    ImageTaskScriptingPanel* q;
 };
 
 ImageTaskScriptingPanel::ImageTaskScriptingPanel(QWidget* parent) :
