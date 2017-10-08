@@ -57,7 +57,8 @@ public:
             return;
         }
 
-        const QByteArray svgData{QByteArray::fromStdString(geometrize::exporter::exportSVG(shapes, width, height))};
+        const QString svgString{QString::fromStdString(geometrize::exporter::exportSVG(shapes, width, height))};
+        const QByteArray svgData{svgString.toUtf8()};
         auto svgItem = new SvgItem(svgData);
         svgItem->setFlags(QGraphicsItem::ItemClipsToShape);
         svgItem->setCacheMode(QGraphicsItem::NoCache);
