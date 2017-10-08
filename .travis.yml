@@ -1,5 +1,9 @@
 sudo: required
 dist: trusty
+language: ruby
+rvm:
+  # Specific Ruby version because OSX homebrew requires it
+  - 2.3
 
 # Install Travis so we can get the token from Travis
 before_script:

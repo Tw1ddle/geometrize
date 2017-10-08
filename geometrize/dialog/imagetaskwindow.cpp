@@ -7,7 +7,6 @@
 #include <vector>
 
 #include <QEvent>
-#include <QMarginsF>
 #include <QMessageBox>
 #include <QPixmap>
 #include <QRectF>
@@ -491,14 +490,14 @@ private:
     void fitImageSceneInView()
     {
         const float margin{m_defaultViewMargins};
-        const QRectF imageViewRect{m_currentImageScene.itemsBoundingRect().marginsAdded(QMarginsF(margin, margin, margin, margin))};
+        const QRectF imageViewRect{m_currentImageScene.itemsBoundingRect().adjusted(-margin, -margin, margin, margin)};
         m_currentImageView->fitInView(imageViewRect, Qt::KeepAspectRatio);
     }
 
     void fitVectorSceneInView()
     {
         const float margin{m_defaultViewMargins};
-        const QRectF svgRect{m_currentSvgScene.itemsBoundingRect().marginsAdded(QMarginsF(margin, margin, margin, margin))};
+        const QRectF svgRect{m_currentSvgScene.itemsBoundingRect().adjusted(-margin, -margin, margin, margin)};
         m_svgImageView->fitInView(svgRect, Qt::KeepAspectRatio);
     }
 
