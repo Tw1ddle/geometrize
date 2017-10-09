@@ -49,31 +49,31 @@ LicenseDialog::LicenseDialog(QWidget* parent) :
         return text;
     };
 
-    const auto setLicenseText{[&readLicenseFile](QTextBrowser* textBrowser, const QString& licenseFilePath) {
-        textBrowser->setText(readLicenseFile(":/licenses/" + licenseFilePath));
+    const auto setLicenseText{[&readLicenseFile](QTextBrowser* textBrowser, const char* licenseFilePath) {
+        textBrowser->setText(readLicenseFile(":/licenses/" + QString(licenseFilePath)));
     }};
 
 #ifdef MAC_APPSTORE_LICENSE
     // Special license for Mac appstore builds
-    setLicenseText(ui->geometrizeLicense, QLatin1String("geometrize_mac_appstore_build_license.txt"));
+    setLicenseText(ui->geometrizeLicense, "geometrize_mac_appstore_build_license.txt");
 #else
-    setLicenseText(ui->geometrizeLicense, QLatin1String("geometrize_license.txt"));
+    setLicenseText(ui->geometrizeLicense, "geometrize_license.txt");
 #endif
 
-    setLicenseText(ui->geometrizeLibraryLicense, QLatin1String("geometrize_library_license.txt"));
-    setLicenseText(ui->qtLicense, QLatin1String("qt_license.txt"));
-    setLicenseText(ui->chaiScriptLicense, QLatin1String("chaiscript_license.txt"));
-    setLicenseText(ui->chaiScriptExtrasLicense, QLatin1String("chaiscript_extras_license.txt"));
-    setLicenseText(ui->cerealLicense, QLatin1String("cereal_license.txt"));
-    setLicenseText(ui->rapidJSONLicense, QLatin1String("rapidjson_license.txt"));
-    setLicenseText(ui->rapidXmlLicense, QLatin1String("rapidxml_license.txt"));
-    setLicenseText(ui->qtGifImageLicense, QLatin1String("qtgifimage_license.txt"));
-    setLicenseText(ui->GIFLIBLicense, QLatin1String("giflib_license.txt"));
-    setLicenseText(ui->qtGoogleAnalyticsLicense, QLatin1String("qt_google_analytics_license.txt"));
-    setLicenseText(ui->flowLayoutLicense, QLatin1String("flowlayout_license.txt"));
-    setLicenseText(ui->elidedLabelLicense, QLatin1String("elidedlabel_license.txt"));
-    setLicenseText(ui->iconAssetsLicense, QLatin1String("fatcow_icon_license.txt"));
-    setLicenseText(ui->templateAssetsLicense, QLatin1String("template_assets_license.txt"));
+    setLicenseText(ui->geometrizeLibraryLicense, "geometrize_library_license.txt");
+    setLicenseText(ui->qtLicense, "qt_license.txt");
+    setLicenseText(ui->chaiScriptLicense, "chaiscript_license.txt");
+    setLicenseText(ui->chaiScriptExtrasLicense, "chaiscript_extras_license.txt");
+    setLicenseText(ui->cerealLicense, "cereal_license.txt");
+    setLicenseText(ui->rapidJSONLicense, "rapidjson_license.txt");
+    setLicenseText(ui->rapidXmlLicense, "rapidxml_license.txt");
+    setLicenseText(ui->qtGifImageLicense, "qtgifimage_license.txt");
+    setLicenseText(ui->GIFLIBLicense, "giflib_license.txt");
+    setLicenseText(ui->qtGoogleAnalyticsLicense, "qt_google_analytics_license.txt");
+    setLicenseText(ui->flowLayoutLicense, "flowlayout_license.txt");
+    setLicenseText(ui->elidedLabelLicense, "elidedlabel_license.txt");
+    setLicenseText(ui->iconAssetsLicense, "fatcow_icon_license.txt");
+    setLicenseText(ui->templateAssetsLicense, "template_assets_license.txt");
 }
 
 LicenseDialog::~LicenseDialog()

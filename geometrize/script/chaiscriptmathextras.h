@@ -1,6 +1,7 @@
 // Additional bindings for ChaiScript from: https://github.com/ChaiScript/ChaiScript_Extras
 //
 // Copyright 2015 Jason Turner
+// Modifications 2017 Sam Twidale (https://samcodes.co.uk/)
 //
 // All Rights Reserved.
 // Redistribution and use in source and binary forms, with or without
@@ -30,7 +31,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#include <cmath>
+#include <math.h>
 #include <memory>
 
 #include <chaiscript/chaiscript.hpp>
