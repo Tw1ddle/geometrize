@@ -18,13 +18,13 @@ namespace dialog
 
 bool shouldShowWelcomeOnLaunch()
 {
-    auto& prefs{geometrize::preferences::getGlobalPreferences()};
+    const auto& prefs = geometrize::preferences::getGlobalPreferences();
     return prefs.shouldShowWelcomeScreenOnLaunch();
 }
 
 void setShouldShowWelcomeOnLaunch(const bool show)
 {
-    auto& prefs{geometrize::preferences::getGlobalPreferences()};
+    auto& prefs = geometrize::preferences::getGlobalPreferences();
     prefs.setShouldShowWelcomeScreenOnLaunch(show);
 }
 
