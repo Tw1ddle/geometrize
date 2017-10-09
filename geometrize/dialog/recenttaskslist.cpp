@@ -92,8 +92,8 @@ private:
             return;
         }
 
-        const auto items{m_recents->getItems()};
-        for(const auto& item : items) {
+        const QList<RecentItem> items{m_recents->getItems()};
+        for(const RecentItem& item : items) {
             addItem(item);
         }
     }
