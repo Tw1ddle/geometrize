@@ -157,9 +157,6 @@ before_install:
   - eval "${MATRIX_EVAL}"
   - echo $CC
   - echo $CXX
-
-  # Workaround for "E: Failed to fetch store:/var/lib/apt/lists/partial/repo.mongodb.org_apt_ubuntu_dists_trusty_mongodb-org_3.2_multiverse_binary-i386_Packages  Empty files can't be valid archives"
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo rm /etc/apt/sources.list.d/mongodb*.list; fi
   
   # Get Qt
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo add-apt-repository ppa:beineri/opt-qt591-trusty -y; fi
