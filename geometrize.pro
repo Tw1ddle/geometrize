@@ -23,6 +23,14 @@ macx {
     DEFINES += MAC_APPSTORE_LICENSE
 }
 
+# Some versions of gcc have linker issues like:
+# //lib/x86_64-linux-gnu/libdl.so.2: error adding symbols: DSO missing from command line
+linux {
+    *-g++* {
+        LIBS += -ldl
+    }
+}
+
 # Include library dependencies
 INCLUDEPATH += $$PWD/lib/cereal/include \
     $$PWD/lib/chaiscript/include

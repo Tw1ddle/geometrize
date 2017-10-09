@@ -46,7 +46,7 @@ void setLocale(const QStringList& arguments)
             return overrideCode;
         }
 
-        const auto& prefs{geometrize::preferences::getGlobalPreferences()};
+        const auto& prefs = geometrize::preferences::getGlobalPreferences();
         return prefs.getLanguageIsoCode();
     }();
 
@@ -79,7 +79,7 @@ int runAppGuiModeUwp(QApplication& app)
 
 int runAppGuiModeDesktop(QApplication& app)
 {
-	const auto& prefs{ geometrize::preferences::getGlobalPreferences() };
+    const auto& prefs = geometrize::preferences::getGlobalPreferences();
 	if (prefs.shouldShowWelcomeScreenOnLaunch()) {
         geometrize::common::ui::openWelcomePage(); // Opens launch window on close
     } else {
@@ -116,6 +116,6 @@ int main(int argc, char* argv[])
     const QStringList arguments{app.arguments()};
     setLocale(arguments);
 
-    const auto run{resolveLaunchFunction(arguments)};
+    const auto run = resolveLaunchFunction(arguments);
     return run(app);
 }
