@@ -49,9 +49,9 @@ LicenseDialog::LicenseDialog(QWidget* parent) :
         return text;
     };
 
-    const auto setLicenseText{[&readLicenseFile](QTextBrowser* textBrowser, const char* licenseFilePath) {
+    const auto setLicenseText = [&readLicenseFile](QTextBrowser* textBrowser, const char* licenseFilePath) {
         textBrowser->setText(readLicenseFile(":/licenses/" + QString(licenseFilePath)));
-    }};
+    };
 
 #ifdef MAC_APPSTORE_LICENSE
     // Special license for Mac appstore builds

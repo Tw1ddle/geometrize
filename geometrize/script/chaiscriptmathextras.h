@@ -31,7 +31,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#include <math.h>
+#include <cmath>
 #include <memory>
 
 #include <chaiscript/chaiscript.hpp>
@@ -800,12 +800,16 @@ ModulePtr bootstrap(ModulePtr m = std::make_shared<Module>())
     isfinite<bool, long double>(m);
 
     isinf<bool, float>(m);
-    isinf<bool, double>(m);
-    isinf<bool, long double>(m);
+
+    // Disabled as these won't compile with gcc6
+    //isinf<bool, double>(m);
+    //isinf<bool, long double>(m);
 
     isnan<bool, float>(m);
-    isnan<bool, double>(m);
-    isnan<bool, long double>(m);
+
+    // Disabled as these won't compile with gcc6
+    //isnan<bool, double>(m);
+    //isnan<bool, long double>(m);
 
     isnormal<bool, float>(m);
     isnormal<bool, double>(m);
