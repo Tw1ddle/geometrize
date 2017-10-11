@@ -17,10 +17,10 @@ namespace serialization
  */
 struct TemplateMetadata
 {
-    std::string name; ///< The name of the template, suitable for displaying to the user.
-    std::vector<std::string> tags; ///< Tag-strings which could be used by the application to sort or search for templates.
-    std::vector<std::string> authors; ///< User names which identify the authors of the template.
-    std::string license; ///< The license under which the template (and associated assets) is released e.g. MIT, or explanatory text regarding licensing.
+    std::string name{}; ///< The name of the template, suitable for displaying to the user.
+    std::vector<std::string> tags{}; ///< Tag-strings which could be used by the application to sort or search for templates.
+    std::vector<std::string> authors{}; ///< User names which identify the authors of the template.
+    std::string license{}; ///< The license under which the template (and associated assets) is released e.g. MIT, or explanatory text regarding licensing.
 
     template<class Archive>
     void save(Archive& archive)

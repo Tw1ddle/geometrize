@@ -3,11 +3,11 @@
 #include <memory>
 
 #include <QPushButton>
+#include <QString>
 
 #include "manifest/templatemanifest.h"
 
 class QEvent;
-class QString;
 
 namespace chaiscript
 {
@@ -36,6 +36,9 @@ public:
      * @return The template manifest data this item corresponds to.
      */
     TemplateManifest getTemplateManifest() const;
+
+signals:
+    void signal_templateLoaded(QString, bool);
 
 protected:
     void changeEvent(QEvent*) override;

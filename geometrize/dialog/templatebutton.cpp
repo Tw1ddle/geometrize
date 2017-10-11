@@ -40,32 +40,40 @@ public:
             openTemplate();
         });
 
-        q->connect(&m_thumbnailLoaderWatcher, &QFutureWatcher<QImage>::finished, [this]() {
-            const QImage thumbnail{m_thumbnailLoaderWatcher.future().result()};
+        q->connect(&m_templateLoaderWatcher, &QFutureWatcher<QImage>::finished, [this]() {
+            const QImage thumbnail{m_templateLoaderWatcher.future().result()};
 
             ui->imageLabel->setPixmap(QPixmap::fromImage(thumbnail));
 
             setButtonToolTipText();
+
+            emit q->signal_templateLoaded(m_templateFolder, true);
         });
 
-        const QString firstImageFile{QString::fromStdString(util::getFirstFileWithExtensions(m_templateFolder.toStdString(), format::getReadableImageFileExtensions(false)))};
-        QFuture<QImage> thumbnailFuture{QtConcurrent::run(this, &TemplateButtonImpl::setupThumbnail, firstImageFile)};
-        m_thumbnailLoaderWatcher.setFuture(thumbnailFuture);
+        m_templateFuture = QtConcurrent::run(this, &TemplateButtonImpl::setupTemplate);
+        m_templateLoaderWatcher.setFuture(m_templateFuture);
     }
 
     ~TemplateButtonImpl()
     {
+        m_templateFuture.waitForFinished(); // Wait for template to finish
     }
 
     TemplateButtonImpl operator=(const TemplateButtonImpl&) = delete;
     TemplateButtonImpl(const TemplateButtonImpl&) = delete;
 
-    QImage setupThumbnail(const QString& imageFilepath)
+    QImage setupTemplate()
     {
+        // Note assuming this is threadsafe
+        m_manifest = util::getTemplateManifest(m_templateFolder.toStdString());
+
+        // Note assuming this is threadsafe
+        const QString imageFilepath{QString::fromStdString(util::getFirstFileWithExtensions(m_templateFolder.toStdString(), format::getReadableImageFileExtensions(false)))};
+
         const QImage thumbnail(imageFilepath);
         if(!thumbnail.isNull()) {
             const QSize size{180, 180};
-            return thumbnail.scaled(size, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+            return thumbnail.scaled(size, Qt::KeepAspectRatioByExpanding, Qt::FastTransformation);
         }
         return thumbnail;
     }
@@ -129,8 +137,9 @@ private:
     TemplateButton* q;
     chaiscript::ChaiScript* const m_templateLoader;
     const QString m_templateFolder;
-    const TemplateManifest m_manifest;
-    QFutureWatcher<QImage> m_thumbnailLoaderWatcher;
+    TemplateManifest m_manifest;
+    QFutureWatcher<QImage> m_templateLoaderWatcher;
+    QFuture<QImage> m_templateFuture;
 };
 
 TemplateButton::TemplateButton(chaiscript::ChaiScript* const templateLoader, const QString& templateFolder) :

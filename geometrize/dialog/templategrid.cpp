@@ -34,8 +34,7 @@ public:
             const std::vector<std::string> templateFolders{util::getTemplateFoldersForPath(path)};
 
             for(const std::string& folder : templateFolders) {
-                const bool result{addTemplateItem(QString::fromStdString(folder))};
-                emit q->signal_templateLoaded(QString::fromStdString(folder), result);
+                addTemplateItem(QString::fromStdString(folder));
             }
         }
     }
@@ -82,12 +81,11 @@ private:
     {
     }
 
-    bool addTemplateItem(const QString& templateFolder)
+    void addTemplateItem(const QString& templateFolder)
     {
         TemplateButton* item{new TemplateButton(m_templateLoader.get(), templateFolder)};
         m_layout->addWidget(item);
         m_buttons.push_back(item);
-        return true;
     }
 
     TemplateGrid* q;
