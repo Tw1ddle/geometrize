@@ -4,6 +4,7 @@
 #include <string>
 
 #include <QApplication>
+#include <QIcon>
 #include <QLocale>
 #include <QString>
 #include <QStringList>
@@ -115,7 +116,7 @@ int main(int argc, char* argv[])
 #ifdef Q_OS_LINUX
     // Some Linux taskbars/DEs use the application window icon to set the taskbar icon
     // So we explicitly set the window icon here
-    app.setWindowIcon(":/logos/logo_small.png");
+    app.setWindowIcon(QIcon(":/logos/logo_small.png"));
 #endif
 
     setupAnalytics();
