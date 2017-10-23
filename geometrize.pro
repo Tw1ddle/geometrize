@@ -20,7 +20,7 @@ winrt {
 
 # Uncomment this to use the special license for the Mac App Store (because I think their DRM is incompatible with the GPL)
 macx {
-    DEFINES += MAC_APPSTORE_LICENSE
+    #DEFINES += MAC_APPSTORE_LICENSE
 }
 
 # Some versions of gcc have linker issues like:
