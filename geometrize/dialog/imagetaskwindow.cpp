@@ -28,6 +28,7 @@
 #include "preferences/globalpreferences.h"
 #include "script/geometrizerengine.h"
 #include "task/imagetask.h"
+#include "version/versioninfo.h"
 
 namespace
 {
@@ -142,7 +143,11 @@ public:
                 }
             });
 
-            q->setWindowTitle(geometrize::strings::Strings::getApplicationName().append(" ").append(QString::fromStdString(currentTask->getDisplayName())));
+            q->setWindowTitle(geometrize::strings::Strings::getApplicationName()
+                              .append(" ")
+                              .append(geometrize::version::getApplicationVersionString())
+                              .append(" ")
+                              .append(QString::fromStdString(currentTask->getDisplayName())));
 
             setupOverlayImages();
             currentTask->drawBackgroundRectangle();

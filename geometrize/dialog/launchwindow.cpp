@@ -19,6 +19,7 @@
 #include "serialization/serializationutil.h"
 #include "task/imagetask.h"
 #include "task/taskutil.h"
+#include "version/versioninfo.h"
 
 namespace geometrize
 {
@@ -130,7 +131,10 @@ public:
 private:
     void populateUi()
     {
-        const QString windowTitle{geometrize::strings::Strings::getApplicationName()};
+        const QString windowTitle{geometrize::strings::Strings::getApplicationName()
+                    .append(" ")
+                    .append(geometrize::version::getApplicationVersionString())};
+
         q->setWindowTitle(windowTitle);
 
         const QString moreResourcesLabel{tr("Get more online", "Text on a button the user presses to open a page containing more resources for using the app, such as extra images, information and help")};
