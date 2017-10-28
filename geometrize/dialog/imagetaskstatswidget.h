@@ -29,7 +29,7 @@ public:
     ~ImageTaskStatsWidget();
 
     void setTaskId(std::size_t id);
-    void setTimeRunning(int millis);
+    void setTimeRunning(int seconds);
     void setCurrentStatus(ImageTaskStatus status);
     void setShapeCount(std::size_t shapeCount);
     void setSimilarity(float similarity);

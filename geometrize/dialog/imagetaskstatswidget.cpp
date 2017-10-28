@@ -4,8 +4,8 @@
 #include <cassert>
 #include <memory>
 
+#include <QDateTime>
 #include <QEvent>
-#include <QTime>
 
 namespace geometrize
 {
@@ -30,10 +30,10 @@ public:
         ui->taskIdValueLabel->setText(QString::number(id));
     }
 
-    void setTimeRunning(const int millis)
+    void setTimeRunning(const int seconds)
     {
-        QTime time(0, 0);
-        ui->timeRunningValueLabel->setText(time.addMSecs(millis).toString(Qt::SystemLocaleLongDate));
+        const QString time{QDateTime::fromTime_t(seconds).toUTC().toString("hh:mm:ss")};
+        ui->timeRunningValueLabel->setText(time);
     }
 
     void setCurrentStatus(const ImageTaskStatsWidget::ImageTaskStatus status)
@@ -121,9 +121,9 @@ void ImageTaskStatsWidget::setShapeCount(const std::size_t shapeCount)
     d->setShapeCount(shapeCount);
 }
 
-void ImageTaskStatsWidget::setTimeRunning(const int millis)
+void ImageTaskStatsWidget::setTimeRunning(const int seconds)
 {
-    d->setTimeRunning(millis);
+    d->setTimeRunning(seconds);
 }
 
 void ImageTaskStatsWidget::setCurrentStatus(const ImageTaskStatus status)

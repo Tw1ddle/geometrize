@@ -467,7 +467,7 @@ private:
             ui->statsDockContents->setSimilarity(m_shapes.back().score * 100.0f);
         }
 
-        ui->statsDockContents->setTimeRunning(m_timeRunning);
+        ui->statsDockContents->setTimeRunning(static_cast<int>(m_timeRunning / 1000.0f));
     }
 
     void disconnectTask()
