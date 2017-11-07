@@ -43,7 +43,7 @@ void writeStringVector(const std::vector<std::string>& vec, const std::string& f
     // Create folders up to the path if necessary
     const QFileInfo fileInfo(QString::fromStdString(filePath));
     if(!fileInfo.exists()) {
-        const bool createdDir{QDir().mkdir(fileInfo.absolutePath())};
+        const bool createdDir{QDir().mkpath(fileInfo.absolutePath())};
         if(!createdDir) {
             assert(0 && "Failed to create directory for string vector");
             return;

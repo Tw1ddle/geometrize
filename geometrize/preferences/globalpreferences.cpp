@@ -66,6 +66,15 @@ public:
 
     bool save(const std::string& filePath)
     {
+        // Create the directory at the filepath if it does not already exist
+        // This is necessary because the output archive will not create any missing directories
+        const QFileInfo info(QString::fromStdString(filePath));
+        const QDir dir(info.absoluteDir());
+        if(!dir.exists() && !dir.mkpath(dir.absolutePath())) {
+            assert(0 && "Failed to create directory in which to save global preferences");
+            return false;
+        }
+
         std::ofstream output(filePath);
         try {
             cereal::JSONOutputArchive archive{output};
