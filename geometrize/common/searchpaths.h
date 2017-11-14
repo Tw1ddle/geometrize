@@ -29,6 +29,12 @@ std::vector<std::string> getScriptSearchPaths();
  */
 std::vector<std::string> getTemplateSearchPaths();
 
+/**
+ * @brief getTaskSettingsFilename Gets the default name of a task settings file.
+ * @return The default filename of a task settings file, including the file extension.
+ */
+std::string getTaskSettingsFilename();
+
 }
 
 }

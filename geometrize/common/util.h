@@ -62,6 +62,13 @@ std::string readFileAsString(const std::string& filePath);
 std::vector<std::string> getFilePathsForDirectory(const std::string& dirPath);
 
 /**
+ * @brief getSubdirectoriesForDirectory Gets the absolute paths for direct subdirectories of the given directory.
+ * @param dirPath The directory to search.
+ * @return A vector of directory paths.
+ */
+std::vector<std::string> getSubdirectoriesForDirectory(const std::string& dirPath);
+
+/**
  * @brief getFilesWithExtension Gets the absolute file paths to the files with the given extension in the given directory.
  * @param dirPath The directory to search.
  * @param extension The file extension to match.
@@ -91,13 +98,6 @@ std::string getFirstFileWithExtensions(const std::string& dirPath, const std::ve
  * @return The absolute file paths to the script files for the given directory.
  */
 std::vector<std::string> getScriptsForPath(const std::string& path);
-
-/**
- * @brief getTemplateFoldersForPath Gets the absolute directory paths to the folders containing script files (*.chai) for the given directory, using recursive search.
- * @param dirPath The directory to search.
- * @return The absolute directory paths to the script files for the given directory.
- */
-std::vector<std::string> getTemplateFoldersForPath(const std::string& dirPath);
 
 /**
  * @brief getDirectoryForFilePath Gets the directory path from the given local file path.

@@ -31,7 +31,7 @@ public:
         const std::vector<std::string> paths{geometrize::searchpaths::getTemplateSearchPaths()};
 
         for(const std::string& path : paths) {
-            const std::vector<std::string> templateFolders{util::getTemplateFoldersForPath(path)};
+            const std::vector<std::string> templateFolders{util::getSubdirectoriesForDirectory(path)};
 
             for(const std::string& folder : templateFolders) {
                 addTemplateItem(QString::fromStdString(folder));

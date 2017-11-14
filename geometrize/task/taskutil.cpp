@@ -1,5 +1,6 @@
 #include "taskutil.h"
 
+#include <QDir>
 #include <QPixmap>
 #include <QString>
 #include <QStringList>
@@ -9,6 +10,7 @@
 #include "chaiscript/chaiscript.hpp"
 
 #include "common/formatsupport.h"
+#include "common/searchpaths.h"
 #include "common/util.h"
 #include "network/completionhandlers.h"
 #include "network/downloader.h"
@@ -24,44 +26,61 @@ namespace geometrize
 namespace util
 {
 
-void openTasks(const QStringList& urls, const bool addToRecents)
+void openTask(const QString& urlStr, bool addToRecents)
 {
-    if(urls.empty()) {
+    if(urlStr.length() == 0) {
         return;
     }
 
     if(addToRecents) {
-        for(const QString& url : urls) {
-            geometrize::getRecentItems().add(url, url);
+        geometrize::getRecentItems().add(urlStr, urlStr);
+    }
+
+    const QUrl url{QUrl::fromUserInput(urlStr)};
+    if(url.isLocalFile()) {
+        geometrize::task::createImageTaskAndWindow(url.toLocalFile().toStdString(), url.toLocalFile().toStdString());
+        return;
+    }
+
+    std::vector<std::string> imageExtensions{format::getReadableImageFileExtensions(true)};
+    for(const std::string& ext : imageExtensions) {
+        if(url.toString().endsWith(QString::fromStdString(ext), Qt::CaseInsensitive)) {
+            network::downloadImage(url, network::completionhandlers::onImageDownloadComplete);
+            return;
         }
     }
 
-    for(const QString& s : urls) {
-        const QUrl url{QUrl::fromUserInput(s)};
-        if(url.isLocalFile()) {
-            geometrize::task::createImageTaskAndWindow(url.toLocalFile().toStdString(), url.toLocalFile().toStdString());
-            continue;
-        }
+    network::downloadWebpage(url, network::completionhandlers::onWebpageDownloadComplete);
+}
 
-        std::vector<std::string> imageExtensions{format::getReadableImageFileExtensions(true)};
-        for(const std::string& ext : imageExtensions) {
-            if(url.toString().endsWith(QString::fromStdString(ext), Qt::CaseInsensitive)) {
-                network::downloadImage(url, network::completionhandlers::onImageDownloadComplete);
-                continue;
-            }
-        }
-
-        network::downloadWebpage(url, network::completionhandlers::onWebpageDownloadComplete);
+void openTasks(const QStringList& urls, const bool addToRecents)
+{
+    for(const QString& url : urls) {
+        openTask(url, addToRecents);
     }
 }
 
 bool openTemplate(chaiscript::ChaiScript& engine, const std::string& templateFolder)
 {
     const std::vector<std::string> scripts{util::getScriptsForPath(templateFolder)};
-
     if(scripts.empty()) {
-        assert(0 && "Could not find script for template");
-        return false;
+        // Could not find script for template, so assume it's an image task
+        const std::string imageFile{util::getFirstFileWithExtensions(templateFolder, format::getReadableImageFileExtensions(true))};
+        if(imageFile.empty()) {
+            return false;
+        }
+
+        geometrize::task::ImageTask* task{task::createImageTaskAndWindow(imageFile, imageFile)};
+
+        // Apply settings file if available
+        const std::string settingsFile{geometrize::searchpaths::getTaskSettingsFilename()};
+        if(util::directoryContainsFile(templateFolder, settingsFile)) {
+            const std::string settingsPath{QDir(QString::fromStdString(templateFolder)).filePath(QString::fromStdString(settingsFile)).toStdString()};
+            const preferences::ImageTaskPreferences prefs(settingsPath);
+            task->setPreferences(prefs);
+        }
+
+        return true;
     }
 
     const std::string script{util::readFileAsString(scripts.front())};

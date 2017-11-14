@@ -122,6 +122,10 @@ public:
             ui->imageTaskExportWidget->setImageTask(currentTask, &m_shapes);
             ui->imageTaskRunnerWidget->setImageTask(currentTask);
 
+            m_taskPreferencesSetConnection = connect(currentTask, &task::ImageTask::signal_preferencesSet, [this]() {
+                ui->imageTaskRunnerWidget->syncUserInterface();
+            });
+
             m_taskWillStepConnection = connect(currentTask, &task::ImageTask::signal_modelWillStep, [this]() {
                 ui->statsDockContents->setCurrentStatus(geometrize::dialog::ImageTaskStatsWidget::RUNNING);
             });
@@ -203,11 +207,6 @@ public:
                 Bitmap target = geometrize::image::createBitmap(image);
                 switchTargetImage(target);
             }
-        });
-
-        // Handle a new set of image task-specific settings being loaded
-        connect(q, &ImageTaskWindow::didLoadSettingsTemplate, [this]() {
-            ui->imageTaskRunnerWidget->syncUserInterface();
         });
 
         // Handle runner button presses
@@ -317,11 +316,15 @@ public:
     void loadSettingsTemplate()
     {
         const QString path{common::ui::openLoadImageTaskSettingsDialog(q)};
-        if(path.isEmpty()) {
+        loadSettingsTemplate(path.toStdString());
+    }
+
+    void loadSettingsTemplate(const std::string& path)
+    {
+        if(path.empty()) {
             return;
         }
-        m_task->getPreferences().load(path.toStdString());
-
+        m_task->getPreferences().load(path);
         emit q->didLoadSettingsTemplate();
     }
 
@@ -477,6 +480,9 @@ private:
 
     void disconnectTask()
     {
+        if(m_taskPreferencesSetConnection) {
+            disconnect(m_taskPreferencesSetConnection);
+        }
         if(m_taskWillStepConnection) {
             disconnect(m_taskWillStepConnection);
         }
@@ -539,6 +545,7 @@ private:
     ImageTaskWindow* q{nullptr};
 
     task::ImageTask* m_task{nullptr}; ///> The image task currently set and manipulated via this window
+    QMetaObject::Connection m_taskPreferencesSetConnection{}; ///> Connection for telling the dialog when the image task preferences are set
     QMetaObject::Connection m_taskWillStepConnection{}; ///> Connection for the window to do work just prior the image task starts a step
     QMetaObject::Connection m_taskDidStepConnection{}; ///> Connection for the window to do work just after the image task finishes a step
     std::vector<std::function<void()>> m_onPostStepCbs; ///> One-shot callbacks triggered when the image task finishes a step

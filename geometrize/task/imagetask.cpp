@@ -146,6 +146,7 @@ public:
     void setPreferences(const preferences::ImageTaskPreferences preferences)
     {
         m_preferences = preferences;
+        emit q->signal_preferencesSet();
     }
 
 private:

@@ -4,8 +4,10 @@
 #include <fstream>
 #include <ostream>
 
-#include "serialization/imagetaskpreferencesdata.h"
 #include "cereal/archives/json.hpp"
+
+#include "serialization/imagetaskpreferencesdata.h"
+#include "serialization/streamview.h"
 
 namespace geometrize
 {
@@ -31,7 +33,9 @@ public:
 
     void load(const std::string& filePath)
     {
-        std::ifstream input(filePath);
+        // Preferences can be bundled into Qt resources, so we use a streamview that loads the file contents into a byte array first
+        serialization::StreamView streamView(filePath);
+        std::istream input(&streamView);
         try {
             cereal::JSONInputArchive archive{input};
             m_data.archive(archive, m_options, m_scriptsEnabled, m_scripts);

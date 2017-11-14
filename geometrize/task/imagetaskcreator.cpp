@@ -37,22 +37,24 @@ namespace geometrize
 namespace task
 {
 
-void createImageTaskAndWindow(const std::string& displayName, const std::string& taskUrl)
+ImageTask* createImageTaskAndWindow(const std::string& displayName, const std::string& taskUrl)
 {
     geometrize::Bitmap bitmap{imageToBitmap(geometrize::image::loadImage(taskUrl))};
     ImageTask* task{new ImageTask(displayName, bitmap)};
     dialog::ImageTaskWindow* imageTaskWindow{new dialog::ImageTaskWindow()};
     imageTaskWindow->setImageTask(task);
     imageTaskWindow->show();
+    return task;
 }
 
-void createImageTaskAndWindow(const std::string& displayName, const QImage& image)
+ImageTask* createImageTaskAndWindow(const std::string& displayName, const QImage& image)
 {
     geometrize::Bitmap bitmap{imageToBitmap(image)};
     ImageTask* task{new ImageTask(displayName, bitmap)};
     dialog::ImageTaskWindow* imageTaskWindow{new dialog::ImageTaskWindow()};
     imageTaskWindow->setImageTask(task);
     imageTaskWindow->show();
+    return task;
 }
 
 }

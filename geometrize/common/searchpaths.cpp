@@ -23,6 +23,11 @@ std::vector<std::string> getTemplateSearchPaths()
     return { ":/templates/templates", "/../../templates", "/templates" };
 }
 
+std::string getTaskSettingsFilename()
+{
+    return "settings.json";
+}
+
 }
 
 }

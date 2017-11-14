@@ -169,6 +169,11 @@ signals:
       */
      void signal_modelDidStep(std::vector<geometrize::ShapeResult> shapes);
 
+     /**
+      * @brief signal_preferencesSet Signal that is emitted immediately after the image task preferences are set.
+      */
+     void signal_preferencesSet();
+
 private:
     void modelWillStep();
     void modelDidStep(std::vector<geometrize::ShapeResult> shapes);

@@ -102,6 +102,20 @@ std::vector<std::string> getFilePathsForDirectory(const std::string& dirPath)
     return files;
 }
 
+std::vector<std::string> getSubdirectoriesForDirectory(const std::string& dirPath)
+{
+    std::vector<std::string> files;
+
+    QDirIterator it(QString::fromStdString(dirPath));
+    while(it.hasNext()) {
+        it.next();
+        if(QFileInfo(it.filePath()).isDir()) {
+            files.push_back(it.filePath().toStdString());
+        }
+    }
+    return files;
+}
+
 inline bool endsWith(const std::string& value, const std::string& ending)
 {
     if (value.length() >= ending.length()) {
@@ -157,22 +171,6 @@ std::vector<std::string> getScriptsForPath(const std::string& dirPath)
     }
 
     return scripts;
-}
-
-std::vector<std::string> getTemplateFoldersForPath(const std::string& dirPath)
-{
-    const std::vector<std::string> scripts{getScriptsForPath(dirPath)};
-    std::vector<std::string> templateFolders;
-
-    for(const std::string& script : scripts) {
-        QFileInfo scriptInfo(QString::fromStdString(script));
-        templateFolders.push_back(scriptInfo.absoluteDir().absolutePath().toStdString());
-    }
-
-    std::sort(templateFolders.begin(), templateFolders.end());
-    templateFolders.erase(std::unique(templateFolders.begin(), templateFolders.end()), templateFolders.end());
-
-    return templateFolders;
 }
 
 std::string getDirectoryForFilePath(const std::string& filePath)
