@@ -327,9 +327,9 @@ private:
     bool m_shouldShowImageTaskScriptEditorByDefault{false};
     bool m_shouldShowImageTaskPixmapViewByDefault{false};
 
-    bool m_imageTaskResizeEnabled{false};
-    std::pair<std::uint32_t, std::uint32_t> m_imageTaskResizeThreshold{384, 384};
-    std::uint32_t m_imageTaskMaxThreads{16};
+    bool m_imageTaskResizeEnabled{true};
+    std::pair<std::uint32_t, std::uint32_t> m_imageTaskResizeThreshold{256, 256};
+    std::uint32_t m_imageTaskMaxThreads{4};
 
     std::string m_languageIsoCode{"en"};
     std::string m_scriptIsoCode{"Latn"};
