@@ -15,6 +15,10 @@ namespace geometrize
 class TemplateManifest::TemplateManifestImpl
 {
 public:
+    TemplateManifestImpl()
+    {
+    }
+
     TemplateManifestImpl(const std::string& manifestFilepath)
     {
         // Templates can be bundled into Qt resources, so we use a streamview that loads the file contents into a byte array first
@@ -33,6 +37,10 @@ public:
 
     serialization::TemplateMetadata m_data;
 };
+
+TemplateManifest::TemplateManifest() : d{std::make_shared<TemplateManifest::TemplateManifestImpl>()}
+{
+}
 
 TemplateManifest::TemplateManifest(const std::string& manifestFilepath) : d{std::make_shared<TemplateManifest::TemplateManifestImpl>(manifestFilepath)}
 {

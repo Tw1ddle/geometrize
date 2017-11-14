@@ -13,6 +13,7 @@ namespace geometrize
 class TemplateManifest
 {
 public:
+    TemplateManifest();
     TemplateManifest(const std::string& manifestFilepath);
     TemplateManifest& operator=(const TemplateManifest&) = default;
     TemplateManifest(const TemplateManifest&) = default;

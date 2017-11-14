@@ -31,7 +31,7 @@ public:
         q{pQ},
         m_templateLoader{templateLoader},
         m_templateFolder{templateFolder},
-        m_manifest{util::getTemplateManifest(m_templateFolder.toStdString())}
+        m_manifest{} // Loaded asynchronously later
     {
         ui->setupUi(q);
         populateUi();
@@ -56,7 +56,7 @@ public:
 
     ~TemplateButtonImpl()
     {
-        m_templateFuture.waitForFinished(); // Wait for template to finish
+        m_templateFuture.waitForFinished(); // Wait for template to finish loading
     }
 
     TemplateButtonImpl operator=(const TemplateButtonImpl&) = delete;
