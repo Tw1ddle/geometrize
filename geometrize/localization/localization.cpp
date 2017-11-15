@@ -85,9 +85,9 @@ void setTranslatorsForLocale(const QString& locale)
         translator->load(file, directory);
         installTranslator(application, translator);
     };
-    loadAndAddTranslator(qtTranslationFilePrefix + locale.toLower() + geometrize::getBinaryTranslationFileExtension(), getQtTranslationResourceDirectory());
-    loadAndAddTranslator(qtBaseTranslationFilePrefix + locale.toLower() + geometrize::getBinaryTranslationFileExtension(), getQtTranslationResourceDirectory());
-    loadAndAddTranslator(geometrizeTranslationFilePrefix + locale.toLower() + geometrize::getBinaryTranslationFileExtension(), getAppTranslationResourceDirectory());
+    loadAndAddTranslator(qtTranslationFilePrefix + locale + geometrize::getBinaryTranslationFileExtension(), getQtTranslationResourceDirectory());
+    loadAndAddTranslator(qtBaseTranslationFilePrefix + locale + geometrize::getBinaryTranslationFileExtension(), getQtTranslationResourceDirectory());
+    loadAndAddTranslator(geometrizeTranslationFilePrefix + locale + geometrize::getBinaryTranslationFileExtension(), getAppTranslationResourceDirectory());
 }
 
 QIcon getFlagIconForLocaleCode(const QString& localeCode)

@@ -26,12 +26,18 @@ public:
                 return;
             }
 
-            const QString isoCode{current->data(Qt::UserRole).toString()};
+            QString isoCode{current->data(Qt::UserRole).toString()};
+            if(isoCode == "pt") {
+                // NOTE hack - the default Portuguese translations are pt_PT not pt_BR, we make that explicit here
+                // This is because Qt defaults to Brazilian version, whereas we preferred to default to Portugal
+                isoCode = "pt_PT";
+            }
 
             geometrize::preferences::GlobalPreferences& prefs{geometrize::preferences::getGlobalPreferences()};
             prefs.setLanguageIsoCode(isoCode.toStdString());
 
             QLocale::setDefault(QLocale(isoCode));
+
             geometrize::setTranslatorsForLocale(isoCode);
         });
     }
