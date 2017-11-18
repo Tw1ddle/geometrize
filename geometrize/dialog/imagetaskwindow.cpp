@@ -7,6 +7,7 @@
 #include <vector>
 
 #include <QEvent>
+#include <QLocale>
 #include <QMessageBox>
 #include <QPixmap>
 #include <QRectF>
@@ -180,8 +181,8 @@ public:
             const int targetWidth{static_cast<int>(target.getWidth())};
             const int targetHeight{static_cast<int>(target.getHeight())};
             if(targetWidth != image.width() || targetHeight != image.height()) {
-                const QString selectedImageSize(tr("%1x%2", "Dimensions of an image e.g. width-x-height, 1024x800").arg(QString::number(image.width())).arg(QString::number(image.height())));
-                const QString targetImageSize(tr("%1x%2", "Dimensions of an image e.g. width-x-height, 1024x800").arg(QString::number(targetWidth)).arg(QString::number(targetHeight)));
+                const QString selectedImageSize(tr("%1x%2", "Dimensions of an image e.g. width-x-height, 1024x800").arg(QLocale().toString(image.width())).arg(QLocale().toString(image.height())));
+                const QString targetImageSize(tr("%1x%2", "Dimensions of an image e.g. width-x-height, 1024x800").arg(QLocale().toString(targetWidth)).arg(QLocale().toString(targetHeight)));
                 QMessageBox::warning(
                             q,
                             tr("Image has incorrect dimensions", "Title of an error dialog shown when the user selects an image that was the wrong resolution/size"),

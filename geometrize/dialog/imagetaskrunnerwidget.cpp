@@ -4,8 +4,7 @@
 #include <memory>
 
 #include <QEvent>
-#include <QHBoxLayout>
-#include <QObjectList>
+#include <QLocale>
 #include <QString>
 
 #include "layout/flowlayout.h"
@@ -121,21 +120,21 @@ public:
 
     void setShapeOpacity(const int opacity)
     {
-        ui->shapeOpacityValueLabel->setText(QString::number(opacity));
+        ui->shapeOpacityValueLabel->setText(QLocale().toString(opacity));
 
         m_task->getPreferences().setShapeAlpha(opacity);
     }
 
     void setCandidateShapesPerStep(const int value)
     {
-        ui->candidateShapesPerStepCountLabel->setText(QString::number(value));
+        ui->candidateShapesPerStepCountLabel->setText(QLocale().toString(value));
 
         m_task->getPreferences().setCandidateShapeCount(value);
     }
 
     void setMutationsPerCandidateShape(const int value)
     {
-        ui->mutationsPerCandidateShapeCountLabel->setText(QString::number(value));
+        ui->mutationsPerCandidateShapeCountLabel->setText(QLocale().toString(value));
 
         m_task->getPreferences().setMaxShapeMutations(value);
     }

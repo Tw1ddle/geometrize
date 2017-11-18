@@ -153,7 +153,7 @@ private:
             return;
         }
 
-        const QString logoToolTip{tr("%1/%2 shapes", "Text showing the number of shapes that have been created to replicate an image so far e.g. 230/300 shapes").arg(QString::number(m_logoTaskSteps)).arg(m_maxLogoTaskSteps)};
+        const QString logoToolTip{tr("%1/%2 shapes", "Text showing the number of shapes that have been created to replicate an image so far e.g. 230/300 shapes").arg(QLocale().toString(m_logoTaskSteps)).arg(QLocale().toString(m_maxLogoTaskSteps))};
         ui->logoLabel->setToolTip(logoToolTip);
     }
 

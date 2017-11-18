@@ -6,6 +6,7 @@
 
 #include <QEvent>
 #include <QImage>
+#include <QLocale>
 
 #include "common/uiactions.h"
 #include "image/imageloader.h"
@@ -81,7 +82,7 @@ private:
     void updateTargetImageOpacity(const unsigned int opacity)
     {
         ui->targetImageOpacitySlider->setValue(opacity);
-        ui->targetImageOpacityValueLabel->setText(QString::number(opacity));
+        ui->targetImageOpacityValueLabel->setText(QLocale().toString(opacity));
     }
 
     ImageTaskImageWidget* q;

@@ -5,6 +5,7 @@
 #include <memory>
 
 #include <QDateTime>
+#include <QLocale>
 #include <QEvent>
 
 namespace geometrize
@@ -27,12 +28,13 @@ public:
 
     void setTaskId(std::size_t id)
     {
-        ui->taskIdValueLabel->setText(QString::number(id));
+        ui->taskIdValueLabel->setText(QLocale().toString(id));
     }
 
     void setTimeRunning(const int seconds)
     {
-        const QString time{QDateTime::fromTime_t(seconds).toUTC().toString("hh:mm:ss")};
+        QDateTime t{QDateTime::fromTime_t(seconds).toUTC()};
+        const QString time{QLocale().toString(t, "hh:mm:ss")};
         ui->timeRunningValueLabel->setText(time);
     }
 
@@ -44,12 +46,12 @@ public:
 
     void setShapeCount(const std::size_t shapeCount)
     {
-        ui->shapeCountValueLabel->setText(QString::number(shapeCount));
+        ui->shapeCountValueLabel->setText(QLocale().toString(shapeCount));
     }
 
     void setSimilarity(const float similarity)
     {
-        const QString similarityValue{QString::number(100.0f - similarity, 'f', 2)};
+        const QString similarityValue{QLocale().toString(100.0f - similarity, 'f', 2)};
         ui->targetSimilarityValueLabel->setText(similarityValue);
     }
 
@@ -75,7 +77,7 @@ private:
 
     void setImageDimensionsText()
     {
-        const QString imageDimensionsText{tr("%1x%2", "Dimensions of an image e.g. width-x-height, 1024x800").arg(m_width).arg(m_height)};
+        const QString imageDimensionsText{tr("%1x%2", "Dimensions of an image e.g. width-x-height, 1024x800").arg(QLocale().toString(m_width)).arg(QLocale().toString(m_height))};
         ui->imageDimensionsValueLabel->setText(imageDimensionsText);
     }
 
