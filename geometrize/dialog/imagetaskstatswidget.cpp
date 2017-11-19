@@ -26,9 +26,9 @@ public:
     ImageTaskStatsWidgetImpl operator=(const ImageTaskStatsWidgetImpl&) = delete;
     ImageTaskStatsWidgetImpl(const ImageTaskStatsWidgetImpl&) = delete;
 
-    void setTaskId(std::size_t id)
+    void setTaskId(const std::size_t id)
     {
-        ui->taskIdValueLabel->setText(QLocale().toString(id));
+        ui->taskIdValueLabel->setText(QLocale().toString(static_cast<uint>(id)));
     }
 
     void setTimeRunning(const int seconds)
@@ -46,7 +46,7 @@ public:
 
     void setShapeCount(const std::size_t shapeCount)
     {
-        ui->shapeCountValueLabel->setText(QLocale().toString(shapeCount));
+        ui->shapeCountValueLabel->setText(QLocale().toString(static_cast<uint>(shapeCount)));
     }
 
     void setSimilarity(const float similarity)
@@ -77,7 +77,7 @@ private:
 
     void setImageDimensionsText()
     {
-        const QString imageDimensionsText{tr("%1x%2", "Dimensions of an image e.g. width-x-height, 1024x800").arg(QLocale().toString(m_width)).arg(QLocale().toString(m_height))};
+        const QString imageDimensionsText{tr("%1x%2", "Dimensions of an image e.g. width-x-height, 1024x800").arg(QLocale().toString(static_cast<uint>(m_width))).arg(QLocale().toString(static_cast<uint>(m_height)))};
         ui->imageDimensionsValueLabel->setText(imageDimensionsText);
     }
 
