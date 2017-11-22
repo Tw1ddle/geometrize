@@ -5,6 +5,7 @@
 
 #include <QEvent>
 #include <QFontMetrics>
+#include <QLabel>
 #include <QSize>
 
 #include "localization/strings.h"
@@ -35,13 +36,18 @@ public:
 
         q->connect(ui->applyScriptButton, &QPushButton::clicked, [this]() {
             const std::string code{ui->scriptTextEdit->toPlainText().toStdString()};
+
             q->signal_scriptApplied(q, code);
         });
 
         q->connect(ui->resetToDefaultButton, &QPushButton::clicked, [this]() {
             ui->scriptTextEdit->setPlainText(QString::fromStdString(m_defaultCode));
+
             q->signal_scriptReset(q, m_defaultCode);
         });
+
+        setScriptEvaluationState(ScriptEvaluationState::OK);
+        setScriptChangesState(ScriptChangesState::READY);
     }
 
     ScriptEditorWidgetImpl operator=(const ScriptEditorWidgetImpl&) = delete;
@@ -87,6 +93,47 @@ private:
     void populateUi()
     {
 
+    }
+
+    enum class ScriptEvaluationState
+    {
+        OK,
+        ERROR
+    };
+
+    void setScriptEvaluationState(const ScriptEvaluationState state)
+    {
+        switch(state) {
+        case ScriptEvaluationState::OK:
+            setLabel(ui->scriptEvaluationStateIcon, QPixmap(":/icons/script_green.png"));
+            break;
+        case ScriptEvaluationState::ERROR:
+            setLabel(ui->scriptEvaluationStateIcon, QPixmap(":/icons/script_red.png"));
+            break;
+        }
+    }
+
+    enum class ScriptChangesState
+    {
+        READY,
+        UNAPPLIED_CHANGES
+    };
+
+    void setScriptChangesState(const ScriptChangesState state)
+    {
+        switch(state) {
+        case ScriptChangesState::READY:
+            setLabel(ui->scriptChangesStateIcon, QPixmap(":/icons/script_go.png"));
+            break;
+        case ScriptChangesState::UNAPPLIED_CHANGES:
+            setLabel(ui->scriptChangesStateIcon, QPixmap(":/icons/script_edit.png"));
+            break;
+        }
+    }
+
+    void setLabel(QLabel* label, QPixmap pixmap)
+    {
+        label->setPixmap(pixmap);
     }
 
     ScriptEditorWidget* q;

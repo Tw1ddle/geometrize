@@ -130,6 +130,11 @@ public:
 
     void modelWillStep()
     {
+        m_geometrizer.setEnabled(m_preferences.isScriptModeEnabled());
+        if(m_preferences.isScriptModeEnabled()) {
+            m_geometrizer.setupScripts(m_preferences.getScripts());
+        }
+
         emit q->signal_modelWillStep();
     }
 

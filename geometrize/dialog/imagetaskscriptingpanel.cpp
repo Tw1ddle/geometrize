@@ -52,15 +52,6 @@ public:
         });
 
         // Setup the actual actions that manipulate the image geometrization script functions
-        // TODO better solution: change the image task preferences - just let the geometrizer pick those up on each step
-        // TODO simply do: geometrizer->setupScripts(scripts) at the time - possibly bubble evaluation failures back
-        // to set an <!> warning on the failing widgets
-
-        // TODO set the geometrizer settings right before the next step i.e. onWillStep signal
-        // something like:
-        // m_task->getGeometrizer().setEnabled(preferences.getScriptModeEnabled());
-        // m_task->getGeometrizer().setScripts(preferences.getScripts());
-
         connect(q, &geometrize::dialog::ImageTaskScriptingPanel::signal_scriptReset, [this](geometrize::dialog::ScriptEditorWidget*) {
             m_task->getPreferences().setScripts(getScripts());
         });
