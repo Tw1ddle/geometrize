@@ -59,7 +59,7 @@ public:
             m_task->getPreferences().setScripts(getScripts());
         });
         connect(q, &geometrize::dialog::ImageTaskScriptingPanel::signal_scriptingToggled, [this](const bool enableScripting) {
-            m_task->getPreferences().setScriptModeEnabled(enableScripting);
+            setScriptModeEnabled(enableScripting);
         });
         connect(ui->resetScriptEngineButton, &QPushButton::pressed, [this]() {
             m_task->getPreferences().setScripts(getScripts());
@@ -77,7 +77,7 @@ public:
 
     void syncUserInterface()
     {
-        ui->scriptsEnabledButton->setChecked(m_task->getPreferences().isScriptModeEnabled());
+        setScriptModeEnabled(m_task->getPreferences().isScriptModeEnabled());
         setScripts(m_task->getPreferences().getScripts());
     }
 
@@ -91,6 +91,16 @@ private:
     void populateUi()
     {
 
+    }
+
+    void setScriptModeEnabled(const bool enabled)
+    {
+        m_task->getPreferences().setScriptModeEnabled(enabled);
+        ui->scriptsEnabledButton->setChecked(enabled);
+        ui->resetScriptEngineButton->setEnabled(enabled);
+        for(const auto& editor : m_editors) {
+            editor->setEnabled(enabled);
+        }
     }
 
     std::map<std::string, std::string> getScripts() const
