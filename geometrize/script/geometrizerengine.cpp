@@ -90,8 +90,10 @@ private:
             try {
                 m_engine->eval(entry.second);
                 q->signal_scriptEvaluationSucceeded(entry.first, entry.second);
+            } catch(const chaiscript::exception::eval_error& e) {
+                q->signal_scriptEvaluationFailed(entry.first, entry.second, e.pretty_print());
             } catch(...) {
-                q->signal_scriptEvaluationFailed(entry.first, entry.second, "Script error"); // TODO better error messages
+                q->signal_scriptEvaluationFailed(entry.first, entry.second, "Unknown script evaluation error");
             }
         }
 

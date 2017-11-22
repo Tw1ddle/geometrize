@@ -88,12 +88,14 @@ public:
     {
         setScriptEvaluationState(ScriptEvaluationState::OK);
         setScriptChangesState(ScriptChangesState::READY);
+        setEvaluationErrorMessage("");
     }
 
     void onScriptEvaluationFailed(const std::string& errorMessage)
     {
         setScriptEvaluationState(ScriptEvaluationState::ERROR);
         setScriptChangesState(ScriptChangesState::UNAPPLIED_CHANGES);
+        setEvaluationErrorMessage(errorMessage);
     }
 
     void onLanguageChange()
@@ -113,6 +115,11 @@ private:
         OK,
         ERROR
     };
+
+    void setEvaluationErrorMessage(const std::string& message)
+    {
+        ui->evaluationErrorMessageLabel->setText(QString::fromStdString(message));
+    }
 
     void setScriptEvaluationState(const ScriptEvaluationState state)
     {
