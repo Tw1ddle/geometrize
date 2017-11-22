@@ -4,6 +4,8 @@
 #include <memory>
 #include <string>
 
+#include <QObject>
+
 namespace chaiscript
 {
 class ChaiScript;
@@ -23,8 +25,10 @@ namespace script
 /**
  * @brief The GeometrizerEngine class encapsulates setup and mutation methods for geometrizing shapes.
  */
-class GeometrizerEngine
+class GeometrizerEngine : public QObject
 {
+    Q_OBJECT
+
 public:
     GeometrizerEngine();
     GeometrizerEngine& operator=(const GeometrizerEngine&) = delete;
@@ -65,6 +69,22 @@ public:
 
     //void setPermittedShapeRegion() {}
     //void setIntProperty(const std::string& propName, int value);
+
+signals:
+    /**
+     * @brief signal_scriptEvaluationSucceeded Signal dispatched when a script is successfully parsed/evaluated.
+     * @param functionName The name of the function.
+     * @param code The code of the function.
+     */
+    void signal_scriptEvaluationSucceeded(const std::string& functionName, const std::string& code);
+
+    /**
+     * @brief signal_scriptEvaluationFailed Signal dispatched when a script fails to parse/evaluate.
+     * @param functionName The name of the function.
+     * @param code The code of the function.
+     * @param error The text of the error message, if any.
+     */
+    void signal_scriptEvaluationFailed(const std::string& functionName, const std::string& code, const std::string& errorMessage);
 
 private:
     class GeometrizerEngineImpl;

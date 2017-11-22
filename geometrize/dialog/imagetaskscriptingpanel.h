@@ -55,8 +55,7 @@ public:
 signals:
     void signal_scriptingToggled(bool enabled);
     void signal_scriptsReset();
-    void signal_scriptReset(ScriptEditorWidget* editor);
-    void signal_scriptApplied(ScriptEditorWidget* editor);
+    void signal_scriptChanged(const std::string& functionName, const std::string& code);
 
 protected:
     void changeEvent(QEvent*) override;

@@ -36,7 +36,7 @@ namespace script
 class GeometrizerEngine::GeometrizerEngineImpl
 {
 public:
-    GeometrizerEngineImpl() : m_engine{script::createShapeMutatorEngine()}, m_defaultScripts{script::getDefaultScripts()}, m_mutator{nullptr}
+    GeometrizerEngineImpl(GeometrizerEngine* pQ) : q{pQ}, m_engine{script::createShapeMutatorEngine()}, m_defaultScripts{script::getDefaultScripts()}, m_mutator{nullptr}
     {
         setupGlobals();
         m_state = m_engine->get_state();
@@ -87,7 +87,12 @@ private:
         // Starting from the base state, re-add custom functions, then attempt to add missing required ones with defaults.
         // This is an ugly workaround, seems to be no choice because Chaiscript does not let us reload/redefine functions easily.
         for(const auto& entry : customFunctions) {
-            m_engine->eval(entry.second);
+            try {
+                m_engine->eval(entry.second);
+                q->signal_scriptEvaluationSucceeded(entry.first, entry.second);
+            } catch(...) {
+                q->signal_scriptEvaluationFailed(entry.first, entry.second, "Script error"); // TODO better error messages
+            }
         }
 
         // Ensure all the default functions have been set (these map to the scripts from the resource files)
@@ -144,13 +149,14 @@ private:
         assert(0 && "Checking for unrecognized required function, will ignore it");
     }
 
+    GeometrizerEngine* q;
     const std::map<std::string, std::string> m_defaultScripts; ///< The default/fallbacks scripts loaded from the resources folder (function name and fields).
     std::unique_ptr<chaiscript::ChaiScript> m_engine;
     chaiscript::ChaiScript::State m_state;
     geometrize::ShapeMutator* m_mutator;
 };
 
-GeometrizerEngine::GeometrizerEngine() : d{std::make_unique<GeometrizerEngine::GeometrizerEngineImpl>()}
+GeometrizerEngine::GeometrizerEngine() : d{std::make_unique<GeometrizerEngine::GeometrizerEngineImpl>(this)}
 {
 }
 

@@ -95,13 +95,6 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="applyScriptButton">
-         <property name="text">
-          <string extracomment="Text on a button that applies an app settings change when pressed">Apply</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QPushButton" name="resetToDefaultButton">
          <property name="text">
           <string extracomment="Text on a button that resets an app setting to a default value when pressed">Reset</string>

@@ -130,16 +130,16 @@ public:
 
     void modelWillStep()
     {
-        m_geometrizer.setEnabled(m_preferences.isScriptModeEnabled());
-        if(m_preferences.isScriptModeEnabled()) {
-            m_geometrizer.setupScripts(m_preferences.getScripts());
-        }
-
         emit q->signal_modelWillStep();
     }
 
     void modelDidStep(std::vector<geometrize::ShapeResult> shapes)
     {
+        m_geometrizer.setEnabled(m_preferences.isScriptModeEnabled());
+        if(m_preferences.isScriptModeEnabled()) {
+            m_geometrizer.setupScripts(m_preferences.getScripts());
+        }
+
         emit q->signal_modelDidStep(shapes);
     }
 
@@ -180,16 +180,16 @@ private:
     {
         q->connect(q, &ImageTask::signal_step, &m_worker, &ImageTaskWorker::step, connectionType);
         q->connect(q, &ImageTask::signal_drawShape, &m_worker, &ImageTaskWorker::drawShape, connectionType);
-        q->connect(&m_worker, &ImageTaskWorker::signal_willStep, q, &ImageTask::signal_modelWillStep, connectionType);
-        q->connect(&m_worker, &ImageTaskWorker::signal_didStep, q, &ImageTask::signal_modelDidStep, connectionType);
+        q->connect(&m_worker, &ImageTaskWorker::signal_willStep, q, &ImageTask::modelWillStep, connectionType);
+        q->connect(&m_worker, &ImageTaskWorker::signal_didStep, q, &ImageTask::modelDidStep, connectionType);
     }
 
     void disconnectAll()
     {
         q->disconnect(q, &ImageTask::signal_step, &m_worker, &ImageTaskWorker::step);
         q->disconnect(q, &ImageTask::signal_drawShape, &m_worker, &ImageTaskWorker::drawShape);
-        q->disconnect(&m_worker, &ImageTaskWorker::signal_willStep, q, &ImageTask::signal_modelWillStep);
-        q->disconnect(&m_worker, &ImageTaskWorker::signal_didStep, q, &ImageTask::signal_modelDidStep);
+        q->disconnect(&m_worker, &ImageTaskWorker::signal_willStep, q, &ImageTask::modelWillStep);
+        q->disconnect(&m_worker, &ImageTaskWorker::signal_didStep, q, &ImageTask::modelDidStep);
     }
 
     ImageTask* q;

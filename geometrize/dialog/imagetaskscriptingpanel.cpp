@@ -8,6 +8,7 @@
 #include <QEvent>
 
 #include "dialog/scripteditorwidget.h"
+#include "script/geometrizerengine.h"
 #include "script/scriptutil.h"
 #include "task/imagetask.h"
 
@@ -30,11 +31,8 @@ public:
         for(const auto& item : scriptDefaults) {
             ScriptEditorWidget* editor{new ScriptEditorWidget(item.first, item.first, item.second)};
             m_editors.push_back(editor);
-            connect(editor, &ScriptEditorWidget::signal_scriptApplied, [this](ScriptEditorWidget* self, const std::string&) {
-                emit q->signal_scriptApplied(self);
-            });
-            connect(editor, &ScriptEditorWidget::signal_scriptReset, [this](ScriptEditorWidget* self, const std::string&) {
-                emit q->signal_scriptReset(self);
+            connect(editor, &ScriptEditorWidget::signal_scriptChanged, [this](ScriptEditorWidget* /*self*/, const std::string& functionName, const std::string& code) {
+                emit q->signal_scriptChanged(functionName, code);
             });
             ui->scriptEditorsContainer->addWidget(editor);
         }
@@ -52,11 +50,8 @@ public:
         });
 
         // Setup the actual actions that manipulate the image geometrization script functions
-        connect(q, &geometrize::dialog::ImageTaskScriptingPanel::signal_scriptReset, [this](geometrize::dialog::ScriptEditorWidget*) {
-            m_task->getPreferences().setScripts(getScripts());
-        });
-        connect(q, &geometrize::dialog::ImageTaskScriptingPanel::signal_scriptApplied, [this](geometrize::dialog::ScriptEditorWidget*) {
-            m_task->getPreferences().setScripts(getScripts());
+        connect(q, &geometrize::dialog::ImageTaskScriptingPanel::signal_scriptChanged, [this](const std::string& functionName, const std::string& code) {
+            m_task->getPreferences().setScript(functionName, code);
         });
         connect(q, &geometrize::dialog::ImageTaskScriptingPanel::signal_scriptingToggled, [this](const bool enableScripting) {
             setScriptModeEnabled(enableScripting);
@@ -72,6 +67,28 @@ public:
     void setImageTask(task::ImageTask* task)
     {
         m_task = task;
+
+        // Connect to the geometrizer that can update the widget when it tries to
+        geometrize::script::GeometrizerEngine& geometrizer{m_task->getGeometrizer()};
+
+        if(m_scriptEvaluationSucceededConnection) {
+            disconnect(m_scriptEvaluationSucceededConnection);
+        }
+        m_scriptEvaluationSucceededConnection = connect(&geometrizer, &geometrize::script::GeometrizerEngine::signal_scriptEvaluationSucceeded, [this](const std::string& functionName, const std::string& /*code*/) {
+            if(dialog::ScriptEditorWidget* editor = findEditor(functionName)) {
+                editor->onScriptEvaluationSucceeded();
+            }
+        });
+
+        if(m_scriptEvaluationFailedConnection) {
+            disconnect(m_scriptEvaluationFailedConnection);
+        }
+        m_scriptEvaluationFailedConnection = connect(&geometrizer, &geometrize::script::GeometrizerEngine::signal_scriptEvaluationFailed, [this](const std::string& functionName, const std::string& /*code*/, const std::string& errorMessage) {
+            if(dialog::ScriptEditorWidget* editor = findEditor(functionName)) {
+                editor->onScriptEvaluationFailed(errorMessage);
+            }
+        });
+
         syncUserInterface();
     }
 
@@ -112,24 +129,32 @@ private:
         return m;
     }
 
+    dialog::ScriptEditorWidget* findEditor(const std::string& functionName) {
+        auto it = std::find_if(m_editors.begin(), m_editors.end(), [&functionName](dialog::ScriptEditorWidget* editor) {
+            return editor->getFunctionName() == functionName;
+        });
+        if(it != m_editors.end()) {
+            return *it;
+        }
+        return nullptr;
+    }
+
     void setScripts(const std::map<std::string, std::string>& scripts)
     {
         // Look for matching script editor widgets, and set their contents if found
         for(const auto& script : scripts) {
-            auto it = std::find_if(m_editors.begin(), m_editors.end(), [&s = script](dialog::ScriptEditorWidget* editor) {
-                return editor->getFunctionName() == s.first;
-            });
-
-            if(it != m_editors.end()) {
+            if(dialog::ScriptEditorWidget* editor = findEditor(script.first)) {
                 if(script.second.length() == 0) {
-                    (*it)->resetCodeToDefault();
+                    editor->resetCodeToDefault();
                 } else {
-                    (*it)->setCurrentCode(script.second);
+                    editor->setCurrentCode(script.second);
                 }
             }
         }
     }
 
+    QMetaObject::Connection m_scriptEvaluationSucceededConnection{}; ///> Connection for the scripting panel to react when a script is successfully evaluated
+    QMetaObject::Connection m_scriptEvaluationFailedConnection{}; ///> Connection for the scripting panel to react when a script fails to evaluate
     std::vector<ScriptEditorWidget*> m_editors;
     std::unique_ptr<Ui::ImageTaskScriptPanel> ui;
     ImageTaskScriptingPanel* q;

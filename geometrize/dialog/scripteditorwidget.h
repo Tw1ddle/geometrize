@@ -31,20 +31,25 @@ public:
 
     void resetCodeToDefault();
 
+    void onScriptEvaluationSucceeded();
+    void onScriptEvaluationFailed(const std::string& errorMessage);
+
 signals:
     /**
-     * @brief signal_scriptApplied Signal emitted when the user commits to a script code change e.g. presses an "apply" button.
+     * @brief signal_scriptChanged Signal emitted when the user change the script code of a function.
      * @param self The widget emitting this signal.
+     * @param functionName The name of the function that was edited.
      * @param code The new Chaiscript code.
      */
-    void signal_scriptApplied(ScriptEditorWidget* self, const std::string& code);
+    void signal_scriptChanged(ScriptEditorWidget* self, const std::string& functionName, const std::string& code);
 
     /**
      * @brief signal_scriptReset Signal emitted when the user hits the reset button, expecting the script to be reset to some default code.
      * @param self The widget emitting this signal.
+     * @param functionName The name of the function that was reset.
      * @param code The default Chaiscript code.
      */
-    void signal_scriptReset(ScriptEditorWidget* self, const std::string& code);
+    void signal_scriptReset(ScriptEditorWidget* self, const std::string& functionName, const std::string& code);
 
 protected:
     void changeEvent(QEvent*) override;
