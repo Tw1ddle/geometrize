@@ -35,7 +35,6 @@ linux {
 INCLUDEPATH += $$PWD/lib/cereal/include \
     $$PWD/lib/chaiscript/include
 include($$PWD/lib/geometrize/geometrize/geometrize.pri)
-include($$PWD/lib/qt_google_analytics/qt-google-analytics.pri)
 include($$PWD/lib/qtgifimage/src/gifimage/qtgifimage.pri)
 
 # Include the Geometrize headers, sources, UI forms

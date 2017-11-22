@@ -141,16 +141,6 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="QtGoogleAnalytics">
-      <attribute name="title">
-       <string notr="true">Qt Google Analytics</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_13">
-       <item>
-        <widget class="QTextBrowser" name="qtGoogleAnalyticsLicense"/>
-       </item>
-      </layout>
-     </widget>
      <widget class="QWidget" name="FlowLayout">
       <attribute name="title">
        <string notr="true">FlowLayout</string>

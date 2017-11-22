@@ -7,9 +7,6 @@
 [submodule "lib/geometrize"]
 	path = lib/geometrize
 	url=https://github.com/Tw1ddle/geometrize-lib
-[submodule "lib/qt_google_analytics"]
-	path = lib/qt_google_analytics
-	url = https://github.com/HSAnet/qt-google-analytics
 [submodule "lib/qtgifimage"]
 	path = lib/qtgifimage
 	url = https://github.com/Tw1ddle/QtGifImage
