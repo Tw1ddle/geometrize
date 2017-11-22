@@ -27,6 +27,7 @@ public:
     std::string getFunctionName() const;
     std::string getDefaultCode() const;
     std::string getCurrentCode() const;
+    void setCurrentCode(const std::string& code);
 
     void resetCodeToDefault();
 

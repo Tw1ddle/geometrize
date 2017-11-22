@@ -48,7 +48,7 @@ public:
 
     /**
      * @brief syncUserInterface Syncs the user interface with the current image task.
-     * This should be called after setting a new image task.
+     * This should be called after setting a new image task, or new task settings.
      * Note this does not change the run/stop button text.
      */
     void syncUserInterface();

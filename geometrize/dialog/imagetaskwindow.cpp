@@ -74,6 +74,9 @@ public:
         populateUi();
         q->setAttribute(Qt::WA_DeleteOnClose);
 
+        // Create scripting panel used to manipulate the scripts for generating/mutating shapes (dies when the image task window is closed)
+        setupScriptingPanel();
+
         // Set up the dock widgets
         q->tabifyDockWidget(ui->runnerSettingsDock, ui->exporterDock);
         ui->runnerSettingsDock->raise(); // Make sure runner settings dock is selected
@@ -122,6 +125,10 @@ public:
         connect(q, &ImageTaskWindow::didSwitchImageTask, [this](task::ImageTask*, task::ImageTask* currentTask) {
             ui->imageTaskExportWidget->setImageTask(currentTask, &m_shapes);
             ui->imageTaskRunnerWidget->setImageTask(currentTask);
+
+            if(dialog::ImageTaskScriptingPanel* scriptingPanel = getScriptingPanel()) {
+                scriptingPanel->setImageTask(currentTask);
+            }
 
             m_taskPreferencesSetConnection = connect(currentTask, &task::ImageTask::signal_preferencesSet, [this]() {
                 ui->imageTaskRunnerWidget->syncUserInterface();
@@ -227,6 +234,14 @@ public:
             clearModel();
         });
 
+        connect(q, &ImageTaskWindow::didLoadSettingsTemplate, [this]() {
+            ui->imageTaskRunnerWidget->syncUserInterface();
+
+            if(dialog::ImageTaskScriptingPanel* scriptingPanel = getScriptingPanel()) {
+                 scriptingPanel->syncUserInterface();
+            }
+        });
+
         // Track how long the task has been in the running state
         connect(&m_timeRunningTimer, &QTimer::timeout, [this]() {
             if(isRunning()) {
@@ -248,7 +263,7 @@ public:
         setPixmapViewVisibility(prefs.shouldShowImageTaskPixmapViewByDefault());
         setVectorViewVisibility(prefs.shouldShowImageTaskVectorViewByDefault());
         if(prefs.shouldShowImageTaskScriptEditorByDefault()) {
-            revealScriptEditor();
+            revealScriptingPanel();
         }
     }
     ImageTaskWindowImpl operator=(const ImageTaskWindowImpl&) = delete;
@@ -346,62 +361,15 @@ public:
         populateUi();
     }
 
-    // Utility function used to create and display the script editor for the given image task window
-    void revealScriptEditor()
+    // Utility function used to setup and display the script editor for the given image task window
+    void revealScriptingPanel()
     {
-        auto existingPanel = q->findChild<geometrize::dialog::ImageTaskScriptingPanel*>();
-        if(existingPanel) {
-            existingPanel->setWindowState(existingPanel->windowState() & ~Qt::WindowMinimized);
-            QApplication::setActiveWindow(existingPanel);
-            existingPanel->raise();
-            return;
+        if(dialog::ImageTaskScriptingPanel* scriptingPanel = getScriptingPanel()) {
+            scriptingPanel->setWindowState(scriptingPanel->windowState() & ~Qt::WindowMinimized);
+            QApplication::setActiveWindow(scriptingPanel);
+            scriptingPanel->raise();
+            scriptingPanel->show();
         }
-        auto scriptingPanel = new geometrize::dialog::ImageTaskScriptingPanel(q);
-
-        // NOTE these do a lot more work than really necessary
-        // TODO instead of writing to the geometrizer, just write to preferences. Geometrizer can pick up settings from preferences each time it steps...
-        connect(scriptingPanel, &geometrize::dialog::ImageTaskScriptingPanel::signal_scriptReset, [scriptingPanel, this](geometrize::dialog::ScriptEditorWidget* /*widget*/) {
-            if(m_task->isStepping()) {
-                addPostStepCb([this, &scriptingPanel]() { m_task->getGeometrizer().setupScripts(scriptingPanel->getScripts()); });
-            } else {
-                m_task->getGeometrizer().setupScripts(scriptingPanel->getScripts());
-            }
-
-            m_task->getPreferences().setScripts(scriptingPanel->getScripts());
-        });
-        connect(scriptingPanel, &geometrize::dialog::ImageTaskScriptingPanel::signal_scriptApplied, [scriptingPanel, this](geometrize::dialog::ScriptEditorWidget* /*widget*/) {
-            if(m_task->isStepping()) {
-                addPostStepCb([this, &scriptingPanel]() { m_task->getGeometrizer().setupScripts(scriptingPanel->getScripts()); });
-            } else {
-                m_task->getGeometrizer().setupScripts(scriptingPanel->getScripts());
-            }
-
-            m_task->getPreferences().setScripts(scriptingPanel->getScripts());
-        });
-        connect(scriptingPanel, &geometrize::dialog::ImageTaskScriptingPanel::signal_scriptingToggled, [scriptingPanel, this](const bool enableScripting) {
-            if(m_task->isStepping()) {
-                addPostStepCb([this, enableScripting]() { m_task->getGeometrizer().setEnabled(enableScripting); });
-            } else {
-                m_task->getGeometrizer().setEnabled(enableScripting);
-            }
-
-            if(enableScripting) {
-                m_task->getPreferences().setScripts(scriptingPanel->getScripts());
-            } else {
-                m_task->getPreferences().setScripts({});
-            }
-        });
-        connect(scriptingPanel, &geometrize::dialog::ImageTaskScriptingPanel::signal_scriptsReset, [scriptingPanel, this]() {
-            if(m_task->isStepping()) {
-                addPostStepCb([this, &scriptingPanel]() { m_task->getGeometrizer().setupScripts(scriptingPanel->getScripts()); });
-            } else {
-                m_task->getGeometrizer().setupScripts(scriptingPanel->getScripts());
-            }
-
-            m_task->getPreferences().setScripts(scriptingPanel->getScripts());
-        });
-
-        scriptingPanel->show();
     }
 
 private:
@@ -409,6 +377,16 @@ private:
     {
         updateStartStopButtonText();
         q->setWindowTitle(geometrize::strings::Strings::getApplicationName());
+    }
+
+    void setupScriptingPanel()
+    {
+        new geometrize::dialog::ImageTaskScriptingPanel(q);
+    }
+
+    geometrize::dialog::ImageTaskScriptingPanel* getScriptingPanel()
+    {
+        return q->findChild<geometrize::dialog::ImageTaskScriptingPanel*>();
     }
 
     void updateStartStopButtonText()
@@ -543,6 +521,7 @@ private:
     }
 
     std::unique_ptr<Ui::ImageTaskWindow> ui{nullptr};
+
     ImageTaskWindow* q{nullptr};
 
     task::ImageTask* m_task{nullptr}; ///> The image task currently set and manipulated via this window
@@ -602,7 +581,7 @@ void ImageTaskWindow::on_actionReveal_Launch_Window_triggered()
 
 void ImageTaskWindow::on_actionReveal_Script_Editor_triggered()
 {
-    d->revealScriptEditor();
+    d->revealScriptingPanel();
 }
 
 void ImageTaskWindow::changeEvent(QEvent* event)

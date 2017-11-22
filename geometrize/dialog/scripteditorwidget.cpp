@@ -71,6 +71,12 @@ public:
         return ui->scriptTextEdit->toPlainText().toStdString();
     }
 
+    void setCurrentCode(const std::string& code)
+    {
+        ui->scriptTextEdit->clear();
+        ui->scriptTextEdit->appendPlainText(QString::fromStdString(code));
+    }
+
     void onLanguageChange()
     {
         ui->retranslateUi(q);
@@ -123,6 +129,11 @@ std::string ScriptEditorWidget::getDefaultCode() const
 std::string ScriptEditorWidget::getCurrentCode() const
 {
     return d->getCurrentCode();
+}
+
+void ScriptEditorWidget::setCurrentCode(const std::string& code)
+{
+    d->setCurrentCode(code);
 }
 
 }

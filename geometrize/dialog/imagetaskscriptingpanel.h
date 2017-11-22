@@ -16,6 +16,11 @@ namespace dialog
 class ScriptEditorWidget;
 }
 
+namespace task
+{
+class ImageTask;
+}
+
 }
 
 namespace geometrize
@@ -36,15 +41,20 @@ public:
     ~ImageTaskScriptingPanel();
 
     /**
-     * @brief getScripts Gets the map of script function names and code within this scripting panel.
-     * @return A map of script function names and code within this scripting panel.
+     * @brief setImageTask Sets the current image task manipulated by the scripting panel.
+     * @param task Non-owning pointer to the image task that the scripting panel on this widget will manipulate.
      */
-    std::map<std::string, std::string> getScripts() const;
+    void setImageTask(task::ImageTask* task);
+
+    /**
+     * @brief syncUserInterface Syncs the user interface with the current image task.
+     * This should be called after setting a new image task, or new task settings.
+     */
+    void syncUserInterface();
 
 signals:
     void signal_scriptingToggled(bool enabled);
     void signal_scriptsReset();
-
     void signal_scriptReset(ScriptEditorWidget* editor);
     void signal_scriptApplied(ScriptEditorWidget* editor);
 
