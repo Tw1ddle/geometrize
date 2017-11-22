@@ -10,7 +10,6 @@
 #include <QStringList>
 #include <QtGlobal>
 
-#include "analytics/analyticswrapper.h"
 #include "cli/commandlineparser.h"
 #include "common/uiactions.h"
 #include "dialog/launchwindow.h"
@@ -55,13 +54,6 @@ void setLocale(const QStringList& arguments)
     // TODO should only use this if a locale is set (by default there should be no preference, so it should use the system?)
     QLocale::setDefault(QLocale(QString::fromStdString(languageCode)));
     geometrize::setTranslatorsForLocale(QString::fromStdString(languageCode));
-}
-
-void setupAnalytics()
-{
-    geometrize::analytics::AnalyticsWrapper analytics;
-    analytics.startSession();
-    analytics.onLaunch();
 }
 
 int runAppConsoleMode(QApplication& app)
@@ -118,8 +110,6 @@ int main(int argc, char* argv[])
     // So we explicitly set the window icon here
     app.setWindowIcon(QIcon(":/logos/logo_small.png"));
 #endif
-
-    setupAnalytics();
 
     const QStringList arguments{app.arguments()};
     setLocale(arguments);
