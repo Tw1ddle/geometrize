@@ -1,6 +1,9 @@
 #include "script/bindingscreator.h"
 
+#include <cstdint>
 #include <string>
+#include <vector>
+#include <utility>
 
 #include <QImage>
 #include <Qt>
@@ -278,6 +281,11 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
 
     ADD_TYPE(Polyline);
     ADD_CONST_REF_MEMBER(Polyline, m_model);
+
+    // Make the polyline points vector accessible from scripts
+    chaiscript::bootstrap::standard_library::pair_type<std::pair<std::int32_t, std::int32_t>>("IntPair", *module);
+    chaiscript::bootstrap::standard_library::vector_type<std::vector<std::pair<std::int32_t, std::int32_t>>>("IntPairVector", *module);
+    module->add(chaiscript::vector_conversion<std::vector<std::pair<std::int32_t, std::int32_t>>>());
     ADD_MEMBER(Polyline, m_points);
 
     ADD_TYPE(QuadraticBezier);
