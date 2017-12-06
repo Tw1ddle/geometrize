@@ -4,9 +4,9 @@
 [![Geometrize AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/09l5nquksmev8ta4?svg=true)](https://ci.appveyor.com/project/Tw1ddle/geometrize)
 [![License](https://img.shields.io/badge/License-GPL%20v3-blue.svg?style=flat-square)](https://github.com/Tw1ddle/geometrize/blob/master/LICENSE)
 
-[Geometrize](http://www.geometrize.co.uk/) is a cross-platform desktop app that geometrizes images into geometric primitives. Download it [here](http://www.geometrize.co.uk/).
+WORK IN PROGRESS
 
-To see what Geometrize does, run the [web demo](http://www.samcodes.co.uk/project/geometrize-haxe-web/) in your browser.
+[Geometrize](http://www.geometrize.co.uk/) is a desktop app that geometrizes images into geometric primitives. Download it [here](http://www.geometrize.co.uk/), or run the [web demo](http://www.samcodes.co.uk/project/geometrize-haxe-web/) in your browser.
 
 Also see the [gallery](http://gallery.geometrize.co.uk/), the [Twitter bot](https://twitter.com/Geometrizer) and Geometrize [tweening demo](http://tweens.geometrize.co.uk/).
 
@@ -17,7 +17,7 @@ Also see the [gallery](http://gallery.geometrize.co.uk/), the [Twitter bot](http
  * Export geometrized images to SVG, PNG, JPG and animated GIF.
  * Export geometrized images as HTML5 canvas or WebGL webpages.
  * Export shape data as JSON for use in custom projects and creations.
- * Control the algorithm at the core of Geometrize with ChaiScript [scripts](https://github.com/Tw1ddle/geometrize-scripts).
+ * Control the algorithm at the core of Geometrize with ChaiScript scripts.
 
 ## Usage
 
@@ -41,9 +41,8 @@ For more examples, see the Geometrize [gallery](http://gallery.geometrize.co.uk/
 
 ## Resources
 
- * Visit the Geometrize [resources](http://resources.geometrize.co.uk/) page.
+ * See the Geometrize [resources](http://resources.geometrize.co.uk/) page.
  
 ## Notes
  * Got an idea or suggestion? Open an issue on GitHub, or send Sam a message on [Twitter](https://twitter.com/Sam_Twidale).
  * Geometrize was inspired by [primitive](https://github.com/fogleman/primitive), a Go tool by [Michael Fogleman](https://github.com/fogleman).
- * Stable builds of Geometrize are available on the [Windows store](TODO) and the [Mac App Store](TODO).
