@@ -4,9 +4,9 @@
 [![Geometrize AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/09l5nquksmev8ta4?svg=true)](https://ci.appveyor.com/project/Tw1ddle/geometrize)
 [![License](https://img.shields.io/badge/License-GPL%20v3-blue.svg?style=flat-square)](https://github.com/Tw1ddle/geometrize/blob/master/LICENSE)
 
-[Geometrize](http://www.geometrize.co.uk/) is a desktop app for geometrizing images into geometric primitives. Download it [here](http://www.geometrize.co.uk/), or run the [web demo](http://www.samcodes.co.uk/project/geometrize-haxe-web/) in your browser.
+[Geometrize](http://www.geometrize.co.uk/) is a desktop app for geometrizing images into geometric primitives.
 
-Also see the [gallery](http://gallery.geometrize.co.uk/), the [bot](https://twitter.com/Geometrizer) and [tweening demo](http://tweens.geometrize.co.uk/).
+Download Geometrize [here](http://www.geometrize.co.uk/), or try the [web demo](http://www.samcodes.co.uk/project/geometrize-haxe-web/) in your browser.
 
 [![Geometrize Shape Animation](https://github.com/Tw1ddle/geometrize/blob/master/screenshots/windflowers_geometrized.gif?raw=true)](http://www.geometrize.co.uk/)
 
@@ -41,7 +41,7 @@ The matrix shows results for circles, triangles, rotated rectangles, rotated ell
 
 ## Screenshots
 
-For examples of geometrized images, see the [gallery](http://gallery.geometrize.co.uk/).
+For more examples of geometrized images, see the [gallery](http://gallery.geometrize.co.uk/).
 
 [![Geometrized Flower 330 Rotated Ellipses](https://github.com/Tw1ddle/geometrize/blob/master/screenshots/flower.png?raw=true "Flower - 330 Rotated Ellipses")](http://www.geometrize.co.uk/)
 
@@ -63,4 +63,5 @@ For examples of geometrized images, see the [gallery](http://gallery.geometrize.
 
 ## Notes
  * Got an idea or suggestion? Open an issue on GitHub, or send Sam a message on [Twitter](https://twitter.com/Sam_Twidale).
- * Geometrize is inspired by [primitive](https://github.com/fogleman/primitive), a Go tool by [Michael Fogleman](https://github.com/fogleman).
+ * Geometrize is inspired by [primitive](https://github.com/fogleman/primitive), a Go tool cby [Michael Fogleman](https://github.com/fogleman).
+ * Also see the Geometrize [gallery](http://gallery.geometrize.co.uk/), [bot](https://twitter.com/Geometrizer) and [tweening demo](http://tweens.geometrize.co.uk/).
