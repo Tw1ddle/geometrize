@@ -63,5 +63,5 @@ For more examples of geometrized images, see the [gallery](http://gallery.geomet
 
 ## Notes
  * Got an idea or suggestion? Open an issue on GitHub, or send Sam a message on [Twitter](https://twitter.com/Sam_Twidale).
- * Geometrize is inspired by [primitive](https://github.com/fogleman/primitive), a Go tool cby [Michael Fogleman](https://github.com/fogleman).
+ * Geometrize is inspired by [primitive](https://github.com/fogleman/primitive), a Go tool created by [Michael Fogleman](https://github.com/fogleman).
  * Also see the Geometrize [gallery](http://gallery.geometrize.co.uk/), [bot](https://twitter.com/Geometrizer) and [tweening demo](http://tweens.geometrize.co.uk/).
