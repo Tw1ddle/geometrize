@@ -105,8 +105,8 @@ int main(int argc, char* argv[])
 
     QApplication app(argc, argv);
 
-#ifdef Q_OS_LINUX
-    // Some Linux taskbars/DEs use the application window icon to set the taskbar icon
+#if defined(Q_OS_LINUX) || defined(Q_OS_MAC)
+    // Some Linux/Mac taskbars/DEs use the application window icon to set the taskbar icon
     // So we explicitly set the window icon here
     app.setWindowIcon(QIcon(":/logos/logo_small.png"));
 #endif
