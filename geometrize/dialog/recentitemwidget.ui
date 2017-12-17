@@ -109,11 +109,6 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <property name="font">
-          <font>
-           <pointsize>7</pointsize>
-          </font>
-         </property>
          <property name="text">
           <string notr="true">itemPath</string>
          </property>

@@ -18,9 +18,9 @@ winrt {
     include($$PWD/uwp/geometrize_uwp.pri)
 }
 
-# Uncomment this to use the special license for the Mac App Store (because I think their DRM is incompatible with the GPL)
+# Options for the Mac AppStore version of Geometrize
 macx {
-    #DEFINES += MAC_APPSTORE_LICENSE
+    include($$PWD/osx/geometrize_osx.pri)
 }
 
 # Some versions of gcc have linker issues like:
