@@ -1,5 +1,6 @@
 #pragma once
 
+#include <QLocale>
 #include <QString>
 
 class QIcon;
@@ -38,5 +39,20 @@ void setTranslatorsForLocale(const QString& locale);
  * @return An icon for the code, or an error symbol if no suitable icon could be found.
  */
 QIcon getFlagIconForLocaleCode(const QString& localeCode);
+
+/**
+ * @brief getGlobalPreferencesLocale Gets a QLocale instance based on the current settings in global preferences.
+ * Note that if the string violates the locale format, the "C" locale is used instead.
+ * @return A QLocale instance based on the global preferences.
+ */
+QLocale getGlobalPreferencesLocale();
+
+/**
+ * @brief setGlobalPreferencesForLocale Sets the locale settings based on the given locale name.
+ * @param localeName The locale name.
+ * Note this sets only the language and country, not the script or other settings.
+ * Even if the string violates the locale format, the string may be saved to the preferences anyway.
+ */
+void setGlobalPreferencesForLocale(const QLocale& locale);
 
 }

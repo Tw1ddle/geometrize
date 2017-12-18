@@ -86,6 +86,16 @@ public:
         return true;
     }
 
+    unsigned int getApplicationLaunchCount() const
+    {
+        return m_applicationLaunchCount;
+    }
+
+    void incrementApplicationLaunchCount()
+    {
+        m_applicationLaunchCount++;
+    }
+
     bool shouldShowWelcomeScreenOnLaunch() const
     {
         return m_shouldShowWelcomeScreenOnLaunch;
@@ -315,6 +325,8 @@ private:
 
     serialization::GlobalPreferencesData m_data;
 
+    unsigned int m_applicationLaunchCount{0};
+
     bool m_shouldShowWelcomeScreenOnLaunch{true};
 
     bool m_shouldGeometrizeAppLogoOnLaunch{true};
@@ -343,6 +355,16 @@ GlobalPreferences::GlobalPreferences() : d{std::make_unique<GlobalPreferences::G
 
 GlobalPreferences::~GlobalPreferences()
 {
+}
+
+unsigned int GlobalPreferences::getApplicationLaunchCount() const
+{
+    return d->getApplicationLaunchCount();
+}
+
+void GlobalPreferences::incrementApplicationLaunchCount()
+{
+    d->incrementApplicationLaunchCount();
 }
 
 bool GlobalPreferences::load(const std::string& filePath)

@@ -63,6 +63,17 @@ public:
     bool save(const std::string& filePath);
 
     /**
+     * @brief getApplicationLaunchCount
+     * @return Gets the number of times the application has been launched.
+     */
+    unsigned int getApplicationLaunchCount() const;
+
+    /**
+     * @brief incrementApplicationLaunchCount Increments the count for the number of times the application has been launched.
+     */
+    void incrementApplicationLaunchCount();
+
+    /**
      * @brief shouldShowWelcomeScreenOnLaunch Gets the preference for whether the welcome screen should be displayed on launch.
      * @return True if the welcome screen should be shown on launch.
      */

@@ -12,6 +12,8 @@
 #include <QStringList>
 #include <QTranslator>
 
+#include "preferences/globalpreferences.h"
+
 namespace geometrize
 {
 
@@ -139,6 +141,64 @@ QIcon getFlagIconForLocaleCode(const QString& localeCode)
     }
 
     return errorIcon;
+}
+
+QLocale getGlobalPreferencesLocale()
+{
+    const auto& prefs = geometrize::preferences::getGlobalPreferences();
+
+    const QString language{QString::fromStdString(prefs.getLanguageIsoCode())};
+    const QString country{QString::fromStdString(prefs.getCountryIsoCode())};
+    const QString script{QString::fromStdString(prefs.getScriptIsoCode())};
+
+    QString localeCode = "";
+    if(!language.isEmpty()) {
+        localeCode += language;
+    }
+    if(!script.isEmpty()) {
+        localeCode += "_" + script;
+    }
+    if(!country.isEmpty()) {
+        localeCode += "_" + country;
+    }
+
+    return QLocale(localeCode);
+}
+
+void setGlobalPreferencesForLocale(const QLocale& locale)
+{
+    auto& prefs = geometrize::preferences::getGlobalPreferences();
+
+    const QStringList parts{locale.name().split("-")};
+
+    if(parts.length() == 0 || parts.length() > 3) {
+        assert(0 && "Failed to extract locale name, will fail to set preferences");
+        return;
+    }
+
+    if(parts.length() == 1) {
+        prefs.setLanguageIsoCode(parts[0].toStdString());
+        return;
+    }
+
+    if(parts.length() == 2) {
+        prefs.setLanguageIsoCode(parts[0].toStdString());
+        prefs.setCountryIsoCode(parts[1].toStdString());
+        return;
+    }
+
+    if(parts.length() == 3) {
+        prefs.setLanguageIsoCode(parts[0].toStdString());
+        prefs.setScriptIsoCode(parts[1].toStdString());
+
+        const QStringList countryAndMaybeCodesetOrModifier{parts[2].split(".")};
+        assert(countryAndMaybeCodesetOrModifier.length() > 0 && countryAndMaybeCodesetOrModifier.length() <= 3);
+
+        if(countryAndMaybeCodesetOrModifier.length() > 0) {
+            prefs.setCountryIsoCode(countryAndMaybeCodesetOrModifier[0].toStdString());
+        }
+        return;
+    }
 }
 
 }

@@ -1,5 +1,6 @@
 #include "dialog/launchwindow.h"
 
+#include <cassert>
 #include <functional>
 #include <string>
 
@@ -39,21 +40,39 @@ void installMessageHandlers()
     qInstallMessageHandler(geometrize::log::handleLogMessages);
 }
 
+void incrementAppLaunchCount()
+{
+    auto& prefs = geometrize::preferences::getGlobalPreferences();
+    prefs.incrementApplicationLaunchCount();
+}
+
 void setLocale(const QStringList& arguments)
 {
-    const std::string languageCode = [&arguments]() {
+    const QLocale locale = [&arguments]() {
         const std::string overrideCode{geometrize::cli::getOverrideLocaleCode(arguments)};
         if(!overrideCode.empty()) {
-            return overrideCode;
+            return QLocale(QString::fromStdString(overrideCode));
         }
 
         const auto& prefs = geometrize::preferences::getGlobalPreferences();
-        return prefs.getLanguageIsoCode();
+
+        // If this is first launch, we override the preferences with the system's preferred UI language
+        // Assume launch count was already incremented from an initial value of 0 earlier
+        if(prefs.getApplicationLaunchCount() == 1) {
+            const QStringList uiLanguages{QLocale().uiLanguages()};
+
+            assert(!uiLanguages.isEmpty() && "No supported UI languages found, will fallback to default settings");
+            if(!uiLanguages.isEmpty()) {
+                geometrize::setGlobalPreferencesForLocale(QLocale(uiLanguages.front()));
+            }
+        }
+
+        // Get locale using name built from current preferences
+        return geometrize::getGlobalPreferencesLocale();
     }();
 
-    // TODO should only use this if a locale is set (by default there should be no preference, so it should use the system?)
-    QLocale::setDefault(QLocale(QString::fromStdString(languageCode)));
-    geometrize::setTranslatorsForLocale(QString::fromStdString(languageCode));
+    QLocale::setDefault(locale);
+    geometrize::setTranslatorsForLocale(locale.bcp47Name().replace("-", "_"));
 }
 
 int runAppConsoleMode(QApplication& app)
@@ -102,6 +121,7 @@ int main(int argc, char* argv[])
 {
     setApplicationSettingsFields();
     installMessageHandlers();
+    incrementAppLaunchCount();
 
     QApplication app(argc, argv);
 
