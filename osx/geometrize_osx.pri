@@ -20,6 +20,6 @@ MAC_LANGUAGE_CODES = ar bg cs da de el en en_AU en_CA en_GB en_US es es_ES es_MX
 
 for(LANGUAGE_CODE, MAC_LANGUAGE_CODES) {
     MAC_LANGUAGE_DATA.files = $$PWD/Localizable.strings
-    MAC_LANGUAGE_DATA.path = "Contents/Resources/$${LANGAUGE_CODE}.lproj"
+    MAC_LANGUAGE_DATA.path = "Contents/Resources/$${LANGUAGE_CODE}.lproj"
     QMAKE_BUNDLE_DATA += MAC_LANGUAGE_DATA
 }
