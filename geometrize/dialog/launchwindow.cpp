@@ -3,6 +3,7 @@
 
 #include <QCloseEvent>
 #include <QEvent>
+#include <QFileInfo>
 
 #include "chaiscript/chaiscript.hpp"
 
@@ -279,7 +280,8 @@ void LaunchWindow::on_actionExit_triggered()
 void LaunchWindow::on_openImageButton_clicked()
 {
     const QString imagePath{common::ui::openImagePathPickerDialog(this)};
-    if(imagePath.isEmpty()) {
+    QFileInfo imageFileInfo(imagePath);
+    if(imagePath.isEmpty() || (imageFileInfo.isSymLink() && !QFileInfo(imageFileInfo.symLinkTarget()).exists())) {
         return;
     }
 
