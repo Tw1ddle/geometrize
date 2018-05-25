@@ -5,14 +5,14 @@ environment:
       MINGW: C:\Qt\Tools\mingw53_32
     - QTDIR: C:\Qt\5.8\mingw53_32
       MINGW: C:\Qt\Tools\mingw53_32
-    - QTDIR: C:\Qt\5.9.3\mingw53_32
+    - QTDIR: C:\Qt\5.9\mingw53_32
       MINGW: C:\Qt\Tools\mingw53_32
     - QTDIR: C:\Qt\5.7\msvc2015
     - QTDIR: C:\Qt\5.7\msvc2015_64
     - QTDIR: C:\Qt\5.8\msvc2015
     - QTDIR: C:\Qt\5.8\msvc2015_64
-    - QTDIR: C:\Qt\5.9.3\msvc2015
-    - QTDIR: C:\Qt\5.9.3\msvc2015_64
+    - QTDIR: C:\Qt\5.9\msvc2015
+    - QTDIR: C:\Qt\5.9\msvc2015_64
 
 configuration:
   - debug
@@ -22,7 +22,7 @@ configuration:
 # Set the environment variables and paths to make
 install:
   - git submodule update --init --recursive
-  - '%QTDIR%\bin\qtenv2.bat'
+  - call "%QTDIR%\bin\qtenv2.bat"
   - set PATH=%PATH%;%QTDIR%\bin;%MINGW%\bin
   - if %QTDIR:msvc=%==%QTDIR% set make=mingw32-make.exe
   - if %QTDIR:_64=%==%QTDIR% ( set ARCH=x86 ) else set ARCH=x64
