@@ -23,7 +23,7 @@ QEvent* getEvent(const QtMsgType type, const QMessageLogContext& context, const 
 void handleLogMessages(const QtMsgType type, const QMessageLogContext& context, const QString& message)
 {
     if(type == QtFatalMsg) {
-        abort();
+        //abort(); // TODO
         return;
     }
 
