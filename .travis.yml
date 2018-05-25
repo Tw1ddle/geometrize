@@ -20,20 +20,10 @@ matrix:
         sources:
         - ubuntu-toolchain-r-test
         packages:
-        - g++-5.1
-    env:
-    - MATRIX_EVAL="CC=gcc-5.1 && CXX=g++-5.1"
-    - TRIGGER_DOWNSTREAM_BUILDS="yes"
-
-  - os: linux
-    addons:
-      apt:
-        sources:
-        - ubuntu-toolchain-r-test
-        packages:
         - g++-6
     env:
     - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
+    - TRIGGER_DOWNSTREAM_BUILDS="yes"
 
   - os: linux
     addons:
