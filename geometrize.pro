@@ -34,8 +34,11 @@ linux {
 # Include library dependencies
 INCLUDEPATH += $$PWD/lib/cereal/include \
     $$PWD/lib/chaiscript/include
+INCLUDEPATH += $$PWD/lib/burstlinker/src
+HEADERS += $$files($$PWD/lib/burstlinker/src/*.h, true)
+SOURCES += $$files($$PWD/lib/burstlinker/src/*.cpp, true)
+
 include($$PWD/lib/geometrize/geometrize/geometrize.pri)
-include($$PWD/lib/qtgifimage/src/gifimage/qtgifimage.pri)
 
 # Include the Geometrize headers, sources, UI forms
 include($$PWD/geometrize/sources.pri)

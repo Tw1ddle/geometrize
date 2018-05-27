@@ -149,12 +149,21 @@ public:
         const std::uint32_t scaleFactor{3};
         const std::uint32_t width{m_task->getCurrent().getWidth()};
         const std::uint32_t height{m_task->getCurrent().getHeight()};
+
+        auto frameSkipPredicate = [](const std::size_t frameIdx) {
+            if(frameIdx % 2 == 0) {
+                return true;
+            }
+            return false;
+        };
+
         geometrize::exporter::exportGIF(
             *m_shapes,
             width,
             height,
             width * scaleFactor,
             height * scaleFactor,
+            frameSkipPredicate,
             path.toStdString());
     }
 

@@ -67,7 +67,7 @@ LicenseDialog::LicenseDialog(QWidget* parent) :
     setLicenseText(ui->cerealLicense, "cereal_license.txt");
     setLicenseText(ui->rapidJSONLicense, "rapidjson_license.txt");
     setLicenseText(ui->rapidXmlLicense, "rapidxml_license.txt");
-    setLicenseText(ui->qtGifImageLicense, "qtgifimage_license.txt");
+    setLicenseText(ui->burstLinkerLicense, "burstlinker_license.txt");
     setLicenseText(ui->GIFLIBLicense, "giflib_license.txt");
     setLicenseText(ui->flowLayoutLicense, "flowlayout_license.txt");
     setLicenseText(ui->elidedLabelLicense, "elidedlabel_license.txt");

@@ -7,9 +7,6 @@
 [submodule "lib/geometrize"]
 	path = lib/geometrize
 	url=https://github.com/Tw1ddle/geometrize-lib
-[submodule "lib/qtgifimage"]
-	path = lib/qtgifimage
-	url = https://github.com/Tw1ddle/QtGifImage
 [submodule "resources/templates"]
 	path = resources/templates
 	url = https://github.com/Tw1ddle/geometrize-templates
@@ -22,3 +19,6 @@
 [submodule "translations"]
 	path = translations
 	url = https://github.com/Tw1ddle/geometrize-translations
+[submodule "lib/burstlinker"]
+	path = lib/burstlinker
+	url = https://github.com/Tw1ddle/BurstLinker

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdint>
+#include <functional>
 #include <string>
 #include <vector>
 
@@ -32,6 +34,7 @@ bool exportGIF(
         std::uint32_t inputHeight,
         std::uint32_t outputWidth,
         std::uint32_t outputHeight,
+        const std::function<bool(std::size_t)>& frameSkipPredicate,
         const std::string& filePath);
 
 }

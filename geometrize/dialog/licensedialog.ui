@@ -121,13 +121,13 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="QtGifImage">
+     <widget class="QWidget" name="BurstLinker">
       <attribute name="title">
-       <string notr="true">QtGifImage</string>
+       <string notr="true">BurstLinker</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_15">
        <item>
-        <widget class="QTextBrowser" name="qtGifImageLicense"/>
+        <widget class="QTextBrowser" name="burstLinkerLicense"/>
        </item>
       </layout>
      </widget>
