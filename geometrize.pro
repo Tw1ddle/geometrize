@@ -34,7 +34,7 @@ linux {
 # Include library dependencies
 INCLUDEPATH += $$PWD/lib/cereal/include \
     $$PWD/lib/chaiscript/include
-INCLUDEPATH += $$PWD/lib/burstlinker/src
+
 HEADERS += $$files($$PWD/lib/burstlinker/src/*.h, true)
 SOURCES += $$files($$PWD/lib/burstlinker/src/*.cpp, true)
 

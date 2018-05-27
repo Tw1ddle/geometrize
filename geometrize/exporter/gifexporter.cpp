@@ -11,7 +11,7 @@
 #include <QSet>
 #include <QVector>
 
-#include "BurstLinker.h"
+#include "lib/burstlinker/src/BurstLinker.h"
 
 #include "geometrize/bitmap/bitmap.h"
 #include "geometrize/core.h"
