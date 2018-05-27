@@ -12,7 +12,7 @@ namespace version
 
 QString getApplicationVersionString()
 {
-    return "1.0.0";
+    return "1.0.1";
 }
 
 QString getRuntimeMachineHostName()

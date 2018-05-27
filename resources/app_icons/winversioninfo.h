@@ -3,8 +3,8 @@
 // Windows-specific version defines
 #define VER_FILEVERSION             1,0,0,0
 #define VER_FILEVERSION_STR         "1.0.0.0\0"
-#define VER_PRODUCTVERSION          1,0,0,0
-#define VER_PRODUCTVERSION_STR      "1.0\0"
+#define VER_PRODUCTVERSION          1,0,1,0
+#define VER_PRODUCTVERSION_STR      "1.0\1"
 #define VER_COMPANYNAME_STR         "Sam Twidale"
 #define VER_FILEDESCRIPTION_STR     "Geometrize"
 #define VER_INTERNALNAME_STR        "Geometrize"
