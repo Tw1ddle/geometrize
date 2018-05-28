@@ -19,6 +19,6 @@
 [submodule "translations"]
 	path = translations
 	url = https://github.com/Tw1ddle/geometrize-translations
-[submodule "lib/burstlinker"]
-	path = lib/burstlinker
+[submodule "lib/burstlinker/burstlinker"]
+	path = lib/burstlinker/burstlinker
 	url = https://github.com/Tw1ddle/BurstLinker
