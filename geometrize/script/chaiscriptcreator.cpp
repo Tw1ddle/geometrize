@@ -2,7 +2,7 @@
 
 #include "chaiscript/chaiscript.hpp"
 
-#include "script/bindingscreator.h"
+#include "script/bindings/bindingscreator.h"
 
 namespace
 {
@@ -32,7 +32,7 @@ std::unique_ptr<chaiscript::ChaiScript> createDefaultEngine()
 
     addDefaultTypes(chai);
 
-    chai->add(createDefaultBindings());
+    chai->add(bindings::createDefaultBindings());
 
     addPrintRedirect(chai);
 
@@ -45,8 +45,8 @@ std::unique_ptr<chaiscript::ChaiScript> createLaunchWindowEngine()
 
     addDefaultTypes(chai);
 
-    chai->add(createDefaultBindings());
-    chai->add(createLaunchWindowBindings());
+    chai->add(bindings::createDefaultBindings());
+    chai->add(bindings::createLaunchWindowBindings());
 
     addPrintRedirect(chai);
 
@@ -59,12 +59,12 @@ std::unique_ptr<chaiscript::ChaiScript> createImageTaskEngine()
 
     addDefaultTypes(chai);
 
-    chai->add(createDefaultBindings());
-    chai->add(createGeometrizeLibraryBindings());
+    chai->add(bindings::createDefaultBindings());
+    chai->add(bindings::createGeometrizeLibraryBindings());
 
-    chai->add(createImageBindings());
-    chai->add(createImageTaskBindings());
-    chai->add(createImageExportBindings());
+    chai->add(bindings::createImageBindings());
+    chai->add(bindings::createImageTaskBindings());
+    chai->add(bindings::createImageExportBindings());
 
     addPrintRedirect(chai);
 
@@ -77,9 +77,9 @@ std::unique_ptr<chaiscript::ChaiScript> createShapeMutatorEngine()
 
     addDefaultTypes(chai);
 
-    chai->add(createDefaultBindings());
-    chai->add(createGeometrizeLibraryBindings());
-    chai->add(createMathBindings());
+    chai->add(bindings::createDefaultBindings());
+    chai->add(bindings::createGeometrizeLibraryBindings());
+    chai->add(bindings::createMathBindings());
 
     return chai;
 }

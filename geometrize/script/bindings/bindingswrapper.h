@@ -11,6 +11,9 @@ namespace geometrize
 namespace script
 {
 
+namespace bindings
+{
+
 std::string getApplicationDirectoryPath();
 
 void printToConsole(const std::string& str);
@@ -74,6 +77,8 @@ int clamp(int value, int lower, int upper);
 std::vector<std::string> split(const std::string& s, const char delimiter);
 
 void setTranslatorsForLocale(const std::string& locale);
+
+}
 
 }
 

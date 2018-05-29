@@ -1,4 +1,4 @@
-#include "script/bindingscreator.h"
+#include "script/bindings/bindingscreator.h"
 
 #include <cstdint>
 #include <string>
@@ -36,27 +36,23 @@
 #include "geometrize/shaperesult.h"
 
 #include "dialog/launchwindow.h"
+#include "exporter/gifexporter.h"
 #include "exporter/imageexporter.h"
 #include "image/imageloader.h"
-#include "script/bindingswrapper.h"
-#include "script/chaiscriptmathextras.h"
+#include "script/bindings/bindingshelpers.h"
+#include "script/bindings/bindingswrapper.h"
+#include "script/bindings/chaiscriptmathextras.h"
 #include "script/scriptutil.h"
 #include "task/imagetask.h"
 #include "task/synchronousimagetask.h"
-
-#define ADD_CONST_VAR(Class, Name) try { module->add(chaiscript::const_var(&Class::Name), #Name); } catch(...) { assert(0 && #Name); }
-#define ADD_FREE_FUN(Name) try { module->add(chaiscript::fun(&Name), #Name); } catch(...) { assert(0 && #Name); }
-#define ADD_MEMBER(Class, Name) try { module->add(chaiscript::fun(&Class::Name), #Name); } catch(...) { assert(0 && #Name); }
-#define ADD_CONST_REF_MEMBER(Class, Name) try { module->add(chaiscript::fun([](const Class &r) -> decltype(auto) { return (r.Name); }), #Name); } catch(...) { assert(0 && #Name); }
-#define ADD_TYPE(Class) try { module->add(chaiscript::user_type<Class>(), #Class); } catch(...) { assert(0 && #Class); }
-#define ADD_BASE_CLASS(Base, Derived) try { module->add(chaiscript::base_class<Base, Derived>()); } catch (...) { assert(0 && #Base); }
-#define ADD_CONSTRUCTOR(Class, Signature) try { module->add(chaiscript::constructor<Signature>(), #Class); } catch(...) { assert(0 && #Signature); }
-#define ADD_GLOBAL_CONST(Name, Value) try { module->add_global_const(chaiscript::const_var(Value), Name); } catch (...) { assert(0 && Name); }
 
 namespace geometrize
 {
 
 namespace script
+{
+
+namespace bindings
 {
 
 std::shared_ptr<chaiscript::Module> createDefaultBindings()
@@ -221,6 +217,17 @@ std::shared_ptr<chaiscript::Module> createImageExportBindings()
     return module;
 }
 
+std::shared_ptr<chaiscript::Module> createAnimatedGifExportBindings()
+{
+    using namespace geometrize::exporter;
+
+    auto module{std::make_shared<chaiscript::Module>()};
+
+    ADD_FREE_FUN(exportGIF);
+
+    return module;
+}
+
 std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
 {
     auto module{std::make_shared<chaiscript::Module>()};
@@ -369,6 +376,8 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
 std::shared_ptr<chaiscript::Module> createMathBindings()
 {
     return chaiscript::extras::math::bootstrap();
+}
+
 }
 
 }

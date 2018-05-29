@@ -13,6 +13,9 @@ namespace geometrize
 namespace script
 {
 
+namespace bindings
+{
+
 /**
  * @brief createDefaultBindings Creates the default Chaiscript to C++ bindings.
  * @return A shared pointer to a module encapsulating the bindings.
@@ -44,6 +47,12 @@ std::shared_ptr<chaiscript::Module> createImageTaskBindings();
 std::shared_ptr<chaiscript::Module> createImageExportBindings();
 
 /**
+ * @brief createGifExportBindings Creates the ChaiScript to C++ bindings for saving animated GIFs.
+ * @return A shared pointer to a module encapsulating the bindings.
+ */
+std::shared_ptr<chaiscript::Module> createAnimatedGifExportBindings();
+
+/**
  * @brief createGeometrizeLibraryBindings Creates the Chaiscript to C++ bindings for all of the functionality in the Geometrize library.
  * @return A shared pointer to a module enscapsulating the bindings.
  */
@@ -54,6 +63,8 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings();
  * @return A shared pointer to a module encapsulating the bindings.
  */
 std::shared_ptr<chaiscript::Module> createMathBindings();
+
+}
 
 }
 

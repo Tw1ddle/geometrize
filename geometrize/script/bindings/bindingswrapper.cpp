@@ -16,6 +16,9 @@ namespace geometrize
 namespace script
 {
 
+namespace bindings
+{
+
 std::string getApplicationDirectoryPath()
 {
     return geometrize::searchpaths::getApplicationDirectoryPath();
@@ -189,6 +192,8 @@ std::vector<std::string> split(const std::string& s, const char delimiter)
 void setTranslatorsForLocale(const std::string& locale)
 {
     geometrize::setTranslatorsForLocale(QString::fromStdString(locale));
+}
+
 }
 
 }
