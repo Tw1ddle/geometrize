@@ -65,6 +65,7 @@ std::unique_ptr<chaiscript::ChaiScript> createImageTaskEngine()
     chai->add(bindings::createImageBindings());
     chai->add(bindings::createImageTaskBindings());
     chai->add(bindings::createImageExportBindings());
+    chai->add(bindings::createAnimatedGifExportBindings());
 
     addPrintRedirect(chai);
 

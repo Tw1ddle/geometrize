@@ -5,6 +5,8 @@
 
 #include <QImage>
 
+#include "geometrize/shaperesult.h"
+
 namespace geometrize
 {
 
@@ -77,6 +79,14 @@ int clamp(int value, int lower, int upper);
 std::vector<std::string> split(const std::string& s, const char delimiter);
 
 void setTranslatorsForLocale(const std::string& locale);
+
+bool exportGIF(const std::vector<geometrize::ShapeResult>& data,
+        std::uint32_t inputWidth,
+        std::uint32_t inputHeight,
+        std::uint32_t outputWidth,
+        std::uint32_t outputHeight,
+        std::size_t frameSkip,
+        const std::string& filePath);
 
 }
 

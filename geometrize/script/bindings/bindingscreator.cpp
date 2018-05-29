@@ -36,7 +36,6 @@
 #include "geometrize/shaperesult.h"
 
 #include "dialog/launchwindow.h"
-#include "exporter/gifexporter.h"
 #include "exporter/imageexporter.h"
 #include "image/imageloader.h"
 #include "script/bindings/bindingshelpers.h"
@@ -219,7 +218,7 @@ std::shared_ptr<chaiscript::Module> createImageExportBindings()
 
 std::shared_ptr<chaiscript::Module> createAnimatedGifExportBindings()
 {
-    using namespace geometrize::exporter;
+    using namespace geometrize::script::bindings;
 
     auto module{std::make_shared<chaiscript::Module>()};
 

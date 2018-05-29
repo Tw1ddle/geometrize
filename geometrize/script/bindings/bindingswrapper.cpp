@@ -7,6 +7,7 @@
 #include "common/formatsupport.h"
 #include "common/searchpaths.h"
 #include "common/util.h"
+#include "exporter/gifexporter.h"
 #include "localization/localization.h"
 #include "task/taskutil.h"
 
@@ -192,6 +193,19 @@ std::vector<std::string> split(const std::string& s, const char delimiter)
 void setTranslatorsForLocale(const std::string& locale)
 {
     geometrize::setTranslatorsForLocale(QString::fromStdString(locale));
+}
+
+bool exportGIF(const std::vector<geometrize::ShapeResult>& data,
+        const std::uint32_t inputWidth,
+        const std::uint32_t inputHeight,
+        const std::uint32_t outputWidth,
+        const std::uint32_t outputHeight,
+        const std::size_t frameSkip,
+        const std::string& filePath)
+{
+    return geometrize::exporter::exportGIF(data, inputWidth, inputHeight, outputWidth, outputHeight, [frameSkip](std::size_t frameIndex) {
+        return frameSkip == 0U ? false : (frameIndex % frameSkip == 0);
+    }, filePath);
 }
 
 }
