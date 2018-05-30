@@ -13,12 +13,14 @@
 #include "script/chaiscriptcreator.h"
 #include "script/scriptrunner.h"
 #include "task/taskutil.h"
+#include "test/functionaltestrunner.h"
 
 namespace
 {
     const QString scriptFileFlag{"script_file"};
     const QString scriptSourceFlag{"script_inline"};
     const QString localeOverrideFlag{"locale_override"};
+    const QString selfTestsFlag{"functional_tests"};
 
     /**
      * @brief setupCommandLineParser Sets up a command line parser to handle application arguments.
@@ -35,6 +37,7 @@ namespace
         parser.addOption(QCommandLineOption(scriptFileFlag, "Executes the ChaiScript script file at the given file path", "File path to ChaiScript script file"));
         parser.addOption(QCommandLineOption(scriptSourceFlag, "Executes the inline ChaiScript source code unmodified", "Inline ChaiScript source code"));
         parser.addOption(QCommandLineOption(localeOverrideFlag, "Overrides the locale and translation that the application launches with", "Locale code"));
+        parser.addOption(QCommandLineOption(selfTestsFlag, "Executes the Geometrize functional tests suite", "Flag to additional test scripts folder"));
 
         if(!parser.parse(arguments)) {
             assert(0 && "Failed to parse command line arguments");
@@ -60,6 +63,9 @@ namespace
 
             std::unique_ptr<chaiscript::ChaiScript> engine{geometrize::script::createImageTaskEngine()};
             geometrize::script::runScript(code, *engine);
+        } else if(parser.isSet(selfTestsFlag)) {
+            const std::string testScriptsDirectory{parser.value(selfTestsFlag).toStdString()};
+            geometrize::test::runSelfTests(testScriptsDirectory);
         }
     }
 }
