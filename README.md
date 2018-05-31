@@ -14,7 +14,7 @@ Download Geometrize [here](http://www.geometrize.co.uk/), or run the [web demo](
 
  * Recreate images as geometric primitives.
  * Start with hundreds of images with preset settings.
- * Export geometrized images to SVG, PNG, JPG and more.
+ * Export geometrized images to SVG, PNG, JPG, GIF and more.
  * Export geometrized images as HTML5 canvas or WebGL webpages.
  * Export shape data as JSON for use in custom projects and creations.
  * Control the algorithm at the core of Geometrize with ChaiScript scripts.
