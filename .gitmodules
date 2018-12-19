@@ -22,3 +22,6 @@
 [submodule "lib/burstlinker/burstlinker"]
 	path = lib/burstlinker/burstlinker
 	url = https://github.com/Tw1ddle/BurstLinker
+[submodule "lib/dataslinger"]
+	path = lib/dataslinger
+	url = https://github.com/Tw1ddle/dataslinger-lib
