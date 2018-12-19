@@ -20,6 +20,10 @@
 #include "preferences/globalpreferences.h"
 #include "version/versioninfo.h"
 
+#if defined DATASLINGER_INCLUDED
+#include "dataslinger/imageslinger.h"
+#endif
+
 namespace {
 
 void setApplicationSettingsFields()
@@ -133,6 +137,10 @@ int main(int argc, char* argv[])
 
     const QStringList arguments{app.arguments()};
     setLocale(arguments);
+
+#if defined DATASLINGER_INCLUDED
+    geometrize::setupImageSlinger();
+#endif
 
     const auto run = resolveLaunchFunction(arguments);
     return run(app);
