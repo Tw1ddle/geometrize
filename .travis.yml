@@ -46,24 +46,6 @@ matrix:
     - MATRIX_EVAL="CC=gcc-8 && CXX=g++-8"
 
   - os: osx
-    osx_image: xcode8
-    env:
-    - MATRIX_EVAL="CC=clang && CXX=clang++"
-    - OSX_IMAGE_NAME="xcode_8_0"
-
-  - os: osx
-    osx_image: xcode8.1
-    env:
-    - MATRIX_EVAL="CC=clang && CXX=clang++"
-    - OSX_IMAGE_NAME="xcode_8_1"
-
-  - os: osx
-    osx_image: xcode8.2
-    env:
-    - MATRIX_EVAL="CC=clang && CXX=clang++"
-    - OSX_IMAGE_NAME="xcode_8_2"
-
-  - os: osx
     osx_image: xcode8.3
     env:
     - MATRIX_EVAL="CC=clang && CXX=clang++"
