@@ -31,7 +31,7 @@ class RecentItemWidget : public QWidget
 
 public:
     explicit RecentItemWidget(const RecentItem& item);
-    ~RecentItemWidget();
+    virtual ~RecentItemWidget();
 
 protected:
     void changeEvent(QEvent*) override;

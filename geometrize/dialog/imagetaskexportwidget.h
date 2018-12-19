@@ -37,7 +37,7 @@ class ImageTaskExportWidget : public QWidget
 
 public:
     ImageTaskExportWidget(QWidget* parent = nullptr);
-    ~ImageTaskExportWidget();
+    virtual ~ImageTaskExportWidget();
 
     /**
      * @brief setImageTask Sets the current image task used by the export functions.

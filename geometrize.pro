@@ -38,6 +38,23 @@ INCLUDEPATH += $$PWD/lib/cereal/include \
 include($$PWD/lib/geometrize/geometrize/geometrize.pri)
 include($$PWD/lib/burstlinker/burstlinker.pri)
 
+# Optional support for WebSocket connections for sending and receiving
+# images/data. Uses Boost, see https://github.com/Tw1ddle/dataslinger-lib
+
+#CONFIG += DATASLINGER_INCLUDED
+#DEFINES += DATASLINGER_INCLUDED
+
+DATASLINGER_INCLUDED {
+    # Include Boost - you will need to set your own path
+    INCLUDEPATH += C:/Development/boost_1_68_0/
+    DEPENDPATH += C:/Development/boost_1_68_0/
+
+    # Include Boost libs
+    LIBS += "-LC:/Development/boost_1_68_0/stage/x64/lib/"
+
+    include($$PWD/lib/dataslinger/dataslinger.pri)
+}
+
 # Include the Geometrize headers, sources, UI forms
 include($$PWD/geometrize/sources.pri)
 

@@ -32,7 +32,7 @@ class ImageTaskRunnerWidget : public QWidget
 
 public:
     ImageTaskRunnerWidget(QWidget* parent = nullptr);
-    ~ImageTaskRunnerWidget();
+    virtual ~ImageTaskRunnerWidget();
 
     /**
      * @brief setImageTask Sets the current image task used by the runner.

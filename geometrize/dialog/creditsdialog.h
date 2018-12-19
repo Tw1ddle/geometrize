@@ -24,7 +24,7 @@ class CreditsDialog : public QDialog
 
 public:
     explicit CreditsDialog(QWidget* parent = nullptr);
-    ~CreditsDialog();
+    virtual ~CreditsDialog();
 
 protected:
     void changeEvent(QEvent*) override;

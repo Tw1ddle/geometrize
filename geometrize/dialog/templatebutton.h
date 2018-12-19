@@ -29,7 +29,7 @@ class TemplateButton : public QPushButton
 
 public:
     explicit TemplateButton(chaiscript::ChaiScript* const templateLoader, const QString& templateFolder);
-    ~TemplateButton();
+    virtual ~TemplateButton();
 
     /**
      * @brief getTemplateManifest Get the manifest data of the template this item corresponds to.

@@ -22,7 +22,7 @@ class ImageTaskImageWidget : public QWidget
 
 public:
     ImageTaskImageWidget(QWidget* parent = nullptr);
-    ~ImageTaskImageWidget();
+    virtual ~ImageTaskImageWidget();
 
     /**
      * @brief setTargetImageOpacity Sets the opacity of the target image.

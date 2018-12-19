@@ -23,7 +23,7 @@ public:
     ImageTaskPreferences(const std::string& filePath);
     ImageTaskPreferences& operator=(const ImageTaskPreferences& other);
     ImageTaskPreferences(const ImageTaskPreferences& other);
-    ~ImageTaskPreferences();
+    virtual ~ImageTaskPreferences();
 
     /**
      * @brief load Loads the image task preferences from a file.

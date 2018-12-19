@@ -21,7 +21,7 @@ class LanguageSelectList : public QListWidget
 
 public:
     LanguageSelectList(QWidget* parent);
-    ~LanguageSelectList();
+    virtual ~LanguageSelectList();
 
 protected:
     void changeEvent(QEvent*) override;

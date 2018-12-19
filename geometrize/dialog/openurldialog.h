@@ -24,7 +24,7 @@ class OpenUrlDialog : public QDialog
 
 public:
     explicit OpenUrlDialog(QWidget* parent = nullptr);
-    ~OpenUrlDialog();
+    virtual ~OpenUrlDialog();
 
     /**
      * @brief getUrl Gets the URL the user entered into the dialog.

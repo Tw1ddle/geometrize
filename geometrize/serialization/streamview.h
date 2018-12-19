@@ -20,6 +20,7 @@ class StreamView : public std::streambuf
 {
 public:
     StreamView(const std::string& filePath);
+    virtual ~StreamView() = default;
 
 private:
     QByteArray m_byteArray;

@@ -22,7 +22,7 @@ class LaunchWindow : public QMainWindow
 
 public:
     explicit LaunchWindow();
-    ~LaunchWindow();
+    virtual ~LaunchWindow();
 
     /**
      * @brief getTopLevelLaunchWindows Gets all of the existing top level launch windows.

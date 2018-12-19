@@ -19,7 +19,7 @@ class ImageTaskPixmapGraphicsItem : public QGraphicsPixmapItem
 public:
     explicit ImageTaskPixmapGraphicsItem();
     explicit ImageTaskPixmapGraphicsItem(const QPixmap& pixmap);
-    ~ImageTaskPixmapGraphicsItem();
+    virtual ~ImageTaskPixmapGraphicsItem();
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event);

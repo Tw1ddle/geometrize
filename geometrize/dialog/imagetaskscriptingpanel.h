@@ -38,7 +38,7 @@ class ImageTaskScriptingPanel : public QWidget
 
 public:
     explicit ImageTaskScriptingPanel(QWidget* parent = nullptr);
-    ~ImageTaskScriptingPanel();
+    virtual ~ImageTaskScriptingPanel();
 
     /**
      * @brief setImageTask Sets the current image task manipulated by the scripting panel.

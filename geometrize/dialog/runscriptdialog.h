@@ -24,7 +24,7 @@ class RunScriptDialog : public QDialog
 
 public:
     explicit RunScriptDialog(QWidget* parent = nullptr);
-    ~RunScriptDialog();
+    virtual ~RunScriptDialog();
 
     QString getScriptFilepath();
 

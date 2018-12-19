@@ -53,7 +53,7 @@ class FlowLayout : public QLayout
 {
 public:
     explicit FlowLayout(const int margin = -1, const int hSpacing = -1, const int vSpacing = -1);
-    ~FlowLayout();
+    virtual ~FlowLayout();
 
     int horizontalSpacing() const;
     int verticalSpacing() const;

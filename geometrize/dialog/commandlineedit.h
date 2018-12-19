@@ -27,7 +27,7 @@ class CommandLineEdit : public QWidget
 
 public:
     explicit CommandLineEdit(QWidget* parent = nullptr);
-    ~CommandLineEdit();
+    virtual ~CommandLineEdit();
 
     /**
      * @brief clearHistory Wipe the history of commands entered this session.

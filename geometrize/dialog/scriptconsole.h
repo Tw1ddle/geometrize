@@ -28,7 +28,7 @@ class ScriptConsole : public QWidget
 
 public:
     explicit ScriptConsole(QWidget* parent = nullptr);
-    ~ScriptConsole();
+    virtual ~ScriptConsole();
 
     static const std::string launchConsoleHistoryFilename; ///< The name of the console history settings file used by the console embedded in the launch window.
 

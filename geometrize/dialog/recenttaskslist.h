@@ -26,7 +26,7 @@ class RecentTasksList : public QListWidget
 
 public:
     explicit RecentTasksList(QWidget* parent = nullptr);
-    ~RecentTasksList();
+    virtual ~RecentTasksList();
 
     /**
      * @brief setRecentItems Sets the items that the list will keep track of.

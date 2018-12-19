@@ -31,7 +31,7 @@ class ImageTaskWindow : public QMainWindow
 
 public:
     explicit ImageTaskWindow();
-    ~ImageTaskWindow();
+    virtual ~ImageTaskWindow();
 
     /**
      * @brief setImageTask Sets the current image task shown by the window.

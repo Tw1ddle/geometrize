@@ -24,7 +24,7 @@ class WelcomeWindow : public QMainWindow
 
 public:
     explicit WelcomeWindow();
-    ~WelcomeWindow();
+    virtual ~WelcomeWindow();
 
 protected:
     virtual void closeEvent (QCloseEvent* event) override;

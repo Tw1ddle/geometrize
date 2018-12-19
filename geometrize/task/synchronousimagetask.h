@@ -29,7 +29,7 @@ class SynchronousImageTask : public QObject
     Q_OBJECT
 public:
     SynchronousImageTask(Bitmap& target);
-    ~SynchronousImageTask();
+    virtual ~SynchronousImageTask();
     SynchronousImageTask& operator=(const SynchronousImageTask&) = delete;
     SynchronousImageTask(const SynchronousImageTask&) = delete;
 

@@ -23,7 +23,7 @@ class GlobalPreferencesDialog : public QDialog
 
 public:
     explicit GlobalPreferencesDialog(QWidget* parent = nullptr);
-    ~GlobalPreferencesDialog();
+    virtual ~GlobalPreferencesDialog();
 
 protected:
     void changeEvent(QEvent*) override;

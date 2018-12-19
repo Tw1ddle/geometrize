@@ -33,7 +33,7 @@ public:
     GeometrizerEngine();
     GeometrizerEngine& operator=(const GeometrizerEngine&) = delete;
     GeometrizerEngine(const GeometrizerEngine&) = delete;
-    ~GeometrizerEngine();
+    virtual ~GeometrizerEngine();
 
     /**
      * @brief getEngine Gets a pointer to the script engine used by the shape mutation engine.

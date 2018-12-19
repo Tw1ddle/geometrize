@@ -21,7 +21,7 @@ class ImageTaskPixmapScene : public QGraphicsScene
 
 public:
     explicit ImageTaskPixmapScene(QObject* parent = nullptr);
-    ~ImageTaskPixmapScene();
+    virtual ~ImageTaskPixmapScene();
 
     /**
      * @brief setTargetPixmapOpacity Sets the opacity of the target pixmap.

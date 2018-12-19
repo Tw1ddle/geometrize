@@ -54,7 +54,7 @@ public:
 
     ImageTask& operator=(const ImageTask&) = delete;
     ImageTask(const ImageTask&) = delete;
-    ~ImageTask();
+    virtual ~ImageTask();
 
     /**
      * @brief getGeometrizer Gets a reference to the script-based engine used to turn images into shapes.

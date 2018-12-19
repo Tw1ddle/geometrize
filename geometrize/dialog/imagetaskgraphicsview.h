@@ -21,6 +21,7 @@ class ImageTaskGraphicsView : public QGraphicsView
 
 public:
     explicit ImageTaskGraphicsView(QWidget* parent = nullptr);
+    virtual ~ImageTaskGraphicsView() = default;
 
 protected:
     void changeEvent(QEvent*) override;

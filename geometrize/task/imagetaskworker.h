@@ -27,7 +27,7 @@ public:
     ImageTaskWorker(Bitmap& bitmap, const Bitmap& initial);
     ImageTaskWorker& operator=(const ImageTaskWorker&) = delete;
     ImageTaskWorker(const ImageTaskWorker&) = delete;
-    ~ImageTaskWorker();
+    virtual ~ImageTaskWorker();
 
     /**
      * @brief step Steps the image task worker. Emits the willStep signal when called, and didStep signal on completion.

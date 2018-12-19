@@ -25,7 +25,7 @@ class ImageTaskSvgScene : public QGraphicsScene
 
 public:
     explicit ImageTaskSvgScene();
-    ~ImageTaskSvgScene();
+    virtual ~ImageTaskSvgScene();
 
     /**
      * @brief setTargetPixmap Sets the pixmap that provides the target/goal image visualization.

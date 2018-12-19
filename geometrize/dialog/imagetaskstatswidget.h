@@ -26,7 +26,7 @@ public:
     };
 
     ImageTaskStatsWidget(QWidget* parent = nullptr);
-    ~ImageTaskStatsWidget();
+    virtual ~ImageTaskStatsWidget();
 
     void setTaskId(std::size_t id);
     void setTimeRunning(int seconds);

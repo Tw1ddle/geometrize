@@ -27,7 +27,7 @@ public:
     RecentItems& operator=(RecentItems&);
     RecentItems(RecentItems&);
     RecentItems(RecentItems&&);
-    ~RecentItems();
+    virtual ~RecentItems();
 
     /**
      * @brief getItems Gets the recent items.

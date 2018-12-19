@@ -23,7 +23,7 @@ class FolderSelectionWidget : public QWidget
     Q_OBJECT
 public:
     explicit FolderSelectionWidget(QWidget* parent = nullptr);
-    ~FolderSelectionWidget();
+    virtual ~FolderSelectionWidget();
 
 signals:
 

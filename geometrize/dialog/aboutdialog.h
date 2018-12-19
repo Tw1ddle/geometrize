@@ -24,7 +24,7 @@ class AboutDialog : public QDialog
 
 public:
     explicit AboutDialog(QWidget* parent = nullptr);
-    ~AboutDialog();
+    virtual ~AboutDialog();
 
 public slots:
     void on_closeButton_released();
