@@ -31,6 +31,10 @@
 #include "task/imagetask.h"
 #include "version/versioninfo.h"
 
+#if DATASLINGER_INCLUDED
+#include "dataslinger/imageslinger.h"
+#endif
+
 namespace
 {
 
@@ -170,6 +174,11 @@ public:
             ui->imageTaskImageWidget->setTargetImage(image::createImage(currentTask->getTarget()));
 
             m_timeRunning = 0.0f;
+
+            #if DATASLINGER_INCLUDED
+            // Bind keyboard shortcuts for sending images out over the network etc
+            geometrize::installImageSlingerKeyboardShortcuts(q, m_task);
+            #endif
         });
 
         // Handle requested target image overlay opacity changes
