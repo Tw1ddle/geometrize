@@ -7,13 +7,13 @@
 
 #include <QApplication>
 #include <QClipboard>
-#include <QDebug>
 #include <QDesktopServices>
 #include <QDir>
 #include <QDirIterator>
 #include <QFileInfo>
 #include <QMessageBox>
 #include <QStandardPaths>
+#include <QTextStream>
 #include <QUrl>
 
 #include "geometrize/commonutil.h"
@@ -42,7 +42,7 @@ void debugBreak()
 
 void printToConsole(const std::string& str)
 {
-    qDebug() << QString::fromStdString(str);
+    QTextStream(stdout) << QString::fromStdString(str);
 }
 
 void messageBox(const std::string& str)
