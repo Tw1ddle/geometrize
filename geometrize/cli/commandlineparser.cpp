@@ -76,6 +76,13 @@ namespace geometrize
 namespace cli
 {
 
+bool shouldRunInSelfTestMode(const QStringList& arguments)
+{
+    QCommandLineParser parser;
+    setupCommandLineParser(parser, arguments);
+    return parser.isSet(selfTestsFlag) || parser.isSet(selfTestsFlag);
+}
+
 bool shouldRunInConsoleMode(const QStringList& arguments)
 {
     QCommandLineParser parser;

@@ -18,6 +18,7 @@
 #include "localization/localization.h"
 #include "logger/logmessagehandlers.h"
 #include "preferences/globalpreferences.h"
+#include "test/functionaltestrunner.h"
 #include "version/versioninfo.h"
 
 #if defined DATASLINGER_INCLUDED
@@ -79,6 +80,11 @@ void setLocale(const QStringList& arguments)
     geometrize::setTranslatorsForLocale(locale.bcp47Name().replace("-", "_"));
 }
 
+int runAppSelfTestMode(QApplication& app)
+{
+    return geometrize::test::runApp(app);
+}
+
 int runAppConsoleMode(QApplication& app)
 {
     return geometrize::cli::runApp(app);
@@ -108,6 +114,10 @@ int runAppGuiModeDesktop(QApplication& app)
 
 std::function<int(QApplication&)> resolveLaunchFunction(const QStringList& arguments)
 {
+    if(geometrize::cli::shouldRunInSelfTestMode(arguments)) {
+        return ::runAppSelfTestMode;
+    }
+
     if(geometrize::cli::shouldRunInConsoleMode(arguments)) {
         return ::runAppConsoleMode;
     }

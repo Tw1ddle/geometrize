@@ -13,6 +13,13 @@ namespace cli
 {
 
 /**
+ * @brief shouldRunInSelfTestMode Checks whether the application should run in automated self-test/functional testing mode.
+ * @param arguments The console arguments.
+ * @return True if the application should run in self-test mode, else false.
+ */
+bool shouldRunInSelfTestMode(const QStringList& arguments);
+
+/**
  * @brief shouldRunInConsoleMode Checks whether the application should run in console mode for the given arguments.
  * @param arguments The console arguments.
  * @return True if the application should run in console mode, else false.

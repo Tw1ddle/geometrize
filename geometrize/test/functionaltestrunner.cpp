@@ -4,6 +4,10 @@
 #include <string>
 #include <vector>
 
+#include <QApplication>
+#include <QCommandLineParser>
+
+#include "cli/commandlineparser.h"
 #include "common/util.h"
 #include "script/scriptrunner.h"
 
@@ -12,6 +16,11 @@ namespace geometrize
 
 namespace test
 {
+
+int runApp(QApplication& app)
+{
+    return geometrize::cli::runApp(app);
+}
 
 void runSelfTests(const std::string& testScriptsDirectory)
 {

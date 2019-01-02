@@ -162,6 +162,7 @@ std::vector<std::string> getScriptsForPath(const std::string& dirPath)
 {
     std::vector<std::string> scripts;
     if(!util::directoryExists(dirPath)) {
+        assert(0 && "Script directory does not exist");
         return scripts;
     }
 
