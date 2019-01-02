@@ -272,6 +272,11 @@ std::vector<std::string> split(const std::string& s, const char delimiter)
     return elements;
 }
 
+std::string getOperatingSystemProductType()
+{
+    return QSysInfo::productType().toStdString();
+}
+
 }
 
 }

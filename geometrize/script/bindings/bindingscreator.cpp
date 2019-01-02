@@ -106,6 +106,8 @@ std::shared_ptr<chaiscript::Module> createDefaultBindings()
 
     ADD_FREE_FUN(split);
 
+    ADD_FREE_FUN(getOperatingSystemProductType);
+
     ADD_FREE_FUN(setTranslatorsForLocale);
 
     return module;

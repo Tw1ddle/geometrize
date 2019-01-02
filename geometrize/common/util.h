@@ -211,6 +211,12 @@ void split(const std::string& s, const char delimiter, T result)
  */
 std::vector<std::string> split(const std::string& s, char delimiter);
 
+/**
+ * @brief getOperatingSystemProductTypeReturns the product name of the operating system this application is running in.
+ * @return The name of the operating system: "windows", "osx", "linux", "android", "ios", "tvos" etc
+ */
+std::string getOperatingSystemProductType();
+
 }
 
 }

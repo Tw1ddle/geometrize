@@ -78,6 +78,8 @@ int clamp(int value, int lower, int upper);
 
 std::vector<std::string> split(const std::string& s, const char delimiter);
 
+std::string getOperatingSystemProductType();
+
 void setTranslatorsForLocale(const std::string& locale);
 
 bool exportGIF(const std::vector<geometrize::ShapeResult>& data,

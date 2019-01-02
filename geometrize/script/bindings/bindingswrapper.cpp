@@ -190,6 +190,11 @@ std::vector<std::string> split(const std::string& s, const char delimiter)
     return geometrize::util::split(s, delimiter);
 }
 
+std::string getOperatingSystemProductType()
+{
+    return geometrize::util::getOperatingSystemProductType();
+}
+
 void setTranslatorsForLocale(const std::string& locale)
 {
     geometrize::setTranslatorsForLocale(QString::fromStdString(locale));
