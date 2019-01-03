@@ -24,6 +24,8 @@ void messageBox(const std::string& str);
 
 void debugBreak();
 
+void processApplicationEvents();
+
 bool fileExists(const std::string& filePath);
 
 bool directoryExists(const std::string& dirPath);

@@ -85,6 +85,20 @@ std::unique_ptr<chaiscript::ChaiScript> createShapeMutatorEngine()
     return chai;
 }
 
+std::unique_ptr<chaiscript::ChaiScript> createFunctionalTestRunnerEngine()
+{
+    std::unique_ptr<chaiscript::ChaiScript> chai = std::make_unique<chaiscript::ChaiScript>();
+
+    addDefaultTypes(chai);
+
+    chai->add(bindings::createDefaultBindings());
+    chai->add(bindings::createLaunchWindowBindings());
+    chai->add(bindings::createImageTaskBindings());
+    chai->add(bindings::createUserInterfacePuppeteerBindings());
+
+    return chai;
+}
+
 }
 
 }

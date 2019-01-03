@@ -7,8 +7,11 @@
 #include <QApplication>
 #include <QCommandLineParser>
 
+#include "chaiscript/chaiscript.hpp"
+
 #include "cli/commandlineparser.h"
 #include "common/util.h"
+#include "script/chaiscriptcreator.h"
 #include "script/scriptrunner.h"
 
 namespace geometrize
@@ -41,7 +44,9 @@ void runSelfTests(const std::string& testScriptsDirectory)
         if(scriptCode.empty()) {
             assert(0 && "Failed to read script file or it was empty");
         }
-        geometrize::script::runScript(scriptCode);
+
+        const auto engine = geometrize::script::createFunctionalTestRunnerEngine();
+        geometrize::script::runScript(scriptCode, *engine.get());
     }
 }
 

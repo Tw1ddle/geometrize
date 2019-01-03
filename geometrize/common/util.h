@@ -28,6 +28,11 @@ void messageBox(const std::string& str);
 void debugBreak();
 
 /**
+ * @brief processApplicationEvents Processes all pending application events for the calling thread.
+ */
+void processApplicationEvents();
+
+/**
  * @brief fileExists Checks if a file exists, returns true if it does.
  * @param filePath The file path.
  * @return True if the file exists, false if it does not.

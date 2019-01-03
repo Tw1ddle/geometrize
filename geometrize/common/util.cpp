@@ -7,6 +7,7 @@
 
 #include <QApplication>
 #include <QClipboard>
+#include <QCoreApplication>
 #include <QCursor>
 #include <QDesktopServices>
 #include <QDir>
@@ -52,6 +53,16 @@ void messageBox(const std::string& str)
     QMessageBox msgBox;
     msgBox.setText(QString::fromStdString(str));
     msgBox.exec();
+}
+
+void processApplicationEvents()
+{
+    QCoreApplication* app = QCoreApplication::instance();
+    if(app == nullptr) {
+        assert(0 && "Application instance pointer is null");
+        return;
+    }
+    app->processEvents();
 }
 
 bool fileExists(const std::string& filePath)

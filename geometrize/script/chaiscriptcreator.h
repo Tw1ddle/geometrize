@@ -37,6 +37,12 @@ std::unique_ptr<chaiscript::ChaiScript> createImageTaskEngine();
  */
 std::unique_ptr<chaiscript::ChaiScript> createShapeMutatorEngine();
 
+/**
+ * @brief createFunctionalTestRunnerEngine Creates a Chaiscript engine object for running functional tests.
+ * @return The Chaiscript engine object.
+ */
+std::unique_ptr<chaiscript::ChaiScript> createFunctionalTestRunnerEngine();
+
 }
 
 }

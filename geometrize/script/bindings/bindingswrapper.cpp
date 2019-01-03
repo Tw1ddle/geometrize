@@ -40,6 +40,11 @@ void debugBreak()
     geometrize::util::debugBreak();
 }
 
+void processApplicationEvents()
+{
+    geometrize::util::processApplicationEvents();
+}
+
 bool fileExists(const std::string& filePath)
 {
     return geometrize::util::fileExists(filePath);
