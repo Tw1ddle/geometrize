@@ -212,6 +212,25 @@ void split(const std::string& s, const char delimiter, T result)
 std::vector<std::string> split(const std::string& s, char delimiter);
 
 /**
+ * @brief getCursorX Gets the x-coordinate of the cursor in global screen coordinates.
+ * @return The x-coordinate of the cursor.
+ */
+int getCursorX();
+
+/**
+ * @brief getCursorY Gets the y-coordinate of the cursor in global screen coordinates.
+ * @return The y-coordinate of the cursor.
+ */
+int getCursorY();
+
+/**
+ * @brief setCursorPos Sets the cursor position in global screen coordinates.
+ * @param x The x-coordinate of the cursor.
+ * @param y The y-coordinate of the cursor.
+ */
+void setCursorPos(int x, int y);
+
+/**
  * @brief getOperatingSystemProductTypeReturns the product name of the operating system this application is running in.
  * @return The name of the operating system: "windows", "osx", "linux", "android", "ios", "tvos" etc
  */

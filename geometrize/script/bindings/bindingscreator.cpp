@@ -379,6 +379,17 @@ std::shared_ptr<chaiscript::Module> createMathBindings()
     return chaiscript::extras::math::bootstrap();
 }
 
+std::shared_ptr<chaiscript::Module> createUserInterfacePuppeteerBindings()
+{
+    auto module{std::make_shared<chaiscript::Module>()};
+
+    ADD_FREE_FUN(getCursorX);
+    ADD_FREE_FUN(getCursorY);
+    ADD_FREE_FUN(setCursorPos);
+
+    return module;
+}
+
 }
 
 }

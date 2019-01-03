@@ -7,11 +7,13 @@
 
 #include <QApplication>
 #include <QClipboard>
+#include <QCursor>
 #include <QDesktopServices>
 #include <QDir>
 #include <QDirIterator>
 #include <QFileInfo>
 #include <QMessageBox>
+#include <QPoint>
 #include <QStandardPaths>
 #include <QTextStream>
 #include <QUrl>
@@ -270,6 +272,21 @@ std::vector<std::string> split(const std::string& s, const char delimiter)
     std::vector<std::string> elements;
     split(s, delimiter, std::back_inserter(elements));
     return elements;
+}
+
+int getCursorX()
+{
+    return QCursor::pos().x();
+}
+
+int getCursorY()
+{
+    return QCursor::pos().y();
+}
+
+void setCursorPos(const int x, const int y)
+{
+    QCursor::setPos(x, y);
 }
 
 std::string getOperatingSystemProductType()

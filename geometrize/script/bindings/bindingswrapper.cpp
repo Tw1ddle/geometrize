@@ -195,6 +195,21 @@ std::string getOperatingSystemProductType()
     return geometrize::util::getOperatingSystemProductType();
 }
 
+int getCursorX()
+{
+    return geometrize::util::getCursorX();
+}
+
+int getCursorY()
+{
+    return geometrize::util::getCursorY();
+}
+
+void setCursorPos(const int x, const int y)
+{
+    geometrize::util::setCursorPos(x, y);
+}
+
 void setTranslatorsForLocale(const std::string& locale)
 {
     geometrize::setTranslatorsForLocale(QString::fromStdString(locale));
