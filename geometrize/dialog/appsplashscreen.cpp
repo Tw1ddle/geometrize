@@ -1,5 +1,6 @@
 #include "appsplashscreen.h"
 
+#include <cassert>
 #include <memory>
 
 #include <QColor>
