@@ -105,7 +105,7 @@
      <x>0</x>
      <y>0</y>
      <width>1280</width>
-     <height>17</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="autoFillBackground">
@@ -210,8 +210,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>288</width>
-          <height>676</height>
+          <width>282</width>
+          <height>656</height>
          </rect>
         </property>
        </widget>
@@ -275,8 +275,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>338</width>
-          <height>362</height>
+          <width>332</width>
+          <height>263</height>
          </rect>
         </property>
        </widget>
@@ -340,8 +340,67 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>338</width>
-          <height>362</height>
+          <width>332</width>
+          <height>263</height>
+         </rect>
+        </property>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="stopConditionsDock">
+   <property name="minimumSize">
+    <size>
+     <width>350</width>
+     <height>300</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>800</width>
+     <height>1350</height>
+    </size>
+   </property>
+   <property name="contextMenuPolicy">
+    <enum>Qt::PreventContextMenu</enum>
+   </property>
+   <property name="features">
+    <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+   </property>
+   <property name="windowTitle">
+    <string>Stop Conditions</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="stopConditionsDockContents">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QScrollArea" name="stopConditionsDockScrollArea">
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Plain</enum>
+       </property>
+       <property name="horizontalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
+       </property>
+       <property name="widgetResizable">
+        <bool>true</bool>
+       </property>
+       <widget class="geometrize::dialog::ImageTaskStopConditionsWidget" name="stopConditionsWidget">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>332</width>
+          <height>263</height>
          </rect>
         </property>
        </widget>
@@ -436,6 +495,12 @@
    <class>geometrize::dialog::ImageTaskRunnerWidget</class>
    <extends>QWidget</extends>
    <header>dialog/imagetaskrunnerwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>geometrize::dialog::ImageTaskStopConditionsWidget</class>
+   <extends>QWidget</extends>
+   <header>dialog/imagetaskstopconditionswidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

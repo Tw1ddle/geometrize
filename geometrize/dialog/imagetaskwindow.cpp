@@ -29,6 +29,7 @@
 #include "preferences/globalpreferences.h"
 #include "script/geometrizerengine.h"
 #include "task/imagetask.h"
+#include "task/shapecollection.h"
 #include "version/versioninfo.h"
 
 #if DATASLINGER_INCLUDED
@@ -82,7 +83,9 @@ public:
         setupScriptingPanel();
 
         // Set up the dock widgets
+        q->tabifyDockWidget(ui->runnerSettingsDock, ui->stopConditionsDock);
         q->tabifyDockWidget(ui->runnerSettingsDock, ui->exporterDock);
+
         ui->runnerSettingsDock->raise(); // Make sure runner settings dock is selected
 
         ui->consoleWidget->setVisible(false); // Make sure console widget is hidden by default
@@ -127,7 +130,7 @@ public:
             m_shapes.clear();
         });
         connect(q, &ImageTaskWindow::didSwitchImageTask, [this](task::ImageTask*, task::ImageTask* currentTask) {
-            ui->imageTaskExportWidget->setImageTask(currentTask, &m_shapes);
+            ui->imageTaskExportWidget->setImageTask(currentTask, &m_shapes.getShapeVector());
             ui->imageTaskRunnerWidget->setImageTask(currentTask);
 
             if(dialog::ImageTaskScriptingPanel* scriptingPanel = getScriptingPanel()) {
@@ -147,10 +150,10 @@ public:
 
                 updateCurrentGraphics(shapes);
                 // If the first shape added background rectangle then fit the scenes to it
-                if(m_shapes.size() == 0) {
+                if(m_shapes.empty()) {
                     fitScenesInViews();
                 }
-                std::copy(shapes.begin(), shapes.end(), std::back_inserter(m_shapes));
+                m_shapes.appendShapes(shapes);
 
                 updateStats();
 
@@ -259,6 +262,16 @@ public:
             }
         });
 
+        connect(&m_shapes, &geometrize::task::ShapeCollection::signal_sizeChanged, [this](const std::size_t size) {
+            if(!ui->stopConditionsWidget->stopConditionsMet(size)) {
+                return;
+            }
+
+            setRunning(false);
+            updateStartStopButtonText();
+            geometrize::dialog::showImageTaskStopConditionMetMessage(q);
+        });
+
         // Start the timer used to track how long the image task has been in the running state
         m_timeRunningTimer.start(m_timeRunningResolutionMs);
 
@@ -275,7 +288,7 @@ public:
             revealScriptingPanel();
         }
     }
-    ImageTaskWindowImpl operator=(const ImageTaskWindowImpl&) = delete;
+    ImageTaskWindowImpl& operator=(const ImageTaskWindowImpl&) = delete;
     ImageTaskWindowImpl(const ImageTaskWindowImpl&) = delete;
     ~ImageTaskWindowImpl()
     {
@@ -539,7 +552,7 @@ private:
     QMetaObject::Connection m_taskDidStepConnection{}; ///> Connection for the window to do work just after the image task finishes a step
     std::vector<std::function<void()>> m_onPostStepCbs; ///> One-shot callbacks triggered when the image task finishes a step
 
-    std::vector<geometrize::ShapeResult> m_shapes; ///> The shapes and score results created by the image task
+    geometrize::task::ShapeCollection m_shapes; ///> Collection of shapes added so far
 
     ImageTaskPixmapScene m_currentImageScene; ///> The scene containing the raster/pixel-based representation of the shapes
     ImageTaskSvgScene m_currentSvgScene; ///> The scene containing the vector-based representation of the shapes
