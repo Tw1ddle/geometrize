@@ -237,6 +237,11 @@ bool stringEndsWith(const std::string& str, const std::string& suffix)
     return str.size() >= suffix.size() && str.compare(str.size() - suffix.size(), suffix.size(), suffix) == 0;
 }
 
+std::string getApplicationDirectoryLocation()
+{
+    return QCoreApplication::applicationDirPath().toStdString();
+}
+
 std::string getAppDataLocation()
 {
     return QStandardPaths::writableLocation(QStandardPaths::DataLocation).toStdString();

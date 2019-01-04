@@ -161,6 +161,12 @@ bool stringBeginsWith(const std::string& str, const std::string& prefix);
 bool stringEndsWith(const std::string& str, const std::string& suffix);
 
 /**
+ * @brief getApplicationDirectory Get directory that the application is in.
+ * @return Get application directory.
+ */
+std::string getApplicationDirectoryLocation();
+
+/**
  * @brief getAppDataLocation Returns a directory location where persistent application data can be stored.
  * @return Directory location where persistent application data can be stored.
  */

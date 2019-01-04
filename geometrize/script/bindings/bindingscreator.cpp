@@ -98,6 +98,7 @@ std::shared_ptr<chaiscript::Module> createDefaultBindings()
     ADD_FREE_FUN(stringBeginsWith);
     ADD_FREE_FUN(stringEndsWith);
 
+    ADD_FREE_FUN(getApplicationDirectoryLocation);
     ADD_FREE_FUN(getAppDataLocation);
     ADD_FREE_FUN(getHomeDirectoryLocation);
 

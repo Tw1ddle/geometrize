@@ -166,6 +166,11 @@ bool stringEndsWith(const std::string& str, const std::string& suffix)
     return geometrize::util::stringEndsWith(str, suffix);
 }
 
+std::string getApplicationDirectoryLocation()
+{
+    return geometrize::util::getApplicationDirectoryLocation();
+}
+
 std::string getAppDataLocation()
 {
     return geometrize::util::getAppDataLocation();

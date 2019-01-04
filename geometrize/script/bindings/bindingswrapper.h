@@ -70,6 +70,8 @@ bool stringBeginsWith(const std::string& str, const std::string& prefix);
 
 bool stringEndsWith(const std::string& str, const std::string& suffix);
 
+std::string getApplicationDirectoryLocation();
+
 std::string getAppDataLocation();
 
 std::string getHomeDirectoryLocation();
