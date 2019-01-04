@@ -62,10 +62,10 @@ private:
 
         // Set style for progressbar
         const int barHeight = 24;
-        const int border = 5;
+        const int border = 0;
         QProgressBar renderer;
 
-        const QString style = "QProgressBar { border: 0px; background-color: #FFFFFF; } QProgressBar::chunk { background-color: #000000; width: 20px; }";
+        const QString style = "QProgressBar { border: 0px; background-color: #FFFFFF; } QProgressBar::chunk { background-color: #505050; width: 20px; }";
 
         renderer.resize(width() - border * 2, barHeight);
         renderer.setMinimum(0);
