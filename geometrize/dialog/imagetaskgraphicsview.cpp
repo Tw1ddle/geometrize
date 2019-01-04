@@ -11,7 +11,6 @@ namespace dialog
 
 ImageTaskGraphicsView::ImageTaskGraphicsView(QWidget* parent) : QGraphicsView(parent)
 {
-    setMouseTracking(true);
     setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
     setDragMode(QGraphicsView::ScrollHandDrag);
     setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
