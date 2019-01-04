@@ -38,6 +38,7 @@ public:
 
 signals:
     void signal_sizeChanged(std::size_t to);
+    void signal_appendedShapes(const std::vector<geometrize::ShapeResult>&);
 
 private:
     std::vector<geometrize::ShapeResult> m_shapes; ///> The shapes and score results created by the image task

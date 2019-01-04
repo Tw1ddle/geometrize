@@ -40,12 +40,17 @@ public:
     void setTargetPixmapOpacity(float opacity);
 
     /**
-     * @brief drawSvg Draws the SVG data based on the given shapes.
+     * @brief addShapes Adds SVG data based on the given shapes.
+     * @param shapes The shapes to add to the scene.
      * @param width The width of the SVG.
      * @param height The height of the SVG.
-     * @param shapes The shapes to draw in the scene.
      */
-    void drawSvg(const std::vector<geometrize::ShapeResult>& shapes, const std::uint32_t width, const std::uint32_t height);
+    void addShapes(const std::vector<geometrize::ShapeResult>& shapes, const std::uint32_t width, const std::uint32_t height);
+
+    /**
+     * @brief removeShapes Removes all shapes from the scene.
+     */
+    void removeShapes();
 
 private:
     class ImageTaskSvgSceneImpl;

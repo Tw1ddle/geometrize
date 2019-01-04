@@ -92,13 +92,13 @@ public:
 
         // Set up the image task geometrization views
         m_currentImageView = new geometrize::dialog::ImageTaskGraphicsView(ui->imageViewContainer);
-        m_currentImageView->setScene(&m_currentImageScene);
+        m_currentImageView->setScene(&m_pixmapScene);
         m_currentImageView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         m_currentImageView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         ui->imageViewContainer->layout()->addWidget(m_currentImageView);
 
         m_svgImageView = new geometrize::dialog::ImageTaskGraphicsView(ui->imageViewContainer);
-        m_svgImageView->setScene(&m_currentSvgScene);
+        m_svgImageView->setScene(&m_svgScene);
         m_svgImageView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         m_svgImageView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         ui->imageViewContainer->layout()->addWidget(m_svgImageView);
@@ -148,7 +148,6 @@ public:
             m_taskDidStepConnection = connect(currentTask, &task::ImageTask::signal_modelDidStep, [this](std::vector<geometrize::ShapeResult> shapes) {
                 processPostStepCbs();
 
-                updateCurrentGraphics(shapes);
                 // If the first shape added background rectangle then fit the scenes to it
                 if(m_shapes.empty()) {
                     fitScenesInViews();
@@ -168,7 +167,10 @@ public:
                               .append(" ")
                               .append(QString::fromStdString(currentTask->getDisplayName())));
 
-            setupOverlayImages();
+            const QPixmap target{image::createPixmap(m_task->getTarget())};
+            m_pixmapScene.setTargetPixmap(target);
+            m_svgScene.setTargetPixmap(target);
+
             currentTask->drawBackgroundRectangle();
 
             ui->consoleWidget->setEngine(currentTask->getGeometrizer().getEngine());
@@ -187,8 +189,8 @@ public:
         // Handle requested target image overlay opacity changes
         connect(ui->imageTaskImageWidget, &ImageTaskImageWidget::targetImageOpacityChanged, [this](const unsigned int value) {
             const float opacity{value * (1.0f / 255.0f)};
-            m_currentImageScene.setTargetPixmapOpacity(opacity);
-            m_currentSvgScene.setTargetPixmapOpacity(opacity);
+            m_pixmapScene.setTargetPixmapOpacity(opacity);
+            m_svgScene.setTargetPixmapOpacity(opacity);
         });
 
         // Handle a request to change the target image
@@ -262,6 +264,7 @@ public:
             }
         });
 
+        // When number of shapes changes check the stop conditions
         connect(&m_shapes, &geometrize::task::ShapeCollection::signal_sizeChanged, [this](const std::size_t size) {
             if(!ui->stopConditionsWidget->stopConditionsMet(size)) {
                 return;
@@ -270,6 +273,20 @@ public:
             setRunning(false);
             updateStartStopButtonText();
             geometrize::dialog::showImageTaskStopConditionMetMessage(q);
+        });
+
+        // Update the graphical image views when shapes are added
+        connect(&m_shapes, &geometrize::task::ShapeCollection::signal_appendedShapes, [this](const std::vector<geometrize::ShapeResult>& shapes) {
+            const QPixmap pixmap{image::createPixmap(m_task->getCurrent())};
+            m_pixmapScene.setWorkingPixmap(pixmap);
+            m_svgScene.addShapes(shapes, pixmap.size().width(), pixmap.size().height());
+        });
+
+        // Update the graphical image views when the number of shapes changes (e.g. when cleared)
+        connect(&m_shapes, &geometrize::task::ShapeCollection::signal_sizeChanged, [this](const std::size_t size) {
+            if(size == 0) {
+                m_svgScene.removeShapes();
+            }
         });
 
         // Start the timer used to track how long the image task has been in the running state
@@ -420,13 +437,6 @@ private:
         }
     }
 
-    void updateCurrentGraphics(const std::vector<geometrize::ShapeResult>& shapes)
-    {
-        const QPixmap pixmap{image::createPixmap(m_task->getCurrent())};
-        m_currentImageScene.setWorkingPixmap(pixmap);
-        m_currentSvgScene.drawSvg(shapes, pixmap.size().width(), pixmap.size().height());
-    }
-
     bool isRunning() const
     {
         return m_running; // TODO this is buggy, need to synch up whether the task is running or not in a better way
@@ -492,24 +502,17 @@ private:
         }
     }
 
-    void setupOverlayImages()
-    {
-        const QPixmap target{image::createPixmap(m_task->getTarget())};
-        m_currentImageScene.setTargetPixmap(target);
-        m_currentSvgScene.setTargetPixmap(target);
-    }
-
     void fitImageSceneInView()
     {
         const float margin{m_defaultViewMargins};
-        const QRectF imageViewRect{m_currentImageScene.itemsBoundingRect().adjusted(-margin, -margin, margin, margin)};
+        const QRectF imageViewRect{m_pixmapScene.itemsBoundingRect().adjusted(-margin, -margin, margin, margin)};
         m_currentImageView->fitInView(imageViewRect, Qt::KeepAspectRatio);
     }
 
     void fitVectorSceneInView()
     {
         const float margin{m_defaultViewMargins};
-        const QRectF svgRect{m_currentSvgScene.itemsBoundingRect().adjusted(-margin, -margin, margin, margin)};
+        const QRectF svgRect{m_svgScene.itemsBoundingRect().adjusted(-margin, -margin, margin, margin)};
         m_svgImageView->fitInView(svgRect, Qt::KeepAspectRatio);
     }
 
@@ -554,8 +557,8 @@ private:
 
     geometrize::task::ShapeCollection m_shapes; ///> Collection of shapes added so far
 
-    ImageTaskPixmapScene m_currentImageScene; ///> The scene containing the raster/pixel-based representation of the shapes
-    ImageTaskSvgScene m_currentSvgScene; ///> The scene containing the vector-based representation of the shapes
+    ImageTaskPixmapScene m_pixmapScene; ///> The scene containing the raster/pixel-based representation of the shapes
+    ImageTaskSvgScene m_svgScene; ///> The scene containing the vector-based representation of the shapes
     const float m_defaultViewMargins{20.0f}; ///> Margins around the graphics shown in the views
     geometrize::dialog::ImageTaskGraphicsView* m_currentImageView{nullptr}; ///> The view that holds the raster/pixel-based scene
     geometrize::dialog::ImageTaskGraphicsView* m_svgImageView{nullptr}; ///> The view that holds the vector-based scene

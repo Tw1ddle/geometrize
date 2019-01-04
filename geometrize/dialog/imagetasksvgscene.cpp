@@ -1,11 +1,13 @@
 #include "imagetasksvgscene.h"
 
 #include <memory>
+#include <vector>
 
 #include <QByteArray>
 #include <QGraphicsSvgItem>
 #include <QSvgRenderer>
 
+#include "geometrize/shaperesult.h"
 #include "geometrize/exporter/svgexporter.h"
 
 #include "dialog/imagetaskpixmapgraphicsitem.h"
@@ -51,7 +53,7 @@ public:
         m_targetPixmapItem->setOpacity(opacity);
     }
 
-    void drawSvg(const std::vector<geometrize::ShapeResult>& shapes, const std::uint32_t width, const std::uint32_t height)
+    void addShapes(const std::vector<geometrize::ShapeResult>& shapes, const std::uint32_t width, const std::uint32_t height)
     {
         if(shapes.empty()) {
             return;
@@ -59,11 +61,22 @@ public:
 
         const QString svgString{QString::fromStdString(geometrize::exporter::exportSVG(shapes, width, height))};
         const QByteArray svgData{svgString.toUtf8()};
+
         auto svgItem = new SvgItem(svgData);
         svgItem->setFlags(QGraphicsItem::ItemClipsToShape);
         svgItem->setCacheMode(QGraphicsItem::NoCache);
         q->addItem(svgItem);
         svgItem->setZValue(0);
+    }
+
+    void removeShapes()
+    {
+        const auto items = q->items();
+        for(auto& item : items) {
+            if(dynamic_cast<SvgItem*>(item) != nullptr) {
+                q->removeItem(item);
+            }
+        }
     }
 
 private:
@@ -89,9 +102,14 @@ void ImageTaskSvgScene::setTargetPixmapOpacity(const float opacity)
     d->setTargetPixmapOpacity(opacity);
 }
 
-void ImageTaskSvgScene::drawSvg(const std::vector<geometrize::ShapeResult>& shapes, const std::uint32_t width, const std::uint32_t height)
+void ImageTaskSvgScene::addShapes(const std::vector<geometrize::ShapeResult>& shapes, const std::uint32_t width, const std::uint32_t height)
 {
-    d->drawSvg(shapes, width, height);
+    d->addShapes(shapes, width, height);
+}
+
+void ImageTaskSvgScene::removeShapes()
+{
+    d->removeShapes();
 }
 
 }
