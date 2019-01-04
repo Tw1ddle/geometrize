@@ -30,21 +30,20 @@ void showImageTaskStopConditionMetMessage(QWidget* parent)
 class ImageTaskStopConditionsWidget::ImageTaskStopConditionsWidgetImpl
 {
 public:
-    ImageTaskStopConditionsWidgetImpl(ImageTaskStopConditionsWidget* pQ) : q{pQ}, ui{std::make_unique<Ui::ImageTaskStopConditionsWidget>()}, m_stopConditionId{0}, m_engine{createEngine()}
+    ImageTaskStopConditionsWidgetImpl(ImageTaskStopConditionsWidget* pQ) : q{pQ}, ui{std::make_unique<Ui::ImageTaskStopConditionsWidget>()}, m_stopConditionId{0}, m_engine{nullptr}
     {
         ui->setupUi(q);
         populateUi();
+
+        m_engine = createEngine();
 
         connect(ui->addStopConditionButton, &QPushButton::clicked, [this]() {
             const std::string editorName = tr("Custom Stop Condition").toStdString();
 
             const std::string functionName = "stop_condition_" + std::to_string(m_stopConditionId++);
+            std::string defaultCode = "shapeCount >= 100;";
 
-            std::string defaultCode = "def ";
-            defaultCode.append(functionName);
-            defaultCode.append("() { return shapeCount <= shapeLimit; }");
-
-            auto widget = new geometrize::dialog::ScriptEditorWidget(editorName, functionName, defaultCode);
+            auto widget = new geometrize::dialog::ScriptEditorWidget(editorName, "", defaultCode, ui->stopConditionScriptGroupBox);
             ui->scriptEditorLayout->addWidget(widget);
         });
         connect(ui->clearStopConditionsButton, &QPushButton::clicked, [this]() {
@@ -76,21 +75,31 @@ public:
             return true;
         }
 
-        const auto scriptWidgets = ui->scriptEditorLayout->findChildren<geometrize::dialog::ScriptEditorWidget*>();
+        if(!m_engine) {
+            assert(0 && "Failed to evaluate stop conditions, no script engine is set");
+            return false;
+        }
+
+        m_engine->set_global(chaiscript::var(currentShapeCount), "shapeCount");
+
+        const auto scriptWidgets = ui->stopConditionScriptGroupBox->findChildren<geometrize::dialog::ScriptEditorWidget*>();
+        if(scriptWidgets.empty()) {
+            return false;
+        }
 
         bool scriptStopConditionMet = false;
         for(const auto& widget : scriptWidgets) {
             try {
-                auto stopCondition = m_engine->eval<std::function<bool()>>(widget->getFunctionName());
-                if(stopCondition()) {
+                auto stopCondition = m_engine->eval<bool>(widget->getCurrentCode());
+                if(stopCondition) {
                     scriptStopConditionMet = true;
                 }
+                widget->onScriptEvaluationSucceeded();
             } catch(const chaiscript::exception::eval_error& e) {
                 widget->onScriptEvaluationFailed(e.pretty_print());
             } catch(...) {
                 widget->onScriptEvaluationFailed("Unknown script evaluation error");
             }
-            widget->onScriptEvaluationSucceeded();
         }
 
         return scriptStopConditionMet;
@@ -99,7 +108,7 @@ public:
 private:
     std::unique_ptr<chaiscript::ChaiScript> createEngine()
     {
-        return geometrize::script::createImageTaskEngine();
+        return geometrize::script::createDefaultEngine();
     }
 
     void populateUi()

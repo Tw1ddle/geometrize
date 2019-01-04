@@ -118,7 +118,7 @@ private:
 
     void setEvaluationErrorMessage(const std::string& message)
     {
-        ui->evaluationErrorMessageLabel->setText(QString::fromStdString(message));
+        ui->evaluationErrorMessageBox->setText(QString::fromStdString(message));
     }
 
     void setScriptEvaluationState(const ScriptEvaluationState state)
@@ -126,9 +126,13 @@ private:
         switch(state) {
         case ScriptEvaluationState::OK:
             setLabel(ui->scriptEvaluationStateIcon, QPixmap(":/icons/script_green.png"));
+            ui->evaluationErrorMessageBox->setStyleSheet("QTextEdit { color: green }");
+            ui->evaluationErrorMessageBox->setVisible(false);
             break;
         case ScriptEvaluationState::ERROR:
             setLabel(ui->scriptEvaluationStateIcon, QPixmap(":/icons/script_red.png"));
+            ui->evaluationErrorMessageBox->setStyleSheet("QTextEdit { color: red }");
+            ui->evaluationErrorMessageBox->setVisible(true);
             break;
         }
     }

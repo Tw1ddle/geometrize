@@ -360,7 +360,7 @@
    <property name="maximumSize">
     <size>
      <width>800</width>
-     <height>1350</height>
+     <height>2400</height>
     </size>
    </property>
    <property name="contextMenuPolicy">
