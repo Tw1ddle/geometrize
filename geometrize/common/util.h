@@ -4,6 +4,8 @@
 #include <sstream>
 #include <vector>
 
+class QObject;
+
 namespace geometrize
 {
 
@@ -165,6 +167,12 @@ bool stringEndsWith(const std::string& str, const std::string& suffix);
 std::string getAppDataLocation();
 
 /**
+ * @brief getHomeDirectoryLocation Returns a path to where the user's home directory is.
+ * @return Location of the user's home directory.
+ */
+std::string getHomeDirectoryLocation();
+
+/**
  * @brief writeStringToFile Writes the string to the file path, attempting to overwrite any existing file at the path.
  * @param str The string to write to file.
  * @param path The file path to write to.
@@ -236,10 +244,25 @@ int getCursorY();
 void setCursorPos(int x, int y);
 
 /**
- * @brief getOperatingSystemProductTypeReturns the product name of the operating system this application is running in.
+ * @brief getOperatingSystemProductType Returns the product name of the operating system this application is running in.
  * @return The name of the operating system: "windows", "osx", "linux", "android", "ios", "tvos" etc
  */
 std::string getOperatingSystemProductType();
+
+/**
+ * @brief saveDesktopScreenshot Takes a screenshot of the desktop and saves it as a .png image to the given path.
+ * @param path The file path to save the screenshot to.
+ * @return True if the screenshot was taken and saved successfully, else false.
+ */
+bool saveDesktopScreenshot(const std::string& path);
+
+/**
+ * @brief saveWidgetScreenshot Takes a screenshot of the given widget and saves it as a .png image to the given path.
+ * @param path The file path to save the screenshot to.
+ * @param widget The widget to take a screenshot of.
+ * @return True if the screenshot was taken and save successfully, else false.
+ */
+bool saveWidgetScreenshot(const std::string& path, QObject* widget);
 
 }
 

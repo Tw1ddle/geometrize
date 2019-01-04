@@ -10,10 +10,13 @@
 #include <QCoreApplication>
 #include <QCursor>
 #include <QDesktopServices>
+#include <QDesktopWidget>
 #include <QDir>
 #include <QDirIterator>
 #include <QFileInfo>
 #include <QMessageBox>
+#include <QObject>
+#include <QPixmap>
 #include <QPoint>
 #include <QStandardPaths>
 #include <QTextStream>
@@ -239,6 +242,11 @@ std::string getAppDataLocation()
     return QStandardPaths::writableLocation(QStandardPaths::DataLocation).toStdString();
 }
 
+std::string getHomeDirectoryLocation()
+{
+    return QStandardPaths::writableLocation(QStandardPaths::HomeLocation).toStdString();
+}
+
 bool writeStringToFile(const std::string& str, const std::string& path)
 {
     std::ofstream out(path, std::ios::trunc | std::ios::out);
@@ -303,6 +311,24 @@ void setCursorPos(const int x, const int y)
 std::string getOperatingSystemProductType()
 {
     return QSysInfo::productType().toStdString();
+}
+
+bool saveDesktopScreenshot(const std::string& path)
+{
+    auto desktop = QApplication::desktop();
+    if(!desktop) {
+        assert(0 && "Failed to get desktop widget");
+        return false;
+    }
+
+    const QPixmap desktopPixmap = QPixmap::grabWindow(desktop->winId());
+
+    return desktopPixmap.save(QString::fromStdString(path), "png");
+}
+
+bool saveWidgetScreenshot(const std::string& path, QObject* widget)
+{
+    return QPixmap::grabWidget(widget).save(QString::fromStdString(path), "png");
 }
 
 }

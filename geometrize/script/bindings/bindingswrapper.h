@@ -7,6 +7,8 @@
 
 #include "geometrize/shaperesult.h"
 
+class QObject;
+
 namespace geometrize
 {
 
@@ -70,6 +72,8 @@ bool stringEndsWith(const std::string& str, const std::string& suffix);
 
 std::string getAppDataLocation();
 
+std::string getHomeDirectoryLocation();
+
 bool writeStringToFile(const std::string& str, const std::string& path);
 
 std::string percentEncode(const std::string& str);
@@ -97,6 +101,10 @@ bool exportGIF(const std::vector<geometrize::ShapeResult>& data,
         std::uint32_t outputHeight,
         std::size_t frameSkip,
         const std::string& filePath);
+
+bool saveDesktopScreenshot(const std::string& path);
+
+bool saveWidgetScreenshot(const std::string& path, QObject* widget);
 
 }
 

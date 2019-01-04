@@ -6,6 +6,8 @@
 #include <utility>
 
 #include <QImage>
+#include <QObject>
+#include <QWidget>
 #include <Qt>
 
 #include "chaiscript/chaiscript.hpp"
@@ -97,6 +99,7 @@ std::shared_ptr<chaiscript::Module> createDefaultBindings()
     ADD_FREE_FUN(stringEndsWith);
 
     ADD_FREE_FUN(getAppDataLocation);
+    ADD_FREE_FUN(getHomeDirectoryLocation);
 
     ADD_FREE_FUN(writeStringToFile);
 
@@ -124,6 +127,7 @@ std::shared_ptr<chaiscript::Module> createLaunchWindowBindings()
 
     ADD_BASE_CLASS(QMainWindow, LaunchWindow);
     ADD_BASE_CLASS(QWidget, LaunchWindow);
+    ADD_BASE_CLASS(QObject, LaunchWindow);
 
     ADD_CONSTRUCTOR(LaunchWindow, LaunchWindow());
 
@@ -387,6 +391,9 @@ std::shared_ptr<chaiscript::Module> createUserInterfacePuppeteerBindings()
     ADD_FREE_FUN(getCursorX);
     ADD_FREE_FUN(getCursorY);
     ADD_FREE_FUN(setCursorPos);
+
+    ADD_FREE_FUN(saveDesktopScreenshot);
+    ADD_FREE_FUN(saveWidgetScreenshot);
 
     return module;
 }

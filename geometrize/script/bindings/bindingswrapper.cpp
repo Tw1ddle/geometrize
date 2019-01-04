@@ -3,6 +3,7 @@
 #include <cassert>
 
 #include <QString>
+#include <QObject>
 
 #include "common/formatsupport.h"
 #include "common/searchpaths.h"
@@ -170,6 +171,11 @@ std::string getAppDataLocation()
     return geometrize::util::getAppDataLocation();
 }
 
+std::string getHomeDirectoryLocation()
+{
+    return geometrize::util::getHomeDirectoryLocation();
+}
+
 bool writeStringToFile(const std::string& str, const std::string& path)
 {
     return geometrize::util::writeStringToFile(str, path);
@@ -231,6 +237,16 @@ bool exportGIF(const std::vector<geometrize::ShapeResult>& data,
     return geometrize::exporter::exportGIF(data, inputWidth, inputHeight, outputWidth, outputHeight, [frameSkip](std::size_t frameIndex) {
         return frameSkip == 0U ? false : (frameIndex % frameSkip == 0);
     }, filePath);
+}
+
+bool saveDesktopScreenshot(const std::string& path)
+{
+    return geometrize::util::saveDesktopScreenshot(path);
+}
+
+bool saveWidgetScreenshot(const std::string& path, QObject* widget)
+{
+    return geometrize::util::saveWidgetScreenshot(path, widget);
 }
 
 }
