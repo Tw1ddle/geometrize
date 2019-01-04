@@ -13,6 +13,7 @@
 
 #include "cli/commandlineparser.h"
 #include "common/uiactions.h"
+#include "dialog/appsplashscreen.h"
 #include "dialog/launchwindow.h"
 #include "dialog/welcomewindow.h"
 #include "localization/localization.h"
@@ -102,12 +103,17 @@ int runAppGuiModeUwp(QApplication& app)
 
 int runAppGuiModeDesktop(QApplication& app)
 {
+    geometrize::dialog::sharedSplashInstance().setState(geometrize::dialog::SplashState::STARTING);
+    geometrize::dialog::sharedSplashInstance().setState(geometrize::dialog::SplashState::LOADING_LAUNCHER_WINDOW);
+
     const auto& prefs = geometrize::preferences::getGlobalPreferences();
 	if (prefs.shouldShowWelcomeScreenOnLaunch()) {
         geometrize::common::ui::openWelcomePage(); // Opens launch window on close
     } else {
         geometrize::common::ui::openLaunchWindow();
     }
+
+    geometrize::dialog::sharedSplashInstance().setState(geometrize::dialog::SplashState::FINISHED);
 
     return app.exec();
 }
