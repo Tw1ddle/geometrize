@@ -329,7 +329,7 @@ private:
 
     bool m_shouldShowWelcomeScreenOnLaunch{true};
 
-    bool m_shouldGeometrizeAppLogoOnLaunch{true};
+    bool m_shouldGeometrizeAppLogoOnLaunch{false};
     bool m_shouldPopulateRecentItemsOnLaunch{true};
     bool m_shouldPopulateTemplatesOnLaunch{true};
 
