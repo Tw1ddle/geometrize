@@ -2,6 +2,7 @@
 
 #include <QEvent>
 #include <QString>
+#include <QTimer>
 
 #include "chaiscript/chaiscript.hpp"
 
@@ -28,14 +29,21 @@ public:
 
     void loadTemplates()
     {
+        // Build the list of templates to load
+        std::vector<std::string> templateFolders;
+
         const std::vector<std::string> paths{geometrize::searchpaths::getTemplateSearchPaths()};
-
         for(const std::string& path : paths) {
-            const std::vector<std::string> templateFolders{util::getSubdirectoriesForDirectory(path)};
+            const std::vector<std::string> folders{util::getSubdirectoriesForDirectory(path)};
+            templateFolders.insert(templateFolders.end(), folders.begin(), folders.end());
+        }
 
-            for(const std::string& folder : templateFolders) {
+        // Add a template item every 50ms
+        for(std::size_t i = 0; i < templateFolders.size(); i++) {
+            std::string folder = templateFolders[i];
+            QTimer::singleShot(50 * i, Qt::PreciseTimer, q, [this, folder]() {
                 addTemplateItem(QString::fromStdString(folder));
-            }
+            });
         }
     }
 
