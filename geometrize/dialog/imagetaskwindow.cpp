@@ -103,8 +103,14 @@ public:
 
         m_sceneManager.setViews(*m_pixmapView, *m_svgView);
 
-        m_pixmapView->setVisible(false); // Make sure the image view is hidden by default (we prefer the SVG view)
-        m_svgView->setVisible(true);
+        // Set initial view visibility
+        const geometrize::preferences::GlobalPreferences& prefs{geometrize::preferences::getGlobalPreferences()};
+        setConsoleVisibility(prefs.shouldShowImageTaskConsoleByDefault());
+        setPixmapViewVisibility(prefs.shouldShowImageTaskPixmapViewByDefault());
+        setVectorViewVisibility(prefs.shouldShowImageTaskVectorViewByDefault());
+        if(prefs.shouldShowImageTaskScriptEditorByDefault()) {
+            revealScriptingPanel();
+        }
 
         // Handle clicks on checkable title bar items
         connect(ui->actionScript_Console, &QAction::toggled, [this](const bool checked) {
@@ -147,6 +153,14 @@ public:
 
             m_taskDidStepConnection = connect(currentTask, &task::ImageTask::signal_modelDidStep, [this](std::vector<geometrize::ShapeResult> shapes) {
                 processPostStepCbs();
+
+                // Apply the latest scripts prior to stepping
+                auto& geometrizer = m_task->getGeometrizer();
+                const bool scriptModeEnabled = m_task->getPreferences().isScriptModeEnabled();
+                geometrizer.setEnabled(scriptModeEnabled);
+                if(scriptModeEnabled) {
+                    geometrizer.setupScripts(m_task->getPreferences().getScripts());
+                }
 
                 // If the first shape added background rectangle then fit the scenes to it
                 if(m_shapes.empty()) {
@@ -233,8 +247,7 @@ public:
         connect(ui->imageTaskRunnerWidget, &ImageTaskRunnerWidget::runStopButtonClicked, [this]() {
             setRunning(!isRunning());
 
-            // Toggle running button text and request another image task step if running started
-            updateStartStopButtonText();
+            // Request another image task step if running started
             if(isRunning()) {
                 stepModel();
             }
@@ -269,7 +282,6 @@ public:
             }
 
             setRunning(false);
-            updateStartStopButtonText();
             geometrize::dialog::showImageTaskStopConditionMetMessage(q);
         });
 
@@ -285,22 +297,6 @@ public:
                 m_sceneManager.reset();
             }
         });
-
-        // Start the timer used to track how long the image task has been in the running state
-        m_timeRunningTimer.start(static_cast<int>(m_timeRunningResolutionMs));
-
-        // Set initial target image opacity
-        const float initialTargetImageOpacity{10};
-        ui->imageTaskImageWidget->setTargetImageOpacity(static_cast<unsigned int>(initialTargetImageOpacity));
-
-        // Set initial view visibility
-        const geometrize::preferences::GlobalPreferences& prefs{geometrize::preferences::getGlobalPreferences()};
-        setConsoleVisibility(prefs.shouldShowImageTaskConsoleByDefault());
-        setPixmapViewVisibility(prefs.shouldShowImageTaskPixmapViewByDefault());
-        setVectorViewVisibility(prefs.shouldShowImageTaskVectorViewByDefault());
-        if(prefs.shouldShowImageTaskScriptEditorByDefault()) {
-            revealScriptingPanel();
-        }
 
         // Handle modifications to the area of influence shape
         connect(&m_areaOfInfluenceShape, &geometrize::scene::AreaOfInfluenceShape::signal_didModifyShape, [this](const geometrize::Shape& shape) {
@@ -320,6 +316,13 @@ public:
             }
             m_areaOfInfluenceShape.scaleShape(amount > 0 ? 1.01f : 0.99f);
         });
+
+        // Set initial target image opacity
+        const float initialTargetImageOpacity{10};
+        ui->imageTaskImageWidget->setTargetImageOpacity(static_cast<unsigned int>(initialTargetImageOpacity));
+
+        // Start the timer used to track how long the image task has been in the running state
+        m_timeRunningTimer.start(static_cast<int>(m_timeRunningResolutionMs));
     }
     ImageTaskWindowImpl& operator=(const ImageTaskWindowImpl&) = delete;
     ImageTaskWindowImpl(const ImageTaskWindowImpl&) = delete;
@@ -455,12 +458,15 @@ private:
 
     bool isRunning() const
     {
-        return m_running; // TODO this is buggy, need to synch up whether the task is running or not in a better way
+        return m_running;
     }
 
     void setRunning(const bool running)
     {
+        // TODO this is buggy when steps are queued up on the task, need to synch up whether the task is running or not in a better way
         m_running = running;
+
+        updateStartStopButtonText();
     }
 
     void stepModel()
@@ -542,7 +548,6 @@ private:
     }
 
     std::unique_ptr<Ui::ImageTaskWindow> ui{nullptr};
-
     ImageTaskWindow* q{nullptr};
 
     task::ImageTask* m_task{nullptr}; ///> The image task currently set and manipulated via this window

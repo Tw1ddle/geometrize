@@ -33,7 +33,7 @@ void ImageTaskWorker::step(const geometrize::ImageRunnerOptions options)
     emit signal_didStep(results);
 }
 
-void ImageTaskWorker::drawShape(std::shared_ptr<geometrize::Shape> shape, geometrize::rgba color)
+void ImageTaskWorker::drawShape(const std::shared_ptr<geometrize::Shape> shape, const geometrize::rgba color)
 {
     emit signal_willStep();
     m_working = true;

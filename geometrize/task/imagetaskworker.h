@@ -17,7 +17,8 @@ namespace task
 {
 
 /**
- * @brief The ImageTaskWorker class transforms a source image into a collection of shapes. Made to be run on a separate thread to avoid blocking UI.
+ * @brief The ImageTaskWorker class transforms a source image into a collection of shapes.
+ * It is made to be run on its own thread to avoid blocking the UI.
  */
 class ImageTaskWorker : public QObject
 {

@@ -112,7 +112,7 @@ public:
         emit q->signal_step(m_preferences.getImageRunnerOptions());
     }
 
-    void drawShape(std::shared_ptr<geometrize::Shape> shape, const geometrize::rgba color)
+    void drawShape(const std::shared_ptr<geometrize::Shape> shape, const geometrize::rgba color)
     {
         emit q->signal_drawShape(shape, color);
     }
@@ -133,13 +133,8 @@ public:
         emit q->signal_modelWillStep();
     }
 
-    void modelDidStep(std::vector<geometrize::ShapeResult> shapes)
+    void modelDidStep(const std::vector<geometrize::ShapeResult> shapes)
     {
-        m_geometrizer.setEnabled(m_preferences.isScriptModeEnabled());
-        if(m_preferences.isScriptModeEnabled()) {
-            m_geometrizer.setupScripts(m_preferences.getScripts());
-        }
-
         emit q->signal_modelDidStep(shapes);
     }
 

@@ -47,10 +47,10 @@ class ImageTask : public QObject
 {
     Q_OBJECT
 public:
-    ImageTask(Bitmap& target, Qt::ConnectionType workerConnectionType = Qt::AutoConnection);
-    ImageTask(Bitmap& target, Bitmap& background, Qt::ConnectionType workerConnectionType = Qt::AutoConnection);
-    ImageTask(const std::string& displayName, Bitmap& bitmap, Qt::ConnectionType workerConnectionType = Qt::AutoConnection);
-    ImageTask(const std::string& displayName, Bitmap& bitmap, const Bitmap& initial, Qt::ConnectionType workerConnectionType = Qt::AutoConnection);
+    ImageTask(Bitmap& target, Qt::ConnectionType workerConnectionType = Qt::QueuedConnection);
+    ImageTask(Bitmap& target, Bitmap& background, Qt::ConnectionType workerConnectionType = Qt::QueuedConnection);
+    ImageTask(const std::string& displayName, Bitmap& bitmap, Qt::ConnectionType workerConnectionType = Qt::QueuedConnection);
+    ImageTask(const std::string& displayName, Bitmap& bitmap, const Bitmap& initial, Qt::ConnectionType workerConnectionType = Qt::QueuedConnection);
 
     ImageTask& operator=(const ImageTask&) = delete;
     ImageTask(const ImageTask&) = delete;
@@ -126,7 +126,7 @@ public:
       * @param shape The shape to add to the model.
       * @param color The color of the shape.
       */
-     void drawShape(std::shared_ptr<geometrize::Shape> shape, geometrize::rgba color);
+     void drawShape(const std::shared_ptr<geometrize::Shape> shape, geometrize::rgba color);
 
      /**
       * @brief drawBackgroundRectangle Convenience function that draws a background rectangle shape using the target image's background color.
