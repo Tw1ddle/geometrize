@@ -285,12 +285,6 @@ int randomInRange(const int lower, const int upper)
     return geometrize::commonutil::randomRange(lower, upper);
 }
 
-int clamp(const int value, const int lower, const int upper)
-{
-    assert(lower <= upper);
-    return std::max(lower, std::min(value, upper));
-}
-
 std::vector<std::string> split(const std::string& s, const char delimiter)
 {
     std::vector<std::string> elements;

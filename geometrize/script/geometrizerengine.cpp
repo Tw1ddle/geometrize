@@ -38,7 +38,6 @@ class GeometrizerEngine::GeometrizerEngineImpl
 public:
     GeometrizerEngineImpl(GeometrizerEngine* pQ) : q{pQ}, m_engine{script::createShapeMutatorEngine()}, m_defaultScripts{script::getDefaultScripts()}, m_mutator{nullptr}
     {
-        setupGlobals();
         m_state = m_engine->get_state();
     }
     ~GeometrizerEngineImpl() = default;
@@ -66,23 +65,20 @@ public:
 
     void setupScripts(const std::map<std::string, std::string>& functions)
     {
-        resetFunctions(functions);
+        resetState(functions);
     }
 
     void resetEngine(const std::map<std::string, std::string>& functions)
     {
-        resetFunctions(functions);
+        resetState(functions);
     }
 
 private:
-    void setupGlobals()
-    {
-        //m_engine->set_global(chaiscript::var("todo"), "foo"); // set the globals that will be used by the engine
-    }
-
-    void resetFunctions(const std::map<std::string, std::string>& customFunctions)
+    void resetState(const std::map<std::string, std::string>& customFunctions)
     {
         m_engine->set_state(m_state); // Restore to the original engine state, this wipes out the function(s) we need to redefine.
+
+        emit q->signal_didResetState();
 
         // Starting from the base state, re-add custom functions, then attempt to add missing required ones with defaults.
         // This is an ugly workaround, seems to be no choice because Chaiscript does not let us reload/redefine functions easily.

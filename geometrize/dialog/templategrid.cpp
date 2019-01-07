@@ -1,5 +1,7 @@
 #include "templategrid.h"
 
+#include <algorithm>
+
 #include <QEvent>
 #include <QString>
 #include <QTimer>
@@ -38,10 +40,13 @@ public:
             templateFolders.insert(templateFolders.end(), folders.begin(), folders.end());
         }
 
-        // Add a template item every 50ms
+        // Put the folders in a sensible order so it doesn't vary based on filesystem implementation/state
+        std::sort(templateFolders.begin(), templateFolders.end());
+
+        // Add a template item every few ms
         for(std::size_t i = 0; i < templateFolders.size(); i++) {
             std::string folder = templateFolders[i];
-            QTimer::singleShot(50 * i, Qt::PreciseTimer, q, [this, folder]() {
+            QTimer::singleShot(16 * i, Qt::PreciseTimer, q, [this, folder]() {
                 addTemplateItem(QString::fromStdString(folder));
             });
         }

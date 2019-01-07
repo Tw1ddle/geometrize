@@ -108,12 +108,12 @@ int runAppGuiModeDesktop(QApplication& app)
 
     const auto& prefs = geometrize::preferences::getGlobalPreferences();
 	if (prefs.shouldShowWelcomeScreenOnLaunch()) {
-        geometrize::common::ui::openWelcomePage(); // Opens launch window on close
+        geometrize::dialog::sharedSplashInstance().setState(geometrize::dialog::SplashState::FINISHED);
+        geometrize::common::ui::openWelcomePage(); // Opens launch window when closed
     } else {
         geometrize::common::ui::openLaunchWindow();
+        geometrize::dialog::sharedSplashInstance().setState(geometrize::dialog::SplashState::FINISHED);
     }
-
-    geometrize::dialog::sharedSplashInstance().setState(geometrize::dialog::SplashState::FINISHED);
 
     return app.exec();
 }

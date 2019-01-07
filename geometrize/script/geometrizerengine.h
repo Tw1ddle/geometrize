@@ -67,9 +67,6 @@ public:
      */
     void resetEngine(const std::map<std::string, std::string>& functions);
 
-    //void setPermittedShapeRegion() {}
-    //void setIntProperty(const std::string& propName, int value);
-
 signals:
     /**
      * @brief signal_scriptEvaluationSucceeded Signal dispatched when a script is successfully parsed/evaluated.
@@ -85,6 +82,12 @@ signals:
      * @param error The text of the error message, if any.
      */
     void signal_scriptEvaluationFailed(const std::string& functionName, const std::string& code, const std::string& errorMessage);
+
+    /**
+     * @brief signal_didResetState Signal emitted when the state of the scripting engine is reset.
+     * This is when this happens, any globals that were set externally need to be set once again.
+     */
+    void signal_didResetState();
 
 private:
     class GeometrizerEngineImpl;

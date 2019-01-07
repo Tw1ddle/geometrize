@@ -41,7 +41,7 @@ public:
             const std::string editorName = tr("Custom Stop Condition").toStdString();
 
             const std::string functionName = "stop_condition_" + std::to_string(m_stopConditionId++);
-            std::string defaultCode = "shapeCount >= 100;";
+            std::string defaultCode = "shapeCount >= 1000;";
 
             auto widget = new geometrize::dialog::ScriptEditorWidget(editorName, "", defaultCode, ui->stopConditionScriptGroupBox);
             ui->scriptEditorLayout->addWidget(widget);

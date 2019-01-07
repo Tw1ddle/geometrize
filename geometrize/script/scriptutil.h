@@ -34,6 +34,12 @@ std::vector<std::string> getEngineFunctionNames(const chaiscript::ChaiScript& en
  */
 std::map<std::string, std::string> getDefaultScripts();
 
+/**
+ * @brief getPointerAreaOfInterestScripts Gets a map of the scripts used for shape creation and mutation based around user input/pointer interaction.
+ * @return A map of Chaiscript script function names to function bodies.
+ */
+std::map<std::string, std::string> getPointerAreaOfInterestScripts();
+
 }
 
 }

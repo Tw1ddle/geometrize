@@ -18,16 +18,16 @@
 
 #include "common/uiactions.h"
 #include "common/util.h"
-#include "dialog/imagetaskgraphicsview.h"
-#include "dialog/imagetaskpixmapscene.h"
 #include "dialog/imagetaskscriptingpanel.h"
-#include "dialog/imagetasksvgscene.h"
 #include "dialog/imagetaskimagewidget.h"
 #include "dialog/scripteditorwidget.h"
 #include "image/imageloader.h"
 #include "localization/strings.h"
 #include "preferences/globalpreferences.h"
 #include "script/geometrizerengine.h"
+#include "scene/areaofinfluenceshape.h"
+#include "scene/imagetaskgraphicsview.h"
+#include "scene/imagetaskscenemanager.h"
 #include "task/imagetask.h"
 #include "task/shapecollection.h"
 #include "version/versioninfo.h"
@@ -91,20 +91,20 @@ public:
         ui->consoleWidget->setVisible(false); // Make sure console widget is hidden by default
 
         // Set up the image task geometrization views
-        m_currentImageView = new geometrize::dialog::ImageTaskGraphicsView(ui->imageViewContainer);
-        m_currentImageView->setScene(&m_pixmapScene);
-        m_currentImageView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        m_currentImageView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        ui->imageViewContainer->layout()->addWidget(m_currentImageView);
+        m_pixmapView = new geometrize::scene::ImageTaskGraphicsView(ui->imageViewContainer);
+        m_pixmapView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        m_pixmapView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        ui->imageViewContainer->layout()->addWidget(m_pixmapView);
 
-        m_svgImageView = new geometrize::dialog::ImageTaskGraphicsView(ui->imageViewContainer);
-        m_svgImageView->setScene(&m_svgScene);
-        m_svgImageView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        m_svgImageView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        ui->imageViewContainer->layout()->addWidget(m_svgImageView);
+        m_svgView = new geometrize::scene::ImageTaskGraphicsView(ui->imageViewContainer);
+        m_svgView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        m_svgView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        ui->imageViewContainer->layout()->addWidget(m_svgView);
 
-        m_currentImageView->setVisible(false); // Make sure the image view is hidden by default (we prefer the SVG view)
-        m_svgImageView->setVisible(true);
+        m_sceneManager.setViews(*m_pixmapView, *m_svgView);
+
+        m_pixmapView->setVisible(false); // Make sure the image view is hidden by default (we prefer the SVG view)
+        m_svgView->setVisible(true);
 
         // Handle clicks on checkable title bar items
         connect(ui->actionScript_Console, &QAction::toggled, [this](const bool checked) {
@@ -150,7 +150,7 @@ public:
 
                 // If the first shape added background rectangle then fit the scenes to it
                 if(m_shapes.empty()) {
-                    fitScenesInViews();
+                    m_sceneManager.fitScenesInViews(*m_pixmapView, *m_svgView);
                 }
                 m_shapes.appendShapes(shapes);
 
@@ -168,8 +168,7 @@ public:
                               .append(QString::fromStdString(currentTask->getDisplayName())));
 
             const QPixmap target{image::createPixmap(m_task->getTarget())};
-            m_pixmapScene.setTargetPixmap(target);
-            m_svgScene.setTargetPixmap(target);
+            m_sceneManager.setTargetPixmap(target);
 
             currentTask->drawBackgroundRectangle();
 
@@ -189,8 +188,7 @@ public:
         // Handle requested target image overlay opacity changes
         connect(ui->imageTaskImageWidget, &ImageTaskImageWidget::targetImageOpacityChanged, [this](const unsigned int value) {
             const float opacity{value * (1.0f / 255.0f)};
-            m_pixmapScene.setTargetPixmapOpacity(opacity);
-            m_svgScene.setTargetPixmapOpacity(opacity);
+            m_sceneManager.setTargetPixmapOpacity(opacity);
         });
 
         // Handle a request to change the target image
@@ -278,23 +276,22 @@ public:
         // Update the graphical image views when shapes are added
         connect(&m_shapes, &geometrize::task::ShapeCollection::signal_appendedShapes, [this](const std::vector<geometrize::ShapeResult>& shapes) {
             const QPixmap pixmap{image::createPixmap(m_task->getCurrent())};
-            m_pixmapScene.setWorkingPixmap(pixmap);
-            m_svgScene.addShapes(shapes, pixmap.size().width(), pixmap.size().height());
+            m_sceneManager.updateScenes(pixmap, shapes);
         });
 
         // Update the graphical image views when the number of shapes changes (e.g. when cleared)
         connect(&m_shapes, &geometrize::task::ShapeCollection::signal_sizeChanged, [this](const std::size_t size) {
             if(size == 0) {
-                m_svgScene.removeShapes();
+                m_sceneManager.reset();
             }
         });
 
         // Start the timer used to track how long the image task has been in the running state
-        m_timeRunningTimer.start(m_timeRunningResolutionMs);
+        m_timeRunningTimer.start(static_cast<int>(m_timeRunningResolutionMs));
 
         // Set initial target image opacity
         const float initialTargetImageOpacity{10};
-        ui->imageTaskImageWidget->setTargetImageOpacity(initialTargetImageOpacity);
+        ui->imageTaskImageWidget->setTargetImageOpacity(static_cast<unsigned int>(initialTargetImageOpacity));
 
         // Set initial view visibility
         const geometrize::preferences::GlobalPreferences& prefs{geometrize::preferences::getGlobalPreferences()};
@@ -304,6 +301,25 @@ public:
         if(prefs.shouldShowImageTaskScriptEditorByDefault()) {
             revealScriptingPanel();
         }
+
+        // Handle modifications to the area of influence shape
+        connect(&m_areaOfInfluenceShape, &geometrize::scene::AreaOfInfluenceShape::signal_didModifyShape, [this](const geometrize::Shape& shape) {
+            m_sceneManager.setAreaOfInfluenceShape(shape);
+        });
+
+        // Connect pointer control/manipulations of the scenes to the actual area of influence shape
+        connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onTargetImageHoverMoveEvent, [this](const int x, const int y, const bool ctrlModifier) {
+            if(!ctrlModifier) {
+                return;
+            }
+            m_areaOfInfluenceShape.setup(x, y, 64); // 64 pixels seems a reasonable starting size
+        });
+        connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onAreaOfInfluenceShapeMouseWheelEvent, [this](const int, const int, const double amount, const bool ctrlModifier) {
+            if(!ctrlModifier) {
+                return;
+            }
+            m_areaOfInfluenceShape.scaleShape(amount > 0 ? 1.01f : 0.99f);
+        });
     }
     ImageTaskWindowImpl& operator=(const ImageTaskWindowImpl&) = delete;
     ImageTaskWindowImpl(const ImageTaskWindowImpl&) = delete;
@@ -350,9 +366,9 @@ public:
             ui->actionPixmap_Results_View->setChecked(visible);
         }
 
-        m_currentImageView->setVisible(visible);
+        m_pixmapView->setVisible(visible);
         if(visible) {
-            fitImageSceneInView();
+            m_sceneManager.fitPixmapSceneInView(*m_pixmapView);
         }
     }
 
@@ -362,9 +378,9 @@ public:
             ui->actionVector_Results_View->setChecked(visible);
         }
 
-        m_svgImageView->setVisible(visible);
+        m_svgView->setVisible(visible);
         if(visible) {
-            fitVectorSceneInView();
+            m_sceneManager.fitVectorSceneInView(*m_svgView);
         }
     }
 
@@ -502,26 +518,6 @@ private:
         }
     }
 
-    void fitImageSceneInView()
-    {
-        const float margin{m_defaultViewMargins};
-        const QRectF imageViewRect{m_pixmapScene.itemsBoundingRect().adjusted(-margin, -margin, margin, margin)};
-        m_currentImageView->fitInView(imageViewRect, Qt::KeepAspectRatio);
-    }
-
-    void fitVectorSceneInView()
-    {
-        const float margin{m_defaultViewMargins};
-        const QRectF svgRect{m_svgScene.itemsBoundingRect().adjusted(-margin, -margin, margin, margin)};
-        m_svgImageView->fitInView(svgRect, Qt::KeepAspectRatio);
-    }
-
-    void fitScenesInViews()
-    {
-        fitImageSceneInView();
-        fitVectorSceneInView();
-    }
-
     void setTargetImage(const QImage& image)
     {
         ui->imageTaskImageWidget->setTargetImage(image);
@@ -557,11 +553,10 @@ private:
 
     geometrize::task::ShapeCollection m_shapes; ///> Collection of shapes added so far
 
-    ImageTaskPixmapScene m_pixmapScene; ///> The scene containing the raster/pixel-based representation of the shapes
-    ImageTaskSvgScene m_svgScene; ///> The scene containing the vector-based representation of the shapes
-    const float m_defaultViewMargins{20.0f}; ///> Margins around the graphics shown in the views
-    geometrize::dialog::ImageTaskGraphicsView* m_currentImageView{nullptr}; ///> The view that holds the raster/pixel-based scene
-    geometrize::dialog::ImageTaskGraphicsView* m_svgImageView{nullptr}; ///> The view that holds the vector-based scene
+    geometrize::scene::AreaOfInfluenceShape m_areaOfInfluenceShape; ///> Shape that can be used to control where shapes are allowed to be spawned/mutated (when scripting is enabled)
+    geometrize::scene::ImageTaskSceneManager m_sceneManager; ///> Manager for scenes containing the pixmap/vector-based representations of the shapes etc
+    geometrize::scene::ImageTaskGraphicsView* m_pixmapView{nullptr}; ///> The view that holds the raster/pixel-based scene
+    geometrize::scene::ImageTaskGraphicsView* m_svgView{nullptr}; ///> The view that holds the vector-based scene
 
     bool m_running{false}; ///> Whether the model is running (automatically)
     QTimer m_timeRunningTimer; ///> Timer used to keep track of how long the image task has been in the "running" state

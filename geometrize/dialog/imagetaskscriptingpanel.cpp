@@ -5,7 +5,10 @@
 #include <memory>
 #include <string>
 
+#include <QComboBox>
 #include <QEvent>
+#include <QPushButton>
+#include <QStringList>
 
 #include "dialog/scripteditorwidget.h"
 #include "script/geometrizerengine.h"
@@ -25,6 +28,13 @@ public:
     {
         q->setWindowFlags(Qt::Window);
         ui->setupUi(q);
+
+        // Populate the presets dropdown
+        const QStringList presetOptions = QStringList()
+                << tr("Default Scripts")
+                << tr("Mouse Pointer Control Scripts");
+        ui->scriptsPresetsComboBox->addItems(presetOptions);
+        ui->scriptsPresetsComboBox->setCurrentIndex(0);
 
         // Setup the script editor widgets
         const std::map<std::string, std::string> scriptDefaults{geometrize::script::getDefaultScripts()};
@@ -57,7 +67,10 @@ public:
             setScriptModeEnabled(enableScripting);
         });
         connect(ui->resetScriptEngineButton, &QPushButton::pressed, [this]() {
-            m_task->getPreferences().setScripts(getScripts());
+            m_task->getPreferences().setScripts(getScripts()); // TODO huh, should be default code?
+        });
+        connect(ui->scriptsPresetsComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), [this](const int idx) {
+            m_task->getPreferences().setScripts(getScripts()); // TODO
         });
     }
     ~ImageTaskScriptingPanelImpl() = default;
@@ -115,6 +128,7 @@ private:
         m_task->getPreferences().setScriptModeEnabled(enabled);
         ui->scriptsEnabledButton->setChecked(enabled);
         ui->resetScriptEngineButton->setEnabled(enabled);
+        ui->scriptsPresetsComboBox->setEnabled(enabled);
         for(const auto& editor : m_editors) {
             editor->setEnabled(enabled);
         }

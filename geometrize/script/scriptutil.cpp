@@ -12,6 +12,26 @@
 
 #include "common/util.h"
 
+namespace
+{
+
+std::map<std::string, std::string> getScripts(const QString& path)
+{
+    std::map<std::string, std::string> m;
+
+    QDirIterator it(path);
+    while(it.hasNext()) {
+        it.next();
+        const std::string fileName{it.fileName().toStdString()};
+        const std::string functionName{fileName.substr(0, fileName.size() - 5)}; // Remove ".chai"
+        m[functionName] = geometrize::util::readFileAsString(it.filePath().toStdString());
+    }
+
+    return m;
+}
+
+}
+
 namespace geometrize
 {
 
@@ -35,19 +55,12 @@ std::vector<std::string> getEngineFunctionNames(const chaiscript::ChaiScript& en
 
 std::map<std::string, std::string> getDefaultScripts()
 {
-    const QString scriptResourceFolder{":/scripts/scripts/default_shape_mutators/"}; // Path to the default shape scripts folder in resources.
+    return getScripts(":/scripts/scripts/default_shape_mutators/");
+}
 
-    std::map<std::string, std::string> m;
-
-    QDirIterator it(scriptResourceFolder);
-    while(it.hasNext()) {
-        it.next();
-        const std::string fileName{it.fileName().toStdString()};
-        const std::string functionName{fileName.substr(0, fileName.size() - 5)}; // Remove ".chai"
-        m[functionName] = geometrize::util::readFileAsString(it.filePath().toStdString());
-    }
-
-    return m;
+std::map<std::string, std::string> getPointerAreaOfInterestScripts()
+{
+    return getScripts(":/scripts/scripts/pointer_area_of_interest_mutators/");
 }
 
 }

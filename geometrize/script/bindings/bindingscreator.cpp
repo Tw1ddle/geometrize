@@ -106,8 +106,41 @@ std::shared_ptr<chaiscript::Module> createDefaultBindings()
 
     ADD_FREE_FUN(percentEncode);
 
-    ADD_FREE_FUN(randomInRange);
-    ADD_FREE_FUN(clamp);
+    // This is horrifying - we are likely to get bitten by bad numeric conversion issues
+    // Helpers that take Boxed_Numbers could work for all numeric types
+    // but would be super slow, so for now I'll just try to use these...
+    ADD_FREE_FUN_TEMPLATE(randomInRange, float COMMA float COMMA float);
+    ADD_FREE_FUN_TEMPLATE(randomInRange, float COMMA float COMMA int);
+    ADD_FREE_FUN_TEMPLATE(randomInRange, float COMMA int COMMA float);
+    ADD_FREE_FUN_TEMPLATE(randomInRange, float COMMA int COMMA int);
+    ADD_FREE_FUN_TEMPLATE(randomInRange, int COMMA float COMMA float);
+    ADD_FREE_FUN_TEMPLATE(randomInRange, int COMMA int COMMA float);
+    ADD_FREE_FUN_TEMPLATE(randomInRange, int COMMA float COMMA int);
+    ADD_FREE_FUN_TEMPLATE(randomInRange, int COMMA int COMMA int);
+
+    ADD_FREE_FUN_TEMPLATE(clamp, float COMMA float COMMA float);
+    ADD_FREE_FUN_TEMPLATE(clamp, float COMMA float COMMA int);
+    ADD_FREE_FUN_TEMPLATE(clamp, float COMMA int COMMA float);
+    ADD_FREE_FUN_TEMPLATE(clamp, float COMMA int COMMA int);
+    ADD_FREE_FUN_TEMPLATE(clamp, int COMMA float COMMA float);
+    ADD_FREE_FUN_TEMPLATE(clamp, int COMMA int COMMA float);
+    ADD_FREE_FUN_TEMPLATE(clamp, int COMMA float COMMA int);
+    ADD_FREE_FUN_TEMPLATE(clamp, int COMMA int COMMA int);
+
+    // Note, this is a horrifying implementation, but should work for all numeric types
+    // TODO beware of the return type though...
+    /*
+    ADD_LAMBDA_FUN([](const chaiscript::Boxed_Number& lower, const chaiscript::Boxed_Number& upper) {
+        assert(chaiscript::Boxed_Number::less_than(lower, upper));
+        return chaiscript::Boxed_Number(util::randomInRange(lower.get_as_checked<int>(), upper.get_as_checked<int>()));
+    }, "randomInRange");
+
+    // Note, this is a horrifying implementation, but should work for all numeric types
+    ADD_LAMBDA_FUN([](const chaiscript::Boxed_Number value, const chaiscript::Boxed_Number& lower, const chaiscript::Boxed_Number upper) {
+        assert(chaiscript::Boxed_Number::less_than(lower, upper));
+        return chaiscript::Boxed_Number(util::clamp(value.get_as_checked<int>(), lower.get_as_checked<int>(), upper.get_as_checked<int>()));
+    }, "clamp");
+    */
 
     ADD_FREE_FUN(split);
 
@@ -273,36 +306,48 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
     //ADD_MEMBER(ImageRunner, getTarget);
     ADD_MEMBER(ImageRunner, getModel);
 
+    ADD_TYPE(Shape);
+
+    ADD_BASE_CLASS(Shape, Circle);
     ADD_TYPE(Circle);
+    ADD_CONSTRUCTOR(Circle, Circle(float, float, float));
     ADD_CONST_REF_MEMBER(Circle, m_model);
     ADD_MEMBER(Circle, m_x);
     ADD_MEMBER(Circle, m_y);
     ADD_MEMBER(Circle, m_r);
 
+    ADD_BASE_CLASS(Shape, Ellipse);
     ADD_TYPE(Ellipse);
+    ADD_CONSTRUCTOR(Ellipse, Ellipse(float, float, float, float));
     ADD_CONST_REF_MEMBER(Ellipse, m_model);
     ADD_MEMBER(Ellipse, m_x);
     ADD_MEMBER(Ellipse, m_y);
     ADD_MEMBER(Ellipse, m_rx);
     ADD_MEMBER(Ellipse, m_ry);
 
+    ADD_BASE_CLASS(Shape, Line);
     ADD_TYPE(Line);
+    ADD_CONSTRUCTOR(Line, Line(float, float, float, float));
     ADD_CONST_REF_MEMBER(Line, m_model);
     ADD_MEMBER(Line, m_x1);
     ADD_MEMBER(Line, m_y1);
     ADD_MEMBER(Line, m_x2);
     ADD_MEMBER(Line, m_y2);
 
+    ADD_BASE_CLASS(Shape, Polyline);
     ADD_TYPE(Polyline);
+    ADD_CONSTRUCTOR(Polyline, Polyline(const std::vector<std::pair<float, float>>));
     ADD_CONST_REF_MEMBER(Polyline, m_model);
 
     // Make the polyline points vector accessible from scripts
-    chaiscript::bootstrap::standard_library::pair_type<std::pair<std::int32_t, std::int32_t>>("IntPair", *module);
-    chaiscript::bootstrap::standard_library::vector_type<std::vector<std::pair<std::int32_t, std::int32_t>>>("IntPairVector", *module);
-    module->add(chaiscript::vector_conversion<std::vector<std::pair<std::int32_t, std::int32_t>>>());
+    chaiscript::bootstrap::standard_library::pair_type<std::pair<float, float>>("FloatPair", *module);
+    chaiscript::bootstrap::standard_library::vector_type<std::vector<std::pair<float, float>>>("IntPairVector", *module);
+    module->add(chaiscript::vector_conversion<std::vector<std::pair<float, float>>>());
     ADD_MEMBER(Polyline, m_points);
 
+    ADD_BASE_CLASS(Shape, QuadraticBezier);
     ADD_TYPE(QuadraticBezier);
+    ADD_CONSTRUCTOR(QuadraticBezier, QuadraticBezier(float, float, float, float, float, float));
     ADD_CONST_REF_MEMBER(QuadraticBezier, m_model);
     ADD_MEMBER(QuadraticBezier, m_cx);
     ADD_MEMBER(QuadraticBezier, m_cy);
@@ -311,14 +356,18 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
     ADD_MEMBER(QuadraticBezier, m_x2);
     ADD_MEMBER(QuadraticBezier, m_y2);
 
+    ADD_BASE_CLASS(Shape, Rectangle);
     ADD_TYPE(Rectangle);
+    ADD_CONSTRUCTOR(Rectangle, Rectangle(float, float, float, float));
     ADD_CONST_REF_MEMBER(Rectangle, m_model);
     ADD_MEMBER(Rectangle, m_x1);
     ADD_MEMBER(Rectangle, m_y1);
     ADD_MEMBER(Rectangle, m_x2);
     ADD_MEMBER(Rectangle, m_y2);
 
+    ADD_BASE_CLASS(Shape, RotatedEllipse);
     ADD_TYPE(RotatedEllipse);
+    ADD_CONSTRUCTOR(RotatedEllipse, RotatedEllipse(float, float, float, float, float));
     ADD_CONST_REF_MEMBER(RotatedEllipse, m_model);
     ADD_MEMBER(RotatedEllipse, m_x);
     ADD_MEMBER(RotatedEllipse, m_y);
@@ -326,7 +375,9 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
     ADD_MEMBER(RotatedEllipse, m_ry);
     ADD_MEMBER(RotatedEllipse, m_angle);
 
+    ADD_BASE_CLASS(Shape, RotatedRectangle);
     ADD_TYPE(RotatedRectangle);
+    ADD_CONSTRUCTOR(RotatedRectangle, RotatedRectangle(float, float, float, float, float));
     ADD_CONST_REF_MEMBER(RotatedRectangle, m_model);
     ADD_MEMBER(RotatedRectangle, m_x1);
     ADD_MEMBER(RotatedRectangle, m_y1);
@@ -334,7 +385,9 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
     ADD_MEMBER(RotatedRectangle, m_y2);
     ADD_MEMBER(RotatedRectangle, m_angle);
 
+    ADD_BASE_CLASS(Shape, Triangle);
     ADD_TYPE(Triangle);
+    ADD_CONSTRUCTOR(Triangle, Triangle(float, float, float, float, float, float));
     ADD_CONST_REF_MEMBER(Triangle, m_model);
     ADD_MEMBER(Triangle, m_x1);
     ADD_MEMBER(Triangle, m_y1);
@@ -363,6 +416,9 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
 
     ADD_FREE_FUN(seedRandomGenerator);
     ADD_FREE_FUN(getAverageImageColor);
+
+    ADD_FREE_FUN(shapesOverlap);
+    ADD_FREE_FUN(shapeContains);
 
     ADD_TYPE(Model);
     ADD_CONSTRUCTOR(Model, Model(const geometrize::Bitmap&));

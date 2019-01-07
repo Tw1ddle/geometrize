@@ -6,6 +6,7 @@
 #include <QImage>
 
 #include "geometrize/shaperesult.h"
+#include "geometrize/common/util.h"
 
 class QObject;
 
@@ -80,9 +81,24 @@ bool writeStringToFile(const std::string& str, const std::string& path);
 
 std::string percentEncode(const std::string& str);
 
-int randomInRange(int lower, int upper);
+template<typename T, typename U, typename V>
+T randomInRange(U lower, V upper)
+{
+    return static_cast<T>(geometrize::util::randomInRange(static_cast<int>(lower), static_cast<int>(upper)));
+}
 
-int clamp(int value, int lower, int upper);
+template<typename T, typename U, typename V>
+T clamp(T value, U lower, V upper)
+{
+    assert(lower <= upper);
+    if (value < lower) {
+        value = lower;
+    }
+    if (value > upper) {
+        value = upper;
+    }
+    return value;
+}
 
 std::vector<std::string> split(const std::string& s, const char delimiter);
 

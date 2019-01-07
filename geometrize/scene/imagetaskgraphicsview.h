@@ -4,12 +4,13 @@
 #include <QObject>
 
 class QEvent;
+class QKeyEvent;
 class QWheelEvent;
 
 namespace geometrize
 {
 
-namespace dialog
+namespace scene
 {
 
 /**
@@ -31,6 +32,7 @@ private:
 
     void wheelEvent(QWheelEvent* event) override;
     void mouseMoveEvent(QMouseEvent* event) override;
+    void keyPressEvent(QKeyEvent* event) override;
 };
 
 }

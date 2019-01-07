@@ -1,26 +1,35 @@
 #include "imagetaskgraphicsview.h"
 
 #include <QEvent>
+#include <QKeyEvent>
 #include <QWheelEvent>
 
 namespace geometrize
 {
 
-namespace dialog
+namespace scene
 {
 
 ImageTaskGraphicsView::ImageTaskGraphicsView(QWidget* parent) : QGraphicsView(parent)
 {
+    setInteractive(true);
+    setMouseTracking(true);
     setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
     setDragMode(QGraphicsView::ScrollHandDrag);
     setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
-    setMouseTracking(true);
 
     populateUi();
 }
 
 void ImageTaskGraphicsView::wheelEvent(QWheelEvent* e)
 {
+    if(e->modifiers() & Qt::ControlModifier) {
+        // Pass down to scene/children in scene if control is pressed
+        QGraphicsView::wheelEvent(e);
+        return;
+    }
+
+    // Handle zooming
     if (e->angleDelta().x() == 0) {
         const QPoint pos{e->pos()};
         const QPointF posf{mapToScene(pos)};
@@ -55,6 +64,11 @@ void ImageTaskGraphicsView::wheelEvent(QWheelEvent* e)
 void ImageTaskGraphicsView::mouseMoveEvent(QMouseEvent* event)
 {
     QGraphicsView::mouseMoveEvent(event);
+}
+
+void ImageTaskGraphicsView::keyPressEvent(QKeyEvent* event)
+{
+    QGraphicsView::keyPressEvent(event);
 }
 
 void ImageTaskGraphicsView::changeEvent(QEvent* event)

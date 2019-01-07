@@ -5,6 +5,8 @@
 
 #include <QGraphicsScene>
 
+#include "imagetaskscene.h"
+
 namespace geometrize
 {
 struct ShapeResult;
@@ -13,35 +15,23 @@ struct ShapeResult;
 namespace geometrize
 {
 
-namespace dialog
+namespace scene
 {
 
 /**
  * @brief The ImageTaskSvgScene class models a graphics scene for viewing the shape data of an image task as an SVG.
  */
-class ImageTaskSvgScene : public QGraphicsScene
+class ImageTaskSvgScene : public ImageTaskScene
 {
     Q_OBJECT
 
 public:
-    explicit ImageTaskSvgScene();
+    ImageTaskSvgScene();
     virtual ~ImageTaskSvgScene();
 
     /**
-     * @brief setTargetPixmap Sets the pixmap that provides the target/goal image visualization.
-     * @param pixmap The pixmap to set as the target/goal image visualization.
-     */
-    void setTargetPixmap(const QPixmap& pixmap);
-
-    /**
-     * @brief setTargetPixmapOpacity Sets the opacity of the target pixmap.
-     * @param opacity The opacity value.
-     */
-    void setTargetPixmapOpacity(float opacity);
-
-    /**
-     * @brief addShapes Adds SVG data based on the given shapes.
-     * @param shapes The shapes to add to the scene.
+     * @brief addShapes Updates the SVG data based on the given shapes.
+     * @param shapes The shapes to draw in the scene.
      * @param width The width of the SVG.
      * @param height The height of the SVG.
      */

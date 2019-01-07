@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cassert>
 #include <string>
 #include <sstream>
 #include <vector>
@@ -209,7 +210,18 @@ int randomInRange(int lower, int upper);
  * @param upper The upper bound of the range.
  * @return The clamped value.
  */
-int clamp(int value, int lower, int upper);
+template<typename T>
+T clamp(T value, T lower, T upper)
+{
+    assert(lower <= upper);
+    if (value < lower) {
+        value = lower;
+    }
+    if (value > upper) {
+        value = upper;
+    }
+    return value;
+}
 
 template<typename T>
 void split(const std::string& s, const char delimiter, T result)

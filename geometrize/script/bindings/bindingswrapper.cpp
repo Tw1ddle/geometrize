@@ -191,16 +191,6 @@ std::string percentEncode(const std::string& str)
     return geometrize::util::percentEncode(str);
 }
 
-int randomInRange(const int lower, const int upper)
-{
-    return geometrize::util::randomInRange(lower, upper);
-}
-
-int clamp(const int value, const int lower, const int upper)
-{
-    return geometrize::util::clamp(value, lower, upper);
-}
-
 std::vector<std::string> split(const std::string& s, const char delimiter)
 {
     return geometrize::util::split(s, delimiter);
