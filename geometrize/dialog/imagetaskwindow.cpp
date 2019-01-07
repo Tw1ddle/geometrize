@@ -170,7 +170,7 @@ public:
 
                 updateStats();
 
-                if(isRunning()) {
+                if(shouldKeepStepping()) {
                     stepModel();
                 }
             });
@@ -245,10 +245,10 @@ public:
 
         // Handle runner button presses
         connect(ui->imageTaskRunnerWidget, &ImageTaskRunnerWidget::runStopButtonClicked, [this]() {
-            setRunning(!isRunning());
+            setShouldKeepStepping(!shouldKeepStepping());
 
-            // Request another image task step if running started
-            if(isRunning()) {
+            // Request another image task step if user clicked start here
+            if(shouldKeepStepping()) {
                 stepModel();
             }
         });
@@ -281,7 +281,7 @@ public:
                 return;
             }
 
-            setRunning(false);
+            setShouldKeepStepping(false);
             geometrize::dialog::showImageTaskStopConditionMetMessage(q);
         });
 
@@ -447,26 +447,32 @@ private:
         return q->findChild<geometrize::dialog::ImageTaskScriptingPanel*>();
     }
 
+    bool isRunning() const
+    {
+        if(!m_task) {
+            return false;
+        }
+        return m_task->isStepping();
+    }
+
+    bool shouldKeepStepping() const
+    {
+        return m_shouldKeepStepping;
+    }
+
+    void setShouldKeepStepping(const bool stepping)
+    {
+        m_shouldKeepStepping = stepping;
+        updateStartStopButtonText();
+    }
+
     void updateStartStopButtonText()
     {
-        if(!isRunning()) {
+        if(!shouldKeepStepping()) {
             ui->imageTaskRunnerWidget->setRunStopButtonText(tr("Start", "Text on a button that the user presses to make the app start/begin transforming an image into shapes"));
         } else {
             ui->imageTaskRunnerWidget->setRunStopButtonText(tr("Stop", "Text on a button that the user presses to make the app stop/pause transforming an image into shapes"));
         }
-    }
-
-    bool isRunning() const
-    {
-        return m_running;
-    }
-
-    void setRunning(const bool running)
-    {
-        // TODO this is buggy when steps are queued up on the task, need to synch up whether the task is running or not in a better way
-        m_running = running;
-
-        updateStartStopButtonText();
     }
 
     void stepModel()
@@ -563,7 +569,7 @@ private:
     geometrize::scene::ImageTaskGraphicsView* m_pixmapView{nullptr}; ///> The view that holds the raster/pixel-based scene
     geometrize::scene::ImageTaskGraphicsView* m_svgView{nullptr}; ///> The view that holds the vector-based scene
 
-    bool m_running{false}; ///> Whether the model is running (automatically)
+    bool m_shouldKeepStepping{false}; ///> Whether to continually step i.e. whether to start another step after stepping once
     QTimer m_timeRunningTimer; ///> Timer used to keep track of how long the image task has been in the "running" state
     float m_timeRunning{0.0f}; ///> Total time that the image task has been in the "running" state
     const float m_timeRunningResolutionMs{100.0f}; ///> Resolution of the time running timer
