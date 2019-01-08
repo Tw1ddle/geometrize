@@ -44,6 +44,14 @@ void AreaOfInfluenceShape::scaleShape(const float scaleFactor)
     emit signal_didModifyShape(*m_lastShape.get());
 }
 
+std::shared_ptr<geometrize::Shape> AreaOfInfluenceShape::getLastShape() const
+{
+    if(m_lastShape == nullptr) {
+        return nullptr;
+    }
+    return m_lastShape->clone();
+}
+
 }
 
 }

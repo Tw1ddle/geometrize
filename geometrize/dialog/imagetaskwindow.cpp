@@ -13,6 +13,8 @@
 #include <QRectF>
 #include <QTimer>
 
+#include "chaiscript/chaiscript.hpp" // TODO remove
+
 #include "geometrize/bitmap/bitmap.h"
 #include "geometrize/runner/imagerunneroptions.h"
 
@@ -154,13 +156,21 @@ public:
             m_taskDidStepConnection = connect(currentTask, &task::ImageTask::signal_modelDidStep, [this](std::vector<geometrize::ShapeResult> shapes) {
                 processPostStepCbs();
 
-                // Apply the latest scripts prior to stepping
+                // Apply the latest scripts and engine state prior to stepping
                 auto& geometrizer = m_task->getGeometrizer();
+
+                // TODO this really ought to be done using std::any or similar for globals
+                // and magic for serialization/deserialization... but MSVC/C++17 lack of support
+                // preclude that for now
+                chaiscript::ChaiScript* engine = geometrizer.getEngine();
+
                 const bool scriptModeEnabled = m_task->getPreferences().isScriptModeEnabled();
                 geometrizer.setEnabled(scriptModeEnabled);
                 if(scriptModeEnabled) {
                     geometrizer.setupScripts(m_task->getPreferences().getScripts());
                 }
+
+                engine->set_global(chaiscript::var(m_areaOfInfluenceShape.getLastShape()), "aoi");
 
                 // If the first shape added background rectangle then fit the scenes to it
                 if(m_shapes.empty()) {

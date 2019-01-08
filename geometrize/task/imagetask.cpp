@@ -8,6 +8,8 @@
 
 #include "geometrize/commonutil.h"
 #include "geometrize/bitmap/bitmap.h"
+#include "geometrize/rasterizer/rasterizer.h"
+#include "geometrize/shape/shapemutator.h"
 #include "geometrize/runner/imagerunner.h"
 #include "geometrize/model.h"
 #include "geometrize/shaperesult.h"
@@ -87,11 +89,6 @@ public:
         return m_worker.getCurrent().getHeight();
     }
 
-    ShapeMutator& getShapeMutator()
-    {
-        return m_worker.getRunner().getModel().getShapeMutator();
-    }
-
     std::string getDisplayName() const
     {
         return m_displayName;
@@ -120,11 +117,12 @@ public:
     void drawBackgroundRectangle()
     {
         const geometrize::rgba color{geometrize::commonutil::getAverageImageColor(m_worker.getRunner().getTarget())};
-        const std::shared_ptr<geometrize::Rectangle> rectangle = std::make_shared<geometrize::Rectangle>(m_worker.getRunner().getModel());
-        rectangle->m_x1 = 0;
-        rectangle->m_x2 = m_worker.getTarget().getWidth();
-        rectangle->m_y1 = 0;
-        rectangle->m_y2 = m_worker.getTarget().getHeight();
+        const std::int32_t w = m_worker.getTarget().getWidth();
+        const std::int32_t h = m_worker.getTarget().getHeight();
+
+        const std::shared_ptr<geometrize::Rectangle> rectangle = std::make_shared<geometrize::Rectangle>(0, 0, w, h);
+        rectangle->rasterize = [w, h](const geometrize::Shape& s) { return geometrize::rasterize(static_cast<const geometrize::Rectangle&>(s), w, h); };
+
         emit q->signal_drawShape(rectangle, color);
     }
 
@@ -158,8 +156,6 @@ private:
 
     void init(const Qt::ConnectionType connectionType)
     {
-        m_geometrizer.setMutator(&m_worker.getRunner().getModel().getShapeMutator());
-
         qRegisterMetaType<std::vector<geometrize::ShapeResult>>();
         qRegisterMetaType<geometrize::ImageRunnerOptions>();
         qRegisterMetaType<std::shared_ptr<geometrize::Shape>>();

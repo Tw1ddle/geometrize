@@ -19,6 +19,7 @@
 #include "geometrize/exporter/shapearrayexporter.h"
 #include "geometrize/exporter/shapejsonexporter.h"
 #include "geometrize/exporter/svgexporter.h"
+#include "geometrize/rasterizer/rasterizer.h"
 #include "geometrize/runner/imagerunner.h"
 #include "geometrize/runner/imagerunneroptions.h"
 #include "geometrize/shape/circle.h"
@@ -30,7 +31,6 @@
 #include "geometrize/shape/rotatedellipse.h"
 #include "geometrize/shape/rotatedrectangle.h"
 #include "geometrize/shape/shapefactory.h"
-#include "geometrize/shape/shapemutator.h"
 #include "geometrize/shape/shapetypes.h"
 #include "geometrize/shape/triangle.h"
 #include "geometrize/commonutil.h"
@@ -311,7 +311,6 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
     ADD_BASE_CLASS(Shape, Circle);
     ADD_TYPE(Circle);
     ADD_CONSTRUCTOR(Circle, Circle(float, float, float));
-    ADD_CONST_REF_MEMBER(Circle, m_model);
     ADD_MEMBER(Circle, m_x);
     ADD_MEMBER(Circle, m_y);
     ADD_MEMBER(Circle, m_r);
@@ -319,7 +318,6 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
     ADD_BASE_CLASS(Shape, Ellipse);
     ADD_TYPE(Ellipse);
     ADD_CONSTRUCTOR(Ellipse, Ellipse(float, float, float, float));
-    ADD_CONST_REF_MEMBER(Ellipse, m_model);
     ADD_MEMBER(Ellipse, m_x);
     ADD_MEMBER(Ellipse, m_y);
     ADD_MEMBER(Ellipse, m_rx);
@@ -328,7 +326,6 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
     ADD_BASE_CLASS(Shape, Line);
     ADD_TYPE(Line);
     ADD_CONSTRUCTOR(Line, Line(float, float, float, float));
-    ADD_CONST_REF_MEMBER(Line, m_model);
     ADD_MEMBER(Line, m_x1);
     ADD_MEMBER(Line, m_y1);
     ADD_MEMBER(Line, m_x2);
@@ -337,7 +334,6 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
     ADD_BASE_CLASS(Shape, Polyline);
     ADD_TYPE(Polyline);
     ADD_CONSTRUCTOR(Polyline, Polyline(const std::vector<std::pair<float, float>>));
-    ADD_CONST_REF_MEMBER(Polyline, m_model);
 
     // Make the polyline points vector accessible from scripts
     chaiscript::bootstrap::standard_library::pair_type<std::pair<float, float>>("FloatPair", *module);
@@ -348,7 +344,6 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
     ADD_BASE_CLASS(Shape, QuadraticBezier);
     ADD_TYPE(QuadraticBezier);
     ADD_CONSTRUCTOR(QuadraticBezier, QuadraticBezier(float, float, float, float, float, float));
-    ADD_CONST_REF_MEMBER(QuadraticBezier, m_model);
     ADD_MEMBER(QuadraticBezier, m_cx);
     ADD_MEMBER(QuadraticBezier, m_cy);
     ADD_MEMBER(QuadraticBezier, m_x1);
@@ -359,7 +354,6 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
     ADD_BASE_CLASS(Shape, Rectangle);
     ADD_TYPE(Rectangle);
     ADD_CONSTRUCTOR(Rectangle, Rectangle(float, float, float, float));
-    ADD_CONST_REF_MEMBER(Rectangle, m_model);
     ADD_MEMBER(Rectangle, m_x1);
     ADD_MEMBER(Rectangle, m_y1);
     ADD_MEMBER(Rectangle, m_x2);
@@ -368,7 +362,6 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
     ADD_BASE_CLASS(Shape, RotatedEllipse);
     ADD_TYPE(RotatedEllipse);
     ADD_CONSTRUCTOR(RotatedEllipse, RotatedEllipse(float, float, float, float, float));
-    ADD_CONST_REF_MEMBER(RotatedEllipse, m_model);
     ADD_MEMBER(RotatedEllipse, m_x);
     ADD_MEMBER(RotatedEllipse, m_y);
     ADD_MEMBER(RotatedEllipse, m_rx);
@@ -378,7 +371,6 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
     ADD_BASE_CLASS(Shape, RotatedRectangle);
     ADD_TYPE(RotatedRectangle);
     ADD_CONSTRUCTOR(RotatedRectangle, RotatedRectangle(float, float, float, float, float));
-    ADD_CONST_REF_MEMBER(RotatedRectangle, m_model);
     ADD_MEMBER(RotatedRectangle, m_x1);
     ADD_MEMBER(RotatedRectangle, m_y1);
     ADD_MEMBER(RotatedRectangle, m_x2);
@@ -388,15 +380,12 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
     ADD_BASE_CLASS(Shape, Triangle);
     ADD_TYPE(Triangle);
     ADD_CONSTRUCTOR(Triangle, Triangle(float, float, float, float, float, float));
-    ADD_CONST_REF_MEMBER(Triangle, m_model);
     ADD_MEMBER(Triangle, m_x1);
     ADD_MEMBER(Triangle, m_y1);
     ADD_MEMBER(Triangle, m_x2);
     ADD_MEMBER(Triangle, m_y2);
     ADD_MEMBER(Triangle, m_x3);
     ADD_MEMBER(Triangle, m_y3);
-
-    ADD_TYPE(ShapeMutator);
 
     chaiscript::utility::add_class<geometrize::ShapeTypes>(*module,
       "ShapeTypes",
@@ -431,7 +420,6 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
     //ADD_MEMBER(Model, getCurrent);
     //ADD_MEMBER(Model, getTarget);
     ADD_MEMBER(Model, setSeed);
-    //ADD_MEMBER(Model, getShapeMutator);
 
     return module;
 }

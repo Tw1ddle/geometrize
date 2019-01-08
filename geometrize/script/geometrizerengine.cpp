@@ -20,7 +20,6 @@
 #include "geometrize/shape/rotatedellipse.h"
 #include "geometrize/shape/rotatedrectangle.h"
 #include "geometrize/shape/triangle.h"
-#include "geometrize/shape/shapemutator.h"
 
 #include "common/util.h"
 #include "script/chaiscriptcreator.h"
@@ -36,7 +35,7 @@ namespace script
 class GeometrizerEngine::GeometrizerEngineImpl
 {
 public:
-    GeometrizerEngineImpl(GeometrizerEngine* pQ) : q{pQ}, m_engine{script::createShapeMutatorEngine()}, m_defaultScripts{script::getDefaultScripts()}, m_mutator{nullptr}
+    GeometrizerEngineImpl(GeometrizerEngine* pQ) : q{pQ}, m_engine{script::createShapeMutatorEngine()}, m_defaultScripts{script::getDefaultScripts()}
     {
         m_state = m_engine->get_state();
     }
@@ -49,17 +48,12 @@ public:
         return m_engine.get();
     }
 
-    void setMutator(geometrize::ShapeMutator* mutator)
-    {
-        m_mutator = mutator;
-    }
-
     void setEnabled(const bool enabled)
     {
         if(enabled) {
             installDefaults();
         } else {
-            m_mutator->setDefaults();
+            //m_mutator->setDefaults();
         }
     }
 
@@ -137,10 +131,10 @@ private:
         const std::string setupPrefix{"setup"};
         const std::string mutatePrefix{"mutate"};
         if(functionName.find(setupPrefix) == 0) {
-            m_mutator->setSetupFunction(f);
+            //m_mutator->setSetupFunction(f);
             return;
         } else if(functionName.find(mutatePrefix) == 0) {
-            m_mutator->setMutatorFunction(f);
+            //m_mutator->setMutatorFunction(f);
             return;
         }
 
@@ -151,7 +145,6 @@ private:
     const std::map<std::string, std::string> m_defaultScripts; ///< The default/fallbacks scripts loaded from the resources folder (function name and fields).
     std::unique_ptr<chaiscript::ChaiScript> m_engine;
     chaiscript::ChaiScript::State m_state;
-    geometrize::ShapeMutator* m_mutator;
 };
 
 GeometrizerEngine::GeometrizerEngine() : d{std::make_unique<GeometrizerEngine::GeometrizerEngineImpl>(this)}
@@ -165,11 +158,6 @@ GeometrizerEngine::~GeometrizerEngine()
 chaiscript::ChaiScript* GeometrizerEngine::getEngine()
 {
     return d->getEngine();
-}
-
-void GeometrizerEngine::setMutator(geometrize::ShapeMutator* mutator)
-{
-    d->setMutator(mutator);
 }
 
 void GeometrizerEngine::setEnabled(const bool enabled)

@@ -49,6 +49,12 @@ public:
      */
     void scaleShape(float scaleFactor);
 
+    /**
+     * @brief getLastShape Gets a clone of the last shape.
+     * @return A clone of the most recently used shape.
+     */
+    std::shared_ptr<geometrize::Shape> getLastShape() const;
+
 signals:
     /**
      * @brief signal_didModifyShape Signal dispatched whenever the area of influence shape is modified.

@@ -13,11 +13,6 @@ class ChaiScript;
 
 namespace geometrize
 {
-class ShapeMutator;
-}
-
-namespace geometrize
-{
 
 namespace script
 {
@@ -40,12 +35,6 @@ public:
      * @return A pointer to the script engine used by the shape mutation engine.
      */
     chaiscript::ChaiScript* getEngine();
-
-    /**
-     * @brief setMutator Sets the shape mutator whose shape mutation functions will be managed by the geometrizer engine.
-     * @param mutator The shape mutator.
-     */
-    void setMutator(geometrize::ShapeMutator* mutator);
 
     /**
      * @brief setEnabled Enables or disables the engine. If disabled, the shape mutator will use its hardcoded defaults instead of the engine implementations.

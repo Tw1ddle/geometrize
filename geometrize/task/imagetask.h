@@ -10,7 +10,6 @@
 #include "geometrize/bitmap/rgba.h"
 #include "geometrize/shaperesult.h"
 #include "geometrize/runner/imagerunneroptions.h"
-#include "geometrize/shape/shapemutator.h"
 
 #include "preferences/imagetaskpreferences.h"
 
