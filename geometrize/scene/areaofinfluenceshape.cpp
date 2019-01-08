@@ -1,6 +1,7 @@
 #include "areaofinfluenceshape.h"
 
 #include "geometrize/shape/circle.h"
+#include "geometrize/shape/shapemutator.h"
 
 #include <cassert>
 
@@ -29,7 +30,7 @@ void AreaOfInfluenceShape::translateShape(const float x, const float y)
         assert(0 && "Last shape used was null, so there is no shape to translate");
         return;
     }
-    m_lastShape->translate(x, y);
+    geometrize::translate(*m_lastShape.get(), x, y);
     emit signal_didModifyShape(*m_lastShape.get());
 }
 
@@ -40,7 +41,7 @@ void AreaOfInfluenceShape::scaleShape(const float scaleFactor)
         return;
     }
 
-    m_lastShape->scale(scaleFactor);
+    geometrize::scale(*m_lastShape.get(), scaleFactor);
     emit signal_didModifyShape(*m_lastShape.get());
 }
 
