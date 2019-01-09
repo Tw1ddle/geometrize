@@ -165,7 +165,6 @@ public:
                 chaiscript::ChaiScript* engine = geometrizer.getEngine();
 
                 const bool scriptModeEnabled = m_task->getPreferences().isScriptModeEnabled();
-                geometrizer.setEnabled(scriptModeEnabled);
                 if(scriptModeEnabled) {
                     geometrizer.setupScripts(m_task->getPreferences().getScripts());
                 }
@@ -514,7 +513,9 @@ private:
         ui->statsDockContents->setTaskId(m_task->getTaskId());
         ui->statsDockContents->setImageDimensions(m_task->getWidth(), m_task->getHeight());
 
-        if(!isRunning()) {
+        // Note this is "stopped" when !isRunning alone, but this prevents flashing while
+        // the user has it continually adding shapes
+        if(!isRunning() && !shouldKeepStepping()) {
             ui->statsDockContents->setCurrentStatus(geometrize::dialog::ImageTaskStatsWidget::STOPPED);
         }
 

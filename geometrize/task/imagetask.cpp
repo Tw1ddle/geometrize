@@ -2,6 +2,8 @@
 
 #include <atomic>
 #include <cassert>
+#include <functional>
+#include <memory>
 #include <vector>
 
 #include <QThread>
@@ -13,6 +15,7 @@
 #include "geometrize/runner/imagerunner.h"
 #include "geometrize/model.h"
 #include "geometrize/shaperesult.h"
+#include "geometrize/shape/shape.h"
 #include "geometrize/shape/rectangle.h"
 
 #include "preferences/imagetaskpreferences.h"
@@ -104,9 +107,9 @@ public:
         return m_worker.isStepping();
     }
 
-    void stepModel()
+    void stepModel(std::function<std::shared_ptr<geometrize::Shape>()> shapeCreator)
     {
-        emit q->signal_step(m_preferences.getImageRunnerOptions());
+        emit q->signal_step(m_preferences.getImageRunnerOptions(), shapeCreator);
     }
 
     void drawShape(const std::shared_ptr<geometrize::Shape> shape, const geometrize::rgba color)
@@ -158,6 +161,7 @@ private:
     {
         qRegisterMetaType<std::vector<geometrize::ShapeResult>>();
         qRegisterMetaType<geometrize::ImageRunnerOptions>();
+        qRegisterMetaType<std::function<std::shared_ptr<geometrize::Shape>()>>();
         qRegisterMetaType<std::shared_ptr<geometrize::Shape>>();
         qRegisterMetaType<geometrize::rgba>();
 
@@ -263,7 +267,7 @@ bool ImageTask::isStepping() const
 
 void ImageTask::stepModel()
 {
-    d->stepModel();
+    d->stepModel(getGeometrizer().makeShapeCreator());
 }
 
 void ImageTask::drawShape(std::shared_ptr<geometrize::Shape> shape, const geometrize::rgba color)

@@ -1,6 +1,8 @@
 #include "geometrizerengine.h"
 
+#include <functional>
 #include <map>
+#include <memory>
 #include <string>
 #include <vector>
 #include <utility>
@@ -19,6 +21,8 @@
 #include "geometrize/shape/rectangle.h"
 #include "geometrize/shape/rotatedellipse.h"
 #include "geometrize/shape/rotatedrectangle.h"
+#include "geometrize/shape/shape.h"
+#include "geometrize/shape/shapefactory.h"
 #include "geometrize/shape/triangle.h"
 
 #include "common/util.h"
@@ -35,7 +39,7 @@ namespace script
 class GeometrizerEngine::GeometrizerEngineImpl
 {
 public:
-    GeometrizerEngineImpl(GeometrizerEngine* pQ) : q{pQ}, m_engine{script::createShapeMutatorEngine()}, m_defaultScripts{script::getDefaultScripts()}
+    GeometrizerEngineImpl(GeometrizerEngine* pQ) : q{pQ}, m_defaultScripts{script::getDefaultScripts()}, m_engine{script::createShapeMutatorEngine()}
     {
         m_state = m_engine->get_state();
     }
@@ -43,18 +47,16 @@ public:
     GeometrizerEngineImpl& operator=(const GeometrizerEngineImpl&) = default;
     GeometrizerEngineImpl(const GeometrizerEngineImpl&) = default;
 
+    std::function<std::shared_ptr<geometrize::Shape>()> makeShapeCreator()
+    {
+        // TODO implement types/bindings based on the actual preferences + bindings
+        //return geometrize::createDefaultShapeCreator(geometrize::ShapeTypes::CIRCLE, 64, 64);
+        return nullptr;
+    }
+
     chaiscript::ChaiScript* getEngine()
     {
         return m_engine.get();
-    }
-
-    void setEnabled(const bool enabled)
-    {
-        if(enabled) {
-            installDefaults();
-        } else {
-            //m_mutator->setDefaults();
-        }
     }
 
     void setupScripts(const std::map<std::string, std::string>& functions)
@@ -155,14 +157,14 @@ GeometrizerEngine::~GeometrizerEngine()
 {
 }
 
+std::function<std::shared_ptr<geometrize::Shape>()> GeometrizerEngine::makeShapeCreator()
+{
+    return d->makeShapeCreator();
+}
+
 chaiscript::ChaiScript* GeometrizerEngine::getEngine()
 {
     return d->getEngine();
-}
-
-void GeometrizerEngine::setEnabled(const bool enabled)
-{
-    d->setEnabled(enabled);
 }
 
 void GeometrizerEngine::setupScripts(const std::map<std::string, std::string>& functions)

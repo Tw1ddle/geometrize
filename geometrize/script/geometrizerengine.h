@@ -1,5 +1,6 @@
 #pragma once
 
+#include <functional>
 #include <map>
 #include <memory>
 #include <string>
@@ -13,12 +14,17 @@ class ChaiScript;
 
 namespace geometrize
 {
+class Shape;
+}
+
+namespace geometrize
+{
 
 namespace script
 {
 
 /**
- * @brief The GeometrizerEngine class encapsulates setup and mutation methods for geometrizing shapes.
+ * @brief The GeometrizerEngine class encapsulates script-based setup and mutation methods for geometrizing shapes.
  */
 class GeometrizerEngine : public QObject
 {
@@ -31,16 +37,18 @@ public:
     virtual ~GeometrizerEngine();
 
     /**
+     * @brief makeShapeCreator Returns a function that generates shapes for the core geometrization algorithm
+     * This is passed to the geometrization algorithm and called across many threads. So it's unsafe to change any
+     * state used by the script engine while we're busy adding shapes.
+     * @return A function that generates shapes for the core geometrization algorithm, for passing to an ImageRunner.
+     */
+    std::function<std::shared_ptr<geometrize::Shape>()> makeShapeCreator();
+
+    /**
      * @brief getEngine Gets a pointer to the script engine used by the shape mutation engine.
      * @return A pointer to the script engine used by the shape mutation engine.
      */
     chaiscript::ChaiScript* getEngine();
-
-    /**
-     * @brief setEnabled Enables or disables the engine. If disabled, the shape mutator will use its hardcoded defaults instead of the engine implementations.
-     * @param enabled True to enable the engine, false to disable it.
-     */
-    void setEnabled(bool enabled);
 
     /**
      * @brief setupScripts Sets the scripted setup and mutation rules on the current shape mutator.
