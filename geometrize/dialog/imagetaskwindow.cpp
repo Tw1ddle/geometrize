@@ -42,7 +42,7 @@ namespace
 {
 
 // Utility function for destroying an image task set on a window.
-// This is a special case because we may need to defer task deletion until the task is finished working.
+// This has a special case because we may need to defer task deletion until the task is finished working.
 void destroyTask(geometrize::task::ImageTask* task)
 {
     if(task == nullptr) {
@@ -54,11 +54,12 @@ void destroyTask(geometrize::task::ImageTask* task)
         // Wait until the task finishes stepping before disposing of it
         // Otherwise it will probably crash as the Geometrize library will be working with deleted data
         task->connect(task, &geometrize::task::ImageTask::signal_modelDidStep, [task](std::vector<geometrize::ShapeResult>) {
+            task->disconnect(nullptr, nullptr, nullptr, nullptr);
             task->deleteLater();
         });
     } else {
-        delete task;
-        task = nullptr;
+        task->disconnect(nullptr, nullptr, nullptr, nullptr);
+        task->deleteLater();
     }
 }
 
@@ -126,18 +127,13 @@ public:
         });
 
         // Handle request to set the image task on the task window
-        connect(q, &ImageTaskWindow::willSwitchImageTask, [this](task::ImageTask* lastTask, task::ImageTask*) {
-            // NOTE we disconnect and destroy the last image task, which will soon be replaced by the next image task
-            // This means that any task set on the window is destroyed after it is replaced
+        connect(q, &ImageTaskWindow::willSwitchImageTask, [this](task::ImageTask*, task::ImageTask*) {
+            // Disconnect the last image task, which will soon be replaced by the next image task
             disconnectTask();
-
-            if(lastTask) {
-                destroyTask(lastTask);
-            }
 
             m_shapes.clear();
         });
-        connect(q, &ImageTaskWindow::didSwitchImageTask, [this](task::ImageTask*, task::ImageTask* currentTask) {
+        connect(q, &ImageTaskWindow::didSwitchImageTask, [this](task::ImageTask* lastTask, task::ImageTask* currentTask) {
             ui->imageTaskExportWidget->setImageTask(currentTask, &m_shapes.getShapeVector());
             ui->imageTaskRunnerWidget->setImageTask(currentTask);
 
@@ -151,17 +147,10 @@ public:
 
             m_taskWillStepConnection = connect(currentTask, &task::ImageTask::signal_modelWillStep, [this]() {
                 ui->statsDockContents->setCurrentStatus(geometrize::dialog::ImageTaskStatsWidget::RUNNING);
-            });
-
-            m_taskDidStepConnection = connect(currentTask, &task::ImageTask::signal_modelDidStep, [this](std::vector<geometrize::ShapeResult> shapes) {
-                processPostStepCbs();
 
                 // Apply the latest scripts and engine state prior to stepping
                 auto& geometrizer = m_task->getGeometrizer();
 
-                // TODO this really ought to be done using std::any or similar for globals
-                // and magic for serialization/deserialization... but MSVC/C++17 lack of support
-                // preclude that for now
                 chaiscript::ChaiScript* engine = geometrizer.getEngine();
 
                 const bool scriptModeEnabled = m_task->getPreferences().isScriptModeEnabled();
@@ -169,7 +158,20 @@ public:
                     geometrizer.setupScripts(m_task->getPreferences().getScripts());
                 }
 
+                engine->set_global(chaiscript::var(static_cast<int>(m_task->getWidth())), "xBound");
+                engine->set_global(chaiscript::var(static_cast<int>(m_task->getHeight())), "yBound");
                 engine->set_global(chaiscript::var(m_areaOfInfluenceShape.getLastShape()), "aoi");
+                engine->set_global(chaiscript::var(m_shapes.getShapeVector().size()), "currentShapeCount");
+
+                std::vector<std::pair<std::int32_t, std::int32_t>> aoiPixels = m_areaOfInfluenceShape.getPixels(m_task->getWidth(), m_task->getHeight());
+                if(aoiPixels.empty()) {
+                    aoiPixels.push_back(std::make_pair(m_task->getWidth() / 2, m_task->getHeight() / 2));
+                }
+                engine->set_global(chaiscript::var(aoiPixels), "aoiPixels");
+            });
+
+            m_taskDidStepConnection = connect(currentTask, &task::ImageTask::signal_modelDidStep, [this](std::vector<geometrize::ShapeResult> shapes) {
+                processPostStepCbs();
 
                 // If the first shape added background rectangle then fit the scenes to it
                 if(m_shapes.empty()) {
@@ -206,6 +208,11 @@ public:
             // Bind keyboard shortcuts for sending images out over the network etc
             geometrize::installImageSlingerKeyboardShortcuts(q, m_task);
             #endif
+
+            // As a final step, dispose of the old image task, if there was one
+            if(lastTask != nullptr) {
+                destroyTask(lastTask);
+            }
         });
 
         // Handle requested target image overlay opacity changes
@@ -313,17 +320,21 @@ public:
         });
 
         // Connect pointer control/manipulations of the scenes to the actual area of influence shape
-        connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onTargetImageHoverMoveEvent, [this](const int x, const int y, const bool ctrlModifier) {
+        connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onTargetImageHoverMoveEvent, [this](const int lastX, const int lastY, const int x, const int y, const bool ctrlModifier) {
             if(!ctrlModifier) {
                 return;
             }
-            m_areaOfInfluenceShape.setup(x, y, 64); // 64 pixels seems a reasonable starting size
+            if(m_areaOfInfluenceShape.getLastShape() == nullptr) {
+                m_areaOfInfluenceShape.setup(x, y, geometrize::ShapeTypes::TRIANGLE);
+            } else {
+                m_areaOfInfluenceShape.translateShape(x - lastX, y - lastY);
+            }
         });
         connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onAreaOfInfluenceShapeMouseWheelEvent, [this](const int, const int, const double amount, const bool ctrlModifier) {
             if(!ctrlModifier) {
                 return;
             }
-            m_areaOfInfluenceShape.scaleShape(amount > 0 ? 1.01f : 0.99f);
+            m_areaOfInfluenceShape.scaleShape(amount > 0 ? 1.03f : 0.97f);
         });
 
         // Set initial target image opacity

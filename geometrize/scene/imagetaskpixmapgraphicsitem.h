@@ -26,9 +26,9 @@ public:
     virtual ~ImageTaskPixmapGraphicsItem();
 
 signals:
-    void signal_onHoverMoveEvent(double x, double y, bool ctrlModifier);
+    void signal_onHoverMoveEvent(double lastX, double lastY, double x, double y, bool ctrlModifier);
     void signal_onMousePressEvent(double x, double y, bool ctrlModifier);
-    void signal_onMouseMoveEvent(double x, double y, bool ctrlModifier);
+    void signal_onMouseMoveEvent(double lastX, double lastY, double x, double y, bool ctrlModifier);
     void signal_onMouseReleaseEvent(double x, double y, bool ctrlModifier);
     void signal_onWheelEvent(double x, double y, int amount, bool ctrlModifier);
 

@@ -17,6 +17,7 @@
 #include "geometrize/shaperesult.h"
 #include "geometrize/shape/shape.h"
 #include "geometrize/shape/rectangle.h"
+#include "geometrize/shape/shapefactory.h"
 
 #include "preferences/imagetaskpreferences.h"
 #include "script/geometrizerengine.h"
@@ -107,8 +108,17 @@ public:
         return m_worker.isStepping();
     }
 
-    void stepModel(std::function<std::shared_ptr<geometrize::Shape>()> shapeCreator)
+    void stepModel()
     {
+        const auto shapeCreator = [this]() {
+            const std::int32_t w = m_worker.getTarget().getWidth();
+            const std::int32_t h = m_worker.getTarget().getHeight();
+
+            if(m_preferences.isScriptModeEnabled()) {
+                return m_geometrizer.makeShapeCreator(m_preferences.getImageRunnerOptions().shapeTypes, w, h);
+            }
+            return geometrize::createDefaultShapeCreator(m_preferences.getImageRunnerOptions().shapeTypes, w, h);
+        }();
         emit q->signal_step(m_preferences.getImageRunnerOptions(), shapeCreator);
     }
 
@@ -175,8 +185,8 @@ private:
     {
         q->connect(q, &ImageTask::signal_step, &m_worker, &ImageTaskWorker::step, connectionType);
         q->connect(q, &ImageTask::signal_drawShape, &m_worker, &ImageTaskWorker::drawShape, connectionType);
-        q->connect(&m_worker, &ImageTaskWorker::signal_willStep, q, &ImageTask::modelWillStep, connectionType);
-        q->connect(&m_worker, &ImageTaskWorker::signal_didStep, q, &ImageTask::modelDidStep, connectionType);
+        q->connect(&m_worker, &ImageTaskWorker::signal_willStep, q, &ImageTask::modelWillStep, Qt::BlockingQueuedConnection);
+        q->connect(&m_worker, &ImageTaskWorker::signal_didStep, q, &ImageTask::modelDidStep, Qt::BlockingQueuedConnection);
     }
 
     void disconnectAll()
@@ -267,7 +277,7 @@ bool ImageTask::isStepping() const
 
 void ImageTask::stepModel()
 {
-    d->stepModel(getGeometrizer().makeShapeCreator());
+    d->stepModel();
 }
 
 void ImageTask::drawShape(std::shared_ptr<geometrize::Shape> shape, const geometrize::rgba color)

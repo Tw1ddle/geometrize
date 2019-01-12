@@ -191,6 +191,26 @@ std::string percentEncode(const std::string& str)
     return geometrize::util::percentEncode(str);
 }
 
+int randomIntInRange(const int lower, const int upper)
+{
+    return randomInRange<int, int, int>(lower, upper);
+}
+
+float randomFloatInRange(const float lower, const float upper)
+{
+    return randomInRange<float, float, float>(lower, upper);
+}
+
+int clampInt(const int value, const int lower, const int upper)
+{
+    return clamp<int, int, int>(value, lower, upper);
+}
+
+float clampFloat(const float value, const float lower, const float upper)
+{
+    return clamp<float, float, float>(value, lower, upper);
+}
+
 std::vector<std::string> split(const std::string& s, const char delimiter)
 {
     return geometrize::util::split(s, delimiter);

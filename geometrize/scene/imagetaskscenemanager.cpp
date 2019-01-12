@@ -114,11 +114,11 @@ public:
 private:
     void connectTargetItemSignals(geometrize::scene::ImageTaskPixmapGraphicsItem& item)
     {
-        connect(&item, &geometrize::scene::ImageTaskPixmapGraphicsItem::signal_onHoverMoveEvent, [this](const double x, const double y, const bool ctrlModifier) {
-            emit q->signal_onTargetImageHoverMoveEvent(x, y, ctrlModifier);
+        connect(&item, &geometrize::scene::ImageTaskPixmapGraphicsItem::signal_onHoverMoveEvent, [this](const double lastX, const double lastY, const double x, const double y, const bool ctrlModifier) {
+            emit q->signal_onTargetImageHoverMoveEvent(lastX, lastY, x, y, ctrlModifier);
         });
-        connect(&item, &geometrize::scene::ImageTaskPixmapGraphicsItem::signal_onMouseMoveEvent, [this](const double x, const double y, const bool ctrlModifier) {
-            emit q->signal_onTargetImageMouseMoveEvent(x, y, ctrlModifier);
+        connect(&item, &geometrize::scene::ImageTaskPixmapGraphicsItem::signal_onMouseMoveEvent, [this](const double lastX, const double lastY, const double x, const double y, const bool ctrlModifier) {
+            emit q->signal_onTargetImageMouseMoveEvent(lastX, lastY, x, y, ctrlModifier);
         });
         connect(&item, &geometrize::scene::ImageTaskPixmapGraphicsItem::signal_onMousePressEvent, [this](const double x, const double y, const bool ctrlModifier) {
             q->signal_onTargetImageMousePressEvent(x, y, ctrlModifier);

@@ -1,11 +1,14 @@
 #pragma once
 
+#include <cstdint>
 #include <functional>
 #include <map>
 #include <memory>
 #include <string>
 
 #include <QObject>
+
+#include "geometrize/shape/shapetypes.h"
 
 namespace chaiscript
 {
@@ -42,7 +45,7 @@ public:
      * state used by the script engine while we're busy adding shapes.
      * @return A function that generates shapes for the core geometrization algorithm, for passing to an ImageRunner.
      */
-    std::function<std::shared_ptr<geometrize::Shape>()> makeShapeCreator();
+    std::function<std::shared_ptr<geometrize::Shape>()> makeShapeCreator(geometrize::ShapeTypes types, std::int32_t w, std::int32_t h);
 
     /**
      * @brief getEngine Gets a pointer to the script engine used by the shape mutation engine.

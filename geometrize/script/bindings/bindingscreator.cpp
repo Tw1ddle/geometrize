@@ -106,41 +106,21 @@ std::shared_ptr<chaiscript::Module> createDefaultBindings()
 
     ADD_FREE_FUN(percentEncode);
 
-    // This is horrifying - we are likely to get bitten by bad numeric conversion issues
-    // Helpers that take Boxed_Numbers could work for all numeric types
-    // but would be super slow, so for now I'll just try to use these...
     ADD_FREE_FUN_TEMPLATE(randomInRange, float COMMA float COMMA float);
-    ADD_FREE_FUN_TEMPLATE(randomInRange, float COMMA float COMMA int);
-    ADD_FREE_FUN_TEMPLATE(randomInRange, float COMMA int COMMA float);
-    ADD_FREE_FUN_TEMPLATE(randomInRange, float COMMA int COMMA int);
-    ADD_FREE_FUN_TEMPLATE(randomInRange, int COMMA float COMMA float);
-    ADD_FREE_FUN_TEMPLATE(randomInRange, int COMMA int COMMA float);
-    ADD_FREE_FUN_TEMPLATE(randomInRange, int COMMA float COMMA int);
-    ADD_FREE_FUN_TEMPLATE(randomInRange, int COMMA int COMMA int);
-
     ADD_FREE_FUN_TEMPLATE(clamp, float COMMA float COMMA float);
-    ADD_FREE_FUN_TEMPLATE(clamp, float COMMA float COMMA int);
-    ADD_FREE_FUN_TEMPLATE(clamp, float COMMA int COMMA float);
-    ADD_FREE_FUN_TEMPLATE(clamp, float COMMA int COMMA int);
-    ADD_FREE_FUN_TEMPLATE(clamp, int COMMA float COMMA float);
-    ADD_FREE_FUN_TEMPLATE(clamp, int COMMA int COMMA float);
-    ADD_FREE_FUN_TEMPLATE(clamp, int COMMA float COMMA int);
-    ADD_FREE_FUN_TEMPLATE(clamp, int COMMA int COMMA int);
 
-    // Note, this is a horrifying implementation, but should work for all numeric types
-    // TODO beware of the return type though...
-    /*
-    ADD_LAMBDA_FUN([](const chaiscript::Boxed_Number& lower, const chaiscript::Boxed_Number& upper) {
-        assert(chaiscript::Boxed_Number::less_than(lower, upper));
-        return chaiscript::Boxed_Number(util::randomInRange(lower.get_as_checked<int>(), upper.get_as_checked<int>()));
-    }, "randomInRange");
+    // Some specialized helper templates if in doubt
+    ADD_FREE_FUN(randomIntInRange);
+    ADD_FREE_FUN(randomFloatInRange);
 
-    // Note, this is a horrifying implementation, but should work for all numeric types
-    ADD_LAMBDA_FUN([](const chaiscript::Boxed_Number value, const chaiscript::Boxed_Number& lower, const chaiscript::Boxed_Number upper) {
-        assert(chaiscript::Boxed_Number::less_than(lower, upper));
-        return chaiscript::Boxed_Number(util::clamp(value.get_as_checked<int>(), lower.get_as_checked<int>(), upper.get_as_checked<int>()));
-    }, "clamp");
-    */
+    ADD_FREE_FUN(clampInt);
+    ADD_FREE_FUN(clampFloat);
+
+    ADD_FREE_FUN_TEMPLATE(randomInVector, std::pair<int COMMA int>);
+    ADD_FREE_FUN_TEMPLATE(randomInVector, std::pair<float COMMA float>);
+
+    ADD_FREE_FUN_TEMPLATE(vectorContains, std::pair<int COMMA int>);
+    ADD_FREE_FUN_TEMPLATE(vectorContains, std::pair<float COMMA float>);
 
     ADD_FREE_FUN(split);
 

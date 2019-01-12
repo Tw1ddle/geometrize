@@ -6,7 +6,8 @@
 #include <QImage>
 
 #include "geometrize/shaperesult.h"
-#include "geometrize/common/util.h"
+
+#include "common/util.h"
 
 class QObject;
 
@@ -87,6 +88,16 @@ T randomInRange(U lower, V upper)
     return static_cast<T>(geometrize::util::randomInRange(static_cast<int>(lower), static_cast<int>(upper)));
 }
 
+int randomIntInRange(int lower, int upper);
+
+float randomFloatInRange(float lower, float upper);
+
+template<typename T> T randomInVector(const std::vector<T>& v)
+{
+    assert(!v.empty());
+    return v[randomInRange<int, std::size_t, std::size_t>(0, v.size() - 1)];
+}
+
 template<typename T, typename U, typename V>
 T clamp(T value, U lower, V upper)
 {
@@ -98,6 +109,16 @@ T clamp(T value, U lower, V upper)
         value = upper;
     }
     return value;
+}
+
+int clampInt(int value, int lower, int upper);
+
+float clampFloat(float value, float lower, float upper);
+
+template<typename T>
+bool vectorContains(const std::vector<T>& v, const T& t)
+{
+    return (std::find(v.begin(), v.end(), t) != v.end());
 }
 
 std::vector<std::string> split(const std::string& s, const char delimiter);

@@ -1,8 +1,12 @@
 #pragma once
 
+#include <utility>
+#include <vector>
+
 #include <QObject>
 
 #include "geometrize/shape/shape.h"
+#include "geometrize/shape/shapetypes.h"
 
 namespace geometrize
 {
@@ -23,12 +27,12 @@ public:
     ~AreaOfInfluenceShape() = default;
 
     /**
-     * @brief setup Sets up the default area of influence shape, a small circle.
+     * @brief setup Sets up the default area of influence shape of the given type.
      * @param x The center x-coordinate of the shape, in target image pixel coordinates.
      * @param y The center y-coordinate of the shape, in target image pixel coordinates.
-     * @param radius The radius of the circle in pixels.
+     * @param type The type of shape to create.
      */
-    void setup(int x, int y, unsigned int radius);
+    void setup(int x, int y, geometrize::ShapeTypes type);
 
     /**
      * @brief setup Sets up the area of influence shape to the given shape.
@@ -54,6 +58,14 @@ public:
      * @return A clone of the most recently used shape.
      */
     std::shared_ptr<geometrize::Shape> getLastShape() const;
+
+    /**
+     * @brief getPixels Gets the pixels that make up the area of influence shape.
+     * @param xBound The max x-value allowed in the pixels.
+     * @param yBound The max y-value allowed in the pixels.
+     * @return A vector of x,y pairs that make up the pixels of the shape. Empty if there is no shape.
+     */
+    std::vector<std::pair<std::int32_t, std::int32_t>> getPixels(std::uint32_t xBound, std::uint32_t yBound) const;
 
 signals:
     /**

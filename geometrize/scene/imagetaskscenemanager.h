@@ -95,9 +95,9 @@ public:
     void setAreaOfInfluenceShape(const geometrize::Shape& shape);
 
 signals:
-    void signal_onTargetImageHoverMoveEvent(double x, double y, bool ctrlModifier);
+    void signal_onTargetImageHoverMoveEvent(double lastX, double lastY, double x, double y, bool ctrlModifier);
     void signal_onTargetImageMousePressEvent(double x, double y, bool ctrlModifier);
-    void signal_onTargetImageMouseMoveEvent(double x, double y, bool ctrlModifier);
+    void signal_onTargetImageMouseMoveEvent(double lastX, double lastY, double x, double y, bool ctrlModifier);
     void signal_onTargetImageMouseReleaseEvent(double x, double y, bool ctrlModifier);
     void signal_onTargetImageWheelEvent(double x, double y, int amount, bool ctrlModifier);
 

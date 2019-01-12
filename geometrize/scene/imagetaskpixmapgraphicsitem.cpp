@@ -29,13 +29,13 @@ ImageTaskPixmapGraphicsItem::~ImageTaskPixmapGraphicsItem()
 void ImageTaskPixmapGraphicsItem::hoverMoveEvent(QGraphicsSceneHoverEvent* event)
 {
     QGraphicsPixmapItem::hoverMoveEvent(event);
-    emit signal_onHoverMoveEvent(event->scenePos().x(), event->scenePos().y(), event->modifiers() & Qt::ControlModifier);
+    emit signal_onHoverMoveEvent(event->lastScenePos().x(), event->lastScenePos().y(), event->scenePos().x(), event->scenePos().y(), event->modifiers() & Qt::ControlModifier);
 }
 
 void ImageTaskPixmapGraphicsItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
     QGraphicsPixmapItem::mousePressEvent(event);
-    emit signal_onMouseMoveEvent(event->scenePos().x(), event->scenePos().y(), event->modifiers() & Qt::ControlModifier);
+    emit signal_onMouseMoveEvent(event->lastScenePos().x(), event->lastScenePos().y(),event->scenePos().x(), event->scenePos().y(), event->modifiers() & Qt::ControlModifier);
 }
 
 void ImageTaskPixmapGraphicsItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
@@ -47,7 +47,7 @@ void ImageTaskPixmapGraphicsItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* ev
 void ImageTaskPixmapGraphicsItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
     QGraphicsPixmapItem::mouseMoveEvent(event);
-    emit signal_onMouseMoveEvent(event->scenePos().x(), event->scenePos().y(), event->modifiers() & Qt::ControlModifier);
+    emit signal_onMouseMoveEvent(event->lastScenePos().x(), event->lastScenePos().y(), event->scenePos().x(), event->scenePos().y(), event->modifiers() & Qt::ControlModifier);
 }
 
 void ImageTaskPixmapGraphicsItem::wheelEvent(QGraphicsSceneWheelEvent* event)

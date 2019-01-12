@@ -4,8 +4,10 @@
 #include <map>
 #include <string>
 #include <thread>
+#include <vector>
 
 #include <QDirIterator>
+#include <QString>
 
 #include "chaiscript/chaiscript.hpp"
 #include "chaiscript/language/chaiscript_engine.hpp"
@@ -15,7 +17,7 @@
 namespace
 {
 
-std::map<std::string, std::string> getScripts(const QString& path)
+std::map<std::string, std::string> getScriptsFromFolder(const QString& path)
 {
     std::map<std::string, std::string> m;
 
@@ -53,14 +55,19 @@ std::vector<std::string> getEngineFunctionNames(const chaiscript::ChaiScript& en
     return functions;
 }
 
+std::map<std::string, std::string> getScripts(const std::string& folder)
+{
+    return getScriptsFromFolder(QString::fromStdString(folder));
+}
+
 std::map<std::string, std::string> getDefaultScripts()
 {
-    return getScripts(":/scripts/scripts/default_shape_mutators/");
+    return getScriptsFromFolder(":/scripts/scripts/default_shape_mutators/");
 }
 
 std::map<std::string, std::string> getPointerAreaOfInterestScripts()
 {
-    return getScripts(":/scripts/scripts/pointer_area_of_interest_mutators/");
+    return getScriptsFromFolder(":/scripts/scripts/pointer_area_of_interest_mutators/");
 }
 
 }
