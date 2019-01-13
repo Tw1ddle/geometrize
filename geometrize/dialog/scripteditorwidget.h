@@ -21,7 +21,8 @@ class ScriptEditorWidget : public QGroupBox
     Q_OBJECT
 
 public:
-    explicit ScriptEditorWidget(const std::string& title, const std::string& functionName, const std::string& defaultCode, QWidget* parent = nullptr);
+    ScriptEditorWidget(QObject* parent);
+    ScriptEditorWidget(const std::string& title, const std::string& functionName, const std::string& defaultCode, QWidget* parent = nullptr);
     virtual ~ScriptEditorWidget();
 
     std::string getFunctionName() const;

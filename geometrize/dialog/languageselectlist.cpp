@@ -69,7 +69,7 @@ private:
         q->sortItems(Qt::AscendingOrder);
     }
 
-    void addItemAtIndex(const int i, const QString localeCode)
+    void addItemAtIndex(const int i, const QString& localeCode)
     {
         const QLocale locale{localeCode};
         const QLocale::Language language{locale.language()};

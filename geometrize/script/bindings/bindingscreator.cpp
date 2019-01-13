@@ -6,6 +6,8 @@
 #include <utility>
 
 #include <QImage>
+#include <QObject>
+#include <QWidget>
 #include <Qt>
 
 #include "chaiscript/chaiscript.hpp"
@@ -17,6 +19,7 @@
 #include "geometrize/exporter/shapearrayexporter.h"
 #include "geometrize/exporter/shapejsonexporter.h"
 #include "geometrize/exporter/svgexporter.h"
+#include "geometrize/rasterizer/rasterizer.h"
 #include "geometrize/runner/imagerunner.h"
 #include "geometrize/runner/imagerunneroptions.h"
 #include "geometrize/shape/circle.h"
@@ -28,7 +31,6 @@
 #include "geometrize/shape/rotatedellipse.h"
 #include "geometrize/shape/rotatedrectangle.h"
 #include "geometrize/shape/shapefactory.h"
-#include "geometrize/shape/shapemutator.h"
 #include "geometrize/shape/shapetypes.h"
 #include "geometrize/shape/triangle.h"
 #include "geometrize/commonutil.h"
@@ -64,6 +66,7 @@ std::shared_ptr<chaiscript::Module> createDefaultBindings()
     ADD_FREE_FUN(messageBox);
     ADD_FREE_FUN(printToConsole);
 
+    ADD_FREE_FUN(processApplicationEvents);
     ADD_FREE_FUN(directoryContainsFile);
     ADD_FREE_FUN(fileExists);
     ADD_FREE_FUN(directoryExists);
@@ -95,16 +98,33 @@ std::shared_ptr<chaiscript::Module> createDefaultBindings()
     ADD_FREE_FUN(stringBeginsWith);
     ADD_FREE_FUN(stringEndsWith);
 
+    ADD_FREE_FUN(getApplicationDirectoryLocation);
     ADD_FREE_FUN(getAppDataLocation);
+    ADD_FREE_FUN(getHomeDirectoryLocation);
 
     ADD_FREE_FUN(writeStringToFile);
 
     ADD_FREE_FUN(percentEncode);
 
-    ADD_FREE_FUN(randomInRange);
-    ADD_FREE_FUN(clamp);
+    ADD_FREE_FUN_TEMPLATE(randomInRange, float COMMA float COMMA float);
+    ADD_FREE_FUN_TEMPLATE(clamp, float COMMA float COMMA float);
+
+    // Some specialized helper templates if in doubt
+    ADD_FREE_FUN(randomIntInRange);
+    ADD_FREE_FUN(randomFloatInRange);
+
+    ADD_FREE_FUN(clampInt);
+    ADD_FREE_FUN(clampFloat);
+
+    ADD_FREE_FUN_TEMPLATE(randomInVector, std::pair<int COMMA int>);
+    ADD_FREE_FUN_TEMPLATE(randomInVector, std::pair<float COMMA float>);
+
+    ADD_FREE_FUN_TEMPLATE(vectorContains, std::pair<int COMMA int>);
+    ADD_FREE_FUN_TEMPLATE(vectorContains, std::pair<float COMMA float>);
 
     ADD_FREE_FUN(split);
+
+    ADD_FREE_FUN(getOperatingSystemProductType);
 
     ADD_FREE_FUN(setTranslatorsForLocale);
 
@@ -121,6 +141,7 @@ std::shared_ptr<chaiscript::Module> createLaunchWindowBindings()
 
     ADD_BASE_CLASS(QMainWindow, LaunchWindow);
     ADD_BASE_CLASS(QWidget, LaunchWindow);
+    ADD_BASE_CLASS(QObject, LaunchWindow);
 
     ADD_CONSTRUCTOR(LaunchWindow, LaunchWindow());
 
@@ -265,37 +286,44 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
     //ADD_MEMBER(ImageRunner, getTarget);
     ADD_MEMBER(ImageRunner, getModel);
 
+    ADD_TYPE(Shape);
+
+    ADD_BASE_CLASS(Shape, Circle);
     ADD_TYPE(Circle);
-    ADD_CONST_REF_MEMBER(Circle, m_model);
+    ADD_CONSTRUCTOR(Circle, Circle(float, float, float));
     ADD_MEMBER(Circle, m_x);
     ADD_MEMBER(Circle, m_y);
     ADD_MEMBER(Circle, m_r);
 
+    ADD_BASE_CLASS(Shape, Ellipse);
     ADD_TYPE(Ellipse);
-    ADD_CONST_REF_MEMBER(Ellipse, m_model);
+    ADD_CONSTRUCTOR(Ellipse, Ellipse(float, float, float, float));
     ADD_MEMBER(Ellipse, m_x);
     ADD_MEMBER(Ellipse, m_y);
     ADD_MEMBER(Ellipse, m_rx);
     ADD_MEMBER(Ellipse, m_ry);
 
+    ADD_BASE_CLASS(Shape, Line);
     ADD_TYPE(Line);
-    ADD_CONST_REF_MEMBER(Line, m_model);
+    ADD_CONSTRUCTOR(Line, Line(float, float, float, float));
     ADD_MEMBER(Line, m_x1);
     ADD_MEMBER(Line, m_y1);
     ADD_MEMBER(Line, m_x2);
     ADD_MEMBER(Line, m_y2);
 
+    ADD_BASE_CLASS(Shape, Polyline);
     ADD_TYPE(Polyline);
-    ADD_CONST_REF_MEMBER(Polyline, m_model);
+    ADD_CONSTRUCTOR(Polyline, Polyline(const std::vector<std::pair<float, float>>));
 
     // Make the polyline points vector accessible from scripts
-    chaiscript::bootstrap::standard_library::pair_type<std::pair<std::int32_t, std::int32_t>>("IntPair", *module);
-    chaiscript::bootstrap::standard_library::vector_type<std::vector<std::pair<std::int32_t, std::int32_t>>>("IntPairVector", *module);
-    module->add(chaiscript::vector_conversion<std::vector<std::pair<std::int32_t, std::int32_t>>>());
+    chaiscript::bootstrap::standard_library::pair_type<std::pair<float, float>>("FloatPair", *module);
+    chaiscript::bootstrap::standard_library::vector_type<std::vector<std::pair<float, float>>>("IntPairVector", *module);
+    module->add(chaiscript::vector_conversion<std::vector<std::pair<float, float>>>());
     ADD_MEMBER(Polyline, m_points);
 
+    ADD_BASE_CLASS(Shape, QuadraticBezier);
     ADD_TYPE(QuadraticBezier);
-    ADD_CONST_REF_MEMBER(QuadraticBezier, m_model);
+    ADD_CONSTRUCTOR(QuadraticBezier, QuadraticBezier(float, float, float, float, float, float));
     ADD_MEMBER(QuadraticBezier, m_cx);
     ADD_MEMBER(QuadraticBezier, m_cy);
     ADD_MEMBER(QuadraticBezier, m_x1);
@@ -303,39 +331,41 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
     ADD_MEMBER(QuadraticBezier, m_x2);
     ADD_MEMBER(QuadraticBezier, m_y2);
 
+    ADD_BASE_CLASS(Shape, Rectangle);
     ADD_TYPE(Rectangle);
-    ADD_CONST_REF_MEMBER(Rectangle, m_model);
+    ADD_CONSTRUCTOR(Rectangle, Rectangle(float, float, float, float));
     ADD_MEMBER(Rectangle, m_x1);
     ADD_MEMBER(Rectangle, m_y1);
     ADD_MEMBER(Rectangle, m_x2);
     ADD_MEMBER(Rectangle, m_y2);
 
+    ADD_BASE_CLASS(Shape, RotatedEllipse);
     ADD_TYPE(RotatedEllipse);
-    ADD_CONST_REF_MEMBER(RotatedEllipse, m_model);
+    ADD_CONSTRUCTOR(RotatedEllipse, RotatedEllipse(float, float, float, float, float));
     ADD_MEMBER(RotatedEllipse, m_x);
     ADD_MEMBER(RotatedEllipse, m_y);
     ADD_MEMBER(RotatedEllipse, m_rx);
     ADD_MEMBER(RotatedEllipse, m_ry);
     ADD_MEMBER(RotatedEllipse, m_angle);
 
+    ADD_BASE_CLASS(Shape, RotatedRectangle);
     ADD_TYPE(RotatedRectangle);
-    ADD_CONST_REF_MEMBER(RotatedRectangle, m_model);
+    ADD_CONSTRUCTOR(RotatedRectangle, RotatedRectangle(float, float, float, float, float));
     ADD_MEMBER(RotatedRectangle, m_x1);
     ADD_MEMBER(RotatedRectangle, m_y1);
     ADD_MEMBER(RotatedRectangle, m_x2);
     ADD_MEMBER(RotatedRectangle, m_y2);
     ADD_MEMBER(RotatedRectangle, m_angle);
 
+    ADD_BASE_CLASS(Shape, Triangle);
     ADD_TYPE(Triangle);
-    ADD_CONST_REF_MEMBER(Triangle, m_model);
+    ADD_CONSTRUCTOR(Triangle, Triangle(float, float, float, float, float, float));
     ADD_MEMBER(Triangle, m_x1);
     ADD_MEMBER(Triangle, m_y1);
     ADD_MEMBER(Triangle, m_x2);
     ADD_MEMBER(Triangle, m_y2);
     ADD_MEMBER(Triangle, m_x3);
     ADD_MEMBER(Triangle, m_y3);
-
-    ADD_TYPE(ShapeMutator);
 
     chaiscript::utility::add_class<geometrize::ShapeTypes>(*module,
       "ShapeTypes",
@@ -356,6 +386,9 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
     ADD_FREE_FUN(seedRandomGenerator);
     ADD_FREE_FUN(getAverageImageColor);
 
+    ADD_FREE_FUN(shapesOverlap);
+    ADD_FREE_FUN(shapeContains);
+
     ADD_TYPE(Model);
     ADD_CONSTRUCTOR(Model, Model(const geometrize::Bitmap&));
     ADD_CONSTRUCTOR(Model, Model(const geometrize::Bitmap&, const geometrize::Bitmap&));
@@ -367,7 +400,6 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
     //ADD_MEMBER(Model, getCurrent);
     //ADD_MEMBER(Model, getTarget);
     ADD_MEMBER(Model, setSeed);
-    //ADD_MEMBER(Model, getShapeMutator);
 
     return module;
 }
@@ -375,6 +407,20 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
 std::shared_ptr<chaiscript::Module> createMathBindings()
 {
     return chaiscript::extras::math::bootstrap();
+}
+
+std::shared_ptr<chaiscript::Module> createUserInterfacePuppeteerBindings()
+{
+    auto module{std::make_shared<chaiscript::Module>()};
+
+    ADD_FREE_FUN(getCursorX);
+    ADD_FREE_FUN(getCursorY);
+    ADD_FREE_FUN(setCursorPos);
+
+    ADD_FREE_FUN(saveDesktopScreenshot);
+    ADD_FREE_FUN(saveWidgetScreenshot);
+
+    return module;
 }
 
 }

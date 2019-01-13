@@ -2,10 +2,14 @@
 #include "ui_imagetaskscriptingpanel.h"
 
 #include <algorithm>
+#include <cassert>
 #include <memory>
 #include <string>
 
+#include <QComboBox>
 #include <QEvent>
+#include <QPushButton>
+#include <QStringList>
 
 #include "dialog/scripteditorwidget.h"
 #include "script/geometrizerengine.h"
@@ -26,21 +30,11 @@ public:
         q->setWindowFlags(Qt::Window);
         ui->setupUi(q);
 
-        // Setup the script editor widgets
-        const std::map<std::string, std::string> scriptDefaults{geometrize::script::getDefaultScripts()};
-        for(const auto& item : scriptDefaults) {
-            ScriptEditorWidget* editor{new ScriptEditorWidget(item.first, item.first, item.second)};
-            m_editors.push_back(editor);
-            connect(editor, &ScriptEditorWidget::signal_scriptChanged, [this](ScriptEditorWidget* /*self*/, const std::string& functionName, const std::string& code) {
-                emit q->signal_scriptChanged(functionName, code);
-            });
-            ui->scriptEditorsContainer->addWidget(editor);
-        }
-
         // Setup the scripting enable/disable checkbox
         connect(ui->scriptsEnabledButton, &QCheckBox::toggled, [this](const bool enabled) {
             emit q->signal_scriptingToggled(enabled);
         });
+
         // Setup the reset scripting engine checkbox
         connect(ui->resetScriptEngineButton, &QPushButton::pressed, [this]() {
             for(ScriptEditorWidget* editor : m_editors) {
@@ -49,16 +43,37 @@ public:
             emit q->signal_scriptsReset();
         });
 
-        // Setup the actual actions that manipulate the image geometrization script functions
-        connect(q, &geometrize::dialog::ImageTaskScriptingPanel::signal_scriptChanged, [this](const std::string& functionName, const std::string& code) {
-            m_task->getPreferences().setScript(functionName, code);
-        });
+        // Enable/disable scripting
         connect(q, &geometrize::dialog::ImageTaskScriptingPanel::signal_scriptingToggled, [this](const bool enableScripting) {
             setScriptModeEnabled(enableScripting);
         });
+
+        // Resets the scripts to their original presets when reset is pressed
         connect(ui->resetScriptEngineButton, &QPushButton::pressed, [this]() {
-            m_task->getPreferences().setScripts(getScripts());
+            for(ScriptEditorWidget* editor : m_editors) {
+                editor->resetCodeToDefault();
+            }
         });
+
+        // Setup the actual actions that manipulate the image geometrization script functions
+        connect(q, &geometrize::dialog::ImageTaskScriptingPanel::signal_scriptChanged, [this](const std::string& functionName, const std::string& code) {
+            if(m_task) {
+                m_task->getPreferences().setScript(functionName, code);
+            }
+        });
+
+        // Handle changes to the script presets
+        connect(ui->scriptsPresetsComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), [this](const int idx) {
+            if(idx >= 0) {
+                setupPreset(idx);
+            }
+        });
+
+        connect(ui->rescanScriptFoldersButton, &QPushButton::pressed, [this]() {
+            buildPresetsMenuAndSelectPreset();
+        });
+
+        buildPresetsMenuAndSelectPreset();
     }
     ~ImageTaskScriptingPanelImpl() = default;
     ImageTaskScriptingPanelImpl operator=(const ImageTaskScriptingPanelImpl&) = delete;
@@ -89,7 +104,10 @@ public:
             }
         });
 
-        syncUserInterface();
+        if(m_task) {
+            setScriptModeEnabled(m_task->getPreferences().isScriptModeEnabled());
+            m_task->getPreferences().setScripts(getScripts());
+        }
     }
 
     void syncUserInterface()
@@ -110,10 +128,59 @@ private:
 
     }
 
+    void buildPresetsMenuAndSelectPreset()
+    {
+        ui->scriptsPresetsComboBox->clear();
+
+        // Populate the presets dropdown
+        // Set the menu to first index, slots will populate the panel with the default scripts
+        const QStringList presetOptions = QStringList()
+                << tr("Default Scripts")
+                << tr("Area Focus Scripts");
+
+        ui->scriptsPresetsComboBox->addItems(presetOptions);
+    }
+
+    void setupPreset(const int idx)
+    {
+        qDeleteAll(m_editors);
+        m_editors.clear();
+
+        // Setup the script editor widgets
+        const auto scripts = [idx]() -> std::map<std::string, std::string> {
+            switch(idx) {
+            case 0:
+                return geometrize::script::getDefaultScripts();
+            case 1:
+                return geometrize::script::getPointerAreaOfInterestScripts();
+            default:
+                assert(0 && "Bad scripts presets index");
+                return {{}};
+            }
+        }();
+
+        for(const auto& item : scripts) {
+            ScriptEditorWidget* editor{new ScriptEditorWidget(item.first, item.first, item.second)};
+            m_editors.push_back(editor);
+            connect(editor, &ScriptEditorWidget::signal_scriptChanged, [this](ScriptEditorWidget* /*self*/, const std::string& functionName, const std::string& code) {
+                emit q->signal_scriptChanged(functionName, code);
+            });
+            ui->scriptEditorsContainer->addWidget(editor);
+        }
+
+        if(m_task) {
+            m_task->getPreferences().setScripts(scripts);
+        }
+    }
+
     void setScriptModeEnabled(const bool enabled)
     {
-        m_task->getPreferences().setScriptModeEnabled(enabled);
+        if(m_task) {
+            m_task->getPreferences().setScriptModeEnabled(enabled);
+        }
         ui->scriptsEnabledButton->setChecked(enabled);
+        ui->scriptsPresetsComboBox->setEnabled(enabled);
+        ui->rescanScriptFoldersButton->setEnabled(enabled);
         ui->resetScriptEngineButton->setEnabled(enabled);
         for(const auto& editor : m_editors) {
             editor->setEnabled(enabled);
@@ -125,6 +192,15 @@ private:
         std::map<std::string, std::string> m;
         for(ScriptEditorWidget* editor : m_editors) {
             m[editor->getFunctionName()] = editor->getCurrentCode();
+        }
+        return m;
+    }
+
+    std::map<std::string, std::string> getDefaultScripts() const
+    {
+        std::map<std::string, std::string> m;
+        for(ScriptEditorWidget* editor : m_editors) {
+            m[editor->getFunctionName()] = editor->getDefaultCode();
         }
         return m;
     }

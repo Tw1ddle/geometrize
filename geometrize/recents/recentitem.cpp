@@ -15,7 +15,7 @@ RecentItem::Type RecentItem::getTypeForKey(const QString& key)
 {
     const QUrl url{QUrl::fromUserInput(key)};
     if(url.scheme() == "file") {
-        if(key.endsWith(".chai"), Qt::CaseInsensitive) {
+        if(key.endsWith(".chai", Qt::CaseInsensitive)) {
             return RecentItem::Type::LOCAL_CHAISCRIPT;
         } else {
             return RecentItem::Type::LOCAL_IMAGE;

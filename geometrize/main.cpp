@@ -13,11 +13,13 @@
 
 #include "cli/commandlineparser.h"
 #include "common/uiactions.h"
+#include "dialog/appsplashscreen.h"
 #include "dialog/launchwindow.h"
 #include "dialog/welcomewindow.h"
 #include "localization/localization.h"
 #include "logger/logmessagehandlers.h"
 #include "preferences/globalpreferences.h"
+#include "test/functionaltestrunner.h"
 #include "version/versioninfo.h"
 
 #if defined DATASLINGER_INCLUDED
@@ -79,6 +81,11 @@ void setLocale(const QStringList& arguments)
     geometrize::setTranslatorsForLocale(locale.bcp47Name().replace("-", "_"));
 }
 
+int runAppSelfTestMode(QApplication& app)
+{
+    return geometrize::test::runApp(app);
+}
+
 int runAppConsoleMode(QApplication& app)
 {
     return geometrize::cli::runApp(app);
@@ -96,11 +103,16 @@ int runAppGuiModeUwp(QApplication& app)
 
 int runAppGuiModeDesktop(QApplication& app)
 {
+    geometrize::dialog::sharedSplashInstance().setState(geometrize::dialog::SplashState::STARTING);
+    geometrize::dialog::sharedSplashInstance().setState(geometrize::dialog::SplashState::LOADING_LAUNCHER_WINDOW);
+
     const auto& prefs = geometrize::preferences::getGlobalPreferences();
 	if (prefs.shouldShowWelcomeScreenOnLaunch()) {
-        geometrize::common::ui::openWelcomePage(); // Opens launch window on close
+        geometrize::dialog::sharedSplashInstance().setState(geometrize::dialog::SplashState::FINISHED);
+        geometrize::common::ui::openWelcomePage(); // Opens launch window when closed
     } else {
         geometrize::common::ui::openLaunchWindow();
+        geometrize::dialog::sharedSplashInstance().setState(geometrize::dialog::SplashState::FINISHED);
     }
 
     return app.exec();
@@ -108,6 +120,10 @@ int runAppGuiModeDesktop(QApplication& app)
 
 std::function<int(QApplication&)> resolveLaunchFunction(const QStringList& arguments)
 {
+    if(geometrize::cli::shouldRunInSelfTestMode(arguments)) {
+        return ::runAppSelfTestMode;
+    }
+
     if(geometrize::cli::shouldRunInConsoleMode(arguments)) {
         return ::runAppConsoleMode;
     }

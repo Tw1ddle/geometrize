@@ -17,7 +17,8 @@ namespace task
 {
 
 /**
- * @brief The ImageTaskWorker class transforms a source image into a collection of shapes. Made to be run on a separate thread to avoid blocking UI.
+ * @brief The ImageTaskWorker class transforms a source image into a collection of shapes.
+ * It is made to be run on its own thread to avoid blocking the UI.
  */
 class ImageTaskWorker : public QObject
 {
@@ -32,8 +33,9 @@ public:
     /**
      * @brief step Steps the image task worker. Emits the willStep signal when called, and didStep signal on completion.
      * @param options The options to provide the image runner when stepping.
+     * @param shapeCreator A function that produces the shapes when stepping.
      */
-    void step(geometrize::ImageRunnerOptions options);
+    void step(geometrize::ImageRunnerOptions options, std::function<std::shared_ptr<geometrize::Shape>()> shapeCreator);
 
     /**
      * @brief isStepping Returns true if the internal model is currently stepping.

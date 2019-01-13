@@ -3,6 +3,7 @@
 #include <cassert>
 
 #include <QString>
+#include <QObject>
 
 #include "common/formatsupport.h"
 #include "common/searchpaths.h"
@@ -38,6 +39,11 @@ void messageBox(const std::string& str)
 void debugBreak()
 {
     geometrize::util::debugBreak();
+}
+
+void processApplicationEvents()
+{
+    geometrize::util::processApplicationEvents();
 }
 
 bool fileExists(const std::string& filePath)
@@ -160,9 +166,19 @@ bool stringEndsWith(const std::string& str, const std::string& suffix)
     return geometrize::util::stringEndsWith(str, suffix);
 }
 
+std::string getApplicationDirectoryLocation()
+{
+    return geometrize::util::getApplicationDirectoryLocation();
+}
+
 std::string getAppDataLocation()
 {
     return geometrize::util::getAppDataLocation();
+}
+
+std::string getHomeDirectoryLocation()
+{
+    return geometrize::util::getHomeDirectoryLocation();
 }
 
 bool writeStringToFile(const std::string& str, const std::string& path)
@@ -175,19 +191,49 @@ std::string percentEncode(const std::string& str)
     return geometrize::util::percentEncode(str);
 }
 
-int randomInRange(const int lower, const int upper)
+int randomIntInRange(const int lower, const int upper)
 {
-    return geometrize::util::randomInRange(lower, upper);
+    return randomInRange<int, int, int>(lower, upper);
 }
 
-int clamp(const int value, const int lower, const int upper)
+float randomFloatInRange(const float lower, const float upper)
 {
-    return geometrize::util::clamp(value, lower, upper);
+    return randomInRange<float, float, float>(lower, upper);
+}
+
+int clampInt(const int value, const int lower, const int upper)
+{
+    return clamp<int, int, int>(value, lower, upper);
+}
+
+float clampFloat(const float value, const float lower, const float upper)
+{
+    return clamp<float, float, float>(value, lower, upper);
 }
 
 std::vector<std::string> split(const std::string& s, const char delimiter)
 {
     return geometrize::util::split(s, delimiter);
+}
+
+std::string getOperatingSystemProductType()
+{
+    return geometrize::util::getOperatingSystemProductType();
+}
+
+int getCursorX()
+{
+    return geometrize::util::getCursorX();
+}
+
+int getCursorY()
+{
+    return geometrize::util::getCursorY();
+}
+
+void setCursorPos(const int x, const int y)
+{
+    geometrize::util::setCursorPos(x, y);
 }
 
 void setTranslatorsForLocale(const std::string& locale)
@@ -206,6 +252,16 @@ bool exportGIF(const std::vector<geometrize::ShapeResult>& data,
     return geometrize::exporter::exportGIF(data, inputWidth, inputHeight, outputWidth, outputHeight, [frameSkip](std::size_t frameIndex) {
         return frameSkip == 0U ? false : (frameIndex % frameSkip == 0);
     }, filePath);
+}
+
+bool saveDesktopScreenshot(const std::string& path)
+{
+    return geometrize::util::saveDesktopScreenshot(path);
+}
+
+bool saveWidgetScreenshot(const std::string& path, QObject* widget)
+{
+    return geometrize::util::saveWidgetScreenshot(path, widget);
 }
 
 }

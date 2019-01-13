@@ -64,6 +64,12 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings();
  */
 std::shared_ptr<chaiscript::Module> createMathBindings();
 
+/**
+ * @brief createUserInterfacePuppeteerBindings Creates ChaiScript to C++ bindings for driving the user interface (primarily for testing purposes).
+ * @return A shared pointer encapsulating the bindings.
+ */
+std::shared_ptr<chaiscript::Module> createUserInterfacePuppeteerBindings();
+
 }
 
 }

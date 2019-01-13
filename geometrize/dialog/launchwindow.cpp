@@ -37,22 +37,30 @@ public:
         ui->setupUi(q);
         populateUi();
 
-        ui->consoleWidget->setVisible(false);
-        ui->consoleWidget->setEngine(m_engine.get());
-
+        // Set up recent items list
         if(preferences::getGlobalPreferences().shouldPopulateRecentItemsOnLaunch()) {
             ui->recentsList->setRecentItems(&geometrize::getRecentItems());
         }
 
+        // Set up console widget
+        ui->consoleWidget->setEngine(m_engine.get());
+
         loadConsoleHistory();
+
+        if(preferences::getGlobalPreferences().shouldShowLaunchConsoleByDefault()) {
+            setConsoleVisibility(true);
+        } else {
+            setConsoleVisibility(false);
+        }
+
         connect(ui->actionScript_Console, &QAction::toggled, [this](const bool checked) {
             setConsoleVisibility(checked);
         });
 
+        // Set up templates search and grid
         connect(ui->templateGrid, &dialog::TemplateGrid::signal_templateLoaded, [this](const QString& templateFolder, const bool /*success*/) {
             ui->templatesSearchEdit->addToCompletionList(QString::fromStdString(util::getTemplateManifest(templateFolder.toStdString()).getName()));
         });
-
         connect(ui->templatesSearchEdit, &dialog::CompletionBox::textChanged, [this](const QString& text) {
             ui->templateGrid->setItemFilter(text);
         });
@@ -61,10 +69,7 @@ public:
             ui->templateGrid->loadTemplates();
         }
 
-        if(preferences::getGlobalPreferences().shouldShowLaunchConsoleByDefault()) {
-            setConsoleVisibility(true);
-        }
-
+        // Set up the logo
         setupLogo();
     }
     LaunchWindowImpl operator=(const LaunchWindowImpl&) = delete;

@@ -1,8 +1,11 @@
 #pragma once
 
+#include <cassert>
 #include <string>
 #include <sstream>
 #include <vector>
+
+class QObject;
 
 namespace geometrize
 {
@@ -26,6 +29,11 @@ void messageBox(const std::string& str);
  * @brief debugBreak Forces the debugger to break/halt the application when this is called.
  */
 void debugBreak();
+
+/**
+ * @brief processApplicationEvents Processes all pending application events for the calling thread.
+ */
+void processApplicationEvents();
 
 /**
  * @brief fileExists Checks if a file exists, returns true if it does.
@@ -154,10 +162,22 @@ bool stringBeginsWith(const std::string& str, const std::string& prefix);
 bool stringEndsWith(const std::string& str, const std::string& suffix);
 
 /**
+ * @brief getApplicationDirectory Get directory that the application is in.
+ * @return Get application directory.
+ */
+std::string getApplicationDirectoryLocation();
+
+/**
  * @brief getAppDataLocation Returns a directory location where persistent application data can be stored.
  * @return Directory location where persistent application data can be stored.
  */
 std::string getAppDataLocation();
+
+/**
+ * @brief getHomeDirectoryLocation Returns a path to where the user's home directory is.
+ * @return Location of the user's home directory.
+ */
+std::string getHomeDirectoryLocation();
 
 /**
  * @brief writeStringToFile Writes the string to the file path, attempting to overwrite any existing file at the path.
@@ -190,7 +210,18 @@ int randomInRange(int lower, int upper);
  * @param upper The upper bound of the range.
  * @return The clamped value.
  */
-int clamp(int value, int lower, int upper);
+template<typename T>
+T clamp(T value, T lower, T upper)
+{
+    assert(lower <= upper);
+    if (value < lower) {
+        value = lower;
+    }
+    if (value > upper) {
+        value = upper;
+    }
+    return value;
+}
 
 template<typename T>
 void split(const std::string& s, const char delimiter, T result)
@@ -210,6 +241,46 @@ void split(const std::string& s, const char delimiter, T result)
  * @return A vector containing the split string.
  */
 std::vector<std::string> split(const std::string& s, char delimiter);
+
+/**
+ * @brief getCursorX Gets the x-coordinate of the cursor in global screen coordinates.
+ * @return The x-coordinate of the cursor.
+ */
+int getCursorX();
+
+/**
+ * @brief getCursorY Gets the y-coordinate of the cursor in global screen coordinates.
+ * @return The y-coordinate of the cursor.
+ */
+int getCursorY();
+
+/**
+ * @brief setCursorPos Sets the cursor position in global screen coordinates.
+ * @param x The x-coordinate of the cursor.
+ * @param y The y-coordinate of the cursor.
+ */
+void setCursorPos(int x, int y);
+
+/**
+ * @brief getOperatingSystemProductType Returns the product name of the operating system this application is running in.
+ * @return The name of the operating system: "windows", "osx", "linux", "android", "ios", "tvos" etc
+ */
+std::string getOperatingSystemProductType();
+
+/**
+ * @brief saveDesktopScreenshot Takes a screenshot of the desktop and saves it as a .png image to the given path.
+ * @param path The file path to save the screenshot to.
+ * @return True if the screenshot was taken and saved successfully, else false.
+ */
+bool saveDesktopScreenshot(const std::string& path);
+
+/**
+ * @brief saveWidgetScreenshot Takes a screenshot of the given widget and saves it as a .png image to the given path.
+ * @param path The file path to save the screenshot to.
+ * @param widget The widget to take a screenshot of.
+ * @return True if the screenshot was taken and save successfully, else false.
+ */
+bool saveWidgetScreenshot(const std::string& path, QObject* widget);
 
 }
 

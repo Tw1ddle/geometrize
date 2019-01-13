@@ -7,6 +7,10 @@
 
 #include "geometrize/shaperesult.h"
 
+#include "common/util.h"
+
+class QObject;
+
 namespace geometrize
 {
 
@@ -23,6 +27,8 @@ void printToConsole(const std::string& str);
 void messageBox(const std::string& str);
 
 void debugBreak();
+
+void processApplicationEvents();
 
 bool fileExists(const std::string& filePath);
 
@@ -66,17 +72,64 @@ bool stringBeginsWith(const std::string& str, const std::string& prefix);
 
 bool stringEndsWith(const std::string& str, const std::string& suffix);
 
+std::string getApplicationDirectoryLocation();
+
 std::string getAppDataLocation();
+
+std::string getHomeDirectoryLocation();
 
 bool writeStringToFile(const std::string& str, const std::string& path);
 
 std::string percentEncode(const std::string& str);
 
-int randomInRange(int lower, int upper);
+template<typename T, typename U, typename V>
+T randomInRange(U lower, V upper)
+{
+    return static_cast<T>(geometrize::util::randomInRange(static_cast<int>(lower), static_cast<int>(upper)));
+}
 
-int clamp(int value, int lower, int upper);
+int randomIntInRange(int lower, int upper);
+
+float randomFloatInRange(float lower, float upper);
+
+template<typename T> T randomInVector(const std::vector<T>& v)
+{
+    assert(!v.empty());
+    return v[randomInRange<int, std::size_t, std::size_t>(0, v.size() - 1)];
+}
+
+template<typename T, typename U, typename V>
+T clamp(T value, U lower, V upper)
+{
+    assert(lower <= upper);
+    if (value < lower) {
+        value = lower;
+    }
+    if (value > upper) {
+        value = upper;
+    }
+    return value;
+}
+
+int clampInt(int value, int lower, int upper);
+
+float clampFloat(float value, float lower, float upper);
+
+template<typename T>
+bool vectorContains(const std::vector<T>& v, const T& t)
+{
+    return (std::find(v.begin(), v.end(), t) != v.end());
+}
 
 std::vector<std::string> split(const std::string& s, const char delimiter);
+
+std::string getOperatingSystemProductType();
+
+int getCursorX();
+
+int getCursorY();
+
+void setCursorPos(int x, int y);
 
 void setTranslatorsForLocale(const std::string& locale);
 
@@ -87,6 +140,10 @@ bool exportGIF(const std::vector<geometrize::ShapeResult>& data,
         std::uint32_t outputHeight,
         std::size_t frameSkip,
         const std::string& filePath);
+
+bool saveDesktopScreenshot(const std::string& path);
+
+bool saveWidgetScreenshot(const std::string& path, QObject* widget);
 
 }
 

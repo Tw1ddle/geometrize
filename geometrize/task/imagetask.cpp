@@ -2,16 +2,22 @@
 
 #include <atomic>
 #include <cassert>
+#include <functional>
+#include <memory>
 #include <vector>
 
 #include <QThread>
 
 #include "geometrize/commonutil.h"
 #include "geometrize/bitmap/bitmap.h"
+#include "geometrize/rasterizer/rasterizer.h"
+#include "geometrize/shape/shapemutator.h"
 #include "geometrize/runner/imagerunner.h"
 #include "geometrize/model.h"
 #include "geometrize/shaperesult.h"
+#include "geometrize/shape/shape.h"
 #include "geometrize/shape/rectangle.h"
+#include "geometrize/shape/shapefactory.h"
 
 #include "preferences/imagetaskpreferences.h"
 #include "script/geometrizerengine.h"
@@ -87,11 +93,6 @@ public:
         return m_worker.getCurrent().getHeight();
     }
 
-    ShapeMutator& getShapeMutator()
-    {
-        return m_worker.getRunner().getModel().getShapeMutator();
-    }
-
     std::string getDisplayName() const
     {
         return m_displayName;
@@ -109,10 +110,19 @@ public:
 
     void stepModel()
     {
-        emit q->signal_step(m_preferences.getImageRunnerOptions());
+        const auto shapeCreator = [this]() {
+            const std::int32_t w = m_worker.getTarget().getWidth();
+            const std::int32_t h = m_worker.getTarget().getHeight();
+
+            if(m_preferences.isScriptModeEnabled()) {
+                return m_geometrizer.makeShapeCreator(m_preferences.getImageRunnerOptions().shapeTypes, w, h);
+            }
+            return geometrize::createDefaultShapeCreator(m_preferences.getImageRunnerOptions().shapeTypes, w, h);
+        }();
+        emit q->signal_step(m_preferences.getImageRunnerOptions(), shapeCreator);
     }
 
-    void drawShape(std::shared_ptr<geometrize::Shape> shape, const geometrize::rgba color)
+    void drawShape(const std::shared_ptr<geometrize::Shape> shape, const geometrize::rgba color)
     {
         emit q->signal_drawShape(shape, color);
     }
@@ -120,11 +130,12 @@ public:
     void drawBackgroundRectangle()
     {
         const geometrize::rgba color{geometrize::commonutil::getAverageImageColor(m_worker.getRunner().getTarget())};
-        const std::shared_ptr<geometrize::Rectangle> rectangle = std::make_shared<geometrize::Rectangle>(m_worker.getRunner().getModel());
-        rectangle->m_x1 = 0;
-        rectangle->m_x2 = m_worker.getTarget().getWidth();
-        rectangle->m_y1 = 0;
-        rectangle->m_y2 = m_worker.getTarget().getHeight();
+        const std::int32_t w = m_worker.getTarget().getWidth();
+        const std::int32_t h = m_worker.getTarget().getHeight();
+
+        const std::shared_ptr<geometrize::Rectangle> rectangle = std::make_shared<geometrize::Rectangle>(0, 0, w, h);
+        rectangle->rasterize = [w, h](const geometrize::Shape& s) { return geometrize::rasterize(static_cast<const geometrize::Rectangle&>(s), w, h); };
+
         emit q->signal_drawShape(rectangle, color);
     }
 
@@ -133,13 +144,8 @@ public:
         emit q->signal_modelWillStep();
     }
 
-    void modelDidStep(std::vector<geometrize::ShapeResult> shapes)
+    void modelDidStep(const std::vector<geometrize::ShapeResult> shapes)
     {
-        m_geometrizer.setEnabled(m_preferences.isScriptModeEnabled());
-        if(m_preferences.isScriptModeEnabled()) {
-            m_geometrizer.setupScripts(m_preferences.getScripts());
-        }
-
         emit q->signal_modelDidStep(shapes);
     }
 
@@ -163,10 +169,9 @@ private:
 
     void init(const Qt::ConnectionType connectionType)
     {
-        m_geometrizer.setMutator(&m_worker.getRunner().getModel().getShapeMutator());
-
         qRegisterMetaType<std::vector<geometrize::ShapeResult>>();
         qRegisterMetaType<geometrize::ImageRunnerOptions>();
+        qRegisterMetaType<std::function<std::shared_ptr<geometrize::Shape>()>>();
         qRegisterMetaType<std::shared_ptr<geometrize::Shape>>();
         qRegisterMetaType<geometrize::rgba>();
 
@@ -180,8 +185,8 @@ private:
     {
         q->connect(q, &ImageTask::signal_step, &m_worker, &ImageTaskWorker::step, connectionType);
         q->connect(q, &ImageTask::signal_drawShape, &m_worker, &ImageTaskWorker::drawShape, connectionType);
-        q->connect(&m_worker, &ImageTaskWorker::signal_willStep, q, &ImageTask::modelWillStep, connectionType);
-        q->connect(&m_worker, &ImageTaskWorker::signal_didStep, q, &ImageTask::modelDidStep, connectionType);
+        q->connect(&m_worker, &ImageTaskWorker::signal_willStep, q, &ImageTask::modelWillStep, Qt::BlockingQueuedConnection);
+        q->connect(&m_worker, &ImageTaskWorker::signal_didStep, q, &ImageTask::modelDidStep, Qt::BlockingQueuedConnection);
     }
 
     void disconnectAll()

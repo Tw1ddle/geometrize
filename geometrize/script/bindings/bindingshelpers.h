@@ -2,8 +2,12 @@
 
 #include "chaiscript/chaiscript.hpp"
 
+#define COMMA ,
+
 #define ADD_CONST_VAR(Class, Name) try { module->add(chaiscript::const_var(&Class::Name), #Name); } catch(...) { assert(0 && #Name); }
 #define ADD_FREE_FUN(Name) try { module->add(chaiscript::fun(&Name), #Name); } catch(...) { assert(0 && #Name); }
+#define ADD_FREE_FUN_TEMPLATE(Name, Params) try { module->add(chaiscript::fun(&Name<Params>), #Name); } catch(...) { assert(0 && #Name); }
+#define ADD_LAMBDA_FUN(Lambda, Name) try { module->add(chaiscript::fun(Lambda), #Name); } catch(...) { assert(0 && #Name); }
 #define ADD_MEMBER(Class, Name) try { module->add(chaiscript::fun(&Class::Name), #Name); } catch(...) { assert(0 && #Name); }
 #define ADD_CONST_REF_MEMBER(Class, Name) try { module->add(chaiscript::fun([](const Class &r) -> decltype(auto) { return (r.Name); }), #Name); } catch(...) { assert(0 && #Name); }
 #define ADD_TYPE(Class) try { module->add(chaiscript::user_type<Class>(), #Class); } catch(...) { assert(0 && #Class); }

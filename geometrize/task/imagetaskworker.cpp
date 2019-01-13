@@ -24,16 +24,16 @@ ImageTaskWorker::~ImageTaskWorker()
 {
 }
 
-void ImageTaskWorker::step(const geometrize::ImageRunnerOptions options)
+void ImageTaskWorker::step(const geometrize::ImageRunnerOptions options, const std::function<std::shared_ptr<geometrize::Shape>()> shapeCreator)
 {
     emit signal_willStep();
     m_working = true;
-    const std::vector<geometrize::ShapeResult> results{m_runner.step(options)};
+    const std::vector<geometrize::ShapeResult> results{m_runner.step(options, shapeCreator)};
     m_working = false;
     emit signal_didStep(results);
 }
 
-void ImageTaskWorker::drawShape(std::shared_ptr<geometrize::Shape> shape, geometrize::rgba color)
+void ImageTaskWorker::drawShape(const std::shared_ptr<geometrize::Shape> shape, const geometrize::rgba color)
 {
     emit signal_willStep();
     m_working = true;

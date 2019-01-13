@@ -1,5 +1,6 @@
 #pragma once
 
+#include <functional>
 #include <memory>
 #include <string>
 #include <vector>
@@ -10,7 +11,7 @@
 #include "geometrize/bitmap/rgba.h"
 #include "geometrize/shaperesult.h"
 #include "geometrize/runner/imagerunneroptions.h"
-#include "geometrize/shape/shapemutator.h"
+#include "geometrize/shape/shape.h"
 
 #include "preferences/imagetaskpreferences.h"
 
@@ -31,6 +32,7 @@ class ChaiScript;
 
 Q_DECLARE_METATYPE(std::vector<geometrize::ShapeResult>) ///< Shape data passed around by the image task worker thread.
 Q_DECLARE_METATYPE(geometrize::ImageRunnerOptions) ///< Image runner options passed to the image task worker thread.
+Q_DECLARE_METATYPE(std::function<std::shared_ptr<geometrize::Shape>()>) ///< Function that generates shapes passed to the image task worker thread.
 Q_DECLARE_METATYPE(std::shared_ptr<geometrize::Shape>) ///< Shape passed to the image task worker thread.
 Q_DECLARE_METATYPE(geometrize::rgba) ///< Shape color passed to the image task worker thread.
 
@@ -47,10 +49,10 @@ class ImageTask : public QObject
 {
     Q_OBJECT
 public:
-    ImageTask(Bitmap& target, Qt::ConnectionType workerConnectionType = Qt::AutoConnection);
-    ImageTask(Bitmap& target, Bitmap& background, Qt::ConnectionType workerConnectionType = Qt::AutoConnection);
-    ImageTask(const std::string& displayName, Bitmap& bitmap, Qt::ConnectionType workerConnectionType = Qt::AutoConnection);
-    ImageTask(const std::string& displayName, Bitmap& bitmap, const Bitmap& initial, Qt::ConnectionType workerConnectionType = Qt::AutoConnection);
+    ImageTask(Bitmap& target, Qt::ConnectionType workerConnectionType = Qt::QueuedConnection);
+    ImageTask(Bitmap& target, Bitmap& background, Qt::ConnectionType workerConnectionType = Qt::QueuedConnection);
+    ImageTask(const std::string& displayName, Bitmap& bitmap, Qt::ConnectionType workerConnectionType = Qt::QueuedConnection);
+    ImageTask(const std::string& displayName, Bitmap& bitmap, const Bitmap& initial, Qt::ConnectionType workerConnectionType = Qt::QueuedConnection);
 
     ImageTask& operator=(const ImageTask&) = delete;
     ImageTask(const ImageTask&) = delete;
@@ -126,7 +128,7 @@ public:
       * @param shape The shape to add to the model.
       * @param color The color of the shape.
       */
-     void drawShape(std::shared_ptr<geometrize::Shape> shape, geometrize::rgba color);
+     void drawShape(const std::shared_ptr<geometrize::Shape> shape, geometrize::rgba color);
 
      /**
       * @brief drawBackgroundRectangle Convenience function that draws a background rectangle shape using the target image's background color.
@@ -149,7 +151,7 @@ signals:
      /**
       * @brief signal_step Signal that the image task emits to make the internal model step.
       */
-     void signal_step(geometrize::ImageRunnerOptions options);
+     void signal_step(geometrize::ImageRunnerOptions options, std::function<std::shared_ptr<geometrize::Shape>()> shapeCreator);
 
      /**
       * @brief signal_drawShape Signal that the image task emits to draw a shape to the internal model.

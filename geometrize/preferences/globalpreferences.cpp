@@ -329,15 +329,15 @@ private:
 
     bool m_shouldShowWelcomeScreenOnLaunch{true};
 
-    bool m_shouldGeometrizeAppLogoOnLaunch{true};
+    bool m_shouldGeometrizeAppLogoOnLaunch{false};
     bool m_shouldPopulateRecentItemsOnLaunch{true};
     bool m_shouldPopulateTemplatesOnLaunch{true};
 
     bool m_shouldShowLaunchConsoleByDefault{false};
-    bool m_shouldShowImageTaskVectorViewByDefault{true};
+    bool m_shouldShowImageTaskVectorViewByDefault{false};
     bool m_shouldShowImageTaskConsoleByDefault{false};
     bool m_shouldShowImageTaskScriptEditorByDefault{false};
-    bool m_shouldShowImageTaskPixmapViewByDefault{false};
+    bool m_shouldShowImageTaskPixmapViewByDefault{true};
 
     bool m_imageTaskResizeEnabled{true};
     std::pair<std::uint32_t, std::uint32_t> m_imageTaskResizeThreshold{256, 256};

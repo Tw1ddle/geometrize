@@ -1,5 +1,8 @@
 #include "chaiscriptcreator.h"
 
+#include <utility>
+#include <vector>
+
 #include "chaiscript/chaiscript.hpp"
 
 #include "script/bindings/bindingscreator.h"
@@ -15,7 +18,12 @@ void addPrintRedirect(const std::unique_ptr<chaiscript::ChaiScript>& chai)
 void addDefaultTypes(const std::unique_ptr<chaiscript::ChaiScript>& chai)
 {
     chai->add(chaiscript::bootstrap::standard_library::vector_type<std::vector<int>>("IntVector"));
+    chai->add(chaiscript::bootstrap::standard_library::vector_type<std::vector<float>>("FloatVector"));
     chai->add(chaiscript::bootstrap::standard_library::vector_type<std::vector<std::string>>("StringVector"));
+    chai->add(chaiscript::bootstrap::standard_library::pair_type<std::pair<int, int>>("IntPair"));
+    chai->add(chaiscript::bootstrap::standard_library::pair_type<std::pair<float, float>>("FloatPair"));
+    chai->add(chaiscript::bootstrap::standard_library::vector_type<std::vector<std::pair<int, int>>>("IntPairVector"));
+    chai->add(chaiscript::bootstrap::standard_library::vector_type<std::vector<std::pair<float, float>>>("FloatPairVector"));
 }
 
 }
@@ -81,6 +89,20 @@ std::unique_ptr<chaiscript::ChaiScript> createShapeMutatorEngine()
     chai->add(bindings::createDefaultBindings());
     chai->add(bindings::createGeometrizeLibraryBindings());
     chai->add(bindings::createMathBindings());
+
+    return chai;
+}
+
+std::unique_ptr<chaiscript::ChaiScript> createFunctionalTestRunnerEngine()
+{
+    std::unique_ptr<chaiscript::ChaiScript> chai = std::make_unique<chaiscript::ChaiScript>();
+
+    addDefaultTypes(chai);
+
+    chai->add(bindings::createDefaultBindings());
+    chai->add(bindings::createLaunchWindowBindings());
+    chai->add(bindings::createImageTaskBindings());
+    chai->add(bindings::createUserInterfacePuppeteerBindings());
 
     return chai;
 }

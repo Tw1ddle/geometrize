@@ -13,7 +13,7 @@ namespace geometrize
 class RecentItems::RecentItemsImpl
 {
 public:
-    RecentItemsImpl(const QString group, unsigned int maxItems) : m_group{group}, m_maxItems{maxItems}
+    RecentItemsImpl(const QString& group, unsigned int maxItems) : m_group{group}, m_maxItems{maxItems}
     {
         assert(m_group.length() > 0 && "Base group cannot be empty");
         assert(!m_group.contains('/') && "Base group must not contain forward slashes");

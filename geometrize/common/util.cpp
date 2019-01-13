@@ -7,13 +7,19 @@
 
 #include <QApplication>
 #include <QClipboard>
-#include <QDebug>
+#include <QCoreApplication>
+#include <QCursor>
 #include <QDesktopServices>
+#include <QDesktopWidget>
 #include <QDir>
 #include <QDirIterator>
 #include <QFileInfo>
 #include <QMessageBox>
+#include <QObject>
+#include <QPixmap>
+#include <QPoint>
 #include <QStandardPaths>
+#include <QTextStream>
 #include <QUrl>
 
 #include "geometrize/commonutil.h"
@@ -42,7 +48,7 @@ void debugBreak()
 
 void printToConsole(const std::string& str)
 {
-    qDebug() << QString::fromStdString(str);
+    QTextStream(stdout) << QString::fromStdString(str);
 }
 
 void messageBox(const std::string& str)
@@ -50,6 +56,16 @@ void messageBox(const std::string& str)
     QMessageBox msgBox;
     msgBox.setText(QString::fromStdString(str));
     msgBox.exec();
+}
+
+void processApplicationEvents()
+{
+    QCoreApplication* app = QCoreApplication::instance();
+    if(app == nullptr) {
+        assert(0 && "Application instance pointer is null");
+        return;
+    }
+    app->processEvents();
 }
 
 bool fileExists(const std::string& filePath)
@@ -162,6 +178,7 @@ std::vector<std::string> getScriptsForPath(const std::string& dirPath)
 {
     std::vector<std::string> scripts;
     if(!util::directoryExists(dirPath)) {
+        assert(0 && "Script directory does not exist");
         return scripts;
     }
 
@@ -220,9 +237,19 @@ bool stringEndsWith(const std::string& str, const std::string& suffix)
     return str.size() >= suffix.size() && str.compare(str.size() - suffix.size(), suffix.size(), suffix) == 0;
 }
 
+std::string getApplicationDirectoryLocation()
+{
+    return QCoreApplication::applicationDirPath().toStdString();
+}
+
 std::string getAppDataLocation()
 {
     return QStandardPaths::writableLocation(QStandardPaths::DataLocation).toStdString();
+}
+
+std::string getHomeDirectoryLocation()
+{
+    return QStandardPaths::writableLocation(QStandardPaths::HomeLocation).toStdString();
 }
 
 bool writeStringToFile(const std::string& str, const std::string& path)
@@ -258,17 +285,49 @@ int randomInRange(const int lower, const int upper)
     return geometrize::commonutil::randomRange(lower, upper);
 }
 
-int clamp(const int value, const int lower, const int upper)
-{
-    assert(lower <= upper);
-    return std::max(lower, std::min(value, upper));
-}
-
 std::vector<std::string> split(const std::string& s, const char delimiter)
 {
     std::vector<std::string> elements;
     split(s, delimiter, std::back_inserter(elements));
     return elements;
+}
+
+int getCursorX()
+{
+    return QCursor::pos().x();
+}
+
+int getCursorY()
+{
+    return QCursor::pos().y();
+}
+
+void setCursorPos(const int x, const int y)
+{
+    QCursor::setPos(x, y);
+}
+
+std::string getOperatingSystemProductType()
+{
+    return QSysInfo::productType().toStdString();
+}
+
+bool saveDesktopScreenshot(const std::string& path)
+{
+    auto desktop = QApplication::desktop();
+    if(!desktop) {
+        assert(0 && "Failed to get desktop widget");
+        return false;
+    }
+
+    const QPixmap desktopPixmap = QPixmap::grabWindow(desktop->winId());
+
+    return desktopPixmap.save(QString::fromStdString(path), "png");
+}
+
+bool saveWidgetScreenshot(const std::string& path, QObject* widget)
+{
+    return QPixmap::grabWidget(widget).save(QString::fromStdString(path), "png");
 }
 
 }

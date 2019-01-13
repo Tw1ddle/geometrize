@@ -13,22 +13,25 @@
 #include <QRectF>
 #include <QTimer>
 
+#include "chaiscript/chaiscript.hpp" // TODO remove
+
 #include "geometrize/bitmap/bitmap.h"
 #include "geometrize/runner/imagerunneroptions.h"
 
 #include "common/uiactions.h"
 #include "common/util.h"
-#include "dialog/imagetaskgraphicsview.h"
-#include "dialog/imagetaskpixmapscene.h"
 #include "dialog/imagetaskscriptingpanel.h"
-#include "dialog/imagetasksvgscene.h"
 #include "dialog/imagetaskimagewidget.h"
 #include "dialog/scripteditorwidget.h"
 #include "image/imageloader.h"
 #include "localization/strings.h"
 #include "preferences/globalpreferences.h"
 #include "script/geometrizerengine.h"
+#include "scene/areaofinfluenceshape.h"
+#include "scene/imagetaskgraphicsview.h"
+#include "scene/imagetaskscenemanager.h"
 #include "task/imagetask.h"
+#include "task/shapecollection.h"
 #include "version/versioninfo.h"
 
 #if defined DATASLINGER_INCLUDED
@@ -39,7 +42,7 @@ namespace
 {
 
 // Utility function for destroying an image task set on a window.
-// This is a special case because we may need to defer task deletion until the task is finished working.
+// This has a special case because we may need to defer task deletion until the task is finished working.
 void destroyTask(geometrize::task::ImageTask* task)
 {
     if(task == nullptr) {
@@ -51,11 +54,12 @@ void destroyTask(geometrize::task::ImageTask* task)
         // Wait until the task finishes stepping before disposing of it
         // Otherwise it will probably crash as the Geometrize library will be working with deleted data
         task->connect(task, &geometrize::task::ImageTask::signal_modelDidStep, [task](std::vector<geometrize::ShapeResult>) {
+            task->disconnect(nullptr, nullptr, nullptr, nullptr);
             task->deleteLater();
         });
     } else {
-        delete task;
-        task = nullptr;
+        task->disconnect(nullptr, nullptr, nullptr, nullptr);
+        task->deleteLater();
     }
 }
 
@@ -82,26 +86,34 @@ public:
         setupScriptingPanel();
 
         // Set up the dock widgets
+        q->tabifyDockWidget(ui->runnerSettingsDock, ui->stopConditionsDock);
         q->tabifyDockWidget(ui->runnerSettingsDock, ui->exporterDock);
+
         ui->runnerSettingsDock->raise(); // Make sure runner settings dock is selected
 
         ui->consoleWidget->setVisible(false); // Make sure console widget is hidden by default
 
         // Set up the image task geometrization views
-        m_currentImageView = new geometrize::dialog::ImageTaskGraphicsView(ui->imageViewContainer);
-        m_currentImageView->setScene(&m_currentImageScene);
-        m_currentImageView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        m_currentImageView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        ui->imageViewContainer->layout()->addWidget(m_currentImageView);
+        m_pixmapView = new geometrize::scene::ImageTaskGraphicsView(ui->imageViewContainer);
+        m_pixmapView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        m_pixmapView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        ui->imageViewContainer->layout()->addWidget(m_pixmapView);
 
-        m_svgImageView = new geometrize::dialog::ImageTaskGraphicsView(ui->imageViewContainer);
-        m_svgImageView->setScene(&m_currentSvgScene);
-        m_svgImageView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        m_svgImageView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        ui->imageViewContainer->layout()->addWidget(m_svgImageView);
+        m_svgView = new geometrize::scene::ImageTaskGraphicsView(ui->imageViewContainer);
+        m_svgView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        m_svgView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        ui->imageViewContainer->layout()->addWidget(m_svgView);
 
-        m_currentImageView->setVisible(false); // Make sure the image view is hidden by default (we prefer the SVG view)
-        m_svgImageView->setVisible(true);
+        m_sceneManager.setViews(*m_pixmapView, *m_svgView);
+
+        // Set initial view visibility
+        const geometrize::preferences::GlobalPreferences& prefs{geometrize::preferences::getGlobalPreferences()};
+        setConsoleVisibility(prefs.shouldShowImageTaskConsoleByDefault());
+        setPixmapViewVisibility(prefs.shouldShowImageTaskPixmapViewByDefault());
+        setVectorViewVisibility(prefs.shouldShowImageTaskVectorViewByDefault());
+        if(prefs.shouldShowImageTaskScriptEditorByDefault()) {
+            revealScriptingPanel();
+        }
 
         // Handle clicks on checkable title bar items
         connect(ui->actionScript_Console, &QAction::toggled, [this](const bool checked) {
@@ -115,19 +127,14 @@ public:
         });
 
         // Handle request to set the image task on the task window
-        connect(q, &ImageTaskWindow::willSwitchImageTask, [this](task::ImageTask* lastTask, task::ImageTask*) {
-            // NOTE we disconnect and destroy the last image task, which will soon be replaced by the next image task
-            // This means that any task set on the window is destroyed after it is replaced
+        connect(q, &ImageTaskWindow::willSwitchImageTask, [this](task::ImageTask*, task::ImageTask*) {
+            // Disconnect the last image task, which will soon be replaced by the next image task
             disconnectTask();
-
-            if(lastTask) {
-                destroyTask(lastTask);
-            }
 
             m_shapes.clear();
         });
-        connect(q, &ImageTaskWindow::didSwitchImageTask, [this](task::ImageTask*, task::ImageTask* currentTask) {
-            ui->imageTaskExportWidget->setImageTask(currentTask, &m_shapes);
+        connect(q, &ImageTaskWindow::didSwitchImageTask, [this](task::ImageTask* lastTask, task::ImageTask* currentTask) {
+            ui->imageTaskExportWidget->setImageTask(currentTask, &m_shapes.getShapeVector());
             ui->imageTaskRunnerWidget->setImageTask(currentTask);
 
             if(dialog::ImageTaskScriptingPanel* scriptingPanel = getScriptingPanel()) {
@@ -140,21 +147,41 @@ public:
 
             m_taskWillStepConnection = connect(currentTask, &task::ImageTask::signal_modelWillStep, [this]() {
                 ui->statsDockContents->setCurrentStatus(geometrize::dialog::ImageTaskStatsWidget::RUNNING);
+
+                // Apply the latest scripts and engine state prior to stepping
+                auto& geometrizer = m_task->getGeometrizer();
+
+                chaiscript::ChaiScript* engine = geometrizer.getEngine();
+
+                const bool scriptModeEnabled = m_task->getPreferences().isScriptModeEnabled();
+                if(scriptModeEnabled) {
+                    geometrizer.setupScripts(m_task->getPreferences().getScripts());
+                }
+
+                engine->set_global(chaiscript::var(static_cast<int>(m_task->getWidth())), "xBound");
+                engine->set_global(chaiscript::var(static_cast<int>(m_task->getHeight())), "yBound");
+                engine->set_global(chaiscript::var(m_areaOfInfluenceShape.getLastShape()), "aoi");
+                engine->set_global(chaiscript::var(m_shapes.getShapeVector().size()), "currentShapeCount");
+
+                std::vector<std::pair<std::int32_t, std::int32_t>> aoiPixels = m_areaOfInfluenceShape.getPixels(m_task->getWidth(), m_task->getHeight());
+                if(aoiPixels.empty()) {
+                    aoiPixels.push_back(std::make_pair(m_task->getWidth() / 2, m_task->getHeight() / 2));
+                }
+                engine->set_global(chaiscript::var(aoiPixels), "aoiPixels");
             });
 
             m_taskDidStepConnection = connect(currentTask, &task::ImageTask::signal_modelDidStep, [this](std::vector<geometrize::ShapeResult> shapes) {
                 processPostStepCbs();
 
-                updateCurrentGraphics(shapes);
                 // If the first shape added background rectangle then fit the scenes to it
-                if(m_shapes.size() == 0) {
-                    fitScenesInViews();
+                if(m_shapes.empty()) {
+                    m_sceneManager.fitScenesInViews(*m_pixmapView, *m_svgView);
                 }
-                std::copy(shapes.begin(), shapes.end(), std::back_inserter(m_shapes));
+                m_shapes.appendShapes(shapes);
 
                 updateStats();
 
-                if(isRunning()) {
+                if(shouldKeepStepping()) {
                     stepModel();
                 }
             });
@@ -165,7 +192,9 @@ public:
                               .append(" ")
                               .append(QString::fromStdString(currentTask->getDisplayName())));
 
-            setupOverlayImages();
+            const QPixmap target{image::createPixmap(m_task->getTarget())};
+            m_sceneManager.setTargetPixmap(target);
+
             currentTask->drawBackgroundRectangle();
 
             ui->consoleWidget->setEngine(currentTask->getGeometrizer().getEngine());
@@ -179,13 +208,17 @@ public:
             // Bind keyboard shortcuts for sending images out over the network etc
             geometrize::installImageSlingerKeyboardShortcuts(q, m_task);
             #endif
+
+            // As a final step, dispose of the old image task, if there was one
+            if(lastTask != nullptr) {
+                destroyTask(lastTask);
+            }
         });
 
         // Handle requested target image overlay opacity changes
         connect(ui->imageTaskImageWidget, &ImageTaskImageWidget::targetImageOpacityChanged, [this](const unsigned int value) {
             const float opacity{value * (1.0f / 255.0f)};
-            m_currentImageScene.setTargetPixmapOpacity(opacity);
-            m_currentSvgScene.setTargetPixmapOpacity(opacity);
+            m_sceneManager.setTargetPixmapOpacity(opacity);
         });
 
         // Handle a request to change the target image
@@ -228,11 +261,10 @@ public:
 
         // Handle runner button presses
         connect(ui->imageTaskRunnerWidget, &ImageTaskRunnerWidget::runStopButtonClicked, [this]() {
-            setRunning(!isRunning());
+            setShouldKeepStepping(!shouldKeepStepping());
 
-            // Toggle running button text and request another image task step if running started
-            updateStartStopButtonText();
-            if(isRunning()) {
+            // Request another image task step if user clicked start here
+            if(shouldKeepStepping()) {
                 stepModel();
             }
         });
@@ -259,23 +291,60 @@ public:
             }
         });
 
-        // Start the timer used to track how long the image task has been in the running state
-        m_timeRunningTimer.start(m_timeRunningResolutionMs);
+        // When number of shapes changes check the stop conditions
+        connect(&m_shapes, &geometrize::task::ShapeCollection::signal_sizeChanged, [this](const std::size_t size) {
+            if(!ui->stopConditionsWidget->stopConditionsMet(size)) {
+                return;
+            }
+
+            setShouldKeepStepping(false);
+            geometrize::dialog::showImageTaskStopConditionMetMessage(q);
+        });
+
+        // Update the graphical image views when shapes are added
+        connect(&m_shapes, &geometrize::task::ShapeCollection::signal_appendedShapes, [this](const std::vector<geometrize::ShapeResult>& shapes) {
+            const QPixmap pixmap{image::createPixmap(m_task->getCurrent())};
+            m_sceneManager.updateScenes(pixmap, shapes);
+        });
+
+        // Update the graphical image views when the number of shapes changes (e.g. when cleared)
+        connect(&m_shapes, &geometrize::task::ShapeCollection::signal_sizeChanged, [this](const std::size_t size) {
+            if(size == 0) {
+                m_sceneManager.reset();
+            }
+        });
+
+        // Handle modifications to the area of influence shape
+        connect(&m_areaOfInfluenceShape, &geometrize::scene::AreaOfInfluenceShape::signal_didModifyShape, [this](const geometrize::Shape& shape) {
+            m_sceneManager.setAreaOfInfluenceShape(shape);
+        });
+
+        // Connect pointer control/manipulations of the scenes to the actual area of influence shape
+        connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onTargetImageHoverMoveEvent, [this](const int lastX, const int lastY, const int x, const int y, const bool ctrlModifier) {
+            if(!ctrlModifier) {
+                return;
+            }
+            if(m_areaOfInfluenceShape.getLastShape() == nullptr) {
+                m_areaOfInfluenceShape.setup(x, y, geometrize::ShapeTypes::TRIANGLE);
+            } else {
+                m_areaOfInfluenceShape.translateShape(x - lastX, y - lastY);
+            }
+        });
+        connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onAreaOfInfluenceShapeMouseWheelEvent, [this](const int, const int, const double amount, const bool ctrlModifier) {
+            if(!ctrlModifier) {
+                return;
+            }
+            m_areaOfInfluenceShape.scaleShape(amount > 0 ? 1.03f : 0.97f);
+        });
 
         // Set initial target image opacity
         const float initialTargetImageOpacity{10};
-        ui->imageTaskImageWidget->setTargetImageOpacity(initialTargetImageOpacity);
+        ui->imageTaskImageWidget->setTargetImageOpacity(static_cast<unsigned int>(initialTargetImageOpacity));
 
-        // Set initial view visibility
-        const geometrize::preferences::GlobalPreferences& prefs{geometrize::preferences::getGlobalPreferences()};
-        setConsoleVisibility(prefs.shouldShowImageTaskConsoleByDefault());
-        setPixmapViewVisibility(prefs.shouldShowImageTaskPixmapViewByDefault());
-        setVectorViewVisibility(prefs.shouldShowImageTaskVectorViewByDefault());
-        if(prefs.shouldShowImageTaskScriptEditorByDefault()) {
-            revealScriptingPanel();
-        }
+        // Start the timer used to track how long the image task has been in the running state
+        m_timeRunningTimer.start(static_cast<int>(m_timeRunningResolutionMs));
     }
-    ImageTaskWindowImpl operator=(const ImageTaskWindowImpl&) = delete;
+    ImageTaskWindowImpl& operator=(const ImageTaskWindowImpl&) = delete;
     ImageTaskWindowImpl(const ImageTaskWindowImpl&) = delete;
     ~ImageTaskWindowImpl()
     {
@@ -320,9 +389,9 @@ public:
             ui->actionPixmap_Results_View->setChecked(visible);
         }
 
-        m_currentImageView->setVisible(visible);
+        m_pixmapView->setVisible(visible);
         if(visible) {
-            fitImageSceneInView();
+            m_sceneManager.fitPixmapSceneInView(*m_pixmapView);
         }
     }
 
@@ -332,9 +401,9 @@ public:
             ui->actionVector_Results_View->setChecked(visible);
         }
 
-        m_svgImageView->setVisible(visible);
+        m_svgView->setVisible(visible);
         if(visible) {
-            fitVectorSceneInView();
+            m_sceneManager.fitVectorSceneInView(*m_svgView);
         }
     }
 
@@ -398,30 +467,32 @@ private:
         return q->findChild<geometrize::dialog::ImageTaskScriptingPanel*>();
     }
 
+    bool isRunning() const
+    {
+        if(!m_task) {
+            return false;
+        }
+        return m_task->isStepping();
+    }
+
+    bool shouldKeepStepping() const
+    {
+        return m_shouldKeepStepping;
+    }
+
+    void setShouldKeepStepping(const bool stepping)
+    {
+        m_shouldKeepStepping = stepping;
+        updateStartStopButtonText();
+    }
+
     void updateStartStopButtonText()
     {
-        if(!isRunning()) {
+        if(!shouldKeepStepping()) {
             ui->imageTaskRunnerWidget->setRunStopButtonText(tr("Start", "Text on a button that the user presses to make the app start/begin transforming an image into shapes"));
         } else {
             ui->imageTaskRunnerWidget->setRunStopButtonText(tr("Stop", "Text on a button that the user presses to make the app stop/pause transforming an image into shapes"));
         }
-    }
-
-    void updateCurrentGraphics(const std::vector<geometrize::ShapeResult>& shapes)
-    {
-        const QPixmap pixmap{image::createPixmap(m_task->getCurrent())};
-        m_currentImageScene.setWorkingPixmap(pixmap);
-        m_currentSvgScene.drawSvg(shapes, pixmap.size().width(), pixmap.size().height());
-    }
-
-    bool isRunning() const
-    {
-        return m_running; // TODO this is buggy, need to synch up whether the task is running or not in a better way
-    }
-
-    void setRunning(const bool running)
-    {
-        m_running = running;
     }
 
     void stepModel()
@@ -453,7 +524,9 @@ private:
         ui->statsDockContents->setTaskId(m_task->getTaskId());
         ui->statsDockContents->setImageDimensions(m_task->getWidth(), m_task->getHeight());
 
-        if(!isRunning()) {
+        // Note this is "stopped" when !isRunning alone, but this prevents flashing while
+        // the user has it continually adding shapes
+        if(!isRunning() && !shouldKeepStepping()) {
             ui->statsDockContents->setCurrentStatus(geometrize::dialog::ImageTaskStatsWidget::STOPPED);
         }
 
@@ -477,33 +550,6 @@ private:
         if(m_taskDidStepConnection) {
             disconnect(m_taskDidStepConnection);
         }
-    }
-
-    void setupOverlayImages()
-    {
-        const QPixmap target{image::createPixmap(m_task->getTarget())};
-        m_currentImageScene.setTargetPixmap(target);
-        m_currentSvgScene.setTargetPixmap(target);
-    }
-
-    void fitImageSceneInView()
-    {
-        const float margin{m_defaultViewMargins};
-        const QRectF imageViewRect{m_currentImageScene.itemsBoundingRect().adjusted(-margin, -margin, margin, margin)};
-        m_currentImageView->fitInView(imageViewRect, Qt::KeepAspectRatio);
-    }
-
-    void fitVectorSceneInView()
-    {
-        const float margin{m_defaultViewMargins};
-        const QRectF svgRect{m_currentSvgScene.itemsBoundingRect().adjusted(-margin, -margin, margin, margin)};
-        m_svgImageView->fitInView(svgRect, Qt::KeepAspectRatio);
-    }
-
-    void fitScenesInViews()
-    {
-        fitImageSceneInView();
-        fitVectorSceneInView();
     }
 
     void setTargetImage(const QImage& image)
@@ -530,7 +576,6 @@ private:
     }
 
     std::unique_ptr<Ui::ImageTaskWindow> ui{nullptr};
-
     ImageTaskWindow* q{nullptr};
 
     task::ImageTask* m_task{nullptr}; ///> The image task currently set and manipulated via this window
@@ -539,15 +584,14 @@ private:
     QMetaObject::Connection m_taskDidStepConnection{}; ///> Connection for the window to do work just after the image task finishes a step
     std::vector<std::function<void()>> m_onPostStepCbs; ///> One-shot callbacks triggered when the image task finishes a step
 
-    std::vector<geometrize::ShapeResult> m_shapes; ///> The shapes and score results created by the image task
+    geometrize::task::ShapeCollection m_shapes; ///> Collection of shapes added so far
 
-    ImageTaskPixmapScene m_currentImageScene; ///> The scene containing the raster/pixel-based representation of the shapes
-    ImageTaskSvgScene m_currentSvgScene; ///> The scene containing the vector-based representation of the shapes
-    const float m_defaultViewMargins{20.0f}; ///> Margins around the graphics shown in the views
-    geometrize::dialog::ImageTaskGraphicsView* m_currentImageView{nullptr}; ///> The view that holds the raster/pixel-based scene
-    geometrize::dialog::ImageTaskGraphicsView* m_svgImageView{nullptr}; ///> The view that holds the vector-based scene
+    geometrize::scene::AreaOfInfluenceShape m_areaOfInfluenceShape; ///> Shape that can be used to control where shapes are allowed to be spawned/mutated (when scripting is enabled)
+    geometrize::scene::ImageTaskSceneManager m_sceneManager; ///> Manager for scenes containing the pixmap/vector-based representations of the shapes etc
+    geometrize::scene::ImageTaskGraphicsView* m_pixmapView{nullptr}; ///> The view that holds the raster/pixel-based scene
+    geometrize::scene::ImageTaskGraphicsView* m_svgView{nullptr}; ///> The view that holds the vector-based scene
 
-    bool m_running{false}; ///> Whether the model is running (automatically)
+    bool m_shouldKeepStepping{false}; ///> Whether to continually step i.e. whether to start another step after stepping once
     QTimer m_timeRunningTimer; ///> Timer used to keep track of how long the image task has been in the "running" state
     float m_timeRunning{0.0f}; ///> Total time that the image task has been in the "running" state
     const float m_timeRunningResolutionMs{100.0f}; ///> Resolution of the time running timer
