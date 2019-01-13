@@ -31,7 +31,7 @@
 #include "task/imagetask.h"
 #include "version/versioninfo.h"
 
-#if DATASLINGER_INCLUDED
+#if defined DATASLINGER_INCLUDED
 #include "dataslinger/imageslinger.h"
 #endif
 
@@ -175,7 +175,7 @@ public:
 
             m_timeRunning = 0.0f;
 
-            #if DATASLINGER_INCLUDED
+            #if defined DATASLINGER_INCLUDED
             // Bind keyboard shortcuts for sending images out over the network etc
             geometrize::installImageSlingerKeyboardShortcuts(q, m_task);
             #endif
