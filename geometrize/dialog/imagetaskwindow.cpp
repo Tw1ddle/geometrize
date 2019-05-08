@@ -311,8 +311,13 @@ public:
         #if defined DATASLINGER_INCLUDED
         // Send the newly added SVG shape data out to listening clients
         connect(&m_shapes, &geometrize::task::ShapeCollection::signal_appendedShapes, [](const std::vector<geometrize::ShapeResult>& shapes) {
+
+            // Exporting rotated ellipses as polygons, since OpenFL's SVG library can't handle regular rotated SVG ellipse or paths
+            geometrize::exporter::SVGExportOptions options;
+            options.rotatedEllipseExportMode = geometrize::exporter::RotatedEllipseSVGExportMode::POLYGON;
+
             for(const auto& result : shapes) {
-                geometrize::sendSvgShapeData(geometrize::exporter::getSingleShapeSVGData(result.color, *result.shape));
+                geometrize::sendSvgShapeData(geometrize::exporter::getSingleShapeSVGData(result.color, *result.shape, options));
             }
         });
         #endif
