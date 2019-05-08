@@ -189,8 +189,10 @@ std::string getPreferencesPath(const QString& configFilename)
     return preferencesPathStr;
 }
 
-std::unique_ptr<dataslinger::DataSlinger> sender{ nullptr };
-std::unique_ptr<dataslinger::DataSlinger> receiver{ nullptr };
+std::unique_ptr<dataslinger::DataSlinger> imageSender{ nullptr };
+std::unique_ptr<dataslinger::DataSlinger> imageReceiver{ nullptr };
+
+std::unique_ptr<dataslinger::DataSlinger> svgShapeSender{ nullptr };
 
 }
 
@@ -199,7 +201,7 @@ namespace geometrize
 
 void setupImageSlinger()
 {
-    if(sender != nullptr) {
+    if(imageSender != nullptr) {
         assert(0 && "Slinger has already been set up");
         return;
     }
@@ -210,11 +212,11 @@ void setupImageSlinger()
         assert(0 && "Slinger connection preferences failed to load"); // No return since we have some defaults
     }
 
-    sender = std::make_unique<dataslinger::DataSlinger>(
-    [](const dataslinger::message::Message& m) {
-        geometrize::log::send("On image slinger received message", nullptr);
+    imageSender = std::make_unique<dataslinger::DataSlinger>(
+    [](const dataslinger::message::Message&) {
+        geometrize::log::send("On image sender received message", nullptr);
     },
-    [](const dataslinger::event::Event& e) {
+    [](const dataslinger::event::Event&) {
         geometrize::log::send("On image sender received event", nullptr);
     },
     dataslinger::connection::ConnectionOptions({{{
@@ -226,22 +228,22 @@ void setupImageSlinger()
 
 void setupImageReceiver()
 {
-    if(receiver != nullptr) {
-        assert(0 && "Receiver has already been set up");
+    if(imageReceiver != nullptr) {
+        assert(0 && "imageReceiver has already been set up");
         return;
     }
 
     std::string host = "127.0.0.2";
     std::uint16_t port = 8082;
     if(!loadReceiverConnectionOptions(getPreferencesPath("imagereceiver_connection_options.json"), host, port)) {
-        assert(0 && "Receiver connection preferences failed to load"); // No return since we have some defaults
+        assert(0 && "imageReceiver connection preferences failed to load"); // No return since we have some defaults
     }
 
-    receiver = std::make_unique<dataslinger::DataSlinger>(
-    [](const dataslinger::message::Message& m) {
+    imageReceiver = std::make_unique<dataslinger::DataSlinger>(
+    [](const dataslinger::message::Message&) {
         geometrize::log::send("On image receiver received message", nullptr);
     },
-    [](const dataslinger::event::Event& e) {
+    [](const dataslinger::event::Event&) {
         geometrize::log::send("On image receiver received event", nullptr);
     },
     dataslinger::connection::ConnectionOptions({{{
@@ -266,22 +268,60 @@ void installImageSlingerKeyboardShortcuts(geometrize::dialog::ImageTaskWindow* w
         auto* console = widget->findChild<geometrize::dialog::ScriptConsole*>();
         assert(console != nullptr);
         if(console) {
-            if(sender == nullptr) {
+            if(imageSender == nullptr) {
                 geometrize::log::send("Dataslinger - will fail to send image, data slinger was not set up", console);
             } else {
                 geometrize::log::send("Dataslinger - sending image", console);
             }
         }
 
-        if(!sender) {
-            assert(0 && "Sender should not be null");
+        if(!imageSender) {
+            assert(0 && "imageSender should not be null");
             return;
         }
 
         const auto& current = imageTask->getCurrent();
         const dataslinger::message::Message msg = makeMessageFromBitmap(current);
-        sender->send(msg);
+        imageSender->send(msg);
     });
+}
+
+void setupSvgShapeSlinger()
+{
+    if(svgShapeSender != nullptr) {
+        assert(0 && "Slinger has already been set up");
+        return;
+    }
+
+    std::string host = "127.0.0.1";
+    std::uint16_t port = 9001;
+    if(!loadSlingerConnectionOptions(getPreferencesPath("svgshapeslinger_connection_options.json"), host, port)) {
+        assert(0 && "Slinger connection preferences failed to load"); // No return since we have some defaults
+    }
+
+    svgShapeSender = std::make_unique<dataslinger::DataSlinger>(
+    [](const dataslinger::message::Message&) {
+        geometrize::log::send("On SVG shape sender received message", nullptr);
+    },
+    [](const dataslinger::event::Event&) {
+        geometrize::log::send("On SVG shape sender received event", nullptr);
+    },
+    dataslinger::connection::ConnectionOptions({{{
+        { dataslinger::connection::ConnectionOption::PREFERRED_BACKEND, dataslinger::connection::PreferredBackend::WEBSOCKET_SERVER },
+        { dataslinger::connection::ConnectionOption::WEBSOCKET_HOST_STRING, host },
+        { dataslinger::connection::ConnectionOption::WEBSOCKET_PORT_UINT16, port }
+    }}}));
+}
+
+void sendSvgShapeData(const std::string& s)
+{
+    if(svgShapeSender == nullptr) {
+        assert(0 && "SVG shape sender isn't set up");
+        return;
+    }
+
+    const dataslinger::message::Message msg(s.begin(), s.end());
+    svgShapeSender->send(msg);
 }
 
 }

@@ -7,6 +7,8 @@
 
 #include <QImage>
 
+#include <string>
+
 namespace geometrize
 {
 namespace dialog
@@ -40,12 +42,24 @@ void setupImageSlinger();
 void setupImageReceiver();
 
 /**
- * @brief installImageSlingerKeyboardShortcut Installs the keyboard shortcuts for sending images etc. Note use of the shortcuts requires the slinger/receiver to be functional.
+ * @brief installImageSlingerKeyboardShortcuts Installs the keyboard shortcuts for sending images etc. Note use of the shortcuts requires the slinger/receiver to be functional.
  * Searches for config file "imageslinger_misc_options.json" for keyboard shortcuts to use.
  * @param widget The widget to install the keyboard shortcuts upon.
  * @param imageTask The image task associated with the widget.
  */
 void installImageSlingerKeyboardShortcuts(geometrize::dialog::ImageTaskWindow* widget, geometrize::task::ImageTask* imageTask);
+
+/**
+ * @brief setupShapeSvgSlinger Sets up a WebSocket server for sending individual SVG shapes out to clients e.g. other open source applications with a client hacked in.
+ * Searches for config file "svgshapeslinger_connection_options.json" for the connection options to use.
+ */
+void setupSvgShapeSlinger();
+
+/**
+ * @brief sendSvgShapeData Sends the given SVG shape data as a string out to clients.
+ * @param s The SVG shape data for a shape.
+ */
+void sendSvgShapeData(const std::string& s);
 
 }
 

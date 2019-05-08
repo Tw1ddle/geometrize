@@ -36,6 +36,7 @@
 
 #if defined DATASLINGER_INCLUDED
 #include "dataslinger/imageslinger.h"
+#include "geometrize/exporter/svgexporter.h"
 #endif
 
 namespace
@@ -306,6 +307,15 @@ public:
             const QPixmap pixmap{image::createPixmap(m_task->getCurrent())};
             m_sceneManager.updateScenes(pixmap, shapes);
         });
+
+        #if defined DATASLINGER_INCLUDED
+        // Send the newly added SVG shape data out to listening clients
+        connect(&m_shapes, &geometrize::task::ShapeCollection::signal_appendedShapes, [](const std::vector<geometrize::ShapeResult>& shapes) {
+            for(const auto& result : shapes) {
+                geometrize::sendSvgShapeData(geometrize::exporter::getSingleShapeSVGData(result.color, *result.shape));
+            }
+        });
+        #endif
 
         // Update the graphical image views when the number of shapes changes (e.g. when cleared)
         connect(&m_shapes, &geometrize::task::ShapeCollection::signal_sizeChanged, [this](const std::size_t size) {

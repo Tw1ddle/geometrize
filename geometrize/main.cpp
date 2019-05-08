@@ -157,6 +157,7 @@ int main(int argc, char* argv[])
 #if defined DATASLINGER_INCLUDED
     geometrize::setupImageSlinger();
     geometrize::setupImageReceiver();
+    geometrize::setupSvgShapeSlinger();
 #endif
 
     const auto run = resolveLaunchFunction(arguments);
