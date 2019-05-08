@@ -1,6 +1,7 @@
 #include "imagetaskpixmapgraphicsitem.h"
 
 #include <QGraphicsPixmapItem>
+#include <QKeyEvent>
 #include <QGraphicsSceneHoverEvent>
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsSceneWheelEvent>
@@ -15,7 +16,9 @@ namespace scene
 ImageTaskPixmapGraphicsItem::ImageTaskPixmapGraphicsItem() : QGraphicsPixmapItem()
 {
     setAcceptHoverEvents(true);
+    setAcceptTouchEvents(true);
     setFlag(ItemIsMovable, false);
+    setFlag(ItemIsSelectable, false);
 }
 
 ImageTaskPixmapGraphicsItem::ImageTaskPixmapGraphicsItem(const QPixmap& pixmap) : QGraphicsPixmapItem(pixmap)
@@ -54,6 +57,30 @@ void ImageTaskPixmapGraphicsItem::wheelEvent(QGraphicsSceneWheelEvent* event)
 {
     QGraphicsPixmapItem::wheelEvent(event);
     emit signal_onWheelEvent(event->scenePos().x(), event->scenePos().y(), event->delta(), event->modifiers() & Qt::ControlModifier);
+}
+
+void ImageTaskPixmapGraphicsItem::keyPressEvent(QKeyEvent* event)
+{
+    QGraphicsPixmapItem::keyPressEvent(event);
+    emit signal_onKeyPressEvent(event->key(), event->modifiers() & Qt::ControlModifier);
+}
+
+void ImageTaskPixmapGraphicsItem::keyReleaseEvent(QKeyEvent* event)
+{
+    QGraphicsPixmapItem::keyReleaseEvent(event);
+    emit signal_onKeyReleaseEvent(event->key(), event->modifiers() & Qt::ControlModifier);
+}
+
+void ImageTaskPixmapGraphicsItem::focusInEvent(QFocusEvent* event)
+{
+    QGraphicsPixmapItem::focusInEvent(event);
+    emit signal_onFocusInEvent();
+}
+
+void ImageTaskPixmapGraphicsItem::focusOutEvent(QFocusEvent* event)
+{
+    QGraphicsPixmapItem::focusOutEvent(event);
+    emit signal_onFocusOutEvent();
 }
 
 }

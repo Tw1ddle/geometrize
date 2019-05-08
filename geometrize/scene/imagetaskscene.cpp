@@ -2,13 +2,14 @@
 
 #include <memory>
 
+#include <QFocusEvent>
 #include <QGraphicsScene>
 #include <QGraphicsSceneWheelEvent>
 #include <QString>
 
-#include "scene/areaofinfluenceshape.h"
 #include "scene/imagetaskpixmapgraphicsitem.h"
 #include "scene/svgitem.h"
+#include "scene/tools/areaofinfluenceshapes.h"
 
 namespace geometrize
 {
@@ -21,6 +22,8 @@ class ImageTaskScene::ImageTaskSceneImpl
 public:
     ImageTaskSceneImpl(ImageTaskScene* pQ) : q{pQ}, m_lastOverlayShapeItem{nullptr}
     {
+        q->setStickyFocus(true);
+
         q->addItem(&m_targetPixmapItem);
         m_targetPixmapItem.setZValue(1);
     }
@@ -30,7 +33,7 @@ public:
 
     void setTargetPixmapOpacity(const float opacity)
     {
-        m_targetPixmapItem.setOpacity(opacity);
+        m_targetPixmapItem.setOpacity(static_cast<qreal>(opacity));
     }
 
     void setTargetPixmap(const QPixmap& pixmap)
@@ -51,6 +54,7 @@ public:
         if(item != nullptr) {
             item->setZValue(1000); // Should be on top of everything else
             q->addItem(item);
+            q->setFocusItem(item, Qt::FocusReason::OtherFocusReason);
         }
         m_lastOverlayShapeItem = item;
     }
@@ -92,9 +96,44 @@ void ImageTaskScene::setOverlayShape(SvgItem* item)
     d->setOverlayShape(item);
 }
 
+void ImageTaskScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
+{
+    QGraphicsScene::mousePressEvent(event);
+}
+
+void ImageTaskScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
+{
+    QGraphicsScene::mouseMoveEvent(event);
+}
+
+void ImageTaskScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
+{
+    QGraphicsScene::mouseReleaseEvent(event);
+}
+
 void ImageTaskScene::wheelEvent(QGraphicsSceneWheelEvent* event)
 {
     QGraphicsScene::wheelEvent(event);
+}
+
+void ImageTaskScene::keyPressEvent(QKeyEvent* event)
+{
+    QGraphicsScene::keyPressEvent(event);
+}
+
+void ImageTaskScene::keyReleaseEvent(QKeyEvent* event)
+{
+    QGraphicsScene::keyReleaseEvent(event);
+}
+
+void ImageTaskScene::focusInEvent(QFocusEvent* event)
+{
+    QGraphicsScene::focusInEvent(event);
+}
+
+void ImageTaskScene::focusOutEvent(QFocusEvent* event)
+{
+    QGraphicsScene::focusOutEvent(event);
 }
 
 }

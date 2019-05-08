@@ -95,11 +95,7 @@ public:
         const QByteArray svgData{svgString.toUtf8()};
 
         const auto makeItem = [](const QByteArray& data) -> AreaOfInfluenceShapeItem* {
-            auto item = new AreaOfInfluenceShapeItem(data);
-            item->setFlags(QGraphicsItem::ItemClipsToShape);
-            item->setCacheMode(QGraphicsItem::NoCache);
-            item->setZValue(0);
-            return item;
+            return new AreaOfInfluenceShapeItem(data);
         };
 
         auto pixmapInfluenceItem = makeItem(svgData);
@@ -115,10 +111,10 @@ private:
     void connectTargetItemSignals(geometrize::scene::ImageTaskPixmapGraphicsItem& item)
     {
         connect(&item, &geometrize::scene::ImageTaskPixmapGraphicsItem::signal_onHoverMoveEvent, [this](const double lastX, const double lastY, const double x, const double y, const bool ctrlModifier) {
-            emit q->signal_onTargetImageHoverMoveEvent(lastX, lastY, x, y, ctrlModifier);
+            q->signal_onTargetImageHoverMoveEvent(lastX, lastY, x, y, ctrlModifier);
         });
         connect(&item, &geometrize::scene::ImageTaskPixmapGraphicsItem::signal_onMouseMoveEvent, [this](const double lastX, const double lastY, const double x, const double y, const bool ctrlModifier) {
-            emit q->signal_onTargetImageMouseMoveEvent(lastX, lastY, x, y, ctrlModifier);
+            q->signal_onTargetImageMouseMoveEvent(lastX, lastY, x, y, ctrlModifier);
         });
         connect(&item, &geometrize::scene::ImageTaskPixmapGraphicsItem::signal_onMousePressEvent, [this](const double x, const double y, const bool ctrlModifier) {
             q->signal_onTargetImageMousePressEvent(x, y, ctrlModifier);
@@ -129,12 +125,38 @@ private:
         connect(&item, &geometrize::scene::ImageTaskPixmapGraphicsItem::signal_onWheelEvent, [this](const double x, const double y, const int amount, const bool ctrlModifier) {
             q->signal_onTargetImageWheelEvent(x, y, amount, ctrlModifier);
         });
+        connect(&item, &geometrize::scene::ImageTaskPixmapGraphicsItem::signal_onKeyPressEvent, [this](const int key, const bool ctrlModifier) {
+            q->signal_onTargetImageKeyPressEvent(key, ctrlModifier);
+        });
+        connect(&item, &geometrize::scene::ImageTaskPixmapGraphicsItem::signal_onKeyReleaseEvent, [this](const int key, const bool ctrlModifier) {
+            q->signal_onTargetImageKeyReleaseEvent(key, ctrlModifier);
+        });
     }
 
-    void connectAreaOfInfluenceItemSignals(AreaOfInfluenceShapeItem& item)
+    void connectAreaOfInfluenceItemSignals(geometrize::scene::AreaOfInfluenceShapeItem& item)
     {
+        connect(&item, &geometrize::scene::AreaOfInfluenceShapeItem::signal_onHoverMoveEvent, [this](const double lastX, const double lastY, const double x, const double y, const bool ctrlModifier) {
+            q->signal_onAreaOfInfluenceShapeHoverMoveEvent(lastX, lastY, x, y, ctrlModifier);
+        });
+        connect(&item, &geometrize::scene::AreaOfInfluenceShapeItem::signal_onMouseMoveEvent, [this](const double lastX, const double lastY, const double x, const double y, const bool ctrlModifier) {
+            q->signal_onAreaOfInfluenceShapeMouseMoveEvent(lastX, lastY, x, y, ctrlModifier);
+        });
+        connect(&item, &geometrize::scene::AreaOfInfluenceShapeItem::signal_onMousePressEvent, [this](const double x, const double y, const bool ctrlModifier) {
+            q->signal_onAreaOfInfluenceShapeMousePressEvent(x, y, ctrlModifier);
+        });
+        connect(&item, &geometrize::scene::AreaOfInfluenceShapeItem::signal_onMouseReleaseEvent, [this](const double x, const double y, const bool ctrlModifier) {
+            q->signal_onAreaOfInfluenceShapeMouseReleaseEvent(x, y, ctrlModifier);
+        });
         connect(&item, &geometrize::scene::AreaOfInfluenceShapeItem::signal_onWheelEvent, [this](const double x, const double y, const int amount, const bool ctrlModifier) {
             q->signal_onAreaOfInfluenceShapeMouseWheelEvent(x, y, amount, ctrlModifier);
+        });
+        connect(&item, &geometrize::scene::AreaOfInfluenceShapeItem::signal_onKeyPressEvent, [this, &item](const int key, const bool ctrlModifier) {
+            item.setFocus(Qt::FocusReason::MouseFocusReason);
+
+            q->signal_onAreaOfInfluenceShapeKeyPressEvent(key, ctrlModifier);
+        });
+        connect(&item, &geometrize::scene::AreaOfInfluenceShapeItem::signal_onKeyReleaseEvent, [this](const int key, const bool ctrlModifier) {
+            q->signal_onAreaOfInfluenceShapeKeyReleaseEvent(key, ctrlModifier);
         });
     }
 

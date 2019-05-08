@@ -61,6 +61,16 @@ void ImageTaskGraphicsView::wheelEvent(QWheelEvent* e)
     }
 }
 
+void ImageTaskGraphicsView::mousePressEvent(QMouseEvent* event)
+{
+    QGraphicsView::mousePressEvent(event);
+}
+
+void ImageTaskGraphicsView::mouseReleaseEvent(QMouseEvent* event)
+{
+    QGraphicsView::mouseReleaseEvent(event);
+}
+
 void ImageTaskGraphicsView::mouseMoveEvent(QMouseEvent* event)
 {
     QGraphicsView::mouseMoveEvent(event);
@@ -69,6 +79,11 @@ void ImageTaskGraphicsView::mouseMoveEvent(QMouseEvent* event)
 void ImageTaskGraphicsView::keyPressEvent(QKeyEvent* event)
 {
     QGraphicsView::keyPressEvent(event);
+}
+
+void ImageTaskGraphicsView::keyReleaseEvent(QKeyEvent* event)
+{
+    QGraphicsView::keyReleaseEvent(event);
 }
 
 void ImageTaskGraphicsView::changeEvent(QEvent* event)

@@ -100,8 +100,16 @@ signals:
     void signal_onTargetImageMouseMoveEvent(double lastX, double lastY, double x, double y, bool ctrlModifier);
     void signal_onTargetImageMouseReleaseEvent(double x, double y, bool ctrlModifier);
     void signal_onTargetImageWheelEvent(double x, double y, int amount, bool ctrlModifier);
+    void signal_onTargetImageKeyPressEvent(int key, bool ctrlModifier);
+    void signal_onTargetImageKeyReleaseEvent(int key, bool ctrlModifier);
 
+    void signal_onAreaOfInfluenceShapeHoverMoveEvent(double lastX, double lastY, double x, double y, bool ctrlModifier);
+    void signal_onAreaOfInfluenceShapeMousePressEvent(double x, double y, bool ctrlModifier);
+    void signal_onAreaOfInfluenceShapeMouseMoveEvent(double lastX, double lastY, double x, double y, bool ctrlModifier);
+    void signal_onAreaOfInfluenceShapeMouseReleaseEvent(double x, double y, bool ctrlModifier);
     void signal_onAreaOfInfluenceShapeMouseWheelEvent(double x, double y, int amount, bool ctrlModifier);
+    void signal_onAreaOfInfluenceShapeKeyPressEvent(int key, bool ctrlModifier);
+    void signal_onAreaOfInfluenceShapeKeyReleaseEvent(int key, bool ctrlModifier);
 
 private:
     class ImageTaskSceneManagerImpl;

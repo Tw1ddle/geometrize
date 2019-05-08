@@ -27,9 +27,9 @@
 #include "localization/strings.h"
 #include "preferences/globalpreferences.h"
 #include "script/geometrizerengine.h"
-#include "scene/areaofinfluenceshape.h"
 #include "scene/imagetaskgraphicsview.h"
 #include "scene/imagetaskscenemanager.h"
+#include "scene/tools/areaofinfluenceshapes.h"
 #include "task/imagetask.h"
 #include "task/shapecollection.h"
 #include "version/versioninfo.h"
@@ -160,10 +160,10 @@ public:
 
                 engine->set_global(chaiscript::var(static_cast<int>(m_task->getWidth())), "xBound");
                 engine->set_global(chaiscript::var(static_cast<int>(m_task->getHeight())), "yBound");
-                engine->set_global(chaiscript::var(m_areaOfInfluenceShape.getLastShape()), "aoi");
+                engine->set_global(chaiscript::var(m_areaOfInfluenceShapes.getCurrentShape()), "aoi");
                 engine->set_global(chaiscript::var(m_shapes.getShapeVector().size()), "currentShapeCount");
 
-                std::vector<std::pair<std::int32_t, std::int32_t>> aoiPixels = m_areaOfInfluenceShape.getPixels(m_task->getWidth(), m_task->getHeight());
+                std::vector<std::pair<std::int32_t, std::int32_t>> aoiPixels = m_areaOfInfluenceShapes.getPixels(m_task->getWidth(), m_task->getHeight());
                 if(aoiPixels.empty()) {
                     aoiPixels.push_back(std::make_pair(m_task->getWidth() / 2, m_task->getHeight() / 2));
                 }
@@ -314,28 +314,14 @@ public:
             }
         });
 
-        // Handle modifications to the area of influence shape
-        connect(&m_areaOfInfluenceShape, &geometrize::scene::AreaOfInfluenceShape::signal_didModifyShape, [this](const geometrize::Shape& shape) {
+        // Connect controls/manipulation in the scenes to the actual area of influence shapes
+        m_areaOfInfluenceShapes.connectToSceneManager(m_sceneManager);
+
+        // Update the scene whenever the current area of influence shape is modified
+        connect(&m_areaOfInfluenceShapes, &geometrize::scene::tools::AreaOfInfluenceShapes::signal_didModifyShape, [this](const geometrize::Shape& shape) {
             m_sceneManager.setAreaOfInfluenceShape(shape);
         });
-
-        // Connect pointer control/manipulations of the scenes to the actual area of influence shape
-        connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onTargetImageHoverMoveEvent, [this](const int lastX, const int lastY, const int x, const int y, const bool ctrlModifier) {
-            if(!ctrlModifier) {
-                return;
-            }
-            if(m_areaOfInfluenceShape.getLastShape() == nullptr) {
-                m_areaOfInfluenceShape.setup(x, y, geometrize::ShapeTypes::TRIANGLE);
-            } else {
-                m_areaOfInfluenceShape.translateShape(x - lastX, y - lastY);
-            }
-        });
-        connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onAreaOfInfluenceShapeMouseWheelEvent, [this](const int, const int, const double amount, const bool ctrlModifier) {
-            if(!ctrlModifier) {
-                return;
-            }
-            m_areaOfInfluenceShape.scaleShape(amount > 0 ? 1.03f : 0.97f);
-        });
+        m_sceneManager.setAreaOfInfluenceShape(*m_areaOfInfluenceShapes.getCurrentShape().get());
 
         // Set initial target image opacity
         const float initialTargetImageOpacity{10};
@@ -586,7 +572,8 @@ private:
 
     geometrize::task::ShapeCollection m_shapes; ///> Collection of shapes added so far
 
-    geometrize::scene::AreaOfInfluenceShape m_areaOfInfluenceShape; ///> Shape that can be used to control where shapes are allowed to be spawned/mutated (when scripting is enabled)
+    geometrize::scene::tools::AreaOfInfluenceShapes m_areaOfInfluenceShapes; ///> Shapes that can be used to control where shapes are allowed to be spawned/mutated (when a corresponding scripting mode is enabled)
+
     geometrize::scene::ImageTaskSceneManager m_sceneManager; ///> Manager for scenes containing the pixmap/vector-based representations of the shapes etc
     geometrize::scene::ImageTaskGraphicsView* m_pixmapView{nullptr}; ///> The view that holds the raster/pixel-based scene
     geometrize::scene::ImageTaskGraphicsView* m_svgView{nullptr}; ///> The view that holds the vector-based scene

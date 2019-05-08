@@ -16,7 +16,7 @@ public:
     ImageTaskPixmapSceneImpl(ImageTaskPixmapScene* pQ) : q{pQ}
     {
         q->addItem(&m_workingPixmapItem);
-        m_workingPixmapItem.setZValue(0);
+        m_workingPixmapItem.setZValue(-1);
     }
     ImageTaskPixmapSceneImpl operator=(const ImageTaskPixmapSceneImpl&) = delete;
     ImageTaskPixmapSceneImpl(const ImageTaskPixmapSceneImpl&) = delete;
