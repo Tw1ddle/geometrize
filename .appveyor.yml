@@ -3,7 +3,6 @@ environment:
   matrix:
     - QTDIR: C:\Qt\5.12\mingw73_32
       MINGW: C:\Qt\Tools\mingw73_32
-    - QTDIR: C:\Qt\5.12\msvc2015
     - QTDIR: C:\Qt\5.12\msvc2015_64
 
 configuration:
