@@ -51,6 +51,8 @@ public:
                 } else {
                     script::runScript(command, *m_engine);
                 }
+            } else {
+                ui->outputView->append(tr("No script engine is set up on this console, commands won't be handled"));
             }
         });
     }

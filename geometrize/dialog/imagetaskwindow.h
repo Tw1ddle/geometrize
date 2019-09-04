@@ -34,6 +34,12 @@ public:
     virtual ~ImageTaskWindow();
 
     /**
+     * @brief getImageTask Gets a pointer to the current image task shown by the window.
+     * @return The image task shown by the window, or nullptr if none is set.
+     */
+    task::ImageTask* getImageTask();
+
+    /**
      * @brief setImageTask Sets the current image task shown by the window.
      * @param task The image task to set on the image task window. The window takes ownership of the image task.
      */

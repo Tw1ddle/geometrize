@@ -5,16 +5,23 @@
 #include <cassert>
 #include <cstdint>
 #include <fstream>
+#include <functional>
 #include <memory>
 #include <string>
 
 #include <QApplication>
 #include <QCoreApplication>
 #include <QDir>
+#include <QDockWidget>
+#include <QHBoxLayout>
 #include <QKeySequence>
+#include <QLabel>
 #include <QList>
 #include <QImage>
+#include <QPushButton>
 #include <QShortcut>
+#include <QTimer>
+#include <QVBoxLayout>
 #include <QWidget>
 
 #include "cereal/cereal.hpp"
@@ -194,6 +201,22 @@ std::unique_ptr<dataslinger::DataSlinger> imageReceiver{ nullptr };
 
 std::unique_ptr<dataslinger::DataSlinger> svgShapeSender{ nullptr };
 
+std::int32_t sendImage(const geometrize::Bitmap& bitmap)
+{
+    static std::int32_t sendAttemptCount = 0;
+    sendAttemptCount++;
+
+    if(!imageSender) {
+        assert(0 && "imageSender should not be null");
+        return sendAttemptCount;
+    }
+
+    const dataslinger::message::Message msg = makeMessageFromBitmap(bitmap);
+    imageSender->send(msg);
+
+    return sendAttemptCount;
+}
+
 }
 
 namespace geometrize
@@ -253,37 +276,81 @@ void setupImageReceiver()
     }}}));
 }
 
-void installImageSlingerKeyboardShortcuts(geometrize::dialog::ImageTaskWindow* widget, geometrize::task::ImageTask* imageTask)
+void installImageSlingerUserInterface(geometrize::dialog::ImageTaskWindow* widget)
 {
+    // Create widget containing slinger user interface
+    // And attach it to the bottom of the image task window in a dock
+
+    QDockWidget* slingerDockWidget = new QDockWidget("Dataslinger Settings", widget);
+    slingerDockWidget->setFeatures(slingerDockWidget->features() & ~QDockWidget::DockWidgetFeature::DockWidgetClosable);
+    QWidget* slingerDockContents = new QWidget(slingerDockWidget);
+    slingerDockWidget->setWidget(slingerDockContents);
+
+    QHBoxLayout* slingerWidgetLayout = new QHBoxLayout();
+    QVBoxLayout* slingerOptionsLayout = new QVBoxLayout();
+
+    QPushButton* imageSendButton = new QPushButton(slingerDockContents);
+    imageSendButton->setText("Send Image");
+
+    QLabel* imageSendCountLabel = new QLabel(slingerDockContents);
+    imageSendCountLabel->setText("Image Send Attempts: -");
+
+    geometrize::dialog::ScriptConsole* slingerConsole = new geometrize::dialog::ScriptConsole(slingerDockContents);
+
+    slingerOptionsLayout->addWidget(imageSendButton);
+    slingerOptionsLayout->addWidget(imageSendCountLabel);
+
+    slingerWidgetLayout->addItem(slingerOptionsLayout);
+    slingerWidgetLayout->addWidget(slingerConsole);
+
+    slingerDockContents->setLayout(slingerWidgetLayout);
+    widget->addDockWidget(Qt::DockWidgetArea::BottomDockWidgetArea, slingerDockWidget);
+
+    // Helper function to send out an image, logging errors and stats
+    const auto sendImageHelper = [widget, slingerConsole, imageSendCountLabel]() {
+        const auto task = widget->getImageTask();
+        if(task == nullptr) {
+            geometrize::log::send("Dataslinger - will fail to send image data, no image task is set on the widget", slingerConsole);
+            return;
+        }
+
+        const std::int32_t sendAttemptCount = ::sendImage(task->getCurrent());
+
+        if(imageSender == nullptr) {
+            geometrize::log::send("Dataslinger - will fail to send image, data slinger was not set up", slingerConsole);
+        } else {
+            geometrize::log::send("Dataslinger - sending image (" + QString::number(sendAttemptCount) + " image(s) this session)", slingerConsole);
+        }
+
+        imageSendCountLabel->setText("Image Send Attempts: " + QString::number(sendAttemptCount));
+    };
+
+    // Connect up send image push button
+    QObject::connect(imageSendButton, &QPushButton::pressed, [sendImageHelper]() {
+        sendImageHelper();
+    });
+
+    // Install keyboard shortcuts
     std::string slingImageKeyboardShortcut = "S";
     if(!loadImageSlingerMiscOptions(getPreferencesPath("imageslinger_misc_options.json"), slingImageKeyboardShortcut)) {
         assert(0 && "Slinger misc preferences failed to load"); // No return since we have some defaults
     }
-
-    // Install keyboard shortcut
     QShortcut* sendShortcut = new QShortcut(QKeySequence(QString::fromStdString(slingImageKeyboardShortcut)), widget);
     sendShortcut->setContext(Qt::ApplicationShortcut);
-
-    QObject::connect(sendShortcut, &QShortcut::activated, [widget, imageTask]() {
-        auto* console = widget->findChild<geometrize::dialog::ScriptConsole*>();
-        assert(console != nullptr);
-        if(console) {
-            if(imageSender == nullptr) {
-                geometrize::log::send("Dataslinger - will fail to send image, data slinger was not set up", console);
-            } else {
-                geometrize::log::send("Dataslinger - sending image", console);
-            }
-        }
-
-        if(!imageSender) {
-            assert(0 && "imageSender should not be null");
-            return;
-        }
-
-        const auto& current = imageTask->getCurrent();
-        const dataslinger::message::Message msg = makeMessageFromBitmap(current);
-        imageSender->send(msg);
+    QObject::connect(sendShortcut, &QShortcut::activated, [sendImageHelper]() {
+        sendImageHelper();
     });
+
+    // Set up polling so the image sender can receive events itself and update the console
+    QTimer* senderPollTimer = new QTimer(widget);
+    senderPollTimer->setInterval(100);
+    QObject::connect(senderPollTimer, &QTimer::timeout, [slingerConsole]() {
+        if(imageSender == nullptr) {
+            geometrize::log::send("Dataslinger - failed to poll image sender, data sligner was not set up", slingerConsole);
+        }
+        imageSender->poll();
+    });
+    senderPollTimer->start();
 }
 
 void setupSvgShapeSlinger()

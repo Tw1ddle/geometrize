@@ -206,8 +206,8 @@ public:
             m_timeRunning = 0.0f;
 
             #if defined DATASLINGER_INCLUDED
-            // Bind keyboard shortcuts for sending images out over the network etc
-            geometrize::installImageSlingerKeyboardShortcuts(q, m_task);
+            // Bind keyboard shortcuts, setup UI for sending images out over the network etc
+            geometrize::installImageSlingerUserInterface(q);
             #endif
 
             // As a final step, dispose of the old image task, if there was one
@@ -356,6 +356,11 @@ public:
     void close()
     {
         q->close();
+    }
+
+    task::ImageTask* getImageTask()
+    {
+        return m_task;
     }
 
     void setImageTask(task::ImageTask* task)
@@ -607,6 +612,11 @@ ImageTaskWindow::ImageTaskWindow() :
 
 ImageTaskWindow::~ImageTaskWindow()
 {
+}
+
+task::ImageTask* ImageTaskWindow::getImageTask()
+{
+    return d->getImageTask();
 }
 
 void ImageTaskWindow::setImageTask(task::ImageTask* task)

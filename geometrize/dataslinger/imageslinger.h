@@ -42,12 +42,13 @@ void setupImageSlinger();
 void setupImageReceiver();
 
 /**
- * @brief installImageSlingerKeyboardShortcuts Installs the keyboard shortcuts for sending images etc. Note use of the shortcuts requires the slinger/receiver to be functional.
+ * @brief insertImageSlingerUserInterface Inserts UI and keyboard shortcuts for sending images etc.
+ * Note use of the keyboard shortcuts requires the slinger/receiver to be functional.
  * Searches for config file "imageslinger_misc_options.json" for keyboard shortcuts to use.
- * @param widget The widget to install the keyboard shortcuts upon.
+ * @param widget The widget to install the additional UI and keyboard shortcuts upon.
  * @param imageTask The image task associated with the widget.
  */
-void installImageSlingerKeyboardShortcuts(geometrize::dialog::ImageTaskWindow* widget, geometrize::task::ImageTask* imageTask);
+void installImageSlingerUserInterface(geometrize::dialog::ImageTaskWindow* widget);
 
 /**
  * @brief setupShapeSvgSlinger Sets up a WebSocket server for sending individual SVG shapes out to clients e.g. other open source applications with a client hacked in.
