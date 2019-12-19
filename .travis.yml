@@ -44,18 +44,12 @@ matrix:
         - g++-8
     env:
     - MATRIX_EVAL="CC=gcc-8 && CXX=g++-8"
-
+    
   - os: osx
-    osx_image: xcode8.3
+    osx_image: xcode11.3
     env:
     - MATRIX_EVAL="CC=clang && CXX=clang++"
-    - OSX_IMAGE_NAME="xcode_8_3"
-
-  - os: osx
-    osx_image: xcode9
-    env:
-    - MATRIX_EVAL="CC=clang && CXX=clang++"
-    - OSX_IMAGE_NAME="xcode_9_0"
+    - OSX_IMAGE_NAME="xcode_11_3"
 
 before_install:
   # Get the latest versions of the submodules, and push to the remotes (if necessary)
