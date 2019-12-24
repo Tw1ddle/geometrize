@@ -3,8 +3,8 @@ QT += core gui network svg
 TARGET = Geometrize
 TEMPLATE = app
 
-# Enable C++14 features
-CONFIG += c++14
+# Enable C++17 features
+CONFIG += c++17
 
 # Disable assertions in release builds (for gcc, clang etc builds)
 CONFIG(release, debug|release): DEFINES += NDEBUG

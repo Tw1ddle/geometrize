@@ -29,9 +29,7 @@
 
 #include "geometrize/runner/imagerunneroptions.h"
 
-#include "dataslinger/connection/connectionoptions.h"
-#include "dataslinger/event/event.h"
-#include "dataslinger/message/message.h"
+#include "dataslinger/slinger.h"
 
 #include "dialog/imagetaskwindow.h"
 #include "dialog/scriptconsole.h"
@@ -242,11 +240,11 @@ void setupImageSlinger()
     [](const dataslinger::event::Event&) {
         geometrize::log::send("On image sender received event", nullptr);
     },
-    dataslinger::connection::ConnectionOptions({{{
+    dataslinger::connection::ConnectionOptions({{
         { dataslinger::connection::ConnectionOption::PREFERRED_BACKEND, dataslinger::connection::PreferredBackend::WEBSOCKET_SERVER },
         { dataslinger::connection::ConnectionOption::WEBSOCKET_HOST_STRING, host },
         { dataslinger::connection::ConnectionOption::WEBSOCKET_PORT_UINT16, port }
-    }}}));
+    }}));
 }
 
 void setupImageReceiver()
@@ -269,11 +267,11 @@ void setupImageReceiver()
     [](const dataslinger::event::Event&) {
         geometrize::log::send("On image receiver received event", nullptr);
     },
-    dataslinger::connection::ConnectionOptions({{{
+    dataslinger::connection::ConnectionOptions({{
         { dataslinger::connection::ConnectionOption::PREFERRED_BACKEND, dataslinger::connection::PreferredBackend::WEBSOCKET_CLIENT },
         { dataslinger::connection::ConnectionOption::WEBSOCKET_HOST_STRING, host },
         { dataslinger::connection::ConnectionOption::WEBSOCKET_PORT_UINT16, port }
-    }}}));
+    }}));
 }
 
 void installImageSlingerUserInterface(geometrize::dialog::ImageTaskWindow* widget)
@@ -373,11 +371,11 @@ void setupSvgShapeSlinger()
     [](const dataslinger::event::Event&) {
         geometrize::log::send("On SVG shape sender received event", nullptr);
     },
-    dataslinger::connection::ConnectionOptions({{{
+    dataslinger::connection::ConnectionOptions({{
         { dataslinger::connection::ConnectionOption::PREFERRED_BACKEND, dataslinger::connection::PreferredBackend::WEBSOCKET_SERVER },
         { dataslinger::connection::ConnectionOption::WEBSOCKET_HOST_STRING, host },
         { dataslinger::connection::ConnectionOption::WEBSOCKET_PORT_UINT16, port }
-    }}}));
+    }}));
 }
 
 void sendSvgShapeData(const std::string& s)
