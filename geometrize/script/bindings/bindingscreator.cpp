@@ -47,6 +47,26 @@
 #include "task/imagetask.h"
 #include "task/synchronousimagetask.h"
 
+namespace
+{
+
+std::shared_ptr<chaiscript::Module> createModule()
+{
+    auto module = std::make_shared<chaiscript::Module>();
+
+    chaiscript::bootstrap::standard_library::vector_type<std::vector<int>>("IntVector", *module);
+    chaiscript::bootstrap::standard_library::vector_type<std::vector<float>>("FloatVector", *module);
+    chaiscript::bootstrap::standard_library::vector_type<std::vector<std::string>>("StringVector", *module);
+    chaiscript::bootstrap::standard_library::pair_type<std::pair<int, int>>("IntPair", *module);
+    chaiscript::bootstrap::standard_library::pair_type<std::pair<float, float>>("FloatPair", *module);
+    chaiscript::bootstrap::standard_library::vector_type<std::vector<std::pair<int, int>>>("IntPairVector", *module);
+    chaiscript::bootstrap::standard_library::vector_type<std::vector<std::pair<float, float>>>("FloatPairVector", *module);
+
+    return module;
+}
+
+}
+
 namespace geometrize
 {
 
@@ -58,7 +78,7 @@ namespace bindings
 
 std::shared_ptr<chaiscript::Module> createDefaultBindings()
 {
-    auto module{std::make_shared<chaiscript::Module>()};
+    auto module = createModule();
 
     ADD_FREE_FUN(sleep);
 
@@ -135,7 +155,7 @@ std::shared_ptr<chaiscript::Module> createLaunchWindowBindings()
 {
     using namespace geometrize::dialog;
 
-    auto module{std::make_shared<chaiscript::Module>()};
+    auto module = createModule();
 
     ADD_TYPE(LaunchWindow);
 
@@ -155,7 +175,7 @@ std::shared_ptr<chaiscript::Module> createImageBindings()
 {
     using namespace geometrize::image;
 
-    auto module{std::make_shared<chaiscript::Module>()};
+    auto module = createModule();
 
     ADD_TYPE(QImage);
 
@@ -187,7 +207,7 @@ std::shared_ptr<chaiscript::Module> createImageTaskBindings()
     using namespace geometrize::task;
     using namespace geometrize::preferences;
 
-    auto module{std::make_shared<chaiscript::Module>()};
+    auto module = createModule();
 
     // Note we use synchronous-stepping image tasks for simplicity in scripts
     ADD_TYPE(SynchronousImageTask);
@@ -228,7 +248,7 @@ std::shared_ptr<chaiscript::Module> createImageExportBindings()
 {
     using namespace geometrize::exporter;
 
-    auto module{std::make_shared<chaiscript::Module>()};
+    auto module = createModule();
 
     ADD_FREE_FUN(exportBitmap);
     ADD_FREE_FUN(exportImage);
@@ -241,7 +261,7 @@ std::shared_ptr<chaiscript::Module> createAnimatedGifExportBindings()
 {
     using namespace geometrize::script::bindings;
 
-    auto module{std::make_shared<chaiscript::Module>()};
+    auto module = createModule();
 
     ADD_FREE_FUN(exportGIF);
 
@@ -250,11 +270,11 @@ std::shared_ptr<chaiscript::Module> createAnimatedGifExportBindings()
 
 std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
 {
-    auto module{std::make_shared<chaiscript::Module>()};
+    auto module = createModule();
 
     ADD_TYPE(Bitmap);
-    ADD_CONSTRUCTOR(Bitmap, Bitmap(std::uint32_t, std::uint32_t, geometrize::rgba));
-    ADD_CONSTRUCTOR(Bitmap, Bitmap(std::uint32_t, std::uint32_t, const std::vector<std::uint8_t>& data));
+    ADD_CONSTRUCTOR(Bitmap, Bitmap(std::uint32_t COMMA std::uint32_t COMMA geometrize::rgba));
+    ADD_CONSTRUCTOR(Bitmap, Bitmap(std::uint32_t COMMA std::uint32_t COMMA const std::vector<std::uint8_t>& data));
     ADD_CONSTRUCTOR(Bitmap, Bitmap(const geometrize::Bitmap&));
     ADD_MEMBER(Bitmap, getWidth);
     ADD_MEMBER(Bitmap, getHeight);
@@ -280,7 +300,7 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
 
     ADD_TYPE(ImageRunner);
     ADD_CONSTRUCTOR(ImageRunner, ImageRunner(const geometrize::Bitmap&));
-    ADD_CONSTRUCTOR(ImageRunner, ImageRunner(const geometrize::Bitmap&, const geometrize::Bitmap&));
+    ADD_CONSTRUCTOR(ImageRunner, ImageRunner(const geometrize::Bitmap& COMMA const geometrize::Bitmap&));
     ADD_MEMBER(ImageRunner, step);
     //ADD_MEMBER(ImageRunner, getCurrent);
     //ADD_MEMBER(ImageRunner, getTarget);
@@ -290,14 +310,14 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
 
     ADD_BASE_CLASS(Shape, Circle);
     ADD_TYPE(Circle);
-    ADD_CONSTRUCTOR(Circle, Circle(float, float, float));
+    ADD_CONSTRUCTOR(Circle, Circle(float COMMA float COMMA float));
     ADD_MEMBER(Circle, m_x);
     ADD_MEMBER(Circle, m_y);
     ADD_MEMBER(Circle, m_r);
 
     ADD_BASE_CLASS(Shape, Ellipse);
     ADD_TYPE(Ellipse);
-    ADD_CONSTRUCTOR(Ellipse, Ellipse(float, float, float, float));
+    ADD_CONSTRUCTOR(Ellipse, Ellipse(float COMMA float COMMA float COMMA float));
     ADD_MEMBER(Ellipse, m_x);
     ADD_MEMBER(Ellipse, m_y);
     ADD_MEMBER(Ellipse, m_rx);
@@ -305,7 +325,7 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
 
     ADD_BASE_CLASS(Shape, Line);
     ADD_TYPE(Line);
-    ADD_CONSTRUCTOR(Line, Line(float, float, float, float));
+    ADD_CONSTRUCTOR(Line, Line(float COMMA float COMMA float COMMA float));
     ADD_MEMBER(Line, m_x1);
     ADD_MEMBER(Line, m_y1);
     ADD_MEMBER(Line, m_x2);
@@ -323,7 +343,7 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
 
     ADD_BASE_CLASS(Shape, QuadraticBezier);
     ADD_TYPE(QuadraticBezier);
-    ADD_CONSTRUCTOR(QuadraticBezier, QuadraticBezier(float, float, float, float, float, float));
+    ADD_CONSTRUCTOR(QuadraticBezier, QuadraticBezier(float COMMA float COMMA float COMMA float COMMA float COMMA float));
     ADD_MEMBER(QuadraticBezier, m_cx);
     ADD_MEMBER(QuadraticBezier, m_cy);
     ADD_MEMBER(QuadraticBezier, m_x1);
@@ -333,7 +353,7 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
 
     ADD_BASE_CLASS(Shape, Rectangle);
     ADD_TYPE(Rectangle);
-    ADD_CONSTRUCTOR(Rectangle, Rectangle(float, float, float, float));
+    ADD_CONSTRUCTOR(Rectangle, Rectangle(float COMMA float COMMA float COMMA float));
     ADD_MEMBER(Rectangle, m_x1);
     ADD_MEMBER(Rectangle, m_y1);
     ADD_MEMBER(Rectangle, m_x2);
@@ -341,7 +361,7 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
 
     ADD_BASE_CLASS(Shape, RotatedEllipse);
     ADD_TYPE(RotatedEllipse);
-    ADD_CONSTRUCTOR(RotatedEllipse, RotatedEllipse(float, float, float, float, float));
+    ADD_CONSTRUCTOR(RotatedEllipse, RotatedEllipse(float COMMA float COMMA float COMMA float COMMA float));
     ADD_MEMBER(RotatedEllipse, m_x);
     ADD_MEMBER(RotatedEllipse, m_y);
     ADD_MEMBER(RotatedEllipse, m_rx);
@@ -350,7 +370,7 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
 
     ADD_BASE_CLASS(Shape, RotatedRectangle);
     ADD_TYPE(RotatedRectangle);
-    ADD_CONSTRUCTOR(RotatedRectangle, RotatedRectangle(float, float, float, float, float));
+    ADD_CONSTRUCTOR(RotatedRectangle, RotatedRectangle(float COMMA float COMMA float COMMA float COMMA float));
     ADD_MEMBER(RotatedRectangle, m_x1);
     ADD_MEMBER(RotatedRectangle, m_y1);
     ADD_MEMBER(RotatedRectangle, m_x2);
@@ -359,7 +379,7 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
 
     ADD_BASE_CLASS(Shape, Triangle);
     ADD_TYPE(Triangle);
-    ADD_CONSTRUCTOR(Triangle, Triangle(float, float, float, float, float, float));
+    ADD_CONSTRUCTOR(Triangle, Triangle(float COMMA float COMMA float COMMA float COMMA float COMMA float));
     ADD_MEMBER(Triangle, m_x1);
     ADD_MEMBER(Triangle, m_y1);
     ADD_MEMBER(Triangle, m_x2);
@@ -391,7 +411,8 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
 
     ADD_TYPE(Model);
     ADD_CONSTRUCTOR(Model, Model(const geometrize::Bitmap&));
-    ADD_CONSTRUCTOR(Model, Model(const geometrize::Bitmap&, const geometrize::Bitmap&));
+    ADD_CONSTRUCTOR(Model, Model(const geometrize::Bitmap& COMMA const geometrize::Bitmap&));
+
     ADD_MEMBER(Model, reset);
     ADD_MEMBER(Model, getWidth);
     ADD_MEMBER(Model, getHeight);
@@ -411,7 +432,7 @@ std::shared_ptr<chaiscript::Module> createMathBindings()
 
 std::shared_ptr<chaiscript::Module> createUserInterfacePuppeteerBindings()
 {
-    auto module{std::make_shared<chaiscript::Module>()};
+    auto module = createModule();
 
     ADD_FREE_FUN(getCursorX);
     ADD_FREE_FUN(getCursorY);
