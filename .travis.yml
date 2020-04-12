@@ -21,12 +21,12 @@ matrix:
         packages:
         - g++-9
     env:
-    - MATRIX_EVAL="CC=gcc-9 && CXX=g++-9"
+    - CXX=g++-9
     
   - os: osx
     osx_image: xcode11.3
     env:
-    - MATRIX_EVAL="CC=clang && CXX=clang++"
+    - CXX=clang++"
     - OSX_IMAGE_NAME="xcode_11_3"
 
 before_install:
