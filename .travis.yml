@@ -21,6 +21,7 @@ matrix:
         packages:
           - g++-8
           - libstdc++-8-dev
+          - libgl1-mesa-dev
     env:
       - MATRIX_EVAL="CC=gcc-8 && CXX=g++-8"
 
