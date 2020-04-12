@@ -24,6 +24,7 @@ matrix:
           - libgl1-mesa-dev
     env:
       - MATRIX_EVAL="CC=gcc-8 && CXX=g++-8"
+      - TRIGGER_DOWNSTREAM_BUILDS="yes"
 
   - os: osx
     osx_image: xcode11.3
