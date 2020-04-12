@@ -17,25 +17,24 @@ matrix:
     addons:
       apt:
         sources:
-        - ubuntu-toolchain-r-test
+          - ubuntu-toolchain-r-test
         packages:
-        - g++-9
-    env:
-    - CXX=g++-9
+          - g++-9
     
   - os: osx
     osx_image: xcode11.3
     env:
-    - CXX=clang++"
-    - OSX_IMAGE_NAME="xcode_11_3"
+      - OSX_IMAGE_NAME="xcode_11_3"
 
 before_install:
   # Get the latest versions of the submodules, and push to the remotes (if necessary)
   - chmod +x ./travis_update_submodules.sh
   - ./travis_update_submodules.sh
-
+  
   # Set compilers
-  - eval "${MATRIX_EVAL}"
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export CXX="g++-9" CC="gcc-9"; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export CXX="clang++-10" CC="clang-10"; fi
+  
   - echo $CC
   - echo $CXX
   
