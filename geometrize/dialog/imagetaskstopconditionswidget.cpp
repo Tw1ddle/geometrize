@@ -38,13 +38,8 @@ public:
         m_engine = createEngine();
 
         connect(ui->addStopConditionButton, &QPushButton::clicked, [this]() {
-            const std::string editorName = tr("Custom Stop Condition").toStdString();
-
-            const std::string functionName = "stop_condition_" + std::to_string(m_stopConditionId++);
-            std::string defaultCode = "shapeCount >= 1000;";
-
-            auto widget = new geometrize::dialog::ScriptEditorWidget(editorName, "", defaultCode, ui->stopConditionScriptGroupBox);
-            ui->scriptEditorLayout->addWidget(widget);
+            const std::string defaultCode = "shapeCount >= 1000;";
+            addStopCondition(defaultCode);
         });
         connect(ui->clearStopConditionsButton, &QPushButton::clicked, [this]() {
             QLayoutItem* item = nullptr;
@@ -64,6 +59,16 @@ public:
     {
         ui->retranslateUi(q);
         populateUi();
+    }
+
+    void addStopCondition(const std::string& scriptCode)
+    {
+        const std::string editorName = tr("Custom Stop Condition").toStdString();
+
+        const std::string functionName = "stop_condition_" + std::to_string(m_stopConditionId++);
+
+        auto widget = new geometrize::dialog::ScriptEditorWidget(editorName, "", scriptCode, ui->stopConditionScriptGroupBox);
+        ui->scriptEditorLayout->addWidget(widget);
     }
 
     bool stopConditionsMet(const std::size_t currentShapeCount) const
@@ -138,6 +143,11 @@ void ImageTaskStopConditionsWidget::changeEvent(QEvent* event)
         d->onLanguageChange();
     }
     QWidget::changeEvent(event);
+}
+
+void ImageTaskStopConditionsWidget::addStopCondition(const std::string& scriptCode)
+{
+    d->addStopCondition(scriptCode);
 }
 
 bool ImageTaskStopConditionsWidget::stopConditionsMet(const std::size_t currentShapeCount) const

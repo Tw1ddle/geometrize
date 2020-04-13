@@ -27,10 +27,21 @@ class ImageTaskStopConditionsWidget : public QWidget
     Q_OBJECT
 
 public:
-   ImageTaskStopConditionsWidget(QWidget* parent = nullptr);
+    ImageTaskStopConditionsWidget(QWidget* parent = nullptr);
     virtual ~ImageTaskStopConditionsWidget();
 
-   bool stopConditionsMet(std::size_t currentShapeCount) const;
+    /**
+     * @brief addStopCondition Adds a stop condition script that will be evaluated when stopConditionsMet is called
+     * @param scriptCode The ChaiScript code for checking the stop condition (must evaluate to a boolean returning true to stop)
+     */
+    void addStopCondition(const std::string& scriptCode);
+
+    /**
+     * @brief stopConditionsMet Returns true if the condition(s) for stopping geometrizing the image were met
+     * @param currentShapeCount The number of shapes that have been geometrized so far
+     * @return True if a stop condition was met
+     */
+    bool stopConditionsMet(std::size_t currentShapeCount) const;
 
 protected:
     void changeEvent(QEvent*) override;
