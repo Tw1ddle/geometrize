@@ -1,5 +1,5 @@
-#include "ImageTaskScriptingWidget.h"
-#include "ui_ImageTaskScriptingWidget.h"
+#include "imagetaskscriptingwidget.h"
+#include "ui_imagetaskscriptingwidget.h"
 
 #include <cassert>
 #include <cstdint>
@@ -48,9 +48,9 @@ public:
             const std::string defaultCode = "shapeCount >= 1000;";
             addStopCondition(defaultCode);
         });
-        connect(ui->clearScriptsButton, &QPushButton::clicked, [this]() {
+        connect(ui->clearStopConditionsButton, &QPushButton::clicked, [this]() {
             QLayoutItem* item = nullptr;
-            while((item = ui->scriptEditorLayout->takeAt(0)) != nullptr) {
+            while((item = ui->stopConditionsEditorLayout->takeAt(0)) != nullptr) {
                 delete item->widget();
                 delete item;
             }
@@ -84,8 +84,8 @@ public:
 
         const std::string functionName = "stop_condition_" + std::to_string(m_stopConditionId++);
 
-        auto widget = new geometrize::dialog::ScriptEditorWidget(editorName, "", scriptCode, ui->scriptsGroupBox);
-        ui->scriptEditorLayout->addWidget(widget);
+        auto widget = new geometrize::dialog::ScriptEditorWidget(editorName, "", scriptCode, ui->stopConditionScriptsGroupBox);
+        ui->stopConditionsEditorLayout->addWidget(widget);
     }
 
     bool stopConditionsMet(const std::size_t currentShapeCount) const
@@ -97,7 +97,7 @@ public:
 
         m_engine->set_global(chaiscript::var(currentShapeCount), "shapeCount");
 
-        const auto scriptWidgets = ui->scriptsGroupBox->findChildren<geometrize::dialog::ScriptEditorWidget*>();
+        const auto scriptWidgets = ui->stopConditionScriptsGroupBox->findChildren<geometrize::dialog::ScriptEditorWidget*>();
         if(scriptWidgets.empty()) {
             return false;
         }

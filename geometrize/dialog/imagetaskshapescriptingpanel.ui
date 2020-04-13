@@ -20,7 +20,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string extracomment="Title of a window containing text editor panels for editing scripts. Scripts are pieces of code that are used to control how the app turns images into shapes">Script Editor</string>
+   <string extracomment="Title of a window containing text editor panels for editing scripts. Scripts are pieces of code that are used to control how the app turns images into shapes">Shape Script Editor</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>

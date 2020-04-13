@@ -15,35 +15,26 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_6">
    <item>
-    <widget class="QGroupBox" name="scriptsGroupBox">
+    <widget class="QPushButton" name="editShapeScriptsButton">
+     <property name="text">
+      <string>Edit Shape Creation/Mutation Scripts</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="stopConditionScriptsGroupBox">
      <property name="title">
       <string>Custom Scripts</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_3">
+       <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
-         <widget class="QPushButton" name="editShapeScriptsButton">
+         <widget class="QPushButton" name="clearStopConditionsButton">
           <property name="text">
-           <string>Edit Shape Creation/Mutation Scripts</string>
+           <string>Clear All</string>
           </property>
          </widget>
-        </item>
-        <item>
-         <spacer name="verticalSpacer_3">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeType">
-           <enum>QSizePolicy::Fixed</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>10</height>
-           </size>
-          </property>
-         </spacer>
         </item>
         <item>
          <widget class="QPushButton" name="addStopConditionButton">
@@ -52,17 +43,10 @@
           </property>
          </widget>
         </item>
-        <item>
-         <widget class="QPushButton" name="clearScriptsButton">
-          <property name="text">
-           <string>Clear All</string>
-          </property>
-         </widget>
-        </item>
        </layout>
       </item>
       <item>
-       <layout class="QVBoxLayout" name="scriptEditorLayout"/>
+       <layout class="QVBoxLayout" name="stopConditionsEditorLayout"/>
       </item>
      </layout>
     </widget>

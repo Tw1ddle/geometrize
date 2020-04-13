@@ -131,7 +131,7 @@ public:
             ui->imageTaskExportWidget->setImageTask(currentTask, &m_shapes.getShapeVector());
             ui->imageTaskRunnerWidget->setImageTask(currentTask);
 
-            if(dialog::ImageTaskPrePostScriptsWidget* scriptingPanel = getScriptingPanel()) {
+            if(dialog::ImageTaskScriptingWidget* scriptingPanel = getScriptingPanel()) {
                 scriptingPanel->setImageTask(currentTask);
             }
 
@@ -272,7 +272,7 @@ public:
         connect(q, &ImageTaskWindow::didLoadSettingsTemplate, [this]() {
             ui->imageTaskRunnerWidget->syncUserInterface();
 
-            if(dialog::ImageTaskPrePostScriptsWidget* scriptingPanel = getScriptingPanel()) {
+            if(dialog::ImageTaskScriptingWidget* scriptingPanel = getScriptingPanel()) {
                  scriptingPanel->syncUserInterface();
             }
         });
@@ -445,9 +445,9 @@ private:
         q->setWindowTitle(geometrize::strings::Strings::getApplicationName());
     }
 
-    geometrize::dialog::ImageTaskPrePostScriptsWidget* getScriptingPanel()
+    geometrize::dialog::ImageTaskScriptingWidget* getScriptingPanel()
     {
-        return ui->scriptsDock->findChild<geometrize::dialog::ImageTaskPrePostScriptsWidget*>();
+        return ui->scriptsDock->findChild<geometrize::dialog::ImageTaskScriptingWidget*>();
     }
 
     bool isRunning() const

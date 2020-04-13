@@ -393,7 +393,7 @@
        <property name="widgetResizable">
         <bool>true</bool>
        </property>
-       <widget class="geometrize::dialog::ImageTaskPrePostScriptsWidget" name="scriptsWidget">
+       <widget class="geometrize::dialog::ImageTaskScriptingWidget" name="scriptsWidget">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -497,9 +497,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>geometrize::dialog::ImageTaskPrePostScriptsWidget</class>
+   <class>geometrize::dialog::ImageTaskScriptingWidget</class>
    <extends>QWidget</extends>
-   <header>dialog/imagetaskprepostscriptswidget.h</header>
+   <header>dialog/ImageTaskScriptingWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
