@@ -24,6 +24,7 @@ void centerWidgetOnScreen(QWidget& widget, const QScreen& screen);
 void openLaunchWindow();
 bool isLaunchWindowOpen();
 void bringLaunchWindowToFront();
+void openTaskQueueWindow();
 void openWelcomePage();
 void openAboutPage(QWidget* parent);
 void openGlobalPreferences(QWidget* parent);

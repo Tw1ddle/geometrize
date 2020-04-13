@@ -45,7 +45,7 @@ public:
             revealShapeScriptingPanel();
         });
         connect(ui->addStopConditionButton, &QPushButton::clicked, [this]() {
-            const std::string defaultCode = "shapeCount >= 1000;";
+            const std::string defaultCode = "shapeCount >= 500;";
             addStopCondition(defaultCode);
         });
         connect(ui->clearStopConditionsButton, &QPushButton::clicked, [this]() {

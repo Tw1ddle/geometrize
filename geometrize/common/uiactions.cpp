@@ -15,6 +15,7 @@
 #include "dialog/launchwindow.h"
 #include "dialog/openurldialog.h"
 #include "dialog/runscriptdialog.h"
+#include "dialog/taskqueuewindow.h"
 #include "dialog/welcomewindow.h"
 
 namespace geometrize
@@ -65,6 +66,12 @@ void bringLaunchWindowToFront()
     firstLauncher->show();
     firstLauncher->raise();
     QApplication::setActiveWindow(firstLauncher);
+}
+
+void openTaskQueueWindow()
+{
+    auto taskQueueWindow = new dialog::TaskQueueWindow();
+    taskQueueWindow->show();
 }
 
 void openWelcomePage()

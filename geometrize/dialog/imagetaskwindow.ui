@@ -499,7 +499,7 @@
   <customwidget>
    <class>geometrize::dialog::ImageTaskScriptingWidget</class>
    <extends>QWidget</extends>
-   <header>dialog/ImageTaskScriptingWidget.h</header>
+   <header>dialog/imagetaskscriptingwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

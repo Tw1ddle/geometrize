@@ -309,6 +309,11 @@ void LaunchWindow::on_runScriptButton_clicked()
     geometrize::script::runScript(util::readFileAsString(result));
 }
 
+void LaunchWindow::on_openTaskQueueButton_clicked()
+{
+    common::ui::openTaskQueueWindow();
+}
+
 void LaunchWindow::on_actionTutorials_triggered()
 {
     common::ui::openOnlineTutorials();

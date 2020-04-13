@@ -314,7 +314,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QToolButton" name="openTaskQueue">
+                 <widget class="QToolButton" name="openTaskQueueButton">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                     <horstretch>0</horstretch>
@@ -517,7 +517,7 @@
                  <x>0</x>
                  <y>0</y>
                  <width>816</width>
-                 <height>516</height>
+                 <height>518</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -687,8 +687,8 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../resources/icons.qrc"/>
   <include location="../../resources/logos.qrc"/>
+  <include location="../../resources/icons.qrc"/>
  </resources>
  <connections/>
 </ui>
