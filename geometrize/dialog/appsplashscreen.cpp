@@ -10,6 +10,7 @@
 #include <QSplashScreen>
 #include <QStyleOptionProgressBar>
 
+#include "common/uiactions.h"
 #include "common/util.h"
 
 namespace geometrize
@@ -27,6 +28,9 @@ public:
         setPixmap(QPixmap(":/logos/splashscreen.png"));
         setCursor(Qt::BusyCursor);
         setState(SplashState::STARTING);
+        if(const auto mouseScreen = geometrize::common::ui::getFirstScreenContainingCursor()) {
+            geometrize::common::ui::centerWidgetOnScreen(*this, *mouseScreen);
+        }
     }
     virtual ~GeometrizeSplashScreen() = default;
 

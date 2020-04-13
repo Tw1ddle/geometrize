@@ -6,6 +6,7 @@
 #include <QString>
 #include <QUrl>
 
+class QScreen;
 class QWidget;
 
 namespace geometrize
@@ -16,6 +17,9 @@ namespace common
 
 namespace ui
 {
+
+const QScreen* getFirstScreenContainingCursor();
+void centerWidgetOnScreen(QWidget& widget, const QScreen& screen);
 
 void openLaunchWindow();
 bool isLaunchWindowOpen();

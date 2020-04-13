@@ -3,7 +3,11 @@
 #include <QApplication>
 #include <QDesktopServices>
 #include <QFileDialog>
+#include <QPoint>
+#include <QScreen>
+#include <QStyle>
 #include <QUrl>
+#include <QWidget>
 
 #include "common/constants.h"
 #include "dialog/aboutdialog.h"
@@ -22,10 +26,25 @@ namespace common
 namespace ui
 {
 
+const QScreen* getFirstScreenContainingCursor()
+{
+    const QPoint globalCursorPos = QCursor::pos();
+    const QScreen* mouseScreen = QGuiApplication::screenAt(globalCursorPos);
+    return mouseScreen;
+}
+
+void centerWidgetOnScreen(QWidget& widget, const QScreen& screen)
+{
+    widget.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, widget.size(), screen.availableGeometry()));
+}
+
 void openLaunchWindow()
 {
     dialog::LaunchWindow* launcher{new dialog::LaunchWindow()};
     launcher->show();
+    if(const auto mouseScreen = geometrize::common::ui::getFirstScreenContainingCursor()) {
+        geometrize::common::ui::centerWidgetOnScreen(*launcher, *mouseScreen);
+    }
 }
 
 bool isLaunchWindowOpen()
@@ -52,6 +71,9 @@ void openWelcomePage()
 {
     dialog::WelcomeWindow* window = new dialog::WelcomeWindow();
     window->show();
+    if(const auto mouseScreen = geometrize::common::ui::getFirstScreenContainingCursor()) {
+        geometrize::common::ui::centerWidgetOnScreen(*window, *mouseScreen);
+    }
 }
 
 void openAboutPage(QWidget* parent)
