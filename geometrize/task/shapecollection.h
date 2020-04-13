@@ -20,8 +20,8 @@ class ShapeCollection : public QObject
     Q_OBJECT
 public:
     ShapeCollection() = default;
-    ShapeCollection& operator=(const ShapeCollection&) = default;
-    ShapeCollection(const ShapeCollection&) = default;
+    ShapeCollection& operator=(const ShapeCollection&) = delete;
+    ShapeCollection(const ShapeCollection&) = delete;
     ~ShapeCollection() = default;
 
     bool empty() const;

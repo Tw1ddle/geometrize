@@ -105,7 +105,7 @@
      <x>0</x>
      <y>0</y>
      <width>1280</width>
-     <height>21</height>
+     <height>19</height>
     </rect>
    </property>
    <property name="autoFillBackground">
@@ -211,7 +211,7 @@
           <x>0</x>
           <y>0</y>
           <width>282</width>
-          <height>656</height>
+          <height>657</height>
          </rect>
         </property>
        </widget>
@@ -350,7 +350,7 @@
     </layout>
    </widget>
   </widget>
-  <widget class="QDockWidget" name="stopConditionsDock">
+  <widget class="QDockWidget" name="scriptsDock">
    <property name="minimumSize">
     <size>
      <width>350</width>
@@ -373,15 +373,15 @@
     <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
    </property>
    <property name="windowTitle">
-    <string>Stop Conditions</string>
+    <string>Scripts</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>2</number>
    </attribute>
-   <widget class="QWidget" name="stopConditionsDockContents">
+   <widget class="QWidget" name="scriptsDockContents">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QScrollArea" name="stopConditionsDockScrollArea">
+      <widget class="QScrollArea" name="scriptsDockScrollArea">
        <property name="frameShape">
         <enum>QFrame::NoFrame</enum>
        </property>
@@ -394,7 +394,7 @@
        <property name="widgetResizable">
         <bool>true</bool>
        </property>
-       <widget class="geometrize::dialog::ImageTaskStopConditionsWidget" name="stopConditionsWidget">
+       <widget class="geometrize::dialog::ImageTaskPrePostScriptsWidget" name="scriptsWidget">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -498,9 +498,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>geometrize::dialog::ImageTaskStopConditionsWidget</class>
+   <class>geometrize::dialog::ImageTaskPrePostScriptsWidget</class>
    <extends>QWidget</extends>
-   <header>dialog/imagetaskstopconditionswidget.h</header>
+   <header>dialog/imagetaskprepostscriptswidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

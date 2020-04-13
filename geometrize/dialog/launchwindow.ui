@@ -313,6 +313,35 @@
                   </property>
                  </widget>
                 </item>
+                <item>
+                 <widget class="QToolButton" name="openTaskQueue">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">padding: 5px;</string>
+                  </property>
+                  <property name="text">
+                   <string>Open Task Queue</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../../resources/icons.qrc">
+                    <normaloff>:/icons/paginator.png</normaloff>:/icons/paginator.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>32</width>
+                    <height>32</height>
+                   </size>
+                  </property>
+                  <property name="toolButtonStyle">
+                   <enum>Qt::ToolButtonTextBesideIcon</enum>
+                  </property>
+                 </widget>
+                </item>
                </layout>
               </item>
              </layout>
@@ -487,8 +516,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>834</width>
-                 <height>549</height>
+                 <width>816</width>
+                 <height>516</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -553,7 +582,7 @@
      <x>0</x>
      <y>0</y>
      <width>1280</width>
-     <height>17</height>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -658,8 +687,8 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../resources/logos.qrc"/>
   <include location="../../resources/icons.qrc"/>
+  <include location="../../resources/logos.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -87,7 +87,7 @@ public:
         setupScriptingPanel();
 
         // Set up the dock widgets
-        q->tabifyDockWidget(ui->runnerSettingsDock, ui->stopConditionsDock);
+        q->tabifyDockWidget(ui->runnerSettingsDock, ui->scriptsDock);
         q->tabifyDockWidget(ui->runnerSettingsDock, ui->exporterDock);
 
         ui->runnerSettingsDock->raise(); // Make sure runner settings dock is selected
@@ -292,9 +292,9 @@ public:
             }
         });
 
-        // When number of shapes changes check the stop conditions
+        // When number of shapes changes check the scripts
         connect(&m_shapes, &geometrize::task::ShapeCollection::signal_sizeChanged, [this](const std::size_t size) {
-            if(!ui->stopConditionsWidget->stopConditionsMet(size)) {
+            if(!ui->scriptsWidget->stopConditionsMet(size)) {
                 return;
             }
 
