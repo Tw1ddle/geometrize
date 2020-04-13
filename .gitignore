@@ -33,3 +33,9 @@
 
 # Build Folders
 /build*
+
+# Per-use project config
+*.pro.user
+
+# Python bytecode
+*.pyc
