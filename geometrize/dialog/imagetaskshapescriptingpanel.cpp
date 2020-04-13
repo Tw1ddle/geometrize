@@ -1,5 +1,5 @@
-#include "imagetaskscriptingpanel.h"
-#include "ui_imagetaskscriptingpanel.h"
+#include "imagetaskshapescriptingpanel.h"
+#include "ui_imagetaskshapescriptingpanel.h"
 
 #include <algorithm>
 #include <cassert>
@@ -11,7 +11,7 @@
 #include <QPushButton>
 #include <QStringList>
 
-#include "dialog/imagetaskscriptingpanel.h"
+#include "dialog/imagetaskshapescriptingpanel.h"
 #include "dialog/scripteditorwidget.h"
 #include "script/geometrizerengine.h"
 #include "script/scriptutil.h"
@@ -23,10 +23,10 @@ namespace geometrize
 namespace dialog
 {
 
-class ImageTaskScriptingPanel::ImageTaskScriptingPanelImpl
+class ImageTaskShapeScriptingPanel::ImageTaskShapeScriptingPanelImpl
 {
 public:
-    ImageTaskScriptingPanelImpl(ImageTaskScriptingPanel* pQ) : ui{std::make_unique<Ui::ImageTaskScriptPanel>()}, q{pQ}
+    ImageTaskShapeScriptingPanelImpl(ImageTaskShapeScriptingPanel* pQ) : ui{std::make_unique<Ui::ImageTaskShapeScriptingPanel>()}, q{pQ}
     {
         q->setWindowFlags(Qt::Window);
         ui->setupUi(q);
@@ -45,7 +45,7 @@ public:
         });
 
         // Enable/disable scripting
-        connect(q, &geometrize::dialog::ImageTaskScriptingPanel::signal_scriptingToggled, [this](const bool enableScripting) {
+        connect(q, &geometrize::dialog::ImageTaskShapeScriptingPanel::signal_scriptingToggled, [this](const bool enableScripting) {
             setScriptModeEnabled(enableScripting);
         });
 
@@ -57,7 +57,7 @@ public:
         });
 
         // Setup the actual actions that manipulate the image geometrization script functions
-        connect(q, &geometrize::dialog::ImageTaskScriptingPanel::signal_scriptChanged, [this](const std::string& functionName, const std::string& code) {
+        connect(q, &geometrize::dialog::ImageTaskShapeScriptingPanel::signal_scriptChanged, [this](const std::string& functionName, const std::string& code) {
             if(m_task) {
                 m_task->getPreferences().setScript(functionName, code);
             }
@@ -76,9 +76,9 @@ public:
 
         buildPresetsMenuAndSelectPreset();
     }
-    ~ImageTaskScriptingPanelImpl() = default;
-    ImageTaskScriptingPanelImpl operator=(const ImageTaskScriptingPanelImpl&) = delete;
-    ImageTaskScriptingPanelImpl(const ImageTaskScriptingPanelImpl&) = delete;
+    ~ImageTaskShapeScriptingPanelImpl() = default;
+    ImageTaskShapeScriptingPanelImpl operator=(const ImageTaskShapeScriptingPanelImpl&) = delete;
+    ImageTaskShapeScriptingPanelImpl(const ImageTaskShapeScriptingPanelImpl&) = delete;
 
     void setImageTask(task::ImageTask* task)
     {
@@ -233,32 +233,32 @@ private:
     QMetaObject::Connection m_scriptEvaluationSucceededConnection{}; ///> Connection for the scripting panel to react when a script is successfully evaluated
     QMetaObject::Connection m_scriptEvaluationFailedConnection{}; ///> Connection for the scripting panel to react when a script fails to evaluate
     std::vector<ScriptEditorWidget*> m_editors;
-    std::unique_ptr<Ui::ImageTaskScriptPanel> ui;
-    ImageTaskScriptingPanel* q;
+    std::unique_ptr<Ui::ImageTaskShapeScriptingPanel> ui;
+    ImageTaskShapeScriptingPanel* q;
     task::ImageTask* m_task{nullptr};
 };
 
-ImageTaskScriptingPanel::ImageTaskScriptingPanel(QWidget* parent) :
+ImageTaskShapeScriptingPanel::ImageTaskShapeScriptingPanel(QWidget* parent) :
     QWidget{parent},
-    d{std::make_unique<ImageTaskScriptingPanel::ImageTaskScriptingPanelImpl>(this)}
+    d{std::make_unique<ImageTaskShapeScriptingPanel::ImageTaskShapeScriptingPanelImpl>(this)}
 {
 }
 
-ImageTaskScriptingPanel::~ImageTaskScriptingPanel()
+ImageTaskShapeScriptingPanel::~ImageTaskShapeScriptingPanel()
 {
 }
 
-void ImageTaskScriptingPanel::setImageTask(task::ImageTask* task)
+void ImageTaskShapeScriptingPanel::setImageTask(task::ImageTask* task)
 {
     d->setImageTask(task);
 }
 
-void ImageTaskScriptingPanel::syncUserInterface()
+void ImageTaskShapeScriptingPanel::syncUserInterface()
 {
     d->syncUserInterface();
 }
 
-void ImageTaskScriptingPanel::changeEvent(QEvent* event)
+void ImageTaskShapeScriptingPanel::changeEvent(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange) {
         d->onLanguageChange();

@@ -124,7 +124,6 @@
      <string extracomment="The title of the View menu that contains commands relating to the handling of visual elements, such as the size and visibility of windows and dialogs within the app">View</string>
     </property>
     <addaction name="actionReveal_Launch_Window"/>
-    <addaction name="actionReveal_Script_Editor"/>
     <addaction name="actionScript_Console"/>
     <addaction name="actionPixmap_Results_View"/>
     <addaction name="actionVector_Results_View"/>

@@ -30,15 +30,15 @@ namespace dialog
 void showImageTaskStopConditionMetMessage(QWidget* parent);
 
 /**
- * @brief The ImageTaskPrePostScriptsWidget implements a widget for writing scripts that are repeatedly run while an image is being geometrized, usually before/after a shape is added.
+ * @brief The ImageTaskScriptingWidget implements a widget for manipulating scripts that are run when an image is being geometrized e.g. before/after a shape is added.
  */
-class ImageTaskPrePostScriptsWidget : public QWidget
+class ImageTaskScriptingWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    ImageTaskPrePostScriptsWidget(QWidget* parent = nullptr);
-    virtual ~ImageTaskPrePostScriptsWidget();
+    ImageTaskScriptingWidget(QWidget* parent = nullptr);
+    virtual ~ImageTaskScriptingWidget();
 
     /**
      * @brief setImageTask Sets the current image task used by the scripts.
@@ -69,8 +69,8 @@ protected:
     void changeEvent(QEvent*) override;
 
 private:
-    class ImageTaskPrePostScriptsWidgetImpl;
-    std::unique_ptr<ImageTaskPrePostScriptsWidgetImpl> d;
+    class ImageTaskScriptingWidgetImpl;
+    std::unique_ptr<ImageTaskScriptingWidgetImpl> d;
 };
 
 }

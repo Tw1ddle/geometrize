@@ -1,5 +1,5 @@
-#include "imagetaskprepostscriptswidget.h"
-#include "ui_imagetaskprepostscriptswidget.h"
+#include "ImageTaskScriptingWidget.h"
+#include "ui_ImageTaskScriptingWidget.h"
 
 #include <cassert>
 #include <cstdint>
@@ -13,7 +13,7 @@
 
 #include "chaiscript/chaiscript.hpp"
 
-#include "dialog/imagetaskscriptingpanel.h"
+#include "dialog/imagetaskshapescriptingpanel.h"
 #include "dialog/scripteditorwidget.h"
 #include "preferences/globalpreferences.h"
 #include "script/chaiscriptcreator.h"
@@ -29,15 +29,15 @@ void showImageTaskStopConditionMetMessage(QWidget* parent)
     QMessageBox::information(parent, QObject::tr("Stop Condition Met"), QObject::tr("Stop condition for geometrizing was met"));
 }
 
-class ImageTaskPrePostScriptsWidget::ImageTaskPrePostScriptsWidgetImpl
+class ImageTaskScriptingWidget::ImageTaskScriptingWidgetImpl
 {
 public:
-    ImageTaskPrePostScriptsWidgetImpl(ImageTaskPrePostScriptsWidget* pQ) : q{pQ}, ui{std::make_unique<Ui::ImageTaskPrePostScriptsWidget>()}, m_stopConditionId{0}, m_engine{nullptr}
+    ImageTaskScriptingWidgetImpl(ImageTaskScriptingWidget* pQ) : q{pQ}, ui{std::make_unique<Ui::ImageTaskScriptingWidget>()}, m_stopConditionId{0}, m_engine{nullptr}
     {
         ui->setupUi(q);
         populateUi();
 
-        new geometrize::dialog::ImageTaskScriptingPanel(q);
+        new geometrize::dialog::ImageTaskShapeScriptingPanel(q);
 
         m_engine = createEngine();
 
@@ -64,9 +64,9 @@ public:
             revealShapeScriptingPanel();
         }
     }
-    ~ImageTaskPrePostScriptsWidgetImpl() = default;
-    ImageTaskPrePostScriptsWidgetImpl operator=(const ImageTaskPrePostScriptsWidgetImpl&) = delete;
-    ImageTaskPrePostScriptsWidgetImpl(const ImageTaskPrePostScriptsWidgetImpl&) = delete;
+    ~ImageTaskScriptingWidgetImpl() = default;
+    ImageTaskScriptingWidgetImpl operator=(const ImageTaskScriptingWidgetImpl&) = delete;
+    ImageTaskScriptingWidgetImpl(const ImageTaskScriptingWidgetImpl&) = delete;
 
     void setImageTask(task::ImageTask* task)
     {
@@ -130,7 +130,7 @@ private:
     // Utility function used to setup and display the script editor for the given image task window
     void revealShapeScriptingPanel()
     {
-        if(dialog::ImageTaskScriptingPanel* scriptingPanel = getShapeScriptingPanel()) {
+        if(dialog::ImageTaskShapeScriptingPanel* scriptingPanel = getShapeScriptingPanel()) {
             scriptingPanel->setWindowState(scriptingPanel->windowState() & ~Qt::WindowMinimized);
             QApplication::setActiveWindow(scriptingPanel);
             scriptingPanel->raise();
@@ -138,9 +138,9 @@ private:
         }
     }
 
-    geometrize::dialog::ImageTaskScriptingPanel* getShapeScriptingPanel()
+    geometrize::dialog::ImageTaskShapeScriptingPanel* getShapeScriptingPanel()
     {
-        return q->findChild<geometrize::dialog::ImageTaskScriptingPanel*>();
+        return q->findChild<geometrize::dialog::ImageTaskShapeScriptingPanel*>();
     }
 
     std::unique_ptr<chaiscript::ChaiScript> createEngine()
@@ -152,24 +152,24 @@ private:
     {
     }
 
-    ImageTaskPrePostScriptsWidget* q;
-    std::unique_ptr<Ui::ImageTaskPrePostScriptsWidget> ui;
+    ImageTaskScriptingWidget* q;
+    std::unique_ptr<Ui::ImageTaskScriptingWidget> ui;
 
     int m_stopConditionId;
     std::unique_ptr<chaiscript::ChaiScript> m_engine;
 };
 
-ImageTaskPrePostScriptsWidget::ImageTaskPrePostScriptsWidget(QWidget* parent) :
+ImageTaskScriptingWidget::ImageTaskScriptingWidget(QWidget* parent) :
     QWidget{parent},
-    d{std::make_unique<ImageTaskPrePostScriptsWidget::ImageTaskPrePostScriptsWidgetImpl>(this)}
+    d{std::make_unique<ImageTaskScriptingWidget::ImageTaskScriptingWidgetImpl>(this)}
 {
 }
 
-ImageTaskPrePostScriptsWidget::~ImageTaskPrePostScriptsWidget()
+ImageTaskScriptingWidget::~ImageTaskScriptingWidget()
 {
 }
 
-void ImageTaskPrePostScriptsWidget::changeEvent(QEvent* event)
+void ImageTaskScriptingWidget::changeEvent(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange) {
         d->onLanguageChange();
@@ -177,22 +177,22 @@ void ImageTaskPrePostScriptsWidget::changeEvent(QEvent* event)
     QWidget::changeEvent(event);
 }
 
-void ImageTaskPrePostScriptsWidget::setImageTask(task::ImageTask* task)
+void ImageTaskScriptingWidget::setImageTask(task::ImageTask* task)
 {
     d->setImageTask(task);
 }
 
-void ImageTaskPrePostScriptsWidget::syncUserInterface()
+void ImageTaskScriptingWidget::syncUserInterface()
 {
     d->syncUserInterface();
 }
 
-void ImageTaskPrePostScriptsWidget::addStopCondition(const std::string& scriptCode)
+void ImageTaskScriptingWidget::addStopCondition(const std::string& scriptCode)
 {
     d->addStopCondition(scriptCode);
 }
 
-bool ImageTaskPrePostScriptsWidget::stopConditionsMet(const std::size_t currentShapeCount) const
+bool ImageTaskScriptingWidget::stopConditionsMet(const std::size_t currentShapeCount) const
 {
     return d->stopConditionsMet(currentShapeCount);
 }

@@ -30,15 +30,15 @@ namespace dialog
 {
 
 /**
- * @brief The ImageTaskScriptingPanel models the UI for the script editors for controlling image task shape setup, mutation etc.
+ * @brief The ImageTaskShapeScriptingPanel models the UI for the script editors for controlling image task shape setup, mutation etc.
  */
-class ImageTaskScriptingPanel : public QWidget
+class ImageTaskShapeScriptingPanel : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit ImageTaskScriptingPanel(QWidget* parent = nullptr);
-    virtual ~ImageTaskScriptingPanel();
+    explicit ImageTaskShapeScriptingPanel(QWidget* parent = nullptr);
+    virtual ~ImageTaskShapeScriptingPanel();
 
     /**
      * @brief setImageTask Sets the current image task manipulated by the scripting panel.
@@ -61,8 +61,8 @@ protected:
     void changeEvent(QEvent*) override;
 
 private:
-    class ImageTaskScriptingPanelImpl;
-    std::unique_ptr<ImageTaskScriptingPanelImpl> d;
+    class ImageTaskShapeScriptingPanelImpl;
+    std::unique_ptr<ImageTaskShapeScriptingPanelImpl> d;
 };
 
 }

@@ -20,7 +20,6 @@
 
 #include "common/uiactions.h"
 #include "common/util.h"
-#include "dialog/imagetaskscriptingpanel.h"
 #include "dialog/imagetaskimagewidget.h"
 #include "dialog/scripteditorwidget.h"
 #include "image/imageloader.h"
@@ -83,9 +82,6 @@ public:
         populateUi();
         q->setAttribute(Qt::WA_DeleteOnClose);
 
-        // Create scripting panel used to manipulate the scripts for generating/mutating shapes (dies when the image task window is closed)
-        setupScriptingPanel();
-
         // Set up the dock widgets
         q->tabifyDockWidget(ui->runnerSettingsDock, ui->scriptsDock);
         q->tabifyDockWidget(ui->runnerSettingsDock, ui->exporterDock);
@@ -112,9 +108,6 @@ public:
         setConsoleVisibility(prefs.shouldShowImageTaskConsoleByDefault());
         setPixmapViewVisibility(prefs.shouldShowImageTaskPixmapViewByDefault());
         setVectorViewVisibility(prefs.shouldShowImageTaskVectorViewByDefault());
-        if(prefs.shouldShowImageTaskScriptEditorByDefault()) {
-            revealScriptingPanel();
-        }
 
         // Handle clicks on checkable title bar items
         connect(ui->actionScript_Console, &QAction::toggled, [this](const bool checked) {
@@ -138,7 +131,7 @@ public:
             ui->imageTaskExportWidget->setImageTask(currentTask, &m_shapes.getShapeVector());
             ui->imageTaskRunnerWidget->setImageTask(currentTask);
 
-            if(dialog::ImageTaskScriptingPanel* scriptingPanel = getScriptingPanel()) {
+            if(dialog::ImageTaskPrePostScriptsWidget* scriptingPanel = getScriptingPanel()) {
                 scriptingPanel->setImageTask(currentTask);
             }
 
@@ -279,7 +272,7 @@ public:
         connect(q, &ImageTaskWindow::didLoadSettingsTemplate, [this]() {
             ui->imageTaskRunnerWidget->syncUserInterface();
 
-            if(dialog::ImageTaskScriptingPanel* scriptingPanel = getScriptingPanel()) {
+            if(dialog::ImageTaskPrePostScriptsWidget* scriptingPanel = getScriptingPanel()) {
                  scriptingPanel->syncUserInterface();
             }
         });
@@ -445,17 +438,6 @@ public:
         populateUi();
     }
 
-    // Utility function used to setup and display the script editor for the given image task window
-    void revealScriptingPanel()
-    {
-        if(dialog::ImageTaskScriptingPanel* scriptingPanel = getScriptingPanel()) {
-            scriptingPanel->setWindowState(scriptingPanel->windowState() & ~Qt::WindowMinimized);
-            QApplication::setActiveWindow(scriptingPanel);
-            scriptingPanel->raise();
-            scriptingPanel->show();
-        }
-    }
-
 private:
     void populateUi()
     {
@@ -463,14 +445,9 @@ private:
         q->setWindowTitle(geometrize::strings::Strings::getApplicationName());
     }
 
-    void setupScriptingPanel()
+    geometrize::dialog::ImageTaskPrePostScriptsWidget* getScriptingPanel()
     {
-        new geometrize::dialog::ImageTaskScriptingPanel(q);
-    }
-
-    geometrize::dialog::ImageTaskScriptingPanel* getScriptingPanel()
-    {
-        return q->findChild<geometrize::dialog::ImageTaskScriptingPanel*>();
+        return ui->scriptsDock->findChild<geometrize::dialog::ImageTaskPrePostScriptsWidget*>();
     }
 
     bool isRunning() const
@@ -642,11 +619,6 @@ void ImageTaskWindow::on_actionSave_Settings_Template_triggered()
 void ImageTaskWindow::on_actionReveal_Launch_Window_triggered()
 {
     d->revealLaunchWindow();
-}
-
-void ImageTaskWindow::on_actionReveal_Script_Editor_triggered()
-{
-    d->revealScriptingPanel();
 }
 
 void ImageTaskWindow::changeEvent(QEvent* event)
