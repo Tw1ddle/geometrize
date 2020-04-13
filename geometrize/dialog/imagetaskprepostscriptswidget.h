@@ -20,15 +20,15 @@ namespace dialog
 void showImageTaskStopConditionMetMessage(QWidget* parent);
 
 /**
- * @brief The ImageTaskStopConditionsWidget implements a widget for setting customizable conditions for when an image should stop being geometrized.
+ * @brief The ImageTaskPrePostScriptsWidget implements a widget for writing scripts that are repeatedly run while an image is being geometrized, usually before/after a shape is added.
  */
-class ImageTaskStopConditionsWidget : public QWidget
+class ImageTaskPrePostScriptsWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    ImageTaskStopConditionsWidget(QWidget* parent = nullptr);
-    virtual ~ImageTaskStopConditionsWidget();
+    ImageTaskPrePostScriptsWidget(QWidget* parent = nullptr);
+    virtual ~ImageTaskPrePostScriptsWidget();
 
     /**
      * @brief addStopCondition Adds a stop condition script that will be evaluated when stopConditionsMet is called
@@ -47,8 +47,8 @@ protected:
     void changeEvent(QEvent*) override;
 
 private:
-    class ImageTaskStopConditionsWidgetImpl;
-    std::unique_ptr<ImageTaskStopConditionsWidgetImpl> d;
+    class ImageTaskPrePostScriptsWidgetImpl;
+    std::unique_ptr<ImageTaskPrePostScriptsWidgetImpl> d;
 };
 
 }

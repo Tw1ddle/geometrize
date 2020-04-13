@@ -1,5 +1,5 @@
-#include "imagetaskstopconditionswidget.h"
-#include "ui_imagetaskstopconditionswidget.h"
+#include "imagetaskprepostscriptswidget.h"
+#include "ui_imagetaskprepostscriptswidget.h"
 
 #include <cassert>
 #include <cstdint>
@@ -27,21 +27,21 @@ void showImageTaskStopConditionMetMessage(QWidget* parent)
     QMessageBox::information(parent, QObject::tr("Stop Condition Met"), QObject::tr("Stop condition for geometrizing was met"));
 }
 
-class ImageTaskStopConditionsWidget::ImageTaskStopConditionsWidgetImpl
+class ImageTaskPrePostScriptsWidget::ImageTaskPrePostScriptsWidgetImpl
 {
 public:
-    ImageTaskStopConditionsWidgetImpl(ImageTaskStopConditionsWidget* pQ) : q{pQ}, ui{std::make_unique<Ui::ImageTaskStopConditionsWidget>()}, m_stopConditionId{0}, m_engine{nullptr}
+    ImageTaskPrePostScriptsWidgetImpl(ImageTaskPrePostScriptsWidget* pQ) : q{pQ}, ui{std::make_unique<Ui::ImageTaskPrePostScriptsWidget>()}, m_stopConditionId{0}, m_engine{nullptr}
     {
         ui->setupUi(q);
         populateUi();
 
         m_engine = createEngine();
 
-        connect(ui->addStopConditionButton, &QPushButton::clicked, [this]() {
+        connect(ui->addScriptButton, &QPushButton::clicked, [this]() {
             const std::string defaultCode = "shapeCount >= 1000;";
             addStopCondition(defaultCode);
         });
-        connect(ui->clearStopConditionsButton, &QPushButton::clicked, [this]() {
+        connect(ui->clearScriptsButton, &QPushButton::clicked, [this]() {
             QLayoutItem* item = nullptr;
             while((item = ui->scriptEditorLayout->takeAt(0)) != nullptr) {
                 delete item->widget();
@@ -51,9 +51,9 @@ public:
             m_stopConditionId = 0;
         });
     }
-    ~ImageTaskStopConditionsWidgetImpl() = default;
-    ImageTaskStopConditionsWidgetImpl operator=(const ImageTaskStopConditionsWidgetImpl&) = delete;
-    ImageTaskStopConditionsWidgetImpl(const ImageTaskStopConditionsWidgetImpl&) = delete;
+    ~ImageTaskPrePostScriptsWidgetImpl() = default;
+    ImageTaskPrePostScriptsWidgetImpl operator=(const ImageTaskPrePostScriptsWidgetImpl&) = delete;
+    ImageTaskPrePostScriptsWidgetImpl(const ImageTaskPrePostScriptsWidgetImpl&) = delete;
 
     void onLanguageChange()
     {
@@ -67,7 +67,7 @@ public:
 
         const std::string functionName = "stop_condition_" + std::to_string(m_stopConditionId++);
 
-        auto widget = new geometrize::dialog::ScriptEditorWidget(editorName, "", scriptCode, ui->stopConditionScriptGroupBox);
+        auto widget = new geometrize::dialog::ScriptEditorWidget(editorName, "", scriptCode, ui->scriptsGroupBox);
         ui->scriptEditorLayout->addWidget(widget);
     }
 
@@ -87,7 +87,7 @@ public:
 
         m_engine->set_global(chaiscript::var(currentShapeCount), "shapeCount");
 
-        const auto scriptWidgets = ui->stopConditionScriptGroupBox->findChildren<geometrize::dialog::ScriptEditorWidget*>();
+        const auto scriptWidgets = ui->scriptsGroupBox->findChildren<geometrize::dialog::ScriptEditorWidget*>();
         if(scriptWidgets.empty()) {
             return false;
         }
@@ -120,24 +120,24 @@ private:
     {
     }
 
-    ImageTaskStopConditionsWidget* q;
-    std::unique_ptr<Ui::ImageTaskStopConditionsWidget> ui;
+    ImageTaskPrePostScriptsWidget* q;
+    std::unique_ptr<Ui::ImageTaskPrePostScriptsWidget> ui;
 
     int m_stopConditionId;
     std::unique_ptr<chaiscript::ChaiScript> m_engine;
 };
 
-ImageTaskStopConditionsWidget::ImageTaskStopConditionsWidget(QWidget* parent) :
+ImageTaskPrePostScriptsWidget::ImageTaskPrePostScriptsWidget(QWidget* parent) :
     QWidget{parent},
-    d{std::make_unique<ImageTaskStopConditionsWidget::ImageTaskStopConditionsWidgetImpl>(this)}
+    d{std::make_unique<ImageTaskPrePostScriptsWidget::ImageTaskPrePostScriptsWidgetImpl>(this)}
 {
 }
 
-ImageTaskStopConditionsWidget::~ImageTaskStopConditionsWidget()
+ImageTaskPrePostScriptsWidget::~ImageTaskPrePostScriptsWidget()
 {
 }
 
-void ImageTaskStopConditionsWidget::changeEvent(QEvent* event)
+void ImageTaskPrePostScriptsWidget::changeEvent(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange) {
         d->onLanguageChange();
@@ -145,12 +145,12 @@ void ImageTaskStopConditionsWidget::changeEvent(QEvent* event)
     QWidget::changeEvent(event);
 }
 
-void ImageTaskStopConditionsWidget::addStopCondition(const std::string& scriptCode)
+void ImageTaskPrePostScriptsWidget::addStopCondition(const std::string& scriptCode)
 {
     d->addStopCondition(scriptCode);
 }
 
-bool ImageTaskStopConditionsWidget::stopConditionsMet(const std::size_t currentShapeCount) const
+bool ImageTaskPrePostScriptsWidget::stopConditionsMet(const std::size_t currentShapeCount) const
 {
     return d->stopConditionsMet(currentShapeCount);
 }

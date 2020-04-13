@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ImageTaskStopConditionsWidget</class>
- <widget class="QWidget" name="ImageTaskStopConditionsWidget">
+ <class>ImageTaskPrePostScriptsWidget</class>
+ <widget class="QWidget" name="ImageTaskPrePostScriptsWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -82,22 +82,22 @@
     </spacer>
    </item>
    <item>
-    <widget class="QGroupBox" name="stopConditionScriptGroupBox">
+    <widget class="QGroupBox" name="scriptsGroupBox">
      <property name="title">
-      <string>Custom Stop Condition Scripts</string>
+      <string>Custom Scripts</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
-         <widget class="QPushButton" name="addStopConditionButton">
+         <widget class="QPushButton" name="addScriptButton">
           <property name="text">
-           <string>Add Stop Condition</string>
+           <string>Add Script</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="clearStopConditionsButton">
+         <widget class="QPushButton" name="clearScriptsButton">
           <property name="text">
            <string>Clear All</string>
           </property>
