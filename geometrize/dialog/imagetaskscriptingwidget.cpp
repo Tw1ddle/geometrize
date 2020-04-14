@@ -10,13 +10,15 @@
 #include <QLocale>
 #include <QMessageBox>
 #include <QString>
+#include <QUuid>
 
 #include "chaiscript/chaiscript.hpp"
 
 #include "dialog/imagetaskshapescriptingpanel.h"
 #include "dialog/scripteditorwidget.h"
 #include "preferences/globalpreferences.h"
-#include "script/chaiscriptcreator.h"
+#include "script/geometrizerengine.h"
+#include "task/imagetask.h"
 
 namespace geometrize
 {
@@ -32,14 +34,12 @@ void showImageTaskStopConditionMetMessage(QWidget* parent)
 class ImageTaskScriptingWidget::ImageTaskScriptingWidgetImpl
 {
 public:
-    ImageTaskScriptingWidgetImpl(ImageTaskScriptingWidget* pQ) : q{pQ}, ui{std::make_unique<Ui::ImageTaskScriptingWidget>()}, m_stopConditionId{0}, m_engine{nullptr}
+    ImageTaskScriptingWidgetImpl(ImageTaskScriptingWidget* pQ) : q{pQ}, ui{std::make_unique<Ui::ImageTaskScriptingWidget>()}
     {
         ui->setupUi(q);
         populateUi();
 
         new geometrize::dialog::ImageTaskShapeScriptingPanel(q);
-
-        m_engine = createEngine();
 
         connect(ui->editShapeScriptsButton, &QPushButton::clicked, [this]() {
             revealShapeScriptingPanel();
@@ -48,14 +48,12 @@ public:
             const std::string defaultCode = "shapeCount >= 500;";
             addStopCondition(defaultCode);
         });
-        connect(ui->clearStopConditionsButton, &QPushButton::clicked, [this]() {
+        connect(ui->clearScriptsButton, &QPushButton::clicked, [this]() {
             QLayoutItem* item = nullptr;
-            while((item = ui->stopConditionsEditorLayout->takeAt(0)) != nullptr) {
+            while((item = ui->scriptsEditorLayout->takeAt(0)) != nullptr) {
                 delete item->widget();
                 delete item;
             }
-
-            m_stopConditionId = 0;
         });
 
         // Reveal shape scripting panel if global preferences are set this way
@@ -70,6 +68,7 @@ public:
 
     void setImageTask(task::ImageTask* task)
     {
+        m_task = task;
         getShapeScriptingPanel()->setImageTask(task);
     }
 
@@ -81,23 +80,21 @@ public:
     void addStopCondition(const std::string& scriptCode)
     {
         const std::string editorName = tr("Custom Stop Condition").toStdString();
-
-        const std::string functionName = "stop_condition_" + std::to_string(m_stopConditionId++);
-
-        auto widget = new geometrize::dialog::ScriptEditorWidget(editorName, "", scriptCode, ui->stopConditionScriptsGroupBox);
-        ui->stopConditionsEditorLayout->addWidget(widget);
+        const std::string functionName = "stop_condition_" + QUuid::createUuid().toString().toStdString();
+        auto widget = new geometrize::dialog::ScriptEditorWidget(editorName, "", scriptCode, ui->customScriptsGroupBox);
+        ui->scriptsEditorLayout->addWidget(widget);
     }
 
-    bool stopConditionsMet(const std::size_t currentShapeCount) const
+    bool evaluateStopConditions(const std::size_t currentShapeCount) const
     {
-        if(!m_engine) {
-            assert(0 && "Failed to evaluate stop conditions, no script engine is set");
+        const auto engine = m_task->getGeometrizer().getEngine();
+        if(!engine) {
             return false;
         }
 
-        m_engine->set_global(chaiscript::var(currentShapeCount), "shapeCount");
+        engine->set_global(chaiscript::var(currentShapeCount), "shapeCount");
 
-        const auto scriptWidgets = ui->stopConditionScriptsGroupBox->findChildren<geometrize::dialog::ScriptEditorWidget*>();
+        const auto scriptWidgets = ui->customScriptsGroupBox->findChildren<geometrize::dialog::ScriptEditorWidget*>();
         if(scriptWidgets.empty()) {
             return false;
         }
@@ -105,7 +102,7 @@ public:
         bool scriptStopConditionMet = false;
         for(const auto& widget : scriptWidgets) {
             try {
-                auto stopCondition = m_engine->eval<bool>(widget->getCurrentCode());
+                auto stopCondition = engine->eval<bool>(widget->getCurrentCode());
                 if(stopCondition) {
                     scriptStopConditionMet = true;
                 }
@@ -143,20 +140,14 @@ private:
         return q->findChild<geometrize::dialog::ImageTaskShapeScriptingPanel*>();
     }
 
-    std::unique_ptr<chaiscript::ChaiScript> createEngine()
-    {
-        return geometrize::script::createDefaultEngine();
-    }
-
     void populateUi()
     {
     }
 
+    task::ImageTask* m_task{nullptr};
+
     ImageTaskScriptingWidget* q;
     std::unique_ptr<Ui::ImageTaskScriptingWidget> ui;
-
-    int m_stopConditionId;
-    std::unique_ptr<chaiscript::ChaiScript> m_engine;
 };
 
 ImageTaskScriptingWidget::ImageTaskScriptingWidget(QWidget* parent) :
@@ -187,14 +178,9 @@ void ImageTaskScriptingWidget::syncUserInterface()
     d->syncUserInterface();
 }
 
-void ImageTaskScriptingWidget::addStopCondition(const std::string& scriptCode)
+bool ImageTaskScriptingWidget::evaluateStopConditions(const std::size_t currentShapeCount) const
 {
-    d->addStopCondition(scriptCode);
-}
-
-bool ImageTaskScriptingWidget::stopConditionsMet(const std::size_t currentShapeCount) const
-{
-    return d->stopConditionsMet(currentShapeCount);
+    return d->evaluateStopConditions(currentShapeCount);
 }
 
 }

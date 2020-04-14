@@ -285,12 +285,11 @@ public:
             }
         });
 
-        // When number of shapes changes check the scripts
-        connect(&m_shapes, &geometrize::task::ShapeCollection::signal_sizeChanged, [this](const std::size_t size) {
-            if(!ui->scriptsWidget->stopConditionsMet(size)) {
+        // When shapes are added, evaluate the stop conditions
+        connect(&m_shapes, &geometrize::task::ShapeCollection::signal_appendedShapes, [this](const std::vector<geometrize::ShapeResult>&) {
+            if(!ui->scriptsWidget->evaluateStopConditions(m_shapes.size())) {
                 return;
             }
-
             setShouldKeepStepping(false);
             geometrize::dialog::showImageTaskStopConditionMetMessage(q);
         });

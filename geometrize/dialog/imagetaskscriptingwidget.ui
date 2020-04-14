@@ -22,31 +22,59 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="stopConditionScriptsGroupBox">
+    <widget class="QGroupBox" name="customScriptsGroupBox">
      <property name="title">
       <string>Custom Scripts</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <item>
-         <widget class="QPushButton" name="clearStopConditionsButton">
-          <property name="text">
-           <string>Clear All</string>
-          </property>
-         </widget>
-        </item>
-        <item>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="1">
          <widget class="QPushButton" name="addStopConditionButton">
           <property name="text">
            <string>Add Stop Condition</string>
           </property>
          </widget>
         </item>
+        <item row="0" column="0">
+         <widget class="QPushButton" name="clearScriptsButton">
+          <property name="text">
+           <string>Remove All</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0" colspan="2">
+         <widget class="QPushButton" name="addBeforeAddShapeEvent">
+          <property name="text">
+           <string>Add Before Add Shape Event</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QPushButton" name="addStartEventButton">
+          <property name="text">
+           <string>Add Stop Event</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QPushButton" name="addStopEventButton">
+          <property name="text">
+           <string>Add Start Event</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0" colspan="2">
+         <widget class="QPushButton" name="addAfterAddShapeEvent">
+          <property name="text">
+           <string>Add After Add Shape Event</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
       <item>
-       <layout class="QVBoxLayout" name="stopConditionsEditorLayout"/>
+       <layout class="QVBoxLayout" name="scriptsEditorLayout"/>
       </item>
      </layout>
     </widget>
