@@ -1,5 +1,7 @@
-#include "recentitemwidget.h"
-#include "ui_recentitemwidget.h"
+#include "taskitemwidget.h"
+#include "ui_taskitemwidget.h"
+
+#include <functional>
 
 #include <QAction>
 #include <QContextMenuEvent>
@@ -8,11 +10,12 @@
 #include <QFutureWatcher>
 #include <QImage>
 #include <QMenu>
+#include <QMouseEvent>
+#include <QString>
 #include <QtConcurrent/QtConcurrentRun>
 
 #include "common/uiactions.h"
 #include "common/util.h"
-#include "recents/recentitem.h"
 #include "recents/recentitems.h"
 #include "task/taskutil.h"
 
@@ -22,31 +25,31 @@ namespace geometrize
 namespace dialog
 {
 
-class RecentItemWidget::RecentItemWidgetImpl
+class TaskItemWidget::TaskItemWidgetImpl
 {
 public:
-    RecentItemWidgetImpl(RecentItemWidget* pQ, const RecentItem& item) : q{pQ}, ui{std::make_unique<Ui::RecentItemWidget>()}, m_item{item}
+    TaskItemWidgetImpl(TaskItemWidget* pQ, const QString& taskItemId, const QString& taskItemDisplayName, const std::function<void(const QString&)>& openItemCb, const std::function<void(const QString&)>& removeItemCb) :
+        q{pQ}, ui{std::make_unique<Ui::TaskItemWidget>()}, m_taskItemId{taskItemId}, m_taskItemDisplayName{taskItemDisplayName}, m_openItemCb{openItemCb}, m_removeItemCb{removeItemCb}
     {
         ui->setupUi(q);
 
-        ui->itemDisplayName->setText(item.getDisplayName());
+        ui->itemDisplayName->setText(m_taskItemDisplayName);
 
-        const QString key{item.getKey()};
-        ui->itemPath->setText(key);
+        ui->itemPath->setText(m_taskItemId);
 
         q->connect(&m_thumbnailLoaderWatcher, &QFutureWatcher<QImage>::finished, [this]() {
             const QImage thumbnail{m_thumbnailLoaderWatcher.future().result()};
             ui->thumbnailIcon->setPixmap(QPixmap::fromImage(thumbnail));
         });
 
-        const QString itemPath{item.getKey()};
+        const QString itemPath{m_taskItemId};
         const RecentItem::Type type{RecentItem::getTypeForKey(itemPath)};
 
-        QFuture<QImage> thumbnailFuture{QtConcurrent::run(this, &RecentItemWidgetImpl::setupThumbnail, itemPath, type)};
+        QFuture<QImage> thumbnailFuture{QtConcurrent::run(this, &TaskItemWidgetImpl::setupThumbnail, itemPath, type)};
         m_thumbnailLoaderWatcher.setFuture(thumbnailFuture);
     }
 
-    ~RecentItemWidgetImpl()
+    ~TaskItemWidgetImpl()
     {
     }
 
@@ -57,31 +60,31 @@ public:
         QAction openAction(tr("Open", "Text on a menu item the user presses to open a file/image"));
         itemContextMenu.addAction(&openAction);
         connect(&openAction, &QAction::triggered, [this]() {
-            geometrize::util::openTasks({m_item.getKey()}, false);
+            m_openItemCb(m_taskItemId);
         });
 
         QAction openInDefaultViewer(tr("Open in viewer", "Text on a menu item the user presses to open an image/piece of media in a viewer"));
         itemContextMenu.addAction(&openInDefaultViewer);
         connect(&openInDefaultViewer, &QAction::triggered, [this]() {
-            geometrize::util::openInDefaultApplication(m_item.getKey().toStdString());
+            geometrize::util::openInDefaultApplication(m_taskItemId.toStdString());
         });
 
         QAction revealInDefaultExplorer(tr("Reveal in file explorer", "Text on a menu item the user presses to open an image/piece of media in a file viewer/explorer"));
         itemContextMenu.addAction(&revealInDefaultExplorer);
         connect(&revealInDefaultExplorer, &QAction::triggered, [this]() {
-            geometrize::util::revealInDefaultApplication(m_item.getKey().toStdString());
+            geometrize::util::revealInDefaultApplication(m_taskItemId.toStdString());
         });
 
         QAction copyToClipboard(tr("Copy file path to clipboard", "Text on a menu item the user selects to copy a file path to the copy-paste clipboard"));
         itemContextMenu.addAction(&copyToClipboard);
         connect(&copyToClipboard, &QAction::triggered, [this]() {
-            geometrize::util::setGlobalClipboardText(m_item.getKey().toStdString());
+            geometrize::util::setGlobalClipboardText(m_taskItemId.toStdString());
         });
 
         QAction removalAction(tr("Remove from list", "Text on a menu item the user presses to remove an item from a list of items"));
         itemContextMenu.addAction(&removalAction);
         connect(&removalAction, &QAction::triggered, [this]() {
-            geometrize::getRecentItems().remove(m_item.getKey());
+            m_removeItemCb(m_taskItemId);
         });
 
         itemContextMenu.exec(e->globalPos());
@@ -93,7 +96,7 @@ public:
             return;
         }
 
-        geometrize::util::openTasks({m_item.getKey()}, false);
+        m_openItemCb(m_taskItemId);
     }
 
     void onKeyPressEvent(QKeyEvent* e)
@@ -102,7 +105,7 @@ public:
             return;
         }
 
-        geometrize::util::openTasks({m_item.getKey()}, false);
+        m_openItemCb(m_taskItemId);
     }
 
     void onLanguageChange()
@@ -153,35 +156,39 @@ private:
         return QImage(":/icons/error.png");
     }
 
-    RecentItemWidget* q;
-    std::unique_ptr<Ui::RecentItemWidget> ui;
-    RecentItem m_item;
+    TaskItemWidget* q;
+    std::unique_ptr<Ui::TaskItemWidget> ui;
+    const QString m_taskItemId;
+    const QString m_taskItemDisplayName;
+    const std::function<void(const QString&)> m_openItemCb;
+    const std::function<void(const QString&)> m_removeItemCb;
     QFutureWatcher<QImage> m_thumbnailLoaderWatcher;
 };
 
-RecentItemWidget::RecentItemWidget(const RecentItem& item) : d{std::make_unique<RecentItemWidget::RecentItemWidgetImpl>(this, item)}
+TaskItemWidget::TaskItemWidget(const QString& taskItemId, const QString& taskItemDisplayName, const std::function<void(const QString&)>& openItemCb, const std::function<void(const QString&)>& removeItemCb) :
+    d{std::make_unique<TaskItemWidget::TaskItemWidgetImpl>(this, taskItemId, taskItemDisplayName, openItemCb, removeItemCb)}
 {
 }
 
-RecentItemWidget::~RecentItemWidget()
+TaskItemWidget::~TaskItemWidget()
 {
 }
 
-void RecentItemWidget::contextMenuEvent(QContextMenuEvent* e)
+void TaskItemWidget::contextMenuEvent(QContextMenuEvent* e)
 {
     d->onContextMenuEvent(e);
 
     QWidget::contextMenuEvent(e);
 }
 
-void RecentItemWidget::mouseReleaseEvent(QMouseEvent* e)
+void TaskItemWidget::mouseReleaseEvent(QMouseEvent* e)
 {
     d->onMouseReleaseEvent(e);
 
     QWidget::mouseReleaseEvent(e);
 }
 
-void RecentItemWidget::changeEvent(QEvent* event)
+void TaskItemWidget::changeEvent(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange) {
         d->onLanguageChange();

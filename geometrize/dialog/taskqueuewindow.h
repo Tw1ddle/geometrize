@@ -23,9 +23,10 @@ public:
     explicit TaskQueueWindow();
     virtual ~TaskQueueWindow();
 
-signals:
-
 protected:
+    virtual void dragEnterEvent(QDragEnterEvent* event) override;
+    virtual void dropEvent(QDropEvent* event) override;
+
     void changeEvent(QEvent*) override;
 
 private slots:

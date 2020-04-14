@@ -141,22 +141,6 @@
            </widget>
           </item>
           <item>
-           <spacer name="horizontalSpacer_4">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
            <spacer name="horizontalSpacer">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -191,34 +175,9 @@
              <number>10</number>
             </property>
             <item>
-             <widget class="QToolButton" name="addImagesButton">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">padding: 5px;</string>
-              </property>
+             <widget class="QLabel" name="label">
               <property name="text">
-               <string extracomment="Text on a button that opens an image selection dialog when it is pressed">Add Images</string>
-              </property>
-              <property name="icon">
-               <iconset resource="../../resources/icons.qrc">
-                <normaloff>:/icons/folder_image.png</normaloff>:/icons/folder_image.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>32</width>
-                <height>32</height>
-               </size>
-              </property>
-              <property name="toolButtonStyle">
-               <enum>Qt::ToolButtonTextBesideIcon</enum>
-              </property>
-              <property name="arrowType">
-               <enum>Qt::NoArrow</enum>
+               <string>Drag-and-drop image files below to queue up geometrization tasks</string>
               </property>
              </widget>
             </item>
@@ -277,8 +236,13 @@
         <item>
          <widget class="QGroupBox" name="actionGroupBox">
           <property name="title">
-           <string>Selected Task Info</string>
+           <string>Per-Image Actions</string>
           </property>
+          <layout class="QVBoxLayout" name="verticalLayout_6">
+           <item>
+            <widget class="QTextBrowser" name="textBrowser"/>
+           </item>
+          </layout>
          </widget>
         </item>
        </layout>
@@ -355,7 +319,6 @@
   </action>
  </widget>
  <resources>
-  <include location="../../resources/icons.qrc"/>
   <include location="../../resources/logos.qrc"/>
  </resources>
  <connections/>

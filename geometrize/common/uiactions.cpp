@@ -95,6 +95,11 @@ void openGlobalPreferences(QWidget* parent)
     preferencesDialog.exec();
 }
 
+QString openGenericFolderPickerDialog(QWidget* parent)
+{
+    return QFileDialog::getExistingDirectory(parent, QWidget::tr("Select Folder", "Title on a dialog that allows the user to select a folder"));
+}
+
 QString openImagePathPickerDialog(QWidget* parent)
 {
     return QFileDialog::getOpenFileName(parent,

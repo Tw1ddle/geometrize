@@ -28,6 +28,7 @@ void openTaskQueueWindow();
 void openWelcomePage();
 void openAboutPage(QWidget* parent);
 void openGlobalPreferences(QWidget* parent);
+QString openGenericFolderPickerDialog(QWidget* parent);
 QString openImagePathPickerDialog(QWidget* parent);
 QString openSaveImagePathPickerDialog(QWidget* parent);
 QString openSaveSVGPathPickerDialog(QWidget* parent);

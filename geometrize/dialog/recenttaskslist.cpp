@@ -9,7 +9,8 @@
 #include <QEvent>
 #include <QMenu>
 
-#include "dialog/recentitemwidget.h"
+#include "task/taskutil.h"
+#include "dialog/taskitemwidget.h"
 #include "recents/recentitem.h"
 #include "recents/recentitems.h"
 
@@ -124,7 +125,13 @@ private:
 
     void addItem(const RecentItem& recentItem) const
     {
-        dialog::RecentItemWidget* button{new dialog::RecentItemWidget(recentItem)};
+        dialog::TaskItemWidget* button{new dialog::TaskItemWidget(recentItem.getKey(), recentItem.getDisplayName(),
+        [](const QString& taskItemId) {
+            geometrize::util::openTasks({taskItemId}, false);
+        },
+        [](const QString& taskItemId) {
+            geometrize::getRecentItems().remove(taskItemId);
+        })};
         QListWidgetItem* item{new QListWidgetItem()};
         item->setToolTip(recentItem.getKey());
         item->setSizeHint(button->sizeHint());
