@@ -67,11 +67,6 @@ QString getBuildQtVersionName()
     return QT_VERSION_STR;
 }
 
-QString getBuildQtLicenseName()
-{
-    return QLibraryInfo::licensedProducts();
-}
-
 }
 
 }

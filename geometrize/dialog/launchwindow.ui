@@ -569,7 +569,6 @@
          <family>Consolas</family>
         </font>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_8"/>
       </widget>
      </widget>
     </item>
@@ -687,8 +686,8 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../resources/logos.qrc"/>
   <include location="../../resources/icons.qrc"/>
+  <include location="../../resources/logos.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -96,13 +96,13 @@ std::string getFirstFileWithExtensions(const std::string& dirPath, const std::ve
     return geometrize::util::getFirstFileWithExtensions(dirPath, extensions);
 }
 
-std::vector<std::string> getFilesWithExtensions(const std::string& dirPath, const std::vector<std::string>& extensions)
+std::vector<std::string> getFilesWithExtensions(const std::string& /*dirPath*/, const std::vector<std::string>& /*extensions*/)
 {
     std::vector<std::string> files;
 
-    for(const std::string& extension : extensions) {
+    //for(const std::string& extension : extensions) {
         // TODO
-    }
+    //}
 
     return files;
 }
@@ -264,7 +264,7 @@ bool saveDesktopScreenshot(const std::string& path)
     return geometrize::util::saveDesktopScreenshot(path);
 }
 
-bool saveWidgetScreenshot(const std::string& path, QObject* widget)
+bool saveWidgetScreenshot(const std::string& path, QWidget* widget)
 {
     return geometrize::util::saveWidgetScreenshot(path, widget);
 }

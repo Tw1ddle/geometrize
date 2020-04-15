@@ -5,7 +5,7 @@
 #include <sstream>
 #include <vector>
 
-class QObject;
+class QWidget;
 
 namespace geometrize
 {
@@ -286,7 +286,7 @@ bool saveDesktopScreenshot(const std::string& path);
  * @param widget The widget to take a screenshot of.
  * @return True if the screenshot was taken and save successfully, else false.
  */
-bool saveWidgetScreenshot(const std::string& path, QObject* widget);
+bool saveWidgetScreenshot(const std::string& path, QWidget* widget);
 
 }
 

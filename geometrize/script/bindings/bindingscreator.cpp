@@ -180,7 +180,7 @@ std::shared_ptr<chaiscript::Module> createImageBindings()
 
     ADD_TYPE(QImage);
 
-    ADD_MEMBER(QImage, byteCount);
+    ADD_MEMBER(QImage, sizeInBytes);
     ADD_MEMBER(QImage, colorCount);
     ADD_MEMBER(QImage, depth);
     ADD_MEMBER(QImage, isNull);

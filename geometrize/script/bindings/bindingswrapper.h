@@ -145,7 +145,7 @@ bool exportGIF(const std::vector<geometrize::ShapeResult>& data,
 
 bool saveDesktopScreenshot(const std::string& path);
 
-bool saveWidgetScreenshot(const std::string& path, QObject* widget);
+bool saveWidgetScreenshot(const std::string& path, QWidget* widget);
 
 }
 

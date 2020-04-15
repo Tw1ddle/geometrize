@@ -62,12 +62,6 @@ QString getBuildCpuArchitectureName();
  */
 QString getBuildQtVersionName();
 
-/**
- * @brief getBuildQtLicenseName Gets a string that describes the sort of license Qt is provided under.
- * @return The sort of license Qt has been provided under.
- */
-QString getBuildQtLicenseName();
-
 }
 
 }

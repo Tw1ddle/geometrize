@@ -33,7 +33,7 @@ std::uint32_t* makeImageData(const QImage& image)
     const uchar* imageBytes = image.constBits();
 
     int byteIndex = 0;
-    for(int pixelIdx = 0; pixelIdx < imageSizePixels; pixelIdx++) {
+    for(std::size_t pixelIdx = 0; pixelIdx < imageSizePixels; pixelIdx++) {
         const std::int32_t r = imageBytes[byteIndex];
         const std::int32_t g = imageBytes[byteIndex + 1];
         const std::int32_t b = imageBytes[byteIndex + 2];

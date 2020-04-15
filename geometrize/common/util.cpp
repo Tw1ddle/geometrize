@@ -19,6 +19,7 @@
 #include <QObject>
 #include <QPixmap>
 #include <QPoint>
+#include <QScreen>
 #include <QStandardPaths>
 #include <QTextStream>
 #include <QUrl>
@@ -335,14 +336,14 @@ bool saveDesktopScreenshot(const std::string& path)
         return false;
     }
 
-    const QPixmap desktopPixmap = QPixmap::grabWindow(desktop->winId());
+    const QPixmap desktopPixmap = desktop->window()->grab();
 
     return desktopPixmap.save(QString::fromStdString(path), "png");
 }
 
-bool saveWidgetScreenshot(const std::string& path, QObject* widget)
+bool saveWidgetScreenshot(const std::string& path, QWidget* widget)
 {
-    return QPixmap::grabWidget(widget).save(QString::fromStdString(path), "png");
+    return widget->grab().save(QString::fromStdString(path), "png");
 }
 
 }

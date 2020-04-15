@@ -1,6 +1,7 @@
 #include "commandlineedit.h"
 #include "ui_commandlineedit.h"
 
+#include <algorithm>
 #include <string>
 #include <vector>
 
@@ -46,8 +47,7 @@ public:
 
     void stepHistory(const int steps)
     {
-        m_historyIndex += steps;
-        m_historyIndex = qBound(0, m_historyIndex, std::max(0, static_cast<int>(m_history.size())));
+        m_historyIndex = static_cast<std::size_t>(std::max(static_cast<std::int64_t>(0), static_cast<std::int64_t>(m_historyIndex) + steps));
 
         if(m_historyIndex == m_history.size()) {
             setCurrentCommand("");
@@ -75,7 +75,7 @@ public:
     void setHistory(const std::vector<std::string>& history)
     {
         m_history = history;
-        m_historyIndex = static_cast<int>(m_history.size());
+        m_historyIndex = m_history.size();
 
         //QStringList words;
         //for(const std::string& word : history) {
@@ -141,7 +141,7 @@ private:
     CommandLineEdit* q;
     std::unique_ptr<Ui::CommandLineEdit> ui;
 
-    int m_historyIndex;
+    std::size_t m_historyIndex;
     std::vector<std::string> m_history;
 };
 

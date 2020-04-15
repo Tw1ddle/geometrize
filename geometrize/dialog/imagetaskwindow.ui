@@ -156,9 +156,7 @@
    <attribute name="dockWidgetArea">
     <number>1</number>
    </attribute>
-   <widget class="geometrize::dialog::ImageTaskStatsWidget" name="statsDockContents">
-    <layout class="QVBoxLayout" name="verticalLayout_26"/>
-   </widget>
+   <widget class="geometrize::dialog::ImageTaskStatsWidget" name="statsDockContents"/>
   </widget>
   <widget class="QDockWidget" name="imageSettingsDock">
    <property name="minimumSize">
