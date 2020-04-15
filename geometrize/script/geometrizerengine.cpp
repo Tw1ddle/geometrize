@@ -321,7 +321,7 @@ private:
 class GeometrizerEngine::GeometrizerEngineImpl
 {
 public:
-    GeometrizerEngineImpl(GeometrizerEngine* pQ) : q{pQ}, m_defaultScripts{script::getDefaultScripts()}, m_engine{script::createShapeMutatorEngine()}
+    GeometrizerEngineImpl(GeometrizerEngine* pQ) : q{pQ}, m_defaultScripts{script::getDefaultShapeMutatorScripts()}, m_engine{script::createShapeMutatorEngine()}
     {
         m_state = m_engine->get_state();
 

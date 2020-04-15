@@ -29,7 +29,7 @@ void sleep(std::size_t ms);
 std::vector<std::string> getEngineFunctionNames(const chaiscript::ChaiScript& engine);
 
 /**
- * @brief getDefaultScripts Gets a map of the scripts (used for shape creation and mutation in image tasks) in the given folder.
+ * @brief getDefaultScripts Gets a map of the scripts in the given folder.
  * @folder Path to the folder containing the ChaiScript scripts to retrieve. The files must have the ".chai" file extension.
  * @return A map of Chaiscript script function names to function bodies.
  */
@@ -39,13 +39,13 @@ std::map<std::string, std::string> getScripts(const std::string& folder);
  * @brief getDefaultScripts Gets a map of the default scripts used for shape creation and mutation in image tasks.
  * @return A map of Chaiscript script function names to function bodies.
  */
-std::map<std::string, std::string> getDefaultScripts();
+std::map<std::string, std::string> getDefaultShapeMutatorScripts();
 
 /**
  * @brief getPointerAreaOfInterestScripts Gets a map of the scripts used for shape creation and mutation based around user input/pointer interaction.
  * @return A map of Chaiscript script function names to function bodies.
  */
-std::map<std::string, std::string> getPointerAreaOfInterestScripts();
+std::map<std::string, std::string> getPointerAreaOfInterestShapeMutatorScripts();
 
 }
 

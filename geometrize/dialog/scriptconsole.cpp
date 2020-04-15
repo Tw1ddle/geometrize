@@ -5,7 +5,6 @@
 
 #include "chaiscript/chaiscript.hpp"
 
-#include "logger/logmessageevents.h"
 #include "script/scriptrunner.h"
 #include "script/scriptutil.h"
 
@@ -135,15 +134,9 @@ void ScriptConsole::setHistory(const std::vector<std::string>& history)
     d->setHistory(history);
 }
 
-bool ScriptConsole::event(QEvent* event)
+void ScriptConsole::appendString(const std::string& str)
 {
-    if(event->type() == geometrize::log::LogMessageEvent::textualWidgetEventType) {
-        geometrize::log::TextualWidgetMessageEvent* message{static_cast<geometrize::log::TextualWidgetMessageEvent*>(event)};
-        d->append(message->getMessage());
-        return true;
-    } else {
-        return QWidget::event(event);
-    }
+    d->append(QString::fromStdString(str));
 }
 
 void ScriptConsole::changeEvent(QEvent* event)

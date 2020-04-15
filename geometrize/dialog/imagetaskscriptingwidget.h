@@ -2,6 +2,7 @@
 
 #include <cstdint>
 #include <memory>
+#include <string>
 
 #include <QWidget>
 
@@ -54,10 +55,12 @@ public:
 
     /**
      * @brief evaluateStopConditions Returns true if the condition(s) for stopping geometrizing the image were met
-     * @param currentShapeCount The number of shapes that have been geometrized so far
      * @return True if a stop condition was met
      */
-    bool evaluateStopConditions(std::size_t currentShapeCount) const;
+    bool evaluateStopConditions() const;
+
+signals:
+    void signal_scriptChanged(const std::string& functionName, const std::string& code);
 
 protected:
     void changeEvent(QEvent*) override;

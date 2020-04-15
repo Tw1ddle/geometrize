@@ -17,7 +17,6 @@
 #include "dialog/launchwindow.h"
 #include "dialog/welcomewindow.h"
 #include "localization/localization.h"
-#include "logger/logmessagehandlers.h"
 #include "preferences/globalpreferences.h"
 #include "test/functionaltestrunner.h"
 #include "version/versioninfo.h"
@@ -39,11 +38,6 @@ void setApplicationSettingsFields()
     QCoreApplication::setApplicationName(APPLICATION_NAME);
 
     QCoreApplication::setApplicationVersion(geometrize::version::getApplicationVersionString()); // This can change
-}
-
-void installMessageHandlers()
-{
-    qInstallMessageHandler(geometrize::log::handleLogMessages);
 }
 
 void incrementAppLaunchCount()
@@ -140,7 +134,6 @@ std::function<int(QApplication&)> resolveLaunchFunction(const QStringList& argum
 int main(int argc, char* argv[])
 {
     setApplicationSettingsFields();
-    installMessageHandlers();
     incrementAppLaunchCount();
 
     QApplication app(argc, argv);

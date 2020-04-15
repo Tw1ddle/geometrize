@@ -33,7 +33,6 @@
 
 #include "dialog/imagetaskwindow.h"
 #include "dialog/scriptconsole.h"
-#include "logger/logmessageevents.h"
 #include "logger/logmessagehandlers.h"
 #include "task/imagetask.h"
 

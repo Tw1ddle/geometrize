@@ -130,13 +130,11 @@ public:
         connect(q, &ImageTaskWindow::didSwitchImageTask, [this](task::ImageTask* lastTask, task::ImageTask* currentTask) {
             ui->imageTaskExportWidget->setImageTask(currentTask, &m_shapes.getShapeVector());
             ui->imageTaskRunnerWidget->setImageTask(currentTask);
-
-            if(dialog::ImageTaskScriptingWidget* scriptingPanel = getScriptingPanel()) {
-                scriptingPanel->setImageTask(currentTask);
-            }
+            ui->scriptsWidget->setImageTask(currentTask);
 
             m_taskPreferencesSetConnection = connect(currentTask, &task::ImageTask::signal_preferencesSet, [this]() {
                 ui->imageTaskRunnerWidget->syncUserInterface();
+                ui->scriptsWidget->syncUserInterface();
             });
 
             m_taskWillStepConnection = connect(currentTask, &task::ImageTask::signal_modelWillStep, [this]() {
@@ -193,6 +191,7 @@ public:
 
             ui->consoleWidget->setEngine(currentTask->getGeometrizer().getEngine());
             ui->imageTaskRunnerWidget->syncUserInterface();
+            ui->scriptsWidget->syncUserInterface();
 
             ui->imageTaskImageWidget->setTargetImage(image::createImage(currentTask->getTarget()));
 
@@ -271,10 +270,7 @@ public:
 
         connect(q, &ImageTaskWindow::didLoadSettingsTemplate, [this]() {
             ui->imageTaskRunnerWidget->syncUserInterface();
-
-            if(dialog::ImageTaskScriptingWidget* scriptingPanel = getScriptingPanel()) {
-                 scriptingPanel->syncUserInterface();
-            }
+            ui->scriptsWidget->syncUserInterface();
         });
 
         // Track how long the task has been in the running state
@@ -287,7 +283,7 @@ public:
 
         // When shapes are added, evaluate the stop conditions
         connect(&m_shapes, &geometrize::task::ShapeCollection::signal_appendedShapes, [this](const std::vector<geometrize::ShapeResult>&) {
-            if(!ui->scriptsWidget->evaluateStopConditions(m_shapes.size())) {
+            if(!ui->scriptsWidget->evaluateStopConditions()) {
                 return;
             }
             setShouldKeepStepping(false);
@@ -442,11 +438,6 @@ private:
     {
         updateStartStopButtonText();
         q->setWindowTitle(geometrize::strings::Strings::getApplicationName());
-    }
-
-    geometrize::dialog::ImageTaskScriptingWidget* getScriptingPanel()
-    {
-        return ui->scriptsDock->findChild<geometrize::dialog::ImageTaskScriptingWidget*>();
     }
 
     bool isRunning() const

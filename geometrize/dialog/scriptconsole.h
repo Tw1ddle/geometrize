@@ -36,7 +36,11 @@ public:
     std::vector<std::string> getHistory() const;
     void setHistory(const std::vector<std::string>& history);
 
-    virtual bool event(QEvent* event) override;
+    /**
+     * @brief appendString Appends a string to the console output window
+     * @param str The string to append to the output window
+     */
+    void appendString(const std::string& str);
 
 protected:
     void changeEvent(QEvent*) override;

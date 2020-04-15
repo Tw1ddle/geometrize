@@ -26,6 +26,8 @@ void printToConsole(const std::string& str);
 
 void messageBox(const std::string& str);
 
+void printToAllScriptConsoleWidgets(const std::string& str);
+
 void debugBreak();
 
 void processApplicationEvents();

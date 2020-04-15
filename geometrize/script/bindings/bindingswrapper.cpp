@@ -31,6 +31,11 @@ void printToConsole(const std::string& str)
     geometrize::util::printToConsole(str);
 }
 
+void printToAllScriptConsoleWidgets(const std::string& str)
+{
+    geometrize::util::printToAllScriptConsoleWidgets(str);
+}
+
 void messageBox(const std::string& str)
 {
     geometrize::util::messageBox(str);

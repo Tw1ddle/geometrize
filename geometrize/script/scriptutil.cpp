@@ -60,12 +60,12 @@ std::map<std::string, std::string> getScripts(const std::string& folder)
     return getScriptsFromFolder(QString::fromStdString(folder));
 }
 
-std::map<std::string, std::string> getDefaultScripts()
+std::map<std::string, std::string> getDefaultShapeMutatorScripts()
 {
     return getScriptsFromFolder(":/scripts/scripts/default_shape_mutators/");
 }
 
-std::map<std::string, std::string> getPointerAreaOfInterestScripts()
+std::map<std::string, std::string> getPointerAreaOfInterestShapeMutatorScripts()
 {
     return getScriptsFromFolder(":/scripts/scripts/pointer_area_of_interest_mutators/");
 }

@@ -3,7 +3,9 @@
 
 #include <cassert>
 #include <cstdint>
+#include <map>
 #include <memory>
+#include <string>
 
 #include <QEvent>
 #include <QList>
@@ -19,6 +21,15 @@
 #include "preferences/globalpreferences.h"
 #include "script/geometrizerengine.h"
 #include "task/imagetask.h"
+
+namespace
+{
+
+const std::string stopConditionIdPrefix = "stop_condition_";
+const std::string beforeAddShapeCallbackPrefix = "before_add_shape_callback_";
+const std::string afterAddShapeCallbackPrefix = "after_add_shape_callback_";
+
+}
 
 namespace geometrize
 {
@@ -45,14 +56,29 @@ public:
             revealShapeScriptingPanel();
         });
         connect(ui->addStopConditionButton, &QPushButton::clicked, [this]() {
-            const std::string defaultCode = "shapeCount >= 500;";
-            addStopCondition(defaultCode);
+            const std::string defaultCode = "currentShapeCount >= 500; // Stop when there are more than 500 shapes";
+            addScript(tr("Custom Stop Condition").toStdString(), ::stopConditionIdPrefix, defaultCode);
+        });
+        connect(ui->addBeforeAddShapeEvent, &QPushButton::clicked, [this]() {
+            const std::string defaultCode = "printToAllScriptConsoleWidgets(\"Will add shape to image...\");";
+            addScript(tr("Before Add Shape Callback").toStdString(), ::beforeAddShapeCallbackPrefix, defaultCode);
+        });
+        connect(ui->addAfterAddShapeEvent, &QPushButton::clicked, [this]() {
+            const std::string defaultCode = "printToAllScriptConsoleWidgets(\"Did add shape to image...\");";
+            addScript(tr("After Add Shape Callback").toStdString(), ::afterAddShapeCallbackPrefix, defaultCode);
         });
         connect(ui->clearScriptsButton, &QPushButton::clicked, [this]() {
             QLayoutItem* item = nullptr;
-            while((item = ui->scriptsEditorLayout->takeAt(0)) != nullptr) {
+            while((item = ui->customScriptsEditorLayout->takeAt(0)) != nullptr) {
                 delete item->widget();
                 delete item;
+            }
+        });
+
+        // Setup the actual actions that manipulate the script functions
+        connect(q, &geometrize::dialog::ImageTaskScriptingWidget::signal_scriptChanged, [this](const std::string& functionName, const std::string& code) {
+            if(m_task) {
+                m_task->getPreferences().setScript(functionName, code);
             }
         });
 
@@ -74,25 +100,38 @@ public:
 
     void syncUserInterface()
     {
-
+        setScripts(m_task->getPreferences().getScripts());
+        if(auto* shapeScriptingPanel = getShapeScriptingPanel()) {
+            shapeScriptingPanel->syncUserInterface();
+        }
     }
 
-    void addStopCondition(const std::string& scriptCode)
+    std::map<std::string, std::string> getScripts() const
     {
-        const std::string editorName = tr("Custom Stop Condition").toStdString();
-        const std::string functionName = "stop_condition_" + QUuid::createUuid().toString().toStdString();
-        auto widget = new geometrize::dialog::ScriptEditorWidget(editorName, "", scriptCode, ui->customScriptsGroupBox);
-        ui->scriptsEditorLayout->addWidget(widget);
+        const auto& editors = ui->customScriptsGroupBox->findChildren<geometrize::dialog::ScriptEditorWidget*>();
+        std::map<std::string, std::string> m;
+        for(ScriptEditorWidget* editor : editors) {
+            m[editor->getFunctionName()] = editor->getCurrentCode();
+        }
+        return m;
     }
 
-    bool evaluateStopConditions(const std::size_t currentShapeCount) const
+    void addScript(const std::string& scriptDisplayName, const std::string& scriptIdPrefix, const std::string& scriptCode)
+    {
+        const std::string functionName = scriptIdPrefix + QUuid::createUuid().toString().toStdString();
+        auto widget = new geometrize::dialog::ScriptEditorWidget(scriptDisplayName, functionName, scriptCode, ui->customScriptsGroupBox);
+        connect(widget, &ScriptEditorWidget::signal_scriptChanged, [this](ScriptEditorWidget* /*self*/, const std::string& functionName, const std::string& code) {
+            emit q->signal_scriptChanged(functionName, code);
+        });
+        ui->customScriptsEditorLayout->addWidget(widget);
+    }
+
+    bool evaluateStopConditions() const
     {
         const auto engine = m_task->getGeometrizer().getEngine();
         if(!engine) {
             return false;
         }
-
-        engine->set_global(chaiscript::var(currentShapeCount), "shapeCount");
 
         const auto scriptWidgets = ui->customScriptsGroupBox->findChildren<geometrize::dialog::ScriptEditorWidget*>();
         if(scriptWidgets.empty()) {
@@ -124,7 +163,7 @@ public:
     }
 
 private:
-    // Utility function used to setup and display the script editor for the given image task window
+    // Utility function used to setup and display the shape creation/mutation script editor for the given image task window
     void revealShapeScriptingPanel()
     {
         if(dialog::ImageTaskShapeScriptingPanel* scriptingPanel = getShapeScriptingPanel()) {
@@ -133,6 +172,29 @@ private:
             scriptingPanel->raise();
             scriptingPanel->show();
         }
+    }
+
+    void setScripts(const std::map<std::string, std::string>& scripts)
+    {
+        // Look for matching script editor widgets, and set their contents if found
+        for(const auto& script : scripts) {
+            if(dialog::ScriptEditorWidget* editor = findEditor(script.first)) {
+                if(!script.second.empty()) {
+                    editor->setCurrentCode(script.second);
+                }
+            }
+        }
+    }
+
+    dialog::ScriptEditorWidget* findEditor(const std::string& editorId)
+    {
+        const auto& editors = ui->customScriptsGroupBox->findChildren<geometrize::dialog::ScriptEditorWidget*>();
+        for(const auto& editor : editors) {
+            if(editor->getFunctionName() == editorId) {
+                return editor;
+            }
+        }
+        return nullptr;
     }
 
     geometrize::dialog::ImageTaskShapeScriptingPanel* getShapeScriptingPanel()
@@ -178,9 +240,9 @@ void ImageTaskScriptingWidget::syncUserInterface()
     d->syncUserInterface();
 }
 
-bool ImageTaskScriptingWidget::evaluateStopConditions(const std::size_t currentShapeCount) const
+bool ImageTaskScriptingWidget::evaluateStopConditions() const
 {
-    return d->evaluateStopConditions(currentShapeCount);
+    return d->evaluateStopConditions();
 }
 
 }

@@ -20,6 +20,12 @@ namespace util
 void printToConsole(const std::string& str);
 
 /**
+ * @brief printToAllScriptConsoleWidgets A convenience function for printing a string to all the GUI console widgets in the application
+ * @param str The string to print to the script console widgets.
+ */
+void printToAllScriptConsoleWidgets(const std::string& str);
+
+/**
  * @brief messageBox A convenience function for displaying a message box containing a message.
  * @param str The string to display in the message box.
  */

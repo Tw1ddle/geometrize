@@ -151,9 +151,9 @@ private:
         const auto scripts = [idx]() -> std::map<std::string, std::string> {
             switch(idx) {
             case 0:
-                return geometrize::script::getDefaultScripts();
+                return geometrize::script::getDefaultShapeMutatorScripts();
             case 1:
-                return geometrize::script::getPointerAreaOfInterestScripts();
+                return geometrize::script::getPointerAreaOfInterestShapeMutatorScripts();
             default:
                 assert(0 && "Bad scripts presets index");
                 return {{}};

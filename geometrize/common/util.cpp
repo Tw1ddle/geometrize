@@ -14,6 +14,7 @@
 #include <QDir>
 #include <QDirIterator>
 #include <QFileInfo>
+#include <QGuiApplication>
 #include <QMessageBox>
 #include <QObject>
 #include <QPixmap>
@@ -21,6 +22,9 @@
 #include <QStandardPaths>
 #include <QTextStream>
 #include <QUrl>
+#include <QWindow>
+
+#include "dialog/scriptconsole.h"
 
 #include "geometrize/commonutil.h"
 
@@ -49,6 +53,17 @@ void debugBreak()
 void printToConsole(const std::string& str)
 {
     QTextStream(stdout) << QString::fromStdString(str);
+}
+
+void printToAllScriptConsoleWidgets(const std::string& str)
+{
+    const auto& allWidgets = QApplication::topLevelWidgets();
+    for (const auto& widget : allWidgets) {
+        const auto& consoles = widget->findChildren<geometrize::dialog::ScriptConsole*>();
+        for(auto& console : consoles) {
+            console->appendString(str);
+        }
+    }
 }
 
 void messageBox(const std::string& str)
