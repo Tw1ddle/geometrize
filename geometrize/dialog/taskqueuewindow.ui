@@ -175,9 +175,9 @@
              <number>10</number>
             </property>
             <item>
-             <widget class="QLabel" name="label">
+             <widget class="QLabel" name="taskListInstructionText">
               <property name="text">
-               <string>Drag-and-drop image files below to queue up geometrization tasks</string>
+               <string>Drag-and-drop image files below to queue up tasks</string>
               </property>
              </widget>
             </item>
@@ -217,7 +217,7 @@
           <item>
            <widget class="QPushButton" name="clearQueueButton">
             <property name="text">
-             <string>Clear</string>
+             <string>Clear Task Queue</string>
             </property>
            </widget>
           </item>
@@ -234,13 +234,46 @@
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <widget class="QGroupBox" name="actionGroupBox">
+         <widget class="QGroupBox" name="perTaskScriptsContainer">
           <property name="title">
-           <string>Per-Image Actions</string>
+           <string>Task Setup Scripts</string>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_6">
            <item>
-            <widget class="QTextBrowser" name="textBrowser"/>
+            <widget class="QPushButton" name="addScriptButton">
+             <property name="text">
+              <string>Add Script</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="clearScriptsButton">
+             <property name="text">
+              <string>Clear Scripts</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QScrollArea" name="taskQueueScriptsScrollArea">
+             <property name="widgetResizable">
+              <bool>true</bool>
+             </property>
+             <widget class="QWidget" name="taskQueueScriptsScrollWidgetContents">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>254</width>
+                <height>624</height>
+               </rect>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_9">
+               <item>
+                <layout class="QVBoxLayout" name="taskQueueScriptsContainer"/>
+               </item>
+              </layout>
+             </widget>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -265,6 +298,8 @@
     <property name="title">
      <string extracomment="The title of the File menu that contains commands relating to the handling of files, such as open, save, print, etc">File</string>
     </property>
+    <addaction name="actionLoad_Scripts"/>
+    <addaction name="actionSave_Scripts"/>
     <addaction name="actionExit"/>
    </widget>
    <addaction name="menuFile"/>
@@ -315,6 +350,16 @@
   <action name="actionSave_Global_Preferences">
    <property name="text">
     <string extracomment="Text on a menu item that opens a dialog that allows the user to save a file containing the current application-wide/global preferences page">Save Global Preferences</string>
+   </property>
+  </action>
+  <action name="actionLoad_Scripts">
+   <property name="text">
+    <string>Load Task Queue Settings</string>
+   </property>
+  </action>
+  <action name="actionSave_Scripts">
+   <property name="text">
+    <string>Save Task Queue Settings</string>
    </property>
   </action>
  </widget>
