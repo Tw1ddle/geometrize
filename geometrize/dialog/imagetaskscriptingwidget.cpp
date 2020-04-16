@@ -126,7 +126,7 @@ public:
         ui->customScriptsEditorLayout->addWidget(widget);
     }
 
-    bool evaluateStopConditions() const
+    bool evaluateStopConditionScripts() const
     {
         const auto engine = m_task->getGeometrizer().getEngine();
         if(!engine) {
@@ -134,12 +134,12 @@ public:
         }
 
         const auto scriptWidgets = ui->customScriptsGroupBox->findChildren<geometrize::dialog::ScriptEditorWidget*>();
-        if(scriptWidgets.empty()) {
-            return false;
-        }
-
         bool scriptStopConditionMet = false;
         for(const auto& widget : scriptWidgets) {
+            if(widget->getFunctionName().substr(0, stopConditionIdPrefix.length()) != stopConditionIdPrefix) {
+                continue; // Skip anything other than stop conditions
+            }
+
             try {
                 auto stopCondition = engine->eval<bool>(widget->getCurrentCode());
                 if(stopCondition) {
@@ -154,6 +154,54 @@ public:
         }
 
         return scriptStopConditionMet;
+    }
+
+    void evaluateBeforeAddShapeScripts()
+    {
+        const auto engine = m_task->getGeometrizer().getEngine();
+        if(!engine) {
+            return;
+        }
+
+        const auto scriptWidgets = ui->customScriptsGroupBox->findChildren<geometrize::dialog::ScriptEditorWidget*>();
+        for(const auto& widget : scriptWidgets) {
+            if(widget->getFunctionName().substr(0, beforeAddShapeCallbackPrefix.length()) != beforeAddShapeCallbackPrefix) {
+                continue;
+            }
+
+            try {
+                engine->eval(widget->getCurrentCode());
+                widget->onScriptEvaluationSucceeded();
+            } catch(const chaiscript::exception::eval_error& e) {
+                widget->onScriptEvaluationFailed(e.pretty_print());
+            } catch(...) {
+                widget->onScriptEvaluationFailed("Unknown script evaluation error");
+            }
+        }
+    }
+
+    void evaluateAfterAddShapeScripts()
+    {
+        const auto engine = m_task->getGeometrizer().getEngine();
+        if(!engine) {
+            return;
+        }
+
+        const auto scriptWidgets = ui->customScriptsGroupBox->findChildren<geometrize::dialog::ScriptEditorWidget*>();
+        for(const auto& widget : scriptWidgets) {
+            if(widget->getFunctionName().substr(0, afterAddShapeCallbackPrefix.length()) != afterAddShapeCallbackPrefix) {
+                continue;
+            }
+
+            try {
+                engine->eval(widget->getCurrentCode());
+                widget->onScriptEvaluationSucceeded();
+            } catch(const chaiscript::exception::eval_error& e) {
+                widget->onScriptEvaluationFailed(e.pretty_print());
+            } catch(...) {
+                widget->onScriptEvaluationFailed("Unknown script evaluation error");
+            }
+        }
     }
 
     void onLanguageChange()
@@ -182,6 +230,8 @@ private:
                 if(!script.second.empty()) {
                     editor->setCurrentCode(script.second);
                 }
+            } else {
+                // TODO add the script if it starts with one of the predefined prefixes?
             }
         }
     }
@@ -240,9 +290,19 @@ void ImageTaskScriptingWidget::syncUserInterface()
     d->syncUserInterface();
 }
 
-bool ImageTaskScriptingWidget::evaluateStopConditions() const
+bool ImageTaskScriptingWidget::evaluateStopConditionScripts() const
 {
-    return d->evaluateStopConditions();
+    return d->evaluateStopConditionScripts();
+}
+
+void ImageTaskScriptingWidget::evaluateBeforeAddShapeScripts() const
+{
+    d->evaluateBeforeAddShapeScripts();
+}
+
+void ImageTaskScriptingWidget::evaluateAfterAddShapeScripts() const
+{
+    d->evaluateAfterAddShapeScripts();
 }
 
 }

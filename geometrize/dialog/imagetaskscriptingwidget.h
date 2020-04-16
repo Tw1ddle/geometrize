@@ -54,10 +54,20 @@ public:
     void syncUserInterface();
 
     /**
-     * @brief evaluateStopConditions Returns true if the condition(s) for stopping geometrizing the image were met
+     * @brief evaluateStopConditionScripts Returns true if the condition(s) for stopping geometrizing the image were met
      * @return True if a stop condition was met
      */
-    bool evaluateStopConditions() const;
+    bool evaluateStopConditionScripts() const;
+
+    /**
+     * @brief evaluateBeforeAddShapeScripts Evaluates the scripts set to run directly before a shape is added to the image
+     */
+    void evaluateBeforeAddShapeScripts() const;
+
+    /**
+     * @brief evaluateAfterAddShapeScripts Evaluates the scripts set to run directly after a shape is added to the image
+     */
+    void evaluateAfterAddShapeScripts() const;
 
 signals:
     void signal_scriptChanged(const std::string& functionName, const std::string& code);

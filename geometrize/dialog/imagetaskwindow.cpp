@@ -281,24 +281,36 @@ public:
             }
         });
 
-        // When shapes are added, evaluate the stop conditions
-        connect(&m_shapes, &geometrize::task::ShapeCollection::signal_appendedShapes, [this](const std::vector<geometrize::ShapeResult>&) {
-            if(!ui->scriptsWidget->evaluateStopConditions()) {
+        // Before shapes are added, evaluate he pre-add shape callbacks
+        connect(&m_shapes, &geometrize::task::ShapeCollection::signal_beforeAppendShapes, [this](const std::vector<geometrize::ShapeResult>&) {
+            ui->scriptsWidget->evaluateBeforeAddShapeScripts();
+        });
+
+        // After shapes are added, evaluate the post-add shape callbacks and stop conditions
+        connect(&m_shapes, &geometrize::task::ShapeCollection::signal_afterAppendShapes, [this](const std::vector<geometrize::ShapeResult>&) {
+            chaiscript::ChaiScript* engine = m_task->getGeometrizer().getEngine();
+            engine->set_global(chaiscript::var(m_shapes.back().shape->clone()), "lastAddedShape");
+            engine->set_global(chaiscript::var(m_shapes.back().score), "lastAddedShapeScore");
+            engine->set_global(chaiscript::var(m_shapes.back().color), "lastAddedShapeColor");
+
+            ui->scriptsWidget->evaluateAfterAddShapeScripts();
+
+            if(!ui->scriptsWidget->evaluateStopConditionScripts()) {
                 return;
             }
             setShouldKeepStepping(false);
             geometrize::dialog::showImageTaskStopConditionMetMessage(q);
         });
 
-        // Update the graphical image views when shapes are added
-        connect(&m_shapes, &geometrize::task::ShapeCollection::signal_appendedShapes, [this](const std::vector<geometrize::ShapeResult>& shapes) {
+        // Update the graphical image views after shapes are added
+        connect(&m_shapes, &geometrize::task::ShapeCollection::signal_afterAppendShapes, [this](const std::vector<geometrize::ShapeResult>& shapes) {
             const QPixmap pixmap{image::createPixmap(m_task->getCurrent())};
             m_sceneManager.updateScenes(pixmap, shapes);
         });
 
         #if defined DATASLINGER_INCLUDED
         // Send the newly added SVG shape data out to listening clients
-        connect(&m_shapes, &geometrize::task::ShapeCollection::signal_appendedShapes, [](const std::vector<geometrize::ShapeResult>& shapes) {
+        connect(&m_shapes, &geometrize::task::ShapeCollection::signal_afterAppendShapes, [](const std::vector<geometrize::ShapeResult>& shapes) {
 
             // Exporting rotated ellipses as polygons, since OpenFL's SVG library can't handle regular rotated SVG ellipse or paths
             geometrize::exporter::SVGExportOptions options;

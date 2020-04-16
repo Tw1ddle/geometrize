@@ -33,9 +33,10 @@ const std::vector<geometrize::ShapeResult>& ShapeCollection::getShapeVector() co
 
 void ShapeCollection::appendShapes(const std::vector<geometrize::ShapeResult>& shapes)
 {
+    emit signal_beforeAppendShapes(shapes);
     std::copy(shapes.begin(), shapes.end(), std::back_inserter(m_shapes));
     emit signal_sizeChanged(m_shapes.size());
-    emit signal_appendedShapes(shapes);
+    emit signal_afterAppendShapes(shapes);
 }
 
 geometrize::ShapeResult& ShapeCollection::back()

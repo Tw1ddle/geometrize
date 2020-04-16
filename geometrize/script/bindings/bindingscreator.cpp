@@ -308,6 +308,8 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
     ADD_MEMBER(ImageRunner, getModel);
 
     ADD_TYPE(Shape);
+    ADD_MEMBER(Shape, getType);
+    ADD_MEMBER(Shape, clone);
 
     ADD_BASE_CLASS(Shape, Circle);
     ADD_TYPE(Circle);
