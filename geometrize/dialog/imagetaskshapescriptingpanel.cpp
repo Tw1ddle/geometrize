@@ -84,6 +84,10 @@ public:
     {
         m_task = task;
 
+        if(m_task == nullptr) {
+            return;
+        }
+
         // Connect to the geometrizer that can update the widget when it tries to
         geometrize::script::GeometrizerEngine& geometrizer{m_task->getGeometrizer()};
 

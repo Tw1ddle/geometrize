@@ -18,7 +18,7 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>600</width>
+    <width>800</width>
     <height>600</height>
    </size>
   </property>
@@ -80,7 +80,7 @@
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
-         <layout class="QHBoxLayout" name="appTitleLayout">
+         <layout class="QHBoxLayout" name="taskQueueTitleLayout">
           <property name="spacing">
            <number>0</number>
           </property>
@@ -136,7 +136,7 @@
              </font>
             </property>
             <property name="text">
-             <string notr="true">Task Queue</string>
+             <string notr="true" extracomment="Title of a window where users can queue up multiple image geometrization tasks to be run one after another">Task Queue</string>
             </property>
            </widget>
           </item>
@@ -177,7 +177,7 @@
             <item>
              <widget class="QLabel" name="taskListInstructionText">
               <property name="text">
-               <string>Drag-and-drop image files below to queue up tasks</string>
+               <string extracomment="Instructions to the user explaining how to add items to the task queue list, by dragging items into a list below this text">Drag-and-drop image files below to add tasks for batch processing</string>
               </property>
              </widget>
             </item>
@@ -208,16 +208,16 @@
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="startStopButton">
+           <widget class="QPushButton" name="runTasksButton">
             <property name="text">
-             <string>Run</string>
+             <string extracomment="Text on a button that starts running the tasks from the task queue when pressed">Run</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="clearQueueButton">
+           <widget class="QPushButton" name="clearTaskListButton">
             <property name="text">
-             <string>Clear Task Queue</string>
+             <string extracomment="Text on a button that removes any queued up tasks from the task queue in the user interface">Clear</string>
             </property>
            </widget>
           </item>
@@ -225,7 +225,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="actionInfoContainer" native="true">
+      <widget class="QWidget" name="taskListScriptContainer" native="true">
        <property name="minimumSize">
         <size>
          <width>200</width>
@@ -234,49 +234,11 @@
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <widget class="QGroupBox" name="perTaskScriptsContainer">
-          <property name="title">
-           <string>Task Setup Scripts</string>
+         <layout class="QVBoxLayout" name="taskListScriptLayout">
+          <property name="sizeConstraint">
+           <enum>QLayout::SetDefaultConstraint</enum>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_6">
-           <item>
-            <widget class="QPushButton" name="addScriptButton">
-             <property name="text">
-              <string>Add Script</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="clearScriptsButton">
-             <property name="text">
-              <string>Clear Scripts</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QScrollArea" name="taskQueueScriptsScrollArea">
-             <property name="widgetResizable">
-              <bool>true</bool>
-             </property>
-             <widget class="QWidget" name="taskQueueScriptsScrollWidgetContents">
-              <property name="geometry">
-               <rect>
-                <x>0</x>
-                <y>0</y>
-                <width>254</width>
-                <height>624</height>
-               </rect>
-              </property>
-              <layout class="QVBoxLayout" name="verticalLayout_9">
-               <item>
-                <layout class="QVBoxLayout" name="taskQueueScriptsContainer"/>
-               </item>
-              </layout>
-             </widget>
-            </widget>
-           </item>
-          </layout>
-         </widget>
+         </layout>
         </item>
        </layout>
       </widget>
@@ -354,12 +316,12 @@
   </action>
   <action name="actionLoad_Scripts">
    <property name="text">
-    <string>Load Task Queue Settings</string>
+    <string extracomment="Text on a menu item that opens a dialog that allows the user to load a file containing settings instructing the computer how to geometrize a group of queued up images">Load Task Queue Settings</string>
    </property>
   </action>
   <action name="actionSave_Scripts">
    <property name="text">
-    <string>Save Task Queue Settings</string>
+    <string extracomment="Text on a menu item that opens a dialog that allows the user to save a file containing settings instructing the computer how to geometrize a group of queued up images">Save Task Queue Settings</string>
    </property>
   </action>
  </widget>

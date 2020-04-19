@@ -50,6 +50,16 @@ public:
         getPrefs().setShouldPopulateTemplatesOnLaunch(enabled);
     }
 
+    void setAutoLoadImageTaskSettings(const bool enabled)
+    {
+        getPrefs().setShouldAutoLoadImageTaskSettings(enabled);
+    }
+
+    void setAutoSaveImageTaskSettings(const bool enabled)
+    {
+        getPrefs().setShouldAutoSaveImageTaskSettings(enabled);
+    }
+
     void setShowLaunchWindowConsoleByDefault(const bool enabled)
     {
         getPrefs().setShouldShowLaunchConsoleByDefault(enabled);
@@ -120,6 +130,9 @@ private:
         ui->populateRecents->setChecked(prefs.shouldPopulateRecentItemsOnLaunch());
         ui->populateTemplates->setChecked(prefs.shouldPopulateTemplatesOnLaunch());
 
+        ui->autoLoadImageTaskSettings->setChecked(prefs.shouldAutoLoadImageTaskSettings());
+        ui->autoSaveImageTaskSettings->setChecked(prefs.shouldAutoSaveImageTaskSettings());
+
         ui->showLaunchWindowConsoleByDefault->setChecked(prefs.shouldShowLaunchConsoleByDefault());
         ui->showVectorResultsByDefault->setChecked(prefs.shouldShowImageTaskVectorViewByDefault());
         ui->showPixmapResultsByDefault->setChecked(prefs.shouldShowImageTaskPixmapViewByDefault());
@@ -157,6 +170,16 @@ void GlobalPreferencesDialog::on_populateRecents_toggled(const bool checked)
 void GlobalPreferencesDialog::on_populateTemplates_toggled(const bool checked)
 {
     d->setPopulateTemplates(checked);
+}
+
+void GlobalPreferencesDialog::on_autoLoadImageTaskSettings_toggled(const bool checked)
+{
+    d->setAutoLoadImageTaskSettings(checked);
+}
+
+void GlobalPreferencesDialog::on_autoSaveImageTaskSettings_toggled(const bool checked)
+{
+    d->setAutoSaveImageTaskSettings(checked);
 }
 
 void GlobalPreferencesDialog::on_showLaunchWindowConsoleByDefault_toggled(const bool checked)

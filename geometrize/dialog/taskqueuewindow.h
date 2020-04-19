@@ -32,6 +32,9 @@ protected:
 private slots:
     void on_actionExit_triggered();
 
+signals:
+    void signal_scriptChanged(const std::string& functionName, const std::string& code);
+
 private:
     class TaskQueueWindowImpl;
     std::unique_ptr<TaskQueueWindowImpl> d;

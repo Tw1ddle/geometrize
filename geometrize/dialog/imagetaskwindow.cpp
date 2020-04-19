@@ -4,8 +4,11 @@
 #include <algorithm>
 #include <cassert>
 #include <functional>
+#include <string>
 #include <vector>
 
+#include <QByteArray>
+#include <QCryptographicHash>
 #include <QEvent>
 #include <QLocale>
 #include <QMessageBox>
@@ -121,17 +124,44 @@ public:
         });
 
         // Handle request to set the image task on the task window
-        connect(q, &ImageTaskWindow::willSwitchImageTask, [this](task::ImageTask*, task::ImageTask*) {
+        connect(q, &ImageTaskWindow::willSwitchImageTask, [this](task::ImageTask* lastTask, task::ImageTask* nextTask) {
             // Disconnect the last image task, which will soon be replaced by the next image task
             disconnectTask();
 
             m_shapes.clear();
+            ui->imageTaskRunnerWidget->setImageTask(nextTask);
+            ui->scriptsWidget->setImageTask(nextTask);
+            ui->imageTaskExportWidget->setImageTask(nextTask, &m_shapes.getShapeVector());
+
+            const auto taskIdForSerialization = [](const task::ImageTask& task) {
+                std::string s = std::to_string(task.getWidth()) + "_" + std::to_string(task.getHeight()) + "_";
+
+                QCryptographicHash hash(QCryptographicHash::Md5);
+                hash.addData(reinterpret_cast<const char*>(task.getTarget().getDataRef().data()), task.getTarget().getDataRef().size());
+                const QByteArray result = hash.result().toHex();
+                const std::string hashStr = std::string(result.begin(), result.end());
+                return s + hashStr;
+            };
+
+            // Autosave the preferences for the task being switched away from, if there was one
+            if(lastTask != nullptr && geometrize::preferences::getGlobalPreferences().shouldAutoSaveImageTaskSettings()) {
+                const std::string path{geometrize::preferences::getImageTaskPreferencesAutoSavePath(taskIdForSerialization(*lastTask))};
+                if(path.empty()) {
+                    assert(0 && "Auto save path for image task file must not be empty");
+                }
+                saveSettingsTemplate(lastTask, path);
+            }
+
+            // Autoload the preferences for the task being switched to, if there is one
+            if(nextTask != nullptr && geometrize::preferences::getGlobalPreferences().shouldAutoLoadImageTaskSettings()) {
+                const std::string path{geometrize::preferences::getImageTaskPreferencesAutoSavePath(taskIdForSerialization(*nextTask))};
+                if(path.empty()) {
+                    assert(0 && "Auto load path for image task file must not be empty");
+                }
+                loadSettingsTemplate(nextTask, path);
+            }
         });
         connect(q, &ImageTaskWindow::didSwitchImageTask, [this](task::ImageTask* lastTask, task::ImageTask* currentTask) {
-            ui->imageTaskExportWidget->setImageTask(currentTask, &m_shapes.getShapeVector());
-            ui->imageTaskRunnerWidget->setImageTask(currentTask);
-            ui->scriptsWidget->setImageTask(currentTask);
-
             m_taskPreferencesSetConnection = connect(currentTask, &task::ImageTask::signal_preferencesSet, [this]() {
                 ui->imageTaskRunnerWidget->syncUserInterface();
                 ui->scriptsWidget->syncUserInterface();
@@ -178,22 +208,41 @@ public:
                 }
             });
 
-            q->setWindowTitle(geometrize::strings::Strings::getApplicationName()
-                              .append(" ")
-                              .append(geometrize::version::getApplicationVersionString())
-                              .append(" ")
-                              .append(QString::fromStdString(currentTask->getDisplayName())));
+            const QString windowTitle = [currentTask]() {
+                QString title = geometrize::strings::Strings::getApplicationName()
+                        .append(" ").append(geometrize::version::getApplicationVersionString());
+                if(currentTask != nullptr) {
+                    title.append(" ").append(QString::fromStdString(currentTask->getDisplayName()));
+                }
+                return title;
+            }();
+            q->setWindowTitle(windowTitle);
 
-            const QPixmap target{image::createPixmap(m_task->getTarget())};
-            m_sceneManager.setTargetPixmap(target);
+            if(currentTask != nullptr) {
+                const QPixmap target{image::createPixmap(m_task->getTarget())};
+                m_sceneManager.setTargetPixmap(target);
+            } else {
+                m_sceneManager.setTargetPixmap(QPixmap());
+            }
 
-            currentTask->drawBackgroundRectangle();
+            if(currentTask != nullptr) {
+                currentTask->drawBackgroundRectangle();
+            }
 
-            ui->consoleWidget->setEngine(currentTask->getGeometrizer().getEngine());
+            if(currentTask != nullptr) {
+                ui->consoleWidget->setEngine(currentTask->getGeometrizer().getEngine());
+            } else {
+                ui->consoleWidget->setEngine(nullptr);
+            }
+
             ui->imageTaskRunnerWidget->syncUserInterface();
             ui->scriptsWidget->syncUserInterface();
 
-            ui->imageTaskImageWidget->setTargetImage(image::createImage(currentTask->getTarget()));
+            if(currentTask != nullptr) {
+                ui->imageTaskImageWidget->setTargetImage(image::createImage(currentTask->getTarget()));
+            } else {
+                ui->imageTaskImageWidget->setTargetImage(QImage());
+            }
 
             m_timeRunning = 0.0f;
 
@@ -349,8 +398,13 @@ public:
     ImageTaskWindowImpl(const ImageTaskWindowImpl&) = delete;
     ~ImageTaskWindowImpl()
     {
-        disconnectTask();
-        destroyTask(m_task);
+        // Sets the task in the UI etc to nothing (potentially autosaving stuff etc), then dispose of the task
+        task::ImageTask* lastTask = getImageTask();
+        setImageTask(nullptr);
+
+        if(lastTask != nullptr) {
+            destroyTask(lastTask);
+        }
     }
 
     void close()
@@ -416,15 +470,21 @@ public:
     void loadSettingsTemplate()
     {
         const QString path{common::ui::openLoadImageTaskSettingsDialog(q)};
-        loadSettingsTemplate(path.toStdString());
-    }
-
-    void loadSettingsTemplate(const std::string& path)
-    {
-        if(path.empty()) {
+        if(path.isEmpty()) {
             return;
         }
-        m_task->getPreferences().load(path);
+        loadSettingsTemplate(m_task, path.toStdString());
+    }
+
+    void loadSettingsTemplate(task::ImageTask* task, const std::string& path)
+    {
+        if(task == nullptr) {
+            return; // Can't load settings for a non-existent task
+        }
+        if(path.empty()) {
+            assert(0 && "Auto load path for image task file must not be empty");
+        }
+        task->getPreferences().load(path);
         emit q->didLoadSettingsTemplate();
     }
 
@@ -434,8 +494,18 @@ public:
         if(path.isEmpty()) {
             return;
         }
-        m_task->getPreferences().save(path.toStdString());
+        saveSettingsTemplate(m_task, path.toStdString());
+    }
 
+    void saveSettingsTemplate(task::ImageTask* task, const std::string& path) const
+    {
+        if(task == nullptr) {
+            return; // Can't save settings for a non-existent task
+        }
+        if(path.empty()) {
+            assert(0 && "Auto save path for image task file must not be empty");
+        }
+        task->getPreferences().save(path);
         emit q->didSaveSettingsTemplate();
     }
 

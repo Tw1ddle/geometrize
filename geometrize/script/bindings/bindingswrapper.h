@@ -13,12 +13,34 @@ class QObject;
 
 namespace geometrize
 {
+class Bitmap;
+}
+
+namespace geometrize::dialog
+{
+class ImageTaskWindow;
+class LaunchWindow;
+}
+
+namespace geometrize::task
+{
+class ImageTask;
+}
+
+namespace geometrize
+{
 
 namespace script
 {
 
 namespace bindings
 {
+
+geometrize::dialog::ImageTaskWindow* createImageTaskWindow();
+
+geometrize::dialog::LaunchWindow* createLaunchWindow();
+
+geometrize::task::ImageTask* createImageTask(geometrize::Bitmap& bitmap);
 
 std::string getApplicationDirectoryPath();
 

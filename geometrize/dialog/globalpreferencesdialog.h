@@ -33,6 +33,9 @@ private slots:
     void on_populateRecents_toggled(bool checked);
     void on_populateTemplates_toggled(bool checked);
 
+    void on_autoLoadImageTaskSettings_toggled(bool checked);
+    void on_autoSaveImageTaskSettings_toggled(bool checked);
+
     void on_showLaunchWindowConsoleByDefault_toggled(bool checked);
     void on_showVectorResultsByDefault_toggled(bool checked);
     void on_showPixmapResultsByDefault_toggled(bool checked);

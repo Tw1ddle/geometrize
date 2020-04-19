@@ -60,7 +60,9 @@ public:
 
     void setTargetImage(const QImage& image)
     {
-        assert(!image.isNull() && "Attempting to set a bad target image");
+        if(image.isNull()) {
+            return;
+        }
 
         const int thumbnailSize{400};
         ui->targetImageLabel->setPixmap(QPixmap::fromImage(image.scaled(thumbnailSize, thumbnailSize, Qt::KeepAspectRatio)));

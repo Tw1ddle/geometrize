@@ -27,6 +27,9 @@ public:
                  bool& shouldPopulateRecentItemsOnLaunch,
                  bool& shouldPopulateTemplatesOnLaunch,
 
+                 bool& shouldAutoLoadImageTaskSettings,
+                 bool& shouldAutoSaveImageTaskSettings,
+
                  bool& shouldShowLaunchConsoleByDefault,
                  bool& shouldShowImageTaskVectorViewByDefault,
                  bool& shouldShowImageTaskConsoleByDefault,
@@ -46,6 +49,9 @@ public:
         ar(cereal::make_nvp(shouldGeometrizeAppLogoOnLaunchKey, shouldGeometrizeAppLogoOnLaunch));
         ar(cereal::make_nvp(shouldPopulateRecentItemsOnLaunchKey, shouldPopulateRecentItemsOnLaunch));
         ar(cereal::make_nvp(shouldPopulateTemplatesOnLaunchKey, shouldPopulateTemplatesOnLaunch));
+
+        ar(cereal::make_nvp(shouldAutoLoadImageTaskSettingsKey, shouldAutoLoadImageTaskSettings));
+        ar(cereal::make_nvp(shouldAutoSaveImageTaskSettingsKey, shouldAutoSaveImageTaskSettings));
 
         ar(cereal::make_nvp(shouldShowLaunchConsoleByDefaultKey, shouldShowLaunchConsoleByDefault));
         ar(cereal::make_nvp(shouldShowImageTaskVectorViewByDefaultKey, shouldShowImageTaskVectorViewByDefault));
@@ -68,6 +74,9 @@ private:
     const std::string shouldGeometrizeAppLogoOnLaunchKey{"shouldGeometrizeAppLogoOnLaunch"};
     const std::string shouldPopulateRecentItemsOnLaunchKey{"shouldPopulateRecentItemsOnLaunch"};
     const std::string shouldPopulateTemplatesOnLaunchKey{"shouldPopulateTemplatesOnLaunch"};
+
+    const std::string shouldAutoLoadImageTaskSettingsKey{"shouldAutoLoadImageTaskSettingsKey"};
+    const std::string shouldAutoSaveImageTaskSettingsKey{"shouldAutoSaveImageTaskSettingsKey"};
 
     const std::string shouldShowLaunchConsoleByDefaultKey{"shouldShowLaunchConsoleByDefault"};
     const std::string shouldShowImageTaskVectorViewByDefaultKey{"shouldShowImageTaskVectorViewByDefault"};

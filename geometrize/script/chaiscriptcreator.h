@@ -32,6 +32,12 @@ std::unique_ptr<chaiscript::ChaiScript> createLaunchWindowEngine();
 std::unique_ptr<chaiscript::ChaiScript> createImageTaskEngine();
 
 /**
+ * @brief createBatchImageTaskEngine Creates a Chaiscript engine for creating and processing multiple image tasks.
+ * @return The Chaiscript engine object.
+ */
+std::unique_ptr<chaiscript::ChaiScript> createBatchImageTaskEngine();
+
+/**
  * @brief createShapeMutatorEngine Creates a Chaiscript engine object for mutating shapes.
  * @return The Chaiscript engine object.
  */

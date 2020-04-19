@@ -100,6 +100,10 @@ public:
 
     void syncUserInterface()
     {
+        if(m_task == nullptr) {
+            return;
+        }
+
         setScripts(m_task->getPreferences().getScripts());
         if(auto* shapeScriptingPanel = getShapeScriptingPanel()) {
             shapeScriptingPanel->syncUserInterface();

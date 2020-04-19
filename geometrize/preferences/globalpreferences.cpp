@@ -3,6 +3,7 @@
 #include <cassert>
 #include <fstream>
 #include <ostream>
+#include <string>
 
 #include <QDir>
 #include <QFileInfo>
@@ -58,7 +59,6 @@ public:
             cereal::JSONInputArchive archive{input};
             performArchival(archive);
         } catch(...) {
-            assert(0 && "Failed to read global preferences");
             return false;
         }
         return true;
@@ -134,6 +134,26 @@ public:
     void setShouldPopulateTemplatesOnLaunch(const bool populateTemplates)
     {
         m_shouldPopulateTemplatesOnLaunch = populateTemplates;
+    }
+
+    bool shouldAutoLoadImageTaskSettings() const
+    {
+        return m_shouldAutoLoadImageTaskSettings;
+    }
+
+    void setShouldAutoLoadImageTaskSettings(const bool loadSettings)
+    {
+        m_shouldAutoLoadImageTaskSettings = loadSettings;
+    }
+
+    bool shouldAutoSaveImageTaskSettings() const
+    {
+        return m_shouldAutoSaveImageTaskSettings;
+    }
+
+    void setShouldAutoSaveImageTaskSettings(const bool saveSettings)
+    {
+        m_shouldAutoSaveImageTaskSettings = saveSettings;
     }
 
     bool shouldShowLaunchConsoleByDefault() const
@@ -308,6 +328,9 @@ private:
            m_shouldPopulateRecentItemsOnLaunch,
            m_shouldPopulateTemplatesOnLaunch,
 
+           m_shouldAutoLoadImageTaskSettings,
+           m_shouldAutoSaveImageTaskSettings,
+
            m_shouldShowLaunchConsoleByDefault,
            m_shouldShowImageTaskVectorViewByDefault,
            m_shouldShowImageTaskConsoleByDefault,
@@ -332,6 +355,9 @@ private:
     bool m_shouldGeometrizeAppLogoOnLaunch{false};
     bool m_shouldPopulateRecentItemsOnLaunch{true};
     bool m_shouldPopulateTemplatesOnLaunch{true};
+
+    bool m_shouldAutoLoadImageTaskSettings{false};
+    bool m_shouldAutoSaveImageTaskSettings{false};
 
     bool m_shouldShowLaunchConsoleByDefault{false};
     bool m_shouldShowImageTaskVectorViewByDefault{false};
@@ -415,6 +441,26 @@ bool GlobalPreferences::shouldPopulateTemplatesOnLaunch() const
 void GlobalPreferences::setShouldPopulateTemplatesOnLaunch(const bool populateTemplates)
 {
     d->setShouldPopulateTemplatesOnLaunch(populateTemplates);
+}
+
+bool GlobalPreferences::shouldAutoLoadImageTaskSettings() const
+{
+    return d->shouldAutoLoadImageTaskSettings();
+}
+
+void GlobalPreferences::setShouldAutoLoadImageTaskSettings(const bool loadSettings)
+{
+    d->setShouldAutoLoadImageTaskSettings(loadSettings);
+}
+
+bool GlobalPreferences::shouldAutoSaveImageTaskSettings() const
+{
+    return d->shouldAutoSaveImageTaskSettings();
+}
+
+void GlobalPreferences::setShouldAutoSaveImageTaskSettings(const bool saveSettings)
+{
+    d->setShouldAutoSaveImageTaskSettings(saveSettings);
 }
 
 bool GlobalPreferences::shouldShowLaunchConsoleByDefault() const

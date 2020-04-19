@@ -63,6 +63,22 @@ std::unique_ptr<chaiscript::ChaiScript> createImageTaskEngine()
     return chai;
 }
 
+std::unique_ptr<chaiscript::ChaiScript> createBatchImageTaskEngine()
+{
+    std::unique_ptr<chaiscript::ChaiScript> chai = std::make_unique<chaiscript::ChaiScript>();
+
+    chai->add(bindings::createDefaultBindings());
+    chai->add(bindings::createGeometrizeLibraryBindings());
+
+    chai->add(bindings::createImageBindings());
+    chai->add(bindings::createImageTaskBindings());
+    chai->add(bindings::createImageTaskWindowBindings());
+
+    addPrintRedirect(chai);
+
+    return chai;
+}
+
 std::unique_ptr<chaiscript::ChaiScript> createShapeMutatorEngine()
 {
     std::unique_ptr<chaiscript::ChaiScript> chai = std::make_unique<chaiscript::ChaiScript>();

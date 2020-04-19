@@ -8,9 +8,13 @@
 #include "common/formatsupport.h"
 #include "common/searchpaths.h"
 #include "common/util.h"
+#include "dialog/launchwindow.h"
+#include "dialog/imagetaskwindow.h"
 #include "exporter/gifexporter.h"
+#include "geometrize/bitmap/bitmap.h"
 #include "localization/localization.h"
 #include "task/taskutil.h"
+#include "task/imagetask.h"
 
 namespace geometrize
 {
@@ -20,6 +24,21 @@ namespace script
 
 namespace bindings
 {
+
+geometrize::dialog::ImageTaskWindow* createImageTaskWindow()
+{
+    return new dialog::ImageTaskWindow();
+}
+
+geometrize::dialog::LaunchWindow* createLaunchWindow()
+{
+    return new dialog::LaunchWindow();
+}
+
+geometrize::task::ImageTask* createImageTask(geometrize::Bitmap& bitmap)
+{
+    return new task::ImageTask(bitmap);
+}
 
 std::string getApplicationDirectoryPath()
 {

@@ -122,6 +122,30 @@ public:
     void setShouldPopulateTemplatesOnLaunch(bool populateTemplates);
 
     /**
+     * @brief shouldAutoLoadImageTaskSettings Gets the preference for whether to automatically load any previously saved image task settings when a task window is opened.
+     * @return Whether to automatically load any previously saved image task settings
+     */
+    bool shouldAutoLoadImageTaskSettings() const;
+
+    /**
+     * @brief setShouldAutoLoadImageTaskSettings Sets the preference for whether to automatically load any previously saved image task settings when a task window is opened.
+     * @param loadSettings Whether to automatically load any previously saved image task settings when a task window is opened
+     */
+    void setShouldAutoLoadImageTaskSettings(bool loadSettings);
+
+    /**
+     * @brief shouldAutoSaveImageTaskSettings Gets the preference for whether to automatically save the last task settings to disk/persistent storage when a task window is closed.
+     * @return Whether to automatically save the last task settings to disk/persistent storage when a task window is closed
+     */
+    bool shouldAutoSaveImageTaskSettings() const;
+
+    /**
+     * @brief setShouldAutoSaveImageTaskSettings Sets the preference for whether to automatically save the last task settings to disk/persistent storage when a task window is closed.
+     * @param saveSettings Whether to automatically save the last task settings to disk/persistent storage when a task window is closed
+     */
+    void setShouldAutoSaveImageTaskSettings(bool saveSettings);
+
+    /**
      * @brief shouldShowLaunchConsoleByDefault Gets the preference for whether to show the console on the launch window when the window is opened.
      * @return Whether to show the console on the launch window when the window is opened.
      */

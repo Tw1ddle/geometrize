@@ -37,7 +37,9 @@
 #include "geometrize/model.h"
 #include "geometrize/shaperesult.h"
 
+#include "common/uiactions.h"
 #include "dialog/launchwindow.h"
+#include "dialog/imagetaskwindow.h"
 #include "exporter/imageexporter.h"
 #include "image/imageloader.h"
 #include "script/bindings/bindingshelpers.h"
@@ -155,6 +157,7 @@ std::shared_ptr<chaiscript::Module> createDefaultBindings()
 std::shared_ptr<chaiscript::Module> createLaunchWindowBindings()
 {
     using namespace geometrize::dialog;
+    using namespace geometrize::common::ui;
 
     auto module = createModule();
 
@@ -166,8 +169,35 @@ std::shared_ptr<chaiscript::Module> createLaunchWindowBindings()
 
     ADD_CONSTRUCTOR(LaunchWindow, LaunchWindow());
 
+    ADD_FREE_FUN(createLaunchWindow);
+
     ADD_MEMBER(LaunchWindow, show);
     ADD_MEMBER(LaunchWindow, hide);
+
+    return module;
+}
+
+std::shared_ptr<chaiscript::Module> createImageTaskWindowBindings()
+{
+    using namespace geometrize::dialog;
+    using namespace geometrize::common::ui;
+
+    auto module = createModule();
+
+    ADD_TYPE(ImageTaskWindow);
+
+    ADD_BASE_CLASS(QMainWindow, ImageTaskWindow);
+    ADD_BASE_CLASS(QWidget, ImageTaskWindow);
+    ADD_BASE_CLASS(QObject, ImageTaskWindow);
+
+    ADD_CONSTRUCTOR(ImageTaskWindow, ImageTaskWindow());
+
+    ADD_FREE_FUN(createImageTaskWindow);
+
+    ADD_MEMBER(ImageTaskWindow, show);
+    ADD_MEMBER(ImageTaskWindow, hide);
+    ADD_MEMBER(ImageTaskWindow, getImageTask);
+    ADD_MEMBER(ImageTaskWindow, setImageTask);
 
     return module;
 }
@@ -222,6 +252,20 @@ std::shared_ptr<chaiscript::Module> createImageTaskBindings()
     ADD_MEMBER(SynchronousImageTask, getPreferences);
     ADD_MEMBER(SynchronousImageTask, setPreferences);
     ADD_MEMBER(SynchronousImageTask, getShapes);
+
+    ADD_TYPE(ImageTask);
+
+    ADD_CONSTRUCTOR(ImageTask, ImageTask(Bitmap&));
+
+    ADD_MEMBER(ImageTask, stepModel);
+    ADD_MEMBER(ImageTask, drawBackgroundRectangle);
+    //ADD_MEMBER(ImageTask, getTarget);
+    //ADD_MEMBER(ImageTask, getCurrent);
+    ADD_MEMBER(ImageTask, getPreferences);
+    ADD_MEMBER(ImageTask, setPreferences);
+    //ADD_MEMBER(ImageTask, getShapes);
+
+    ADD_FREE_FUN(createImageTask);
 
     ADD_TYPE(ImageTaskPreferences);
 

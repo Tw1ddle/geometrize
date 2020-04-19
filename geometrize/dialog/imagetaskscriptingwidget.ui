@@ -56,6 +56,13 @@
        <layout class="QVBoxLayout" name="customScriptsEditorLayout"/>
       </item>
       <item>
+       <widget class="Line" name="line">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="clearScriptsButton">
         <property name="text">
          <string>Clear Scripts</string>

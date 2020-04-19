@@ -81,7 +81,6 @@ private slots:
     void on_mutationsPerCandidateShapeSlider_valueChanged(int value);
     void on_randomSeedSpinBox_valueChanged(int value);
     void on_maxThreadsSpinBox_valueChanged(int value);
-    void on_regionOfInterest_clicked(bool checked);
 
 private:
     class ImageTaskRunnerWidgetImpl;

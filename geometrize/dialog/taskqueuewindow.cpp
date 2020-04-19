@@ -3,10 +3,48 @@
 
 #include <QDragEnterEvent>
 #include <QDropEvent>
+#include <QUuid>
+
+#include "chaiscript/chaiscript.hpp"
 
 #include "common/formatsupport.h"
+#include "dialog/scripteditorwidget.h"
 #include "dialog/taskitemwidget.h"
+#include "script/chaiscriptcreator.h"
+#include "script/scriptrunner.h"
 #include "task/taskutil.h"
+
+namespace
+{
+
+const std::string defaultScriptCode = R"(
+// Load up an image file
+var image = loadImage(inputPath);
+if(image.isNull()) {
+    messageBox("Failed to load image from: " + inputPath);
+    return;
+}
+
+// Make sure the image is in RGBA8888 format
+image := convertImageToRgba8888(image);
+
+// Create a RGBA8888 bitmap from the image, that Geometrize can turn to shapes
+var bitmap = createBitmap(image);
+
+// Create an image task
+var task = createImageTask(bitmap);
+
+// Create the image task UI window
+var window = createImageTaskWindow();
+
+// Set the image task upon the UI
+window.setImageTask(task);
+
+// Show the image task window
+window.show();
+)";
+
+}
 
 namespace geometrize
 {
@@ -25,10 +63,28 @@ public:
         populateUi();
         q->setAttribute(Qt::WA_DeleteOnClose);
 
-        connect(ui->startStopButton, &QPushButton::clicked, []() {
+        setupScriptEditor();
 
+        connect(ui->runTasksButton, &QPushButton::clicked, [this]() {
+            for(int i = 0; i < ui->taskList->count(); ++i) {
+                QListWidgetItem* item = ui->taskList->item(i);
+                QString data = item->data(Qt::UserRole).toString();
+
+                const auto engine = script::createBatchImageTaskEngine();
+                const std::string imagePath = data.toStdString();
+                engine->set_global(chaiscript::var(imagePath), "inputPath");
+                const auto& code = m_scriptEditorWidget->getCurrentCode();
+                try {
+                    engine->eval(code);
+                    m_scriptEditorWidget->onScriptEvaluationSucceeded();
+                } catch(const chaiscript::exception::eval_error& e) {
+                    m_scriptEditorWidget->onScriptEvaluationFailed(e.pretty_print());
+                } catch(...) {
+                    m_scriptEditorWidget->onScriptEvaluationFailed("Unknown script evaluation error");
+                }
+            }
         });
-        connect(ui->clearQueueButton, &QPushButton::clicked, [this]() {
+        connect(ui->clearTaskListButton, &QPushButton::clicked, [this]() {
             ui->taskList->clear();
         });
     }
@@ -61,8 +117,8 @@ private:
     {
         QListWidgetItem* item{new QListWidgetItem()};
         dialog::TaskItemWidget* button{new dialog::TaskItemWidget(itemPath, itemDisplayName,
-        [item](const QString& taskItemId) {
-            geometrize::util::openTasks({taskItemId}, false);
+        [](const QString&) {
+            //geometrize::util::openTasks({taskItemId}, false);
         },
         [item](const QString& /*taskItemId*/) {
             delete item;
@@ -79,12 +135,29 @@ private:
         item->setData(Qt::UserRole, key);
     }
 
+    void setupScriptEditor()
+    {
+        const std::string functionName = "task_queue_processing_script" + QUuid::createUuid().toString().toStdString();
+
+        const std::string scriptEditorWidgetTitle = tr("Script Editor").toStdString();
+
+        m_scriptEditorWidget = new geometrize::dialog::ScriptEditorWidget(scriptEditorWidgetTitle, functionName, defaultScriptCode, ui->taskListScriptContainer);
+
+        connect(m_scriptEditorWidget, &ScriptEditorWidget::signal_scriptChanged, [this](ScriptEditorWidget* /*self*/, const std::string& functionName, const std::string& code) {
+            emit q->signal_scriptChanged(functionName, code);
+        });
+
+        ui->taskListScriptLayout->addWidget(m_scriptEditorWidget);
+    }
+
     void populateUi()
     {
     }
 
     std::unique_ptr<Ui::TaskQueueWindow> ui{nullptr};
     TaskQueueWindow* q{nullptr};
+
+    geometrize::dialog::ScriptEditorWidget* m_scriptEditorWidget;
 };
 
 TaskQueueWindow::TaskQueueWindow() :
@@ -120,7 +193,7 @@ void TaskQueueWindow::dropEvent(QDropEvent* event)
     const QList<QUrl> urls{geometrize::format::getUrls(event->mimeData())};
     QStringList tasks;
     for(const QUrl& url : urls) {
-        const QString urlString{url.toString()};
+        const QString urlString{url.toLocalFile()};
         tasks.push_back(urlString);
     }
     d->addItems(tasks);

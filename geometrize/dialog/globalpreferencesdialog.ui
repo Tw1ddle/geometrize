@@ -100,6 +100,18 @@
       </item>
       <item>
        <property name="text">
+        <string>Loading &amp; Saving</string>
+       </property>
+       <property name="toolTip">
+        <string extracomment="Title of the loading/saving of savedata settings section - with options relating to whether to automatically save/restore the state of the program etc"/>
+       </property>
+       <property name="icon">
+        <iconset resource="../../resources/icons.qrc">
+         <normaloff>:/icons/save_as.png</normaloff>:/icons/save_as.png</iconset>
+       </property>
+      </item>
+      <item>
+       <property name="text">
         <string>Display</string>
        </property>
        <property name="toolTip">
@@ -214,6 +226,83 @@
            <size>
             <width>20</width>
             <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="autoloadingAndAutosavingPage">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_9">
+          <item>
+           <widget class="QLabel" name="autoloadingAndAutosavingTitle">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string extracomment="Title text for a section of app settings relating to automatic loading/saving of preferences">Autoloading &amp; Autosaving</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Line" name="autoloadingAndAutosavingTitleSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_23">
+            <item>
+             <widget class="QGroupBox" name="autoLoadingOptionsGroup">
+              <property name="title">
+               <string extracomment="Title for the on startup section of app settings. Settings in this section are applied when the app launches or first starts up">Autoloading</string>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_28">
+               <item>
+                <widget class="QCheckBox" name="autoLoadImageTaskSettings">
+                 <property name="text">
+                  <string extracomment="Label text for a checkbox option that controls whether the application automatically restores saved settings when opening a task for geometrizing an image">Automatically restore saved image task settings</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="autoSavingOptionsGroup">
+              <property name="title">
+               <string>Autosaving</string>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_13">
+               <item>
+                <widget class="QCheckBox" name="autoSaveImageTaskSettings">
+                 <property name="text">
+                  <string extracomment="Label text for a checkbox option that controls whether the application automatically saves settings when closing a task for geometrizing an image (ready to restore the settings later)">Automatically save image task settings</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_5">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>364</height>
            </size>
           </property>
          </spacer>

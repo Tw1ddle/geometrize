@@ -61,6 +61,10 @@ public:
 
     void syncUserInterface()
     {
+        if(m_task == nullptr) {
+            return;
+        }
+
         geometrize::preferences::ImageTaskPreferences& prefs{m_task->getPreferences()};
 
         const geometrize::ImageRunnerOptions opts{prefs.getImageRunnerOptions()}; // Geometrize library options
@@ -89,9 +93,6 @@ public:
         ui->maxThreadsSpinBox->setMaximum(geometrize::preferences::getGlobalPreferences().getImageTaskMaxThreads());
 
         ui->maxThreadsSpinBox->setValue(opts.maxThreads);
-
-        // If the script editor is set up, populate it with the current scripts (and apply to engine)
-        // TODO
     }
 
     void toggleRunning()
@@ -147,12 +148,6 @@ public:
     void setMaxThreads(const int value)
     {
         m_task->getPreferences().setMaxThreads(value);
-    }
-
-    void setRegionOfInterestEnabled(const bool /*enabled*/)
-    {
-        // TODO
-        //m_task->getPreferences().setRegionOfInterestEnabled(enabled);
     }
 
     void onLanguageChange()
@@ -280,11 +275,6 @@ void ImageTaskRunnerWidget::on_randomSeedSpinBox_valueChanged(int value)
 void ImageTaskRunnerWidget::on_maxThreadsSpinBox_valueChanged(int value)
 {
     d->setMaxThreads(value);
-}
-
-void ImageTaskRunnerWidget::on_regionOfInterest_clicked(bool checked)
-{
-    d->setRegionOfInterestEnabled(checked);
 }
 
 void ImageTaskRunnerWidget::changeEvent(QEvent* event)

@@ -3,9 +3,15 @@
 #include <cassert>
 #include <fstream>
 #include <ostream>
+#include <string>
+#include <vector>
+
+#include <QDir>
+#include <QFileInfo>
 
 #include "cereal/archives/json.hpp"
 
+#include "common/searchpaths.h"
 #include "serialization/imagetaskpreferencesdata.h"
 #include "serialization/streamview.h"
 
@@ -14,6 +20,17 @@ namespace geometrize
 
 namespace preferences
 {
+
+std::string getImageTaskPreferencesAutoSavePath(const std::string& hashOfFirstTargetImage)
+{
+    const std::vector<std::string> autoSaveSearchPaths = geometrize::searchpaths::getAutosaveTaskSettingsSearchPaths();
+    if(autoSaveSearchPaths.empty()) {
+        assert(0 && "Image task autosave search paths should never be empty");
+        return "";
+    }
+    const auto autoSaveTaskSettingsFilename = geometrize::searchpaths::getAutosaveTaskSettingsFilename(hashOfFirstTargetImage);
+    return autoSaveSearchPaths[0] + QDir::separator().toLatin1() + autoSaveTaskSettingsFilename;
+}
 
 class ImageTaskPreferences::ImageTaskPreferencesImpl
 {
@@ -31,7 +48,7 @@ public:
     ImageTaskPreferencesImpl& operator=(const ImageTaskPreferencesImpl&) = default;
     ImageTaskPreferencesImpl(const ImageTaskPreferencesImpl&) = default;
 
-    void load(const std::string& filePath)
+    bool load(const std::string& filePath)
     {
         // Preferences can be bundled into Qt resources, so we use a streamview that loads the file contents into a byte array first
         serialization::StreamView streamView(filePath);
@@ -40,19 +57,31 @@ public:
             cereal::JSONInputArchive archive{input};
             m_data.archive(archive, m_options, m_scriptsEnabled, m_scripts);
         } catch(...) {
-            assert(0 && "Failed to read image preferences");
+            return false;
         }
+        return true;
     }
 
-    void save(const std::string& filePath)
+    bool save(const std::string& filePath)
     {
+        // Create the directory at the filepath if it does not already exist
+        // This is necessary because the output archive will not create any missing directories
+        const QFileInfo info(QString::fromStdString(filePath));
+        const QDir dir(info.absoluteDir());
+        if(!dir.exists() && !dir.mkpath(dir.absolutePath())) {
+            assert(0 && "Failed to create directory in which to save image task preferences");
+            return false;
+        }
+
         std::ofstream output(filePath);
         try {
             cereal::JSONOutputArchive archive{output};
             m_data.archive(archive, m_options, m_scriptsEnabled, m_scripts);
         } catch(...) {
-            assert(0 && "Failed to write image preferences");
+            assert(0 && "Failed to write image task preferences");
+            return false;
         }
+        return true;
     }
 
     geometrize::ImageRunnerOptions getImageRunnerOptions() const
@@ -155,14 +184,14 @@ ImageTaskPreferences::ImageTaskPreferences(const ImageTaskPreferences& other) : 
 {
 }
 
-void ImageTaskPreferences::load(const std::string& filePath)
+bool ImageTaskPreferences::load(const std::string& filePath)
 {
-    d->load(filePath);
+    return d->load(filePath);
 }
 
-void ImageTaskPreferences::save(const std::string& filePath)
+bool ImageTaskPreferences::save(const std::string& filePath)
 {
-    d->save(filePath);
+    return d->save(filePath);
 }
 
 geometrize::ImageRunnerOptions ImageTaskPreferences::getImageRunnerOptions() const

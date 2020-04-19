@@ -29,6 +29,12 @@ std::shared_ptr<chaiscript::Module> createDefaultBindings();
 std::shared_ptr<chaiscript::Module> createLaunchWindowBindings();
 
 /**
+ * @brief createImageTaskWindowBindings Creates the Chaiscript to C++ binding for the Geometrize image task window.
+ * @return A shared pointer to a module encapsulating the bindings.
+ */
+std::shared_ptr<chaiscript::Module> createImageTaskWindowBindings();
+
+/**
  * @brief createImageBindings Creates the Chaiscript to C++ bindings for image manipulation.
  * @return A shared pointer to a module encapsulating the bindings.
  */

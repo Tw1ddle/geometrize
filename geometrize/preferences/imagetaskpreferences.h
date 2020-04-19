@@ -14,6 +14,15 @@ namespace preferences
 {
 
 /**
+ * @brief getImageTaskPreferencesAutoSavePath Gets the absolute path to where the image task preferences config file should be read/written.
+ * @param hashOfFirstTargetImage A string containing a hash of the first target image the task was set up to use.
+ * NOTE - this hash changes based on the target image, so modifying the "resize image" settings in the application will cause this to change.
+ * @return The name of the autosave task settings file, including the file extension
+ * @return The absolute path the image task auto save path.
+ */
+std::string getImageTaskPreferencesAutoSavePath(const std::string& hashOfFirstTargetImage);
+
+/**
  * @brief The ImageTaskPreferences class models the preferences associated with an image task.
  */
 class ImageTaskPreferences
@@ -28,14 +37,16 @@ public:
     /**
      * @brief load Loads the image task preferences from a file.
      * @param filePath The path to the image task preferences file.
+     * @param return True if the image task preferences were loaded successfully, else false.
      */
-    void load(const std::string& filePath);
+    bool load(const std::string& filePath);
 
     /**
      * @brief save Saves the image task preferences to a file.
      * @param filePath The path to the image task preferences file.
+     * @param return True if the image task preferences were saved successfully, else false.
      */
-    void save(const std::string& filePath);
+    bool save(const std::string& filePath);
 
     /**
      * @brief getImageRunnerOptions Gets a copy of the image runner options.
