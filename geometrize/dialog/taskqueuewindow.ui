@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
+    <width>1028</width>
     <height>800</height>
    </rect>
   </property>
@@ -74,7 +74,7 @@
        </property>
        <property name="minimumSize">
         <size>
-         <width>400</width>
+         <width>300</width>
          <height>0</height>
         </size>
        </property>
@@ -177,7 +177,7 @@
             <item>
              <widget class="QLabel" name="taskListInstructionText">
               <property name="text">
-               <string extracomment="Instructions to the user explaining how to add items to the task queue list, by dragging items into a list below this text">Drag-and-drop image files below to add tasks for batch processing</string>
+               <string extracomment="Instructions to the user explaining how to add items to the task queue list, by dragging items into a list below this text">Drag-and-drop image files below for batch processing</string>
               </property>
              </widget>
             </item>
@@ -209,6 +209,9 @@
           </item>
           <item>
            <widget class="QPushButton" name="runTasksButton">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="text">
              <string extracomment="Text on a button that starts running the tasks from the task queue when pressed">Run</string>
             </property>
@@ -216,6 +219,9 @@
           </item>
           <item>
            <widget class="QPushButton" name="clearTaskListButton">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="text">
              <string extracomment="Text on a button that removes any queued up tasks from the task queue in the user interface">Clear</string>
             </property>
@@ -226,9 +232,15 @@
        </layout>
       </widget>
       <widget class="QWidget" name="taskListScriptContainer" native="true">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="minimumSize">
         <size>
-         <width>200</width>
+         <width>600</width>
          <height>0</height>
         </size>
        </property>
@@ -252,7 +264,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>1028</width>
      <height>19</height>
     </rect>
    </property>

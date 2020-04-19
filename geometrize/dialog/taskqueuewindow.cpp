@@ -17,8 +17,8 @@
 namespace
 {
 
-const std::string defaultScriptCode = R"(
-// Load up an image file
+const std::string defaultScriptCode =
+R"(// Load up the image file
 var image = loadImage(inputPath);
 if(image.isNull()) {
     messageBox("Failed to load image from: " + inputPath);
@@ -42,6 +42,12 @@ window.setImageTask(task);
 
 // Show the image task window
 window.show();
+
+// Add a stop condition that will save the image to the desktop when it finishes
+// TODO
+
+// Start the image task
+// TODO
 )";
 
 }
@@ -138,7 +144,6 @@ private:
     void setupScriptEditor()
     {
         const std::string functionName = "task_queue_processing_script" + QUuid::createUuid().toString().toStdString();
-
         const std::string scriptEditorWidgetTitle = tr("Script Editor").toStdString();
 
         m_scriptEditorWidget = new geometrize::dialog::ScriptEditorWidget(scriptEditorWidgetTitle, functionName, defaultScriptCode, ui->taskListScriptContainer);
