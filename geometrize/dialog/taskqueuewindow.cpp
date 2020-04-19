@@ -17,8 +17,7 @@
 namespace
 {
 
-const std::string defaultScriptCode =
-R"(// Load up the image file
+const std::string defaultScriptCode = R"(// Load up the image file
 var image = loadImage(inputPath);
 if(image.isNull()) {
     messageBox("Failed to load image from: " + inputPath);
@@ -27,9 +26,14 @@ if(image.isNull()) {
 
 // Make sure the image is in RGBA8888 format
 image := convertImageToRgba8888(image);
+if(image.isNull()) {
+    messageBox("Failed to convert image to the proper format");
+    return;
+}
 
-// Create a RGBA8888 bitmap from the image, that Geometrize can turn to shapes
-var bitmap = createBitmap(image);
+// Create a RGBA8888 bitmap from the image
+// Note that this downscales the image as well (to reduce processing time)
+var bitmap = convertImageToBitmapWithDownscaling(image);
 
 // Create an image task
 var task = createImageTask(bitmap);
@@ -37,24 +41,24 @@ var task = createImageTask(bitmap);
 // Create some image task preferences
 var prefs = ImageTaskPreferences();
 
-prefs.setCandidateShapeCount(100);
-prefs.setMaxShapeMutations(100);
+prefs.setCandidateShapeCount(200);
+prefs.setMaxShapeMutations(200);
 prefs.setShapeAlpha(255);
 prefs.setSeed(1000);
 prefs.setShapeTypes(RECTANGLE);
 prefs.enableShapeTypes(TRIANGLE);
 prefs.enableShapeTypes(ROTATED_RECTANGLE);
 
-// Only use one thread per task (since all the tasks will run concurrently)
+// Only use one thread per task
 prefs.setMaxThreads(1);
 
 // Define a stop condition script that will stop the geometrization after a while
 def getStopConditionCode() {
-    return \"if(currentShapeCount >= 500) { return true; } else { return false; }\";
+  return "return currentShapeCount >= 500;";
 }
 
 // Set a stop condition that will stop the task when the condition is met
-prefs.setScript(\"stop_condition_for_script\", getStopConditionCode());
+prefs.setScript("stop_condition_for_script", getStopConditionCode());
 
 // Set the preferences up on the image task
 task.setPreferences(prefs);
@@ -67,9 +71,6 @@ imageTaskWindow.setImageTask(task);
 
 // Show the image task window
 imageTaskWindow.show();
-
-// Start the image task
-imageTaskWindow.start();
 )";
 
 }
@@ -97,19 +98,7 @@ public:
             for(int i = 0; i < ui->taskList->count(); ++i) {
                 QListWidgetItem* item = ui->taskList->item(i);
                 QString data = item->data(Qt::UserRole).toString();
-
-                const auto engine = script::createBatchImageTaskEngine();
-                const std::string imagePath = data.toStdString();
-                engine->set_global(chaiscript::var(imagePath), "inputPath");
-                const auto& code = m_scriptEditorWidget->getCurrentCode();
-                try {
-                    engine->eval(code);
-                    m_scriptEditorWidget->onScriptEvaluationSucceeded();
-                } catch(const chaiscript::exception::eval_error& e) {
-                    m_scriptEditorWidget->onScriptEvaluationFailed(e.pretty_print());
-                } catch(...) {
-                    m_scriptEditorWidget->onScriptEvaluationFailed("Unknown script evaluation error");
-                }
+                runScript(data.toStdString());
             }
         });
         connect(ui->clearTaskListButton, &QPushButton::clicked, [this]() {
@@ -141,12 +130,27 @@ public:
     }
 
 private:
+    void runScript(const std::string& imagePath) const
+    {
+        const auto engine = script::createBatchImageTaskEngine();
+        engine->set_global(chaiscript::var(imagePath), "inputPath");
+        const auto& code = m_scriptEditorWidget->getCurrentCode();
+        try {
+            engine->eval(code);
+            m_scriptEditorWidget->onScriptEvaluationSucceeded();
+        } catch(const chaiscript::exception::eval_error& e) {
+            m_scriptEditorWidget->onScriptEvaluationFailed(e.pretty_print());
+        } catch(...) {
+            m_scriptEditorWidget->onScriptEvaluationFailed("Unknown script evaluation error");
+        }
+    }
+
     void addItem(const QString& itemPath, const QString& itemDisplayName) const
     {
         QListWidgetItem* item{new QListWidgetItem()};
         dialog::TaskItemWidget* button{new dialog::TaskItemWidget(itemPath, itemDisplayName,
-        [](const QString&) {
-            //geometrize::util::openTasks({taskItemId}, false);
+        [this](const QString& taskItemId) {
+            runScript(taskItemId.toStdString());
         },
         [item](const QString& /*taskItemId*/) {
             delete item;

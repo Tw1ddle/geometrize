@@ -272,8 +272,6 @@
     <property name="title">
      <string extracomment="The title of the File menu that contains commands relating to the handling of files, such as open, save, print, etc">File</string>
     </property>
-    <addaction name="actionLoad_Scripts"/>
-    <addaction name="actionSave_Scripts"/>
     <addaction name="actionExit"/>
    </widget>
    <addaction name="menuFile"/>
