@@ -9,6 +9,8 @@
 #include "geometrize/bitmap/bitmap.h"
 #include "geometrize/core.h"
 
+#include "preferences/globalpreferences.h"
+
 namespace geometrize
 {
 
@@ -21,10 +23,26 @@ Bitmap createBitmap(const QImage& image)
     assert((image.width() != 0 && image.height() != 0) && "Image has zero width or height");
     assert((image.format() == QImage::Format_RGBA8888) && "Cannot create bitmap data from a non-RGBA8888 image");
 
-    const std::vector<uchar> data(image.bits(), image.bits() + image.byteCount());
+    const std::vector<uchar> data(image.bits(), image.bits() + image.sizeInBytes());
     return Bitmap(image.width(), image.height(), data);
 }
 
+geometrize::Bitmap convertImageToBitmapWithDownscaling(const QImage& image)
+{
+    QImage im{image.copy()};
+
+    const geometrize::preferences::GlobalPreferences& prefs{geometrize::preferences::getGlobalPreferences()};
+    if(prefs.isImageTaskImageResizeEnabled()) {
+        const std::pair<std::uint32_t, std::uint32_t> sizeThreshold{prefs.getImageTaskResizeThreshold()};
+        const QSize imageSize{im.size()};
+
+        if(sizeThreshold.first < static_cast<unsigned int>(imageSize.width())
+                || sizeThreshold.second < static_cast<unsigned int>(imageSize.height())) {
+            im = image.scaled(sizeThreshold.first, sizeThreshold.second, Qt::KeepAspectRatio, Qt::SmoothTransformation).convertToFormat(QImage::Format_RGBA8888);
+        }
+    }
+    return geometrize::image::createBitmap(im);
+}
 QImage createImage(const Bitmap& data)
 {
     if(data.getWidth() == 0 || data.getHeight() == 0) {

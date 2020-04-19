@@ -24,6 +24,13 @@ namespace image
 Bitmap createBitmap(const QImage& image);
 
 /**
+ * @brief imageToBitmapWithDownscaling Creates a bitmap data object from the given image, downscaling in the process based on global preferences for image resizing
+ * @param image The image to create the bitmap data from.
+ * @return The new bitmap data.
+ */
+geometrize::Bitmap convertImageToBitmapWithDownscaling(const QImage& image);
+
+/**
  * @brief createImage Creates an image from the bitmap data object. Assumes RGBA8888 format.
  * @param data The bitmap data, RGBA8888 bytes (must be a multiple of 4).
  * @return The pixmap created from the bytes data.

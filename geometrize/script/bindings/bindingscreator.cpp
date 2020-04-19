@@ -229,6 +229,7 @@ std::shared_ptr<chaiscript::Module> createImageBindings()
     ADD_FREE_FUN(loadImage);
     ADD_FREE_FUN(convertImageToRgba8888);
     ADD_FREE_FUN(createBitmap);
+    ADD_FREE_FUN(convertImageToBitmapWithDownscaling);
 
     return module;
 }

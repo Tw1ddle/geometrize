@@ -16,15 +16,25 @@ namespace geometrize
 class Bitmap;
 }
 
-namespace geometrize::dialog
+namespace geometrize
+{
+
+namespace dialog
 {
 class ImageTaskWindow;
 class LaunchWindow;
 }
 
-namespace geometrize::task
+}
+
+namespace geometrize
+{
+
+namespace task
 {
 class ImageTask;
+}
+
 }
 
 namespace geometrize

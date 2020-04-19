@@ -34,20 +34,42 @@ var bitmap = createBitmap(image);
 // Create an image task
 var task = createImageTask(bitmap);
 
-// Create the image task UI window
-var window = createImageTaskWindow();
+// Create some image task preferences
+var prefs = ImageTaskPreferences();
 
-// Set the image task upon the UI
-window.setImageTask(task);
+prefs.setCandidateShapeCount(100);
+prefs.setMaxShapeMutations(100);
+prefs.setShapeAlpha(255);
+prefs.setSeed(1000);
+prefs.setShapeTypes(RECTANGLE);
+prefs.enableShapeTypes(TRIANGLE);
+prefs.enableShapeTypes(ROTATED_RECTANGLE);
+
+// Only use one thread per task (since all the tasks will run concurrently)
+prefs.setMaxThreads(1);
+
+// Define a stop condition script that will stop the geometrization after a while
+def getStopConditionCode() {
+    return \"if(currentShapeCount >= 500) { return true; } else { return false; }\";
+}
+
+// Set a stop condition that will stop the task when the condition is met
+prefs.setScript(\"stop_condition_for_script\", getStopConditionCode());
+
+// Set the preferences up on the image task
+task.setPreferences(prefs);
+
+// Create the image task UI window
+var imageTaskWindow = createImageTaskWindow();
+
+// Set the image task up on the UI
+imageTaskWindow.setImageTask(task);
 
 // Show the image task window
-window.show();
-
-// Add a stop condition that will save the image to the desktop when it finishes
-// TODO
+imageTaskWindow.show();
 
 // Start the image task
-// TODO
+imageTaskWindow.start();
 )";
 
 }

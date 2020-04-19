@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1028</width>
-    <height>800</height>
+    <height>1024</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -210,7 +210,7 @@
           <item>
            <widget class="QPushButton" name="runTasksButton">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="text">
              <string extracomment="Text on a button that starts running the tasks from the task queue when pressed">Run</string>
@@ -220,7 +220,7 @@
           <item>
            <widget class="QPushButton" name="clearTaskListButton">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="text">
              <string extracomment="Text on a button that removes any queued up tasks from the task queue in the user interface">Clear</string>
