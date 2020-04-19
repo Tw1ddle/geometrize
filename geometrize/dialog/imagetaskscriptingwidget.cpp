@@ -39,7 +39,15 @@ namespace dialog
 
 void showImageTaskStopConditionMetMessage(QWidget* parent)
 {
-    QMessageBox::information(parent, QObject::tr("Stop Condition Met"), QObject::tr("Stop condition for geometrizing was met"));
+    QMessageBox info(QMessageBox::Icon::Information,
+                     QObject::tr("Stop Condition Met"),
+                     QObject::tr("Stop condition for geometrizing was met"),
+                     QMessageBox::StandardButton::Ok,
+                     parent);
+
+    info.setWindowModality(Qt::WindowModality::WindowModal);
+    info.setWindowFlags(info.windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    info.exec();
 }
 
 class ImageTaskScriptingWidget::ImageTaskScriptingWidgetImpl
@@ -57,15 +65,15 @@ public:
         });
         connect(ui->addStopConditionButton, &QPushButton::clicked, [this]() {
             const std::string defaultCode = "currentShapeCount >= 500; // Stop when there are more than 500 shapes";
-            addScript(tr("Custom Stop Condition").toStdString(), ::stopConditionIdPrefix, defaultCode);
+            addCustomStopConditionWidget(defaultCode);
         });
         connect(ui->addBeforeAddShapeEvent, &QPushButton::clicked, [this]() {
             const std::string defaultCode = "printToAllScriptConsoleWidgets(\"Will add shape to image...\");";
-            addScript(tr("Before Add Shape Callback").toStdString(), ::beforeAddShapeCallbackPrefix, defaultCode);
+            addBeforeAddShapeCallbackWidget(defaultCode);
         });
         connect(ui->addAfterAddShapeEvent, &QPushButton::clicked, [this]() {
             const std::string defaultCode = "printToAllScriptConsoleWidgets(\"Did add shape to image...\");";
-            addScript(tr("After Add Shape Callback").toStdString(), ::afterAddShapeCallbackPrefix, defaultCode);
+            addAfterAddShapeCallbackWidget(defaultCode);
         });
         connect(ui->clearScriptsButton, &QPushButton::clicked, [this]() {
             QLayoutItem* item = nullptr;
@@ -118,16 +126,6 @@ public:
             m[editor->getFunctionName()] = editor->getCurrentCode();
         }
         return m;
-    }
-
-    void addScript(const std::string& scriptDisplayName, const std::string& scriptIdPrefix, const std::string& scriptCode)
-    {
-        const std::string functionName = scriptIdPrefix + QUuid::createUuid().toString().toStdString();
-        auto widget = new geometrize::dialog::ScriptEditorWidget(scriptDisplayName, functionName, scriptCode, ui->customScriptsGroupBox);
-        connect(widget, &ScriptEditorWidget::signal_scriptChanged, [this](ScriptEditorWidget* /*self*/, const std::string& functionName, const std::string& code) {
-            emit q->signal_scriptChanged(functionName, code);
-        });
-        ui->customScriptsEditorLayout->addWidget(widget);
     }
 
     bool evaluateStopConditionScripts() const
@@ -215,6 +213,42 @@ public:
     }
 
 private:
+    static bool startsWith(const std::string& s, const std::string& prefix)
+    {
+        return s.rfind(prefix, 0) == 0;
+    }
+
+    void addScriptWidget(const std::string& scriptDisplayName, const std::string& scriptIdPrefix, const std::string& scriptCode)
+    {
+        if(!startsWith(scriptIdPrefix, ::stopConditionIdPrefix) &&
+           !startsWith(scriptIdPrefix, ::beforeAddShapeCallbackPrefix) &&
+           !startsWith(scriptIdPrefix, ::afterAddShapeCallbackPrefix)) {
+            return;
+        }
+
+        const std::string functionName = scriptIdPrefix + QUuid::createUuid().toString().toStdString();
+        auto widget = new geometrize::dialog::ScriptEditorWidget(scriptDisplayName, functionName, scriptCode, ui->customScriptsGroupBox);
+        connect(widget, &ScriptEditorWidget::signal_scriptChanged, [this](ScriptEditorWidget* /*self*/, const std::string& functionName, const std::string& code) {
+            emit q->signal_scriptChanged(functionName, code);
+        });
+        ui->customScriptsEditorLayout->addWidget(widget);
+    }
+
+    void addCustomStopConditionWidget(const std::string& scriptCode)
+    {
+        addScriptWidget(tr("Custom Stop Condition").toStdString(), ::stopConditionIdPrefix, scriptCode);
+    }
+
+    void addBeforeAddShapeCallbackWidget(const std::string& scriptCode)
+    {
+        addScriptWidget(tr("Before Add Shape Callback").toStdString(), ::beforeAddShapeCallbackPrefix, scriptCode);
+    }
+
+    void addAfterAddShapeCallbackWidget(const std::string& scriptCode)
+    {
+        addScriptWidget(tr("After Add Shape Callback").toStdString(), ::afterAddShapeCallbackPrefix, scriptCode);
+    }
+
     // Utility function used to setup and display the shape creation/mutation script editor for the given image task window
     void revealShapeScriptingPanel()
     {
@@ -235,7 +269,8 @@ private:
                     editor->setCurrentCode(script.second);
                 }
             } else {
-                // TODO add the script if it starts with one of the predefined prefixes?
+                // If no such editor exists, create a new panel (but only for scripts with names we recognize)
+                addScriptWidget(script.first, script.first, script.second);
             }
         }
     }

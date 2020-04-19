@@ -111,7 +111,11 @@ public:
 
         if(m_task) {
             setScriptModeEnabled(m_task->getPreferences().isScriptModeEnabled());
-            m_task->getPreferences().setScripts(getScripts());
+
+            const auto& scripts = getScripts();
+            for(const auto& script : scripts) {
+                m_task->getPreferences().setScript(script.first, script.second);
+            }
         }
     }
 
