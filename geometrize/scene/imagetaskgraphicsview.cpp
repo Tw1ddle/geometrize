@@ -1,8 +1,42 @@
 #include "imagetaskgraphicsview.h"
 
+#include <QDebug>
 #include <QEvent>
 #include <QKeyEvent>
+#include <QString>
+#include <QTabletEvent>
 #include <QWheelEvent>
+
+namespace
+{
+
+void printTabletEventInfo(const QTabletEvent* const event)
+{
+    if(!event) {
+        return;
+    }
+    const QString action = [event]() {
+        if(event->type() == QEvent::TabletMove)
+            return "moved";
+        else if(event->type() == QEvent::TabletPress)
+            return "pressed";
+        else if(event->type() == QEvent::TabletRelease)
+            return "lifted";
+        return "unknown";
+    }();
+    const QString text = QString("%1 at %2, %3, pressure=%4% tangentialPressure=%5% rotation=%6 xTilt=%7 yTilt=%8")
+            .arg(action)
+            .arg(event->posF().x(), 0, 'f', 1).arg(event->posF().y(), 0, 'f', 1)
+            .arg(event->pressure() * 100.0, 0, 'f', 1)
+            .arg(event->tangentialPressure(), 0, 'f', 1)
+            .arg(event->rotation(), 0, 'f', 1)
+            .arg(event->xTilt(), 0, 'f', 1).arg(event->yTilt(), 0, 'f', 1);
+
+
+    qInfo() << text;
+}
+
+}
 
 namespace geometrize
 {
@@ -19,6 +53,22 @@ ImageTaskGraphicsView::ImageTaskGraphicsView(QWidget* parent) : QGraphicsView(pa
     setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 
     populateUi();
+}
+
+bool ImageTaskGraphicsView::viewportEvent(QEvent* event)
+{
+    //printTabletEventInfo(dynamic_cast<QTabletEvent*>(event));
+
+    if(event->type() == QEvent::TabletMove) {
+        event->accept();
+    } else if(event->type() == QEvent::TabletPress) {
+        event->accept();
+    } else if(event->type() == QEvent::TabletRelease) {
+        event->accept();
+    } else {
+        return QGraphicsView::viewportEvent(event);
+    }
+    return true;
 }
 
 void ImageTaskGraphicsView::wheelEvent(QWheelEvent* e)
