@@ -33,6 +33,12 @@ private slots:
     void on_populateRecents_toggled(bool checked);
     void on_populateTemplates_toggled(bool checked);
 
+    void on_useCustomImageTaskBackgroundColor_toggled(bool checked);
+    void on_selectCustomImageBackgroundColorButton_clicked();
+
+    void on_replaceTargetImageAlphaWithCustomColor_toggled(bool enabled);
+    void on_selectTargetImageAlphaReplacementColorButton_clicked();
+
     void on_autoLoadImageTaskSettings_toggled(bool checked);
     void on_autoSaveImageTaskSettings_toggled(bool checked);
 

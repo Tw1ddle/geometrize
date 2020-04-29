@@ -1,9 +1,14 @@
 #include "globalpreferencesdialog.h"
 #include "ui_globalpreferencesdialog.h"
 
+#include <array>
 #include <cassert>
 
+#include <QColor>
+#include <QColorDialog>
 #include <QEvent>
+#include <QPalette>
+#include <QPushButton>
 
 #include "preferences/globalpreferences.h"
 
@@ -63,6 +68,50 @@ public:
     void setShowLaunchWindowConsoleByDefault(const bool enabled)
     {
         getPrefs().setShouldShowLaunchConsoleByDefault(enabled);
+    }
+
+    void openCustomImageBackgroundBackgroundColorPicker()
+    {
+        const std::array<std::int32_t, 4> col = getPrefs().getCustomImageTaskBackgroundOverrideColor();
+        const QColor currentColor = QColor(col[0], col[1], col[2], col[3]);
+        const QColor result = QColorDialog::getColor(currentColor, q, tr("Color Picker"), QColorDialog::ColorDialogOption::ShowAlphaChannel);
+        if(!result.isValid()) {
+            return;
+        }
+        setCustomImageTaskBackgroundOverrideColor(result.red(), result.green(), result.blue(), result.alpha());
+    }
+
+    void setCustomImageTaskBackgroundOverrideColor(const std::int32_t r, const std::int32_t g, const std::int32_t b, const std::int32_t a)
+    {
+        getPrefs().setCustomImageTaskBackgroundOverrideColor(r, g, b, a);
+        setButtonColor(*ui->selectCustomImageBackgroundColorButton, r, g, b, a);
+    }
+
+    void openCustomImageAlphaReplacementColorPicker()
+    {
+        const std::array<std::int32_t, 4> col = getPrefs().getTargetImageAlphaReplacementColor();
+        const QColor currentColor = QColor(col[0], col[1], col[2], col[3]);
+        const QColor result = QColorDialog::getColor(currentColor, q, tr("Color Picker"), QColorDialog::ColorDialogOption::ShowAlphaChannel);
+        if(!result.isValid()) {
+            return;
+        }
+        setTargetImageAlphaReplacementColor(result.red(), result.green(), result.blue(), result.alpha());
+    }
+
+    void setTargetImageAlphaReplacementColor(const std::int32_t r, const std::int32_t g, const std::int32_t b, const std::int32_t a)
+    {
+        getPrefs().setTargetImageAlphaReplacementColor(r, g, b, a);
+        setButtonColor(*ui->selectTargetImageAlphaReplacementColorButton, r, g, b, a);
+    }
+
+    void setShouldUseCustomImageTaskBackgroundOverrideColor(const bool enabled)
+    {
+        getPrefs().setShouldUseCustomImageTaskBackgroundOverrideColor(enabled);
+    }
+
+    void setShouldReplaceTargetImageAlphaWithCustomColor(const bool enabled)
+    {
+        getPrefs().setShouldReplaceTargetImageAlphaWithCustomColor(enabled);
     }
 
     void setShowVectorResultsByDefault(const bool enabled)
@@ -133,6 +182,16 @@ private:
         ui->autoLoadImageTaskSettings->setChecked(prefs.shouldAutoLoadImageTaskSettings());
         ui->autoSaveImageTaskSettings->setChecked(prefs.shouldAutoSaveImageTaskSettings());
 
+        ui->useCustomImageTaskBackgroundColor->setChecked(prefs.shouldUseCustomImageTaskBackgroundOverrideColor());
+
+        const std::array<std::int32_t, 4> bgCol = prefs.getCustomImageTaskBackgroundOverrideColor();
+        setButtonColor(*ui->selectCustomImageBackgroundColorButton, bgCol[0], bgCol[1], bgCol[2], bgCol[3]);
+
+        ui->replaceTargetImageAlphaWithCustomColor->setChecked(prefs.shouldUseImageAlphaReplacementColor());
+
+        const std::array<std::int32_t, 4> alphaCol = prefs.getTargetImageAlphaReplacementColor();
+        setButtonColor(*ui->selectTargetImageAlphaReplacementColorButton, alphaCol[0], alphaCol[1], alphaCol[2], alphaCol[3]);
+
         ui->showLaunchWindowConsoleByDefault->setChecked(prefs.shouldShowLaunchConsoleByDefault());
         ui->showVectorResultsByDefault->setChecked(prefs.shouldShowImageTaskVectorViewByDefault());
         ui->showPixmapResultsByDefault->setChecked(prefs.shouldShowImageTaskPixmapViewByDefault());
@@ -143,6 +202,14 @@ private:
         ui->resizeWidth->setValue(prefs.getImageTaskResizeThreshold().first);
         ui->resizeHeight->setValue(prefs.getImageTaskResizeThreshold().second);
         ui->maxThreadsPerImageTask->setValue(prefs.getImageTaskMaxThreads());
+    }
+
+    void setButtonColor(QPushButton& button, const std::int32_t r, const std::int32_t g, const std::int32_t b, const std::int32_t a)
+    {
+        const QString buttonStyle = "QPushButton {border: 0.05em solid lightgray; background-color: rgba(" +
+                QString::number(r) + "," + QString::number(g) + "," + QString::number(b) + "," + QString::number(static_cast<float>(a) / 255.0f) + ") }";
+        button.setStyleSheet(buttonStyle);
+        button.update();
     }
 
     std::unique_ptr<Ui::GlobalPreferencesDialog> ui;
@@ -170,6 +237,26 @@ void GlobalPreferencesDialog::on_populateRecents_toggled(const bool checked)
 void GlobalPreferencesDialog::on_populateTemplates_toggled(const bool checked)
 {
     d->setPopulateTemplates(checked);
+}
+
+void GlobalPreferencesDialog::on_useCustomImageTaskBackgroundColor_toggled(const bool checked)
+{
+    d->setShouldUseCustomImageTaskBackgroundOverrideColor(checked);
+}
+
+void GlobalPreferencesDialog::on_selectCustomImageBackgroundColorButton_clicked()
+{
+    d->openCustomImageBackgroundBackgroundColorPicker();
+}
+
+void GlobalPreferencesDialog::on_replaceTargetImageAlphaWithCustomColor_toggled(bool enabled)
+{
+    d->setShouldReplaceTargetImageAlphaWithCustomColor(enabled);
+}
+
+void GlobalPreferencesDialog::on_selectTargetImageAlphaReplacementColorButton_clicked()
+{
+    d->openCustomImageAlphaReplacementColorPicker();
 }
 
 void GlobalPreferencesDialog::on_autoLoadImageTaskSettings_toggled(const bool checked)
