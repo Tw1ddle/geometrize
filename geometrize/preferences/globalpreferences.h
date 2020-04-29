@@ -1,5 +1,6 @@
 #pragma once
 
+#include <array>
 #include <cstdint>
 #include <memory>
 #include <string>
@@ -120,6 +121,60 @@ public:
      * @param populateTemplates Whether to populate the task templates on the launch window on app launch.
      */
     void setShouldPopulateTemplatesOnLaunch(bool populateTemplates);
+
+    /**
+     * @brief getCustomImageTaskBackgroundOverrideColor Gets the preference for the custom image task background override color to use when an image task is initially set up.
+     * @return An array containing the RGBA override color values.
+     */
+    std::array<std::int32_t, 4> getCustomImageTaskBackgroundOverrideColor() const;
+
+    /**
+     * @brief setUseCustomImageTaskBackgroundOverrideColor Sets the preference for the custom image task background override color to use when an image task is initially set up.
+     * @param r The red color component
+     * @param g The green color component
+     * @param b The blue color component
+     * @param a The alpha color component
+     */
+    void setCustomImageTaskBackgroundOverrideColor(std::int32_t r, std::int32_t g, std::int32_t b, std::int32_t a);
+
+    /**
+     * @brief shouldUseCustomImageTaskBackgroundOverrideColor Gets the preference for whether to use the custom image task background override color.
+     * @return Whether to use the custom image task background override color when setting up image tasks etc.
+     */
+    bool shouldUseCustomImageTaskBackgroundOverrideColor() const;
+
+    /**
+     * @brief setShouldUseCustomImageTaskBackgroundOverrideColor Sets the preference for whether to use the custom image task background override color.
+     * @param useColor Whether to use the custom image task background override color when setting up image tasks etc.
+     */
+    void setShouldUseCustomImageTaskBackgroundOverrideColor(bool useColor);
+
+    /**
+     * @brief getTargetImageAlphaReplacementColor Gets the preference for the color to replace the alpha of a target image with, when an image task is initially set up.
+     * @return An array containing the RGBA target image alpha replacement color.
+     */
+    std::array<std::int32_t, 4> getTargetImageAlphaReplacementColor() const;
+
+    /**
+     * @brief setTargetImageAlphaReplacementColor Sets the preference for the color to replace the alpha of a target image with, when an image task is initially set up.
+     * @param r The red color component
+     * @param g The green color component
+     * @param b The blue color component
+     * @param a The alpha color component
+     */
+    void setTargetImageAlphaReplacementColor(std::int32_t r, std::int32_t g, std::int32_t b, std::int32_t a);
+
+    /**
+     * @brief shouldUseImageAlphaReplacementColor Gets the preference for whether to replace the alpha of a target image with a color, when an image task is initially set up.
+     * @return Whether to replace the alpha of a target image with a color, when an image task is initially set up etc.
+     */
+    bool shouldUseImageAlphaReplacementColor() const;
+
+    /**
+     * @brief setShouldReplaceTargetImageAlphaWithCustomColor Sets the preference for whether to replace the alpha of a target image with a color, when an image task is initially set up.
+     * @param useColor Whether to replace the alpha of a target image with a color, when an image task is initially set up etc.
+     */
+    void setShouldReplaceTargetImageAlphaWithCustomColor(bool useColor);
 
     /**
      * @brief shouldAutoLoadImageTaskSettings Gets the preference for whether to automatically load any previously saved image task settings when a task window is opened.

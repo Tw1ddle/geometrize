@@ -19,6 +19,7 @@
 #include "chaiscript/chaiscript.hpp" // TODO remove
 
 #include "geometrize/bitmap/bitmap.h"
+#include "geometrize/commonutil.h"
 #include "geometrize/runner/imagerunneroptions.h"
 
 #include "common/uiactions.h"
@@ -182,9 +183,9 @@ public:
 
                 engine->set_global(chaiscript::var(static_cast<int>(m_task->getWidth())), "xBound");
                 engine->set_global(chaiscript::var(static_cast<int>(m_task->getHeight())), "yBound");
-                engine->set_global(chaiscript::var(m_areaOfInfluenceShapes.getCurrentShape()), "aoi");
                 engine->set_global(chaiscript::var(m_shapes.getShapeVector().size()), "currentShapeCount");
 
+                engine->set_global(chaiscript::var(m_areaOfInfluenceShapes.getCurrentShape()), "aoi");
                 std::vector<std::pair<std::int32_t, std::int32_t>> aoiPixels = m_areaOfInfluenceShapes.getPixels(m_task->getWidth(), m_task->getHeight());
                 if(aoiPixels.empty()) {
                     aoiPixels.push_back(std::make_pair(m_task->getWidth() / 2, m_task->getHeight() / 2));
@@ -226,7 +227,15 @@ public:
             }
 
             if(currentTask != nullptr) {
-                currentTask->drawBackgroundRectangle();
+                const auto getStartingColor = [this]() {
+                    const geometrize::preferences::GlobalPreferences& prefs{geometrize::preferences::getGlobalPreferences()};
+                    if(prefs.shouldUseCustomImageTaskBackgroundOverrideColor()) {
+                        const auto color = prefs.getCustomImageTaskBackgroundOverrideColor();
+                        return geometrize::rgba{ static_cast<std::uint8_t>(color[0]), static_cast<std::uint8_t>(color[1]), static_cast<std::uint8_t>(color[2]), static_cast<std::uint8_t>(color[3]) };
+                    }
+                    return geometrize::commonutil::getAverageImageColor(m_task->getTarget());
+                };
+                currentTask->drawBackgroundRectangle(getStartingColor());
             }
 
             if(currentTask != nullptr) {
@@ -388,7 +397,7 @@ public:
         m_sceneManager.setAreaOfInfluenceShape(*m_areaOfInfluenceShapes.getCurrentShape().get());
 
         // Set initial target image opacity
-        const float initialTargetImageOpacity{10};
+        const float initialTargetImageOpacity{0};
         ui->imageTaskImageWidget->setTargetImageOpacity(static_cast<unsigned int>(initialTargetImageOpacity));
 
         // Start the timer used to track how long the image task has been in the running state

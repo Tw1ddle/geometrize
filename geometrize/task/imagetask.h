@@ -131,9 +131,10 @@ public:
      void drawShape(const std::shared_ptr<geometrize::Shape> shape, geometrize::rgba color);
 
      /**
-      * @brief drawBackgroundRectangle Convenience function that draws a background rectangle shape using the target image's background color.
+      * @brief drawBackgroundRectangle Convenience function that draws a background rectangle shape.
+      * @param color The color of the background rectangle.
       */
-     void drawBackgroundRectangle();
+     void drawBackgroundRectangle(geometrize::rgba color);
 
      /**
       * @brief getPreferences Gets a reference to the current preferences of this task.

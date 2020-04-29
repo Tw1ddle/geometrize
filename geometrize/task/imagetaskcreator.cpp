@@ -1,12 +1,45 @@
 #include "imagetaskcreator.h"
 
+#include <QColor>
 #include <QImage>
+#include <QPainter>
+#include <QPixmap>
+#include <QPoint>
 #include <QSize>
 
 #include "imagetask.h"
 #include "dialog/imagetaskwindow.h"
 #include "image/imageloader.h"
 #include "preferences/globalpreferences.h"
+
+namespace
+{
+
+// Replace alpha values in an image with a preferred value from global preferences (if the preference is enabled)
+QImage replaceAlphaInImage(const QImage& image)
+{
+    const geometrize::preferences::GlobalPreferences& prefs = geometrize::preferences::getGlobalPreferences();
+    if(!prefs.shouldUseImageAlphaReplacementColor()) {
+        return image;
+    }
+
+    const auto col = prefs.getTargetImageAlphaReplacementColor();
+    const QColor color(col[0], col[1], col[2], col[3]);
+
+    QImage im(image.size(), image.format());
+    im.fill(color);
+    im.setAlphaChannel(im);
+
+    QPixmap combined(im.size());
+    QPainter p(&combined);
+    p.drawImage(QPoint(0, 0), im);
+    p.drawImage(QPoint(0, 0), image);
+    p.end();
+
+    return combined.toImage();
+}
+
+}
 
 namespace geometrize
 {
@@ -16,7 +49,7 @@ namespace task
 
 ImageTask* createImageTaskAndWindow(const std::string& displayName, const std::string& taskUrl)
 {
-    geometrize::Bitmap bitmap{image::convertImageToBitmapWithDownscaling(geometrize::image::loadImage(taskUrl))};
+    geometrize::Bitmap bitmap{image::convertImageToBitmapWithDownscaling(replaceAlphaInImage(geometrize::image::loadImage(taskUrl)))};
     ImageTask* task{new ImageTask(displayName, bitmap)};
     dialog::ImageTaskWindow* imageTaskWindow{new dialog::ImageTaskWindow()};
     imageTaskWindow->setImageTask(task);
@@ -26,7 +59,7 @@ ImageTask* createImageTaskAndWindow(const std::string& displayName, const std::s
 
 ImageTask* createImageTaskAndWindow(const std::string& displayName, const QImage& image)
 {
-    geometrize::Bitmap bitmap{image::convertImageToBitmapWithDownscaling(image)};
+    geometrize::Bitmap bitmap{image::convertImageToBitmapWithDownscaling(replaceAlphaInImage(image))};
     ImageTask* task{new ImageTask(displayName, bitmap)};
     dialog::ImageTaskWindow* imageTaskWindow{new dialog::ImageTaskWindow()};
     imageTaskWindow->setImageTask(task);

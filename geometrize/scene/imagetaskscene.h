@@ -7,6 +7,7 @@
 #include "imagetaskpixmapgraphicsitem.h"
 #include "svgitem.h"
 
+class QEvent;
 class QFocusEvent;
 class QKeyEvent;
 class QGraphicsSceneWheelEvent;
@@ -52,7 +53,14 @@ public:
       */
      void setOverlayShape(SvgItem* item);
 
+     /**
+      * @brief setOverlayShapeVisibility Whether the overlay shape(s) in the scene should be visible.
+      * @param visible True if visible, false for invisible
+      */
+     void setOverlayShapeVisibility(bool visible);
+
 protected:
+     bool event(QEvent* event) override;
      void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
      void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
      void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;

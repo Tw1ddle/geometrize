@@ -20,7 +20,7 @@ namespace scene
 class ImageTaskScene::ImageTaskSceneImpl
 {
 public:
-    ImageTaskSceneImpl(ImageTaskScene* pQ) : q{pQ}, m_lastOverlayShapeItem{nullptr}
+    ImageTaskSceneImpl(ImageTaskScene* pQ) : q{pQ}, m_lastOverlayShapeItem{nullptr}, m_overlayShapeVisibility{true}
     {
         q->setStickyFocus(true);
 
@@ -53,10 +53,19 @@ public:
         }
         if(item != nullptr) {
             item->setZValue(1000); // Should be on top of everything else
+            item->setVisible(m_overlayShapeVisibility);
             q->addItem(item);
             q->setFocusItem(item, Qt::FocusReason::OtherFocusReason);
         }
         m_lastOverlayShapeItem = item;
+    }
+
+    void setOverlayShapeVisibility(const bool visible)
+    {
+        m_overlayShapeVisibility = visible;
+        if(m_lastOverlayShapeItem != nullptr) {
+            m_lastOverlayShapeItem->setVisible(m_overlayShapeVisibility);
+        }
     }
 	
 protected:
@@ -66,6 +75,7 @@ private:
     ImageTaskScene* q;
 
     SvgItem* m_lastOverlayShapeItem;
+    bool m_overlayShapeVisibility;
 };
 
 ImageTaskScene::ImageTaskScene(QObject* parent) : QGraphicsScene{parent}, d{std::make_unique<ImageTaskScene::ImageTaskSceneImpl>(this)}
@@ -94,6 +104,37 @@ ImageTaskPixmapGraphicsItem& ImageTaskScene::getTargetPixmapItem()
 void ImageTaskScene::setOverlayShape(SvgItem* item)
 {
     d->setOverlayShape(item);
+}
+
+void ImageTaskScene::setOverlayShapeVisibility(const bool visible)
+{
+    d->setOverlayShapeVisibility(visible);
+}
+
+bool ImageTaskScene::event(QEvent* event)
+{
+    /*
+    switch(event->type())
+    {
+        // Events forwarded from the ImageTaskGraphicsView
+        case QEvent::TabletPress:
+        case QEvent::TabletRelease:
+        case QEvent::TabletMove:
+        {
+            // TODO also need to handle enter/exit proximity events with wacom tablet
+            // TODO should also care about the device type probably
+            const auto ev = static_cast<QTabletEvent*>(event); // TODO get tablet event + extras e.g. the global pos mapped to scene pos
+            ev->
+            //tabletEvent = new MyTabletEvent(ev);
+            //sendEvent(itemAt(tabletEvent->scenePos()), tabletEvent);
+            return true;
+        }
+        default:
+            return QGraphicsScene::event(event);
+    }
+    */
+
+    return QGraphicsScene::event(event);
 }
 
 void ImageTaskScene::mousePressEvent(QGraphicsSceneMouseEvent* event)

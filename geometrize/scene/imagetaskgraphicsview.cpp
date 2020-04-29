@@ -1,5 +1,6 @@
 #include "imagetaskgraphicsview.h"
 
+#include <QApplication>
 #include <QDebug>
 #include <QEvent>
 #include <QKeyEvent>
@@ -10,6 +11,7 @@
 namespace
 {
 
+/*
 void printTabletEventInfo(const QTabletEvent* const event)
 {
     if(!event) {
@@ -24,17 +26,15 @@ void printTabletEventInfo(const QTabletEvent* const event)
             return "lifted";
         return "unknown";
     }();
-    const QString text = QString("%1 at %2, %3, pressure=%4% tangentialPressure=%5% rotation=%6 xTilt=%7 yTilt=%8")
-            .arg(action)
-            .arg(event->posF().x(), 0, 'f', 1).arg(event->posF().y(), 0, 'f', 1)
-            .arg(event->pressure() * 100.0, 0, 'f', 1)
-            .arg(event->tangentialPressure(), 0, 'f', 1)
-            .arg(event->rotation(), 0, 'f', 1)
-            .arg(event->xTilt(), 0, 'f', 1).arg(event->yTilt(), 0, 'f', 1);
 
-
-    qInfo() << text;
+    qInfo() << action << " at " << QString::number(event->posF().x(), 'g', 8) << ", " << QString::number(event->posF().y(), 'g', 8)
+            << " pressure = " << QString::number(event->pressure() * 100.0, 'g', 8)
+            << " tangentialPressure = " << QString::number(event->tangentialPressure(), 'g', 8)
+            << " rotation = " << QString::number(event->rotation(), 'g', 8)
+            << " xTilt = " << QString::number(event->xTilt(), 'g', 8)
+            << " yTilt = " << QString::number(event->yTilt(), 'g', 8);
 }
+*/
 
 }
 
@@ -60,10 +60,13 @@ bool ImageTaskGraphicsView::viewportEvent(QEvent* event)
     //printTabletEventInfo(dynamic_cast<QTabletEvent*>(event));
 
     if(event->type() == QEvent::TabletMove) {
+        QApplication::sendEvent(scene(), event);
         event->accept();
     } else if(event->type() == QEvent::TabletPress) {
+        QApplication::sendEvent(scene(), event);
         event->accept();
     } else if(event->type() == QEvent::TabletRelease) {
+        QApplication::sendEvent(scene(), event);
         event->accept();
     } else {
         return QGraphicsView::viewportEvent(event);

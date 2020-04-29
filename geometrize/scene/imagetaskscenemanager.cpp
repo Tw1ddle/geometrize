@@ -103,6 +103,9 @@ public:
         connectAreaOfInfluenceItemSignals(*pixmapInfluenceItem);
         connectAreaOfInfluenceItemSignals(*svgInfluenceItem);
 
+        m_pixmapScene.setOverlayShapeVisibility(false);
+        m_svgScene.setOverlayShapeVisibility(false);
+
         m_pixmapScene.setOverlayShape(pixmapInfluenceItem);
         m_svgScene.setOverlayShape(svgInfluenceItem);
     }

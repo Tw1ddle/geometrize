@@ -111,6 +111,13 @@ signals:
     void signal_onAreaOfInfluenceShapeKeyPressEvent(int key, bool ctrlModifier);
     void signal_onAreaOfInfluenceShapeKeyReleaseEvent(int key, bool ctrlModifier);
 
+    void signal_onAreaOfInfluenceShapeTabletPressEvent(double lastX, double lastY,
+        double x, double y, float pressure, float tangentialPressure, float rotation, float xTilt, float yTilt);
+    void signal_onAreaOfInfluenceShapeTabletMoveEvent(double lastX, double lastY,
+        double x, double y, float pressure, float tangentialPressure, float rotation, float xTilt, float yTilt);
+    void signal_onAreaOfInfluenceShapeTabletLiftEvent(double lastX, double lastY,
+        double x, double y, float pressure, float tangentialPressure, float rotation, float xTilt, float yTilt);
+
 private:
     class ImageTaskSceneManagerImpl;
     std::unique_ptr<ImageTaskSceneManagerImpl> d;

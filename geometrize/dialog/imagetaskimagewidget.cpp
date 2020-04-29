@@ -51,9 +51,6 @@ public:
 
     void setTargetImageOpacity(const unsigned int opacity)
     {
-        if(static_cast<int>(opacity) == ui->targetImageOpacitySlider->value()) {
-            return;
-        }
         updateTargetImageOpacity(opacity);
         emit q->targetImageOpacityChanged(opacity);
     }

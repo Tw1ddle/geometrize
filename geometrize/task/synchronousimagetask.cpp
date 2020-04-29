@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "geometrize/bitmap/bitmap.h"
+#include "geometrize/commonutil.h"
 #include "geometrize/shaperesult.h"
 #include "geometrize/runner/imagerunner.h"
 #include "geometrize/runner/imagerunneroptions.h"
@@ -55,7 +56,8 @@ public:
 
     void drawBackgroundRectangle()
     {
-        m_task->drawBackgroundRectangle();
+        const geometrize::rgba color{geometrize::commonutil::getAverageImageColor(m_task->getTarget())};
+        m_task->drawBackgroundRectangle(color);
     }
 
     geometrize::preferences::ImageTaskPreferences& getPreferences()

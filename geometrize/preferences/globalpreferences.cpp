@@ -136,6 +136,46 @@ public:
         m_shouldPopulateTemplatesOnLaunch = populateTemplates;
     }
 
+    std::array<std::int32_t, 4> getCustomImageTaskBackgroundOverrideColor() const
+    {
+        return m_customImageTaskBackgroundOverrideColor;
+    }
+
+    void setCustomImageTaskBackgroundOverrideColor(const std::int32_t r, const std::int32_t g, const std::int32_t b, const std::int32_t a)
+    {
+        m_customImageTaskBackgroundOverrideColor = { r, g, b, a };
+    }
+
+    bool shouldUseCustomImageTaskBackgroundOverrideColor() const
+    {
+        return m_shouldUseCustomImageTaskBackgroundOverrideColor;
+    }
+
+    void setShouldUseCustomImageTaskBackgroundOverrideColor(const bool useColor)
+    {
+        m_shouldUseCustomImageTaskBackgroundOverrideColor = useColor;
+    }
+
+    std::array<std::int32_t, 4> getTargetImageAlphaReplacementColor() const
+    {
+        return m_targetImageAlphaReplacementColor;
+    }
+
+    void setTargetImageAlphaReplacementColor(const std::int32_t r, const std::int32_t g, const std::int32_t b, const std::int32_t a)
+    {
+        m_targetImageAlphaReplacementColor = { r, g, b, a };
+    }
+
+    bool shouldUseImageAlphaReplacementColor() const
+    {
+        return m_shouldUseImageAlphaReplacementColor;
+    }
+
+    void setShouldReplaceTargetImageAlphaWithCustomColor(const bool useColor)
+    {
+        m_shouldUseImageAlphaReplacementColor = useColor;
+    }
+
     bool shouldAutoLoadImageTaskSettings() const
     {
         return m_shouldAutoLoadImageTaskSettings;
@@ -328,6 +368,12 @@ private:
            m_shouldPopulateRecentItemsOnLaunch,
            m_shouldPopulateTemplatesOnLaunch,
 
+           m_customImageTaskBackgroundOverrideColor,
+           m_shouldUseCustomImageTaskBackgroundOverrideColor,
+
+           m_targetImageAlphaReplacementColor,
+           m_shouldUseImageAlphaReplacementColor,
+
            m_shouldAutoLoadImageTaskSettings,
            m_shouldAutoSaveImageTaskSettings,
 
@@ -355,6 +401,12 @@ private:
     bool m_shouldGeometrizeAppLogoOnLaunch{false};
     bool m_shouldPopulateRecentItemsOnLaunch{true};
     bool m_shouldPopulateTemplatesOnLaunch{true};
+
+    std::array<std::int32_t, 4> m_customImageTaskBackgroundOverrideColor{ 128, 64, 196, 255 };
+    bool m_shouldUseCustomImageTaskBackgroundOverrideColor{false};
+
+    std::array<std::int32_t, 4> m_targetImageAlphaReplacementColor{ 255, 255, 255, 255 };
+    bool m_shouldUseImageAlphaReplacementColor{false};
 
     bool m_shouldAutoLoadImageTaskSettings{false};
     bool m_shouldAutoSaveImageTaskSettings{false};
@@ -443,6 +495,26 @@ void GlobalPreferences::setShouldPopulateTemplatesOnLaunch(const bool populateTe
     d->setShouldPopulateTemplatesOnLaunch(populateTemplates);
 }
 
+std::array<std::int32_t, 4> GlobalPreferences::getCustomImageTaskBackgroundOverrideColor() const
+{
+    return d->getCustomImageTaskBackgroundOverrideColor();
+}
+
+void GlobalPreferences::setCustomImageTaskBackgroundOverrideColor(const std::int32_t r, const std::int32_t g, const std::int32_t b, const std::int32_t a)
+{
+    d->setCustomImageTaskBackgroundOverrideColor(r, g, b, a);
+}
+
+bool GlobalPreferences::shouldUseCustomImageTaskBackgroundOverrideColor() const
+{
+    return d->shouldUseCustomImageTaskBackgroundOverrideColor();
+}
+
+void GlobalPreferences::setShouldUseCustomImageTaskBackgroundOverrideColor(const bool useColor)
+{
+    d->setShouldUseCustomImageTaskBackgroundOverrideColor(useColor);
+}
+
 bool GlobalPreferences::shouldAutoLoadImageTaskSettings() const
 {
     return d->shouldAutoLoadImageTaskSettings();
@@ -461,6 +533,26 @@ bool GlobalPreferences::shouldAutoSaveImageTaskSettings() const
 void GlobalPreferences::setShouldAutoSaveImageTaskSettings(const bool saveSettings)
 {
     d->setShouldAutoSaveImageTaskSettings(saveSettings);
+}
+
+std::array<std::int32_t, 4> GlobalPreferences::getTargetImageAlphaReplacementColor() const
+{
+    return d->getTargetImageAlphaReplacementColor();
+}
+
+void GlobalPreferences::setTargetImageAlphaReplacementColor(const std::int32_t r, const std::int32_t g, const std::int32_t b, const std::int32_t a)
+{
+    d->setTargetImageAlphaReplacementColor(r, g, b, a);
+}
+
+bool GlobalPreferences::shouldUseImageAlphaReplacementColor() const
+{
+    return d->shouldUseImageAlphaReplacementColor();
+}
+
+void GlobalPreferences::setShouldReplaceTargetImageAlphaWithCustomColor(const bool useColor)
+{
+    d->setShouldReplaceTargetImageAlphaWithCustomColor(useColor);
 }
 
 bool GlobalPreferences::shouldShowLaunchConsoleByDefault() const

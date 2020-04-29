@@ -127,12 +127,10 @@ public:
         emit q->signal_drawShape(shape, color);
     }
 
-    void drawBackgroundRectangle()
+    void drawBackgroundRectangle(const geometrize::rgba color)
     {
-        const geometrize::rgba color{geometrize::commonutil::getAverageImageColor(m_worker.getRunner().getTarget())};
         const std::int32_t w = m_worker.getTarget().getWidth();
         const std::int32_t h = m_worker.getTarget().getHeight();
-
         const std::shared_ptr<geometrize::Rectangle> rectangle = std::make_shared<geometrize::Rectangle>(0, 0, w, h);
         rectangle->rasterize = [w, h](const geometrize::Shape& s) { return geometrize::rasterize(static_cast<const geometrize::Rectangle&>(s), w, h); };
 
@@ -285,9 +283,9 @@ void ImageTask::drawShape(std::shared_ptr<geometrize::Shape> shape, const geomet
     d->drawShape(shape, color);
 }
 
-void ImageTask::drawBackgroundRectangle()
+void ImageTask::drawBackgroundRectangle(const geometrize::rgba color)
 {
-    d->drawBackgroundRectangle();
+    d->drawBackgroundRectangle(color);
 }
 
 void ImageTask::modelWillStep()

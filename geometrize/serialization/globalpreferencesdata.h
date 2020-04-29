@@ -1,10 +1,12 @@
 #pragma once
 
+#include <array>
 #include <cstdint>
 #include <string>
 #include <utility>
 
 #include "cereal/cereal.hpp"
+#include "cereal/types/array.hpp"
 #include "cereal/types/utility.hpp"
 
 namespace geometrize
@@ -26,6 +28,12 @@ public:
                  bool& shouldGeometrizeAppLogoOnLaunch,
                  bool& shouldPopulateRecentItemsOnLaunch,
                  bool& shouldPopulateTemplatesOnLaunch,
+
+                 std::array<std::int32_t, 4>& customImageTaskBackgroundOverrideColor,
+                 bool& shouldUseCustomImageTaskBackgroundOverrideColor,
+
+                 std::array<std::int32_t, 4>& targetImageAlphaReplacementColor,
+                 bool& shouldUseImageAlphaReplacementColor,
 
                  bool& shouldAutoLoadImageTaskSettings,
                  bool& shouldAutoSaveImageTaskSettings,
@@ -49,6 +57,12 @@ public:
         ar(cereal::make_nvp(shouldGeometrizeAppLogoOnLaunchKey, shouldGeometrizeAppLogoOnLaunch));
         ar(cereal::make_nvp(shouldPopulateRecentItemsOnLaunchKey, shouldPopulateRecentItemsOnLaunch));
         ar(cereal::make_nvp(shouldPopulateTemplatesOnLaunchKey, shouldPopulateTemplatesOnLaunch));
+
+        ar(cereal::make_nvp(customImageTaskBackgroundOverrideColorKey, customImageTaskBackgroundOverrideColor));
+        ar(cereal::make_nvp(shouldUseCustomImageTaskBackgroundOverrideColorKey, shouldUseCustomImageTaskBackgroundOverrideColor));
+
+        ar(cereal::make_nvp(targetImageAlphaReplacementColorKey, targetImageAlphaReplacementColor));
+        ar(cereal::make_nvp(shouldUseImageAlphaReplacementColorKey, shouldUseImageAlphaReplacementColor));
 
         ar(cereal::make_nvp(shouldAutoLoadImageTaskSettingsKey, shouldAutoLoadImageTaskSettings));
         ar(cereal::make_nvp(shouldAutoSaveImageTaskSettingsKey, shouldAutoSaveImageTaskSettings));
@@ -74,6 +88,12 @@ private:
     const std::string shouldGeometrizeAppLogoOnLaunchKey{"shouldGeometrizeAppLogoOnLaunch"};
     const std::string shouldPopulateRecentItemsOnLaunchKey{"shouldPopulateRecentItemsOnLaunch"};
     const std::string shouldPopulateTemplatesOnLaunchKey{"shouldPopulateTemplatesOnLaunch"};
+
+    const std::string customImageTaskBackgroundOverrideColorKey{"customImageTaskBackgroundOverrideColor"};
+    const std::string shouldUseCustomImageTaskBackgroundOverrideColorKey{"shouldUseCustomImageTaskBackgroundOverrideColor"};
+
+    const std::string targetImageAlphaReplacementColorKey{"targetImageAlphaReplacementColor"};
+    const std::string shouldUseImageAlphaReplacementColorKey{"shouldUseImageAlphaReplacementColor"};
 
     const std::string shouldAutoLoadImageTaskSettingsKey{"shouldAutoLoadImageTaskSettingsKey"};
     const std::string shouldAutoSaveImageTaskSettingsKey{"shouldAutoSaveImageTaskSettingsKey"};
