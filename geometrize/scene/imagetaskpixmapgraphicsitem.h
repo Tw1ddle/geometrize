@@ -1,5 +1,6 @@
 #pragma once
 
+#include <QEvent>
 #include <QGraphicsPixmapItem>
 #include <QFocusEvent>
 #include <QKeyEvent>
@@ -8,6 +9,8 @@
 #include <QGraphicsSceneWheelEvent>
 #include <QObject>
 #include <QPixmap>
+
+#include "customtabletevent.h"
 
 namespace geometrize
 {
@@ -28,6 +31,7 @@ public:
     virtual ~ImageTaskPixmapGraphicsItem();
 
 signals:
+    void signal_onCustomTabletEvent(const geometrize::scene::CustomTabletEvent& event);
     void signal_onHoverMoveEvent(double lastX, double lastY, double x, double y, bool ctrlModifier);
     void signal_onMousePressEvent(double x, double y, bool ctrlModifier);
     void signal_onMouseMoveEvent(double lastX, double lastY, double x, double y, bool ctrlModifier);
@@ -39,6 +43,7 @@ signals:
     void signal_onFocusOutEvent();
 
 protected:
+    bool sceneEvent(QEvent* event) override;
     void hoverMoveEvent(QGraphicsSceneHoverEvent* event) override;
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;

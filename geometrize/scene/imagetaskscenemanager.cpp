@@ -113,6 +113,9 @@ public:
 private:
     void connectTargetItemSignals(geometrize::scene::ImageTaskPixmapGraphicsItem& item)
     {
+        connect(&item, &geometrize::scene::ImageTaskPixmapGraphicsItem::signal_onCustomTabletEvent, [this](const geometrize::scene::CustomTabletEvent& event) {
+            q->signal_onTargetImageTabletEvent(event);
+        });
         connect(&item, &geometrize::scene::ImageTaskPixmapGraphicsItem::signal_onHoverMoveEvent, [this](const double lastX, const double lastY, const double x, const double y, const bool ctrlModifier) {
             q->signal_onTargetImageHoverMoveEvent(lastX, lastY, x, y, ctrlModifier);
         });

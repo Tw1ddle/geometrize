@@ -6,35 +6,62 @@
 #include <QKeyEvent>
 #include <QString>
 #include <QTabletEvent>
+#include <QTouchEvent>
 #include <QWheelEvent>
+
+#include "customtabletevent.h"
+#include "scene/imagetaskscene.h"
 
 namespace
 {
 
-/*
-void printTabletEventInfo(const QTabletEvent* const event)
+geometrize::scene::TabletEventData makeCustomTabletEventData(const QTabletEvent& event, const QGraphicsView& view)
 {
-    if(!event) {
-        return;
-    }
-    const QString action = [event]() {
-        if(event->type() == QEvent::TabletMove)
-            return "moved";
-        else if(event->type() == QEvent::TabletPress)
-            return "pressed";
-        else if(event->type() == QEvent::TabletRelease)
-            return "lifted";
-        return "unknown";
+    const geometrize::scene::TabletEventType eventType = [&event]() {
+        switch(event.type()) {
+        case QEvent::Type::TabletMove:
+            return geometrize::scene::TabletEventType::Move;
+        case QEvent::Type::TabletPress:
+            return geometrize::scene::TabletEventType::Press;
+        case QEvent::Type::TabletRelease:
+            return geometrize::scene::TabletEventType::Release;
+        case QEvent::Type::TabletEnterProximity:
+            return geometrize::scene::TabletEventType::EnterProximity;
+        case QEvent::Type::TabletLeaveProximity:
+            return geometrize::scene::TabletEventType::LeaveProximity;
+        default:
+            break;
+        }
+        return geometrize::scene::TabletEventType::Unknown;
     }();
 
-    qInfo() << action << " at " << QString::number(event->posF().x(), 'g', 8) << ", " << QString::number(event->posF().y(), 'g', 8)
-            << " pressure = " << QString::number(event->pressure() * 100.0, 'g', 8)
-            << " tangentialPressure = " << QString::number(event->tangentialPressure(), 'g', 8)
-            << " rotation = " << QString::number(event->rotation(), 'g', 8)
-            << " xTilt = " << QString::number(event->xTilt(), 'g', 8)
-            << " yTilt = " << QString::number(event->yTilt(), 'g', 8);
+    const geometrize::scene::TabletEventPointerType pointerType = [&event]() {
+        switch(event.pointerType()) {
+        case QTabletEvent::PointerType::Pen:
+            return geometrize::scene::TabletEventPointerType::Pen;
+        case QTabletEvent::PointerType::Cursor:
+            return geometrize::scene::TabletEventPointerType::Cursor;
+        case QTabletEvent::PointerType::Eraser:
+            return geometrize::scene::TabletEventPointerType::Eraser;
+        default:
+            break;
+        }
+        return geometrize::scene::TabletEventPointerType::UnknownPointer;
+    }();
+
+    return geometrize::scene::TabletEventData {
+        eventType,
+        pointerType,
+        static_cast<float>(event.posF().x()),
+        static_cast<float>(event.posF().y()),
+        static_cast<float>(view.mapToScene(event.pos()).x()),
+        static_cast<float>(view.mapToScene(event.pos()).y()),
+        static_cast<float>(event.pressure()),
+        static_cast<float>(event.tangentialPressure()),
+        static_cast<float>(event.xTilt()),
+        static_cast<float>(event.yTilt())
+    };
 }
-*/
 
 }
 
@@ -44,8 +71,24 @@ namespace geometrize
 namespace scene
 {
 
-ImageTaskGraphicsView::ImageTaskGraphicsView(QWidget* parent) : QGraphicsView(parent)
+class ImageTaskGraphicsView::ImageTaskGraphicsViewImpl
 {
+public:
+    ImageTaskGraphicsViewImpl(ImageTaskGraphicsView* pQ) : q{pQ}, m_totalScaleFactor(1.0f)
+    {
+    }
+    ImageTaskGraphicsViewImpl operator=(const ImageTaskGraphicsViewImpl&) = delete;
+    ImageTaskGraphicsViewImpl(const ImageTaskGraphicsViewImpl&) = delete;
+    ~ImageTaskGraphicsViewImpl() = default;
+
+    ImageTaskGraphicsView* q;
+
+    float m_totalScaleFactor;
+};
+
+ImageTaskGraphicsView::ImageTaskGraphicsView(QWidget* parent) : QGraphicsView(parent), d{std::make_unique<ImageTaskGraphicsViewImpl>(this)}
+{
+    viewport()->setAttribute(Qt::WA_AcceptTouchEvents);
     setInteractive(true);
     setMouseTracking(true);
     setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
@@ -55,23 +98,59 @@ ImageTaskGraphicsView::ImageTaskGraphicsView(QWidget* parent) : QGraphicsView(pa
     populateUi();
 }
 
+ImageTaskGraphicsView::~ImageTaskGraphicsView()
+{
+}
+
 bool ImageTaskGraphicsView::viewportEvent(QEvent* event)
 {
-    //printTabletEventInfo(dynamic_cast<QTabletEvent*>(event));
-
-    if(event->type() == QEvent::TabletMove) {
-        QApplication::sendEvent(scene(), event);
+    switch(event->type()) {
+    case QEvent::TabletMove:
+    case QEvent::TabletPress:
+    case QEvent::TabletRelease:
+    case QEvent::TabletEnterProximity:
+    case QEvent::TabletLeaveProximity:
+    {
+        // Forward an event containing relevant tablet event data to the graphics scene
+        const auto customEventData = makeCustomTabletEventData(static_cast<QTabletEvent&>(*event), *this);
+        geometrize::scene::CustomTabletEvent customEvent(customEventData, this);
+        QCoreApplication::sendEvent(dynamic_cast<geometrize::scene::ImageTaskScene*>(scene()), &customEvent);
         event->accept();
-    } else if(event->type() == QEvent::TabletPress) {
-        QApplication::sendEvent(scene(), event);
-        event->accept();
-    } else if(event->type() == QEvent::TabletRelease) {
-        QApplication::sendEvent(scene(), event);
-        event->accept();
-    } else {
-        return QGraphicsView::viewportEvent(event);
+        return true;
     }
-    return true;
+    // TODO implement pinch-to-zoom
+    /*
+    case QEvent::TouchBegin:
+    case QEvent::TouchUpdate:
+    case QEvent::TouchEnd:
+    {
+        QTouchEvent *touchEvent = static_cast<QTouchEvent *>(event);
+        QList<QTouchEvent::TouchPoint> touchPoints = touchEvent->touchPoints();
+        if (touchPoints.count() == 2) {
+            // determine scale factor
+            const QTouchEvent::TouchPoint &touchPoint0 = touchPoints.first();
+            const QTouchEvent::TouchPoint &touchPoint1 = touchPoints.last();
+            qreal currentScaleFactor =
+                    QLineF(touchPoint0.pos(), touchPoint1.pos()).length()
+                    / QLineF(touchPoint0.startPos(), touchPoint1.startPos()).length();
+            if (touchEvent->touchPointStates() & Qt::TouchPointReleased) {
+                // if one of the fingers is released, remember the current scale
+                // factor so that adding another finger later will continue zooming
+                // by adding new scale factor to the existing remembered value.
+                d->m_totalScaleFactor *= currentScaleFactor;
+                currentScaleFactor = 1;
+            }
+            setTransform(QTransform().scale(d->m_totalScaleFactor * currentScaleFactor,
+                                            d->m_totalScaleFactor * currentScaleFactor));
+        }
+        event->accept();
+        return true;
+    }
+    */
+    default:
+        break;
+    }
+    return QGraphicsView::viewportEvent(event);
 }
 
 void ImageTaskGraphicsView::wheelEvent(QWheelEvent* e)

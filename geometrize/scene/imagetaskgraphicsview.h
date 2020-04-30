@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include <QGraphicsView>
 #include <QObject>
 
@@ -22,7 +24,7 @@ class ImageTaskGraphicsView : public QGraphicsView
 
 public:
     explicit ImageTaskGraphicsView(QWidget* parent = nullptr);
-    virtual ~ImageTaskGraphicsView() = default;
+    virtual ~ImageTaskGraphicsView();
 
 protected:
     void changeEvent(QEvent*) override;
@@ -37,6 +39,9 @@ private:
     void mouseMoveEvent(QMouseEvent* event) override;
     void keyPressEvent(QKeyEvent* event) override;
     void keyReleaseEvent(QKeyEvent* event) override;
+
+    class ImageTaskGraphicsViewImpl;
+    std::unique_ptr<ImageTaskGraphicsViewImpl> d;
 };
 
 }

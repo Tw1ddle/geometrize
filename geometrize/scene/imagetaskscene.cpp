@@ -7,6 +7,7 @@
 #include <QGraphicsSceneWheelEvent>
 #include <QString>
 
+#include "scene/customtabletevent.h"
 #include "scene/imagetaskpixmapgraphicsitem.h"
 #include "scene/svgitem.h"
 #include "scene/tools/areaofinfluenceshapes.h"
@@ -113,27 +114,15 @@ void ImageTaskScene::setOverlayShapeVisibility(const bool visible)
 
 bool ImageTaskScene::event(QEvent* event)
 {
-    /*
-    switch(event->type())
-    {
-        // Events forwarded from the ImageTaskGraphicsView
-        case QEvent::TabletPress:
-        case QEvent::TabletRelease:
-        case QEvent::TabletMove:
-        {
-            // TODO also need to handle enter/exit proximity events with wacom tablet
-            // TODO should also care about the device type probably
-            const auto ev = static_cast<QTabletEvent*>(event); // TODO get tablet event + extras e.g. the global pos mapped to scene pos
-            ev->
-            //tabletEvent = new MyTabletEvent(ev);
-            //sendEvent(itemAt(tabletEvent->scenePos()), tabletEvent);
-            return true;
+    // Handle custom tablet events forwarded from the ImageTaskGraphicsView
+    if(event->type() == geometrize::scene::CustomTabletEvent::customEventId) {
+        const auto ev = static_cast<geometrize::scene::CustomTabletEvent*>(event);
+        QGraphicsItem* itemUnderEvent = itemAt(ev->getData().xScenePos, ev->getData().yScenePos, QTransform());
+        if(itemUnderEvent) {
+            sendEvent(itemUnderEvent, ev);
         }
-        default:
-            return QGraphicsScene::event(event);
+        return true;
     }
-    */
-
     return QGraphicsScene::event(event);
 }
 

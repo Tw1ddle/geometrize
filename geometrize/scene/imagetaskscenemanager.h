@@ -5,6 +5,8 @@
 
 #include <QObject>
 
+#include "scene/customtabletevent.h"
+
 class QPixmap;
 
 namespace geometrize
@@ -29,6 +31,7 @@ namespace scene
 
 /**
  * @brief The ImageTaskSceneManager manages the scenes representing the graphical state of the shapes
+ * It mostly works to synchronize their state and provide a single interface for handling scene events
  */
 class ImageTaskSceneManager : public QObject
 {
@@ -95,6 +98,7 @@ public:
     void setAreaOfInfluenceShape(const geometrize::Shape& shape);
 
 signals:
+    void signal_onTargetImageTabletEvent(const geometrize::scene::CustomTabletEvent& event);
     void signal_onTargetImageHoverMoveEvent(double lastX, double lastY, double x, double y, bool ctrlModifier);
     void signal_onTargetImageMousePressEvent(double x, double y, bool ctrlModifier);
     void signal_onTargetImageMouseMoveEvent(double lastX, double lastY, double x, double y, bool ctrlModifier);
@@ -110,13 +114,6 @@ signals:
     void signal_onAreaOfInfluenceShapeMouseWheelEvent(double x, double y, int amount, bool ctrlModifier);
     void signal_onAreaOfInfluenceShapeKeyPressEvent(int key, bool ctrlModifier);
     void signal_onAreaOfInfluenceShapeKeyReleaseEvent(int key, bool ctrlModifier);
-
-    void signal_onAreaOfInfluenceShapeTabletPressEvent(double lastX, double lastY,
-        double x, double y, float pressure, float tangentialPressure, float rotation, float xTilt, float yTilt);
-    void signal_onAreaOfInfluenceShapeTabletMoveEvent(double lastX, double lastY,
-        double x, double y, float pressure, float tangentialPressure, float rotation, float xTilt, float yTilt);
-    void signal_onAreaOfInfluenceShapeTabletLiftEvent(double lastX, double lastY,
-        double x, double y, float pressure, float tangentialPressure, float rotation, float xTilt, float yTilt);
 
 private:
     class ImageTaskSceneManagerImpl;

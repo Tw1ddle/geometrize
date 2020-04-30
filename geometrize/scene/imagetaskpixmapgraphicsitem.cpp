@@ -1,11 +1,14 @@
 #include "imagetaskpixmapgraphicsitem.h"
 
+#include <QEvent>
 #include <QGraphicsPixmapItem>
 #include <QKeyEvent>
 #include <QGraphicsSceneHoverEvent>
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsSceneWheelEvent>
 #include <QPixmap>
+
+#include "customtabletevent.h"
 
 namespace geometrize
 {
@@ -27,6 +30,16 @@ ImageTaskPixmapGraphicsItem::ImageTaskPixmapGraphicsItem(const QPixmap& pixmap) 
 
 ImageTaskPixmapGraphicsItem::~ImageTaskPixmapGraphicsItem()
 {
+}
+
+bool ImageTaskPixmapGraphicsItem::sceneEvent(QEvent* event)
+{
+    // Handle custom tablet events forwarded from the ImageTaskScene
+    if(event->type() == geometrize::scene::CustomTabletEvent::customEventId) {
+        emit signal_onCustomTabletEvent(*static_cast<geometrize::scene::CustomTabletEvent*>(event));
+        return true;
+    }
+    return QGraphicsPixmapItem::sceneEvent(event);
 }
 
 void ImageTaskPixmapGraphicsItem::hoverMoveEvent(QGraphicsSceneHoverEvent* event)
