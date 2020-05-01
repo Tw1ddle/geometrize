@@ -30,6 +30,11 @@ class LaunchWindow;
 namespace geometrize
 {
 
+namespace scene
+{
+class TabletEventData;
+}
+
 namespace task
 {
 class ImageTask;
@@ -178,6 +183,8 @@ bool exportGIF(const std::vector<geometrize::ShapeResult>& data,
 bool saveDesktopScreenshot(const std::string& path);
 
 bool saveWidgetScreenshot(const std::string& path, QWidget* widget);
+
+std::string customTabletEventDataToString(const geometrize::scene::TabletEventData& data);
 
 }
 

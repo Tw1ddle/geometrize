@@ -65,6 +65,12 @@ std::shared_ptr<chaiscript::Module> createAnimatedGifExportBindings();
 std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings();
 
 /**
+ * @brief createTabletEventBindings Creates the Chaiscript to C++ bindings for tablet events (e.g. Wacom pen input data).
+ * @return A shared pointer to a module encapsulating the bindings.
+ */
+std::shared_ptr<chaiscript::Module> createTabletEventBindings();
+
+/**
  * @brief createMathBindings Creates the Chaiscript to C++ bindings for common math functions.
  * @return A shared pointer to a module encapsulating the bindings.
  */

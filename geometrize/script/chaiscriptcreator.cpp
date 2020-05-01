@@ -86,6 +86,7 @@ std::unique_ptr<chaiscript::ChaiScript> createShapeMutatorEngine()
     chai->add(bindings::createDefaultBindings());
     chai->add(bindings::createGeometrizeLibraryBindings());
     chai->add(bindings::createMathBindings());
+    chai->add(bindings::createTabletEventBindings());
 
     return chai;
 }

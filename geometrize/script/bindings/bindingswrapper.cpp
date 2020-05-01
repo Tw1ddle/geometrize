@@ -13,6 +13,7 @@
 #include "exporter/gifexporter.h"
 #include "geometrize/bitmap/bitmap.h"
 #include "localization/localization.h"
+#include "scene/customtabletevent.h"
 #include "task/taskutil.h"
 #include "task/imagetask.h"
 
@@ -286,6 +287,11 @@ bool saveDesktopScreenshot(const std::string& path)
 bool saveWidgetScreenshot(const std::string& path, QWidget* widget)
 {
     return geometrize::util::saveWidgetScreenshot(path, widget);
+}
+
+std::string customTabletEventDataToString(const geometrize::scene::TabletEventData& data)
+{
+    return geometrize::scene::tabletEventDataToString(data).toStdString();
 }
 
 }

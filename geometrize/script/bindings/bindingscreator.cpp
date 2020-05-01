@@ -42,6 +42,7 @@
 #include "dialog/imagetaskwindow.h"
 #include "exporter/imageexporter.h"
 #include "image/imageloader.h"
+#include "scene/customtabletevent.h"
 #include "script/bindings/bindingshelpers.h"
 #include "script/bindings/bindingswrapper.h"
 #include "script/bindings/chaiscriptmathextras.h"
@@ -469,6 +470,19 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
     //ADD_MEMBER(Model, getCurrent);
     //ADD_MEMBER(Model, getTarget);
     ADD_MEMBER(Model, setSeed);
+
+    return module;
+}
+
+std::shared_ptr<chaiscript::Module> createTabletEventBindings()
+{
+    using namespace geometrize::scene;
+
+    auto module = createModule();
+
+    ADD_TYPE(TabletEventData);
+
+    ADD_FREE_FUN(customTabletEventDataToString);
 
     return module;
 }

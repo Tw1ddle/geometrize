@@ -396,6 +396,18 @@ public:
         });
         m_sceneManager.setAreaOfInfluenceShape(*m_areaOfInfluenceShapes.getCurrentShape().get());
 
+        // Pass the latest tablet event info to the current image task's script engine
+        connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onTargetImageTabletEvent, [this](const geometrize::scene::CustomTabletEvent& event) {
+
+            const geometrize::scene::TabletEventData& eventData = event.getData();
+
+            // TODO do something useful with the event
+            if(m_task != nullptr) {
+                chaiscript::ChaiScript* engine = m_task->getGeometrizer().getEngine();
+                engine->set_global(chaiscript::var(event.getData()), "lastTabletEvent");
+            }
+        });
+
         // Set initial target image opacity
         const float initialTargetImageOpacity{0};
         ui->imageTaskImageWidget->setTargetImageOpacity(static_cast<unsigned int>(initialTargetImageOpacity));
