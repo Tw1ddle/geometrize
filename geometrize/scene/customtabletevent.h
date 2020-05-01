@@ -54,6 +54,7 @@ QString tabletEventPointerTypeToString(const TabletEventPointerType& type);
  */
 class TabletEventData
 {
+public:
     TabletEventData() = default;
     ~TabletEventData() = default;
     TabletEventData& operator=(const TabletEventData&) = default;
