@@ -49,18 +49,19 @@ geometrize::scene::TabletEventData makeCustomTabletEventData(const QTabletEvent&
         return geometrize::scene::TabletEventPointerType::UnknownPointer;
     }();
 
-    return geometrize::scene::TabletEventData {
-        eventType,
-        pointerType,
-        static_cast<float>(event.posF().x()),
-        static_cast<float>(event.posF().y()),
-        static_cast<float>(view.mapToScene(event.pos()).x()),
-        static_cast<float>(view.mapToScene(event.pos()).y()),
-        static_cast<float>(event.pressure()),
-        static_cast<float>(event.tangentialPressure()),
-        static_cast<float>(event.xTilt()),
-        static_cast<float>(event.yTilt())
-    };
+    geometrize::scene::TabletEventData data;
+    data.eventType = eventType;
+    data.pointerType = pointerType;
+    data.xViewPos = static_cast<float>(event.posF().x());
+    data.yViewPos = static_cast<float>(event.posF().y());
+    data.xScenePos = static_cast<float>(view.mapToScene(event.pos()).x());
+    data.yScenePos = static_cast<float>(view.mapToScene(event.pos()).y());
+    data.pressure = static_cast<float>(event.pressure());
+    data.tangentialPressure = static_cast<float>(event.tangentialPressure());
+    data.xTilt = static_cast<float>(event.xTilt());
+    data.yTilt = static_cast<float>(event.yTilt());
+
+    return data;
 }
 
 }
