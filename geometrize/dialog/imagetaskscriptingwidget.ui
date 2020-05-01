@@ -30,6 +30,20 @@
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
+         <widget class="QPushButton" name="addBeforeStepEvent">
+          <property name="text">
+           <string>Add Before Step Event</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="addAfterStepEvent">
+          <property name="text">
+           <string>Add After Step Event</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="addStopConditionButton">
           <property name="text">
            <string>Add Stop Condition</string>

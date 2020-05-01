@@ -54,18 +54,28 @@ public:
     void syncUserInterface();
 
     /**
-     * @brief evaluateStopConditionScripts Returns true if the condition(s) for stopping geometrizing the image were met
+     * @brief evaluateBeforeStepScripts Evaluates the scripts set to run directly before the image task is stepped (i.e. immediately before the image task starts a step).
+     */
+    void evaluateBeforeStepScripts() const;
+
+    /**
+     * @brief evaluateAfterStepScripts Evaluates the scripts set to run directly after the image task is stepped (i.e. immediately after the image task starts a step).
+     */
+    void evaluateAfterStepScripts() const;
+
+    /**
+     * @brief evaluateStopConditionScripts Returns true if the condition(s) for stopping geometrizing the image were met. This is run each time the image task completes a step.
      * @return True if a stop condition was met
      */
     bool evaluateStopConditionScripts() const;
 
     /**
-     * @brief evaluateBeforeAddShapeScripts Evaluates the scripts set to run directly before a shape is added to the image
+     * @brief evaluateBeforeAddShapeScripts Evaluates the scripts set to run directly before a shape is added to the image.
      */
     void evaluateBeforeAddShapeScripts() const;
 
     /**
-     * @brief evaluateAfterAddShapeScripts Evaluates the scripts set to run directly after a shape is added to the image
+     * @brief evaluateAfterAddShapeScripts Evaluates the scripts set to run directly after a shape is added to the image.
      */
     void evaluateAfterAddShapeScripts() const;
 

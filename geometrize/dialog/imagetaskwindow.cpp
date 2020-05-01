@@ -191,6 +191,8 @@ public:
                     aoiPixels.push_back(std::make_pair(m_task->getWidth() / 2, m_task->getHeight() / 2));
                 }
                 engine->set_global(chaiscript::var(aoiPixels), "aoiPixels");
+
+                ui->scriptsWidget->evaluateBeforeStepScripts();
             });
 
             m_taskDidStepConnection = connect(currentTask, &task::ImageTask::signal_modelDidStep, [this](std::vector<geometrize::ShapeResult> shapes) {
@@ -203,6 +205,8 @@ public:
                 m_shapes.appendShapes(shapes);
 
                 updateStats();
+
+                ui->scriptsWidget->evaluateAfterStepScripts();
 
                 if(shouldKeepStepping()) {
                     stepModel();
@@ -398,10 +402,6 @@ public:
 
         // Pass the latest tablet event info to the current image task's script engine
         connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onTargetImageTabletEvent, [this](const geometrize::scene::CustomTabletEvent& event) {
-
-            const geometrize::scene::TabletEventData& eventData = event.getData();
-
-            // TODO do something useful with the event
             if(m_task != nullptr) {
                 chaiscript::ChaiScript* engine = m_task->getGeometrizer().getEngine();
                 engine->set_global(chaiscript::var(event.getData()), "lastTabletEvent");

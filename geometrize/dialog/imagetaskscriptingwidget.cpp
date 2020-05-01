@@ -25,6 +25,8 @@
 namespace
 {
 
+const std::string beforeStepCallbackPrefix = "before_step_callback_";
+const std::string afterStepCallbackPrefix = "after_step_callback_";
 const std::string stopConditionIdPrefix = "stop_condition_";
 const std::string beforeAddShapeCallbackPrefix = "before_add_shape_callback_";
 const std::string afterAddShapeCallbackPrefix = "after_add_shape_callback_";
@@ -62,6 +64,14 @@ public:
 
         connect(ui->editShapeScriptsButton, &QPushButton::clicked, [this]() {
             revealShapeScriptingPanel();
+        });
+        connect(ui->addBeforeStepEvent, &QPushButton::clicked, [this]() {
+            const std::string defaultCode = "printToAllScriptConsoleWidgets(\"Will step...\")";
+            addBeforeStepCallbackWidget(defaultCode);
+        });
+        connect(ui->addAfterStepEvent, &QPushButton::clicked, [this]() {
+            const std::string defaultCode = "printToAllScriptConsoleWidgets(\"Did step...\")";
+            addAfterStepCallbackWidget(defaultCode);
         });
         connect(ui->addStopConditionButton, &QPushButton::clicked, [this]() {
             const std::string defaultCode = "currentShapeCount >= 500; // Stop when there are more than 500 shapes";
@@ -158,6 +168,54 @@ public:
         return scriptStopConditionMet;
     }
 
+    void evaluateBeforeStepScripts()
+    {
+        const auto engine = m_task->getGeometrizer().getEngine();
+        if(!engine) {
+            return;
+        }
+
+        const auto scriptWidgets = ui->customScriptsGroupBox->findChildren<geometrize::dialog::ScriptEditorWidget*>();
+        for(const auto& widget : scriptWidgets) {
+            if(widget->getFunctionName().substr(0, beforeStepCallbackPrefix.length()) != beforeStepCallbackPrefix) {
+                continue;
+            }
+
+            try {
+                engine->eval(widget->getCurrentCode());
+                widget->onScriptEvaluationSucceeded();
+            } catch(const chaiscript::exception::eval_error& e) {
+                widget->onScriptEvaluationFailed(e.pretty_print());
+            } catch(...) {
+                widget->onScriptEvaluationFailed("Unknown script evaluation error");
+            }
+        }
+    }
+
+    void evaluateAfterStepScripts()
+    {
+        const auto engine = m_task->getGeometrizer().getEngine();
+        if(!engine) {
+            return;
+        }
+
+        const auto scriptWidgets = ui->customScriptsGroupBox->findChildren<geometrize::dialog::ScriptEditorWidget*>();
+        for(const auto& widget : scriptWidgets) {
+            if(widget->getFunctionName().substr(0, afterStepCallbackPrefix.length()) != afterStepCallbackPrefix) {
+                continue;
+            }
+
+            try {
+                engine->eval(widget->getCurrentCode());
+                widget->onScriptEvaluationSucceeded();
+            } catch(const chaiscript::exception::eval_error& e) {
+                widget->onScriptEvaluationFailed(e.pretty_print());
+            } catch(...) {
+                widget->onScriptEvaluationFailed("Unknown script evaluation error");
+            }
+        }
+    }
+
     void evaluateBeforeAddShapeScripts()
     {
         const auto engine = m_task->getGeometrizer().getEngine();
@@ -222,7 +280,9 @@ private:
     {
         if(!startsWith(scriptIdPrefix, ::stopConditionIdPrefix) &&
            !startsWith(scriptIdPrefix, ::beforeAddShapeCallbackPrefix) &&
-           !startsWith(scriptIdPrefix, ::afterAddShapeCallbackPrefix)) {
+           !startsWith(scriptIdPrefix, ::afterAddShapeCallbackPrefix) &&
+           !startsWith(scriptIdPrefix, ::beforeStepCallbackPrefix) &&
+           !startsWith(scriptIdPrefix, ::afterStepCallbackPrefix)) {
             return;
         }
 
@@ -232,6 +292,16 @@ private:
             emit q->signal_scriptChanged(functionName, code);
         });
         ui->customScriptsEditorLayout->addWidget(widget);
+    }
+
+    void addBeforeStepCallbackWidget(const std::string& scriptCode)
+    {
+        addScriptWidget(tr("Before Step Callback").toStdString(), ::beforeStepCallbackPrefix, scriptCode);
+    }
+
+    void addAfterStepCallbackWidget(const std::string& scriptCode)
+    {
+        addScriptWidget(tr("After Step Callback").toStdString(), ::afterStepCallbackPrefix, scriptCode);
     }
 
     void addCustomStopConditionWidget(const std::string& scriptCode)
@@ -327,6 +397,16 @@ void ImageTaskScriptingWidget::setImageTask(task::ImageTask* task)
 void ImageTaskScriptingWidget::syncUserInterface()
 {
     d->syncUserInterface();
+}
+
+void ImageTaskScriptingWidget::evaluateBeforeStepScripts() const
+{
+    d->evaluateBeforeStepScripts();
+}
+
+void ImageTaskScriptingWidget::evaluateAfterStepScripts() const
+{
+    d->evaluateAfterStepScripts();
 }
 
 bool ImageTaskScriptingWidget::evaluateStopConditionScripts() const
