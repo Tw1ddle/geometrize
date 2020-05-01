@@ -50,9 +50,9 @@ enum class TabletEventPointerType
 QString tabletEventPointerTypeToString(const TabletEventPointerType& type);
 
 /**
- * @brief The TabletEventData struct represents data produced from a Wacom pen/tablet event (in the context of a graphics view)
+ * @brief The TabletEventData class represents data produced from a Wacom pen/tablet event (in the context of a graphics view)
  */
-struct TabletEventData
+class TabletEventData
 {
     TabletEventData() = default;
     ~TabletEventData() = default;
