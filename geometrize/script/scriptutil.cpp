@@ -70,6 +70,31 @@ std::map<std::string, std::string> getPointerAreaOfInterestShapeMutatorScripts()
     return getScriptsFromFolder(":/scripts/scripts/pointer_area_of_interest_mutators/");
 }
 
+std::map<std::string, std::string> getBeforeStepCallbackScripts()
+{
+    return getScriptsFromFolder(":/scripts/scripts/before_step_callbacks/");
+}
+
+std::map<std::string, std::string> getAfterStepCallbackScripts()
+{
+    return getScriptsFromFolder(":/scripts/scripts/after_step_callbacks/");
+}
+
+std::map<std::string, std::string> getStopConditionScripts()
+{
+    return getScriptsFromFolder(":/scripts/scripts/stop_condition_callbacks/");
+}
+
+std::map<std::string, std::string> getBeforeAddShapeCallbackScripts()
+{
+    return getScriptsFromFolder(":/scripts/scripts/before_add_shape_callbacks/");
+}
+
+std::map<std::string, std::string> getAfterAddShapeCallbackScripts()
+{
+    return getScriptsFromFolder(":/scripts/scripts/after_add_shape_callbacks/");
+}
+
 }
 
 }

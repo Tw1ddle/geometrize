@@ -50,7 +50,7 @@ QString tabletEventDataToString(const TabletEventData& data)
             "Pressure: " + QString::number(data.pressure * 100.0, 'g', 8) + ", " +
             "Tangential pressure: " + QString::number(data.tangentialPressure, 'g', 8) + ", " +
             "Rotation: " + QString::number(data.rotation, 'g', 8) + ", " +
-            "Tilt: " + QString::number(data.xTilt, 'g', 8) + ", " + QString::number(data.yTilt, 'g', 8) + ", ";
+            "Tilt: " + QString::number(data.xTilt, 'g', 8) + ", " + QString::number(data.yTilt, 'g', 8);
     return s;
 }
 

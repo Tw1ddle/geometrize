@@ -47,6 +47,36 @@ std::map<std::string, std::string> getDefaultShapeMutatorScripts();
  */
 std::map<std::string, std::string> getPointerAreaOfInterestShapeMutatorScripts();
 
+/**
+ * @brief getBeforeStepCallbackScripts Gets a map of scripts that are useful to call prior to stepping an image task (i.e. before starting work to find a shape to add).
+ * @return A map of Chaiscript script function names to function bodies.
+ */
+std::map<std::string, std::string> getBeforeStepCallbackScripts();
+
+/**
+ * @brief getAfterStepCallbackScripts Gets a map of scripts that are useful to call after stepping an image task (i.e. after completing work to find a shape to add).
+ * @return A map of Chaiscript script function names to function bodies.
+ */
+std::map<std::string, std::string> getAfterStepCallbackScripts();
+
+/**
+ * @brief getStopConditionScripts Gets a map of scripts that evaluate to true/false, and can be used to check whether to stop an image task (usually after stepping).
+ * @return A map of Chaiscript script function names to function bodies.
+ */
+std::map<std::string, std::string> getStopConditionScripts();
+
+/**
+ * @brief getBeforeAddShapeCallbackScripts Gets a map of scripts that are useful to call before adding a shape to the image task views.
+ * @return A map of Chaiscript script function names to function bodies.
+ */
+std::map<std::string, std::string> getBeforeAddShapeCallbackScripts();
+
+/**
+ * @brief getAfterAddShapeCallbackScripts Gets a map of scripts that are useful to call after adding a shape to the image task views.
+ * @return A map of Chaiscript script function names to function bodies.
+ */
+std::map<std::string, std::string> getAfterAddShapeCallbackScripts();
+
 }
 
 }

@@ -30,39 +30,78 @@
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
-         <widget class="QPushButton" name="addBeforeStepEvent">
-          <property name="text">
-           <string>Add Before Step Event</string>
-          </property>
-         </widget>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QPushButton" name="addBeforeStepEvent">
+            <property name="text">
+             <string>Add Before Step Event</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="addBeforeStepPresetScriptsComboBox">
+            <property name="currentText">
+             <string/>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
         <item>
-         <widget class="QPushButton" name="addAfterStepEvent">
-          <property name="text">
-           <string>Add After Step Event</string>
-          </property>
-         </widget>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QPushButton" name="addAfterStepEvent">
+            <property name="text">
+             <string>Add After Step Event</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="addAfterStepPresetScriptsComboBox"/>
+          </item>
+         </layout>
         </item>
         <item>
-         <widget class="QPushButton" name="addStopConditionButton">
-          <property name="text">
-           <string>Add Stop Condition</string>
-          </property>
-         </widget>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QPushButton" name="addStopConditionButton">
+            <property name="text">
+             <string>Add Stop Condition</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="addStopConditionPresetScriptsComboBox"/>
+          </item>
+         </layout>
         </item>
         <item>
-         <widget class="QPushButton" name="addBeforeAddShapeEvent">
-          <property name="text">
-           <string>Add Before Add Shape Event</string>
-          </property>
-         </widget>
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <item>
+           <widget class="QPushButton" name="addBeforeAddShapeEvent">
+            <property name="text">
+             <string>Add Before Add Shape Event</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="addBeforeAddShapePresetScriptsComboBox"/>
+          </item>
+         </layout>
         </item>
         <item>
-         <widget class="QPushButton" name="addAfterAddShapeEvent">
-          <property name="text">
-           <string>Add After Add Shape Event</string>
-          </property>
-         </widget>
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <item>
+           <widget class="QPushButton" name="addAfterAddShapeEvent">
+            <property name="text">
+             <string>Add After Add Shape Event</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="addAfterAddShapePresetScriptsComboBox"/>
+          </item>
+         </layout>
         </item>
        </layout>
       </item>
@@ -73,6 +112,13 @@
        <widget class="Line" name="line">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="rescanScriptsButton">
+        <property name="text">
+         <string>Rescan Scripts</string>
         </property>
        </widget>
       </item>

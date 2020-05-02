@@ -6,7 +6,9 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <utility>
 
+#include <QComboBox>
 #include <QEvent>
 #include <QList>
 #include <QLocale>
@@ -20,6 +22,7 @@
 #include "dialog/scripteditorwidget.h"
 #include "preferences/globalpreferences.h"
 #include "script/geometrizerengine.h"
+#include "script/scriptutil.h"
 #include "task/imagetask.h"
 
 namespace
@@ -62,29 +65,9 @@ public:
 
         new geometrize::dialog::ImageTaskShapeScriptingPanel(q);
 
-        connect(ui->editShapeScriptsButton, &QPushButton::clicked, [this]() {
-            revealShapeScriptingPanel();
-        });
-        connect(ui->addBeforeStepEvent, &QPushButton::clicked, [this]() {
-            const std::string defaultCode = "printToAllScriptConsoleWidgets(\"Will step...\")";
-            addBeforeStepCallbackWidget(defaultCode);
-        });
-        connect(ui->addAfterStepEvent, &QPushButton::clicked, [this]() {
-            const std::string defaultCode = "printToAllScriptConsoleWidgets(\"Did step...\")";
-            addAfterStepCallbackWidget(defaultCode);
-        });
-        connect(ui->addStopConditionButton, &QPushButton::clicked, [this]() {
-            const std::string defaultCode = "currentShapeCount >= 500; // Stop when there are more than 500 shapes";
-            addCustomStopConditionWidget(defaultCode);
-        });
-        connect(ui->addBeforeAddShapeEvent, &QPushButton::clicked, [this]() {
-            const std::string defaultCode = "printToAllScriptConsoleWidgets(\"Will add shape to image...\");";
-            addBeforeAddShapeCallbackWidget(defaultCode);
-        });
-        connect(ui->addAfterAddShapeEvent, &QPushButton::clicked, [this]() {
-            const std::string defaultCode = "printToAllScriptConsoleWidgets(\"Did add shape to image...\");";
-            addAfterAddShapeCallbackWidget(defaultCode);
-        });
+        // Populate the preset script comboboxes with the default/built-in scripts
+        buildScriptSelectionComboBoxes();
+
         connect(ui->clearScriptsButton, &QPushButton::clicked, [this]() {
             QLayoutItem* item = nullptr;
             while((item = ui->customScriptsEditorLayout->takeAt(0)) != nullptr) {
@@ -92,8 +75,31 @@ public:
                 delete item;
             }
         });
+        connect(ui->rescanScriptsButton, &QPushButton::clicked, [this]() {
+            buildScriptSelectionComboBoxes();
+        });
 
-        // Setup the actual actions that manipulate the script functions
+        connect(ui->editShapeScriptsButton, &QPushButton::clicked, [this]() {
+            revealShapeScriptingPanel();
+        });
+
+        connect(ui->addBeforeStepEvent, &QPushButton::clicked, [this]() {
+            addBeforeStepCallbackWidget(getScriptForSelectedComboBoxItem(ui->addBeforeStepPresetScriptsComboBox));
+        });
+        connect(ui->addAfterStepEvent, &QPushButton::clicked, [this]() {
+            addAfterStepCallbackWidget(getScriptForSelectedComboBoxItem(ui->addAfterStepPresetScriptsComboBox));
+        });
+        connect(ui->addStopConditionButton, &QPushButton::clicked, [this]() {
+            addCustomStopConditionWidget(getScriptForSelectedComboBoxItem(ui->addStopConditionPresetScriptsComboBox));
+        });
+        connect(ui->addBeforeAddShapeEvent, &QPushButton::clicked, [this]() {
+            addBeforeAddShapeCallbackWidget(getScriptForSelectedComboBoxItem(ui->addBeforeAddShapePresetScriptsComboBox));
+        });
+        connect(ui->addAfterAddShapeEvent, &QPushButton::clicked, [this]() {
+            addAfterAddShapeCallbackWidget(getScriptForSelectedComboBoxItem(ui->addAfterAddShapePresetScriptsComboBox));
+        });
+
+        // Update the script code when the editor modifies them
         connect(q, &geometrize::dialog::ImageTaskScriptingWidget::signal_scriptChanged, [this](const std::string& functionName, const std::string& code) {
             if(m_task) {
                 m_task->getPreferences().setScript(functionName, code);
@@ -128,6 +134,8 @@ public:
         }
     }
 
+    // Note that we don't call this and apply the scripts to the image task until it's safe to do so (i.e. when the task isn't stepping)
+    // As a result, the latest script settings won't be saved until after the image task has stepped (i.e. had the scripts applied to it)
     std::map<std::string, std::string> getScripts() const
     {
         const auto& editors = ui->customScriptsGroupBox->findChildren<geometrize::dialog::ScriptEditorWidget*>();
@@ -363,6 +371,33 @@ private:
 
     void populateUi()
     {
+    }
+
+    void populateScriptSelectionComboBox(QComboBox* combo, const std::map<std::string, std::string>& scripts)
+    {
+        combo->clear();
+        for(const auto& item : scripts) {
+            combo->addItem(QString::fromStdString(item.first), QString::fromStdString(item.second));
+        }
+        combo->setCurrentIndex(0);
+    }
+
+    std::string getScriptForSelectedComboBoxItem(QComboBox* combo)
+    {
+        return combo->itemData(combo->currentIndex()).toString().toStdString();
+    }
+
+    void buildScriptSelectionComboBoxes()
+    {
+        std::vector<std::pair<QComboBox*, std::map<std::string, std::string>>> presetScriptData;
+        presetScriptData.push_back(std::make_pair(ui->addBeforeStepPresetScriptsComboBox, geometrize::script::getBeforeStepCallbackScripts()));
+        presetScriptData.push_back(std::make_pair(ui->addAfterStepPresetScriptsComboBox, geometrize::script::getAfterStepCallbackScripts()));
+        presetScriptData.push_back(std::make_pair(ui->addStopConditionPresetScriptsComboBox, geometrize::script::getStopConditionScripts()));
+        presetScriptData.push_back(std::make_pair(ui->addBeforeAddShapePresetScriptsComboBox, geometrize::script::getBeforeAddShapeCallbackScripts()));
+        presetScriptData.push_back(std::make_pair(ui->addAfterAddShapePresetScriptsComboBox, geometrize::script::getAfterAddShapeCallbackScripts()));
+        for(const auto& item : presetScriptData) {
+            populateScriptSelectionComboBox(item.first, item.second);
+        }
     }
 
     task::ImageTask* m_task{nullptr};
