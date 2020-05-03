@@ -175,9 +175,7 @@ public:
                 auto& geometrizer = m_task->getGeometrizer();
 
                 chaiscript::ChaiScript* engine = geometrizer.getEngine();
-
-                const bool scriptModeEnabled = m_task->getPreferences().isScriptModeEnabled();
-                if(scriptModeEnabled) {
+                if(m_task->getPreferences().isScriptModeEnabled()) {
                     geometrizer.setupScripts(m_task->getPreferences().getScripts());
                 }
 

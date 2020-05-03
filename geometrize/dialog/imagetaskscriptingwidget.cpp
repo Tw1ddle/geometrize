@@ -176,7 +176,7 @@ public:
         return scriptStopConditionMet;
     }
 
-    void evaluateBeforeStepScripts()
+    void evaluateScriptsWithNoReturnValue(const std::string& scriptGroupNamePrefix) const
     {
         const auto engine = m_task->getGeometrizer().getEngine();
         if(!engine) {
@@ -185,7 +185,7 @@ public:
 
         const auto scriptWidgets = ui->customScriptsGroupBox->findChildren<geometrize::dialog::ScriptEditorWidget*>();
         for(const auto& widget : scriptWidgets) {
-            if(widget->getFunctionName().substr(0, beforeStepCallbackPrefix.length()) != beforeStepCallbackPrefix) {
+            if(widget->getFunctionName().substr(0, scriptGroupNamePrefix.length()) != scriptGroupNamePrefix) {
                 continue;
             }
 
@@ -200,76 +200,24 @@ public:
         }
     }
 
-    void evaluateAfterStepScripts()
+    void evaluateBeforeStepScripts() const
     {
-        const auto engine = m_task->getGeometrizer().getEngine();
-        if(!engine) {
-            return;
-        }
-
-        const auto scriptWidgets = ui->customScriptsGroupBox->findChildren<geometrize::dialog::ScriptEditorWidget*>();
-        for(const auto& widget : scriptWidgets) {
-            if(widget->getFunctionName().substr(0, afterStepCallbackPrefix.length()) != afterStepCallbackPrefix) {
-                continue;
-            }
-
-            try {
-                engine->eval(widget->getCurrentCode());
-                widget->onScriptEvaluationSucceeded();
-            } catch(const chaiscript::exception::eval_error& e) {
-                widget->onScriptEvaluationFailed(e.pretty_print());
-            } catch(...) {
-                widget->onScriptEvaluationFailed("Unknown script evaluation error");
-            }
-        }
+        evaluateScriptsWithNoReturnValue(::beforeStepCallbackPrefix);
     }
 
-    void evaluateBeforeAddShapeScripts()
+    void evaluateAfterStepScripts() const
     {
-        const auto engine = m_task->getGeometrizer().getEngine();
-        if(!engine) {
-            return;
-        }
-
-        const auto scriptWidgets = ui->customScriptsGroupBox->findChildren<geometrize::dialog::ScriptEditorWidget*>();
-        for(const auto& widget : scriptWidgets) {
-            if(widget->getFunctionName().substr(0, beforeAddShapeCallbackPrefix.length()) != beforeAddShapeCallbackPrefix) {
-                continue;
-            }
-
-            try {
-                engine->eval(widget->getCurrentCode());
-                widget->onScriptEvaluationSucceeded();
-            } catch(const chaiscript::exception::eval_error& e) {
-                widget->onScriptEvaluationFailed(e.pretty_print());
-            } catch(...) {
-                widget->onScriptEvaluationFailed("Unknown script evaluation error");
-            }
-        }
+        evaluateScriptsWithNoReturnValue(::afterStepCallbackPrefix);
     }
 
-    void evaluateAfterAddShapeScripts()
+    void evaluateBeforeAddShapeScripts() const
     {
-        const auto engine = m_task->getGeometrizer().getEngine();
-        if(!engine) {
-            return;
-        }
+        evaluateScriptsWithNoReturnValue(::beforeAddShapeCallbackPrefix);
+    }
 
-        const auto scriptWidgets = ui->customScriptsGroupBox->findChildren<geometrize::dialog::ScriptEditorWidget*>();
-        for(const auto& widget : scriptWidgets) {
-            if(widget->getFunctionName().substr(0, afterAddShapeCallbackPrefix.length()) != afterAddShapeCallbackPrefix) {
-                continue;
-            }
-
-            try {
-                engine->eval(widget->getCurrentCode());
-                widget->onScriptEvaluationSucceeded();
-            } catch(const chaiscript::exception::eval_error& e) {
-                widget->onScriptEvaluationFailed(e.pretty_print());
-            } catch(...) {
-                widget->onScriptEvaluationFailed("Unknown script evaluation error");
-            }
-        }
+    void evaluateAfterAddShapeScripts() const
+    {
+        evaluateScriptsWithNoReturnValue(::afterAddShapeCallbackPrefix);
     }
 
     void onLanguageChange()
