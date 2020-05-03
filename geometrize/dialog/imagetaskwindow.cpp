@@ -175,13 +175,16 @@ public:
                 auto& geometrizer = m_task->getGeometrizer();
 
                 chaiscript::ChaiScript* engine = geometrizer.getEngine();
+
                 if(m_task->getPreferences().isScriptModeEnabled()) {
+                    // Note this resets the script engine state to the original state, wiping out global variables etc
                     geometrizer.setupScripts(m_task->getPreferences().getScripts());
                 }
 
                 engine->set_global(chaiscript::var(static_cast<int>(m_task->getWidth())), "xBound");
                 engine->set_global(chaiscript::var(static_cast<int>(m_task->getHeight())), "yBound");
                 engine->set_global(chaiscript::var(m_shapes.getShapeVector().size()), "currentShapeCount");
+                engine->set_global(chaiscript::var(m_lastTabletEventData), "lastTabletEvent");
 
                 engine->set_global(chaiscript::var(m_areaOfInfluenceShapes.getCurrentShape()), "aoi");
                 std::vector<std::pair<std::int32_t, std::int32_t>> aoiPixels = m_areaOfInfluenceShapes.getPixels(m_task->getWidth(), m_task->getHeight());
@@ -400,10 +403,7 @@ public:
 
         // Pass the latest tablet event info to the current image task's script engine
         connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onTargetImageTabletEvent, [this](const geometrize::scene::CustomTabletEvent& event) {
-            if(m_task != nullptr) {
-                chaiscript::ChaiScript* engine = m_task->getGeometrizer().getEngine();
-                engine->set_global(chaiscript::var(event.getData()), "lastTabletEvent");
-            }
+            m_lastTabletEventData = event.getData();
         });
 
         // Set initial target image opacity
@@ -665,6 +665,8 @@ private:
     geometrize::scene::ImageTaskSceneManager m_sceneManager; ///> Manager for scenes containing the pixmap/vector-based representations of the shapes etc
     geometrize::scene::ImageTaskGraphicsView* m_pixmapView{nullptr}; ///> The view that holds the raster/pixel-based scene
     geometrize::scene::ImageTaskGraphicsView* m_svgView{nullptr}; ///> The view that holds the vector-based scene
+
+    geometrize::scene::TabletEventData m_lastTabletEventData{}; ///> The last tablet event that was received - TODO should avoid needing to hang onto this
 
     bool m_shouldKeepStepping{false}; ///> Whether to continually step i.e. whether to start another step after stepping once
     QTimer m_timeRunningTimer; ///> Timer used to keep track of how long the image task has been in the "running" state

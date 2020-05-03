@@ -47,7 +47,7 @@ QString tabletEventDataToString(const TabletEventData& data)
             "Pointer type: " + tabletEventPointerTypeToString(data.pointerType) + ", " +
             "View pos: " + QString::number(data.xViewPos, 'g', 8) + ", " + QString::number(data.yViewPos, 'g', 8) + ", " +
             "Scene pos: " + QString::number(data.xScenePos, 'g', 8) + ", " + QString::number(data.yScenePos, 'g', 8) + ", " +
-            "Pressure: " + QString::number(data.pressure * 100.0, 'g', 8) + ", " +
+            "Pressure: " + QString::number(data.pressure, 'g', 8) + ", " +
             "Tangential pressure: " + QString::number(data.tangentialPressure, 'g', 8) + ", " +
             "Rotation: " + QString::number(data.rotation, 'g', 8) + ", " +
             "Tilt: " + QString::number(data.xTilt, 'g', 8) + ", " + QString::number(data.yTilt, 'g', 8);

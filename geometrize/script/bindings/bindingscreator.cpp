@@ -43,6 +43,7 @@
 #include "exporter/imageexporter.h"
 #include "image/imageloader.h"
 #include "scene/customtabletevent.h"
+#include "scene/tools/areaofinfluenceshapes.h"
 #include "script/bindings/bindingshelpers.h"
 #include "script/bindings/bindingswrapper.h"
 #include "script/bindings/chaiscriptmathextras.h"
@@ -457,6 +458,8 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
 
     ADD_FREE_FUN(shapesOverlap);
     ADD_FREE_FUN(shapeContains);
+
+    ADD_FREE_FUN(shapeToPixels);
 
     ADD_TYPE(Model);
     ADD_CONSTRUCTOR(Model, Model(const geometrize::Bitmap&));

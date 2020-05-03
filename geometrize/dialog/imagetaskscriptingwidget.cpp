@@ -3,6 +3,7 @@
 
 #include <cassert>
 #include <cstdint>
+#include <exception>
 #include <map>
 #include <memory>
 #include <string>
@@ -168,6 +169,8 @@ public:
                 widget->onScriptEvaluationSucceeded();
             } catch(const chaiscript::exception::eval_error& e) {
                 widget->onScriptEvaluationFailed(e.pretty_print());
+            } catch(const std::exception& e) {
+                widget->onScriptEvaluationFailed(e.what());
             } catch(...) {
                 widget->onScriptEvaluationFailed("Unknown script evaluation error");
             }
@@ -194,6 +197,8 @@ public:
                 widget->onScriptEvaluationSucceeded();
             } catch(const chaiscript::exception::eval_error& e) {
                 widget->onScriptEvaluationFailed(e.pretty_print());
+            } catch(const std::exception& e) {
+                widget->onScriptEvaluationFailed(e.what());
             } catch(...) {
                 widget->onScriptEvaluationFailed("Unknown script evaluation error");
             }

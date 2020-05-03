@@ -41,7 +41,7 @@ geometrize::Bitmap convertImageToBitmapWithDownscaling(const QImage& image)
             im = image.scaled(sizeThreshold.first, sizeThreshold.second, Qt::KeepAspectRatio, Qt::SmoothTransformation).convertToFormat(QImage::Format_RGBA8888);
         }
     }
-    return geometrize::image::createBitmap(im);
+    return geometrize::image::createBitmap(im.convertToFormat(QImage::Format_RGBA8888));
 }
 QImage createImage(const Bitmap& data)
 {
