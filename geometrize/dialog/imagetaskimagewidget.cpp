@@ -61,7 +61,7 @@ public:
             return;
         }
 
-        const int thumbnailSize{400};
+        const int thumbnailSize{250};
         ui->targetImageLabel->setPixmap(QPixmap::fromImage(image.scaled(thumbnailSize, thumbnailSize, Qt::KeepAspectRatio)));
 
         emit q->targetImageSet(image);

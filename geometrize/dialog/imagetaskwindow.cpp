@@ -32,7 +32,6 @@
 #include "script/geometrizerengine.h"
 #include "scene/imagetaskgraphicsview.h"
 #include "scene/imagetaskscenemanager.h"
-#include "scene/tools/areaofinfluenceshapes.h"
 #include "task/imagetask.h"
 #include "task/shapecollection.h"
 #include "version/versioninfo.h"
@@ -185,13 +184,6 @@ public:
                 engine->set_global(chaiscript::var(static_cast<int>(m_task->getHeight())), "yBound");
                 engine->set_global(chaiscript::var(m_shapes.getShapeVector().size()), "currentShapeCount");
                 engine->set_global(chaiscript::var(m_lastTabletEventData), "lastTabletEvent");
-
-                engine->set_global(chaiscript::var(m_areaOfInfluenceShapes.getCurrentShape()), "aoi");
-                std::vector<std::pair<std::int32_t, std::int32_t>> aoiPixels = m_areaOfInfluenceShapes.getPixels(m_task->getWidth(), m_task->getHeight());
-                if(aoiPixels.empty()) {
-                    aoiPixels.push_back(std::make_pair(m_task->getWidth() / 2, m_task->getHeight() / 2));
-                }
-                engine->set_global(chaiscript::var(aoiPixels), "aoiPixels");
 
                 ui->scriptsWidget->evaluateBeforeStepScripts();
             });
@@ -392,22 +384,54 @@ public:
             }
         });
 
-        // Connect controls/manipulation in the scenes to the actual area of influence shapes
-        m_areaOfInfluenceShapes.connectToSceneManager(m_sceneManager);
-
-        // Update the scene whenever the current area of influence shape is modified
-        connect(&m_areaOfInfluenceShapes, &geometrize::scene::tools::AreaOfInfluenceShapes::signal_didModifyShape, [this](const geometrize::Shape& shape) {
-            m_sceneManager.setAreaOfInfluenceShape(shape);
-        });
-        m_sceneManager.setAreaOfInfluenceShape(*m_areaOfInfluenceShapes.getCurrentShape().get());
-
         // Pass the latest tablet event info to the current image task's script engine
         connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onTargetImageTabletEvent, [this](const geometrize::scene::CustomTabletEvent& event) {
             m_lastTabletEventData = event.getData();
+
+            if(!m_task) {
+                return;
+            }
+            // TODO setup the shape here, perhaps use a script
+            //chaiscript::ChaiScript* engine = m_task->getGeometrizer().getEngine();
+            /*
+            try {
+                std::shared_ptr<geometrize::Shape> aoiShape = engine->eval<std::shared_ptr<geometrize::Shape>>("aoi");
+                if(aoiShape) {
+                    m_sceneManager.setAreaOfInfluenceShape(*aoiShape);
+                }
+            } catch(...) {
+                // Expect another script to have set the area of influence shape
+            }
+            */
+        });
+
+        // TODO do stuff with the area of influence shape, or tell the script engine, when input happens
+        connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onAreaOfInfluenceShapeHoverMoveEvent, [this](const int lastX, const int lastY, const int x, const int y, const bool ctrlModifier) {
+            if(!ctrlModifier) {
+                return;
+            }
+            //translateShape(x - lastX, y - lastY);
+        });
+        connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onAreaOfInfluenceShapeMouseWheelEvent, [this](const int, const int, const double amount, const bool ctrlModifier) {
+            if(!ctrlModifier) {
+                return;
+            }
+            //scaleShape(amount > 0 ? 1.03f : 0.97f);
+        });
+        connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onAreaOfInfluenceShapeKeyPressEvent, [this](const int key, const bool) {
+            if(key == Qt::Key_R) { // Rotate
+                //rotateShape(3);
+            }
+            if(key == Qt::Key_Q) { // Scale down
+                //scaleShape(0.97f);
+            }
+            if(key == Qt::Key_A) { // Scale up
+                //scaleShape(1.03f);
+            }
         });
 
         // Set initial target image opacity
-        const float initialTargetImageOpacity{0};
+        const float initialTargetImageOpacity{8};
         ui->imageTaskImageWidget->setTargetImageOpacity(static_cast<unsigned int>(initialTargetImageOpacity));
 
         // Start the timer used to track how long the image task has been in the running state
@@ -659,8 +683,6 @@ private:
     std::vector<std::function<void()>> m_onPostStepCbs; ///> One-shot callbacks triggered when the image task finishes a step
 
     geometrize::task::ShapeCollection m_shapes; ///> Collection of shapes added so far
-
-    geometrize::scene::tools::AreaOfInfluenceShapes m_areaOfInfluenceShapes; ///> Shapes that can be used to control where shapes are allowed to be spawned/mutated (when a corresponding scripting mode is enabled)
 
     geometrize::scene::ImageTaskSceneManager m_sceneManager; ///> Manager for scenes containing the pixmap/vector-based representations of the shapes etc
     geometrize::scene::ImageTaskGraphicsView* m_pixmapView{nullptr}; ///> The view that holds the raster/pixel-based scene
