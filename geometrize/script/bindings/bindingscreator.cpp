@@ -483,7 +483,38 @@ std::shared_ptr<chaiscript::Module> createTabletEventBindings()
 
     auto module = createModule();
 
+    chaiscript::utility::add_class<TabletEventType>(*module,
+      "TabletEventType",
+    {
+        { TabletEventType::Move, "Move" },
+        { TabletEventType::Press, "Press" },
+        { TabletEventType::Release, "Release" },
+        { TabletEventType::EnterProximity, "EnterProximity" },
+        { TabletEventType::LeaveProximity, "LeaveProximity" },
+        { TabletEventType::Unknown, "Unknown" }
+    });
+
+    chaiscript::utility::add_class<TabletEventPointerType>(*module,
+      "TabletEventPointerType",
+    {
+      { TabletEventPointerType::UnknownPointer, "UnknownPointer" },
+      { TabletEventPointerType::Pen, "Pen" },
+      { TabletEventPointerType::Cursor, "Cursor" },
+      { TabletEventPointerType::Eraser, "Eraser" }
+    });
+
     ADD_TYPE(TabletEventData);
+    ADD_MEMBER(TabletEventData, eventType);
+    ADD_MEMBER(TabletEventData, pointerType);
+    ADD_MEMBER(TabletEventData, xViewPos);
+    ADD_MEMBER(TabletEventData, yViewPos);
+    ADD_MEMBER(TabletEventData, xScenePos);
+    ADD_MEMBER(TabletEventData, yScenePos);
+    ADD_MEMBER(TabletEventData, pressure);
+    ADD_MEMBER(TabletEventData, tangentialPressure);
+    ADD_MEMBER(TabletEventData, rotation);
+    ADD_MEMBER(TabletEventData, xTilt);
+    ADD_MEMBER(TabletEventData, yTilt);
 
     ADD_FREE_FUN(customTabletEventDataToString);
 
