@@ -53,6 +53,8 @@ public:
      */
     void syncUserInterface();
 
+    std::map<std::string, std::string> getShapeMutationScripts() const;
+
     /**
      * @brief evaluateBeforeStepScripts Evaluates the scripts set to run directly before the image task is stepped (i.e. immediately before the image task starts a step).
      */
@@ -78,6 +80,11 @@ public:
      * @brief evaluateAfterAddShapeScripts Evaluates the scripts set to run directly after a shape is added to the image.
      */
     void evaluateAfterAddShapeScripts() const;
+
+    /**
+     * @brief evaluateOnPenInputEventScripts Evaluates the scripts set to run directly after a pen e.g. Wacom stylus interacts with the scenes
+     */
+    void evaluateOnPenInputEventScripts() const;
 
 signals:
     void signal_scriptChanged(const std::string& functionName, const std::string& code);

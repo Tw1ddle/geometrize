@@ -131,6 +131,16 @@ public:
         populateUi();
     }
 
+    std::map<std::string, std::string> getScripts() const
+    {
+        std::map<std::string, std::string> m;
+        for(ScriptEditorWidget* editor : m_editors) {
+            m[editor->getFunctionName()] = editor->getCurrentCode();
+        }
+        return m;
+    }
+
+
 private:
     void populateUi()
     {
@@ -195,16 +205,6 @@ private:
             editor->setEnabled(enabled);
         }
     }
-
-    std::map<std::string, std::string> getScripts() const
-    {
-        std::map<std::string, std::string> m;
-        for(ScriptEditorWidget* editor : m_editors) {
-            m[editor->getFunctionName()] = editor->getCurrentCode();
-        }
-        return m;
-    }
-
     std::map<std::string, std::string> getDefaultScripts() const
     {
         std::map<std::string, std::string> m;
@@ -264,6 +264,11 @@ void ImageTaskShapeScriptingPanel::setImageTask(task::ImageTask* task)
 void ImageTaskShapeScriptingPanel::syncUserInterface()
 {
     d->syncUserInterface();
+}
+
+std::map<std::string, std::string> ImageTaskShapeScriptingPanel::getScripts() const
+{
+    return d->getScripts();
 }
 
 void ImageTaskShapeScriptingPanel::changeEvent(QEvent* event)

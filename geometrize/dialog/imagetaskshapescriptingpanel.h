@@ -52,6 +52,8 @@ public:
      */
     void syncUserInterface();
 
+    std::map<std::string, std::string> getScripts() const;
+
 signals:
     void signal_scriptingToggled(bool enabled);
     void signal_scriptsReset();

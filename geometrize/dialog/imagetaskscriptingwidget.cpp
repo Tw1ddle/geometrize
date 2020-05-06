@@ -34,6 +34,7 @@ const std::string afterStepCallbackPrefix = "after_step_callback_";
 const std::string stopConditionIdPrefix = "stop_condition_";
 const std::string beforeAddShapeCallbackPrefix = "before_add_shape_callback_";
 const std::string afterAddShapeCallbackPrefix = "after_add_shape_callback_";
+const std::string onPenInputCallbackPrefix = "on_pen_input_callback_";
 
 }
 
@@ -99,6 +100,9 @@ public:
         connect(ui->addAfterAddShapeEvent, &QPushButton::clicked, [this]() {
             addAfterAddShapeCallbackWidget(getScriptForSelectedComboBoxItem(ui->addAfterAddShapePresetScriptsComboBox));
         });
+        connect(ui->onScenePenInputEvent, &QPushButton::clicked, [this]() {
+            addOnPenInputWidget(getScriptForSelectedComboBoxItem(ui->onScenePenInputEventPresetScriptsComboBox));
+        });
 
         // Update the script code when the editor modifies them
         connect(q, &geometrize::dialog::ImageTaskScriptingWidget::signal_scriptChanged, [this](const std::string& functionName, const std::string& code) {
@@ -130,9 +134,12 @@ public:
         }
 
         setScripts(m_task->getPreferences().getScripts());
-        if(auto* shapeScriptingPanel = getShapeScriptingPanel()) {
-            shapeScriptingPanel->syncUserInterface();
-        }
+        getShapeScriptingPanel()->syncUserInterface();
+    }
+
+    std::map<std::string, std::string> getShapeMutationScripts()
+    {
+        return getShapeScriptingPanel()->getScripts();
     }
 
     // Note that we don't call this and apply the scripts to the image task until it's safe to do so (i.e. when the task isn't stepping)
@@ -144,6 +151,11 @@ public:
         for(ScriptEditorWidget* editor : editors) {
             m[editor->getFunctionName()] = editor->getCurrentCode();
         }
+
+        getShapeScriptingPanel()->syncUserInterface();
+
+        getShapeScriptingPanel()->getScripts();
+
         return m;
     }
 
@@ -225,6 +237,11 @@ public:
         evaluateScriptsWithNoReturnValue(::afterAddShapeCallbackPrefix);
     }
 
+    void evaluateOnPenInputEventScripts() const
+    {
+        evaluateScriptsWithNoReturnValue(::onPenInputCallbackPrefix);
+    }
+
     void onLanguageChange()
     {
         ui->retranslateUi(q);
@@ -243,7 +260,9 @@ private:
            !startsWith(scriptIdPrefix, ::beforeAddShapeCallbackPrefix) &&
            !startsWith(scriptIdPrefix, ::afterAddShapeCallbackPrefix) &&
            !startsWith(scriptIdPrefix, ::beforeStepCallbackPrefix) &&
-           !startsWith(scriptIdPrefix, ::afterStepCallbackPrefix)) {
+           !startsWith(scriptIdPrefix, ::afterStepCallbackPrefix) &&
+           !startsWith(scriptIdPrefix, ::onPenInputCallbackPrefix))
+        {
             return;
         }
 
@@ -280,15 +299,19 @@ private:
         addScriptWidget(tr("After Add Shape Callback").toStdString(), ::afterAddShapeCallbackPrefix, scriptCode);
     }
 
+    void addOnPenInputWidget(const std::string& scriptCode)
+    {
+        addScriptWidget(tr("On Pen Input Callback").toStdString(), ::onPenInputCallbackPrefix, scriptCode);
+    }
+
     // Utility function used to setup and display the shape creation/mutation script editor for the given image task window
     void revealShapeScriptingPanel()
     {
-        if(dialog::ImageTaskShapeScriptingPanel* scriptingPanel = getShapeScriptingPanel()) {
-            scriptingPanel->setWindowState(scriptingPanel->windowState() & ~Qt::WindowMinimized);
-            QApplication::setActiveWindow(scriptingPanel);
-            scriptingPanel->raise();
-            scriptingPanel->show();
-        }
+        auto scriptingPanel = getShapeScriptingPanel();
+        scriptingPanel->setWindowState(scriptingPanel->windowState() & ~Qt::WindowMinimized);
+        QApplication::setActiveWindow(scriptingPanel);
+        scriptingPanel->raise();
+        scriptingPanel->show();
     }
 
     void setScripts(const std::map<std::string, std::string>& scripts)
@@ -317,7 +340,7 @@ private:
         return nullptr;
     }
 
-    geometrize::dialog::ImageTaskShapeScriptingPanel* getShapeScriptingPanel()
+    geometrize::dialog::ImageTaskShapeScriptingPanel* getShapeScriptingPanel() const
     {
         return q->findChild<geometrize::dialog::ImageTaskShapeScriptingPanel*>();
     }
@@ -348,6 +371,7 @@ private:
         presetScriptData.push_back(std::make_pair(ui->addStopConditionPresetScriptsComboBox, geometrize::script::getStopConditionScripts()));
         presetScriptData.push_back(std::make_pair(ui->addBeforeAddShapePresetScriptsComboBox, geometrize::script::getBeforeAddShapeCallbackScripts()));
         presetScriptData.push_back(std::make_pair(ui->addAfterAddShapePresetScriptsComboBox, geometrize::script::getAfterAddShapeCallbackScripts()));
+        presetScriptData.push_back(std::make_pair(ui->onScenePenInputEventPresetScriptsComboBox, geometrize::script::getOnPenInputCallbackScripts()));
         for(const auto& item : presetScriptData) {
             populateScriptSelectionComboBox(item.first, item.second);
         }
@@ -410,6 +434,16 @@ void ImageTaskScriptingWidget::evaluateBeforeAddShapeScripts() const
 void ImageTaskScriptingWidget::evaluateAfterAddShapeScripts() const
 {
     d->evaluateAfterAddShapeScripts();
+}
+
+void ImageTaskScriptingWidget::evaluateOnPenInputEventScripts() const
+{
+    d->evaluateOnPenInputEventScripts();
+}
+
+std::map<std::string, std::string> ImageTaskScriptingWidget::getShapeMutationScripts() const
+{
+    return d->getShapeMutationScripts();
 }
 
 }

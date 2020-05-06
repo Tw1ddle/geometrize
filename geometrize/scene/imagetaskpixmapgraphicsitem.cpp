@@ -22,6 +22,7 @@ ImageTaskPixmapGraphicsItem::ImageTaskPixmapGraphicsItem() : QGraphicsPixmapItem
     setAcceptTouchEvents(true);
     setFlag(ItemIsMovable, false);
     setFlag(ItemIsSelectable, false);
+    setZValue(1000);
 }
 
 ImageTaskPixmapGraphicsItem::ImageTaskPixmapGraphicsItem(const QPixmap& pixmap) : QGraphicsPixmapItem(pixmap)

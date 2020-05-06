@@ -173,17 +173,12 @@ public:
                 // Apply the latest scripts and engine state prior to stepping
                 auto& geometrizer = m_task->getGeometrizer();
 
+                m_task->getPreferences().setScripts(ui->scriptsWidget->getShapeMutationScripts());
+
                 chaiscript::ChaiScript* engine = geometrizer.getEngine();
-
-                if(m_task->getPreferences().isScriptModeEnabled()) {
-                    // Note this resets the script engine state to the original state, wiping out global variables etc
-                    geometrizer.setupScripts(m_task->getPreferences().getScripts());
-                }
-
                 engine->set_global(chaiscript::var(static_cast<int>(m_task->getWidth())), "xBound");
                 engine->set_global(chaiscript::var(static_cast<int>(m_task->getHeight())), "yBound");
                 engine->set_global(chaiscript::var(m_shapes.getShapeVector().size()), "currentShapeCount");
-                engine->set_global(chaiscript::var(m_lastTabletEventData), "lastTabletEvent");
 
                 ui->scriptsWidget->evaluateBeforeStepScripts();
             });
@@ -386,23 +381,25 @@ public:
 
         // Pass the latest tablet event info to the current image task's script engine
         connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onTargetImageTabletEvent, [this](const geometrize::scene::CustomTabletEvent& event) {
-            m_lastTabletEventData = event.getData();
-
             if(!m_task) {
                 return;
             }
-            // TODO setup the shape here, perhaps use a script
-            //chaiscript::ChaiScript* engine = m_task->getGeometrizer().getEngine();
-            /*
+
+            const geometrize::scene::TabletEventData data = event.getData();
+            chaiscript::ChaiScript* engine = m_task->getGeometrizer().getEngine();
+            engine->set_global(chaiscript::var(data), "lastTabletEvent");
+            engine->set_global(chaiscript::var(static_cast<int>(m_task->getWidth())), "xBound");
+            engine->set_global(chaiscript::var(static_cast<int>(m_task->getHeight())), "yBound");
+
+            ui->scriptsWidget->evaluateOnPenInputEventScripts();
+
             try {
                 std::shared_ptr<geometrize::Shape> aoiShape = engine->eval<std::shared_ptr<geometrize::Shape>>("aoi");
-                if(aoiShape) {
-                    m_sceneManager.setAreaOfInfluenceShape(*aoiShape);
-                }
+                engine->set_global(chaiscript::var(aoiShape->clone()), "aoi"); // Work around fail to assign shape to shape in the script
+                m_sceneManager.setAreaOfInfluenceShape(*aoiShape);
             } catch(...) {
-                // Expect another script to have set the area of influence shape
+                // The pen input scripts should setup an area of influence shape
             }
-            */
         });
 
         // TODO do stuff with the area of influence shape, or tell the script engine, when input happens
@@ -687,8 +684,6 @@ private:
     geometrize::scene::ImageTaskSceneManager m_sceneManager; ///> Manager for scenes containing the pixmap/vector-based representations of the shapes etc
     geometrize::scene::ImageTaskGraphicsView* m_pixmapView{nullptr}; ///> The view that holds the raster/pixel-based scene
     geometrize::scene::ImageTaskGraphicsView* m_svgView{nullptr}; ///> The view that holds the vector-based scene
-
-    geometrize::scene::TabletEventData m_lastTabletEventData{}; ///> The last tablet event that was received - TODO should avoid needing to hang onto this
 
     bool m_shouldKeepStepping{false}; ///> Whether to continually step i.e. whether to start another step after stepping once
     QTimer m_timeRunningTimer; ///> Timer used to keep track of how long the image task has been in the "running" state

@@ -103,6 +103,20 @@
           </item>
          </layout>
         </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_6">
+          <item>
+           <widget class="QPushButton" name="onScenePenInputEvent">
+            <property name="text">
+             <string>On Scene Pen Input</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="onScenePenInputEventPresetScriptsComboBox"/>
+          </item>
+         </layout>
+        </item>
        </layout>
       </item>
       <item>

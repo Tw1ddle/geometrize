@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QObject>
+#include <QString>
 
 namespace geometrize
 {

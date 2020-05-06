@@ -10,7 +10,6 @@
 #include "scene/customtabletevent.h"
 #include "scene/imagetaskpixmapgraphicsitem.h"
 #include "scene/svgitem.h"
-#include "scene/tools/areaofinfluenceshapes.h"
 
 namespace geometrize
 {
@@ -26,7 +25,6 @@ public:
         q->setStickyFocus(true);
 
         q->addItem(&m_targetPixmapItem);
-        m_targetPixmapItem.setZValue(1);
     }
     ImageTaskSceneImpl operator=(const ImageTaskSceneImpl&) = delete;
     ImageTaskSceneImpl(const ImageTaskSceneImpl&) = delete;
@@ -53,7 +51,6 @@ public:
             q->removeItem(m_lastOverlayShapeItem);
         }
         if(item != nullptr) {
-            item->setZValue(1000); // Should be on top of everything else
             item->setVisible(m_overlayShapeVisibility);
             q->addItem(item);
             q->setFocusItem(item, Qt::FocusReason::OtherFocusReason);
