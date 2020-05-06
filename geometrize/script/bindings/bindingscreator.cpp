@@ -43,7 +43,6 @@
 #include "exporter/imageexporter.h"
 #include "image/imageloader.h"
 #include "scene/customtabletevent.h"
-#include "scene/tools/areaofinfluenceshapes.h"
 #include "script/bindings/bindingshelpers.h"
 #include "script/bindings/bindingswrapper.h"
 #include "script/bindings/chaiscriptmathextras.h"

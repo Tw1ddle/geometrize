@@ -115,7 +115,11 @@ public:
             const std::int32_t h = m_worker.getTarget().getHeight();
 
             if(m_preferences.isScriptModeEnabled()) {
-                return m_geometrizer.makeShapeCreator(m_preferences.getImageRunnerOptions().shapeTypes, w, h);
+                // Clone the geometrizer engine state
+                // NOTE - the makeShapeCreator method uses shared_from_this to keep the engine alive
+                const auto geometrizerClone = std::make_shared<geometrize::script::GeometrizerEngine>(m_geometrizer.getEngine()->get_state());
+                geometrizerClone->installScripts(m_preferences.getScripts());
+                return geometrizerClone->makeShapeCreator(m_preferences.getImageRunnerOptions().shapeTypes, w, h);
             }
             return geometrize::createDefaultShapeCreator(m_preferences.getImageRunnerOptions().shapeTypes, w, h);
         }();

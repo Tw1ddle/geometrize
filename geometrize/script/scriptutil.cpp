@@ -95,6 +95,11 @@ std::map<std::string, std::string> getAfterAddShapeCallbackScripts()
     return getScriptsFromFolder(":/scripts/scripts/after_add_shape_callbacks/");
 }
 
+std::map<std::string, std::string> getOnPenInputCallbackScripts()
+{
+    return getScriptsFromFolder(":/scripts/scripts/on_pen_input_callbacks/");
+}
+
 }
 
 }

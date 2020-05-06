@@ -77,6 +77,12 @@ std::map<std::string, std::string> getBeforeAddShapeCallbackScripts();
  */
 std::map<std::string, std::string> getAfterAddShapeCallbackScripts();
 
+/**
+ * @brief getOnPenInputCallbackScripts Gets a map of scripts that are useful to call after receiving pen input to the image task views.
+ * @return A map of Chaiscript script function names to function bodies.
+ */
+std::map<std::string, std::string> getOnPenInputCallbackScripts();
+
 }
 
 }
