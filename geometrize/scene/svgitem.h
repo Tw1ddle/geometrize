@@ -18,6 +18,9 @@ class SvgItem : public QGraphicsSvgItem
 public:
     explicit SvgItem(const QByteArray& data);
     virtual ~SvgItem();
+
+    // NOTE unfortunately there isn't much point overriding the pointer events, because transparent parts of the image aren't ignored
+    // https://stackoverflow.com/questions/5026429/ignore-mouse-events-over-transparent-parts-of-an-svg-image-in-qgraphicsview
 };
 
 }

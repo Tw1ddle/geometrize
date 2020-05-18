@@ -30,8 +30,12 @@ public:
     ImageTaskSceneImpl(const ImageTaskSceneImpl&) = delete;
     ~ImageTaskSceneImpl() = default;
 
-    void setTargetPixmapOpacity(const float opacity)
+    void setTargetPixmapOpacity(float opacity)
     {
+        // It's a pain to get completely transparent items to receive mouse/tablet events e.g. items()
+        // However we need the target image to receive events, so we always make it slightly visible
+        opacity = std::max(opacity, 0.001f);
+
         m_targetPixmapItem.setOpacity(static_cast<qreal>(opacity));
     }
 
@@ -114,9 +118,9 @@ bool ImageTaskScene::event(QEvent* event)
     // Handle custom tablet events forwarded from the ImageTaskGraphicsView
     if(event->type() == geometrize::scene::CustomTabletEvent::customEventId) {
         const auto ev = static_cast<geometrize::scene::CustomTabletEvent*>(event);
-        QGraphicsItem* itemUnderEvent = itemAt(ev->getData().xScenePos, ev->getData().yScenePos, QTransform());
-        if(itemUnderEvent) {
-            sendEvent(itemUnderEvent, ev);
+        QList<QGraphicsItem*> itemsUnderEvent = items(QPointF(ev->getData().xScenePos, ev->getData().yScenePos), Qt::IntersectsItemBoundingRect);
+        for(const auto& item : itemsUnderEvent) {
+            sendEvent(item, ev);
         }
         return true;
     }

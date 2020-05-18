@@ -23,6 +23,9 @@ ImageTaskPixmapGraphicsItem::ImageTaskPixmapGraphicsItem() : QGraphicsPixmapItem
     setFlag(ItemIsMovable, false);
     setFlag(ItemIsSelectable, false);
     setZValue(1000);
+
+    // Allows the pixmap to receive events even when the opacity is set to 0
+    setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
 }
 
 ImageTaskPixmapGraphicsItem::ImageTaskPixmapGraphicsItem(const QPixmap& pixmap) : QGraphicsPixmapItem(pixmap)
