@@ -37,6 +37,9 @@ public:
         ui->setupUi(q);
         populateUi();
 
+        // Hide the run script button by default (it's not useful to casual users at the moment, the task queue is better)
+        ui->runScriptButton->setHidden(true);
+
         // Set up recent items list
         if(preferences::getGlobalPreferences().shouldPopulateRecentItemsOnLaunch()) {
             ui->recentsList->setRecentItems(&geometrize::getRecentItems());

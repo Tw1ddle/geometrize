@@ -177,7 +177,7 @@
             <item>
              <widget class="QLabel" name="taskListInstructionText">
               <property name="text">
-               <string extracomment="Instructions to the user explaining how to add items to the task queue list, by dragging items into a list below this text">Drag-and-drop image files below for batch processing</string>
+               <string extracomment="Instructions to the user explaining how to add items to the task queue list, by dragging items into a list below this text">Drop image files below to batch process them via scripts</string>
               </property>
              </widget>
             </item>
