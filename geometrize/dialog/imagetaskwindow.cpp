@@ -428,7 +428,7 @@ public:
         });
 
         // Set initial target image opacity
-        const float initialTargetImageOpacity{8};
+        const float initialTargetImageOpacity{0};
         ui->imageTaskImageWidget->setTargetImageOpacity(static_cast<unsigned int>(initialTargetImageOpacity));
 
         // Start the timer used to track how long the image task has been in the running state
