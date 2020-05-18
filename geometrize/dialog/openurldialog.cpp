@@ -31,8 +31,9 @@ QUrl OpenUrlDialog::getUrl() const
     const QString userText{ui->urlLineEdit->text()};
     const QUrl url{QUrl::fromUserInput(userText)};
 
-    if(url.isLocalFile()) { // We want remote URLs only, local files are opened with an "Open File" button
-        return QUrl();
+    // We want remote URLs only, local files are opened with an "Open File" button
+    if(url.isLocalFile() || url.isEmpty()) {
+        return QUrl::fromUserInput(ui->urlLineEdit->placeholderText());
     }
     return url;
 }

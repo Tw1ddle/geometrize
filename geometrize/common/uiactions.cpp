@@ -173,8 +173,10 @@ QString openSaveWebGLPathPickerDialog(QWidget* parent)
 QUrl openGetUrlDialog(QWidget* parent)
 {
     dialog::OpenUrlDialog dialog(parent);
-    dialog.exec();
-    return dialog.getUrl();
+    if(dialog.exec() == QDialog::Accepted) {
+        return dialog.getUrl();
+    }
+    return QUrl();
 }
 
 QString openGetScriptDialog(QWidget* parent)

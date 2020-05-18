@@ -296,7 +296,7 @@ void LaunchWindow::on_openImageButton_clicked()
 void LaunchWindow::on_openLinkButton_clicked()
 {
     const QUrl url{common::ui::openGetUrlDialog(this)};
-    if(!url.isValid()) {
+    if(url.isEmpty() || !url.isValid()) {
         return;
     }
 
