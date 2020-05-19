@@ -3,7 +3,7 @@
 // Copyright (c) Yash (http://speedovation.com/)
 //
 // Modifications Copyright (c) 2017, Sam Twidale.
-// Contact: http://samcodes.co.uk/contact/
+// Contact: https://samcodes.co.uk/contact/
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal

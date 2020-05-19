@@ -1,6 +1,6 @@
 The Geometrize library is a library for turning images into geometric primitives. It is licensed under the MIT License (MIT) as follows:
 
-Copyright (c) 2017 Sam Twidale (http://samcodes.co.uk/)
+Copyright (c) 2017 Sam Twidale (https://samcodes.co.uk/)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
