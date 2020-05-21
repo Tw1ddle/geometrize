@@ -29,10 +29,10 @@ bool TabletProximityEventFilter::eventFilter(QObject* /*obj*/, QEvent* event)
     return false;
 }
 
-TabletProximityEventFilter* getSharedTabletProximityEventFilterInstance()
+TabletProximityEventFilter& getSharedTabletProximityEventFilterInstance()
 {
     static TabletProximityEventFilter* sharedInstance = new TabletProximityEventFilter(QApplication::instance());
-    return sharedInstance;
+    return *sharedInstance;
 }
 
 }

@@ -33,9 +33,9 @@ signals:
 };
 
 /**
- * @brief getSharedTabletProximityEventFilterInstance Gets a pointer to the shared instance of the tablet proximity event filter (since we only need one at the top level)
+ * @brief getSharedTabletProximityEventFilterInstance Gets a reference to the shared instance of the tablet proximity event filter (since we currently only need one to give to the application instance)
  * @return A reference to the tablet proximity event filter
  */
-TabletProximityEventFilter* getSharedTabletProximityEventFilterInstance();
+TabletProximityEventFilter& getSharedTabletProximityEventFilterInstance();
 
 }

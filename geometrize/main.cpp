@@ -140,7 +140,7 @@ int main(int argc, char* argv[])
     incrementAppLaunchCount();
 
     QApplication app(argc, argv);
-    app.installEventFilter(geometrize::getSharedTabletProximityEventFilterInstance());
+    app.installEventFilter(&geometrize::getSharedTabletProximityEventFilterInstance());
 
 #if defined(Q_OS_LINUX) || defined(Q_OS_MAC)
     // Some Linux/Macs taskbars/DEs use the application window icon to set the taskbar icon
