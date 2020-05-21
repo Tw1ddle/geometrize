@@ -86,6 +86,16 @@ public:
      */
     void evaluateOnPenInputEventScripts() const;
 
+    /**
+     * @brief evaluateOnPenProximityEnterEventScripts Evaluates the scripts set to run directly after a pen e.g. Wacom stylus enters proximity of the screen (application global, not just the scenes)
+     */
+    void evaluateOnPenProximityEnterEventScripts() const;
+
+    /**
+     * @brief evaluateOnPenProximityExitEventScripts Evaluates the scripts set to run directly after a pen e.g. Wacom stylus leaves the proximity of the screen (application global, not just the scenes)
+     */
+    void evaluateOnPenProximityExitEventScripts() const;
+
 signals:
     void signal_scriptChanged(const std::string& functionName, const std::string& code);
 

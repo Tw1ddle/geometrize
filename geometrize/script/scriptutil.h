@@ -83,6 +83,18 @@ std::map<std::string, std::string> getAfterAddShapeCallbackScripts();
  */
 std::map<std::string, std::string> getOnPenInputCallbackScripts();
 
+/**
+ * @brief getOnPenProximityEnterCallbackScripts Gets a map of scripts that are useful to call after receiving a pen proximity enter callback. This is application global, not bound to a particular view.
+ * @return A map of Chaiscript script function names to function bodies.
+ */
+std::map<std::string, std::string> getOnPenProximityEnterCallbackScripts();
+
+/**
+ * @brief getOnPenProximityExitCallbackScripts Gets a map of scripts that are useful to call after receiving a pen proximity exit callback. This is application global, not bound to a particular view.
+ * @return A map of Chaiscript script function names to function bodies.
+ */
+std::map<std::string, std::string> getOnPenProximityExitCallbackScripts();
+
 }
 
 }

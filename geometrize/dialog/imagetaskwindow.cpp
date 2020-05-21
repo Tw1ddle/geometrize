@@ -35,6 +35,7 @@
 #include "task/imagetask.h"
 #include "task/shapecollection.h"
 #include "version/versioninfo.h"
+#include "tabletproximityeventfilter.h"
 
 #if defined DATASLINGER_INCLUDED
 #include "dataslinger/imageslinger.h"
@@ -425,6 +426,15 @@ public:
             if(key == Qt::Key_A) { // Scale up
                 //scaleShape(1.03f);
             }
+        });
+
+        // Connect the pen input proximity event filter
+        auto& sharedTabletProximityEventFilter = geometrize::getSharedTabletProximityEventFilterInstance();
+        connect(&sharedTabletProximityEventFilter, &geometrize::TabletProximityEventFilter::signal_onTabletEnterProximity, [this]() {
+            ui->scriptsWidget->evaluateOnPenProximityEnterEventScripts();
+        });
+        connect(&sharedTabletProximityEventFilter, &geometrize::TabletProximityEventFilter::signal_onTabletLeaveProximity, [this]() {
+            ui->scriptsWidget->evaluateOnPenProximityExitEventScripts();
         });
 
         // Set initial target image opacity

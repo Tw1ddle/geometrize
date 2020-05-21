@@ -35,6 +35,8 @@ const std::string stopConditionIdPrefix = "stop_condition_";
 const std::string beforeAddShapeCallbackPrefix = "before_add_shape_callback_";
 const std::string afterAddShapeCallbackPrefix = "after_add_shape_callback_";
 const std::string onPenInputCallbackPrefix = "on_pen_input_callback_";
+const std::string onPenProximityEnterCallbackPrefix = "on_pen_proximity_enter_callback_";
+const std::string onPenProximityExitCallbackPrefix = "on_pen_proximity_exit_callback_";
 
 }
 
@@ -102,6 +104,12 @@ public:
         });
         connect(ui->onScenePenInputEvent, &QPushButton::clicked, [this]() {
             addOnPenInputWidget(getScriptForSelectedComboBoxItem(ui->onScenePenInputEventPresetScriptsComboBox));
+        });
+        connect(ui->onPenProximityEnterEvent, &QPushButton::clicked, [this]() {
+            addOnPenProximityEnterWidget(getScriptForSelectedComboBoxItem(ui->onPenProximityEnterEventPresetScriptsComboBox));
+        });
+        connect(ui->onPenProximityExitEvent, &QPushButton::clicked, [this]() {
+            addOnPenProximityExitWidget(getScriptForSelectedComboBoxItem(ui->onPenProximityExitEventPresetScriptsComboBox));
         });
 
         // Update the script code when the editor modifies them
@@ -242,6 +250,16 @@ public:
         evaluateScriptsWithNoReturnValue(::onPenInputCallbackPrefix);
     }
 
+    void evaluateOnPenProximityEnterEventScripts() const
+    {
+        evaluateScriptsWithNoReturnValue(::onPenProximityEnterCallbackPrefix);
+    }
+
+    void evaluateOnPenProximityExitEventScripts() const
+    {
+        evaluateScriptsWithNoReturnValue(::onPenProximityExitCallbackPrefix);
+    }
+
     void onLanguageChange()
     {
         ui->retranslateUi(q);
@@ -261,7 +279,9 @@ private:
            !startsWith(scriptIdPrefix, ::afterAddShapeCallbackPrefix) &&
            !startsWith(scriptIdPrefix, ::beforeStepCallbackPrefix) &&
            !startsWith(scriptIdPrefix, ::afterStepCallbackPrefix) &&
-           !startsWith(scriptIdPrefix, ::onPenInputCallbackPrefix))
+           !startsWith(scriptIdPrefix, ::onPenInputCallbackPrefix) &&
+           !startsWith(scriptIdPrefix, ::onPenProximityEnterCallbackPrefix) &&
+           !startsWith(scriptIdPrefix, ::onPenProximityExitCallbackPrefix))
         {
             return;
         }
@@ -302,6 +322,16 @@ private:
     void addOnPenInputWidget(const std::string& scriptCode)
     {
         addScriptWidget(tr("On Pen Input Callback").toStdString(), ::onPenInputCallbackPrefix, scriptCode);
+    }
+
+    void addOnPenProximityEnterWidget(const std::string& scriptCode)
+    {
+        addScriptWidget(tr("On Pen Proximity Enter Callback").toStdString(), ::onPenProximityEnterCallbackPrefix, scriptCode);
+    }
+
+    void addOnPenProximityExitWidget(const std::string& scriptCode)
+    {
+        addScriptWidget(tr("On Pen Proximity Exit Callback").toStdString(), ::onPenProximityExitCallbackPrefix, scriptCode);
     }
 
     // Utility function used to setup and display the shape creation/mutation script editor for the given image task window
@@ -372,6 +402,9 @@ private:
         presetScriptData.push_back(std::make_pair(ui->addBeforeAddShapePresetScriptsComboBox, geometrize::script::getBeforeAddShapeCallbackScripts()));
         presetScriptData.push_back(std::make_pair(ui->addAfterAddShapePresetScriptsComboBox, geometrize::script::getAfterAddShapeCallbackScripts()));
         presetScriptData.push_back(std::make_pair(ui->onScenePenInputEventPresetScriptsComboBox, geometrize::script::getOnPenInputCallbackScripts()));
+        presetScriptData.push_back(std::make_pair(ui->onPenProximityEnterEventPresetScriptsComboBox, geometrize::script::getOnPenProximityEnterCallbackScripts()));
+        presetScriptData.push_back(std::make_pair(ui->onPenProximityExitEventPresetScriptsComboBox, geometrize::script::getOnPenProximityExitCallbackScripts()));
+
         for(const auto& item : presetScriptData) {
             populateScriptSelectionComboBox(item.first, item.second);
         }
@@ -439,6 +472,16 @@ void ImageTaskScriptingWidget::evaluateAfterAddShapeScripts() const
 void ImageTaskScriptingWidget::evaluateOnPenInputEventScripts() const
 {
     d->evaluateOnPenInputEventScripts();
+}
+
+void ImageTaskScriptingWidget::evaluateOnPenProximityEnterEventScripts() const
+{
+    d->evaluateOnPenProximityEnterEventScripts();
+}
+
+void ImageTaskScriptingWidget::evaluateOnPenProximityExitEventScripts() const
+{
+    d->evaluateOnPenProximityExitEventScripts();
 }
 
 std::map<std::string, std::string> ImageTaskScriptingWidget::getShapeMutationScripts() const

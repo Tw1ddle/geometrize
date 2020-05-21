@@ -13,6 +13,7 @@
 #include <QStringList>
 #include <QtGlobal>
 
+#include "tabletproximityeventfilter.h"
 #include "cli/commandlineparser.h"
 #include "common/uiactions.h"
 #include "dialog/appsplashscreen.h"
@@ -131,25 +132,6 @@ std::function<int(QApplication&)> resolveLaunchFunction(const QStringList& argum
 #endif
 }
 
-// Helper to capture tablet enter/exit proximity events (like when Wacom pens are held close to the screen)
-// Used to hide the cursor so it doesn't get in the way of wherever the pen is being held
-class TabletProximityEventFilter : public QObject
-{
-public:
-    TabletProximityEventFilter(QApplication* app) : QObject(app) {}
-
-    bool eventFilter(QObject* /*obj*/, QEvent* event) override
-    {
-        if (event->type() == QEvent::TabletEnterProximity) {
-            QApplication::setOverrideCursor(Qt::BlankCursor);
-        }
-        if(event->type() == QEvent::TabletLeaveProximity) {
-            QApplication::restoreOverrideCursor();
-        }
-        return false;
-    }
-};
-
 }
 
 int main(int argc, char* argv[])
@@ -158,7 +140,7 @@ int main(int argc, char* argv[])
     incrementAppLaunchCount();
 
     QApplication app(argc, argv);
-    app.installEventFilter(new TabletProximityEventFilter(&app));
+    app.installEventFilter(geometrize::getSharedTabletProximityEventFilterInstance());
 
 #if defined(Q_OS_LINUX) || defined(Q_OS_MAC)
     // Some Linux/Macs taskbars/DEs use the application window icon to set the taskbar icon

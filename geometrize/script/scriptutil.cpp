@@ -100,6 +100,16 @@ std::map<std::string, std::string> getOnPenInputCallbackScripts()
     return getScriptsFromFolder(":/scripts/scripts/on_pen_input_callbacks/");
 }
 
+std::map<std::string, std::string> getOnPenProximityEnterCallbackScripts()
+{
+    return getScriptsFromFolder(":/scripts/scripts/on_pen_proximity_enter_callbacks/");
+}
+
+std::map<std::string, std::string> getOnPenProximityExitCallbackScripts()
+{
+    return getScriptsFromFolder(":/scripts/scripts/on_pen_proximity_exit_callbacks/");
+}
+
 }
 
 }

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>300</width>
-    <height>400</height>
+    <height>402</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -114,6 +114,34 @@
           </item>
           <item>
            <widget class="QComboBox" name="onScenePenInputEventPresetScriptsComboBox"/>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_7">
+          <item>
+           <widget class="QPushButton" name="onPenProximityEnterEvent">
+            <property name="text">
+             <string>On Pen Proximity Enter</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="onPenProximityEnterEventPresetScriptsComboBox"/>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_8">
+          <item>
+           <widget class="QPushButton" name="onPenProximityExitEvent">
+            <property name="text">
+             <string>On Pen Proximity Exit</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="onPenProximityExitEventPresetScriptsComboBox"/>
           </item>
          </layout>
         </item>
