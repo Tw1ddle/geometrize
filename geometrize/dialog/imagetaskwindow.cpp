@@ -380,6 +380,31 @@ public:
             }
         });
 
+        // Pass the latest mouse event info to the current image task's script engine
+        connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onTargetImageHoverMoveEvent, [this](double lastX, double lastY, double x, double y, bool ctrlModifier) {
+            // TODO
+        });
+        connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onTargetImageMousePressEvent, [this](double x, double y, bool ctrlModifier) {
+            // TODO
+        });
+        connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onTargetImageMouseMoveEvent, [this](double lastX, double lastY, double x, double y, bool ctrlModifier) {
+            // TODO
+        });
+        connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onTargetImageMouseReleaseEvent, [this](double x, double y, bool ctrlModifier) {
+            // TODO
+        });
+        connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onTargetImageWheelEvent, [this](double x, double y, int amount, bool ctrlModifier) {
+            // TODO
+        });
+
+        // Pass the latest key event info to the current image task's script engine
+        connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onTargetImageKeyPressEvent, [this](int key, bool ctrlModifier) {
+            // TODO
+        });
+        connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onTargetImageKeyReleaseEvent, [this](int key, bool ctrlModifier) {
+            // TODO
+        });
+
         // Pass the latest tablet event info to the current image task's script engine
         connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onTargetImageTabletEvent, [this](const geometrize::scene::CustomTabletEvent& event) {
             if(!m_task) {
@@ -401,6 +426,17 @@ public:
             } catch(...) {
                 // The pen input scripts should setup an area of influence shape
             }
+        });
+
+        // Connect the global pen input proximity event filter signals
+        // Note these are separate from the other tablet events, since they are application-wide
+        // and proximity events don't seem to include useful data e.g. position etc
+        auto& sharedTabletProximityEventFilter = geometrize::getSharedTabletProximityEventFilterInstance();
+        connect(&sharedTabletProximityEventFilter, &geometrize::TabletProximityEventFilter::signal_onTabletEnterProximity, q, [this]() {
+            ui->scriptsWidget->evaluateOnPenProximityEnterEventScripts();
+        });
+        connect(&sharedTabletProximityEventFilter, &geometrize::TabletProximityEventFilter::signal_onTabletLeaveProximity, q, [this]() {
+            ui->scriptsWidget->evaluateOnPenProximityExitEventScripts();
         });
 
         // TODO do stuff with the area of influence shape, or tell the script engine, when input happens
@@ -426,15 +462,6 @@ public:
             if(key == Qt::Key_A) { // Scale up
                 //scaleShape(1.03f);
             }
-        });
-
-        // Connect the pen input proximity event filter
-        auto& sharedTabletProximityEventFilter = geometrize::getSharedTabletProximityEventFilterInstance();
-        connect(&sharedTabletProximityEventFilter, &geometrize::TabletProximityEventFilter::signal_onTabletEnterProximity, q, [this]() {
-            ui->scriptsWidget->evaluateOnPenProximityEnterEventScripts();
-        });
-        connect(&sharedTabletProximityEventFilter, &geometrize::TabletProximityEventFilter::signal_onTabletLeaveProximity, q, [this]() {
-            ui->scriptsWidget->evaluateOnPenProximityExitEventScripts();
         });
 
         // Set initial target image opacity
