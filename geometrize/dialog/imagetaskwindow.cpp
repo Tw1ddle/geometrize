@@ -430,10 +430,10 @@ public:
 
         // Connect the pen input proximity event filter
         auto& sharedTabletProximityEventFilter = geometrize::getSharedTabletProximityEventFilterInstance();
-        connect(&sharedTabletProximityEventFilter, &geometrize::TabletProximityEventFilter::signal_onTabletEnterProximity, [this]() {
+        connect(&sharedTabletProximityEventFilter, &geometrize::TabletProximityEventFilter::signal_onTabletEnterProximity, q, [this]() {
             ui->scriptsWidget->evaluateOnPenProximityEnterEventScripts();
         });
-        connect(&sharedTabletProximityEventFilter, &geometrize::TabletProximityEventFilter::signal_onTabletLeaveProximity, [this]() {
+        connect(&sharedTabletProximityEventFilter, &geometrize::TabletProximityEventFilter::signal_onTabletLeaveProximity, q, [this]() {
             ui->scriptsWidget->evaluateOnPenProximityExitEventScripts();
         });
 
