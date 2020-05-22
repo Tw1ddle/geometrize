@@ -1,5 +1,6 @@
 #include "imagetaskworker.h"
 
+#include "geometrize/core.h"
 #include "geometrize/bitmap/bitmap.h"
 #include "geometrize/bitmap/rgba.h"
 #include "geometrize/model.h"
@@ -24,11 +25,11 @@ ImageTaskWorker::~ImageTaskWorker()
 {
 }
 
-void ImageTaskWorker::step(const geometrize::ImageRunnerOptions options, const std::function<std::shared_ptr<geometrize::Shape>()> shapeCreator)
+void ImageTaskWorker::step(const geometrize::ImageRunnerOptions options, const std::function<std::shared_ptr<geometrize::Shape>()> shapeCreator, const geometrize::core::EnergyFunction energyFunction)
 {
     emit signal_willStep();
     m_working = true;
-    const std::vector<geometrize::ShapeResult> results{m_runner.step(options, shapeCreator)};
+    const std::vector<geometrize::ShapeResult> results{m_runner.step(options, shapeCreator, energyFunction)};
     m_working = false;
     emit signal_didStep(results);
 }

@@ -110,20 +110,43 @@ public:
 
     void stepModel()
     {
-        const auto shapeCreator = [this]() {
-            const std::int32_t w = m_worker.getTarget().getWidth();
-            const std::int32_t h = m_worker.getTarget().getHeight();
+        // NOTE this isn't ideal. The best way would probably be to take copies of dependencies, pass through, and compose them on the other side
+        const bool isScriptModeEnabled = m_preferences.isScriptModeEnabled();
+        const auto scripts = m_preferences.getScripts();
+        const auto imageRunnerOptions = m_preferences.getImageRunnerOptions();
+        const std::int32_t targetWidth = m_worker.getTarget().getWidth();
+        const std::int32_t targetHeight = m_worker.getTarget().getHeight();
 
-            if(m_preferences.isScriptModeEnabled()) {
-                // Clone the geometrizer engine state
-                // NOTE - the makeShapeCreator method uses shared_from_this to keep the engine alive
-                const auto geometrizerClone = std::make_shared<geometrize::script::GeometrizerEngine>(m_geometrizer.getEngine()->get_state());
-                geometrizerClone->installScripts(m_preferences.getScripts());
-                return geometrizerClone->makeShapeCreator(m_preferences.getImageRunnerOptions().shapeTypes, w, h);
+        // Clone the entire geometrizer engine
+        // This is important because many threads will be working with it when geometrizing shapes
+        // and we don't want to mess with the state of the engine on the main thread while these threads are working with
+        const auto geometrizerEngineClone = [this, scripts, isScriptModeEnabled]() {
+            if(!isScriptModeEnabled) {
+                return std::shared_ptr<geometrize::script::GeometrizerEngine>(nullptr); // Not using scripts, return no engine, fallbacks will be used instead
             }
-            return geometrize::createDefaultShapeCreator(m_preferences.getImageRunnerOptions().shapeTypes, w, h);
+            auto engine = std::make_shared<geometrize::script::GeometrizerEngine>(m_geometrizer.getEngine()->get_state());
+            engine->installScripts(scripts);
+            return engine;
         }();
-        emit q->signal_step(m_preferences.getImageRunnerOptions(), shapeCreator);
+
+        // Pick the energy calculation function
+        const geometrize::core::EnergyFunction energyFunction = [geometrizerEngineClone]() {
+            if(!geometrizerEngineClone) {
+                return geometrize::core::EnergyFunction(); // Not using scripts, will use the default energy function
+            }
+            return geometrize::core::EnergyFunction(); // TODO - Empty function, will check later
+        }();
+
+        // Pick the shape creation functions
+        const auto shapeCreator = [geometrizerEngineClone, imageRunnerOptions, targetWidth, targetHeight]() {
+            if(!geometrizerEngineClone) {
+                return std::function<std::shared_ptr<geometrize::Shape>()>(); // Not using scripts, will use the default energy function
+            }
+            // NOTE - the makeShapeCreator method uses shared_from_this to keep the engine alive
+            return geometrizerEngineClone->makeShapeCreator(imageRunnerOptions.shapeTypes, targetWidth, targetHeight);
+        }();
+
+        emit q->signal_step(imageRunnerOptions, shapeCreator, energyFunction);
     }
 
     void drawShape(const std::shared_ptr<geometrize::Shape> shape, const geometrize::rgba color)
@@ -176,6 +199,7 @@ private:
         qRegisterMetaType<std::function<std::shared_ptr<geometrize::Shape>()>>();
         qRegisterMetaType<std::shared_ptr<geometrize::Shape>>();
         qRegisterMetaType<geometrize::rgba>();
+        qRegisterMetaType<geometrize::core::EnergyFunction>();
 
         m_worker.moveToThread(&m_workerThread);
         m_workerThread.start();

@@ -5,6 +5,7 @@
 
 #include <QObject>
 
+#include "geometrize/core.h"
 #include "geometrize/bitmap/bitmap.h"
 #include "geometrize/runner/imagerunner.h"
 #include "geometrize/runner/imagerunneroptions.h"
@@ -34,8 +35,9 @@ public:
      * @brief step Steps the image task worker. Emits the willStep signal when called, and didStep signal on completion.
      * @param options The options to provide the image runner when stepping.
      * @param shapeCreator A function that produces the shapes when stepping.
+     * @param energyFunction An optional function to calculate the energy (if unspecified a default implementation is used).
      */
-    void step(geometrize::ImageRunnerOptions options, std::function<std::shared_ptr<geometrize::Shape>()> shapeCreator);
+    void step(geometrize::ImageRunnerOptions options, std::function<std::shared_ptr<geometrize::Shape>()> shapeCreator, geometrize::core::EnergyFunction energyFunction = nullptr);
 
     /**
      * @brief isStepping Returns true if the internal model is currently stepping.
