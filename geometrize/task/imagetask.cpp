@@ -11,6 +11,7 @@
 #include "geometrize/commonutil.h"
 #include "geometrize/bitmap/bitmap.h"
 #include "geometrize/rasterizer/rasterizer.h"
+#include "geometrize/rasterizer/scanline.h"
 #include "geometrize/shape/shapemutator.h"
 #include "geometrize/runner/imagerunner.h"
 #include "geometrize/model.h"
@@ -110,40 +111,52 @@ public:
 
     void stepModel()
     {
-        // NOTE this isn't ideal. The best way would probably be to take copies of dependencies, pass through, and compose them on the other side
         const bool isScriptModeEnabled = m_preferences.isScriptModeEnabled();
-        const auto scripts = m_preferences.getScripts();
         const auto imageRunnerOptions = m_preferences.getImageRunnerOptions();
+
+        // Early out if the script engine is disabled (use the default/C++ implementations)
+        if(!isScriptModeEnabled) {
+            emit q->signal_step(imageRunnerOptions, nullptr, nullptr);
+            return;
+        }
+
+        const auto scripts = m_preferences.getScripts();
         const std::int32_t targetWidth = m_worker.getTarget().getWidth();
         const std::int32_t targetHeight = m_worker.getTarget().getHeight();
 
-        // Clone the entire geometrizer engine
+        // Scripting is enabled - clone the entire geometrizer engine
         // This is important because many threads will be working with it when geometrizing shapes
         // and we don't want to mess with the state of the engine on the main thread while these threads are working with
-        const auto geometrizerEngineClone = [this, scripts, isScriptModeEnabled]() {
-            if(!isScriptModeEnabled) {
-                return std::shared_ptr<geometrize::script::GeometrizerEngine>(nullptr); // Not using scripts, return no engine, fallbacks will be used instead
-            }
+        const auto geometrizerEngineClone = [this, scripts]() {
             auto engine = std::make_shared<geometrize::script::GeometrizerEngine>(m_geometrizer.getEngine()->get_state());
             engine->installScripts(scripts);
             return engine;
         }();
 
-        // Pick the energy calculation function
-        const geometrize::core::EnergyFunction energyFunction = [geometrizerEngineClone]() {
-            if(!geometrizerEngineClone) {
-                return geometrize::core::EnergyFunction(); // Not using scripts, will use the default energy function
-            }
-            return geometrize::core::EnergyFunction(); // TODO - Empty function, will check later
-        }();
-
-        // Pick the shape creation functions
+        // Pick the shape creation function
         const auto shapeCreator = [geometrizerEngineClone, imageRunnerOptions, targetWidth, targetHeight]() {
-            if(!geometrizerEngineClone) {
-                return std::function<std::shared_ptr<geometrize::Shape>()>(); // Not using scripts, will use the default energy function
-            }
             // NOTE - the makeShapeCreator method uses shared_from_this to keep the engine alive
             return geometrizerEngineClone->makeShapeCreator(imageRunnerOptions.shapeTypes, targetWidth, targetHeight);
+        }();
+
+        // Pick the energy calculation function
+        const geometrize::core::EnergyFunction energyFunction = [geometrizerEngineClone]() {
+            try {
+                // NOTE - capturing a shared pointer to the script engine to keep it alive
+                const auto f = geometrizerEngineClone->getEngine()->eval<geometrize::core::EnergyFunction>("customEnergyFunction");
+                const geometrize::core::EnergyFunction g = [f, geometrizerEngineClone](
+                        const std::vector<geometrize::Scanline>& lines,
+                        const std::uint32_t alpha,
+                        const geometrize::Bitmap& target,
+                        const geometrize::Bitmap& current,
+                        geometrize::Bitmap& buffer,
+                        const float score) {
+                    return f(lines, alpha, target, current, buffer, score);
+                };
+                return g;
+            } catch(...) {
+                return geometrize::core::EnergyFunction(); // No energy function in the script engine, will use the default
+            }
         }();
 
         emit q->signal_step(imageRunnerOptions, shapeCreator, energyFunction);
