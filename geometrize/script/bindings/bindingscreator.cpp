@@ -319,6 +319,10 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
 {
     auto module = createModule();
 
+    using namespace geometrize::core;
+
+    ADD_FREE_FUN(defaultEnergyFunction);
+
     ADD_TYPE(Bitmap);
     ADD_CONSTRUCTOR(Bitmap, Bitmap(std::uint32_t COMMA std::uint32_t COMMA geometrize::rgba));
     ADD_CONSTRUCTOR(Bitmap, Bitmap(std::uint32_t COMMA std::uint32_t COMMA const std::vector<std::uint8_t>& data));

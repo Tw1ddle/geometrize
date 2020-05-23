@@ -13,6 +13,7 @@
 #include "chaiscript/chaiscript.hpp"
 
 #include "geometrize/commonutil.h"
+#include "geometrize/core.h"
 #include "geometrize/model.h"
 #include "geometrize/shape/circle.h"
 #include "geometrize/shape/ellipse.h"
@@ -55,25 +56,30 @@ chaiscript::ChaiScript* GeometrizerEngine::getEngine()
 
 void GeometrizerEngine::installScripts(const std::map<std::string, std::string>& scripts)
 {
-    installScript<geometrize::Circle>("setupCircle", scripts);
-    installScript<geometrize::Ellipse>("setupEllipse", scripts);
-    installScript<geometrize::Line>("setupLine", scripts);
-    installScript<geometrize::Polyline>("setupPolyline", scripts);
-    installScript<geometrize::QuadraticBezier>("setupQuadraticBezier", scripts);
-    installScript<geometrize::Rectangle>("setupRectangle", scripts);
-    installScript<geometrize::RotatedEllipse>("setupRotatedEllipse", scripts);
-    installScript<geometrize::RotatedRectangle>("setupRotatedRectangle", scripts);
-    installScript<geometrize::Triangle>("setupTriangle", scripts);
+    installShapeScript<geometrize::Circle>("setupCircle", scripts);
+    installShapeScript<geometrize::Ellipse>("setupEllipse", scripts);
+    installShapeScript<geometrize::Line>("setupLine", scripts);
+    installShapeScript<geometrize::Polyline>("setupPolyline", scripts);
+    installShapeScript<geometrize::QuadraticBezier>("setupQuadraticBezier", scripts);
+    installShapeScript<geometrize::Rectangle>("setupRectangle", scripts);
+    installShapeScript<geometrize::RotatedEllipse>("setupRotatedEllipse", scripts);
+    installShapeScript<geometrize::RotatedRectangle>("setupRotatedRectangle", scripts);
+    installShapeScript<geometrize::Triangle>("setupTriangle", scripts);
 
-    installScript<geometrize::Circle>("mutateCircle", scripts);
-    installScript<geometrize::Ellipse>("mutateEllipse", scripts);
-    installScript<geometrize::Line>("mutateLine", scripts);
-    installScript<geometrize::Polyline>("mutatePolyline", scripts);
-    installScript<geometrize::QuadraticBezier>("mutateQuadraticBezier", scripts);
-    installScript<geometrize::Rectangle>("mutateRectangle", scripts);
-    installScript<geometrize::RotatedEllipse>("mutateRotatedEllipse", scripts);
-    installScript<geometrize::RotatedRectangle>("mutateRotatedRectangle", scripts);
-    installScript<geometrize::Triangle>("mutateTriangle", scripts);
+    installShapeScript<geometrize::Circle>("mutateCircle", scripts);
+    installShapeScript<geometrize::Ellipse>("mutateEllipse", scripts);
+    installShapeScript<geometrize::Line>("mutateLine", scripts);
+    installShapeScript<geometrize::Polyline>("mutatePolyline", scripts);
+    installShapeScript<geometrize::QuadraticBezier>("mutateQuadraticBezier", scripts);
+    installShapeScript<geometrize::Rectangle>("mutateRectangle", scripts);
+    installShapeScript<geometrize::RotatedEllipse>("mutateRotatedEllipse", scripts);
+    installShapeScript<geometrize::RotatedRectangle>("mutateRotatedRectangle", scripts);
+    installShapeScript<geometrize::Triangle>("mutateTriangle", scripts);
+
+    const auto iter = scripts.find("customEnergyFunction");
+    if(iter != scripts.end()) {
+        installCustomEnergyScript(iter->first, iter->second);
+    }
 }
 
 }

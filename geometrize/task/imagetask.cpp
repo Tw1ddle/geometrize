@@ -129,34 +129,22 @@ public:
         // and we don't want to mess with the state of the engine on the main thread while these threads are working with
         const auto geometrizerEngineClone = [this, scripts]() {
             auto engine = std::make_shared<geometrize::script::GeometrizerEngine>(m_geometrizer.getEngine()->get_state());
+
+            // Install the scripts that are required for the geometrization process
             engine->installScripts(scripts);
             return engine;
         }();
 
         // Pick the shape creation function
         const auto shapeCreator = [geometrizerEngineClone, imageRunnerOptions, targetWidth, targetHeight]() {
-            // NOTE - the makeShapeCreator method uses shared_from_this to keep the engine alive
+            // NOTE - this method uses shared_from_this to keep the engine alive
             return geometrizerEngineClone->makeShapeCreator(imageRunnerOptions.shapeTypes, targetWidth, targetHeight);
         }();
 
         // Pick the energy calculation function
         const geometrize::core::EnergyFunction energyFunction = [geometrizerEngineClone]() {
-            try {
-                // NOTE - capturing a shared pointer to the script engine to keep it alive
-                const auto f = geometrizerEngineClone->getEngine()->eval<geometrize::core::EnergyFunction>("customEnergyFunction");
-                const geometrize::core::EnergyFunction g = [f, geometrizerEngineClone](
-                        const std::vector<geometrize::Scanline>& lines,
-                        const std::uint32_t alpha,
-                        const geometrize::Bitmap& target,
-                        const geometrize::Bitmap& current,
-                        geometrize::Bitmap& buffer,
-                        const float score) {
-                    return f(lines, alpha, target, current, buffer, score);
-                };
-                return g;
-            } catch(...) {
-                return geometrize::core::EnergyFunction(); // No energy function in the script engine, will use the default
-            }
+            // NOTE - this method uses shared_from_this to keep the engine alive
+            return geometrizerEngineClone->makeEnergyFunction();
         }();
 
         emit q->signal_step(imageRunnerOptions, shapeCreator, energyFunction);

@@ -5,13 +5,15 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <vector>
 
 #include <QObject>
 
 #include "chaiscript/chaiscript.hpp"
 
-#include "geometrize/shape/shapetypes.h"
+#include "geometrize/bitmap/bitmap.h"
 #include "geometrize/commonutil.h"
+#include "geometrize/core.h"
 #include "geometrize/model.h"
 #include "geometrize/shape/circle.h"
 #include "geometrize/shape/ellipse.h"
@@ -19,6 +21,7 @@
 #include "geometrize/shape/polyline.h"
 #include "geometrize/shape/quadraticbezier.h"
 #include "geometrize/rasterizer/rasterizer.h"
+#include "geometrize/rasterizer/scanline.h"
 #include "geometrize/shape/rectangle.h"
 #include "geometrize/shape/rotatedellipse.h"
 #include "geometrize/shape/rotatedrectangle.h"
@@ -63,6 +66,15 @@ public:
     GeometrizerEngine(const GeometrizerEngine&) = delete;
 
     void installScripts(const std::map<std::string, std::string>& scripts);
+
+    /**
+     * @brief makeEnergyFunction Returns a custom energy function for the core geometrization algorithm.
+     * @return An energy function, for passing to an ImageRunner.
+     */
+    geometrize::core::EnergyFunction makeEnergyFunction()
+    {
+        return m_customEnergyFunction;
+    }
 
     /**
      * @brief makeShapeCreator Returns a function that generates shapes for the core geometrization algorithm
@@ -166,7 +178,7 @@ signals:
 
 private:
     template<class T>
-    void installScript(const std::string& functionName, const std::map<std::string, std::string>& scripts)
+    void installShapeScript(const std::string& functionName, const std::map<std::string, std::string>& scripts)
     {
         try {
             const auto it{scripts.find(functionName)};
@@ -197,6 +209,43 @@ private:
                  setMutatorFunction(g);
                  return;
              }
+        } catch(std::exception& e) {
+            std::cout << e.what() << std::endl;
+        }
+
+        assert(0 && "Checking for unrecognized required function, will ignore it");
+    }
+
+    void installCustomEnergyScript(const std::string& functionName, const std::string& scriptCode)
+    {
+        try {
+            m_engine->eval(scriptCode);
+        } catch(...) {
+            // Either syntax error or the function was already defined
+            //assert(0 && "Encountered script error when adding custom energy function");
+        }
+
+        try {
+            const auto f{m_engine->eval<geometrize::core::EnergyFunction>(functionName)};
+            const auto self(shared_from_this());
+
+            const geometrize::core::EnergyFunction g = [self, f](
+                    const std::vector<geometrize::Scanline>& lines,
+                    const std::uint32_t alpha,
+                    const geometrize::Bitmap& target,
+                    const geometrize::Bitmap& current,
+                    geometrize::Bitmap& buffer,
+                    const float score) {
+                try {
+                    return f(lines, alpha, target, current, buffer, score);
+                } catch(std::exception& e) {
+                    std::cout << e.what() << std::endl;
+                    return 0.0f;
+                }
+            };
+
+            setCustomEnergyFunction(g);
+            return;
         } catch(std::exception& e) {
             std::cout << e.what() << std::endl;
         }
@@ -384,6 +433,11 @@ private:
         m_mutateTriangle = f;
     }
 
+    void setCustomEnergyFunction(const geometrize::core::EnergyFunction& f)
+    {
+        m_customEnergyFunction = f;
+    }
+
     std::function<void(geometrize::Circle&)> m_setupCircle;
     std::function<void(geometrize::Ellipse&)> m_setupEllipse;
     std::function<void(geometrize::Line&)> m_setupLine;
@@ -403,6 +457,8 @@ private:
     std::function<void(geometrize::RotatedEllipse&)> m_mutateRotatedEllipse;
     std::function<void(geometrize::RotatedRectangle&)> m_mutateRotatedRectangle;
     std::function<void(geometrize::Triangle&)> m_mutateTriangle;
+
+    geometrize::core::EnergyFunction m_customEnergyFunction;
 
     std::unique_ptr<chaiscript::ChaiScript> m_engine;
 };
