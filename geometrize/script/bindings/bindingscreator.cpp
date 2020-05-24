@@ -319,10 +319,6 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
 {
     auto module = createModule();
 
-    using namespace geometrize::core;
-
-    ADD_FREE_FUN(defaultEnergyFunction);
-
     ADD_TYPE(Bitmap);
     ADD_CONSTRUCTOR(Bitmap, Bitmap(std::uint32_t COMMA std::uint32_t COMMA geometrize::rgba));
     ADD_CONSTRUCTOR(Bitmap, Bitmap(std::uint32_t COMMA std::uint32_t COMMA const std::vector<std::uint8_t>& data));
@@ -453,6 +449,17 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
       { QUADRATIC_BEZIER, "QUADRATIC_BEZIER" },
       { POLYLINE, "POLYLINE" }
     });
+
+    using namespace geometrize::core;
+
+    ADD_FREE_FUN(defaultEnergyFunction);
+
+    ADD_TYPE(Scanline);
+    ADD_MEMBER(Scanline, y);
+    ADD_MEMBER(Scanline, x1);
+    ADD_MEMBER(Scanline, x2);
+
+    chaiscript::bootstrap::standard_library::vector_type<std::vector<Scanline>>("ScanlineVector", *module);
 
     using namespace geometrize::commonutil;
 

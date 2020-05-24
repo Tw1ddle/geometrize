@@ -71,9 +71,18 @@ public:
      * @brief makeEnergyFunction Returns a custom energy function for the core geometrization algorithm.
      * @return An energy function, for passing to an ImageRunner.
      */
-    geometrize::core::EnergyFunction makeEnergyFunction()
+    geometrize::core::EnergyFunction makeEnergyFunction() const
     {
-        return m_customEnergyFunction;
+        auto self(shared_from_this());
+        geometrize::core::EnergyFunction f = [self, this](const std::vector<geometrize::Scanline>& lines,
+                const std::uint32_t alpha,
+                const geometrize::Bitmap& target,
+                const geometrize::Bitmap& current,
+                geometrize::Bitmap& buffer,
+                double score) {
+            return m_customEnergyFunction(lines, alpha, target, current, buffer, score);
+        };
+        return f;
     }
 
     /**
@@ -227,20 +236,19 @@ private:
 
         try {
             const auto f{m_engine->eval<geometrize::core::EnergyFunction>(functionName)};
-            const auto self(shared_from_this());
 
-            const geometrize::core::EnergyFunction g = [self, f](
+            const geometrize::core::EnergyFunction g = [f](
                     const std::vector<geometrize::Scanline>& lines,
                     const std::uint32_t alpha,
                     const geometrize::Bitmap& target,
                     const geometrize::Bitmap& current,
                     geometrize::Bitmap& buffer,
-                    const float score) {
+                    const double score) {
                 try {
                     return f(lines, alpha, target, current, buffer, score);
                 } catch(std::exception& e) {
                     std::cout << e.what() << std::endl;
-                    return 0.0f;
+                    return 0.0;
                 }
             };
 
