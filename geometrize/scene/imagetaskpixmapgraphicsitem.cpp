@@ -21,7 +21,8 @@ ImageTaskPixmapGraphicsItem::ImageTaskPixmapGraphicsItem() : QGraphicsPixmapItem
     setAcceptHoverEvents(true);
     setAcceptTouchEvents(true);
     setFlag(ItemIsMovable, false);
-    setFlag(ItemIsSelectable, true);
+    setFlag(ItemIsSelectable, true); // To receive mouse events
+    setFlag(ItemIsFocusable, true); // To receive key events (need focus first of course)
     setZValue(1000);
 
     // Allows the pixmap to receive events even when the opacity is set to 0

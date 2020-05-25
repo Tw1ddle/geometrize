@@ -425,11 +425,13 @@ public:
             chaiscript::ChaiScript* engine = m_task->getGeometrizer().getEngine();
             const std::string keyString = QKeySequence(key).toString().toStdString();
 
-
             // Update vars for pressed keys in the engine (cleared on key release)
             engine->set_global(chaiscript::var(keyString), "targetImageLastKeyDown");
             engine->set_global(chaiscript::var(true), "targetImageKeyDown_" + keyString);
             engine->set_global(chaiscript::var(ctrlModifier), "targetImageControlModifierDown");
+
+            // Last pressed key in the engine, not cleared on key release
+            engine->set_global(chaiscript::var(keyString), "targetImageLastKeyDownPersistent");
         });
         connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onTargetImageKeyReleaseEvent, [this](int key, bool ctrlModifier) {
             chaiscript::ChaiScript* engine = m_task->getGeometrizer().getEngine();
@@ -473,6 +475,31 @@ public:
         });
         connect(&sharedTabletProximityEventFilter, &geometrize::TabletProximityEventFilter::signal_onTabletLeaveProximity, q, [this]() {
             ui->scriptsWidget->evaluateOnPenProximityExitEventScripts();
+        });
+
+        // TODO do stuff with the area of influence shape, or tell the script engine, when input happens
+        connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onAreaOfInfluenceShapeHoverMoveEvent, [this](const int lastX, const int lastY, const int x, const int y, const bool ctrlModifier) {
+            if(!ctrlModifier) {
+                return;
+            }
+            //translateShape(x - lastX, y - lastY);
+        });
+        connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onAreaOfInfluenceShapeMouseWheelEvent, [this](const int, const int, const double amount, const bool ctrlModifier) {
+            if(!ctrlModifier) {
+                return;
+            }
+            //scaleShape(amount > 0 ? 1.03f : 0.97f);
+        });
+        connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onAreaOfInfluenceShapeKeyPressEvent, [this](const int key, const bool) {
+            if(key == Qt::Key_R) { // Rotate
+                //rotateShape(3);
+            }
+            if(key == Qt::Key_Q) { // Scale down
+                //scaleShape(0.97f);
+            }
+            if(key == Qt::Key_A) { // Scale up
+                //scaleShape(1.03f);
+            }
         });
 
         // Set initial target image opacity
