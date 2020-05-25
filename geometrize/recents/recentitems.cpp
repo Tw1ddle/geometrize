@@ -21,8 +21,8 @@ public:
     }
 
     ~RecentItemsImpl() = default;
-    RecentItemsImpl& operator=(const RecentItemsImpl&) = default;
-    RecentItemsImpl(const RecentItemsImpl&) = default;
+    RecentItemsImpl& operator=(const RecentItemsImpl&) = delete;
+    RecentItemsImpl(const RecentItemsImpl&) = delete;
 
     QList<RecentItem> getItems() const
     {
@@ -161,33 +161,12 @@ const QString RecentItems::RecentItemsImpl::ID_KEY{"id"};
 const QString RecentItems::RecentItemsImpl::DISPLAY_NAME_KEY{"displayname"};
 const QString RecentItems::RecentItemsImpl::TIME_STAMP_KEY{"timestamp"};
 
-void swap(RecentItems& first, RecentItems& second)
-{
-    std::swap(first.d, second.d);
-}
-
 RecentItems::RecentItems(const QString& group, const unsigned int maxItems) : d{std::make_unique<RecentItemsImpl>(group, maxItems)}
 {
 }
 
 RecentItems::~RecentItems()
 {
-}
-
-RecentItems& RecentItems::operator=(RecentItems& other)
-{
-    swap(*this, other);
-    return *this;
-}
-
-RecentItems::RecentItems(RecentItems& other)
-{
-    swap(*this, other);
-}
-
-RecentItems::RecentItems(RecentItems&& other)
-{
-    swap(*this, other);
 }
 
 QList<RecentItem> RecentItems::getItems() const

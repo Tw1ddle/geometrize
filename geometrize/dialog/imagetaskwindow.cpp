@@ -495,6 +495,7 @@ public:
             ui->scriptsWidget->evaluateOnPenProximityExitEventScripts();
         });
 
+        /*
         // TODO do stuff with the area of influence shape, or tell the script engine, when input happens
         connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onAreaOfInfluenceShapeHoverMoveEvent, [this](const int lastX, const int lastY, const int x, const int y, const bool ctrlModifier) {
             if(!ctrlModifier) {
@@ -519,6 +520,7 @@ public:
                 //scaleShape(1.03f);
             }
         });
+        */
 
         // Set initial target image opacity
         const float initialTargetImageOpacity{0};

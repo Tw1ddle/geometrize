@@ -39,6 +39,7 @@ void purgeTranslators(QCoreApplication* application)
     std::vector<QTranslator*>& translators{getTranslators()};
     for(QTranslator* translator : translators) {
         const bool removed{application->removeTranslator(translator)};
+        Q_UNUSED(removed);
         assert(removed);
         delete translator;
     }
