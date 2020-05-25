@@ -10,6 +10,7 @@
 #include <QByteArray>
 #include <QCryptographicHash>
 #include <QEvent>
+#include <QKeySequence>
 #include <QLocale>
 #include <QMessageBox>
 #include <QPixmap>
@@ -381,28 +382,63 @@ public:
         });
 
         // Pass the latest mouse event info to the current image task's script engine
-        connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onTargetImageHoverMoveEvent, [this](double lastX, double lastY, double x, double y, bool ctrlModifier) {
-            // TODO
+        connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onTargetImageHoverMoveEvent, [this](double lastX, double lastY, double x, double y, bool /*ctrlModifier*/) {
+            chaiscript::ChaiScript* engine = m_task->getGeometrizer().getEngine();
+            engine->set_global(chaiscript::var(lastX), "targetImageLastMouseX");
+            engine->set_global(chaiscript::var(lastY), "targetImageLastMouseY");
+            engine->set_global(chaiscript::var(x), "targetImageMouseX");
+            engine->set_global(chaiscript::var(y), "targetImageMouseY");
         });
-        connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onTargetImageMousePressEvent, [this](double x, double y, bool ctrlModifier) {
-            // TODO
+        connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onTargetImageMousePressEvent, [this](double x, double y, bool /*ctrlModifier*/) {
+            chaiscript::ChaiScript* engine = m_task->getGeometrizer().getEngine();
+            engine->set_global(chaiscript::var(x), "targetImageLastMouseX");
+            engine->set_global(chaiscript::var(y), "targetImageLastMouseY");
+            engine->set_global(chaiscript::var(x), "targetImageMouseX");
+            engine->set_global(chaiscript::var(y), "targetImageMouseY");
         });
-        connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onTargetImageMouseMoveEvent, [this](double lastX, double lastY, double x, double y, bool ctrlModifier) {
-            // TODO
+        connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onTargetImageMouseMoveEvent, [this](double lastX, double lastY, double x, double y, bool /*ctrlModifier*/) {
+            // NOTE not triggered currently, hover move events are used instead
+            chaiscript::ChaiScript* engine = m_task->getGeometrizer().getEngine();
+            engine->set_global(chaiscript::var(lastX), "targetImageLastMouseX");
+            engine->set_global(chaiscript::var(lastY), "targetImageLastMouseY");
+            engine->set_global(chaiscript::var(x), "targetImageMouseX");
+            engine->set_global(chaiscript::var(y), "targetImageMouseY");
         });
-        connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onTargetImageMouseReleaseEvent, [this](double x, double y, bool ctrlModifier) {
-            // TODO
+        connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onTargetImageMouseReleaseEvent, [this](double x, double y, bool /*ctrlModifier*/) {
+            chaiscript::ChaiScript* engine = m_task->getGeometrizer().getEngine();
+            engine->set_global(chaiscript::var(x), "targetImageLastMouseX");
+            engine->set_global(chaiscript::var(y), "targetImageLastMouseY");
+            engine->set_global(chaiscript::var(x), "targetImageMouseX");
+            engine->set_global(chaiscript::var(y), "targetImageMouseY");
         });
-        connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onTargetImageWheelEvent, [this](double x, double y, int amount, bool ctrlModifier) {
-            // TODO
+        connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onTargetImageWheelEvent, [this](double x, double y, int amount, bool /*ctrlModifier*/) {
+            chaiscript::ChaiScript* engine = m_task->getGeometrizer().getEngine();
+            engine->set_global(chaiscript::var(x), "targetImageLastMouseX");
+            engine->set_global(chaiscript::var(y), "targetImageLastMouseY");
+            engine->set_global(chaiscript::var(x), "targetImageMouseX");
+            engine->set_global(chaiscript::var(y), "targetImageMouseY");
+            engine->set_global(chaiscript::var(amount), "targetImageWheelMoveAmount");
         });
 
         // Pass the latest key event info to the current image task's script engine
         connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onTargetImageKeyPressEvent, [this](int key, bool ctrlModifier) {
-            // TODO
+            chaiscript::ChaiScript* engine = m_task->getGeometrizer().getEngine();
+            const std::string keyString = QKeySequence(key).toString().toStdString();
+
+
+            // Update vars for pressed keys in the engine (cleared on key release)
+            engine->set_global(chaiscript::var(keyString), "targetImageLastKeyDown");
+            engine->set_global(chaiscript::var(true), "targetImageKeyDown_" + keyString);
+            engine->set_global(chaiscript::var(ctrlModifier), "targetImageControlModifierDown");
         });
         connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onTargetImageKeyReleaseEvent, [this](int key, bool ctrlModifier) {
-            // TODO
+            chaiscript::ChaiScript* engine = m_task->getGeometrizer().getEngine();
+            const std::string keyString = QKeySequence(key).toString().toStdString();
+
+            // Update vars for pressed keys in the engine
+            engine->set_global(chaiscript::var(""), "targetImageLastKeyDown");
+            engine->set_global(chaiscript::var(false), "targetImageKeyDown_" + keyString);
+            engine->set_global(chaiscript::var(ctrlModifier), "targetImageControlModifierDown");
         });
 
         // Pass the latest tablet event info to the current image task's script engine
@@ -437,31 +473,6 @@ public:
         });
         connect(&sharedTabletProximityEventFilter, &geometrize::TabletProximityEventFilter::signal_onTabletLeaveProximity, q, [this]() {
             ui->scriptsWidget->evaluateOnPenProximityExitEventScripts();
-        });
-
-        // TODO do stuff with the area of influence shape, or tell the script engine, when input happens
-        connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onAreaOfInfluenceShapeHoverMoveEvent, [this](const int lastX, const int lastY, const int x, const int y, const bool ctrlModifier) {
-            if(!ctrlModifier) {
-                return;
-            }
-            //translateShape(x - lastX, y - lastY);
-        });
-        connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onAreaOfInfluenceShapeMouseWheelEvent, [this](const int, const int, const double amount, const bool ctrlModifier) {
-            if(!ctrlModifier) {
-                return;
-            }
-            //scaleShape(amount > 0 ? 1.03f : 0.97f);
-        });
-        connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onAreaOfInfluenceShapeKeyPressEvent, [this](const int key, const bool) {
-            if(key == Qt::Key_R) { // Rotate
-                //rotateShape(3);
-            }
-            if(key == Qt::Key_Q) { // Scale down
-                //scaleShape(0.97f);
-            }
-            if(key == Qt::Key_A) { // Scale up
-                //scaleShape(1.03f);
-            }
         });
 
         // Set initial target image opacity

@@ -21,7 +21,7 @@ ImageTaskPixmapGraphicsItem::ImageTaskPixmapGraphicsItem() : QGraphicsPixmapItem
     setAcceptHoverEvents(true);
     setAcceptTouchEvents(true);
     setFlag(ItemIsMovable, false);
-    setFlag(ItemIsSelectable, false);
+    setFlag(ItemIsSelectable, true);
     setZValue(1000);
 
     // Allows the pixmap to receive events even when the opacity is set to 0
@@ -55,7 +55,7 @@ void ImageTaskPixmapGraphicsItem::hoverMoveEvent(QGraphicsSceneHoverEvent* event
 void ImageTaskPixmapGraphicsItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
     QGraphicsPixmapItem::mousePressEvent(event);
-    emit signal_onMouseMoveEvent(event->lastScenePos().x(), event->lastScenePos().y(),event->scenePos().x(), event->scenePos().y(), event->modifiers() & Qt::ControlModifier);
+    emit signal_onMousePressEvent(event->scenePos().x(), event->scenePos().y(), event->modifiers() & Qt::ControlModifier);
 }
 
 void ImageTaskPixmapGraphicsItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
