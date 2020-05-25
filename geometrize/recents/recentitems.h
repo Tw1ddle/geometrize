@@ -24,9 +24,9 @@ public:
      */
     RecentItems(const QString& group, unsigned int maxItems);
 
-    RecentItems& operator=(RecentItems&);
-    RecentItems(RecentItems&);
-    RecentItems(RecentItems&&);
+    RecentItems& operator=(RecentItems&) = delete;
+    RecentItems(RecentItems&) = delete;
+    RecentItems(RecentItems&&) = delete;
     virtual ~RecentItems();
 
     /**
