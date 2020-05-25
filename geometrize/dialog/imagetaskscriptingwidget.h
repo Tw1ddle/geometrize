@@ -53,7 +53,11 @@ public:
      */
     void syncUserInterface();
 
-    std::map<std::string, std::string> getShapeMutationScripts() const;
+    /**
+     * @brief getScripts Gets all the scripts (shape setup/mutation scripts, and additional scripts).
+     * @return All scripts within the scripting widget and the shape scripting widget.
+     */
+    std::map<std::string, std::string> getScripts() const;
 
     /**
      * @brief evaluateBeforeStepScripts Evaluates the scripts set to run directly before the image task is stepped (i.e. immediately before the image task starts a step).

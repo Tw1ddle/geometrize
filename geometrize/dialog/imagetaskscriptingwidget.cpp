@@ -182,17 +182,18 @@ public:
     // As a result, the latest script settings won't be saved until after the image task has stepped (i.e. had the scripts applied to it)
     std::map<std::string, std::string> getScripts() const
     {
+        // Gather the scripts from the editor boxes
         const auto& editors = ui->customScriptsGroupBox->findChildren<geometrize::dialog::ScriptEditorWidget*>();
-        std::map<std::string, std::string> m;
+        std::map<std::string, std::string> scripts;
         for(ScriptEditorWidget* editor : editors) {
-            m[editor->getFunctionName()] = editor->getCurrentCode();
+            scripts[editor->getFunctionName()] = editor->getCurrentCode();
         }
 
-        getShapeScriptingPanel()->syncUserInterface();
+        // Gather the scripts from the shape scripting panel
+        const std::map<std::string, std::string> shapeScripts = getShapeScriptingPanel()->getScripts();
+        scripts.insert(shapeScripts.begin(), shapeScripts.end());
 
-        getShapeScriptingPanel()->getScripts();
-
-        return m;
+        return scripts;
     }
 
     bool evaluateStopConditionScripts() const
@@ -631,9 +632,9 @@ void ImageTaskScriptingWidget::evaluateOnTimedUpdateEventScripts() const
     d->evaluateOnTimedUpdateEventScripts();
 }
 
-std::map<std::string, std::string> ImageTaskScriptingWidget::getShapeMutationScripts() const
+std::map<std::string, std::string> ImageTaskScriptingWidget::getScripts() const
 {
-    return d->getShapeMutationScripts();
+    return d->getScripts();
 }
 
 }

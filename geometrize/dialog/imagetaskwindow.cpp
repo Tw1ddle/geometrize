@@ -175,7 +175,7 @@ public:
                 // Apply the latest scripts and engine state prior to stepping
                 auto& geometrizer = m_task->getGeometrizer();
 
-                m_task->getPreferences().setScripts(ui->scriptsWidget->getShapeMutationScripts());
+                m_task->getPreferences().setScripts(ui->scriptsWidget->getScripts());
 
                 chaiscript::ChaiScript* engine = geometrizer.getEngine();
                 engine->set_global(chaiscript::var(static_cast<int>(m_task->getWidth())), "xBound");
