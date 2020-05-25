@@ -328,9 +328,13 @@ public:
         // Track how long the task has been in the running state
         connect(&m_timeRunningTimer, &QTimer::timeout, [this]() {
             if(isRunning()) {
-                m_timeRunning += m_timeRunningResolutionMs;
+                m_timeRunning += m_timeRunningTimerResolutionMs;
                 updateStats();
             }
+        });
+
+        connect(&m_scriptEngineUpdateTimer, &QTimer::timeout, [this]() {
+            ui->scriptsWidget->evaluateOnTimedUpdateEventScripts();
         });
 
         // Before shapes are added, evaluate he pre-add shape callbacks
@@ -388,6 +392,8 @@ public:
             engine->set_global(chaiscript::var(lastY), "targetImageLastMouseY");
             engine->set_global(chaiscript::var(x), "targetImageMouseX");
             engine->set_global(chaiscript::var(y), "targetImageMouseY");
+
+            ui->scriptsWidget->evaluateOnMouseMoveEventScripts();
         });
         connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onTargetImageMousePressEvent, [this](double x, double y, bool /*ctrlModifier*/) {
             chaiscript::ChaiScript* engine = m_task->getGeometrizer().getEngine();
@@ -395,6 +401,8 @@ public:
             engine->set_global(chaiscript::var(y), "targetImageLastMouseY");
             engine->set_global(chaiscript::var(x), "targetImageMouseX");
             engine->set_global(chaiscript::var(y), "targetImageMouseY");
+
+            ui->scriptsWidget->evaluateOnMouseDownEventScripts();
         });
         connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onTargetImageMouseMoveEvent, [this](double lastX, double lastY, double x, double y, bool /*ctrlModifier*/) {
             // NOTE not triggered currently, hover move events are used instead
@@ -403,6 +411,8 @@ public:
             engine->set_global(chaiscript::var(lastY), "targetImageLastMouseY");
             engine->set_global(chaiscript::var(x), "targetImageMouseX");
             engine->set_global(chaiscript::var(y), "targetImageMouseY");
+
+            ui->scriptsWidget->evaluateOnMouseMoveEventScripts();
         });
         connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onTargetImageMouseReleaseEvent, [this](double x, double y, bool /*ctrlModifier*/) {
             chaiscript::ChaiScript* engine = m_task->getGeometrizer().getEngine();
@@ -410,6 +420,8 @@ public:
             engine->set_global(chaiscript::var(y), "targetImageLastMouseY");
             engine->set_global(chaiscript::var(x), "targetImageMouseX");
             engine->set_global(chaiscript::var(y), "targetImageMouseY");
+
+            ui->scriptsWidget->evaluateOnMouseUpEventScripts();
         });
         connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onTargetImageWheelEvent, [this](double x, double y, int amount, bool /*ctrlModifier*/) {
             chaiscript::ChaiScript* engine = m_task->getGeometrizer().getEngine();
@@ -418,6 +430,8 @@ public:
             engine->set_global(chaiscript::var(x), "targetImageMouseX");
             engine->set_global(chaiscript::var(y), "targetImageMouseY");
             engine->set_global(chaiscript::var(amount), "targetImageWheelMoveAmount");
+
+            ui->scriptsWidget->evaluateOnMouseWheelEventScripts();
         });
 
         // Pass the latest key event info to the current image task's script engine
@@ -432,6 +446,8 @@ public:
 
             // Last pressed key in the engine, not cleared on key release
             engine->set_global(chaiscript::var(keyString), "targetImageLastKeyDownPersistent");
+
+            ui->scriptsWidget->evaluateOnKeyDownEventScripts();
         });
         connect(&m_sceneManager, &geometrize::scene::ImageTaskSceneManager::signal_onTargetImageKeyReleaseEvent, [this](int key, bool ctrlModifier) {
             chaiscript::ChaiScript* engine = m_task->getGeometrizer().getEngine();
@@ -441,6 +457,8 @@ public:
             engine->set_global(chaiscript::var(""), "targetImageLastKeyDown");
             engine->set_global(chaiscript::var(false), "targetImageKeyDown_" + keyString);
             engine->set_global(chaiscript::var(ctrlModifier), "targetImageControlModifierDown");
+
+            ui->scriptsWidget->evaluateOnKeyUpEventScripts();
         });
 
         // Pass the latest tablet event info to the current image task's script engine
@@ -507,7 +525,10 @@ public:
         ui->imageTaskImageWidget->setTargetImageOpacity(static_cast<unsigned int>(initialTargetImageOpacity));
 
         // Start the timer used to track how long the image task has been in the running state
-        m_timeRunningTimer.start(static_cast<int>(m_timeRunningResolutionMs));
+        m_timeRunningTimer.start(static_cast<int>(m_timeRunningTimerResolutionMs));
+
+        // Start the timer used to regularly update the associated image task's script engine (if any)
+        m_scriptEngineUpdateTimer.start(static_cast<int>(m_scriptEngineUpdateTimerResolution));
     }
     ImageTaskWindowImpl& operator=(const ImageTaskWindowImpl&) = delete;
     ImageTaskWindowImpl(const ImageTaskWindowImpl&) = delete;
@@ -763,7 +784,10 @@ private:
     bool m_shouldKeepStepping{false}; ///> Whether to continually step i.e. whether to start another step after stepping once
     QTimer m_timeRunningTimer; ///> Timer used to keep track of how long the image task has been in the "running" state
     float m_timeRunning{0.0f}; ///> Total time that the image task has been in the "running" state
-    const float m_timeRunningResolutionMs{100.0f}; ///> Resolution of the time running timer
+    const float m_timeRunningTimerResolutionMs{100.0f}; ///> Resolution of the time running timer in milliseconds
+
+    QTimer m_scriptEngineUpdateTimer; ///> Timer used to call an update function on the script engine of the associated image task
+    float m_scriptEngineUpdateTimerResolution{100.0f}; ///> Resolution of the script update timer in milliseconds
 };
 
 ImageTaskWindow::ImageTaskWindow() :

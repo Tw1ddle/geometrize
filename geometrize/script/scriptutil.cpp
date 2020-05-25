@@ -110,6 +110,41 @@ std::map<std::string, std::string> getOnPenProximityExitCallbackScripts()
     return getScriptsFromFolder(":/scripts/scripts/on_pen_proximity_exit_callbacks/");
 }
 
+std::map<std::string, std::string> getOnKeyDownEventScripts()
+{
+    return getScriptsFromFolder(":/scripts/scripts/on_key_down_callbacks/");
+}
+
+std::map<std::string, std::string> getOnKeyUpEventScripts()
+{
+    return getScriptsFromFolder(":/scripts/scripts/on_key_up_callbacks/");
+}
+
+std::map<std::string, std::string> getOnMouseDownEventScripts()
+{
+    return getScriptsFromFolder(":/scripts/scripts/on_mouse_down_callbacks/");
+}
+
+std::map<std::string, std::string> getOnMouseUpEventScripts()
+{
+    return getScriptsFromFolder(":/scripts/scripts/on_mouse_up_callbacks/");
+}
+
+std::map<std::string, std::string> getOnMouseMoveEventScripts()
+{
+    return getScriptsFromFolder(":/scripts/scripts/on_mouse_move_callbacks/");
+}
+
+std::map<std::string, std::string> getOnMouseWheelEventScripts()
+{
+    return getScriptsFromFolder(":/scripts/scripts/on_mouse_wheel_callbacks/");
+}
+
+std::map<std::string, std::string> getOnTimedUpdateEventScripts()
+{
+    return getScriptsFromFolder(":/scripts/scripts/on_update_callbacks/");
+}
+
 }
 
 }

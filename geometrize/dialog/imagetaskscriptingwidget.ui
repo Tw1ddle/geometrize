@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>300</width>
-    <height>402</height>
+    <height>612</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -142,6 +142,104 @@
           </item>
           <item>
            <widget class="QComboBox" name="onPenProximityExitEventPresetScriptsComboBox"/>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_12">
+          <item>
+           <widget class="QPushButton" name="onKeyDownEvent">
+            <property name="text">
+             <string>On Key Down</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="onKeyDownEventPresetScriptsComboBox"/>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_10">
+          <item>
+           <widget class="QPushButton" name="onKeyUpEvent">
+            <property name="text">
+             <string>On Key Up</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="onKeyUpEventPresetScriptsComboBox"/>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_13">
+          <item>
+           <widget class="QPushButton" name="onMouseDownEvent">
+            <property name="text">
+             <string>On Mouse Down</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="onMouseDownEventPresetScriptsComboBox"/>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_15">
+          <item>
+           <widget class="QPushButton" name="onMouseUpEvent">
+            <property name="text">
+             <string>On Mouse Up</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="onMouseUpEventPresetScriptsComboBox"/>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_14">
+          <item>
+           <widget class="QPushButton" name="onMouseMoveEvent">
+            <property name="text">
+             <string>On Mouse Move</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="onMouseMoveEventPresetScriptsComboBox"/>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_16">
+          <item>
+           <widget class="QPushButton" name="onMouseWheelEvent">
+            <property name="text">
+             <string>On Mouse Wheel</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="onMouseWheelEventPresetScriptsComboBox"/>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_9">
+          <item>
+           <widget class="QPushButton" name="onUpdateEvent">
+            <property name="text">
+             <string>On Update</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="onUpdateEventPresetScriptsComboBox"/>
           </item>
          </layout>
         </item>

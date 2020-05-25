@@ -60,7 +60,7 @@ std::map<std::string, std::string> getBeforeStepCallbackScripts();
 std::map<std::string, std::string> getAfterStepCallbackScripts();
 
 /**
- * @brief getStopConditionScripts Gets a map of scripts that evaluate to true/false, and can be used to check whether to stop an image task (usually after stepping).
+ * @brief getStopConditionScripts Gets a map of scripts that get to true/false, and can be used to check whether to stop an image task (usually after stepping).
  * @return A map of Chaiscript script function names to function bodies.
  */
 std::map<std::string, std::string> getStopConditionScripts();
@@ -84,16 +84,58 @@ std::map<std::string, std::string> getAfterAddShapeCallbackScripts();
 std::map<std::string, std::string> getOnPenInputCallbackScripts();
 
 /**
- * @brief getOnPenProximityEnterCallbackScripts Gets a map of scripts that are useful to call after receiving a pen proximity enter callback. This is application global, not bound to a particular view.
+ * @brief getOnPenProximityEnterCallbackScripts Gets a map of scripts that are useful to call after receiving a pen proximity enter event. This is application global, not bound to a particular view.
  * @return A map of Chaiscript script function names to function bodies.
  */
 std::map<std::string, std::string> getOnPenProximityEnterCallbackScripts();
 
 /**
- * @brief getOnPenProximityExitCallbackScripts Gets a map of scripts that are useful to call after receiving a pen proximity exit callback. This is application global, not bound to a particular view.
+ * @brief getOnPenProximityExitCallbackScripts Gets a map of scripts that are useful to call after receiving a pen proximity exit event. This is application global, not bound to a particular view.
  * @return A map of Chaiscript script function names to function bodies.
  */
 std::map<std::string, std::string> getOnPenProximityExitCallbackScripts();
+
+/**
+ * @brief getOnKeyDownEventScripts Gets a map of scripts that are useful to call after receiving a key down event to the image task views.
+ * @return A map of Chaiscript script function names to function bodies.
+ */
+std::map<std::string, std::string> getOnKeyDownEventScripts();
+
+/**
+ * @brief getOnKeyUpEventScripts Gets a map of scripts that are useful to call after receiving a key up event to the image task views.
+ * @return A map of Chaiscript script function names to function bodies.
+ */
+std::map<std::string, std::string> getOnKeyUpEventScripts();
+
+/**
+ * @brief getOnMouseDownEventScripts Gets a map of scripts that are useful to call after receiving a mouse down event to the image task views.
+ * @return A map of Chaiscript script function names to function bodies.
+ */
+std::map<std::string, std::string> getOnMouseDownEventScripts();
+
+/**
+ * @brief getOnMouseUpEventScripts Gets a map of scripts that are useful to call after receiving a mouse up event to the image task views.
+ * @return A map of Chaiscript script function names to function bodies.
+ */
+std::map<std::string, std::string> getOnMouseUpEventScripts();
+
+/**
+ * @brief getOnMouseMoveEventScripts Gets a map of scripts that are useful to call after receiving a mouse move event to the image task views.
+ * @return A map of Chaiscript script function names to function bodies.
+ */
+std::map<std::string, std::string> getOnMouseMoveEventScripts();
+
+/**
+ * @brief getOnMouseWheelEventScripts Gets a map of scripts that are useful to call after receiving a mouse wheel event to the image task views.
+ * @return A map of Chaiscript script function names to function bodies.
+ */
+std::map<std::string, std::string> getOnMouseWheelEventScripts();
+
+/**
+ * @brief getOnTimedUpdateEventScripts Gets a map of scripts that are useful to regularly periodically call i.e. on update
+ * @return A map of Chaiscript script function names to function bodies.
+ */
+std::map<std::string, std::string> getOnTimedUpdateEventScripts();
 
 }
 

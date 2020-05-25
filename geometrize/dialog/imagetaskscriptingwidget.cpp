@@ -37,6 +37,13 @@ const std::string afterAddShapeCallbackPrefix = "after_add_shape_callback_";
 const std::string onPenInputCallbackPrefix = "on_pen_input_callback_";
 const std::string onPenProximityEnterCallbackPrefix = "on_pen_proximity_enter_callback_";
 const std::string onPenProximityExitCallbackPrefix = "on_pen_proximity_exit_callback_";
+const std::string onKeyDownCallbackPrefix = "on_key_down_callback_";
+const std::string onKeyUpCallbackPrefix = "on_key_up_callback_";
+const std::string onMouseDownCallbackPrefix = "on_mouse_down_callback_";
+const std::string onMouseUpCallbackPrefix = "on_mouse_up_callback_";
+const std::string onMouseMoveCallbackPrefix = "on_mouse_move_callback_";
+const std::string onMouseWheelCallbackPrefix = "on_mouse_wheel_callback_";
+const std::string onTimedUpdateCallbackPrefix = "on_timed_update_callback_";
 
 }
 
@@ -110,6 +117,27 @@ public:
         });
         connect(ui->onPenProximityExitEvent, &QPushButton::clicked, [this]() {
             addOnPenProximityExitWidget(getScriptForSelectedComboBoxItem(ui->onPenProximityExitEventPresetScriptsComboBox));
+        });
+        connect(ui->onKeyDownEvent, &QPushButton::clicked, [this]() {
+            addOnKeyDownWidget(getScriptForSelectedComboBoxItem(ui->onKeyDownEventPresetScriptsComboBox));
+        });
+        connect(ui->onKeyUpEvent, &QPushButton::clicked, [this]() {
+            addOnKeyUpWidget(getScriptForSelectedComboBoxItem(ui->onKeyUpEventPresetScriptsComboBox));
+        });
+        connect(ui->onMouseDownEvent, &QPushButton::clicked, [this]() {
+            addOnMouseDownWidget(getScriptForSelectedComboBoxItem(ui->onMouseDownEventPresetScriptsComboBox));
+        });
+        connect(ui->onMouseUpEvent, &QPushButton::clicked, [this]() {
+            addOnMouseUpWidget(getScriptForSelectedComboBoxItem(ui->onMouseUpEventPresetScriptsComboBox));
+        });
+        connect(ui->onMouseMoveEvent, &QPushButton::clicked, [this]() {
+            addOnMouseMoveWidget(getScriptForSelectedComboBoxItem(ui->onMouseMoveEventPresetScriptsComboBox));
+        });
+        connect(ui->onMouseWheelEvent, &QPushButton::clicked, [this]() {
+            addOnMouseWheelWidget(getScriptForSelectedComboBoxItem(ui->onMouseWheelEventPresetScriptsComboBox));
+        });
+        connect(ui->onUpdateEvent, &QPushButton::clicked, [this]() {
+            addOnTimedUpdateWidget(getScriptForSelectedComboBoxItem(ui->onUpdateEventPresetScriptsComboBox));
         });
 
         // Update the script code when the editor modifies them
@@ -260,6 +288,41 @@ public:
         evaluateScriptsWithNoReturnValue(::onPenProximityExitCallbackPrefix);
     }
 
+    void evaluateOnKeyDownEventScripts() const
+    {
+        evaluateScriptsWithNoReturnValue(::onKeyDownCallbackPrefix);
+    }
+
+    void evaluateOnKeyUpEventScripts() const
+    {
+        evaluateScriptsWithNoReturnValue(::onKeyUpCallbackPrefix);
+    }
+
+    void evaluateOnMouseDownEventScripts() const
+    {
+        evaluateScriptsWithNoReturnValue(::onMouseDownCallbackPrefix);
+    }
+
+    void evaluateOnMouseUpEventScripts() const
+    {
+        evaluateScriptsWithNoReturnValue(::onMouseUpCallbackPrefix);
+    }
+
+    void evaluateOnMouseMoveEventScripts() const
+    {
+        evaluateScriptsWithNoReturnValue(::onMouseMoveCallbackPrefix);
+    }
+
+    void evaluateOnMouseWheelEventScripts() const
+    {
+        evaluateScriptsWithNoReturnValue(::onMouseWheelCallbackPrefix);
+    }
+
+    void evaluateOnTimedUpdateEventScripts() const
+    {
+        evaluateScriptsWithNoReturnValue(::onTimedUpdateCallbackPrefix);
+    }
+
     void onLanguageChange()
     {
         ui->retranslateUi(q);
@@ -281,7 +344,14 @@ private:
            !startsWith(scriptIdPrefix, ::afterStepCallbackPrefix) &&
            !startsWith(scriptIdPrefix, ::onPenInputCallbackPrefix) &&
            !startsWith(scriptIdPrefix, ::onPenProximityEnterCallbackPrefix) &&
-           !startsWith(scriptIdPrefix, ::onPenProximityExitCallbackPrefix))
+           !startsWith(scriptIdPrefix, ::onPenProximityExitCallbackPrefix) &&
+           !startsWith(scriptIdPrefix, ::onKeyDownCallbackPrefix) &&
+           !startsWith(scriptIdPrefix, ::onKeyUpCallbackPrefix) &&
+           !startsWith(scriptIdPrefix, ::onMouseDownCallbackPrefix) &&
+           !startsWith(scriptIdPrefix, ::onMouseUpCallbackPrefix) &&
+           !startsWith(scriptIdPrefix, ::onMouseMoveCallbackPrefix) &&
+           !startsWith(scriptIdPrefix, ::onMouseWheelCallbackPrefix) &&
+           !startsWith(scriptIdPrefix, ::onTimedUpdateCallbackPrefix))
         {
             return;
         }
@@ -332,6 +402,41 @@ private:
     void addOnPenProximityExitWidget(const std::string& scriptCode)
     {
         addScriptWidget(tr("On Pen Proximity Exit Callback").toStdString(), ::onPenProximityExitCallbackPrefix, scriptCode);
+    }
+
+    void addOnKeyDownWidget(const std::string& scriptCode)
+    {
+        addScriptWidget(tr("On Key Down Callback").toStdString(), ::onKeyDownCallbackPrefix, scriptCode);
+    }
+
+    void addOnKeyUpWidget(const std::string& scriptCode)
+    {
+        addScriptWidget(tr("On Key Up Callback").toStdString(), ::onKeyUpCallbackPrefix, scriptCode);
+    }
+
+    void addOnMouseDownWidget(const std::string& scriptCode)
+    {
+        addScriptWidget(tr("On Mouse Down Callback").toStdString(), ::onMouseDownCallbackPrefix, scriptCode);
+    }
+
+    void addOnMouseUpWidget(const std::string& scriptCode)
+    {
+        addScriptWidget(tr("On Mouse Up Callback").toStdString(), ::onMouseUpCallbackPrefix, scriptCode);
+    }
+
+    void addOnMouseMoveWidget(const std::string& scriptCode)
+    {
+        addScriptWidget(tr("On Mouse Move Callback").toStdString(), ::onMouseMoveCallbackPrefix, scriptCode);
+    }
+
+    void addOnMouseWheelWidget(const std::string& scriptCode)
+    {
+        addScriptWidget(tr("On Mouse Wheel Callback").toStdString(), ::onMouseWheelCallbackPrefix, scriptCode);
+    }
+
+    void addOnTimedUpdateWidget(const std::string& scriptCode)
+    {
+        addScriptWidget(tr("On Timed Update Callback").toStdString(), ::onTimedUpdateCallbackPrefix, scriptCode);
     }
 
     // Utility function used to setup and display the shape creation/mutation script editor for the given image task window
@@ -404,6 +509,13 @@ private:
         presetScriptData.push_back(std::make_pair(ui->onScenePenInputEventPresetScriptsComboBox, geometrize::script::getOnPenInputCallbackScripts()));
         presetScriptData.push_back(std::make_pair(ui->onPenProximityEnterEventPresetScriptsComboBox, geometrize::script::getOnPenProximityEnterCallbackScripts()));
         presetScriptData.push_back(std::make_pair(ui->onPenProximityExitEventPresetScriptsComboBox, geometrize::script::getOnPenProximityExitCallbackScripts()));
+        presetScriptData.push_back(std::make_pair(ui->onKeyDownEventPresetScriptsComboBox, geometrize::script::getOnKeyDownEventScripts()));
+        presetScriptData.push_back(std::make_pair(ui->onKeyUpEventPresetScriptsComboBox, geometrize::script::getOnKeyUpEventScripts()));
+        presetScriptData.push_back(std::make_pair(ui->onMouseDownEventPresetScriptsComboBox, geometrize::script::getOnMouseDownEventScripts()));
+        presetScriptData.push_back(std::make_pair(ui->onMouseUpEventPresetScriptsComboBox, geometrize::script::getOnMouseUpEventScripts()));
+        presetScriptData.push_back(std::make_pair(ui->onMouseMoveEventPresetScriptsComboBox, geometrize::script::getOnMouseMoveEventScripts()));
+        presetScriptData.push_back(std::make_pair(ui->onMouseWheelEventPresetScriptsComboBox, geometrize::script::getOnMouseWheelEventScripts()));
+        presetScriptData.push_back(std::make_pair(ui->onUpdateEventPresetScriptsComboBox, geometrize::script::getOnTimedUpdateEventScripts()));
 
         for(const auto& item : presetScriptData) {
             populateScriptSelectionComboBox(item.first, item.second);
@@ -482,6 +594,41 @@ void ImageTaskScriptingWidget::evaluateOnPenProximityEnterEventScripts() const
 void ImageTaskScriptingWidget::evaluateOnPenProximityExitEventScripts() const
 {
     d->evaluateOnPenProximityExitEventScripts();
+}
+
+void ImageTaskScriptingWidget::evaluateOnKeyDownEventScripts() const
+{
+    d->evaluateOnKeyDownEventScripts();
+}
+
+void ImageTaskScriptingWidget::evaluateOnKeyUpEventScripts() const
+{
+    d->evaluateOnKeyUpEventScripts();
+}
+
+void ImageTaskScriptingWidget::evaluateOnMouseDownEventScripts() const
+{
+    d->evaluateOnMouseDownEventScripts();
+}
+
+void ImageTaskScriptingWidget::evaluateOnMouseUpEventScripts() const
+{
+    d->evaluateOnMouseUpEventScripts();
+}
+
+void ImageTaskScriptingWidget::evaluateOnMouseMoveEventScripts() const
+{
+    d->evaluateOnMouseMoveEventScripts();
+}
+
+void ImageTaskScriptingWidget::evaluateOnMouseWheelEventScripts() const
+{
+    d->evaluateOnMouseWheelEventScripts();
+}
+
+void ImageTaskScriptingWidget::evaluateOnTimedUpdateEventScripts() const
+{
+    d->evaluateOnTimedUpdateEventScripts();
 }
 
 std::map<std::string, std::string> ImageTaskScriptingWidget::getShapeMutationScripts() const

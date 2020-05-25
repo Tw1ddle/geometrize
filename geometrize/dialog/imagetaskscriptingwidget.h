@@ -82,19 +82,54 @@ public:
     void evaluateAfterAddShapeScripts() const;
 
     /**
-     * @brief evaluateOnPenInputEventScripts Evaluates the scripts set to run directly after a pen e.g. Wacom stylus interacts with the scenes
+     * @brief evaluateOnPenInputEventScripts Evaluates the scripts set to run directly after a pen e.g. Wacom stylus interacts with the scenes.
      */
     void evaluateOnPenInputEventScripts() const;
 
     /**
-     * @brief evaluateOnPenProximityEnterEventScripts Evaluates the scripts set to run directly after a pen e.g. Wacom stylus enters proximity of the screen (application global, not just the scenes)
+     * @brief evaluateOnPenProximityEnterEventScripts Evaluates the scripts set to run directly after a pen e.g. Wacom stylus enters proximity of the screen (application global, not just the scenes).
      */
     void evaluateOnPenProximityEnterEventScripts() const;
 
     /**
-     * @brief evaluateOnPenProximityExitEventScripts Evaluates the scripts set to run directly after a pen e.g. Wacom stylus leaves the proximity of the screen (application global, not just the scenes)
+     * @brief evaluateOnPenProximityExitEventScripts Evaluates the scripts set to run directly after a pen e.g. Wacom stylus leaves the proximity of the screen (application global, not just the scenes).
      */
     void evaluateOnPenProximityExitEventScripts() const;
+
+    /**
+     * @brief evaluateOnKeyDownEventScripts Evaluates the scripts set to run directly after a keyboard key is pressed in the context of a scene.
+     */
+    void evaluateOnKeyDownEventScripts() const;
+
+    /**
+     * @brief evaluateOnKeyUpEventScripts Evaluates the scripts set to run directly after a keyboard key is released in the context of a scene.
+     */
+    void evaluateOnKeyUpEventScripts() const;
+
+    /**
+     * @brief evaluateOnMouseDownEventScripts Evaluates the scripts set to run directly after a mouse key is pressed in the context of a scene.
+     */
+    void evaluateOnMouseDownEventScripts() const;
+
+    /**
+     * @brief evaluateOnMouseUpEventScripts Evaluates the scripts set to run directly after a mouse key is released in the context of a scene.
+    */
+    void evaluateOnMouseUpEventScripts() const;
+
+    /**
+     * @brief evaluateOnMouseMoveEventScripts Evaluates the scripts set to run when the mouse is moved in the context of a scene.
+     */
+    void evaluateOnMouseMoveEventScripts() const;
+
+    /**
+     * @brief evaluateOnMouseWheelEventScripts Evaluates the scripts set to run when the mouse wheel is moved in the context of a scene.
+     */
+    void evaluateOnMouseWheelEventScripts() const;
+
+    /**
+     * @brief evaluateOnTimedUpdateEventScripts Evaluates the scripts that are set to run periodically (i.e. on an update function triggered by a timer).
+     */
+    void evaluateOnTimedUpdateEventScripts() const;
 
 signals:
     void signal_scriptChanged(const std::string& functionName, const std::string& code);
