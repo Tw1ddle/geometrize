@@ -35,6 +35,7 @@ geometrize::scene::TabletEventData makeCustomTabletEventData(const QTabletEvent&
         return geometrize::scene::TabletEventType::Unknown;
     }();
 
+    #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     const geometrize::scene::TabletEventPointerType pointerType = [&event]() {
         switch(event.pointerType()) {
         case QPointingDevice::PointerType::Pen:
@@ -48,14 +49,38 @@ geometrize::scene::TabletEventData makeCustomTabletEventData(const QTabletEvent&
         }
         return geometrize::scene::TabletEventPointerType::UnknownPointer;
     }();
+    #else
+    const geometrize::scene::TabletEventPointerType pointerType = [&event]() {
+        switch(event.pointerType()) {
+        case QTabletEvent::PointerType::Pen:
+        case QPointingDevice::PointerType::Pen:
+            return geometrize::scene::TabletEventPointerType::Pen;
+        case QTabletEvent::PointerType::Cursor:
+        case QPointingDevice::PointerType::Cursor:
+            return geometrize::scene::TabletEventPointerType::Cursor;
+        case QTabletEvent::PointerType::Eraser:
+        case QPointingDevice::PointerType::Eraser:
+            return geometrize::scene::TabletEventPointerType::Eraser;
+        default:
+            break;
+        return geometrize::scene::TabletEventPointerType::UnknownPointer;
+    }();
+    #endif
 
     geometrize::scene::TabletEventData data;
     data.eventType = eventType;
     data.pointerType = pointerType;
+    #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     data.xViewPos = static_cast<float>(event.position().x());
     data.yViewPos = static_cast<float>(event.position().y());
     data.xScenePos = static_cast<float>(view.mapToScene(event.position().toPoint()).x());
     data.yScenePos = static_cast<float>(view.mapToScene(event.position().toPoint()).y());
+    #else
+    data.xViewPos = static_cast<float>(event.pos().x());
+    data.yViewPos = static_cast<float>(event.pos().y());
+    data.xScenePos = static_cast<float>(view.mapToScene(event.pos()).x());
+    data.yScenePos = static_cast<float>(view.mapToScene(event.pos()).y());
+    #endif
     data.pressure = static_cast<float>(event.pressure());
     data.tangentialPressure = static_cast<float>(event.tangentialPressure());
     data.xTilt = static_cast<float>(event.xTilt());
@@ -164,8 +189,15 @@ void ImageTaskGraphicsView::wheelEvent(QWheelEvent* e)
 
     // Handle zooming
     if (e->angleDelta().x() == 0) {
+        #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
         const QPointF pos{e->position()};
         const QPointF posf{mapToScene(pos.toPoint())};
+        const QPointF newPos{mapToScene(pos.toPoint())};
+        #else
+        const QPoint pos{e->pos()};
+        const QPointF posf{mapToScene(pos)};
+        const QPointF newPos{mapToScene(pos)};
+        #endif
 
         const double angle{static_cast<double>(e->angleDelta().y())};
         double by{0.0};
@@ -181,13 +213,12 @@ void ImageTaskGraphicsView::wheelEvent(QWheelEvent* e)
 
         const int w{viewport()->width()};
         const int h{viewport()->height()};
-        const double wf{mapToScene(QPoint(w - 1, 0)).x() -mapToScene(QPoint(0,0)).x()};
+        const double wf{mapToScene(QPoint(w - 1, 0)).x() - mapToScene(QPoint(0,0)).x()};
         const double hf{mapToScene(QPoint(0, h - 1)).y() - mapToScene(QPoint(0,0)).y()};
         const double lf{posf.x() - pos.x() * wf / w};
         const double tf{posf.y() - pos.y() * hf / h};
 
         ensureVisible(lf, tf, wf, hf, 0, 0);
-        const QPointF newPos{mapToScene(pos.toPoint())};
         ensureVisible(QRectF(QPointF(lf, tf) - newPos + posf, QSizeF(wf, hf)), 0, 0);
 
         e->accept();
