@@ -10,6 +10,7 @@
 #include <QLocale>
 #include <QString>
 #include <QStringList>
+#include <QtGlobal>
 #include <QTranslator>
 
 #include "preferences/globalpreferences.h"
