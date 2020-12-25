@@ -2,6 +2,10 @@ QT += core gui network svg svgwidgets
 
 TARGET = Geometrize
 TEMPLATE = app
+OBJECTS_DIR=obj
+MOC_DIR=qt_gen
+RCC_DIR=qt_gen
+UI_DIR=qt_gen
 
 # Enable C++17 features
 CONFIG += c++17
