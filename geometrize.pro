@@ -1,4 +1,8 @@
-QT += core gui network svg svgwidgets
+QT += core gui network svg
+
+greaterThan(QT_MAJOR_VERSION, 5) {
+    QT += svgwidgets
+}
 
 TARGET = Geometrize
 TEMPLATE = app
@@ -12,11 +16,6 @@ CONFIG(release, debug|release): DEFINES += NDEBUG
 # Flag for ChaiScript linking
 # Note that mingw32 builds may not work with the compiled-in stdlib because of a "too many sections error" with Chaiscript
 msvc:QMAKE_CXXFLAGS += -bigobj
-
-# Options for the Universal Windows Platform version of Geometrize
-winrt {
-    include($$PWD/uwp/geometrize_uwp.pri)
-}
 
 # Options for the Mac AppStore version of Geometrize
 macx {
