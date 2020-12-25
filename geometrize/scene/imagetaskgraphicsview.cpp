@@ -60,6 +60,7 @@ geometrize::scene::TabletEventData makeCustomTabletEventData(const QTabletEvent&
             return geometrize::scene::TabletEventPointerType::Eraser;
         default:
             break;
+        }
         return geometrize::scene::TabletEventPointerType::UnknownPointer;
     }();
     #endif
