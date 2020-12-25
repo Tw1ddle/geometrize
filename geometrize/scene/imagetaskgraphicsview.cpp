@@ -37,11 +37,11 @@ geometrize::scene::TabletEventData makeCustomTabletEventData(const QTabletEvent&
 
     const geometrize::scene::TabletEventPointerType pointerType = [&event]() {
         switch(event.pointerType()) {
-        case QTabletEvent::PointerType::Pen:
+        case QPointingDevice::PointerType::Pen:
             return geometrize::scene::TabletEventPointerType::Pen;
-        case QTabletEvent::PointerType::Cursor:
+        case QPointingDevice::PointerType::Cursor:
             return geometrize::scene::TabletEventPointerType::Cursor;
-        case QTabletEvent::PointerType::Eraser:
+        case QPointingDevice::PointerType::Eraser:
             return geometrize::scene::TabletEventPointerType::Eraser;
         default:
             break;
@@ -52,10 +52,10 @@ geometrize::scene::TabletEventData makeCustomTabletEventData(const QTabletEvent&
     geometrize::scene::TabletEventData data;
     data.eventType = eventType;
     data.pointerType = pointerType;
-    data.xViewPos = static_cast<float>(event.posF().x());
-    data.yViewPos = static_cast<float>(event.posF().y());
-    data.xScenePos = static_cast<float>(view.mapToScene(event.pos()).x());
-    data.yScenePos = static_cast<float>(view.mapToScene(event.pos()).y());
+    data.xViewPos = static_cast<float>(event.position().x());
+    data.yViewPos = static_cast<float>(event.position().y());
+    data.xScenePos = static_cast<float>(view.mapToScene(event.position().toPoint()).x());
+    data.yScenePos = static_cast<float>(view.mapToScene(event.position().toPoint()).y());
     data.pressure = static_cast<float>(event.pressure());
     data.tangentialPressure = static_cast<float>(event.tangentialPressure());
     data.xTilt = static_cast<float>(event.xTilt());
@@ -164,8 +164,8 @@ void ImageTaskGraphicsView::wheelEvent(QWheelEvent* e)
 
     // Handle zooming
     if (e->angleDelta().x() == 0) {
-        const QPoint pos{e->pos()};
-        const QPointF posf{mapToScene(pos)};
+        const QPointF pos{e->position()};
+        const QPointF posf{mapToScene(pos.toPoint())};
 
         const double angle{static_cast<double>(e->angleDelta().y())};
         double by{0.0};
@@ -187,7 +187,7 @@ void ImageTaskGraphicsView::wheelEvent(QWheelEvent* e)
         const double tf{posf.y() - pos.y() * hf / h};
 
         ensureVisible(lf, tf, wf, hf, 0, 0);
-        const QPointF newPos{mapToScene(pos)};
+        const QPointF newPos{mapToScene(pos.toPoint())};
         ensureVisible(QRectF(QPointF(lf, tf) - newPos + posf, QSizeF(wf, hf)), 0, 0);
 
         e->accept();

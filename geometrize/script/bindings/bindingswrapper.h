@@ -180,8 +180,6 @@ bool exportGIF(const std::vector<geometrize::ShapeResult>& data,
         std::size_t frameSkip,
         const std::string& filePath);
 
-bool saveDesktopScreenshot(const std::string& path);
-
 bool saveWidgetScreenshot(const std::string& path, QWidget* widget);
 
 std::string customTabletEventDataToString(const geometrize::scene::TabletEventData& data);

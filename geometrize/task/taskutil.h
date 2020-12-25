@@ -2,11 +2,12 @@
 
 #include <string>
 
+#include <QStringList>
+
 #include "manifest/templatemanifest.h"
 
 class QImage;
 class QString;
-class QStringList;
 
 namespace chaiscript
 {

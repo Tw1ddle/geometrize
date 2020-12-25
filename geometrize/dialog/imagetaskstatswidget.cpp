@@ -33,7 +33,7 @@ public:
 
     void setTimeRunning(const int seconds)
     {
-        QDateTime t{QDateTime::fromTime_t(seconds).toUTC()};
+        QDateTime t{QDateTime::fromSecsSinceEpoch(seconds).toUTC()};
         const QString time{QLocale().toString(t, "hh:mm:ss")};
         ui->timeRunningValueLabel->setText(time);
     }

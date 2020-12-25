@@ -3,7 +3,7 @@
 #include <QDebug>
 #include <QNetworkReply>
 #include <QPixmap>
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QString>
 
 #include "network/downloader.h"
@@ -62,17 +62,16 @@ void onWebpageDownloadComplete(network::Downloader* self, const QNetworkReply::N
 
     const QString document(data);
 
-    QRegExp imageTagRegex("\\<img[^\\>]*src\\s*=\\s*\"([^\"]*)\"[^\\>]*\\>", Qt::CaseInsensitive);
-    imageTagRegex.setMinimal(true);
+    QRegularExpression imageTagRegex("\\<img[^\\>]*src\\s*=\\s*\"([^\"]*)\"[^\\>]*\\>", QRegularExpression::CaseInsensitiveOption | QRegularExpression::InvertedGreedinessOption);
 
     QStringList imageMatches;
     QStringList urlMatches;
 
-    int offset{0};
-    while((offset = imageTagRegex.indexIn(document, offset)) != -1) {
-        offset += imageTagRegex.matchedLength();
-        imageMatches.append(imageTagRegex.cap(0)); // Should hold complete img tag
-        urlMatches.append(imageTagRegex.cap(1)); // Should hold only src property
+    QRegularExpressionMatchIterator it = imageTagRegex.globalMatch(document);
+    while(it.hasNext()) {
+        QRegularExpressionMatch match = it.next();
+        imageMatches.append(match.captured(0)); // Should hold complete img tag
+        urlMatches.append(match.captured(1)); // Should hold only src property
     }
 
     QList<QUrl> imageUrls;

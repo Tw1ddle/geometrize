@@ -544,7 +544,6 @@ std::shared_ptr<chaiscript::Module> createUserInterfacePuppeteerBindings()
     ADD_FREE_FUN(getCursorY);
     ADD_FREE_FUN(setCursorPos);
 
-    ADD_FREE_FUN(saveDesktopScreenshot);
     ADD_FREE_FUN(saveWidgetScreenshot);
 
     return module;

@@ -78,7 +78,7 @@ void FlowLayout::addItem(QLayoutItem* item)
 
 Qt::Orientations FlowLayout::expandingDirections() const
 {
-    return 0;
+    return Qt::Horizontal;
 }
 
 bool FlowLayout::hasHeightForWidth() const
@@ -109,7 +109,13 @@ QSize FlowLayout::minimumSize() const
         size = size.expandedTo(item->minimumSize());
     }
 
-    size += QSize(2 * margin(), 2 * margin());
+    int left = 0;
+    int right = 0;
+    int bottom = 0;
+    int top = 0;
+    getContentsMargins(&left, &top, &right, &bottom);
+
+    size += QSize(left + right, bottom + top);
     return size;
 }
 

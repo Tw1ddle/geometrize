@@ -24,7 +24,7 @@ public:
         q->connect(q, &Downloader::signal_downloaded, onDownloaded);
 
         QNetworkRequest request(m_url);
-        request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true); // So that it can handle redirects e.g. Wikipedia random article links
+        request.setAttribute(QNetworkRequest::RedirectPolicyAttribute, true); // So that it can handle redirects e.g. Wikipedia random article links
         m_webCtrl.get(request);
     }
     DownloaderImpl& operator=(const DownloaderImpl&) = delete;

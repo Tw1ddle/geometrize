@@ -1,4 +1,4 @@
-QT += core gui network svg
+QT += core gui network svg svgwidgets
 
 TARGET = Geometrize
 TEMPLATE = app

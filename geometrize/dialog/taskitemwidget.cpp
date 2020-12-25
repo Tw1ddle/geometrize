@@ -45,7 +45,9 @@ public:
         const QString itemPath{m_taskItemId};
         const RecentItem::Type type{RecentItem::getTypeForKey(itemPath)};
 
-        QFuture<QImage> thumbnailFuture{QtConcurrent::run(this, &TaskItemWidgetImpl::setupThumbnail, itemPath, type)};
+        QFuture<QImage> thumbnailFuture = QtConcurrent::run([this, itemPath, type]() {
+            return setupThumbnail(itemPath, type);
+        });
         m_thumbnailLoaderWatcher.setFuture(thumbnailFuture);
     }
 

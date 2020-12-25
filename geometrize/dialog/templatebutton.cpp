@@ -50,7 +50,9 @@ public:
             emit q->signal_templateLoaded(m_templateFolder, true);
         });
 
-        m_templateFuture = QtConcurrent::run(this, &TemplateButtonImpl::setupTemplate);
+        m_templateFuture = QtConcurrent::run([this]() {
+            return setupTemplate();
+        });
         m_templateLoaderWatcher.setFuture(m_templateFuture);
     }
 

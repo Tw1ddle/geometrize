@@ -10,7 +10,6 @@
 #include <QCoreApplication>
 #include <QCursor>
 #include <QDesktopServices>
-#include <QDesktopWidget>
 #include <QDir>
 #include <QDirIterator>
 #include <QFileInfo>
@@ -260,7 +259,7 @@ std::string getApplicationDirectoryLocation()
 
 std::string getAppDataLocation()
 {
-    return QStandardPaths::writableLocation(QStandardPaths::DataLocation).toStdString();
+    return QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation).toStdString();
 }
 
 std::string getHomeDirectoryLocation()
@@ -326,19 +325,6 @@ void setCursorPos(const int x, const int y)
 std::string getOperatingSystemProductType()
 {
     return QSysInfo::productType().toStdString();
-}
-
-bool saveDesktopScreenshot(const std::string& path)
-{
-    auto desktop = QApplication::desktop();
-    if(!desktop) {
-        assert(0 && "Failed to get desktop widget");
-        return false;
-    }
-
-    const QPixmap desktopPixmap = desktop->window()->grab();
-
-    return desktopPixmap.save(QString::fromStdString(path), "png");
 }
 
 bool saveWidgetScreenshot(const std::string& path, QWidget* widget)

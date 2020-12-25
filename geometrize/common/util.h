@@ -274,13 +274,6 @@ void setCursorPos(int x, int y);
 std::string getOperatingSystemProductType();
 
 /**
- * @brief saveDesktopScreenshot Takes a screenshot of the desktop and saves it as a .png image to the given path.
- * @param path The file path to save the screenshot to.
- * @return True if the screenshot was taken and saved successfully, else false.
- */
-bool saveDesktopScreenshot(const std::string& path);
-
-/**
  * @brief saveWidgetScreenshot Takes a screenshot of the given widget and saves it as a .png image to the given path.
  * @param path The file path to save the screenshot to.
  * @param widget The widget to take a screenshot of.

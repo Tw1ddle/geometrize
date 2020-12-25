@@ -53,9 +53,9 @@ class ElidedLabel : public QLabel
     };
 
 public:
-    explicit ElidedLabel(QWidget* parent = nullptr, Qt::WindowFlags flags = 0);
-    ElidedLabel(const QString& text, QWidget* parent = nullptr, Qt::WindowFlags flags = 0);
-    ElidedLabel(const QString& text, Qt::TextElideMode elideMode, ElidedLabel::TrimMode trimMode, QWidget* parent = nullptr, Qt::WindowFlags flags = 0);
+    explicit ElidedLabel(QWidget* parent = nullptr, Qt::WindowFlags flags = Qt::Widget);
+    ElidedLabel(const QString& text, QWidget* parent = nullptr, Qt::WindowFlags flags = Qt::Widget);
+    ElidedLabel(const QString& text, Qt::TextElideMode elideMode, ElidedLabel::TrimMode trimMode, QWidget* parent = nullptr, Qt::WindowFlags flags = Qt::Widget);
     virtual ~ElidedLabel();
 
     /**
