@@ -6,10 +6,12 @@ greaterThan(QT_MAJOR_VERSION, 5) {
 
 TARGET = Geometrize
 TEMPLATE = app
-OBJECTS_DIR=obj
-MOC_DIR=qt_gen
-RCC_DIR=qt_gen
-UI_DIR=qt_gen
+
+# Put intermediate files in separate folders to keep the build directory tidy
+OBJECTS_DIR = obj
+MOC_DIR = qt_gen
+RCC_DIR = qt_gen
+UI_DIR = qt_gen
 
 # Enable C++17 features
 CONFIG += c++17

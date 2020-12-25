@@ -119,7 +119,12 @@ QIcon getFlagIconForLocaleCode(const QString& localeCode)
     // If "language_country_locale" fails, then "language_country" and lastly "language" will be tried
     const auto makeIconPaths = [](const QString& localeCode) {
         const QString separator{"_"};
+
+        #if QT_VERSION < QT_VERSION_CHECK(5, 1, 5)
+        const QStringList parts{localeCode.split(separator, QString::SkipEmptyParts)};
+        #else
         const QStringList parts{localeCode.split(separator, Qt::SkipEmptyParts)};
+        #endif
 
         QStringList paths;
         if(parts.length() >= 3) {
