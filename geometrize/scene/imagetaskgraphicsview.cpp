@@ -35,7 +35,7 @@ geometrize::scene::TabletEventData makeCustomTabletEventData(const QTabletEvent&
         return geometrize::scene::TabletEventType::Unknown;
     }();
 
-    #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    #if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
     const geometrize::scene::TabletEventPointerType pointerType = [&event]() {
         switch(event.pointerType()) {
         case QPointingDevice::PointerType::Pen:
@@ -53,13 +53,10 @@ geometrize::scene::TabletEventData makeCustomTabletEventData(const QTabletEvent&
     const geometrize::scene::TabletEventPointerType pointerType = [&event]() {
         switch(event.pointerType()) {
         case QTabletEvent::PointerType::Pen:
-        case QPointingDevice::PointerType::Pen:
             return geometrize::scene::TabletEventPointerType::Pen;
         case QTabletEvent::PointerType::Cursor:
-        case QPointingDevice::PointerType::Cursor:
             return geometrize::scene::TabletEventPointerType::Cursor;
         case QTabletEvent::PointerType::Eraser:
-        case QPointingDevice::PointerType::Eraser:
             return geometrize::scene::TabletEventPointerType::Eraser;
         default:
             break;
@@ -70,7 +67,7 @@ geometrize::scene::TabletEventData makeCustomTabletEventData(const QTabletEvent&
     geometrize::scene::TabletEventData data;
     data.eventType = eventType;
     data.pointerType = pointerType;
-    #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    #if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
     data.xViewPos = static_cast<float>(event.position().x());
     data.yViewPos = static_cast<float>(event.position().y());
     data.xScenePos = static_cast<float>(view.mapToScene(event.position().toPoint()).x());
@@ -189,7 +186,7 @@ void ImageTaskGraphicsView::wheelEvent(QWheelEvent* e)
 
     // Handle zooming
     if (e->angleDelta().x() == 0) {
-        #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        #if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
         const QPointF pos{e->position()};
         const QPointF posf{mapToScene(pos.toPoint())};
         const QPointF newPos{mapToScene(pos.toPoint())};
