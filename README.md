@@ -58,7 +58,7 @@ For more examples of geometrized images, see the [gallery](https://gallery.geome
 Geometrize is a Qt app written in C++.
 
  * Download and install Qt 5.10 or above.
- * Install Python 3.x. The build process includes a few Python scripts for creating resource files.
+ * Install Python 3.x and add it to your path. The build process includes a few Python scripts for creating resource files.
  * Checkout this repository and all submodules, and build and run [geometrize.pro](https://github.com/Tw1ddle/geometrize/blob/master/geometrize.pro) within Qt Creator.
 
 ## Notes
