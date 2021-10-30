@@ -107,7 +107,7 @@ public:
     {
         QSettings settings;
         settings.beginGroup(m_group);
-        const int count{settings.childGroups().length()};
+        const int count{static_cast<int>(settings.childGroups().length())};
         settings.endGroup();
 
         return count;
