@@ -1,9 +1,11 @@
-# Define the compiler versions we wish to build the installer against
+image: Visual Studio 2019
+
+# Define the compiler versions we wish to build the project against
 environment:
   matrix:
-    - QTDIR: C:\Qt\5.12\mingw73_32
-      MINGW: C:\Qt\Tools\mingw73_32
-    - QTDIR: C:\Qt\5.12\msvc2015_64
+    - QTDIR: C:\Qt\6.2.0\mingw81_64
+      MINGW: C:\Qt\Tools\mingw810_64
+    - QTDIR: C:\Qt\6.2.0\msvc2019_64
 
 configuration:
   - debug
@@ -13,12 +15,11 @@ configuration:
 # Set the environment variables and paths to make
 install:
   - git submodule update --init --recursive
-  - call "%QTDIR%\bin\qtenv2.bat"
   - set PATH=%PATH%;%QTDIR%\bin;%MINGW%\bin
+  - call "%QTDIR%\bin\qtenv2.bat"
   - if %QTDIR:msvc=%==%QTDIR% set make=mingw32-make.exe
   - if %QTDIR:_64=%==%QTDIR% ( set ARCH=x86 ) else set ARCH=x64
-  - if not %QTDIR:msvc2015=%==%QTDIR% call "%ProgramFiles(x86)%\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" %ARCH%
-  - if not %QTDIR:msvc2017=%==%QTDIR% call "%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" %ARCH%
+  - if not %QTDIR:msvc2019=%==%QTDIR% call "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" %ARCH%
   - if not %QTDIR:msvc=%==%QTDIR% set make=nmake.exe
   - if not %QTDIR:msvc=%==%QTDIR% %make% /? > nul
 
