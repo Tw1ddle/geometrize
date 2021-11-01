@@ -44,10 +44,6 @@ configuration:
   - debug
   - release
 
-# Update the submodules
-install:
-  - git submodule update --init --recursive
-
 # Do configuration-specific build steps
 for:
   - matrix:
@@ -56,6 +52,7 @@ for:
           BUILD_NAME: mingw_windows
 
     install:
+      - git submodule update --init --recursive
       - set PATH=%PATH%;%QTDIR%\bin;%MINGW%\bin
       - call "%QTDIR%\bin\qtenv2.bat"
       - if %QTDIR:msvc=%==%QTDIR% set make=mingw32-make.exe
@@ -67,6 +64,7 @@ for:
           BUILD_NAME: msvc_windows
 
     install:
+      - git submodule update --init --recursive
       - set PATH=%PATH%;%QTDIR%\bin;%MINGW%\bin
       - call "%QTDIR%\bin\qtenv2.bat"
       - if %QTDIR:_64=%==%QTDIR% ( set ARCH=x86 ) else set ARCH=x64
