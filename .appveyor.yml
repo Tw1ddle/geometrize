@@ -44,6 +44,10 @@ configuration:
   - debug
   - release
 
+# Update the submodules
+install:
+  - git submodule update --init --recursive
+
 # Do configuration-specific build steps
 for:
   - matrix:
@@ -80,9 +84,8 @@ for:
         - image: Ubuntu2004
           BUILD_NAME: gcc_linux
 
-# Update the submodules and run qmake
+# Run qmake
 before_build:
-  - git submodule update --init --recursive
   - cd %APPVEYOR_BUILD_FOLDER%
   - qmake geometrize.pro
 
