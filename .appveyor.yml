@@ -1,8 +1,11 @@
-image: Visual Studio 2019
-
 branches:
   only:
     - master
+
+image:
+  - Visual Studio 2019
+  #- macos-mojave
+  #- Ubuntu2004
 
 # Define the build configurations
 environment:
@@ -15,30 +18,78 @@ environment:
     #- BUILD_NAME: clang_osx
     #- BUILD_NAME: gcc_linux
 
+# Exclude invalid build configurations
+matrix:
+  exclude:
+    - image: Visual Studio 2019
+      BUILD_NAME: clang_osx
+    - image: Visual Studio 2019
+      BUILD_NAME: gcc_linux
+
+    #- image: macos-mojave
+    #  BUILD_NAME: mingw_windows
+    #- image: macos-mojave
+    #  BUILD_NAME: msvc_windows
+    #- image: macos-mojave
+    #  BUILD_NAME: gcc_linux
+
+    #- image: Ubuntu2004
+    #  BUILD_NAME: mingw_windows
+    #- image: Ubuntu2004
+    #  BUILD_NAME: msvc_windows
+    #- image: Ubuntu2004
+    #  BUILD_NAME: clang_osx
+
 configuration:
   - debug
   - release
 
-# Get the project submodules
-# Set the environment variables and paths to make
-install:
+# Fetch the submodules
+init:
   - git submodule update --init --recursive
-  - set PATH=%PATH%;%QTDIR%\bin;%MINGW%\bin
-  - call "%QTDIR%\bin\qtenv2.bat"
-  - if %QTDIR:msvc=%==%QTDIR% set make=mingw32-make.exe
-  - if %QTDIR:_64=%==%QTDIR% ( set ARCH=x86 ) else set ARCH=x64
-  - if not %QTDIR:msvc2019=%==%QTDIR% call "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" %ARCH%
-  - if not %QTDIR:msvc=%==%QTDIR% set make=nmake.exe
-  - if not %QTDIR:msvc=%==%QTDIR% %make% /? > nul
+
+# Do configuration-specific build steps
+for:
+  - matrix:
+      only:
+        - image: Visual Studio 2019
+          BUILD_NAME: mingw_windows
+
+    install:
+      - set PATH=%PATH%;%QTDIR%\bin;%MINGW%\bin
+      - call "%QTDIR%\bin\qtenv2.bat"
+      - if %QTDIR:msvc=%==%QTDIR% set make=mingw32-make.exe
+      - if %QTDIR:_64=%==%QTDIR% ( set ARCH=x86 ) else set ARCH=x64
+
+  - matrix:
+      only:
+        - image: Visual Studio 2019
+          BUILD_NAME: msvc_windows
+
+    install:
+      - set PATH=%PATH%;%QTDIR%\bin;%MINGW%\bin
+      - call "%QTDIR%\bin\qtenv2.bat"
+      - if %QTDIR:_64=%==%QTDIR% ( set ARCH=x86 ) else set ARCH=x64
+      - if not %QTDIR:msvc2019=%==%QTDIR% call "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" %ARCH%
+      - if not %QTDIR:msvc=%==%QTDIR% set make=nmake.exe
+      - if not %QTDIR:msvc=%==%QTDIR% %make% /? > nul
+
+  - matrix:
+      only:
+        - image: macos-mojave
+          BUILD_NAME: clang_osx
+
+  - matrix:
+      only:
+        - image: Ubuntu2004
+          BUILD_NAME: gcc_linux
 
 # Run qmake
 before_build:
   - cd %APPVEYOR_BUILD_FOLDER%
   - qmake geometrize.pro
 
-# Build the projects
+# Build the project
 build_script:
   - cd %APPVEYOR_BUILD_FOLDER%
   - '%make%'
-
-# Note, the downstream installer CI etc builds and deploys Geometrize
