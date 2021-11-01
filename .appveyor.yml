@@ -4,7 +4,7 @@ branches:
 
 image:
   - Visual Studio 2019
-  #- macos-mojave
+  #- macos-bigsur
   #- Ubuntu2004
 
 # Define the build configurations
@@ -26,11 +26,11 @@ matrix:
     - image: Visual Studio 2019
       BUILD_NAME: gcc_linux
 
-    #- image: macos-mojave
+    #- image: macos-bigsur
     #  BUILD_NAME: mingw_windows
-    #- image: macos-mojave
+    #- image: macos-bigsur
     #  BUILD_NAME: msvc_windows
-    #- image: macos-mojave
+    #- image: macos-bigsur
     #  BUILD_NAME: gcc_linux
 
     #- image: Ubuntu2004
@@ -74,13 +74,19 @@ for:
 
   - matrix:
       only:
-        - image: macos-mojave
+        - image: macos-bigsur
           BUILD_NAME: clang_osx
+          
+    install:
+      - export PATH=$HOME/Qt/6.1:$PATH
 
   - matrix:
       only:
         - image: Ubuntu2004
           BUILD_NAME: gcc_linux
+          
+    install:
+      - export PATH=$HOME/Qt/6.1:$PATH
 
 # Run qmake
 before_build:
