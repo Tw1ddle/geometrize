@@ -1,15 +1,19 @@
+image: Visual Studio 2019
+
 branches:
   only:
     - master
 
-# Define the VM images/compilers we wish to build the project on
+# Define the build configurations
 environment:
   matrix:
-    - image: Visual Studio 2019
+    - BUILD_NAME: mingw_windows
       QTDIR: C:\Qt\6.2.0\mingw81_64
       MINGW: C:\Qt\Tools\mingw810_64
-    - image: Visual Studio 2019
+    - BUILD_NAME: msvc_windows
       QTDIR: C:\Qt\6.2.0\msvc2019_64
+    #- BUILD_NAME: clang_osx
+    #- BUILD_NAME: gcc_linux
 
 configuration:
   - debug
