@@ -78,7 +78,7 @@ for:
           git push origin master
         fi
       
-      - sudo apt-get update
+      - sudo apt-get update -qq --force-yes
       - sudo apt-get install libgl1-mesa-dev # Needed to avoid -lGL linker error
     
       - export PATH=$HOME/Qt/6.1/gcc_64/bin:$PATH
