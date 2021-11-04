@@ -77,8 +77,12 @@ for:
           git remote add origin https://${GITHUB_API_KEY}@github.com/Tw1ddle/geometrize.git > /dev/null 2>&1
           git push origin master
         fi
+      
+      - sudo apt-get update
+      - sudo apt-get install libgl1-mesa-dev # Needed to avoid -lGL linker error
     
       - export PATH=$HOME/Qt/6.1/gcc_64/bin:$PATH
+
 
   - matrix:
       only:
