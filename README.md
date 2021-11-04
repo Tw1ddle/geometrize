@@ -1,6 +1,5 @@
 [![Geometrize Logo](https://github.com/Tw1ddle/geometrize/blob/master/screenshots/logo.png?raw=true "Geometrize logo")](https://www.geometrize.co.uk/)
 
-[![Travis Build Status](https://img.shields.io/travis/Tw1ddle/geometrize.svg?style=flat-square)](https://travis-ci.org/Tw1ddle/geometrize)
 [![Geometrize AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/09l5nquksmev8ta4?svg=true)](https://ci.appveyor.com/project/Tw1ddle/geometrize)
 [![License](https://img.shields.io/badge/License-GPL%20v3-blue.svg?style=flat-square)](https://github.com/Tw1ddle/geometrize/blob/master/LICENSE)
 
@@ -60,6 +59,8 @@ Geometrize is a Qt app written in C++.
  * Download and install Qt 5.10 or above.
  * Install Python 3.x and add it to your path. The build process includes a few Python scripts for creating resource files.
  * Checkout this repository and all submodules, and build and run [geometrize.pro](https://github.com/Tw1ddle/geometrize/blob/master/geometrize.pro) within Qt Creator.
+ 
+If you want to develop or extend Geometrize, look at the [top level repo](https://github.com/Tw1ddle/geometrize-top-level-repo) for a high-level overview of the repositories in the Geometrize project.
 
 ## Notes
  * Got an idea or suggestion? Open an issue on GitHub, or send Sam a message on [Twitter](https://twitter.com/Sam_Twidale).
