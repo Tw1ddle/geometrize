@@ -68,6 +68,8 @@ for:
       - |
         if [[ `git status --porcelain` ]]; then
           git checkout master
+          git add lib/cereal
+          git add lib/dataslinger
           git add lib/geometrize
           git add resources/scripts
           git add resources/templates
