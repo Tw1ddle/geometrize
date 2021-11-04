@@ -67,7 +67,6 @@ for:
       - set ARCH=x64
       - call "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" %ARCH%
       - set make=nmake.exe
-      - %make% /? > nul
 
   - matrix:
       only:
