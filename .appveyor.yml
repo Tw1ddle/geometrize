@@ -4,8 +4,8 @@ branches:
 
 image:
   - Visual Studio 2019
-  #- macos-bigsur
-  #- Ubuntu2004
+  - macos-bigsur
+  - Ubuntu2004
 
 # Define the build configurations
 environment:
@@ -15,8 +15,8 @@ environment:
       MINGW: C:\Qt\Tools\mingw810_64
     - BUILD_NAME: msvc_windows
       QTDIR: C:\Qt\6.2\msvc2019_64
-    #- BUILD_NAME: clang_osx
-    #- BUILD_NAME: gcc_linux
+    - BUILD_NAME: clang_osx
+    - BUILD_NAME: gcc_linux
 
 # Exclude invalid build configurations
 matrix:
@@ -26,19 +26,19 @@ matrix:
     - image: Visual Studio 2019
       BUILD_NAME: gcc_linux
 
-    #- image: macos-bigsur
-    #  BUILD_NAME: mingw_windows
-    #- image: macos-bigsur
-    #  BUILD_NAME: msvc_windows
-    #- image: macos-bigsur
-    #  BUILD_NAME: gcc_linux
+    - image: macos-bigsur
+      BUILD_NAME: mingw_windows
+    - image: macos-bigsur
+      BUILD_NAME: msvc_windows
+    - image: macos-bigsur
+      BUILD_NAME: gcc_linux
 
-    #- image: Ubuntu2004
-    #  BUILD_NAME: mingw_windows
-    #- image: Ubuntu2004
-    #  BUILD_NAME: msvc_windows
-    #- image: Ubuntu2004
-    #  BUILD_NAME: clang_osx
+    - image: Ubuntu2004
+      BUILD_NAME: mingw_windows
+    - image: Ubuntu2004
+      BUILD_NAME: msvc_windows
+    - image: Ubuntu2004
+      BUILD_NAME: clang_osx
 
 configuration:
   - debug
