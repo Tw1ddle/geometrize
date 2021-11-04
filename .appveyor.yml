@@ -52,7 +52,7 @@ for:
           BUILD_NAME: gcc_linux
           
     install:
-      - export PATH=$HOME/Qt/6.1:$PATH
+      - export PATH=$HOME/Qt/6.1/gcc_64/bin:$PATH
 
   - matrix:
       only:
