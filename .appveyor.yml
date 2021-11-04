@@ -1,3 +1,5 @@
+stack: python 3.9
+
 branches:
   only:
     - master
@@ -52,6 +54,7 @@ for:
           BUILD_NAME: gcc_linux
           
     install:
+      - git submodule update --init --recursive
       - export PATH=$HOME/Qt/6.1/gcc_64/bin:$PATH
 
   - matrix:
@@ -60,6 +63,7 @@ for:
           BUILD_NAME: clang_osx
           
     install:
+      - git submodule update --init --recursive
       - export PATH=$HOME/Qt/6.1:$PATH
       
   - matrix:
@@ -95,5 +99,5 @@ before_build:
 build_script:
   - sh: cd $APPVEYOR_BUILD_FOLDER
   - cmd: cd %APPVEYOR_BUILD_FOLDER%
-  - sh: $make
+  - sh: make
   - cmd: '%make%'
