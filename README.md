@@ -24,9 +24,9 @@ Open the app, select an image, pick your desired shape types, and hit start.
 
 [![Geometrize Getting Started Animation](https://github.com/Tw1ddle/geometrize/blob/master/screenshots/startup_geometrized.gif?raw=true)](https://www.geometrize.co.uk/)
 
-Video tutorials for Geometrize are posted [here](https://www.youtube.com/playlist?list=PLe9ogi_J4cFgcqLdpmPC7GdFV5ohJPEzN).
+Video tutorials for Geometrize are posted [here](https://www.youtube.com/playlist?list=PLe9ogi_J4cFgcqLdpmPC7GdFV5ohJPEzN):
 
-[![Geometrize Video Tutorials](https://github.com/Tw1ddle/geometrize/blob/master/screenshots/geometrize_video_tutorials.png?raw=true)](https://www.youtube.com/watch?v=qdp_D3k59Y4&list=PLe9ogi_J4cFgcqLdpmPC7GdFV5ohJPEzN&index=1)
+<a href="https://www.youtube.com/watch?v=qdp_D3k59Y4&list=PLe9ogi_J4cFgcqLdpmPC7GdFV5ohJPEzN&index=1" target="_blank" rel="noopener"><img width="300" alt="Geometrize Video Tutorials" src="https://github.com/Tw1ddle/geometrize/blob/master/screenshots/geometrize_video_tutorials.png?raw=true"></a>
 
 ## Shape Comparison
 
