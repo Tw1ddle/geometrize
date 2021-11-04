@@ -9,6 +9,10 @@ image:
   #- macos-bigsur
   - Visual Studio 2019
 
+environment:
+  GITHUB_API_KEY:
+    secure: w1zaTUARBAuhkAKUke5sBvSkVtlDGL8YfQxROzv5oGIynVJImn+KWGFVDxyjQore
+
 # Define the build configurations
 environment:
   matrix:
@@ -54,7 +58,27 @@ for:
           BUILD_NAME: gcc_linux
           
     install:
+      # Configure CI bot git email/username
+      - git config --global user.name "AppVeyor CI Bot"
+      - git config --global user.email "appveyor@appveyor.org"
+    
       - git submodule update --init --recursive
+      - git submodule update --remote --merge
+      
+      # Push the latest versions of the submodules to the repository - note that these Linux builds run first, so other build platforms don't do this step
+      - |
+        if [[ `git status --porcelain` ]]; then
+          git checkout master
+          git add lib/geometrize
+          git add resources/scripts
+          git add resources/templates
+          git add resources/web_export
+          git commit --message "Build bot updating submodule"
+          git remote rm origin
+          git remote add origin https://${GITHUB_API_KEY}@github.com/Tw1ddle/geometrize.git > /dev/null 2>&1
+          git push origin master
+        fi
+    
       - export PATH=$HOME/Qt/6.1/gcc_64/bin:$PATH
 
   - matrix:
