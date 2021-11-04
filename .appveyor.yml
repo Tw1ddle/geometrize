@@ -9,12 +9,11 @@ image:
   #- macos-bigsur
   - Visual Studio 2019
 
+# Define the build configurations
 environment:
   GITHUB_API_KEY:
     secure: w1zaTUARBAuhkAKUke5sBvSkVtlDGL8YfQxROzv5oGIynVJImn+KWGFVDxyjQore
 
-# Define the build configurations
-environment:
   matrix:
     - BUILD_NAME: gcc_linux
     #- BUILD_NAME: clang_osx
