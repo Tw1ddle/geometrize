@@ -52,11 +52,9 @@ for:
           BUILD_NAME: mingw_windows
 
     install:
-      - git submodule update --init --recursive
       - set PATH=%PATH%;%QTDIR%\bin;%MINGW%\bin
       - call "%QTDIR%\bin\qtenv2.bat"
-      - if %QTDIR:msvc=%==%QTDIR% set make=mingw32-make.exe
-      - if %QTDIR:_64=%==%QTDIR% ( set ARCH=x86 ) else set ARCH=x64
+      - set make=mingw32-make.exe
 
   - matrix:
       only:
@@ -64,13 +62,12 @@ for:
           BUILD_NAME: msvc_windows
 
     install:
-      - git submodule update --init --recursive
       - set PATH=%PATH%;%QTDIR%\bin;%MINGW%\bin
       - call "%QTDIR%\bin\qtenv2.bat"
-      - if %QTDIR:_64=%==%QTDIR% ( set ARCH=x86 ) else set ARCH=x64
-      - if not %QTDIR:msvc2019=%==%QTDIR% call "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" %ARCH%
-      - if not %QTDIR:msvc=%==%QTDIR% set make=nmake.exe
-      - if not %QTDIR:msvc=%==%QTDIR% %make% /? > nul
+      - set ARCH=x64
+      - call "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" %ARCH%
+      - set make=nmake.exe
+      - %make% /? > nul
 
   - matrix:
       only:
@@ -90,6 +87,7 @@ for:
 
 # Run qmake
 before_build:
+  - git submodule update --init --recursive
   - cd %APPVEYOR_BUILD_FOLDER%
   - qmake geometrize.pro
 
