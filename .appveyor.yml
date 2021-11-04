@@ -3,14 +3,14 @@ branches:
     - master
 
 image:
-  #- Ubuntu2004
+  - Ubuntu2004
   #- macos-bigsur
   - Visual Studio 2019
 
 # Define the build configurations
 environment:
   matrix:
-    #- BUILD_NAME: gcc_linux
+    - BUILD_NAME: gcc_linux
     #- BUILD_NAME: clang_osx
     - BUILD_NAME: mingw_windows
       QTDIR: C:\Qt\6.2\mingw81_64
@@ -72,7 +72,6 @@ for:
       - set PATH=%PATH%;%QTDIR%\bin;%MINGW%\bin
       - call "%QTDIR%\bin\qtenv2.bat"
       - set make=mingw32-make.exe
-      - set ARCH=x64
 
   - matrix:
       only:
@@ -81,12 +80,10 @@ for:
 
     install:
       - git submodule update --init --recursive
-      - set PATH=%PATH%;%QTDIR%\bin;%MINGW%\bin
+      - set PATH=%PATH%;%QTDIR%\bin
       - call "%QTDIR%\bin\qtenv2.bat"
-      - set ARCH=x64
-      - call "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" %ARCH%
+      - call "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" x64
       - set make=nmake.exe
-      #- if not %QTDIR:msvc=%==%QTDIR% %make% /? > nul
 
 # Run qmake
 before_build:
