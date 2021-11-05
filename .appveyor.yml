@@ -103,7 +103,7 @@ for:
           
     install:
       - git submodule update --init --recursive
-      - export PATH=$HOME/Qt/6.1:$PATH
+      - export PATH=$HOME/Qt/6.1.2/clang_64/bin:$PATH
       
     before_build:
       - cd $APPVEYOR_BUILD_FOLDER
