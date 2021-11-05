@@ -6,7 +6,7 @@ branches:
 
 image:
   - Ubuntu2004
-  #- macos-bigsur
+  - macos-bigsur
   - Visual Studio 2019
 
 # Define the build configurations
@@ -16,7 +16,7 @@ environment:
 
   matrix:
     - BUILD_NAME: gcc_linux
-    #- BUILD_NAME: clang_osx
+    - BUILD_NAME: clang_osx
     - BUILD_NAME: mingw_windows
       QTDIR: C:\Qt\6.2\mingw81_64
       MINGW: C:\Qt\Tools\mingw810_64
@@ -86,6 +86,16 @@ for:
       - export PATH=$HOME/Qt/6.1/gcc_64/bin:$PATH
 
 
+    before_build:
+      - cd $APPVEYOR_BUILD_FOLDER
+      - qmake geometrize.pro
+
+    build_script:
+      - cd $APPVEYOR_BUILD_FOLDER
+      - make
+
+
+
   - matrix:
       only:
         - image: macos-bigsur
@@ -95,6 +105,17 @@ for:
       - git submodule update --init --recursive
       - export PATH=$HOME/Qt/6.1:$PATH
       
+    before_build:
+      - cd $APPVEYOR_BUILD_FOLDER
+      - qmake geometrize.pro
+
+    build_script:
+      - cd $APPVEYOR_BUILD_FOLDER
+      - make
+      
+      
+      
+
   - matrix:
       only:
         - image: Visual Studio 2019
@@ -105,6 +126,17 @@ for:
       - set PATH=%PATH%;%QTDIR%\bin;%MINGW%\bin
       - call "%QTDIR%\bin\qtenv2.bat"
       - set make=mingw32-make.exe
+      
+    before_build:
+      - cd %APPVEYOR_BUILD_FOLDER%
+      - qmake geometrize.pro
+
+    build_script:
+      - cd %APPVEYOR_BUILD_FOLDER%
+      - '%make%'
+
+
+
 
   - matrix:
       only:
@@ -117,16 +149,11 @@ for:
       - call "%QTDIR%\bin\qtenv2.bat"
       - call "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" x64
       - set make=nmake.exe
+      
+    before_build:
+      - cd %APPVEYOR_BUILD_FOLDER%
+      - qmake geometrize.pro
 
-# Run qmake
-before_build:
-  - sh: cd $APPVEYOR_BUILD_FOLDER
-  - cmd: cd %APPVEYOR_BUILD_FOLDER%
-  - qmake geometrize.pro
-
-# Build the project
-build_script:
-  - sh: cd $APPVEYOR_BUILD_FOLDER
-  - cmd: cd %APPVEYOR_BUILD_FOLDER%
-  - sh: make
-  - cmd: '%make%'
+    build_script:
+      - cd %APPVEYOR_BUILD_FOLDER%
+      - '%make%'
