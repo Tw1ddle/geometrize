@@ -16,9 +16,7 @@ environment:
 
   matrix:
     - BUILD_NAME: gcc_linux
-      QTDIR: $HOME/Qt/6.1/gcc_64
     - BUILD_NAME: clang_osx
-      QTDIR: $HOME/Qt/6.1/macos
     - BUILD_NAME: mingw_windows
       QTDIR: C:\Qt\6.2\mingw81_64
       MINGW: C:\Qt\Tools\mingw810_64
@@ -87,12 +85,12 @@ for:
       - sudo apt update -qq --yes --force-yes
       - sudo apt install libgl1-mesa-dev --yes --force-yes # Needed to avoid -lGL linker error
     
-      - export PATH=$QTDIR/bin:$PATH
+      - export PATH=$HOME/Qt/6.1/gcc_64/bin:$PATH
 
 
     before_build:
       # Debug prints
-      - $QTDIR
+      - cd $HOME/Qt
       - ls -a
     
       - cd $APPVEYOR_BUILD_FOLDER
@@ -112,11 +110,11 @@ for:
           
     install:
       - git submodule update --init --recursive
-      - export PATH=$QTDIR/bin:$PATH
+      - export PATH=$HOME/Qt/6.1/macos/bin:$PATH
       
     before_build:
       # Debug prints
-      - cd $QTDIR
+      - cd $HOME/Qt
       - ls -a
     
       - cd $APPVEYOR_BUILD_FOLDER     
