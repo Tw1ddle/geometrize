@@ -5,7 +5,7 @@ branches:
     - master
 
 image:
-  - Ubuntu2004
+  #- Ubuntu2004
   - macos-bigsur
   - Visual Studio 2019
 
