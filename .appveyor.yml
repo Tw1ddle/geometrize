@@ -89,6 +89,12 @@ for:
 
 
     before_build:
+      # Debug prints
+      - cd $HOME/Qt
+      - ls -a
+      - $HOME/Qt/6.1/gcc_64/bin
+      - ls -a
+    
       - cd $APPVEYOR_BUILD_FOLDER
       - qmake geometrize.pro
 
@@ -106,19 +112,16 @@ for:
           
     install:
       - git submodule update --init --recursive
-      - export PATH=$HOME/Qt/6.1.2/clang_64/bin:$PATH
+      - export PATH=$HOME/Qt/6.1/macos/bin:$PATH
       
     before_build:
-      - cd $APPVEYOR_BUILD_FOLDER
-      - ls
+      # Debug prints
       - cd $HOME/Qt
-      - ls -a
-      - cd $HOME/Qt/6.1.2
-      - ls -a
-      - cd $HOME/Qt/6.1
       - ls -a
       - cd $HOME/Qt/6.1/macos
       - ls -a
+    
+      - cd $APPVEYOR_BUILD_FOLDER     
       - qmake geometrize.pro
 
     build_script:
@@ -141,6 +144,10 @@ for:
       - set make=nmake.exe
       
     before_build:
+      # Debug prints
+      - cd %QTDIR%
+      - ls -a
+    
       - cd %APPVEYOR_BUILD_FOLDER%
       - qmake geometrize.pro
 
@@ -163,6 +170,10 @@ for:
       - set make=mingw32-make.exe
       
     before_build:
+      # Debug prints
+      - cd %QTDIR%
+      - ls -a
+    
       - cd %APPVEYOR_BUILD_FOLDER%
       - qmake geometrize.pro
 
