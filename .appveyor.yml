@@ -51,6 +51,8 @@ configuration:
 
 # Do configuration-specific build steps
 for:
+
+  # Linux GCC
   - matrix:
       only:
         - image: Ubuntu2004
@@ -96,6 +98,7 @@ for:
 
 
 
+  # Clang OSX
   - matrix:
       only:
         - image: macos-bigsur
@@ -107,37 +110,22 @@ for:
       
     before_build:
       - cd $APPVEYOR_BUILD_FOLDER
+      - ls
+      - cd $HOME/Qt
+      - ls -a
+      - cd $HOME/Qt/6.1.2
+      - ls -a
+      - cd $HOME/Qt/6.1
+      - ls -a
       - qmake geometrize.pro
 
     build_script:
       - cd $APPVEYOR_BUILD_FOLDER
       - make
       
-      
-      
-
-  - matrix:
-      only:
-        - image: Visual Studio 2019
-          BUILD_NAME: mingw_windows
-
-    install:
-      - git submodule update --init --recursive
-      - set PATH=%PATH%;%QTDIR%\bin;%MINGW%\bin
-      - call "%QTDIR%\bin\qtenv2.bat"
-      - set make=mingw32-make.exe
-      
-    before_build:
-      - cd %APPVEYOR_BUILD_FOLDER%
-      - qmake geometrize.pro
-
-    build_script:
-      - cd %APPVEYOR_BUILD_FOLDER%
-      - '%make%'
 
 
-
-
+  # Windows MSVC
   - matrix:
       only:
         - image: Visual Studio 2019
@@ -149,6 +137,28 @@ for:
       - call "%QTDIR%\bin\qtenv2.bat"
       - call "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" x64
       - set make=nmake.exe
+      
+    before_build:
+      - cd %APPVEYOR_BUILD_FOLDER%
+      - qmake geometrize.pro
+
+    build_script:
+      - cd %APPVEYOR_BUILD_FOLDER%
+      - '%make%'
+     
+      
+      
+  # Windows Mingw
+  - matrix:
+      only:
+        - image: Visual Studio 2019
+          BUILD_NAME: mingw_windows
+
+    install:
+      - git submodule update --init --recursive
+      - set PATH=%PATH%;%QTDIR%\bin;%MINGW%\bin
+      - call "%QTDIR%\bin\qtenv2.bat"
+      - set make=mingw32-make.exe
       
     before_build:
       - cd %APPVEYOR_BUILD_FOLDER%
