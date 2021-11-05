@@ -4,6 +4,7 @@ branches:
   only:
     - master
 
+# Note that builds run in the order the images are declared
 image:
   - Ubuntu2004
   - macos-bigsur
@@ -32,14 +33,14 @@ matrix:
       BUILD_NAME: msvc_windows
     - image: Ubuntu2004
       BUILD_NAME: clang_osx
-  
+
     - image: macos-bigsur
       BUILD_NAME: mingw_windows
     - image: macos-bigsur
       BUILD_NAME: msvc_windows
     - image: macos-bigsur
       BUILD_NAME: gcc_linux
-      
+
     - image: Visual Studio 2019
       BUILD_NAME: clang_osx
     - image: Visual Studio 2019
@@ -57,15 +58,15 @@ for:
       only:
         - image: Ubuntu2004
           BUILD_NAME: gcc_linux
-          
+
     install:
       # Configure CI bot git email/username
       - git config --global user.name "AppVeyor CI Bot"
       - git config --global user.email "appveyor@appveyor.org"
-    
+
       - git submodule update --init --recursive
       - git submodule update --remote --merge
-      
+
       # Push the latest versions of the submodules to the repository - note that these Linux builds run first, so other build platforms don't do this step
       - |
         if [[ `git status --porcelain` ]]; then
@@ -81,10 +82,10 @@ for:
           git remote add origin https://${GITHUB_API_KEY}@github.com/Tw1ddle/geometrize.git > /dev/null 2>&1
           git push origin master
         fi
-      
+
       - sudo apt update -qq --yes --force-yes
       - sudo apt install libgl1-mesa-dev --yes --force-yes # Needed to avoid -lGL linker error
-    
+
       - export PATH=$HOME/Qt/6.1/gcc_64/bin:$PATH
 
 
@@ -92,7 +93,7 @@ for:
       # Debug prints
       - cd $HOME/Qt
       - ls -a
-    
+
       - cd $APPVEYOR_BUILD_FOLDER
       - qmake geometrize.pro
 
@@ -107,23 +108,23 @@ for:
       only:
         - image: macos-bigsur
           BUILD_NAME: clang_osx
-          
+
     install:
       - git submodule update --init --recursive
       - export PATH=$HOME/Qt/6.1/macos/bin:$PATH
-      
+
     before_build:
       # Debug prints
       - cd $HOME/Qt
       - ls -a
-    
+
       - cd $APPVEYOR_BUILD_FOLDER     
       - qmake geometrize.pro
 
     build_script:
       - cd $APPVEYOR_BUILD_FOLDER
       - make
-      
+
 
 
   # Windows MSVC
@@ -138,21 +139,21 @@ for:
       - call "%QTDIR%\bin\qtenv2.bat"
       - call "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" x64
       - set make=nmake.exe
-      
+
     before_build:
       # Debug prints
       - cd %QTDIR%
       - ls -a
-    
+
       - cd %APPVEYOR_BUILD_FOLDER%
       - qmake geometrize.pro
 
     build_script:
       - cd %APPVEYOR_BUILD_FOLDER%
       - '%make%'
-     
-      
-      
+
+
+
   # Windows Mingw
   - matrix:
       only:
@@ -164,7 +165,7 @@ for:
       - set PATH=%PATH%;%QTDIR%\bin;%MINGW%\bin
       - call "%QTDIR%\bin\qtenv2.bat"
       - set make=mingw32-make.exe
-      
+
     before_build:
       # Debug prints
       - cd %QTDIR%
