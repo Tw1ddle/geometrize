@@ -117,6 +117,8 @@ for:
       - ls -a
       - cd $HOME/Qt/6.1
       - ls -a
+      - cd $HOME/Qt/6.1/macos
+      - ls -a
       - qmake geometrize.pro
 
     build_script:
