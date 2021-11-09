@@ -1,7 +1,7 @@
 [![Geometrize Logo](https://github.com/Tw1ddle/geometrize/blob/master/screenshots/logo.png?raw=true "Geometrize logo")](https://www.geometrize.co.uk/)
 
-[![Geometrize AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/09l5nquksmev8ta4?svg=true)](https://ci.appveyor.com/project/Tw1ddle/geometrize)
 [![License](https://img.shields.io/badge/License-GPL%20v3-blue.svg?style=flat-square)](https://github.com/Tw1ddle/geometrize/blob/master/LICENSE)
+[![Geometrize AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/Tw1ddle/geometrize)](https://ci.appveyor.com/project/Tw1ddle/geometrize)
 
 [Geometrize](https://www.geometrize.co.uk/) is a desktop app that geometrizes images into geometric primitives.
 
