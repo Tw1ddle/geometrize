@@ -1,4 +1,4 @@
-Geometrize is copyright (c) 2017 Sam Twidale (https://samcodes.co.uk/)
+Geometrize is copyright (c) 2021 Sam Twidale (https://samcodes.co.uk/)
 
 GNU GENERAL PUBLIC LICENSE
 
