@@ -1,7 +1,7 @@
 // Additional bindings for ChaiScript from: https://github.com/ChaiScript/ChaiScript_Extras
 //
 // Copyright 2015 Jason Turner
-// Modifications 2017 Sam Twidale (https://samcodes.co.uk/)
+// Modifications 2021 Sam Twidale (https://samcodes.co.uk/)
 //
 // All Rights Reserved.
 // Redistribution and use in source and binary forms, with or without

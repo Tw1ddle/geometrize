@@ -18,7 +18,7 @@ QString Strings::getShortApplicationDescription()
 
 QString Strings::getCopyrightNotice()
 {
-    return tr("Copyright 2015-2017 Sam Twidale", "This is the copyright notice of the application.");
+    return tr("Copyright 2015-2021 Sam Twidale", "This is the copyright notice of the application.");
 }
 
 QString Strings::getShapeTypeNamePlural(const geometrize::ShapeTypes shapeType)

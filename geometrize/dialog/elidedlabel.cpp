@@ -2,7 +2,7 @@
 //
 // Copyright (c) Yash (http://speedovation.com/)
 //
-// Modifications Copyright (c) 2017, Sam Twidale.
+// Modifications Copyright (c) 2021, Sam Twidale.
 // Contact: https://samcodes.co.uk/contact/
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
