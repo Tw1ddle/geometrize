@@ -1,4 +1,4 @@
-A subset of the FatCow free icon set is used in this application (http://www.fatcow.com/free-icons). The icons are used under the terms of CC BY 3.0 US as follows:
+A subset of the FatCow free icon set is used in this application (https://www.fatcow.com/free-icons). The icons are used under the terms of CC BY 3.0 US as follows:
 
 CC BY 3.0 US
 
