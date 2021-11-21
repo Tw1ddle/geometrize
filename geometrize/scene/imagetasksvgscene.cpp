@@ -49,6 +49,7 @@ public:
         for(auto& item : items) {
             if(dynamic_cast<SvgItem*>(item) != nullptr) {
                 q->removeItem(item);
+                delete item;
             }
         }
     }

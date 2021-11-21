@@ -53,6 +53,7 @@ public:
     {
         if(m_lastOverlayShapeItem != nullptr) {
             q->removeItem(m_lastOverlayShapeItem);
+            delete m_lastOverlayShapeItem;
         }
         if(item != nullptr) {
             item->setVisible(m_overlayShapeVisibility);

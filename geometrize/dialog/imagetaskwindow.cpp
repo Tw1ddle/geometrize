@@ -97,13 +97,9 @@ public:
 
         // Set up the image task geometrization views
         m_pixmapView = new geometrize::scene::ImageTaskGraphicsView(ui->imageViewContainer);
-        m_pixmapView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        m_pixmapView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         ui->imageViewContainer->layout()->addWidget(m_pixmapView);
 
         m_svgView = new geometrize::scene::ImageTaskGraphicsView(ui->imageViewContainer);
-        m_svgView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        m_svgView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         ui->imageViewContainer->layout()->addWidget(m_svgView);
 
         m_sceneManager.setViews(*m_pixmapView, *m_svgView);

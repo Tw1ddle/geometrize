@@ -118,6 +118,8 @@ ImageTaskGraphicsView::ImageTaskGraphicsView(QWidget* parent) : QGraphicsView(pa
     setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
     setDragMode(QGraphicsView::ScrollHandDrag);
     setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     populateUi();
 }
