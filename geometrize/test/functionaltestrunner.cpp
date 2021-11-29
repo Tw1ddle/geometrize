@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 
+#include <QApplication>
 #include <QTimer>
 
 #include "chaiscript/chaiscript.hpp"
@@ -36,7 +37,7 @@ bool runNextTest()
 
     const std::string scriptPath = scriptPaths.back();
     scriptPaths.pop_back();
-    engine->add_global_const(chaiscript::var(scriptPath), "scriptPath");
+    engine->add_global(chaiscript::var(scriptPath), "scriptPath");
 
     const std::string scriptCode = geometrize::util::readFileAsString(scriptPath);
     if(scriptCode.empty()) {
@@ -74,15 +75,15 @@ void addTestScriptDirectory(const std::string& scriptDirectory)
 void runSelfTests()
 {
     QTimer* timer = new QTimer(QApplication::instance());
-    timer->start(1500);
+    timer->start(2500);
     QObject::connect(timer, &QTimer::timeout, [] {
         if(scriptPaths.empty()) {
-            std::exit(0);
+            QApplication::exit(0);
         }
         const bool result = runNextTest();
         if(!scriptPaths.empty() && !result) {
             assert(0 && "Script failed before all of them completed");
-            std::exit(-1);
+            QApplication::exit(-1);
         }
     });
 }

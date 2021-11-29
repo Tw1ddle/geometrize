@@ -26,7 +26,7 @@ void addTestScriptDirectory(const std::string& scriptDirectory);
 /**
  * @brief runSelfTests Runs the self tests
  * This periodically consumes and runs scripts from the directories specified by the calls to addTestScriptDirectory/setTestScriptDirectories
- * It closes the application with std::exit(0) when there are no scripts are left to run, or std::exit(-1) in case of an error
+ * It closes the application with QApplication::exit(0) when there are no scripts are left to run, or QApplication::exit(-1) in case of an error
  */
 void runSelfTests();
 
