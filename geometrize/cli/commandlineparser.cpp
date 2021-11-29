@@ -37,7 +37,7 @@ namespace
         parser.addOption(QCommandLineOption(scriptFileFlag, "Executes the ChaiScript script file at the given file path", "File path to ChaiScript script file"));
         parser.addOption(QCommandLineOption(scriptSourceFlag, "Executes the inline ChaiScript source code unmodified", "Inline ChaiScript source code"));
         parser.addOption(QCommandLineOption(localeOverrideFlag, "Overrides the locale and translation that the application launches with", "Locale code"));
-        parser.addOption(QCommandLineOption(selfTestsFlag, "Executes the Geometrize functional tests suite", "Flag to additional test scripts folder"));
+        parser.addOption(QCommandLineOption(selfTestsFlag, "Specifies the Geometrize functional tests suite scripts folder path", "File path to test scripts folder"));
 
         if(!parser.parse(arguments)) {
             assert(0 && "Failed to parse command line arguments");
@@ -64,8 +64,7 @@ namespace
             std::unique_ptr<chaiscript::ChaiScript> engine{geometrize::script::createImageTaskEngine()};
             geometrize::script::runScript(code, *engine);
         } else if(parser.isSet(selfTestsFlag)) {
-            const std::string testScriptsDirectory{parser.value(selfTestsFlag).toStdString()};
-            geometrize::test::runSelfTests(testScriptsDirectory);
+            // Self-tests are handled one-by-one in a work queue, after the application is launched normally
         }
     }
 }
@@ -81,6 +80,13 @@ bool shouldRunInSelfTestMode(const QStringList& arguments)
     QCommandLineParser parser;
     setupCommandLineParser(parser, arguments);
     return parser.isSet(selfTestsFlag) || parser.isSet(selfTestsFlag);
+}
+
+std::vector<std::string> getSelfTestModeScriptDirectories(const QStringList& arguments)
+{
+    QCommandLineParser parser;
+    setupCommandLineParser(parser, arguments);
+    return std::vector<std::string>{parser.value(selfTestsFlag).toStdString()};
 }
 
 bool shouldRunInConsoleMode(const QStringList& arguments)

@@ -78,11 +78,6 @@ void setLocale(const QStringList& arguments)
     geometrize::setTranslatorsForLocale(locale.bcp47Name().replace("-", "_"));
 }
 
-int runAppSelfTestMode(QApplication& app)
-{
-    return geometrize::test::runApp(app);
-}
-
 int runAppConsoleMode(QApplication& app)
 {
     return geometrize::cli::runApp(app);
@@ -102,15 +97,16 @@ int runAppGuiModeDesktop(QApplication& app)
         geometrize::dialog::sharedSplashInstance().setState(geometrize::dialog::SplashState::FINISHED);
     }
 
+    // Set up the self tests
+    if(geometrize::cli::shouldRunInSelfTestMode(app.arguments())) {
+        geometrize::test::setTestScriptDirectories(geometrize::cli::getSelfTestModeScriptDirectories(app.arguments()));
+    }
+
     return app.exec();
 }
 
 std::function<int(QApplication&)> resolveLaunchFunction(const QStringList& arguments)
 {
-    if(geometrize::cli::shouldRunInSelfTestMode(arguments)) {
-        return ::runAppSelfTestMode;
-    }
-
     if(geometrize::cli::shouldRunInConsoleMode(arguments)) {
         return ::runAppConsoleMode;
     }
@@ -126,6 +122,8 @@ int main(int argc, char* argv[])
     incrementAppLaunchCount();
 
     QApplication app(argc, argv);
+
+    // Intercept proximity tablet pen events
     app.installEventFilter(&geometrize::getSharedTabletProximityEventFilterInstance());
 
 #if defined(Q_OS_LINUX) || defined(Q_OS_MAC)

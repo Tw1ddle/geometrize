@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 #include <QStringList>
 
@@ -18,6 +19,13 @@ namespace cli
  * @return True if the application should run in self-test mode, else false.
  */
 bool shouldRunInSelfTestMode(const QStringList& arguments);
+
+/**
+ * @brief getSelfTestModeScriptDirectories Gets a vector of the directories containing scripts to run in self-test mode
+ * @param arguments The console arguments.
+ * @return A vector of paths to directories containing scripts to run in self-test mode, empty if there are no tests to run.
+ */
+std::vector<std::string> getSelfTestModeScriptDirectories(const QStringList& arguments);
 
 /**
  * @brief shouldRunInConsoleMode Checks whether the application should run in console mode for the given arguments.

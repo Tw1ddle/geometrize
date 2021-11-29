@@ -3,6 +3,7 @@
 #include <QApplication>
 
 #include <string>
+#include <vector>
 
 namespace geometrize
 {
@@ -11,17 +12,22 @@ namespace test
 {
 
 /**
- * @brief runApp Runs the application in self-test mode.
- * @param app The application.
- * @return 0 on success, any other return code if there was an error running the tests.
+ * @brief setTestScriptDirectories Sets the directories containing self-test scripts to run
+ * @param scriptDirectories A vector of paths to the directories containing scripts to run scripts
  */
-int runApp(QApplication& app);
+void setTestScriptDirectories(const std::vector<std::string>& scriptDirectories);
 
 /**
- * @brief runSelfTests Runs the scripts in the given directory, one by one.
- * @param testScriptsDirectory The directory of test scripts to execute.
+ * @brief addTestScriptDirectory Adds a directory containing scripts to run self-tests from
+ * @param scriptDirectory The path to the directory containing scripts to run
  */
-void runSelfTests(const std::string& testScriptsDirectory);
+void addTestScriptDirectory(const std::string& scriptDirectory);
+
+/**
+ * @brief runSelfTests Runs the self tests
+ * This consumes the tests from the test script directories specified by the call to setTestScriptDirectories
+ */
+void runSelfTests();
 
 }
 
