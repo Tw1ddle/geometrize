@@ -93,6 +93,11 @@ bool directoryExists(const std::string& dirPath)
     return QDir(QString::fromStdString(dirPath)).exists();
 }
 
+bool directoriesExist(const std::vector<std::string>& dirPaths)
+{
+    return std::all_of(dirPaths.begin(), dirPaths.end(), directoryExists);
+}
+
 bool directoryContainsFile(const std::string& dirPath, const std::string& fileName)
 {
     const QString qFileName{QString::fromStdString(fileName)};
@@ -202,6 +207,16 @@ std::vector<std::string> getScriptsForPath(const std::string& dirPath)
         scripts.push_back(it.next().toStdString());
     }
 
+    return scripts;
+}
+
+std::vector<std::string> getScriptsForPaths(const std::vector<std::string>& dirPaths)
+{
+    std::vector<std::string> scripts;
+    for(const auto& dirPath : dirPaths) {
+        const auto newScripts = getScriptsForPath(dirPath);
+        scripts.insert(scripts.end(), newScripts.begin(), newScripts.end());
+    }
     return scripts;
 }
 

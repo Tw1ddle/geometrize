@@ -94,6 +94,7 @@ std::shared_ptr<chaiscript::Module> createDefaultBindings()
     ADD_FREE_FUN(directoryContainsFile);
     ADD_FREE_FUN(fileExists);
     ADD_FREE_FUN(directoryExists);
+    ADD_FREE_FUN(directoriesExist);
     ADD_FREE_FUN(readFileAsString);
     ADD_FREE_FUN(getFilePathsForDirectory);
 
@@ -107,6 +108,7 @@ std::shared_ptr<chaiscript::Module> createDefaultBindings()
     ADD_FREE_FUN(getFirstFileWithExtension);
     ADD_FREE_FUN(getFirstFileWithExtensions);
     ADD_FREE_FUN(getScriptsForPath);
+    ADD_FREE_FUN(getScriptsForPaths);
 
     ADD_FREE_FUN(getSupportedImageFileExtensions);
 

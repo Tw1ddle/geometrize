@@ -73,6 +73,8 @@ bool fileExists(const std::string& filePath);
 
 bool directoryExists(const std::string& dirPath);
 
+bool directoriesExist(const std::vector<std::string>& dirPaths);
+
 bool directoryContainsFile(const std::string& dirPath, const std::string& fileName);
 
 std::string readFileAsString(const std::string& filePath);
@@ -94,6 +96,8 @@ std::vector<std::string> getFilesWithExtensions(const std::string& dirPath, cons
 std::vector<std::string> getSupportedImageFileExtensions();
 
 std::vector<std::string> getScriptsForPath(const std::string& dirPath);
+
+std::vector<std::string> getScriptsForPaths(const std::vector<std::string>& dirPaths);
 
 void openTask(const std::string& url, bool addToRecents);
 

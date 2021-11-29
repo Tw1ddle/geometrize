@@ -56,6 +56,13 @@ bool fileExists(const std::string& filePath);
 bool directoryExists(const std::string& dirPath);
 
 /**
+ * @brief directoriesExist Checks if the given directories exist, returns true if all do.
+ * @param dirPaths The directory paths.
+ * @return True if all the directories exist, false if any do not.
+ */
+bool directoriesExist(const std::vector<std::string>& dirPaths);
+
+/**
  * @brief directoryContainsFile Checks if the directory contains the given file, returns true if it does.
  * @return True if the directory contains the given file, false otherwise.
  */
@@ -112,6 +119,13 @@ std::string getFirstFileWithExtensions(const std::string& dirPath, const std::ve
  * @return The absolute file paths to the script files for the given directory.
  */
 std::vector<std::string> getScriptsForPath(const std::string& path);
+
+/**
+ * @brief getScriptsForPaths Gets the absolute file paths to the script files (*.chai) for the given directories, using recursive search.
+ * @param dirPaths The directories to search.
+ * @return The absolute file paths to the script files for the given directories.
+ */
+std::vector<std::string> getScriptsForPaths(const std::vector<std::string>& dirPaths);
 
 /**
  * @brief getDirectoryForFilePath Gets the directory path from the given local file path.

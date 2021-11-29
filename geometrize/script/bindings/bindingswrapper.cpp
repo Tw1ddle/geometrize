@@ -81,6 +81,11 @@ bool directoryExists(const std::string& dirPath)
     return geometrize::util::directoryExists(dirPath);
 }
 
+bool directoriesExist(const std::vector<std::string>& dirPaths)
+{
+    return geometrize::util::directoriesExist(dirPaths);
+}
+
 bool directoryContainsFile(const std::string& dirPath, const std::string& fileName)
 {
     return geometrize::util::directoryContainsFile(dirPath, fileName);
@@ -140,6 +145,11 @@ std::vector<std::string> getSupportedImageFileExtensions()
 std::vector<std::string> getScriptsForPath(const std::string& dirPath)
 {
     return geometrize::util::getScriptsForPath(dirPath);
+}
+
+std::vector<std::string> getScriptsForPaths(const std::vector<std::string>& dirPaths)
+{
+    return geometrize::util::getScriptsForPaths(dirPaths);
 }
 
 void openTask(const std::string& url, const bool addToRecents)
