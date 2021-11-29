@@ -97,9 +97,10 @@ int runAppGuiModeDesktop(QApplication& app)
         geometrize::dialog::sharedSplashInstance().setState(geometrize::dialog::SplashState::FINISHED);
     }
 
-    // Set up the self tests
+    // Set up the self tests (these will take over the application and run in the background)
     if(geometrize::cli::shouldRunInSelfTestMode(app.arguments())) {
         geometrize::test::setTestScriptDirectories(geometrize::cli::getSelfTestModeScriptDirectories(app.arguments()));
+        geometrize::test::runSelfTests();
     }
 
     return app.exec();

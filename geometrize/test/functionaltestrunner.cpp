@@ -1,8 +1,11 @@
 #include "test/functionaltestrunner.h"
 
+#include <cassert>
 #include <cstdlib>
 #include <string>
 #include <vector>
+
+#include <QTimer>
 
 #include "chaiscript/chaiscript.hpp"
 
@@ -70,14 +73,18 @@ void addTestScriptDirectory(const std::string& scriptDirectory)
 
 void runSelfTests()
 {
-    if(scriptPaths.empty()) {
-        std::exit(0);
-    }
-    const bool result = runNextTest();
-    if(!scriptPaths.empty() && !result) {
-        assert(0 && "Script failed before all of them completed");
-        std::exit(-1);
-    }
+    QTimer* timer = new QTimer(QApplication::instance());
+    timer->start(1500);
+    QObject::connect(timer, &QTimer::timeout, [] {
+        if(scriptPaths.empty()) {
+            std::exit(0);
+        }
+        const bool result = runNextTest();
+        if(!scriptPaths.empty() && !result) {
+            assert(0 && "Script failed before all of them completed");
+            std::exit(-1);
+        }
+    });
 }
 
 }

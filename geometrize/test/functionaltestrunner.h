@@ -25,7 +25,8 @@ void addTestScriptDirectory(const std::string& scriptDirectory);
 
 /**
  * @brief runSelfTests Runs the self tests
- * This consumes the tests from the test script directories specified by the call to setTestScriptDirectories
+ * This periodically consumes and runs scripts from the directories specified by the calls to addTestScriptDirectory/setTestScriptDirectories
+ * It closes the application with std::exit(0) when there are no scripts are left to run, or std::exit(-1) in case of an error
  */
 void runSelfTests();
 
