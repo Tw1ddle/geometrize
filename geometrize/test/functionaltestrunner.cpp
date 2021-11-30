@@ -19,7 +19,6 @@ namespace
 
 std::vector<std::string> scriptDirectories; // Directories containing test scripts
 std::vector<std::string> scriptPaths; // Paths to test scripts
-std::vector<std::string> completedScriptPaths; // Completed test scripts
 
 bool runNextTest()
 {
@@ -30,7 +29,7 @@ bool runNextTest()
 
     const auto engine = geometrize::script::createFunctionalTestRunnerEngine();
 
-    // Consume the scripts one-by-one, adding the paths to a list of completed scripts (to print when finished)
+    // Consume the scripts one-by-one
     if(scriptPaths.empty()) {
         return false;
     }
@@ -46,8 +45,6 @@ bool runNextTest()
     }
 
     geometrize::script::runScript(scriptCode, *engine.get());
-
-    completedScriptPaths.emplace_back(scriptPath);
 
     return true;
 }

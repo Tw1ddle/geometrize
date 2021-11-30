@@ -27,18 +27,7 @@ public:
             }
 
             QString isoCode{current->data(Qt::UserRole).toString()};
-            if(isoCode == "pt") {
-                // NOTE hack - the default Portuguese translations are pt_PT not pt_BR, we make that explicit here
-                // This is because Qt defaults to Brazilian version, whereas we preferred to default to Portugal
-                isoCode = "pt_PT";
-            }
-
-            geometrize::preferences::GlobalPreferences& prefs{geometrize::preferences::getGlobalPreferences()};
-            prefs.setLanguageIsoCode(isoCode.toStdString());
-
-            QLocale::setDefault(QLocale(isoCode));
-
-            geometrize::setTranslatorsForLocale(isoCode);
+            geometrize::setLocaleAndUserInterfaceLanguage(isoCode);
         });
     }
 
@@ -57,15 +46,11 @@ private:
     // Iterate over all of the embedded qm files and extract the ISO codes from the filenames
     void setupLanguageSelect()
     {
-        QDirIterator it(geometrize::getAppTranslationResourceDirectory());
+        const QStringList supportedLocaleCodes = geometrize::getSupportedLocaleCodes();
         int idx = 0;
-        while (it.hasNext()) {
-            it.next();
-            QString fileName{it.fileName()};
-            const QString localeCode{fileName.remove("geometrize_").remove(geometrize::getBinaryTranslationFileExtension())};
-            addItemAtIndex(++idx, localeCode);
+        for (const QString& s : supportedLocaleCodes) {
+            addItemAtIndex(++idx, s);
         }
-
         q->sortItems(Qt::AscendingOrder);
     }
 

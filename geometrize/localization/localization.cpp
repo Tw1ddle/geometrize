@@ -4,6 +4,7 @@
 #include <vector>
 
 #include <QApplication>
+#include <QDirIterator>
 #include <QFileInfo>
 #include <QIcon>
 #include <QLibraryInfo>
@@ -206,6 +207,35 @@ void setGlobalPreferencesForLocale(const QLocale& locale)
         }
         return;
     }
+}
+
+QStringList getSupportedLocaleCodes()
+{
+    QStringList supportedLocaleCodes;
+    QDirIterator it(geometrize::getAppTranslationResourceDirectory());
+    while (it.hasNext()) {
+        it.next();
+        QString fileName{it.fileName()};
+        const QString localeCode{fileName.remove("geometrize_").remove(geometrize::getBinaryTranslationFileExtension())};
+        supportedLocaleCodes.append(localeCode);
+    }
+    supportedLocaleCodes.sort();
+    return supportedLocaleCodes;
+}
+
+void setLocaleAndUserInterfaceLanguage(const QString& isoCode)
+{
+    QString code = isoCode;
+    if(code == "pt") {
+        // NOTE hack - the default Portuguese translations are pt_PT not pt_BR, we make that explicit here
+        // This is because Qt defaults to Brazilian version, whereas we preferred to default to Portugal
+        code = "pt_PT";
+    }
+
+    geometrize::preferences::GlobalPreferences& prefs{geometrize::preferences::getGlobalPreferences()};
+    prefs.setLanguageIsoCode(code.toStdString());
+    QLocale::setDefault(QLocale(code));
+    geometrize::setTranslatorsForLocale(code);
 }
 
 }

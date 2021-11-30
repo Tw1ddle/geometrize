@@ -153,6 +153,8 @@ std::shared_ptr<chaiscript::Module> createDefaultBindings()
     ADD_FREE_FUN(getOperatingSystemProductType);
 
     ADD_FREE_FUN(setTranslatorsForLocale);
+    ADD_FREE_FUN(getSupportedLocaleCodes);
+    ADD_FREE_FUN(setLocaleAndUserInterfaceLanguage);
 
     return module;
 }

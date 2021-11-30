@@ -176,6 +176,10 @@ void setCursorPos(int x, int y);
 
 void setTranslatorsForLocale(const std::string& locale);
 
+std::vector<std::string> getSupportedLocaleCodes();
+
+void setLocaleAndUserInterfaceLanguage(const std::string& locale);
+
 bool exportGIF(const std::vector<geometrize::ShapeResult>& data,
         std::uint32_t inputWidth,
         std::uint32_t inputHeight,

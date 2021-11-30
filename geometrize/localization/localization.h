@@ -2,6 +2,7 @@
 
 #include <QLocale>
 #include <QString>
+#include <QStringList>
 
 class QIcon;
 
@@ -54,5 +55,19 @@ QLocale getGlobalPreferencesLocale();
  * Even if the string violates the locale format, the string may be saved to the preferences anyway.
  */
 void setGlobalPreferencesForLocale(const QLocale& locale);
+
+/**
+ * @brief getSupportedLocaleCodes Iterates over the embedded .qm files and extracts the ISO language codes from their filenames
+ * @return A list of supported locale codes, sorted alphabetically e.g. "en_GB, ru_RU" etc
+ */
+QStringList getSupportedLocaleCodes();
+
+/**
+ * @brief setLocaleAndUserInterfaceLanguage Sets the application locale and user interface language to the given language code
+ * @param isoCode The locale code to set the application to.
+ * Note: has a hack that transforms Portuguese "pt" to "pt_PT" to prefer Portuguese over Brazilian-Portuguese
+ * Also sets global preferences to remember the given code.
+ */
+void setLocaleAndUserInterfaceLanguage(const QString& isoCode);
 
 }

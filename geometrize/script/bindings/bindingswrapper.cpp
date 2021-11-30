@@ -1,8 +1,11 @@
 #include "bindingswrapper.h"
 
 #include <cassert>
+#include <string>
+#include <vector>
 
 #include <QString>
+#include <QStringList>
 #include <QObject>
 
 #include "common/formatsupport.h"
@@ -274,6 +277,21 @@ void setCursorPos(const int x, const int y)
 void setTranslatorsForLocale(const std::string& locale)
 {
     geometrize::setTranslatorsForLocale(QString::fromStdString(locale));
+}
+
+std::vector<std::string> getSupportedLocaleCodes()
+{
+    QStringList codes = geometrize::getSupportedLocaleCodes();
+    std::vector<std::string> v;
+    for(const QString& s : codes) {
+        v.emplace_back(s.toStdString());
+    }
+    return v;
+}
+
+void setLocaleAndUserInterfaceLanguage(const std::string& locale)
+{
+    geometrize::setLocaleAndUserInterfaceLanguage(QString::fromStdString(locale));
 }
 
 bool exportGIF(const std::vector<geometrize::ShapeResult>& data,
