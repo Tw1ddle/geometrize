@@ -176,6 +176,9 @@ std::shared_ptr<chaiscript::Module> createLaunchWindowBindings()
 
     ADD_FREE_FUN(createLaunchWindow);
 
+    chaiscript::bootstrap::standard_library::vector_type<std::vector<LaunchWindow*>>("LaunchWindowVector", *module);
+    ADD_FREE_FUN(getLaunchWindows);
+
     ADD_MEMBER(LaunchWindow, show);
     ADD_MEMBER(LaunchWindow, hide);
 
@@ -198,6 +201,9 @@ std::shared_ptr<chaiscript::Module> createImageTaskWindowBindings()
     ADD_CONSTRUCTOR(ImageTaskWindow, ImageTaskWindow());
 
     ADD_FREE_FUN(createImageTaskWindow);
+
+    chaiscript::bootstrap::standard_library::vector_type<std::vector<ImageTaskWindow*>>("ImageTaskWindowVector", *module);
+    ADD_FREE_FUN(getImageTaskWindows);
 
     ADD_MEMBER(ImageTaskWindow, show);
     ADD_MEMBER(ImageTaskWindow, hide);
@@ -547,6 +553,13 @@ std::shared_ptr<chaiscript::Module> createUserInterfacePuppeteerBindings()
     ADD_FREE_FUN(getCursorX);
     ADD_FREE_FUN(getCursorY);
     ADD_FREE_FUN(setCursorPos);
+
+    return module;
+}
+
+std::shared_ptr<chaiscript::Module> createFunctionalTestHelperBindings()
+{
+    auto module = createModule();
 
     ADD_FREE_FUN(saveWidgetScreenshot);
 

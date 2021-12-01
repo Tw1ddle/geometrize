@@ -40,6 +40,7 @@ std::unique_ptr<chaiscript::ChaiScript> createLaunchWindowEngine()
 
     chai->add(bindings::createDefaultBindings());
     chai->add(bindings::createLaunchWindowBindings());
+    chai->add(bindings::createImageTaskWindowBindings());
 
     addPrintRedirect(chai);
 
@@ -99,6 +100,7 @@ std::unique_ptr<chaiscript::ChaiScript> createFunctionalTestRunnerEngine()
     chai->add(bindings::createLaunchWindowBindings());
     chai->add(bindings::createImageTaskBindings());
     chai->add(bindings::createUserInterfacePuppeteerBindings());
+    chai->add(bindings::createFunctionalTestHelperBindings());
 
     return chai;
 }

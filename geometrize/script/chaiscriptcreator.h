@@ -20,13 +20,13 @@ namespace script
 std::unique_ptr<chaiscript::ChaiScript> createDefaultEngine();
 
 /**
- * @brief createLaunchWindowEngine Creates a Chaiscript engine object for the launch window.
+ * @brief createLaunchWindowEngine Creates a Chaiscript engine object for the launch window script console.
  * @return The Chaiscript engine object.
  */
 std::unique_ptr<chaiscript::ChaiScript> createLaunchWindowEngine();
 
 /**
- * @brief createImageTaskEngine Creates a Chaiscript engine for an image task window.
+ * @brief createImageTaskEngine Creates a Chaiscript engine for an image task window script console.
  * @return The Chaiscript engine object.
  */
 std::unique_ptr<chaiscript::ChaiScript> createImageTaskEngine();

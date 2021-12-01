@@ -44,6 +44,16 @@ geometrize::task::ImageTask* createImageTask(geometrize::Bitmap& bitmap)
     return new task::ImageTask(bitmap);
 }
 
+std::vector<geometrize::dialog::LaunchWindow*> getLaunchWindows()
+{
+    return geometrize::dialog::LaunchWindow::getTopLevelLaunchWindows();
+}
+
+std::vector<geometrize::dialog::ImageTaskWindow*> getImageTaskWindows()
+{
+    return geometrize::dialog::ImageTaskWindow::getExistingImageTaskWindows();
+}
+
 std::string getApplicationDirectoryPath()
 {
     return geometrize::searchpaths::getApplicationDirectoryPath();

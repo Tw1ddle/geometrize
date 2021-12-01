@@ -79,7 +79,7 @@ void runSelfTests()
         }
         const bool result = runNextTest();
         if(!scriptPaths.empty() && !result) {
-            assert(0 && "Script failed before all of them completed");
+            assert(0 && "Functional test script failed to run");
             QApplication::exit(-1);
         }
     });

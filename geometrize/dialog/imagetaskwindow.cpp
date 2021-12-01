@@ -541,6 +541,18 @@ public:
         }
     }
 
+    static std::vector<ImageTaskWindow*> getExistingImageTaskWindows()
+    {
+        std::vector<ImageTaskWindow*> windows;
+        const QWidgetList allWidgets = QApplication::allWidgets();
+        for (QWidget* widget : allWidgets) {
+            if(ImageTaskWindow* w = dynamic_cast<ImageTaskWindow*>(widget)) {
+                windows.push_back(w);
+            }
+        }
+        return windows;
+    }
+
     void close()
     {
         q->close();
@@ -796,6 +808,11 @@ ImageTaskWindow::ImageTaskWindow() :
 
 ImageTaskWindow::~ImageTaskWindow()
 {
+}
+
+std::vector<ImageTaskWindow*> ImageTaskWindow::getExistingImageTaskWindows()
+{
+    return ImageTaskWindowImpl::getExistingImageTaskWindows();
 }
 
 task::ImageTask* ImageTaskWindow::getImageTask()

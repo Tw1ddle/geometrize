@@ -34,6 +34,12 @@ public:
     virtual ~ImageTaskWindow();
 
     /**
+     * @brief getExistingImageTaskWindows Gets all of the existing image task windows.
+     * @return The image task windows. Should only be empty if there are no image tasks open.
+     */
+    static std::vector<ImageTaskWindow*> getExistingImageTaskWindows();
+
+    /**
      * @brief getImageTask Gets a pointer to the current image task shown by the window.
      * @return The image task shown by the window, or nullptr if none is set.
      */

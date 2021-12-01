@@ -82,6 +82,12 @@ std::shared_ptr<chaiscript::Module> createMathBindings();
  */
 std::shared_ptr<chaiscript::Module> createUserInterfacePuppeteerBindings();
 
+/**
+ * @brief createFunctionalTestHelperBindings Creates ChaiScript to C++ bindings for helper functions needed for the functional/self-tests (e.g. reporting test results).
+ * @return A shared pointer encapsulating the bindings.
+ */
+std::shared_ptr<chaiscript::Module> createFunctionalTestHelperBindings();
+
 }
 
 }
