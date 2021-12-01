@@ -64,7 +64,7 @@ namespace
             std::unique_ptr<chaiscript::ChaiScript> engine{geometrize::script::createImageTaskEngine()};
             geometrize::script::runScript(code, *engine);
         } else if(parser.isSet(selfTestsFlag)) {
-            // Self-tests are handled one-by-one in a work queue, after the application is launched normally
+            // Self-tests are handled one-by-one in a work queue, after the application is launched in GUI mode
         }
     }
 }
