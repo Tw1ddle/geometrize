@@ -181,6 +181,7 @@ std::shared_ptr<chaiscript::Module> createLaunchWindowBindings()
 
     ADD_MEMBER(LaunchWindow, show);
     ADD_MEMBER(LaunchWindow, hide);
+    ADD_MEMBER(LaunchWindow, updateGeometry);
 
     return module;
 }
