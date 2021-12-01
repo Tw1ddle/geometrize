@@ -36,7 +36,15 @@ bool runNextTest()
 
     const std::string scriptPath = scriptPaths.back();
     scriptPaths.pop_back();
+
+    // Set some globals that are used across several functional test scripts
     engine->add_global(chaiscript::var(scriptPath), "scriptPath");
+
+    const std::string scriptDirectory = geometrize::util::getDirectoryForFilePath(scriptPath);
+    engine->add_global(chaiscript::var(scriptDirectory), "scriptDirectory");
+
+    const std::string screengrabResultsDirectory = scriptDirectory + "/../results/screengrabs";
+    engine->add_global(chaiscript::var(screengrabResultsDirectory), "screengrabResultsDirectory");
 
     const std::string scriptCode = geometrize::util::readFileAsString(scriptPath);
     if(scriptCode.empty()) {
