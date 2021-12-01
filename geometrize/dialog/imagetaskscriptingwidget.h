@@ -76,6 +76,11 @@ public:
     bool evaluateStopConditionScripts() const;
 
     /**
+     * @brief evaluateOnStopConditionMetScripts Evaluates the scripts set to run when the stop condition for stopping geometrizing the image is met.
+     */
+    void evaluateOnStopConditionMetScripts() const;
+
+    /**
      * @brief evaluateBeforeAddShapeScripts Evaluates the scripts set to run directly before a shape is added to the image.
      */
     void evaluateBeforeAddShapeScripts() const;

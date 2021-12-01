@@ -351,6 +351,7 @@ public:
                 return;
             }
             setShouldKeepStepping(false);
+            ui->scriptsWidget->evaluateOnStopConditionMetScripts();
             geometrize::dialog::showImageTaskStopConditionMetMessage(q);
         });
 

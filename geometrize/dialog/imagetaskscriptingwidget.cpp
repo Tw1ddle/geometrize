@@ -32,6 +32,7 @@ namespace
 const std::string beforeStepCallbackPrefix = "before_step_callback_";
 const std::string afterStepCallbackPrefix = "after_step_callback_";
 const std::string stopConditionIdPrefix = "stop_condition_";
+const std::string onStopConditionMetCallbackPrefix = "stop_condition_met";
 const std::string beforeAddShapeCallbackPrefix = "before_add_shape_callback_";
 const std::string afterAddShapeCallbackPrefix = "after_add_shape_callback_";
 const std::string onPenInputCallbackPrefix = "on_pen_input_callback_";
@@ -102,6 +103,9 @@ public:
         });
         connect(ui->addStopConditionButton, &QPushButton::clicked, [this]() {
             addCustomStopConditionWidget(getScriptForSelectedComboBoxItem(ui->addStopConditionPresetScriptsComboBox));
+        });
+        connect(ui->onStopConditionMetEvent, &QPushButton::clicked, [this]() {
+            addOnStopConditionMetWidget(getScriptForSelectedComboBoxItem(ui->onStopConditionMetEventComboBox));
         });
         connect(ui->addBeforeAddShapeEvent, &QPushButton::clicked, [this]() {
             addBeforeAddShapeCallbackWidget(getScriptForSelectedComboBoxItem(ui->addBeforeAddShapePresetScriptsComboBox));
@@ -254,6 +258,11 @@ public:
         }
     }
 
+    void evaluateOnStopConditionMetScripts() const
+    {
+        evaluateScriptsWithNoReturnValue(::onStopConditionMetCallbackPrefix);
+    }
+
     void evaluateBeforeStepScripts() const
     {
         evaluateScriptsWithNoReturnValue(::beforeStepCallbackPrefix);
@@ -378,6 +387,11 @@ private:
     void addCustomStopConditionWidget(const std::string& scriptCode)
     {
         addScriptWidget(tr("Custom Stop Condition").toStdString(), ::stopConditionIdPrefix, scriptCode);
+    }
+
+    void addOnStopConditionMetWidget(const std::string& scriptCode)
+    {
+        addScriptWidget(tr("On Stop Condition Met Callback").toStdString(), ::onStopConditionMetCallbackPrefix, scriptCode);
     }
 
     void addBeforeAddShapeCallbackWidget(const std::string& scriptCode)
@@ -505,6 +519,7 @@ private:
         presetScriptData.push_back(std::make_pair(ui->addBeforeStepPresetScriptsComboBox, geometrize::script::getBeforeStepCallbackScripts()));
         presetScriptData.push_back(std::make_pair(ui->addAfterStepPresetScriptsComboBox, geometrize::script::getAfterStepCallbackScripts()));
         presetScriptData.push_back(std::make_pair(ui->addStopConditionPresetScriptsComboBox, geometrize::script::getStopConditionScripts()));
+        presetScriptData.push_back(std::make_pair(ui->onStopConditionMetEventComboBox, geometrize::script::getOnStopConditionMetScripts()));
         presetScriptData.push_back(std::make_pair(ui->addBeforeAddShapePresetScriptsComboBox, geometrize::script::getBeforeAddShapeCallbackScripts()));
         presetScriptData.push_back(std::make_pair(ui->addAfterAddShapePresetScriptsComboBox, geometrize::script::getAfterAddShapeCallbackScripts()));
         presetScriptData.push_back(std::make_pair(ui->onScenePenInputEventPresetScriptsComboBox, geometrize::script::getOnPenInputCallbackScripts()));
@@ -570,6 +585,11 @@ void ImageTaskScriptingWidget::evaluateAfterStepScripts() const
 bool ImageTaskScriptingWidget::evaluateStopConditionScripts() const
 {
     return d->evaluateStopConditionScripts();
+}
+
+void ImageTaskScriptingWidget::evaluateOnStopConditionMetScripts() const
+{
+    d->evaluateOnStopConditionMetScripts();
 }
 
 void ImageTaskScriptingWidget::evaluateBeforeAddShapeScripts() const

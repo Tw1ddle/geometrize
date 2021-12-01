@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>300</width>
-    <height>612</height>
+    <height>641</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -72,6 +72,20 @@
           </item>
           <item>
            <widget class="QComboBox" name="addStopConditionPresetScriptsComboBox"/>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_11">
+          <item>
+           <widget class="QPushButton" name="onStopConditionMetEvent">
+            <property name="text">
+             <string>On Stop Condition Met</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="onStopConditionMetEventComboBox"/>
           </item>
          </layout>
         </item>

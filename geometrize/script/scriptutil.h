@@ -66,6 +66,12 @@ std::map<std::string, std::string> getAfterStepCallbackScripts();
 std::map<std::string, std::string> getStopConditionScripts();
 
 /**
+ * @brief getOnStopConditionMetScripts Gets a map of scripts that are useful to call after the stop condition for an image task is met.
+ * @return A map of Chaiscript script function names to function bodies.
+ */
+std::map<std::string, std::string> getOnStopConditionMetScripts();
+
+/**
  * @brief getBeforeAddShapeCallbackScripts Gets a map of scripts that are useful to call before adding a shape to the image task views.
  * @return A map of Chaiscript script function names to function bodies.
  */
