@@ -32,7 +32,7 @@ namespace
 const std::string beforeStepCallbackPrefix = "before_step_callback_";
 const std::string afterStepCallbackPrefix = "after_step_callback_";
 const std::string stopConditionIdPrefix = "stop_condition_";
-const std::string onStopConditionMetCallbackPrefix = "stop_condition_met";
+const std::string onStopConditionMetCallbackPrefix = "on_stop_condition_met_";
 const std::string beforeAddShapeCallbackPrefix = "before_add_shape_callback_";
 const std::string afterAddShapeCallbackPrefix = "after_add_shape_callback_";
 const std::string onPenInputCallbackPrefix = "on_pen_input_callback_";
@@ -348,6 +348,7 @@ private:
     void addScriptWidget(const std::string& scriptDisplayName, const std::string& scriptIdPrefix, const std::string& scriptCode)
     {
         if(!startsWith(scriptIdPrefix, ::stopConditionIdPrefix) &&
+           !startsWith(scriptIdPrefix, ::onStopConditionMetCallbackPrefix) &&
            !startsWith(scriptIdPrefix, ::beforeAddShapeCallbackPrefix) &&
            !startsWith(scriptIdPrefix, ::afterAddShapeCallbackPrefix) &&
            !startsWith(scriptIdPrefix, ::beforeStepCallbackPrefix) &&

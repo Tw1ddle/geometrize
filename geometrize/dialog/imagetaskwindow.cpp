@@ -352,7 +352,7 @@ public:
             }
             setShouldKeepStepping(false);
             ui->scriptsWidget->evaluateOnStopConditionMetScripts();
-            geometrize::dialog::showImageTaskStopConditionMetMessage(q);
+            //geometrize::dialog::showImageTaskStopConditionMetMessage(q); // Letting the scripts handle notifying the user
         });
 
         // Update the graphical image views after shapes are added
