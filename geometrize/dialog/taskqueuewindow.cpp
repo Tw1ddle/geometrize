@@ -57,8 +57,16 @@ def getStopConditionCode() {
   return "return currentShapeCount >= 500;";
 }
 
+// Define code to run when the stop condition is met
+def getOnStopConditionMetCode() {
+  return "";
+}
+
 // Set a stop condition that will stop the task when the condition is met
 prefs.setScript("stop_condition_for_script", getStopConditionCode());
+
+// Save the image when the stop condition is met
+prefs.setScript("on_stop_condition_met_for_script", getOnStopConditionMetCode());
 
 // Set the preferences up on the image task
 task.setPreferences(prefs);
