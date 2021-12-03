@@ -7,6 +7,8 @@
 #include <QWidget>
 #include <QUrl>
 
+#include <optional>
+
 #include "chaiscript/chaiscript.hpp"
 
 #include "common/formatsupport.h"
@@ -38,7 +40,7 @@ void openTask(const QString& urlStr, bool addToRecents)
 
     const QUrl url{QUrl::fromUserInput(urlStr)};
     if(url.isLocalFile()) {
-        geometrize::task::createImageTaskAndWindow(url.toLocalFile().toStdString(), url.toLocalFile().toStdString());
+        geometrize::task::createImageTaskAndWindow(url.toLocalFile().toStdString(), url.toLocalFile().toStdString(), std::nullopt);
         return;
     }
 
@@ -70,15 +72,18 @@ bool openTemplate(chaiscript::ChaiScript& engine, const std::string& templateFol
             return false;
         }
 
-        geometrize::task::ImageTask* task{task::createImageTaskAndWindow(imageFile, imageFile)};
-
         // Apply settings file if a default one is available
-        const std::string settingsFile{geometrize::searchpaths::getDefaultTaskSettingsFilename()};
-        if(util::directoryContainsFile(templateFolder, settingsFile)) {
-            const std::string settingsPath{QDir(QString::fromStdString(templateFolder)).filePath(QString::fromStdString(settingsFile)).toStdString()};
-            const preferences::ImageTaskPreferences prefs(settingsPath);
-            task->setPreferences(prefs);
-        }
+        const auto prefs = [&templateFolder]() -> std::optional<preferences::ImageTaskPreferences> {
+            const std::string settingsFile{geometrize::searchpaths::getDefaultTaskSettingsFilename()};
+            if(util::directoryContainsFile(templateFolder, settingsFile)) {
+                const std::string settingsPath{QDir(QString::fromStdString(templateFolder)).filePath(QString::fromStdString(settingsFile)).toStdString()};
+                const preferences::ImageTaskPreferences prefs(settingsPath);
+                return prefs;
+            }
+            return std::nullopt;
+        }();
+
+        task::createImageTaskAndWindow(imageFile, imageFile, prefs);
 
         return true;
     }

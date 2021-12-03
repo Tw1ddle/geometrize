@@ -1,5 +1,7 @@
 #include "imagetaskcreator.h"
 
+#include <optional>
+
 #include <QColor>
 #include <QImage>
 #include <QPainter>
@@ -47,20 +49,26 @@ namespace geometrize
 namespace task
 {
 
-ImageTask* createImageTaskAndWindow(const std::string& displayName, const std::string& taskUrl)
+ImageTask* createImageTaskAndWindow(const std::string& displayName, const std::string& taskUrl, const std::optional<geometrize::preferences::ImageTaskPreferences>& prefs)
 {
     geometrize::Bitmap bitmap{image::convertImageToBitmapWithDownscaling(replaceAlphaInImage(geometrize::image::loadImage(taskUrl)))};
     ImageTask* task{new ImageTask(displayName, bitmap)};
+    if(prefs) {
+        task->setPreferences(*prefs);
+    }
     dialog::ImageTaskWindow* imageTaskWindow{new dialog::ImageTaskWindow()};
     imageTaskWindow->setImageTask(task);
     imageTaskWindow->show();
     return task;
 }
 
-ImageTask* createImageTaskAndWindow(const std::string& displayName, const QImage& image)
+ImageTask* createImageTaskAndWindow(const std::string& displayName, const QImage& image, const std::optional<geometrize::preferences::ImageTaskPreferences>& prefs)
 {
     geometrize::Bitmap bitmap{image::convertImageToBitmapWithDownscaling(replaceAlphaInImage(image))};
     ImageTask* task{new ImageTask(displayName, bitmap)};
+    if(prefs) {
+        task->setPreferences(*prefs);
+    }
     dialog::ImageTaskWindow* imageTaskWindow{new dialog::ImageTaskWindow()};
     imageTaskWindow->setImageTask(task);
     imageTaskWindow->show();

@@ -1,5 +1,7 @@
 #include "completionhandlers.h"
 
+#include <optional>
+
 #include <QDebug>
 #include <QNetworkReply>
 #include <QPixmap>
@@ -45,7 +47,7 @@ void onImageDownloadComplete(network::Downloader* self, const QNetworkReply::Net
         return;
     }
 
-    task::createImageTaskAndWindow(url.toString().toStdString(), image);
+    task::createImageTaskAndWindow(url.toString().toStdString(), image, std::nullopt);
 }
 
 void onWebpageDownloadComplete(network::Downloader* self, const QNetworkReply::NetworkError error)

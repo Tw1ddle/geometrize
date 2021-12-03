@@ -345,29 +345,28 @@ private:
         return s.rfind(prefix, 0) == 0;
     }
 
-    void addScriptWidget(const std::string& scriptDisplayName, const std::string& scriptIdPrefix, const std::string& scriptCode)
+    void addScriptWidget(const std::string& scriptDisplayName, const std::string& functionName, const std::string& scriptCode)
     {
-        if(!startsWith(scriptIdPrefix, ::stopConditionIdPrefix) &&
-           !startsWith(scriptIdPrefix, ::onStopConditionMetCallbackPrefix) &&
-           !startsWith(scriptIdPrefix, ::beforeAddShapeCallbackPrefix) &&
-           !startsWith(scriptIdPrefix, ::afterAddShapeCallbackPrefix) &&
-           !startsWith(scriptIdPrefix, ::beforeStepCallbackPrefix) &&
-           !startsWith(scriptIdPrefix, ::afterStepCallbackPrefix) &&
-           !startsWith(scriptIdPrefix, ::onPenInputCallbackPrefix) &&
-           !startsWith(scriptIdPrefix, ::onPenProximityEnterCallbackPrefix) &&
-           !startsWith(scriptIdPrefix, ::onPenProximityExitCallbackPrefix) &&
-           !startsWith(scriptIdPrefix, ::onKeyDownCallbackPrefix) &&
-           !startsWith(scriptIdPrefix, ::onKeyUpCallbackPrefix) &&
-           !startsWith(scriptIdPrefix, ::onMouseDownCallbackPrefix) &&
-           !startsWith(scriptIdPrefix, ::onMouseUpCallbackPrefix) &&
-           !startsWith(scriptIdPrefix, ::onMouseMoveCallbackPrefix) &&
-           !startsWith(scriptIdPrefix, ::onMouseWheelCallbackPrefix) &&
-           !startsWith(scriptIdPrefix, ::onTimedUpdateCallbackPrefix))
+        if(!startsWith(functionName, ::stopConditionIdPrefix) &&
+           !startsWith(functionName, ::onStopConditionMetCallbackPrefix) &&
+           !startsWith(functionName, ::beforeAddShapeCallbackPrefix) &&
+           !startsWith(functionName, ::afterAddShapeCallbackPrefix) &&
+           !startsWith(functionName, ::beforeStepCallbackPrefix) &&
+           !startsWith(functionName, ::afterStepCallbackPrefix) &&
+           !startsWith(functionName, ::onPenInputCallbackPrefix) &&
+           !startsWith(functionName, ::onPenProximityEnterCallbackPrefix) &&
+           !startsWith(functionName, ::onPenProximityExitCallbackPrefix) &&
+           !startsWith(functionName, ::onKeyDownCallbackPrefix) &&
+           !startsWith(functionName, ::onKeyUpCallbackPrefix) &&
+           !startsWith(functionName, ::onMouseDownCallbackPrefix) &&
+           !startsWith(functionName, ::onMouseUpCallbackPrefix) &&
+           !startsWith(functionName, ::onMouseMoveCallbackPrefix) &&
+           !startsWith(functionName, ::onMouseWheelCallbackPrefix) &&
+           !startsWith(functionName, ::onTimedUpdateCallbackPrefix))
         {
             return;
         }
 
-        const std::string functionName = scriptIdPrefix + QUuid::createUuid().toString().toStdString();
         auto widget = new geometrize::dialog::ScriptEditorWidget(scriptDisplayName, functionName, scriptCode, ui->customScriptsGroupBox);
         connect(widget, &ScriptEditorWidget::signal_scriptChanged, [this](ScriptEditorWidget* /*self*/, const std::string& functionName, const std::string& code) {
             emit q->signal_scriptChanged(functionName, code);
@@ -377,82 +376,82 @@ private:
 
     void addBeforeStepCallbackWidget(const std::string& scriptCode)
     {
-        addScriptWidget(tr("Before Step Callback").toStdString(), ::beforeStepCallbackPrefix, scriptCode);
+        addScriptWidget(tr("Before Step Callback").toStdString(), makeUniqueFunctionName(::beforeStepCallbackPrefix), scriptCode);
     }
 
     void addAfterStepCallbackWidget(const std::string& scriptCode)
     {
-        addScriptWidget(tr("After Step Callback").toStdString(), ::afterStepCallbackPrefix, scriptCode);
+        addScriptWidget(tr("After Step Callback").toStdString(), makeUniqueFunctionName(::afterStepCallbackPrefix), scriptCode);
     }
 
     void addCustomStopConditionWidget(const std::string& scriptCode)
     {
-        addScriptWidget(tr("Custom Stop Condition").toStdString(), ::stopConditionIdPrefix, scriptCode);
+        addScriptWidget(tr("Custom Stop Condition").toStdString(), makeUniqueFunctionName(::stopConditionIdPrefix), scriptCode);
     }
 
     void addOnStopConditionMetWidget(const std::string& scriptCode)
     {
-        addScriptWidget(tr("On Stop Condition Met Callback").toStdString(), ::onStopConditionMetCallbackPrefix, scriptCode);
+        addScriptWidget(tr("On Stop Condition Met Callback").toStdString(), makeUniqueFunctionName(::onStopConditionMetCallbackPrefix), scriptCode);
     }
 
     void addBeforeAddShapeCallbackWidget(const std::string& scriptCode)
     {
-        addScriptWidget(tr("Before Add Shape Callback").toStdString(), ::beforeAddShapeCallbackPrefix, scriptCode);
+        addScriptWidget(tr("Before Add Shape Callback").toStdString(), makeUniqueFunctionName(::beforeAddShapeCallbackPrefix), scriptCode);
     }
 
     void addAfterAddShapeCallbackWidget(const std::string& scriptCode)
     {
-        addScriptWidget(tr("After Add Shape Callback").toStdString(), ::afterAddShapeCallbackPrefix, scriptCode);
+        addScriptWidget(tr("After Add Shape Callback").toStdString(), makeUniqueFunctionName(::afterAddShapeCallbackPrefix), scriptCode);
     }
 
     void addOnPenInputWidget(const std::string& scriptCode)
     {
-        addScriptWidget(tr("On Pen Input Callback").toStdString(), ::onPenInputCallbackPrefix, scriptCode);
+        addScriptWidget(tr("On Pen Input Callback").toStdString(), makeUniqueFunctionName(::onPenInputCallbackPrefix), scriptCode);
     }
 
     void addOnPenProximityEnterWidget(const std::string& scriptCode)
     {
-        addScriptWidget(tr("On Pen Proximity Enter Callback").toStdString(), ::onPenProximityEnterCallbackPrefix, scriptCode);
+        addScriptWidget(tr("On Pen Proximity Enter Callback").toStdString(), makeUniqueFunctionName(::onPenProximityEnterCallbackPrefix), scriptCode);
     }
 
     void addOnPenProximityExitWidget(const std::string& scriptCode)
     {
-        addScriptWidget(tr("On Pen Proximity Exit Callback").toStdString(), ::onPenProximityExitCallbackPrefix, scriptCode);
+        addScriptWidget(tr("On Pen Proximity Exit Callback").toStdString(), makeUniqueFunctionName(::onPenProximityExitCallbackPrefix), scriptCode);
     }
 
     void addOnKeyDownWidget(const std::string& scriptCode)
     {
-        addScriptWidget(tr("On Key Down Callback").toStdString(), ::onKeyDownCallbackPrefix, scriptCode);
+        addScriptWidget(tr("On Key Down Callback").toStdString(), makeUniqueFunctionName(::onKeyDownCallbackPrefix), scriptCode);
     }
 
     void addOnKeyUpWidget(const std::string& scriptCode)
     {
-        addScriptWidget(tr("On Key Up Callback").toStdString(), ::onKeyUpCallbackPrefix, scriptCode);
+        addScriptWidget(tr("On Key Up Callback").toStdString(), makeUniqueFunctionName(::onKeyUpCallbackPrefix), scriptCode);
     }
 
     void addOnMouseDownWidget(const std::string& scriptCode)
     {
-        addScriptWidget(tr("On Mouse Down Callback").toStdString(), ::onMouseDownCallbackPrefix, scriptCode);
+        addScriptWidget(tr("On Mouse Down Callback").toStdString(), makeUniqueFunctionName(::onMouseDownCallbackPrefix), scriptCode);
     }
 
     void addOnMouseUpWidget(const std::string& scriptCode)
     {
-        addScriptWidget(tr("On Mouse Up Callback").toStdString(), ::onMouseUpCallbackPrefix, scriptCode);
+        addScriptWidget(tr("On Mouse Up Callback").toStdString(), makeUniqueFunctionName(::onMouseUpCallbackPrefix), scriptCode);
     }
 
     void addOnMouseMoveWidget(const std::string& scriptCode)
     {
-        addScriptWidget(tr("On Mouse Move Callback").toStdString(), ::onMouseMoveCallbackPrefix, scriptCode);
+        addScriptWidget(tr("On Mouse Move Callback").toStdString(), makeUniqueFunctionName(::onMouseMoveCallbackPrefix), scriptCode);
     }
 
     void addOnMouseWheelWidget(const std::string& scriptCode)
     {
-        addScriptWidget(tr("On Mouse Wheel Callback").toStdString(), ::onMouseWheelCallbackPrefix, scriptCode);
+        addScriptWidget(tr("On Mouse Wheel Callback").toStdString(), makeUniqueFunctionName(::onMouseWheelCallbackPrefix), scriptCode);
     }
 
     void addOnTimedUpdateWidget(const std::string& scriptCode)
     {
-        addScriptWidget(tr("On Timed Update Callback").toStdString(), ::onTimedUpdateCallbackPrefix, scriptCode);
+        addScriptWidget(tr("On Timed Update Callback").toStdString(), makeUniqueFunctionName(::onTimedUpdateCallbackPrefix), scriptCode);
     }
 
     // Utility function used to setup and display the shape creation/mutation script editor for the given image task window
@@ -537,6 +536,11 @@ private:
         for(const auto& item : presetScriptData) {
             populateScriptSelectionComboBox(item.first, item.second);
         }
+    }
+
+    std::string makeUniqueFunctionName(const std::string& prefix)
+    {
+        return prefix + QUuid::createUuid().toString().toStdString();
     }
 
     task::ImageTask* m_task{nullptr};
