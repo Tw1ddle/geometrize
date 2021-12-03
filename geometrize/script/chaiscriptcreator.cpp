@@ -39,6 +39,7 @@ std::unique_ptr<chaiscript::ChaiScript> createLaunchWindowEngine()
     std::unique_ptr<chaiscript::ChaiScript> chai = std::make_unique<chaiscript::ChaiScript>();
 
     chai->add(bindings::createDefaultBindings());
+    chai->add(bindings::createQWidgetBindings());
     chai->add(bindings::createLaunchWindowBindings());
     chai->add(bindings::createImageTaskWindowBindings());
 
@@ -97,6 +98,7 @@ std::unique_ptr<chaiscript::ChaiScript> createFunctionalTestRunnerEngine()
     std::unique_ptr<chaiscript::ChaiScript> chai = std::make_unique<chaiscript::ChaiScript>();
 
     chai->add(bindings::createDefaultBindings());
+    chai->add(bindings::createQWidgetBindings());
     chai->add(bindings::createLaunchWindowBindings());
     chai->add(bindings::createImageTaskBindings());
     chai->add(bindings::createUserInterfacePuppeteerBindings());

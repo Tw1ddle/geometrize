@@ -163,6 +163,21 @@ std::shared_ptr<chaiscript::Module> createDefaultBindings()
     return module;
 }
 
+std::shared_ptr<chaiscript::Module> createQWidgetBindings()
+{
+    auto module = createModule();
+
+    ADD_TYPE(QWidget);
+
+    ADD_BASE_CLASS(QObject, QWidget);
+
+    ADD_MEMBER(QWidget, show);
+    ADD_MEMBER(QWidget, hide);
+    ADD_MEMBER(QWidget, updateGeometry);
+
+    return module;
+}
+
 std::shared_ptr<chaiscript::Module> createLaunchWindowBindings()
 {
     using namespace geometrize::dialog;

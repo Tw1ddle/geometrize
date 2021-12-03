@@ -23,6 +23,12 @@ namespace bindings
 std::shared_ptr<chaiscript::Module> createDefaultBindings();
 
 /**
+ * @brief createQWidgetBindings Creates the Chaiscript to C++ bindings for the Qt QWidget class.
+ * @return A shared pointer to a module encapsulating the bindings.
+ */
+std::shared_ptr<chaiscript::Module> createQWidgetBindings();
+
+/**
  * @brief createLaunchWindowBindings Creates the Chaiscript to C++ bindings for the Geometrize launch window.
  * @return A shared pointer to a module encapsulating the bindings.
  */
