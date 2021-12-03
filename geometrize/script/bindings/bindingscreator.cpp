@@ -156,6 +156,10 @@ std::shared_ptr<chaiscript::Module> createDefaultBindings()
     ADD_FREE_FUN(getSupportedLocaleCodes);
     ADD_FREE_FUN(setLocaleAndUserInterfaceLanguage);
 
+    ADD_FREE_FUN(getAllNamedWidgets);
+    ADD_FREE_FUN(getAllNamedGeometrizeWidgets);
+    ADD_FREE_FUN(getWidgetByName);
+
     return module;
 }
 

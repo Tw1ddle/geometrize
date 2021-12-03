@@ -295,6 +295,25 @@ std::string getOperatingSystemProductType();
  */
 bool saveWidgetScreenshot(const std::string& path, QWidget* widget);
 
+/**
+ * @brief getAllWidgetNames Returns a vector containing the names of all the existing widgets in the application
+ * @return A vector containing the names of all the existing widgets in the application
+ */
+std::vector<std::string> getAllNamedWidgets();
+
+/**
+ * @brief getAllWidgetNames Returns a vector containing the names of all the widgets in the application with "geometrize" in their name
+ * @return A vector containing the names of all the existing widgets in the application with "geometrize" in their name
+ */
+std::vector<std::string> getAllNamedGeometrizeWidgets();
+
+/**
+ * @brief getWidgetByName Returns the first found instance of the existing widget with the given name
+ * @param widgetName The name of the widget to find
+ * @return A pointer to the first widget instance with the given name, nullptr if no match
+ */
+QWidget* getWidgetByName(const std::string& widgetName);
+
 }
 
 }

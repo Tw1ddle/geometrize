@@ -10,6 +10,7 @@
 #include "common/util.h"
 
 class QObject;
+class QWidget;
 
 namespace geometrize
 {
@@ -195,6 +196,12 @@ bool exportGIF(const std::vector<geometrize::ShapeResult>& data,
 bool saveWidgetScreenshot(const std::string& path, QWidget* widget);
 
 std::string customTabletEventDataToString(const geometrize::scene::TabletEventData& data);
+
+std::vector<std::string> getAllNamedWidgets();
+
+std::vector<std::string> getAllNamedGeometrizeWidgets();
+
+QWidget* getWidgetByName(const std::string& widgetName);
 
 }
 

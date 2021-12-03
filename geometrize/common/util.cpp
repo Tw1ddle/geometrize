@@ -347,6 +347,41 @@ bool saveWidgetScreenshot(const std::string& path, QWidget* widget)
     return widget->grab().save(QString::fromStdString(path), "png");
 }
 
+std::vector<std::string> getAllNamedWidgets()
+{
+    std::vector<std::string> names;
+    const QWidgetList allWidgets = QApplication::allWidgets();
+    for (QWidget* widget : allWidgets) {
+        if(widget && !widget->objectName().isEmpty()) {
+            names.emplace_back(widget->objectName().toStdString());
+        }
+    }
+    return names;
+}
+
+std::vector<std::string> getAllNamedGeometrizeWidgets()
+{
+    std::vector<std::string> names;
+    const QWidgetList allWidgets = QApplication::allWidgets();
+    for (QWidget* widget : allWidgets) {
+        if(widget && widget->objectName().contains("geometrize")) {
+            names.emplace_back(widget->objectName().toStdString());
+        }
+    }
+    return names;
+}
+
+QWidget* getWidgetByName(const std::string& widgetName)
+{
+    const QWidgetList allWidgets = QApplication::allWidgets();
+    for (QWidget* widget : allWidgets) {
+        if(widget && widget->objectName().toStdString() == widgetName) {
+            return widget;
+        }
+    }
+    return nullptr;
+}
+
 }
 
 }

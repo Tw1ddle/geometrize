@@ -7,6 +7,7 @@
 #include <QString>
 #include <QStringList>
 #include <QObject>
+#include <QWidget>
 
 #include "common/formatsupport.h"
 #include "common/searchpaths.h"
@@ -325,6 +326,21 @@ bool saveWidgetScreenshot(const std::string& path, QWidget* widget)
 std::string customTabletEventDataToString(const geometrize::scene::TabletEventData& data)
 {
     return geometrize::scene::tabletEventDataToString(data).toStdString();
+}
+
+std::vector<std::string> getAllNamedWidgets()
+{
+    return geometrize::util::getAllNamedWidgets();
+}
+
+std::vector<std::string> getAllNamedGeometrizeWidgets()
+{
+    return geometrize::util::getAllNamedGeometrizeWidgets();
+}
+
+QWidget* getWidgetByName(const std::string& widgetName)
+{
+    return geometrize::util::getWidgetByName(widgetName);
 }
 
 }
