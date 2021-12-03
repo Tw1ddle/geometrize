@@ -47,7 +47,8 @@ public:
 
     void stepHistory(const int steps)
     {
-        m_historyIndex = static_cast<std::size_t>(std::max(static_cast<std::int64_t>(0), static_cast<std::int64_t>(m_historyIndex) + steps));
+        m_historyIndex = static_cast<std::size_t>(std::min(static_cast<std::int64_t>(m_history.size()),
+                                                           std::max(static_cast<std::int64_t>(0), static_cast<std::int64_t>(m_historyIndex) + steps)));
 
         if(m_historyIndex == m_history.size()) {
             setCurrentCommand("");
