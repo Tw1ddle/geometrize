@@ -203,9 +203,10 @@ private:
         qRegisterMetaType<geometrize::core::EnergyFunction>();
 
         m_worker.moveToThread(&m_workerThread);
-        m_workerThread.start();
 
         connectSignals(connectionType);
+
+        m_workerThread.start();
     }
 
     void connectSignals(const Qt::ConnectionType connectionType)
