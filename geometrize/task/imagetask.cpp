@@ -196,6 +196,8 @@ private:
     void init(const Qt::ConnectionType connectionType)
     {
         m_geometrizer.getEngine()->set_global(chaiscript::var(q), "task");
+        m_geometrizer.getEngine()->set_global(chaiscript::var(static_cast<int>(getWidth())), "xBound");
+        m_geometrizer.getEngine()->set_global(chaiscript::var(static_cast<int>(getHeight())), "yBound");
 
         qRegisterMetaType<std::vector<geometrize::ShapeResult>>();
         qRegisterMetaType<geometrize::ImageRunnerOptions>();

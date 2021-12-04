@@ -176,8 +176,6 @@ public:
                 m_task->getPreferences().setScripts(ui->scriptsWidget->getScripts());
 
                 chaiscript::ChaiScript* engine = geometrizer.getEngine();
-                engine->set_global(chaiscript::var(static_cast<int>(m_task->getWidth())), "xBound");
-                engine->set_global(chaiscript::var(static_cast<int>(m_task->getHeight())), "yBound");
                 engine->set_global(chaiscript::var(m_shapes.getShapeVector().size()), "currentShapeCount");
 
                 ui->scriptsWidget->evaluateBeforeStepScripts();
@@ -469,8 +467,6 @@ public:
             const geometrize::scene::TabletEventData data = event.getData();
             chaiscript::ChaiScript* engine = m_task->getGeometrizer().getEngine();
             engine->set_global(chaiscript::var(data), "lastTabletEvent");
-            engine->set_global(chaiscript::var(static_cast<int>(m_task->getWidth())), "xBound");
-            engine->set_global(chaiscript::var(static_cast<int>(m_task->getHeight())), "yBound");
 
             ui->scriptsWidget->evaluateOnPenInputEventScripts();
 
