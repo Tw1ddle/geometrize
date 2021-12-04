@@ -204,7 +204,7 @@ private:
             emit q->signal_scriptChanged(functionName, code);
         });
 
-        ui->taskListScriptLayout->addWidget(m_scriptEditorWidget);
+        ui->scrollArea->setWidget(m_scriptEditorWidget);
     }
 
     void populateUi()

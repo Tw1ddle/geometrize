@@ -250,6 +250,23 @@
           <property name="sizeConstraint">
            <enum>QLayout::SetDefaultConstraint</enum>
           </property>
+          <item>
+           <widget class="QScrollArea" name="scrollArea">
+            <property name="widgetResizable">
+             <bool>true</bool>
+            </property>
+            <widget class="QWidget" name="scrollAreaWidgetContents">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>578</width>
+               <height>941</height>
+              </rect>
+             </property>
+            </widget>
+           </widget>
+          </item>
          </layout>
         </item>
        </layout>
@@ -265,7 +282,7 @@
      <x>0</x>
      <y>0</y>
      <width>1028</width>
-     <height>19</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
