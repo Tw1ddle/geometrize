@@ -336,6 +336,11 @@ std::shared_ptr<chaiscript::Module> createImageTaskBindings()
     ADD_MEMBER(ImageTask, getCurrentMutable);
     ADD_MEMBER(ImageTask, getPreferences);
     ADD_MEMBER(ImageTask, setPreferences);
+    ADD_MEMBER(ImageTask, getDisplayName);
+    ADD_MEMBER(ImageTask, getWidth);
+    ADD_MEMBER(ImageTask, getHeight);
+    ADD_MEMBER(ImageTask, getTaskId);
+    ADD_MEMBER(ImageTask, isStepping);
 
     ADD_FREE_FUN(createImageTask);
 
