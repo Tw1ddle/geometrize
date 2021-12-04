@@ -93,6 +93,75 @@ public:
         return windows;
     }
 
+    void handleCommand(const geometrize::script::Command& command)
+    {
+        const QString s = QString::fromStdString(command.getCommand());
+        if(s == "search_sample_images") {
+            ui->templatesSearchEdit->setText(QString::fromStdString(command.getStringArg("search_term")));
+        }
+
+        // File menu options
+        if(s == "show_file_menu") {
+            ui->menuFile->exec(q->mapToGlobal(ui->menuBar->pos()));
+        }
+        if(s == "file_menu_clear_recent_items") {
+            q->on_actionClear_Recents_triggered();
+        }
+        if(s == "file_menu_open_global_preferences") {
+            q->on_actionGlobal_Preferences_triggered();
+        }
+        if(s == "file_menu_load_global_preferences") {
+            q->on_actionLoad_Global_Preferences_triggered();
+        }
+        if(s == "file_menu_save_global_preferences") {
+            q->on_actionSave_Global_Preferences_triggered();
+        }
+        if(s == "file_menu_exit") {
+            q->on_actionExit_triggered();
+        }
+
+        if(s == "show_view_menu") {
+            ui->menuView->exec(q->mapToGlobal(ui->menuBar->pos()));
+        }
+        if(s == "view_menu_toggle_script_console") {
+            ui->actionScript_Console->toggle();
+        }
+        if(s == "view_menu_show_script_console") {
+            ui->actionScript_Console->setChecked(true);
+        }
+        if(s == "view_menu_hide_script_console") {
+            ui->actionScript_Console->setChecked(false);
+        }
+
+        if(s == "show_help_menu") {
+            ui->menuHelp->popup(q->mapToGlobal(ui->menuBar->pos()));
+        }
+        if(s == "help_menu_show_tutorials") {
+            ui->actionTutorials->trigger();
+        }
+        if(s == "help_menu_show_support") {
+            ui->actionSupport->trigger();
+        }
+        if(s == "help_menu_show_about") {
+            ui->actionAbout->trigger();
+        }
+
+        if(s == "click_open_image") {
+            ui->openImageButton->click();
+        }
+        if(s == "click_open_link") {
+            ui->openLinkButton->click();
+        }
+        if(s == "click_open_task_queue") {
+            ui->openTaskQueueButton->click();
+        }
+    }
+
+    std::string getCommandHandlerName() const
+    {
+        return q->objectName().toStdString();
+    }
+
     void setConsoleVisibility(const bool visible)
     {
         if(ui->actionScript_Console->isChecked() != visible) {
@@ -222,6 +291,16 @@ LaunchWindow::~LaunchWindow()
 std::vector<LaunchWindow*> LaunchWindow::getTopLevelLaunchWindows()
 {
     return LaunchWindowImpl::getTopLevelLaunchWindows();
+}
+
+void LaunchWindow::handleCommand(const geometrize::script::Command& command)
+{
+    d->handleCommand(command);
+}
+
+std::string LaunchWindow::getCommandHandlerName() const
+{
+    return d->getCommandHandlerName();
 }
 
 void LaunchWindow::dragEnterEvent(QDragEnterEvent* event)

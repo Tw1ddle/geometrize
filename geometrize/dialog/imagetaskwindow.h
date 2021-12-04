@@ -4,6 +4,8 @@
 
 #include <QMainWindow>
 
+#include "script/commandhandler.h"
+
 class QEvent;
 
 namespace geometrize
@@ -25,7 +27,7 @@ namespace dialog
 /**
  * @brief The ImageTaskWindow class encapsulates the UI for manipiulating, running and viewing an image task that geometrizes an image.
  */
-class ImageTaskWindow : public QMainWindow
+class ImageTaskWindow : public QMainWindow, public geometrize::script::CommandHandler
 {
     Q_OBJECT
 
@@ -38,6 +40,9 @@ public:
      * @return The image task windows. Should only be empty if there are no image tasks open.
      */
     static std::vector<ImageTaskWindow*> getExistingImageTaskWindows();
+
+    virtual void handleCommand(const geometrize::script::Command& command) override;
+    virtual std::string getCommandHandlerName() const override;
 
     /**
      * @brief getImageTask Gets a pointer to the current image task shown by the window.

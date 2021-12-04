@@ -31,6 +31,8 @@
 #include "localization/strings.h"
 #include "preferences/globalpreferences.h"
 #include "script/geometrizerengine.h"
+#include "script/command.h"
+#include "script/commandhandler.h"
 #include "scene/imagetaskgraphicsview.h"
 #include "scene/imagetaskscenemanager.h"
 #include "task/imagetask.h"
@@ -662,6 +664,26 @@ public:
         populateUi();
     }
 
+    void handleCommand(const geometrize::script::Command& command)
+    {
+        const QString s = QString::fromStdString(command.getCommand());
+
+        if(s == "click_start_stop_button") {
+            ui->imageTaskRunnerWidget->runStopButtonClicked();
+        }
+        if(s == "click_step_button") {
+            ui->imageTaskRunnerWidget->stepButtonClicked();
+        }
+        if(s == "click_clear_button") {
+            ui->imageTaskRunnerWidget->clearButtonClicked();
+        }
+    }
+
+    std::string getCommandHandlerName() const
+    {
+        return q->objectName().toStdString();
+    }
+
 private:
     void populateUi()
     {
@@ -814,6 +836,16 @@ ImageTaskWindow::~ImageTaskWindow()
 std::vector<ImageTaskWindow*> ImageTaskWindow::getExistingImageTaskWindows()
 {
     return ImageTaskWindowImpl::getExistingImageTaskWindows();
+}
+
+void ImageTaskWindow::handleCommand(const geometrize::script::Command& command)
+{
+    d->handleCommand(command);
+}
+
+std::string ImageTaskWindow::getCommandHandlerName() const
+{
+    return d->getCommandHandlerName();
 }
 
 task::ImageTask* ImageTaskWindow::getImageTask()

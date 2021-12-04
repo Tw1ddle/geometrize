@@ -160,6 +160,15 @@ std::shared_ptr<chaiscript::Module> createDefaultBindings()
     ADD_FREE_FUN(getAllNamedGeometrizeWidgets);
     ADD_FREE_FUN(getWidgetByName);
 
+    ADD_FREE_FUN(getAllNamedCommandHandlers);
+    ADD_FREE_FUN(getCommandHandlerByName);
+
+    ADD_FREE_FUN(sendCommandString);
+    ADD_FREE_FUN(sendCommandObject);
+
+    ADD_FREE_FUN(broadcastCommandString);
+    ADD_FREE_FUN(broadcastCommandObject);
+
     return module;
 }
 

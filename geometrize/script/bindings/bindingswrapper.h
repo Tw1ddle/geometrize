@@ -36,6 +36,12 @@ namespace scene
 class TabletEventData;
 }
 
+namespace script
+{
+class Command;
+class CommandHandler;
+}
+
 namespace task
 {
 class ImageTask;
@@ -202,6 +208,18 @@ std::vector<std::string> getAllNamedWidgets();
 std::vector<std::string> getAllNamedGeometrizeWidgets();
 
 QWidget* getWidgetByName(const std::string& widgetName);
+
+std::vector<std::string> getAllNamedCommandHandlers();
+
+CommandHandler* getCommandHandlerByName(const std::string& name);
+
+void sendCommandString(const std::string& target, const std::string& command);
+
+void sendCommandObject(const std::string& target, Command& command);
+
+void broadcastCommandString(const std::string& command);
+
+void broadcastCommandObject(Command& command);
 
 }
 

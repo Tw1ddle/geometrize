@@ -10,6 +10,19 @@ class QWidget;
 namespace geometrize
 {
 
+namespace script
+{
+
+class Command;
+class CommandHandler;
+
+}
+
+}
+
+namespace geometrize
+{
+
 namespace util
 {
 
@@ -313,6 +326,45 @@ std::vector<std::string> getAllNamedGeometrizeWidgets();
  * @return A pointer to the first widget instance with the given name, nullptr if no match
  */
 QWidget* getWidgetByName(const std::string& widgetName);
+
+/**
+ * @brief getAllNamedCommandHandlers Gets all of the existing objects in the application that implement the CommandHandler interface and can be addressed by name
+ * @return A vector containing the names of all existing objects that implement the CommandHandler interface
+ */
+std::vector<std::string> getAllNamedCommandHandlers();
+
+/**
+ * @brief getCommandHandlerByName Returns the first found instance of the existing command handler with the given name
+ * @param name The name of the command handler to find
+ * @return A pointer to the first command handler with the given name, nullptr if no match
+ */
+geometrize::script::CommandHandler* getCommandHandlerByName(const std::string& name);
+
+/**
+ * @brief sendCommand Sends a command to the given command handler
+ * @param target The name of the target command handler
+ * @param command A string representation of the command
+ */
+void sendCommand(const std::string& target, const std::string& command);
+
+/**
+ * @brief sendCommand Sends a command to the given command handler
+ * @param target The name of the target command handler
+ * @param command A command object representing the command
+ */
+void sendCommand(const std::string& target, geometrize::script::Command& command);
+
+/**
+ * @brief broadcastCommand Sends a command to all command handlers
+ * @param command A string representation of the command
+ */
+void broadcastCommand(const std::string& command);
+
+/**
+ * @brief broadcastCommand Sends a command to all command handlers
+ * @param command A command object representing the command
+ */
+void broadcastCommand(geometrize::script::Command& command);
 
 }
 

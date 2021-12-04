@@ -18,6 +18,8 @@
 #include "geometrize/bitmap/bitmap.h"
 #include "localization/localization.h"
 #include "scene/customtabletevent.h"
+#include "script/command.h"
+#include "script/commandhandler.h"
 #include "task/taskutil.h"
 #include "task/imagetask.h"
 
@@ -341,6 +343,36 @@ std::vector<std::string> getAllNamedGeometrizeWidgets()
 QWidget* getWidgetByName(const std::string& widgetName)
 {
     return geometrize::util::getWidgetByName(widgetName);
+}
+
+std::vector<std::string> getAllNamedCommandHandlers()
+{
+    return geometrize::util::getAllNamedCommandHandlers();
+}
+
+CommandHandler* getCommandHandlerByName(const std::string& name)
+{
+    return geometrize::util::getCommandHandlerByName(name);
+}
+
+void sendCommandString(const std::string& target, const std::string& command)
+{
+    geometrize::util::sendCommand(target, command);
+}
+
+void sendCommandObject(const std::string& target, Command& command)
+{
+    geometrize::util::sendCommand(target, command);
+}
+
+void broadcastCommandString(const std::string& command)
+{
+    geometrize::util::broadcastCommand(command);
+}
+
+void broadcastCommandObject(Command& command)
+{
+    geometrize::util::broadcastCommand(command);
 }
 
 }

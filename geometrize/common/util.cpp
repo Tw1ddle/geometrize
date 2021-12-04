@@ -25,6 +25,8 @@
 #include <QWindow>
 
 #include "dialog/scriptconsole.h"
+#include "script/command.h"
+#include "script/commandhandler.h"
 
 #include "geometrize/commonutil.h"
 
@@ -380,6 +382,68 @@ QWidget* getWidgetByName(const std::string& widgetName)
         }
     }
     return nullptr;
+}
+
+std::vector<std::string> getAllNamedCommandHandlers()
+{
+    const auto& handlers = geometrize::script::CommandHandler::allCommandHandlers;
+    std::vector<std::string> names;
+    for(const auto& h : handlers) {
+        names.emplace_back(h->getCommandHandlerName());
+    }
+    return names;
+}
+
+geometrize::script::CommandHandler* getCommandHandlerByName(const std::string& name)
+{
+    const auto& handlers = geometrize::script::CommandHandler::allCommandHandlers;
+    for(const auto& h : handlers) {
+        if(h->getCommandHandlerName() == name)
+        {
+            return h;
+        }
+    }
+    return nullptr;
+}
+
+void sendCommand(const std::string& target, const std::string& command)
+{
+    const auto& handlers = geometrize::script::CommandHandler::allCommandHandlers;
+    for(const auto& h : handlers) {
+        if(h->getCommandHandlerName() == target)
+        {
+            h->handleCommand(geometrize::script::Command(command));
+            return;
+        }
+    }
+}
+
+void sendCommand(const std::string& target, geometrize::script::Command& command)
+{
+    const auto& handlers = geometrize::script::CommandHandler::allCommandHandlers;
+    for(const auto& h : handlers) {
+        if(h->getCommandHandlerName() == target)
+        {
+            h->handleCommand(geometrize::script::Command(command));
+            return;
+        }
+    }
+}
+
+void broadcastCommand(const std::string& command)
+{
+    const auto& handlers = geometrize::script::CommandHandler::allCommandHandlers;
+    for(const auto& h : handlers) {
+        h->handleCommand(geometrize::script::Command(command));
+    }
+}
+
+void broadcastCommand(geometrize::script::Command& command)
+{
+    const auto& handlers = geometrize::script::CommandHandler::allCommandHandlers;
+    for(const auto& h : handlers) {
+        h->handleCommand(command);
+    }
 }
 
 }

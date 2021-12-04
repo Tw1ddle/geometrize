@@ -5,6 +5,8 @@
 
 #include <QMainWindow>
 
+#include "script/commandhandler.h"
+
 class QEvent;
 
 namespace geometrize
@@ -16,7 +18,7 @@ namespace dialog
 /**
  * @brief The LaunchWindow class models the UI for a launchpad for opening new task templates and recent tasks.
  */
-class LaunchWindow : public QMainWindow
+class LaunchWindow : public QMainWindow, public geometrize::script::CommandHandler
 {
     Q_OBJECT
 
@@ -29,6 +31,9 @@ public:
      * @return The top level launch windows. Should only be empty if there are no launch windows open.
      */
     static std::vector<LaunchWindow*> getTopLevelLaunchWindows();
+
+    virtual void handleCommand(const geometrize::script::Command& command) override;
+    virtual std::string getCommandHandlerName() const override;
 
     virtual void dragEnterEvent(QDragEnterEvent* event) override;
     virtual void dropEvent(QDropEvent* event) override;
