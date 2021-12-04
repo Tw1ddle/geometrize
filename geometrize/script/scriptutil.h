@@ -30,7 +30,7 @@ std::vector<std::string> getEngineFunctionNames(const chaiscript::ChaiScript& en
 
 /**
  * @brief getDefaultScripts Gets a map of the scripts in the given folder.
- * @folder Path to the folder containing the ChaiScript scripts to retrieve. The files must have the ".chai" file extension.
+ * @param folder Path to the folder containing the ChaiScript scripts to retrieve. The files must have the ".chai" file extension.
  * @return A map of Chaiscript script function names to function bodies.
  */
 std::map<std::string, std::string> getScripts(const std::string& folder);
@@ -142,6 +142,12 @@ std::map<std::string, std::string> getOnMouseWheelEventScripts();
  * @return A map of Chaiscript script function names to function bodies.
  */
 std::map<std::string, std::string> getOnTimedUpdateEventScripts();
+
+/**
+ * @brief getTaskQueueBatchProcessingScripts Gets a map of scripts used for batch processing multiple images on the task queue
+ * @return A map of Chaiscript script function names to function bodies.
+ */
+std::map<std::string, std::string> getTaskQueueBatchProcessingScripts();
 
 }
 

@@ -12,94 +12,8 @@
 #include "dialog/taskitemwidget.h"
 #include "script/chaiscriptcreator.h"
 #include "script/scriptrunner.h"
+#include "script/scriptutil.h"
 #include "task/taskutil.h"
-
-namespace
-{
-
-const std::string defaultScriptCode = R"(// Load up the image file
-var image = loadImage(inputPath);
-if(image.isNull()) {
-    messageBox("Failed to load image from: " + inputPath);
-    return;
-}
-
-// Make sure the image is in RGBA8888 format
-image := convertImageToRgba8888(image);
-if(image.isNull()) {
-    messageBox("Failed to convert image to the proper format");
-    return;
-}
-
-// Create a RGBA8888 bitmap from the image
-// Note that this downscales the image as well (to reduce processing time)
-var bitmap = convertImageToBitmapWithDownscaling(image);
-
-// Create an image task
-var task = createImageTask(bitmap);
-
-// Create some image task preferences
-var prefs = ImageTaskPreferences();
-
-prefs.setCandidateShapeCount(200);
-prefs.setMaxShapeMutations(200);
-prefs.setShapeAlpha(255);
-prefs.setSeed(1000);
-prefs.setShapeTypes(RECTANGLE);
-prefs.enableShapeTypes(TRIANGLE);
-prefs.enableShapeTypes(ROTATED_RECTANGLE);
-
-// Only use one thread per task
-prefs.setMaxThreads(1);
-
-// Define a stop condition script that will stop the geometrization after a while
-def getStopConditionCode() {
-  return "return currentShapeCount >= 100;";
-}
-
-// Define code to run when the stop condition is met
-// Saves the files in a folder on the user's desktop
-def getOnStopConditionMetCode() {
-  var outputDir = getDesktopDirectoryLocation() + "/geometrize_batch_output/";
-  createDirectory(outputDir);
-
-  var outputPath = outputDir + "/result_" + getFilenameTimestamp() +"_" + getUuidString() + ".png";
-  return "exportBitmap(task.getCurrent()," + "\"" + outputPath + "\"" + ");";
-}
-
-// Set a stop condition that will stop the task when the condition is met
-prefs.setScript("stop_condition_for_script", getStopConditionCode());
-
-// Save the image when the stop condition is met
-prefs.setScript("on_stop_condition_met_for_script", getOnStopConditionMetCode());
-
-// Set the preferences up on the image task
-task.setPreferences(prefs);
-
-// Create the image task UI window
-var imageTaskWindow = createImageTaskWindow();
-
-// Set the image task up on the UI
-imageTaskWindow.setImageTask(task);
-
-// Show the image task window
-imageTaskWindow.show();
-
-// Give the window an id we can use to refer to it later
-var name = getUuidString();
-imageTaskWindow.setCommandHandlerName(name);
-
-// Hide a bunch of unnecessary things that will slow down the batch processing
-sendCommandString(name, "hide_pixmap_view");
-sendCommandString(name, "hide_vector_view");
-sendCommandString(name, "hide_script_console");
-
-// Tell the window to click the start button
-sendCommandString(name, "start");
-
-)";
-
-}
 
 namespace geometrize
 {
@@ -198,7 +112,10 @@ private:
         const std::string functionName = "task_queue_processing_script" + QUuid::createUuid().toString().toStdString();
         const std::string scriptEditorWidgetTitle = tr("Script Editor").toStdString();
 
-        m_scriptEditorWidget = new geometrize::dialog::ScriptEditorWidget(scriptEditorWidgetTitle, functionName, defaultScriptCode, ui->taskListScriptContainer);
+        const auto scripts = geometrize::script::getTaskQueueBatchProcessingScripts();
+        const std::string defaultScriptName = "default";
+
+        m_scriptEditorWidget = new geometrize::dialog::ScriptEditorWidget(scriptEditorWidgetTitle, defaultScriptName, scripts.at(defaultScriptName), ui->taskListScriptContainer);
 
         connect(m_scriptEditorWidget, &ScriptEditorWidget::signal_scriptChanged, [this](ScriptEditorWidget* /*self*/, const std::string& functionName, const std::string& code) {
             emit q->signal_scriptChanged(functionName, code);

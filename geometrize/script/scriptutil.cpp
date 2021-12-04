@@ -150,6 +150,11 @@ std::map<std::string, std::string> getOnTimedUpdateEventScripts()
     return getScriptsFromFolder(":/scripts/scripts/on_update_callbacks/");
 }
 
+std::map<std::string, std::string> getTaskQueueBatchProcessingScripts()
+{
+    return getScriptsFromFolder(":/scripts/task_queue_scripts/");
+}
+
 }
 
 }

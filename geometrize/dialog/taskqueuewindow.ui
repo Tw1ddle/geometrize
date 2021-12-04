@@ -177,7 +177,10 @@
             <item>
              <widget class="QLabel" name="taskListInstructionText">
               <property name="text">
-               <string extracomment="Instructions to the user explaining how to add items to the task queue list, by dragging items into a list below this text">Drop image files below to batch process them via scripts</string>
+               <string extracomment="Instructions to the user explaining how to add items to the task queue list, by dragging items into a list below this text">Drop image files onto the area below to batch process them via a script</string>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -213,7 +216,7 @@
              <bool>true</bool>
             </property>
             <property name="text">
-             <string extracomment="Text on a button that starts running the tasks from the task queue when pressed">Run</string>
+             <string extracomment="Text on a button that starts running the tasks from the task queue when pressed">Run All</string>
             </property>
            </widget>
           </item>
@@ -251,6 +254,33 @@
            <enum>QLayout::SetDefaultConstraint</enum>
           </property>
           <item>
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <item>
+             <widget class="QLabel" name="scriptSelectLabel">
+              <property name="text">
+               <string>Select Script</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="scriptSelectComboBox"/>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_4">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
            <widget class="QScrollArea" name="scrollArea">
             <property name="widgetResizable">
              <bool>true</bool>
@@ -261,7 +291,7 @@
                <x>0</x>
                <y>0</y>
                <width>578</width>
-               <height>941</height>
+               <height>911</height>
               </rect>
              </property>
             </widget>
