@@ -92,6 +92,7 @@ std::shared_ptr<chaiscript::Module> createDefaultBindings()
 
     ADD_FREE_FUN(processApplicationEvents);
     ADD_FREE_FUN(directoryContainsFile);
+    ADD_FREE_FUN(createDirectory);
     ADD_FREE_FUN(fileExists);
     ADD_FREE_FUN(directoryExists);
     ADD_FREE_FUN(directoriesExist);
@@ -109,6 +110,8 @@ std::shared_ptr<chaiscript::Module> createDefaultBindings()
     ADD_FREE_FUN(getFirstFileWithExtensions);
     ADD_FREE_FUN(getScriptsForPath);
     ADD_FREE_FUN(getScriptsForPaths);
+    ADD_FREE_FUN(getFileNameForFilePath);
+    ADD_FREE_FUN(getDirectoryForFilePath);
 
     ADD_FREE_FUN(getSupportedImageFileExtensions);
 
@@ -127,6 +130,7 @@ std::shared_ptr<chaiscript::Module> createDefaultBindings()
     ADD_FREE_FUN(getApplicationDirectoryLocation);
     ADD_FREE_FUN(getAppDataLocation);
     ADD_FREE_FUN(getHomeDirectoryLocation);
+    ADD_FREE_FUN(getDesktopDirectoryLocation);
 
     ADD_FREE_FUN(writeStringToFile);
 
@@ -177,6 +181,11 @@ std::shared_ptr<chaiscript::Module> createDefaultBindings()
 
     ADD_FREE_FUN(broadcastCommandString);
     ADD_FREE_FUN(broadcastCommandObject);
+
+    ADD_FREE_FUN(getFormattedTimestamp);
+    ADD_FREE_FUN(getFilenameTimestamp);
+
+    ADD_FREE_FUN(getUuidString);
 
     return module;
 }
@@ -285,14 +294,14 @@ std::shared_ptr<chaiscript::Module> createImageBindings()
     return module;
 }
 
-std::shared_ptr<chaiscript::Module> createImageTaskBindings()
+std::shared_ptr<chaiscript::Module> createSynchronousImageTaskBindings()
 {
     using namespace geometrize::task;
     using namespace geometrize::preferences;
 
     auto module = createModule();
 
-    // Note we use synchronous-stepping image tasks for simplicity in scripts
+    // Note we use synchronous-stepping image tasks for simplicity in some scripts e.g. the Twitter bot
     ADD_TYPE(SynchronousImageTask);
 
     ADD_CONSTRUCTOR(SynchronousImageTask, SynchronousImageTask(Bitmap&));
@@ -305,17 +314,28 @@ std::shared_ptr<chaiscript::Module> createImageTaskBindings()
     ADD_MEMBER(SynchronousImageTask, setPreferences);
     ADD_MEMBER(SynchronousImageTask, getShapes);
 
+    return module;
+}
+
+std::shared_ptr<chaiscript::Module> createImageTaskBindings()
+{
+    using namespace geometrize::task;
+    using namespace geometrize::preferences;
+
+    auto module = createModule();
+
     ADD_TYPE(ImageTask);
 
     ADD_CONSTRUCTOR(ImageTask, ImageTask(Bitmap&));
 
     ADD_MEMBER(ImageTask, stepModel);
     ADD_MEMBER(ImageTask, drawBackgroundRectangle);
-    //ADD_MEMBER(ImageTask, getTarget);
-    //ADD_MEMBER(ImageTask, getCurrent);
+    ADD_MEMBER(ImageTask, getTarget);
+    ADD_MEMBER(ImageTask, getCurrent);
+    ADD_MEMBER(ImageTask, getTargetMutable);
+    ADD_MEMBER(ImageTask, getCurrentMutable);
     ADD_MEMBER(ImageTask, getPreferences);
     ADD_MEMBER(ImageTask, setPreferences);
-    //ADD_MEMBER(ImageTask, getShapes);
 
     ADD_FREE_FUN(createImageTask);
 

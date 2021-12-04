@@ -126,7 +126,7 @@ public:
 
         // Scripting is enabled - clone the entire geometrizer engine
         // This is important because many threads will be working with it when geometrizing shapes
-        // and we don't want to mess with the state of the engine on the main thread while these threads are working with
+        // and we don't want to mess with the state of the engine on the main thread while these threads are working with it
         const auto geometrizerEngineClone = [this, scripts]() {
             auto engine = std::make_shared<geometrize::script::GeometrizerEngine>(m_geometrizer.getEngine()->get_state());
 
@@ -195,6 +195,8 @@ private:
 
     void init(const Qt::ConnectionType connectionType)
     {
+        m_geometrizer.getEngine()->set_global(chaiscript::var(q), "task");
+
         qRegisterMetaType<std::vector<geometrize::ShapeResult>>();
         qRegisterMetaType<geometrize::ImageRunnerOptions>();
         qRegisterMetaType<std::function<std::shared_ptr<geometrize::Shape>()>>();
@@ -258,12 +260,12 @@ ImageTask::~ImageTask()
 {
 }
 
-Bitmap& ImageTask::getTarget()
+Bitmap& ImageTask::getTargetMutable()
 {
     return d->getTarget();
 }
 
-Bitmap& ImageTask::getCurrent()
+Bitmap& ImageTask::getCurrentMutable()
 {
     return d->getCurrent();
 }

@@ -739,20 +739,20 @@ private:
 
     void clearModel()
     {
-        auto task = new geometrize::task::ImageTask(m_task->getDisplayName(), m_task->getTarget());
+        auto task = new geometrize::task::ImageTask(m_task->getDisplayName(), m_task->getTargetMutable());
         task->setPreferences(m_task->getPreferences());
         setImageTask(task);
     }
 
     void switchTargetImage(Bitmap& bitmap)
     {
-        Bitmap& targetBitmap{m_task->getTarget()};
+        Bitmap& targetBitmap{m_task->getTargetMutable()};
         targetBitmap = bitmap;
     }
 
     void switchCurrentImage(Bitmap& bitmap)
     {
-        Bitmap& currentBitmap{m_task->getCurrent()};
+        Bitmap& currentBitmap{m_task->getCurrentMutable()};
         currentBitmap = bitmap;
     }
 

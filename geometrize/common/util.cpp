@@ -9,6 +9,7 @@
 #include <QClipboard>
 #include <QCoreApplication>
 #include <QCursor>
+#include <QDateTime>
 #include <QDesktopServices>
 #include <QDir>
 #include <QDirIterator>
@@ -22,6 +23,7 @@
 #include <QStandardPaths>
 #include <QTextStream>
 #include <QUrl>
+#include <QUuid>
 #include <QWindow>
 
 #include "dialog/scriptconsole.h"
@@ -113,6 +115,11 @@ bool directoryContainsFile(const std::string& dirPath, const std::string& fileNa
         }
     }
     return false;
+}
+
+bool createDirectory(const std::string& dirPath)
+{
+    return QDir().mkpath(QString::fromStdString(dirPath));
 }
 
 std::string readFileAsString(const std::string& filePath)
@@ -233,6 +240,11 @@ std::string getDirectoryForFilePath(const std::string& filePath)
     return fileInfo.absoluteDir().absolutePath().toStdString();
 }
 
+std::string getFileNameForFilePath(const std::string& filePath)
+{
+    return QFileInfo(QString::fromStdString(filePath)).fileName().toStdString();
+}
+
 bool openInDefaultApplication(const std::string& path)
 {
     return QDesktopServices::openUrl(QUrl::fromUserInput(QString::fromStdString(path)));
@@ -282,6 +294,11 @@ std::string getAppDataLocation()
 std::string getHomeDirectoryLocation()
 {
     return QStandardPaths::writableLocation(QStandardPaths::HomeLocation).toStdString();
+}
+
+std::string getDesktopDirectoryLocation()
+{
+    return QStandardPaths::writableLocation(QStandardPaths::DesktopLocation).toStdString();
 }
 
 bool writeStringToFile(const std::string& str, const std::string& path)
@@ -444,6 +461,21 @@ void broadcastCommand(geometrize::script::Command& command)
     for(const auto& h : handlers) {
         h->handleCommand(command);
     }
+}
+
+std::string getFormattedTimestamp(const std::string& formatString)
+{
+    return QDateTime::currentDateTime().toString(QString::fromStdString(formatString)).toStdString();
+}
+
+std::string getFilenameTimestamp()
+{
+    return getFormattedTimestamp("yyyy_MM_dd_hh_mm_ss_zzz");
+}
+
+std::string getUuidString()
+{
+    return QUuid::createUuid().toString().toStdString();
 }
 
 }

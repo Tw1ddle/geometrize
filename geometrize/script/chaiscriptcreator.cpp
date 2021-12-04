@@ -42,6 +42,7 @@ std::unique_ptr<chaiscript::ChaiScript> createLaunchWindowEngine()
     chai->add(bindings::createQWidgetBindings());
     chai->add(bindings::createLaunchWindowBindings());
     chai->add(bindings::createImageTaskWindowBindings());
+    chai->add(bindings::createSynchronousImageTaskBindings());
 
     addPrintRedirect(chai);
 
@@ -57,6 +58,7 @@ std::unique_ptr<chaiscript::ChaiScript> createImageTaskEngine()
 
     chai->add(bindings::createImageBindings());
     chai->add(bindings::createImageTaskBindings());
+    chai->add(bindings::createSynchronousImageTaskBindings());
     chai->add(bindings::createImageExportBindings());
     chai->add(bindings::createAnimatedGifExportBindings());
 
@@ -74,7 +76,9 @@ std::unique_ptr<chaiscript::ChaiScript> createBatchImageTaskEngine()
 
     chai->add(bindings::createImageBindings());
     chai->add(bindings::createImageTaskBindings());
+    chai->add(bindings::createSynchronousImageTaskBindings());
     chai->add(bindings::createImageTaskWindowBindings());
+    chai->add(bindings::createImageExportBindings());
 
     addPrintRedirect(chai);
 
@@ -89,6 +93,8 @@ std::unique_ptr<chaiscript::ChaiScript> createShapeMutatorEngine()
     chai->add(bindings::createGeometrizeLibraryBindings());
     chai->add(bindings::createMathBindings());
     chai->add(bindings::createTabletEventBindings());
+    chai->add(bindings::createImageExportBindings());
+    chai->add(bindings::createImageTaskBindings());
 
     return chai;
 }
@@ -101,6 +107,7 @@ std::unique_ptr<chaiscript::ChaiScript> createFunctionalTestRunnerEngine()
     chai->add(bindings::createQWidgetBindings());
     chai->add(bindings::createLaunchWindowBindings());
     chai->add(bindings::createImageTaskBindings());
+    chai->add(bindings::createSynchronousImageTaskBindings());
     chai->add(bindings::createUserInterfacePuppeteerBindings());
     chai->add(bindings::createFunctionalTestHelperBindings());
 

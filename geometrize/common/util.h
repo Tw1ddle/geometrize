@@ -82,6 +82,12 @@ bool directoriesExist(const std::vector<std::string>& dirPaths);
 bool directoryContainsFile(const std::string& dirPath, const std::string& fileName);
 
 /**
+ * @brief createDirectory Creates the directory at the given path, recursively creating subdirectories if needed
+ * @return True if the directory was created (or already existed), else false
+ */
+bool createDirectory(const std::string& dirPath);
+
+/**
  * @brief readFileAsString Reads a file, returning a string containing the contents.
  * @param filePath The path to the file.
  * @return The contents of the file, as a string.
@@ -148,6 +154,13 @@ std::vector<std::string> getScriptsForPaths(const std::vector<std::string>& dirP
 std::string getDirectoryForFilePath(const std::string& filePath);
 
 /**
+ * @brief getFileNameForFilePath Gets the filename from the given local file path.
+ * @param filePath The filepath to chop.
+ * @return The filename i.e. the file name from the end of the filepath
+ */
+std::string getFileNameForFilePath(const std::string& filePath);
+
+/**
  * @brief openInDefaultApplication Opens the given path in the default application.
  * @param path The path to the resource to open.
  * @return True if the directory, file, URL (or whatever) should open, else false.
@@ -211,6 +224,12 @@ std::string getAppDataLocation();
  * @return Location of the user's home directory.
  */
 std::string getHomeDirectoryLocation();
+
+/**
+ * @brief getDesktopDirectoryLocation Returns a path to where the user's desktop is.
+ * @return Location of the user's desktop directory.
+ */
+std::string getDesktopDirectoryLocation();
 
 /**
  * @brief writeStringToFile Writes the string to the file path, attempting to overwrite any existing file at the path.
@@ -365,6 +384,25 @@ void broadcastCommand(const std::string& command);
  * @param command A command object representing the command
  */
 void broadcastCommand(geometrize::script::Command& command);
+
+/**
+ * @brief getFormattedTimestamp Gets a formatted timestamp for the current local time
+ * @param formatString The format of the timestamp e.g. "ddMMyyyy-hhmmss"
+ * @return A string representing a timestamp for the current local time
+ */
+std::string getFormattedTimestamp(const std::string& formatString);
+
+/**
+ * @brief getFilenameTimestamp Gets a filename timestamp string for the current local time
+ * @return A timestamp string in the format "yyyy_MM_dd_hh_mm_ss_zzz"
+ */
+std::string getFilenameTimestamp();
+
+/**
+ * @brief getUuidString Gets a Universally Unique Identifier (UUID) as a string
+ * @return The UUID string
+ */
+std::string getUuidString();
 
 }
 

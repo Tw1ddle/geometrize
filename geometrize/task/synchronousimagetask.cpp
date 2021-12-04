@@ -41,12 +41,12 @@ public:
 
     Bitmap& getTarget()
     {
-        return m_task->getTarget();
+        return m_task->getTargetMutable();
     }
 
     Bitmap& getCurrent()
     {
-        return m_task->getCurrent();
+        return m_task->getCurrentMutable();
     }
 
     void step()

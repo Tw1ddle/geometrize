@@ -54,12 +54,17 @@ prefs.setMaxThreads(1);
 
 // Define a stop condition script that will stop the geometrization after a while
 def getStopConditionCode() {
-  return "return currentShapeCount >= 500;";
+  return "return currentShapeCount >= 100;";
 }
 
 // Define code to run when the stop condition is met
+// Saves the files in a folder on the user's desktop
 def getOnStopConditionMetCode() {
-  return "";
+  var outputDir = getDesktopDirectoryLocation() + "/geometrize_batch_output/";
+  createDirectory(outputDir);
+
+  var outputPath = outputDir + "/result_" + getFilenameTimestamp() +"_" + getUuidString() + ".png";
+  return "exportBitmap(task.getCurrent()," + "\"" + outputPath + "\"" + ");";
 }
 
 // Set a stop condition that will stop the task when the condition is met
@@ -81,10 +86,12 @@ imageTaskWindow.setImageTask(task);
 imageTaskWindow.show();
 
 // Give the window an id we can use to refer to it later
-imageTaskWindow.setCommandHandlerName(inputPath);
+var name = getUuidString();
+imageTaskWindow.setCommandHandlerName(name);
 
 // Tell the window to click the start button
-sendCommandString(inputPath, "start");
+sendCommandString(name, "start");
+
 )";
 
 }

@@ -107,6 +107,11 @@ bool directoryContainsFile(const std::string& dirPath, const std::string& fileNa
     return geometrize::util::directoryContainsFile(dirPath, fileName);
 }
 
+bool createDirectory(const std::string& dirPath)
+{
+    return geometrize::util::createDirectory(dirPath);
+}
+
 std::string readFileAsString(const std::string& filePath)
 {
     return geometrize::util::readFileAsString(filePath);
@@ -166,6 +171,16 @@ std::vector<std::string> getScriptsForPath(const std::string& dirPath)
 std::vector<std::string> getScriptsForPaths(const std::vector<std::string>& dirPaths)
 {
     return geometrize::util::getScriptsForPaths(dirPaths);
+}
+
+std::string getDirectoryForFilePath(const std::string& filePath)
+{
+    return geometrize::util::getDirectoryForFilePath(filePath);
+}
+
+std::string getFileNameForFilePath(const std::string& filePath)
+{
+    return geometrize::util::getFileNameForFilePath(filePath);
 }
 
 void openTask(const std::string& url, const bool addToRecents)
@@ -230,6 +245,11 @@ std::string getAppDataLocation()
 std::string getHomeDirectoryLocation()
 {
     return geometrize::util::getHomeDirectoryLocation();
+}
+
+std::string getDesktopDirectoryLocation()
+{
+    return geometrize::util::getDesktopDirectoryLocation();
 }
 
 bool writeStringToFile(const std::string& str, const std::string& path)
@@ -373,6 +393,21 @@ void broadcastCommandString(const std::string& command)
 void broadcastCommandObject(Command& command)
 {
     geometrize::util::broadcastCommand(command);
+}
+
+std::string getFormattedTimestamp(const std::string& formatString)
+{
+    return geometrize::util::getFormattedTimestamp(formatString);
+}
+
+std::string getFilenameTimestamp()
+{
+    return geometrize::util::getFilenameTimestamp();
+}
+
+std::string getUuidString()
+{
+    return geometrize::util::getUuidString();
 }
 
 }

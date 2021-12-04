@@ -88,6 +88,8 @@ bool directoriesExist(const std::vector<std::string>& dirPaths);
 
 bool directoryContainsFile(const std::string& dirPath, const std::string& fileName);
 
+bool createDirectory(const std::string& dirPath);
+
 std::string readFileAsString(const std::string& filePath);
 
 std::vector<std::string> getFilePathsForDirectory(const std::string& dirPath);
@@ -110,6 +112,10 @@ std::vector<std::string> getScriptsForPath(const std::string& dirPath);
 
 std::vector<std::string> getScriptsForPaths(const std::vector<std::string>& dirPaths);
 
+std::string getDirectoryForFilePath(const std::string& filePath);
+
+std::string getFileNameForFilePath(const std::string& filePath);
+
 void openTask(const std::string& url, bool addToRecents);
 
 bool openInDefaultApplication(const std::string& path);
@@ -131,6 +137,8 @@ std::string getApplicationDirectoryLocation();
 std::string getAppDataLocation();
 
 std::string getHomeDirectoryLocation();
+
+std::string getDesktopDirectoryLocation();
 
 bool writeStringToFile(const std::string& str, const std::string& path);
 
@@ -220,6 +228,12 @@ void sendCommandObject(const std::string& target, Command& command);
 void broadcastCommandString(const std::string& command);
 
 void broadcastCommandObject(Command& command);
+
+std::string getFormattedTimestamp(const std::string& formatString);
+
+std::string getFilenameTimestamp();
+
+std::string getUuidString();
 
 }
 

@@ -67,16 +67,16 @@ public:
     geometrize::script::GeometrizerEngine& getGeometrizer();
 
     /**
-     * @brief getTarget Gets the target bitmap.
+     * @brief getTarget Gets the target bitmap, non-const edition.
      * @return The target bitmap.
      */
-    Bitmap& getTarget();
+    Bitmap& getTargetMutable();
 
     /**
-     * @brief getCurrent Gets the current bitmap.
+     * @brief getCurrent Gets the current bitmap, non-const edition.
      * @return The current bitmap.
      */
-    Bitmap& getCurrent();
+    Bitmap& getCurrentMutable();
 
     /**
      * @brief getTarget Gets the target bitmap, const-edition.

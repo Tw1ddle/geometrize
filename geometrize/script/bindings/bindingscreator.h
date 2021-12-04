@@ -47,6 +47,12 @@ std::shared_ptr<chaiscript::Module> createImageTaskWindowBindings();
 std::shared_ptr<chaiscript::Module> createImageBindings();
 
 /**
+ * @brief createSynchronousImageTaskBindings Creates the Chaiscript to C++ bindings for synchronous Geometrize image tasks (used by the Twitter bot).
+ * @return A shared pointer to a module encapsulating the bindings.
+ */
+std::shared_ptr<chaiscript::Module> createSynchronousImageTaskBindings();
+
+/**
  * @brief createImageTaskBindings Creates the Chaiscript to C++ bindings for Geometrize image tasks.
  * @return A shared pointer to a module encapsulating the bindings.
  */
