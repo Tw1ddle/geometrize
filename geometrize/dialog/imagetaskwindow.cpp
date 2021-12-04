@@ -685,6 +685,36 @@ public:
         if(s == "click_clear_button") {
             ui->imageTaskRunnerWidget->clearButtonClicked();
         }
+
+        if(s == "toggle_script_console") {
+            ui->actionScript_Console->toggle();
+        }
+        if(s == "show_script_console") {
+            ui->actionScript_Console->setChecked(true);
+        }
+        if(s == "hide_script_console") {
+            ui->actionScript_Console->setChecked(false);
+        }
+
+        if(s == "toggle_pixmap_view") {
+            ui->actionPixmap_Results_View->toggle();
+        }
+        if(s == "show_pixmap_view") {
+            ui->actionPixmap_Results_View->setChecked(true);
+        }
+        if(s == "hide_pixmap_view") {
+            ui->actionPixmap_Results_View->setChecked(false);
+        }
+
+        if(s == "toggle_vector_view") {
+            ui->actionVector_Results_View->toggle();
+        }
+        if(s == "show_vector_view") {
+            ui->actionVector_Results_View->setChecked(true);
+        }
+        if(s == "hide_vector_view") {
+            ui->actionVector_Results_View->setChecked(false);
+        }
     }
 
     void setCommandHandlerName(const std::string& name)

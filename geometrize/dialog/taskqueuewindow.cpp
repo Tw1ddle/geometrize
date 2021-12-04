@@ -89,6 +89,11 @@ imageTaskWindow.show();
 var name = getUuidString();
 imageTaskWindow.setCommandHandlerName(name);
 
+// Hide a bunch of unnecessary things that will slow down the batch processing
+sendCommandString(name, "hide_pixmap_view");
+sendCommandString(name, "hide_vector_view");
+sendCommandString(name, "hide_script_console");
+
 // Tell the window to click the start button
 sendCommandString(name, "start");
 
