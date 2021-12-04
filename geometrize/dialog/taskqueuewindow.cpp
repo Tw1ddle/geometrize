@@ -3,6 +3,7 @@
 
 #include <QDragEnterEvent>
 #include <QDropEvent>
+#include <QTimer>
 #include <QUuid>
 
 #include "chaiscript/chaiscript.hpp"
@@ -49,6 +50,17 @@ public:
         connect(ui->clearTaskListButton, &QPushButton::clicked, [this]() {
             ui->taskList->clear();
         });
+
+        // Enable the run and clear buttons only when items are present
+        ui->runTasksButton->setEnabled(false);
+        ui->clearTaskListButton->setEnabled(false);
+        QTimer* timer = new QTimer(q);
+        q->connect(timer, &QTimer::timeout, q, [this]() {
+            const bool enable = ui->taskList->count() > 0;
+            ui->runTasksButton->setEnabled(enable);
+            ui->clearTaskListButton->setEnabled(enable);
+        });
+        timer->start(500);
     }
     TaskQueueWindowImpl& operator=(const TaskQueueWindowImpl&) = delete;
     TaskQueueWindowImpl(const TaskQueueWindowImpl&) = delete;
