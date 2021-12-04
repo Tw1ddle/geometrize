@@ -32,7 +32,12 @@ public:
         populateUi();
         q->setAttribute(Qt::WA_DeleteOnClose);
 
+        refreshScripts();
         setupScriptEditor();
+
+        connect(ui->scriptSelectComboBox, &QComboBox::currentTextChanged, [this](const QString& text) {
+            m_scriptEditorWidget->setCurrentCode(m_scripts[text.toStdString()]);
+        });
 
         connect(ui->runTasksButton, &QPushButton::clicked, [this]() {
             for(int i = 0; i < ui->taskList->count(); ++i) {
@@ -70,6 +75,16 @@ public:
     }
 
 private:
+    void refreshScripts()
+    {
+        m_scripts = geometrize::script::getTaskQueueBatchProcessingScripts();
+
+        ui->scriptSelectComboBox->clear();
+        for(const auto& script : m_scripts) {
+            ui->scriptSelectComboBox->addItem(QString::fromStdString(script.first));
+        }
+    }
+
     void runScript(const std::string& imagePath) const
     {
         const auto engine = script::createBatchImageTaskEngine();
@@ -109,13 +124,9 @@ private:
 
     void setupScriptEditor()
     {
-        const std::string functionName = "task_queue_processing_script" + QUuid::createUuid().toString().toStdString();
         const std::string scriptEditorWidgetTitle = tr("Script Editor").toStdString();
 
-        const auto scripts = geometrize::script::getTaskQueueBatchProcessingScripts();
-        const std::string defaultScriptName = "default";
-
-        m_scriptEditorWidget = new geometrize::dialog::ScriptEditorWidget(scriptEditorWidgetTitle, defaultScriptName, scripts.at(defaultScriptName), ui->taskListScriptContainer);
+        m_scriptEditorWidget = new geometrize::dialog::ScriptEditorWidget(scriptEditorWidgetTitle, defaultScriptName, m_scripts.at(defaultScriptName), ui->taskListScriptContainer);
 
         connect(m_scriptEditorWidget, &ScriptEditorWidget::signal_scriptChanged, [this](ScriptEditorWidget* /*self*/, const std::string& functionName, const std::string& code) {
             emit q->signal_scriptChanged(functionName, code);
@@ -132,6 +143,9 @@ private:
     TaskQueueWindow* q{nullptr};
 
     geometrize::dialog::ScriptEditorWidget* m_scriptEditorWidget;
+
+    const std::string defaultScriptName{ "default" };
+    std::map<std::string, std::string> m_scripts;
 };
 
 TaskQueueWindow::TaskQueueWindow() :
