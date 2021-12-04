@@ -34,6 +34,7 @@ public:
 
     virtual void handleCommand(const geometrize::script::Command& command) override;
     virtual std::string getCommandHandlerName() const override;
+    virtual void setCommandHandlerName(const std::string& name) override;
 
     virtual void dragEnterEvent(QDragEnterEvent* event) override;
     virtual void dropEvent(QDropEvent* event) override;

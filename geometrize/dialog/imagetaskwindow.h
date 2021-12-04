@@ -43,6 +43,7 @@ public:
 
     virtual void handleCommand(const geometrize::script::Command& command) override;
     virtual std::string getCommandHandlerName() const override;
+    virtual void setCommandHandlerName(const std::string& name) override;
 
     /**
      * @brief getImageTask Gets a pointer to the current image task shown by the window.

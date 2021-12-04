@@ -21,8 +21,9 @@ public:
     CommandHandler();
     virtual ~CommandHandler();
 
-    virtual std::string getCommandHandlerName() const = 0;
     virtual void handleCommand(const Command& command) = 0;
+    virtual std::string getCommandHandlerName() const = 0;
+    virtual void setCommandHandlerName(const std::string& name) = 0;
 
     static std::set<CommandHandler*> allCommandHandlers;
 };

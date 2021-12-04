@@ -17,7 +17,7 @@
 #include <QRectF>
 #include <QTimer>
 
-#include "chaiscript/chaiscript.hpp" // TODO remove
+#include "chaiscript/chaiscript.hpp"
 
 #include "geometrize/bitmap/bitmap.h"
 #include "geometrize/commonutil.h"
@@ -668,6 +668,14 @@ public:
     {
         const QString s = QString::fromStdString(command.getCommand());
 
+        if(s == "start") {
+            setShouldKeepStepping(true);
+            stepModel();
+        }
+        if(s == "stop") {
+            setShouldKeepStepping(false);
+        }
+
         if(s == "click_start_stop_button") {
             ui->imageTaskRunnerWidget->runStopButtonClicked();
         }
@@ -677,6 +685,11 @@ public:
         if(s == "click_clear_button") {
             ui->imageTaskRunnerWidget->clearButtonClicked();
         }
+    }
+
+    void setCommandHandlerName(const std::string& name)
+    {
+        q->setObjectName(QString::fromStdString(name));
     }
 
     std::string getCommandHandlerName() const
@@ -846,6 +859,11 @@ void ImageTaskWindow::handleCommand(const geometrize::script::Command& command)
 std::string ImageTaskWindow::getCommandHandlerName() const
 {
     return d->getCommandHandlerName();
+}
+
+void ImageTaskWindow::setCommandHandlerName(const std::string& name)
+{
+    d->setCommandHandlerName(name);
 }
 
 task::ImageTask* ImageTaskWindow::getImageTask()

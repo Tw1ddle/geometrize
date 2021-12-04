@@ -79,6 +79,12 @@ imageTaskWindow.setImageTask(task);
 
 // Show the image task window
 imageTaskWindow.show();
+
+// Give the window an id we can use to refer to it later
+imageTaskWindow.setCommandHandlerName(inputPath);
+
+// Tell the window to click the start button
+sendCommandString(inputPath, "start");
 )";
 
 }

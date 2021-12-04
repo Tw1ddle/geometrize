@@ -160,6 +160,15 @@ std::shared_ptr<chaiscript::Module> createDefaultBindings()
     ADD_FREE_FUN(getAllNamedGeometrizeWidgets);
     ADD_FREE_FUN(getWidgetByName);
 
+    ADD_TYPE(Command);
+    ADD_MEMBER(Command, getCommand);
+    ADD_MEMBER(Command, setStringArg);
+
+    ADD_TYPE(CommandHandler);
+    ADD_MEMBER(CommandHandler, handleCommand);
+    ADD_MEMBER(CommandHandler, getCommandHandlerName);
+    ADD_MEMBER(CommandHandler, setCommandHandlerName);
+
     ADD_FREE_FUN(getAllNamedCommandHandlers);
     ADD_FREE_FUN(getCommandHandlerByName);
 
@@ -199,6 +208,7 @@ std::shared_ptr<chaiscript::Module> createLaunchWindowBindings()
     ADD_BASE_CLASS(QMainWindow, LaunchWindow);
     ADD_BASE_CLASS(QWidget, LaunchWindow);
     ADD_BASE_CLASS(QObject, LaunchWindow);
+    ADD_BASE_CLASS(CommandHandler, LaunchWindow);
 
     ADD_CONSTRUCTOR(LaunchWindow, LaunchWindow());
 
@@ -226,6 +236,7 @@ std::shared_ptr<chaiscript::Module> createImageTaskWindowBindings()
     ADD_BASE_CLASS(QMainWindow, ImageTaskWindow);
     ADD_BASE_CLASS(QWidget, ImageTaskWindow);
     ADD_BASE_CLASS(QObject, ImageTaskWindow);
+    ADD_BASE_CLASS(CommandHandler, ImageTaskWindow);
 
     ADD_CONSTRUCTOR(ImageTaskWindow, ImageTaskWindow());
 

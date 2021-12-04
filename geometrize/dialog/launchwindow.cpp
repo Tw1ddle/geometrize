@@ -162,6 +162,11 @@ public:
         return q->objectName().toStdString();
     }
 
+    void setCommandHandlerName(const std::string& name)
+    {
+        q->setObjectName(QString::fromStdString(name));
+    }
+
     void setConsoleVisibility(const bool visible)
     {
         if(ui->actionScript_Console->isChecked() != visible) {
@@ -301,6 +306,11 @@ void LaunchWindow::handleCommand(const geometrize::script::Command& command)
 std::string LaunchWindow::getCommandHandlerName() const
 {
     return d->getCommandHandlerName();
+}
+
+void LaunchWindow::setCommandHandlerName(const std::string& name)
+{
+    d->setCommandHandlerName(name);
 }
 
 void LaunchWindow::dragEnterEvent(QDragEnterEvent* event)
