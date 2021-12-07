@@ -13,7 +13,7 @@
 namespace
 {
 
-void messageHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg)
+void messageHandler(QtMsgType, const QMessageLogContext&, const QString& msg)
 {
     const QByteArray localMsg = msg.toLocal8Bit();
     geometrize::util::printToAllScriptConsoleWidgets("Log message: " + localMsg.toStdString());
