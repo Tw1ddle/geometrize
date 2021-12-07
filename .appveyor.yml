@@ -19,7 +19,7 @@ environment:
     - BUILD_NAME: gcc_linux
     - BUILD_NAME: clang_osx
     - BUILD_NAME: mingw_windows
-      QTDIR: C:\Qt\6.2\mingw81_64
+      QTDIR: C:\Qt\6.2.2\mingw81_64
       MINGW: C:\Qt\Tools\mingw810_64
     - BUILD_NAME: msvc_windows
       QTDIR: C:\Qt\6.2\msvc2019_64
