@@ -61,11 +61,11 @@ void destroyTask(geometrize::task::ImageTask* task)
         // Wait until the task finishes stepping before disposing of it
         // Otherwise it will probably crash as the Geometrize library will be working with deleted data
         task->connect(task, &geometrize::task::ImageTask::signal_modelDidStep, [task](std::vector<geometrize::ShapeResult>) {
-            task->disconnect(nullptr, nullptr, nullptr, nullptr);
+            task->disconnect();
             task->deleteLater();
         });
     } else {
-        task->disconnect(nullptr, nullptr, nullptr, nullptr);
+        task->disconnect();
         task->deleteLater();
     }
 }
@@ -162,6 +162,12 @@ public:
             }
         });
         connect(q, &ImageTaskWindow::didSwitchImageTask, [this](task::ImageTask* lastTask, task::ImageTask* currentTask) {
+            if(currentTask == nullptr) {
+                m_taskPreferencesSetConnection = QMetaObject::Connection{};
+                m_taskWillStepConnection = QMetaObject::Connection{};
+                return; // Don't try to connect if we're setting the current task to nothing/nullptr
+            }
+
             m_taskPreferencesSetConnection = connect(currentTask, &task::ImageTask::signal_preferencesSet, [this]() {
                 ui->imageTaskRunnerWidget->syncUserInterface();
                 ui->scriptsWidget->syncUserInterface();

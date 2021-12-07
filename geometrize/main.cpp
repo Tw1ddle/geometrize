@@ -20,6 +20,7 @@
 #include "dialog/launchwindow.h"
 #include "dialog/welcomewindow.h"
 #include "localization/localization.h"
+#include "logging/logging.h"
 #include "preferences/globalpreferences.h"
 #include "test/functionaltestrunner.h"
 #include "version/versioninfo.h"
@@ -119,6 +120,8 @@ std::function<int(QApplication&)> resolveLaunchFunction(const QStringList& argum
 
 int main(int argc, char* argv[])
 {
+    geometrize::logging::setupLogging();
+
     setApplicationSettingsFields();
     incrementAppLaunchCount();
 
