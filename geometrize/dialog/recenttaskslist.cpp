@@ -47,7 +47,7 @@ public:
         }
 
         // Otherwise return only a trimmed part of the URL's path
-        return url.path(QUrl::FullyDecoded).rightJustified(50, '.', false);
+        return url.path(QUrl::FullyDecoded).rightJustified(50, '.', true);
     }
 
     void setRecentItems(RecentItems* recents)
@@ -125,7 +125,7 @@ private:
 
     void addItem(const RecentItem& recentItem) const
     {
-        dialog::TaskItemWidget* button{new dialog::TaskItemWidget(recentItem.getKey(), recentItem.getDisplayName(),
+        dialog::TaskItemWidget* button{new dialog::TaskItemWidget(recentItem.getKey(), getDisplayNameForTaskPath(recentItem.getDisplayName()),
         [](const QString& taskItemId) {
             geometrize::util::openTasks({taskItemId}, false);
         },

@@ -33,6 +33,12 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="minimumSize">
+        <size>
+         <width>64</width>
+         <height>64</height>
+        </size>
+       </property>
        <property name="text">
         <string notr="true">icon</string>
        </property>

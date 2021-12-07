@@ -82,7 +82,7 @@ public:
         thumbnail = thumbnail.scaled(size, Qt::KeepAspectRatioByExpanding, Qt::FastTransformation);
 
         QMimeData* mimeData = new QMimeData;
-        mimeData->setUrls({ QUrl::fromLocalFile(imageFilepath) });
+        mimeData->setUrls({ QUrl::fromUserInput(imageFilepath) });
         mimeData->setText(tr("Drag and drop template contents"));
 
         m_currentDragAction = new QDrag(q);

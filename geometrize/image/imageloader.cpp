@@ -2,9 +2,11 @@
 
 #include <cassert>
 
+#include <QFile>
 #include <QImage>
 #include <QPixmap>
 #include <QString>
+#include <QUrl>
 
 #include "geometrize/bitmap/bitmap.h"
 #include "geometrize/core.h"
@@ -61,7 +63,13 @@ QPixmap createPixmap(const Bitmap& data)
 
 QImage loadImage(const std::string& filePath)
 {
-    const QImage image(QString::fromStdString(filePath));
+    const QString path = QString::fromStdString(filePath);
+    QImage image;
+    if(QFile(path).exists()) {
+        image = QImage(path);
+    } else {
+        image = QImage(QUrl(path).toLocalFile());
+    }
 
     if(image.isNull()) {
         assert(0 && "Bad image data");
@@ -74,11 +82,6 @@ QImage loadImage(const std::string& filePath)
 QImage convertImageToRgba8888(const QImage& image)
 {
     return image.convertToFormat(QImage::Format_RGBA8888);
-}
-
-QPixmap loadPixmap(const std::string& filePath)
-{
-    return QPixmap::fromImage(loadImage(filePath));
 }
 
 }

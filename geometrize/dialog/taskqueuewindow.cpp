@@ -9,6 +9,7 @@
 #include "chaiscript/chaiscript.hpp"
 
 #include "common/formatsupport.h"
+#include "dialog/recenttaskslist.h"
 #include "dialog/scripteditorwidget.h"
 #include "dialog/taskitemwidget.h"
 #include "script/chaiscriptcreator.h"
@@ -115,7 +116,7 @@ private:
     void addItem(const QString& itemPath, const QString& itemDisplayName) const
     {
         QListWidgetItem* item{new QListWidgetItem()};
-        dialog::TaskItemWidget* button{new dialog::TaskItemWidget(itemPath, itemDisplayName,
+        dialog::TaskItemWidget* button{new dialog::TaskItemWidget(itemPath, RecentTasksList::getDisplayNameForTaskPath(itemDisplayName),
         [this](const QString& taskItemId) {
             runScript(taskItemId.toStdString());
         },
@@ -193,7 +194,7 @@ void TaskQueueWindow::dropEvent(QDropEvent* event)
     const QList<QUrl> urls{geometrize::format::getUrls(event->mimeData())};
     QStringList tasks;
     for(const QUrl& url : urls) {
-        const QString urlString{url.toLocalFile()};
+        const QString urlString{url.toString()};
         tasks.push_back(urlString);
     }
     d->addItems(tasks);

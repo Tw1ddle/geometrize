@@ -6,6 +6,7 @@
 #include <QAction>
 #include <QContextMenuEvent>
 #include <QEvent>
+#include <QFile>
 #include <QFuture>
 #include <QFutureWatcher>
 #include <QImage>
@@ -122,12 +123,22 @@ private:
 
     }
 
-    QImage setupThumbnail(const QString& /*itemPath*/, const RecentItem::Type type)
+    QImage setupThumbnail(const QString& itemPath, const RecentItem::Type type)
     {
         switch(type) {
             case RecentItem::Type::LOCAL_IMAGE:
             {
-                const QImage thumbnail(":/icons/image.png");
+                QImage thumbnail;
+                if(QFile(itemPath).exists()) {
+                    thumbnail = QImage(itemPath);
+                } else {
+                    thumbnail = QImage(QUrl(itemPath).toLocalFile());
+                }
+                if(!thumbnail.isNull()) {
+                    thumbnail = thumbnail.scaled(64, 64, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+                    return thumbnail;
+                }
+                thumbnail = QImage(":/icons/image.png");
                 if(!thumbnail.isNull()) {
                     return thumbnail;
                 }
