@@ -2,13 +2,20 @@
 #include "ui_templatebutton.h"
 
 #include <QContextMenuEvent>
+#include <QDrag>
+#include <QDragLeaveEvent>
 #include <QEvent>
 #include <QFuture>
 #include <QFutureWatcher>
+#include <QImage>
+#include <QMimeData>
 #include <QMenu>
+#include <QPainter>
 #include <QPixmap>
+#include <QPoint>
 #include <QString>
 #include <QtConcurrent/QtConcurrentRun>
+#include <QUrl>
 
 #include "chaiscript/chaiscript.hpp"
 
@@ -63,6 +70,53 @@ public:
 
     TemplateButtonImpl operator=(const TemplateButtonImpl&) = delete;
     TemplateButtonImpl(const TemplateButtonImpl&) = delete;
+
+    void handleMousePressEvent(QMouseEvent* event)
+    {
+        const QString imageFilepath{QString::fromStdString(util::getFirstFileWithExtensions(m_templateFolder.toStdString(), format::getReadableImageFileExtensions(false)))};
+        QImage thumbnail(imageFilepath);
+        if(thumbnail.isNull()) {
+            return; // Failed to load an image
+        }
+        const QSize size{180, 180};
+        thumbnail = thumbnail.scaled(size, Qt::KeepAspectRatioByExpanding, Qt::FastTransformation);
+
+        QMimeData* mimeData = new QMimeData;
+        mimeData->setUrls({ QUrl::fromLocalFile(imageFilepath) });
+        mimeData->setText(tr("Drag and drop template contents"));
+
+        m_currentDragAction = new QDrag(q);
+        m_currentDragAction->setMimeData(mimeData);
+        m_currentDragAction->setPixmap(QPixmap::fromImage(thumbnail));
+        m_currentDragAction->setHotSpot(QPoint(m_currentDragAction->pixmap().width() / 2, m_currentDragAction->pixmap().height()));
+    }
+
+    void handleMouseReleaseEvent(QMouseEvent* event)
+    {
+        if(m_currentDragAction) {
+            QDrag::cancel();
+            m_currentDragAction->deleteLater();
+            m_currentDragAction = nullptr;
+        }
+    }
+
+    void handleMouseMoveEvent(QMouseEvent* event)
+    {
+        if(event->buttons() != Qt::LeftButton) {
+            return;
+        }
+
+        // Start the drag action after moving the mouse
+        if(m_currentDragAction) {
+            m_currentDragAction->exec(Qt::CopyAction | Qt::MoveAction, Qt::CopyAction);
+            m_currentDragAction = nullptr;
+        }
+    }
+
+    void handleDragLeaveEvent(QDragLeaveEvent*)
+    {
+
+    }
 
     QImage setupTemplate()
     {
@@ -136,6 +190,7 @@ private:
     }
 
     std::unique_ptr<Ui::TemplateButton> ui;
+    QDrag* m_currentDragAction{ nullptr };
     TemplateButton* q;
     chaiscript::ChaiScript* const m_templateLoader;
     const QString m_templateFolder;
@@ -170,6 +225,34 @@ void TemplateButton::changeEvent(QEvent* event)
         d->onLanguageChange();
     }
     QPushButton::changeEvent(event);
+}
+
+void TemplateButton::mousePressEvent(QMouseEvent* event)
+{
+    QPushButton::mousePressEvent(event);
+
+    d->handleMousePressEvent(event);
+}
+
+void TemplateButton::mouseReleaseEvent(QMouseEvent* event)
+{
+    QPushButton::mouseReleaseEvent(event);
+
+    d->handleMouseReleaseEvent(event);
+}
+
+void TemplateButton::mouseMoveEvent(QMouseEvent* event)
+{
+    QPushButton::mouseMoveEvent(event);
+
+    d->handleMouseMoveEvent(event);
+}
+
+void TemplateButton::dragLeaveEvent(QDragLeaveEvent* event)
+{
+    QPushButton::dragLeaveEvent(event);
+
+    d->handleDragLeaveEvent(event);
 }
 
 }

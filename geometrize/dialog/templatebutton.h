@@ -2,6 +2,8 @@
 
 #include <memory>
 
+#include <QDragLeaveEvent>
+#include <QMouseEvent>
 #include <QPushButton>
 #include <QString>
 
@@ -42,6 +44,10 @@ signals:
 
 protected:
     void changeEvent(QEvent*) override;
+    void mousePressEvent(QMouseEvent* event) override;
+    void mouseReleaseEvent(QMouseEvent* event) override;
+    void mouseMoveEvent(QMouseEvent* event) override;
+    void dragLeaveEvent(QDragLeaveEvent* event) override;
 
 private:
     virtual void contextMenuEvent(QContextMenuEvent* e) override;
