@@ -39,11 +39,19 @@ The matrix shows results for circles, triangles, rotated rectangles, rotated ell
 | Rotated Ellipses   | [![50 Rotated Ellipses](https://github.com/Tw1ddle/geometrize/blob/master/screenshots/seagull_50_rotated_ellipses.png?raw=true)](https://www.geometrize.co.uk/) | [![200 Rotated Ellipses](https://github.com/Tw1ddle/geometrize/blob/master/screenshots/seagull_200_rotated_ellipses.png?raw=true)](https://www.geometrize.co.uk/) | [![500 Rotated Ellipses](https://github.com/Tw1ddle/geometrize/blob/master/screenshots/seagull_500_rotated_ellipses.png?raw=true)](https://www.geometrize.co.uk/) |
 | All Shapes         | [![50 All Shapes](https://github.com/Tw1ddle/geometrize/blob/master/screenshots/seagull_50_all_shapes.png?raw=true)](https://www.geometrize.co.uk/) | [![200 All Shapes](https://github.com/Tw1ddle/geometrize/blob/master/screenshots/seagull_200_all_shapes.png?raw=true)](https://www.geometrize.co.uk/) | [![500 All Shapes](https://github.com/Tw1ddle/geometrize/blob/master/screenshots/seagull_500_all_shapes.png?raw=true)](https://www.geometrize.co.uk/) |
 
+## Animations
+
+By batch editing and exporting images, and then combining the results using an external tool like ScreenToGif, you can create animations using Geometrize:
+
+[![Geometrized Horse Animation Rectangles](https://github.com/Tw1ddle/geometrize/blob/master/screenshots/muybridge_horse_rectangles.gif?raw=true)](https://www.geometrize.co.uk/)
+
+[![Geometrized Horse Animation Triangles](https://github.com/Tw1ddle/geometrize/blob/master/screenshots/muybridge_horse_triangles.gif?raw=true)](https://www.geometrize.co.uk/)
+
+[![Geometrized Horse Animation Circles](https://github.com/Tw1ddle/geometrize/blob/master/screenshots/muybridge_horse_circles.gif?raw=true)](https://www.geometrize.co.uk/)
+
 ## Screenshots
 
 For more examples of geometrized images, see the [gallery](https://gallery.geometrize.co.uk/).
-
-[![Geometrized Horse Animation](https://github.com/Tw1ddle/geometrize/blob/master/screenshots/muybridge_horse_rectangles.gif?raw=true)](https://www.geometrize.co.uk/)
 
 [![Geometrized Flower 330 Rotated Ellipses](https://github.com/Tw1ddle/geometrize/blob/master/screenshots/flower.png?raw=true "Flower - 330 Rotated Ellipses")](https://www.geometrize.co.uk/)
 
