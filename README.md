@@ -14,7 +14,6 @@ Download Geometrize [here](https://www.geometrize.co.uk/), or run the [web demo]
  * Recreate images as geometric primitives.
  * Start with hundreds of images with preset settings.
  * Export geometrized images to SVG, PNG, JPG, GIF and more.
- * Export geometrized images as HTML5 canvas or WebGL webpages.
  * Export shape data as JSON for use in custom projects and creations.
  * Control the algorithm at the core of Geometrize with ChaiScript scripts.
 
@@ -43,6 +42,8 @@ The matrix shows results for circles, triangles, rotated rectangles, rotated ell
 ## Screenshots
 
 For more examples of geometrized images, see the [gallery](https://gallery.geometrize.co.uk/).
+
+[![Geometrized Horse Animation](https://github.com/Tw1ddle/geometrize/blob/master/screenshots/muybridge_horse_rectangles.gif?raw=true)](https://www.geometrize.co.uk/)
 
 [![Geometrized Flower 330 Rotated Ellipses](https://github.com/Tw1ddle/geometrize/blob/master/screenshots/flower.png?raw=true "Flower - 330 Rotated Ellipses")](https://www.geometrize.co.uk/)
 
