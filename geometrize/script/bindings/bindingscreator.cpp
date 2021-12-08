@@ -205,6 +205,8 @@ std::shared_ptr<chaiscript::Module> createQWidgetBindings()
     ADD_FREE_FUN(setWidgetSize);
     ADD_FREE_FUN(setWidgetPosition);
 
+    ADD_FREE_FUN(arrangeWidgetsInGrid);
+
     module->add(chaiscript::fun(static_cast<void(QWidget::*)(int, int)>(&QWidget::resize)), "resize");
     module->add(chaiscript::fun(static_cast<void(QWidget::*)(int, int)>(&QWidget::move)), "move");
 
@@ -259,6 +261,7 @@ std::shared_ptr<chaiscript::Module> createImageTaskWindowBindings()
     ADD_CONSTRUCTOR(ImageTaskWindow, ImageTaskWindow());
 
     ADD_FREE_FUN(createImageTaskWindow);
+    ADD_FREE_FUN(arrangeImageTaskWidgetsInGrid);
 
     chaiscript::bootstrap::standard_library::vector_type<std::vector<ImageTaskWindow*>>("ImageTaskWindowVector", *module);
     ADD_FREE_FUN(getImageTaskWindows);

@@ -420,6 +420,16 @@ void setWidgetPosition(QWidget* widget, int x, int y)
     geometrize::util::setWidgetPosition(widget, x, y);
 }
 
+void arrangeWidgetsInGrid(const std::vector<QWidget*>& widgets, int centerX, int centerY, int xDim, int yDim, int resizeX, int resizeY)
+{
+    geometrize::util::arrangeWidgetsInGrid(widgets, centerX, centerY, xDim, yDim, resizeX, resizeY);
+}
+
+void arrangeImageTaskWidgetsInGrid(int centerX, int centerY, int xDim, int yDim, int resizeX, int resizeY)
+{
+    geometrize::util::arrangeImageTaskWidgetsInGrid(centerX, centerY, xDim, yDim, resizeX, resizeY);
+}
+
 }
 
 }

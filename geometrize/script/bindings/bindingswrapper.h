@@ -239,6 +239,10 @@ void setWidgetSize(QWidget* widget, int width, int height);
 
 void setWidgetPosition(QWidget* widget, int x, int y);
 
+void arrangeWidgetsInGrid(const std::vector<QWidget*>& widgets, int centerX, int centerY, int xDim, int yDim, int resizeX, int resizeY);
+
+void arrangeImageTaskWidgetsInGrid(int centerX, int centerY, int xDim, int yDim, int resizeX, int resizeY);
+
 }
 
 }

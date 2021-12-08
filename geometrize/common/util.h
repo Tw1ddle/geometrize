@@ -420,6 +420,30 @@ void setWidgetSize(QWidget* widget, int width, int height);
  */
 void setWidgetPosition(QWidget* widget, int x, int y);
 
+/**
+ * @brief arrangeWidgetsInGrid Arranges the given widgets into a grid shape
+ * @param widgets The widgets to arrange
+ * @param centerX The x coordinate of where to center the grid
+ * @param centerY The y coordinate of where to center the grid
+ * @param xDim The number of widgets to lay out horizontally
+ * @param yDim The number of widgets to lay out vertically
+ * @param resizeX The width to resize the widgets to
+ * @param resizeY The height to resize the widgets to
+ */
+void arrangeWidgetsInGrid(const std::vector<QWidget*>& widgets, int centerX, int centerY, int xDim, int yDim, int resizeX, int resizeY);
+
+/**
+ * @brief arrangeImageTaskWidgetsInGrid Arranges all the open image task widgets into a grid shape
+ * @param centerX The x coordinate of where to center the grid
+ * @param centerY The y coordinate of where to center the grid
+ * @param xDim The number of widgets to lay out horizontally
+ * @param yDim The number of widgets to lay out vertically
+ * @param resizeX The width to resize the widgets to
+ * @param resizeY The height to resize the widgets to
+ */
+void arrangeImageTaskWidgetsInGrid(int centerX, int centerY, int xDim, int yDim, int resizeX, int resizeY);
+
+
 }
 
 }

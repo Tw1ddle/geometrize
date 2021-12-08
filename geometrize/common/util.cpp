@@ -26,6 +26,7 @@
 #include <QUuid>
 #include <QWindow>
 
+#include "dialog/imagetaskwindow.h"
 #include "dialog/scriptconsole.h"
 #include "script/command.h"
 #include "script/commandhandler.h"
@@ -486,6 +487,35 @@ void setWidgetSize(QWidget* widget, int width, int height)
 void setWidgetPosition(QWidget* widget, int x, int y)
 {
     widget->move(x, y);
+}
+
+void arrangeWidgetsInGrid(const std::vector<QWidget*>& widgets, int centerX, int centerY, int xDim, int yDim, int resizeX, int resizeY)
+{
+    int idx = 0;
+    const int width = xDim * resizeX;
+    const int height = yDim * resizeY;
+    for(int y = 0; y < yDim; y++) {
+        for(int x = 0; x < xDim; x++) {
+            if(idx >= widgets.size()) {
+                continue;
+            }
+            if(QWidget* widget = widgets[idx]) {
+                setWidgetSize(widget, resizeX, resizeY);
+                setWidgetPosition(widget, (centerX - width / 2) + x * resizeX, (centerY - height / 2) + y * resizeY);
+            }
+            idx++;
+        }
+    }
+}
+
+void arrangeImageTaskWidgetsInGrid(int centerX, int centerY, int xDim, int yDim, int resizeX, int resizeY)
+{
+    const std::vector<geometrize::dialog::ImageTaskWindow*> windows = geometrize::dialog::ImageTaskWindow::getExistingImageTaskWindows();
+    std::vector<QWidget*> widgets;
+    for(auto* w : windows) {
+        widgets.emplace_back(w);
+    }
+    arrangeWidgetsInGrid(widgets, centerX, centerY, xDim, yDim, resizeX, resizeY);
 }
 
 }
