@@ -8,7 +8,7 @@
 #include <QMessageLogContext>
 #include <QString>
 
-#include "geometrize/common/util.h"
+#include "common/util.h"
 
 namespace
 {
