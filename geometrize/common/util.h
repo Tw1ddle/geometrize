@@ -443,7 +443,6 @@ void arrangeWidgetsInGrid(const std::vector<QWidget*>& widgets, int centerX, int
  */
 void arrangeImageTaskWidgetsInGrid(int centerX, int centerY, int xDim, int yDim, int resizeX, int resizeY);
 
-
 }
 
 }

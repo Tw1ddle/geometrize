@@ -9,6 +9,7 @@
 #include "chaiscript/chaiscript.hpp"
 
 #include "common/formatsupport.h"
+#include "dialog/imagetaskwindow.h"
 #include "dialog/recenttaskslist.h"
 #include "dialog/scripteditorwidget.h"
 #include "dialog/taskitemwidget.h"
@@ -51,15 +52,19 @@ public:
         connect(ui->clearTaskListButton, &QPushButton::clicked, [this]() {
             ui->taskList->clear();
         });
+        connect(ui->closeOpenWindowsButton, &QPushButton::clicked, [this]() {
+            closeOpenWindows();
+        });
 
         // Enable the run and clear buttons only when items are present
         ui->runTasksButton->setEnabled(false);
         ui->clearTaskListButton->setEnabled(false);
         QTimer* timer = new QTimer(q);
         q->connect(timer, &QTimer::timeout, q, [this]() {
-            const bool enable = ui->taskList->count() > 0;
-            ui->runTasksButton->setEnabled(enable);
-            ui->clearTaskListButton->setEnabled(enable);
+            const bool enableRunClearButtons = ui->taskList->count() > 0;
+            ui->runTasksButton->setEnabled(enableRunClearButtons);
+            ui->clearTaskListButton->setEnabled(enableRunClearButtons);
+            ui->closeOpenWindowsButton->setEnabled(!geometrize::dialog::ImageTaskWindow::getExistingImageTaskWindows().empty());
         });
         timer->start(500);
     }
@@ -85,6 +90,14 @@ public:
     {
         ui->retranslateUi(q);
         populateUi();
+    }
+
+    void closeOpenWindows()
+    {
+        const auto& windows = geometrize::dialog::ImageTaskWindow::getExistingImageTaskWindows();
+        for(auto* window : windows) {
+            window->close();
+        }
     }
 
 private:
