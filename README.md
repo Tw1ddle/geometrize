@@ -41,7 +41,7 @@ The matrix shows results for circles, triangles, rotated rectangles, rotated ell
 
 ## Animations
 
-By batch editing and exporting images, and then combining the results using an external tool like ScreenToGif, you can create animations using Geometrize:
+By batch editing and exporting images, and then combining the results using a tool such as [ScreenToGif](https://github.com/NickeManarin/ScreenToGif), you can produce animations using Geometrize:
 
 [![Geometrized Horse Animation Rectangles](https://github.com/Tw1ddle/geometrize/blob/master/screenshots/muybridge_horse_rectangles.gif?raw=true)](https://www.geometrize.co.uk/)
 
