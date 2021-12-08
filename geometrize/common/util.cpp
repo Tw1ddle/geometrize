@@ -478,6 +478,16 @@ std::string getUuidString()
     return QUuid::createUuid().toString().toStdString();
 }
 
+void setWidgetSize(QWidget* widget, int width, int height)
+{
+    widget->resize(width, height);
+}
+
+void setWidgetPosition(QWidget* widget, int x, int y)
+{
+    widget->move(x, y);
+}
+
 }
 
 }

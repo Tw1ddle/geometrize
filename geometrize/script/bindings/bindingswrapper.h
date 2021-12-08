@@ -235,6 +235,10 @@ std::string getFilenameTimestamp();
 
 std::string getUuidString();
 
+void setWidgetSize(QWidget* widget, int width, int height);
+
+void setWidgetPosition(QWidget* widget, int x, int y);
+
 }
 
 }

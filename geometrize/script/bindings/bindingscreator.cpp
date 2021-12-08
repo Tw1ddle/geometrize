@@ -202,6 +202,12 @@ std::shared_ptr<chaiscript::Module> createQWidgetBindings()
     ADD_MEMBER(QWidget, hide);
     ADD_MEMBER(QWidget, updateGeometry);
 
+    ADD_FREE_FUN(setWidgetSize);
+    ADD_FREE_FUN(setWidgetPosition);
+
+    module->add(chaiscript::fun(static_cast<void(QWidget::*)(int, int)>(&QWidget::resize)), "resize");
+    module->add(chaiscript::fun(static_cast<void(QWidget::*)(int, int)>(&QWidget::move)), "move");
+
     return module;
 }
 
@@ -229,6 +235,9 @@ std::shared_ptr<chaiscript::Module> createLaunchWindowBindings()
     ADD_MEMBER(LaunchWindow, show);
     ADD_MEMBER(LaunchWindow, hide);
     ADD_MEMBER(LaunchWindow, updateGeometry);
+
+    module->add(chaiscript::fun(static_cast<void(LaunchWindow::*)(int, int)>(&LaunchWindow::resize)), "resize");
+    module->add(chaiscript::fun(static_cast<void(LaunchWindow::*)(int, int)>(&LaunchWindow::move)), "move");
 
     return module;
 }
@@ -258,6 +267,9 @@ std::shared_ptr<chaiscript::Module> createImageTaskWindowBindings()
     ADD_MEMBER(ImageTaskWindow, hide);
     ADD_MEMBER(ImageTaskWindow, getImageTask);
     ADD_MEMBER(ImageTaskWindow, setImageTask);
+
+    module->add(chaiscript::fun(static_cast<void(ImageTaskWindow::*)(int, int)>(&ImageTaskWindow::resize)), "resize");
+    module->add(chaiscript::fun(static_cast<void(ImageTaskWindow::*)(int, int)>(&ImageTaskWindow::move)), "move");
 
     return module;
 }

@@ -404,6 +404,22 @@ std::string getFilenameTimestamp();
  */
 std::string getUuidString();
 
+/**
+ * @brief setWidgetSize Sets the size of the given widget in pixels.
+ * @param widget The widget to resize.
+ * @param width The width to set on the widget.
+ * @param height The height to set on the widget.
+ */
+void setWidgetSize(QWidget* widget, int width, int height);
+
+/**
+ * @brief setWidgetPosition Sets the widget to the given position.
+ * @param widget The widget to move.
+ * @param x The x-coordinate to set on the widget.
+ * @param y The y-coordinate to set on the widget.
+ */
+void setWidgetPosition(QWidget* widget, int x, int y);
+
 }
 
 }

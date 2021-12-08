@@ -410,6 +410,16 @@ std::string getUuidString()
     return geometrize::util::getUuidString();
 }
 
+void setWidgetSize(QWidget* widget, int width, int height)
+{
+    geometrize::util::setWidgetSize(widget, width, height);
+}
+
+void setWidgetPosition(QWidget* widget, int x, int y)
+{
+    geometrize::util::setWidgetPosition(widget, x, y);
+}
+
 }
 
 }
