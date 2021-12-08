@@ -443,6 +443,62 @@ void arrangeWidgetsInGrid(const std::vector<QWidget*>& widgets, int centerX, int
  */
 void arrangeImageTaskWidgetsInGrid(int centerX, int centerY, int xDim, int yDim, int resizeX, int resizeY);
 
+/**
+ * @brief arrangeWidgetsInGridOnMonitor Arranges the given widgets into a grid on the given monitor
+ * @param widgets The widgets to arrange
+ * @param screenIdx The index of the screen to center the grid on
+ * @param resizeX The width to resize the widgets to
+ * @param resizeY The height to resize the widgets to
+ */
+void arrangeWidgetsInGridOnMonitor(const std::vector<QWidget*>& widgets, int screenIdx, int resizeX, int resizeY);
+
+/**
+ * @brief arrangeImageTaskWidgetsInGridOnMonitor Arranges all the open image task widgets into a grid on the given monitor
+ * @param screenIdx The index of the screen to center the grid on
+ * @param resizeX The width to resize the widgets to
+ * @param resizeY The height to resize the widgets to
+ */
+void arrangeImageTaskWidgetsInGridOnMonitor(int screenIdx, int resizeX, int resizeY);
+
+/**
+ * @brief arrangeWidgetsInGridOnPrimaryMonitor Arranges the given widgets into a grid on the primary monitor
+ * @param widgets The widgets to arrange
+ * @param resizeX The width to resize the widgets to
+ * @param resizeY The height to resize the widgets to
+ */
+void arrangeWidgetsInGridOnPrimaryMonitor(const std::vector<QWidget*>& widgets, int resizeX, int resizeY);
+
+/**
+ * @brief arrangeImageTaskWidgetsInGridOnPrimaryMonitor Arranges all the open image task widgets into a grid on the given monitor
+ * @param resizeX The width to resize the widgets to
+ * @param resizeY The height to resize the widgets to
+ */
+void arrangeImageTaskWidgetsInGridOnPrimaryMonitor(int resizeX, int resizeY);
+
+/**
+ * @brief fitWidgetsInGridOnMonitor Fits the given widgets into a grid on the given monitor
+ * @param widgets The widgets to arrange
+ * @param screenIdx The index of the screen to center the grid on
+ */
+void fitWidgetsInGridOnMonitor(const std::vector<QWidget*>& widgets, int screenIdx);
+
+/**
+ * @brief fitImageTaskWidgetsInGridOnMonitor Fits all of the open image task widgets into a grid on the given monitor
+ * @param screenIdx The index of the screen to center the grid on
+ */
+void fitImageTaskWidgetsInGridOnMonitor(int screenIdx);
+
+/**
+ * @brief fitWidgetsInGridOnPrimaryMonitor Fits the given widgets into a grid on the primary monitor
+ * @param widgets The widgets to arrange
+ */
+void fitWidgetsInGridOnPrimaryMonitor(const std::vector<QWidget*>& widgets);
+
+/**
+ * @brief fitImageTaskWidgetsInGridOnPrimaryMonitor Fits all of the open image task widgets into a grid on the primary monitor
+ */
+void fitImageTaskWidgetsInGridOnPrimaryMonitor();
+
 }
 
 }

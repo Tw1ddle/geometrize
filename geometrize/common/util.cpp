@@ -1,6 +1,7 @@
 #include "util.h"
 
 #include <cassert>
+#include <cmath>
 #include <csignal>
 #include <fstream>
 #include <random>
@@ -36,6 +37,34 @@
 #ifdef _MSC_VER
 #include <intrin.h> // For debugbreak
 #endif
+
+namespace
+{
+
+std::vector<QWidget*> getImageTaskWidgets()
+{
+    const std::vector<geometrize::dialog::ImageTaskWindow*> windows = geometrize::dialog::ImageTaskWindow::getExistingImageTaskWindows();
+    std::vector<QWidget*> widgets;
+    for(auto* w : windows) {
+        widgets.emplace_back(w);
+    }
+    return widgets;
+}
+
+int getPrimaryScreenIdx()
+{
+    QScreen* primaryScreen = QGuiApplication::primaryScreen();
+    int screenIdx = 0;
+    for(QScreen* s : QGuiApplication::screens()) {
+        if(primaryScreen == s) {
+            break;
+        }
+        screenIdx++;
+    }
+    return screenIdx;
+}
+
+}
 
 namespace geometrize
 {
@@ -510,12 +539,64 @@ void arrangeWidgetsInGrid(const std::vector<QWidget*>& widgets, int centerX, int
 
 void arrangeImageTaskWidgetsInGrid(int centerX, int centerY, int xDim, int yDim, int resizeX, int resizeY)
 {
-    const std::vector<geometrize::dialog::ImageTaskWindow*> windows = geometrize::dialog::ImageTaskWindow::getExistingImageTaskWindows();
-    std::vector<QWidget*> widgets;
-    for(auto* w : windows) {
-        widgets.emplace_back(w);
+    arrangeWidgetsInGrid(getImageTaskWidgets(), centerX, centerY, xDim, yDim, resizeX, resizeY);
+}
+
+void arrangeWidgetsInGridOnMonitor(const std::vector<QWidget*>& widgets, int screenIdx, int resizeX, int resizeY)
+{
+    QList<QScreen*> screens = QGuiApplication::screens();
+    if(screenIdx >= screens.size()) {
+        return;
     }
-    arrangeWidgetsInGrid(widgets, centerX, centerY, xDim, yDim, resizeX, resizeY);
+    QRect screenGeometry = screens.at(screenIdx)->geometry();
+    int height = screenGeometry.height();
+    int width = screenGeometry.width();
+    arrangeWidgetsInGrid(widgets, screenGeometry.x() + width / 2, screenGeometry.y() + height / 2, (width / resizeX), (height / resizeY), resizeX, resizeY);
+}
+
+void arrangeImageTaskWidgetsInGridOnMonitor(int screenIdx, int resizeX, int resizeY)
+{
+    arrangeWidgetsInGridOnMonitor(getImageTaskWidgets(), screenIdx, resizeX, resizeY);
+}
+
+void arrangeWidgetsInGridOnPrimaryMonitor(const std::vector<QWidget*>& widgets, int resizeX, int resizeY)
+{
+    arrangeWidgetsInGridOnMonitor(widgets, getPrimaryScreenIdx(), resizeX, resizeY);
+}
+
+void arrangeImageTaskWidgetsInGridOnPrimaryMonitor(int resizeX, int resizeY)
+{
+    arrangeWidgetsInGridOnPrimaryMonitor(getImageTaskWidgets(), resizeX, resizeY);
+}
+
+void fitWidgetsInGridOnMonitor(const std::vector<QWidget*>& widgets, int screenIdx)
+{
+    QList<QScreen*> screens = QGuiApplication::screens();
+    if(screenIdx >= screens.size()) {
+        return;
+    }
+    QRect screenGeometry = screens.at(screenIdx)->geometry();
+    const int width = screenGeometry.width();
+    const int height = screenGeometry.height();
+    const double maxWidgetsAcross = 4.0;
+    const int widgetWidth = std::max(1.0, (static_cast<double>(width) / maxWidgetsAcross) - 5);
+    const int widgetHeight = std::max(1.0, std::min((static_cast<double>(height) / (static_cast<double>(widgets.size() / maxWidgetsAcross))) - 5, 800.0));
+    arrangeWidgetsInGridOnMonitor(widgets, screenIdx, widgetWidth, widgetHeight);
+}
+
+void fitImageTaskWidgetsInGridOnMonitor(int screenIdx)
+{
+    fitWidgetsInGridOnMonitor(getImageTaskWidgets(), screenIdx);
+}
+
+void fitWidgetsInGridOnPrimaryMonitor(const std::vector<QWidget*>& widgets)
+{
+    fitWidgetsInGridOnMonitor(widgets, getPrimaryScreenIdx());
+}
+
+void fitImageTaskWidgetsInGridOnPrimaryMonitor()
+{
+    fitWidgetsInGridOnPrimaryMonitor(getImageTaskWidgets());
 }
 
 }

@@ -430,6 +430,46 @@ void arrangeImageTaskWidgetsInGrid(int centerX, int centerY, int xDim, int yDim,
     geometrize::util::arrangeImageTaskWidgetsInGrid(centerX, centerY, xDim, yDim, resizeX, resizeY);
 }
 
+void arrangeWidgetsInGridOnMonitor(const std::vector<QWidget*>& widgets, int monitorId, int resizeX, int resizeY)
+{
+    geometrize::util::arrangeWidgetsInGridOnMonitor(widgets, monitorId, resizeX, resizeY);
+}
+
+void arrangeImageTaskWidgetsInGridOnMonitor(int monitorId, int resizeX, int resizeY)
+{
+    geometrize::util::arrangeImageTaskWidgetsInGridOnMonitor(monitorId, resizeX, resizeY);
+}
+
+void arrangeWidgetsInGridOnPrimaryMonitor(const std::vector<QWidget*>& widgets, int resizeX, int resizeY)
+{
+    geometrize::util::arrangeWidgetsInGridOnPrimaryMonitor(widgets, resizeX, resizeY);
+}
+
+void arrangeImageTaskWidgetsInGridOnPrimaryMonitor(int resizeX, int resizeY)
+{
+    geometrize::util::arrangeImageTaskWidgetsInGridOnPrimaryMonitor(resizeX, resizeY);
+}
+
+void fitWidgetsInGridOnMonitor(const std::vector<QWidget*>& widgets, int screenIdx)
+{
+    geometrize::util::fitWidgetsInGridOnMonitor(widgets, screenIdx);
+}
+
+void fitImageTaskWidgetsInGridOnMonitor(int screenIdx)
+{
+    geometrize::util::fitImageTaskWidgetsInGridOnMonitor(screenIdx);
+}
+
+void fitWidgetsInGridOnPrimaryMonitor(const std::vector<QWidget*>& widgets)
+{
+    geometrize::util::fitWidgetsInGridOnPrimaryMonitor(widgets);
+}
+
+void fitImageTaskWidgetsInGridOnPrimaryMonitor()
+{
+    geometrize::util::fitImageTaskWidgetsInGridOnPrimaryMonitor();
+}
+
 }
 
 }

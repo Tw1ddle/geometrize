@@ -243,6 +243,22 @@ void arrangeWidgetsInGrid(const std::vector<QWidget*>& widgets, int centerX, int
 
 void arrangeImageTaskWidgetsInGrid(int centerX, int centerY, int xDim, int yDim, int resizeX, int resizeY);
 
+void arrangeWidgetsInGridOnMonitor(const std::vector<QWidget*>& widgets, int monitorId, int resizeX, int resizeY);
+
+void arrangeImageTaskWidgetsInGridOnMonitor(int monitorId, int resizeX, int resizeY);
+
+void arrangeWidgetsInGridOnPrimaryMonitor(const std::vector<QWidget*>& widgets, int resizeX, int resizeY);
+
+void arrangeImageTaskWidgetsInGridOnPrimaryMonitor(int resizeX, int resizeY);
+
+void fitWidgetsInGridOnMonitor(const std::vector<QWidget*>& widgets, int screenIdx);
+
+void fitImageTaskWidgetsInGridOnMonitor(int screenIdx);
+
+void fitWidgetsInGridOnPrimaryMonitor(const std::vector<QWidget*>& widgets);
+
+void fitImageTaskWidgetsInGridOnPrimaryMonitor();
+
 }
 
 }
