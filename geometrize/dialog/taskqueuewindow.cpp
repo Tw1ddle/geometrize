@@ -1,6 +1,7 @@
 #include "taskqueuewindow.h"
 #include "ui_taskqueuewindow.h"
 
+#include <QCollator>
 #include <QDragEnterEvent>
 #include <QDropEvent>
 #include <QTimer>
@@ -128,7 +129,25 @@ private:
 
     void addItem(const QString& itemPath, const QString& itemDisplayName) const
     {
-        QListWidgetItem* item{new QListWidgetItem()};
+        class MyListWidgetItem : public QListWidgetItem {
+        public:
+            MyListWidgetItem()
+            {
+                static int instanceCounter = 0;
+                m_instanceId = instanceCounter;
+                instanceCounter++;
+                //setData(Qt::DisplayRole, instanceCounter);
+            }
+
+            virtual bool operator<(const MyListWidgetItem& other) const {
+                return m_instanceId > other.m_instanceId;
+            }
+
+        private:
+            int m_instanceId;
+        };
+
+        QListWidgetItem* item{new MyListWidgetItem()};
         dialog::TaskItemWidget* button{new dialog::TaskItemWidget(itemPath, RecentTasksList::getDisplayNameForTaskPath(itemDisplayName),
         [this](const QString& taskItemId) {
             runScript(taskItemId.toStdString());
