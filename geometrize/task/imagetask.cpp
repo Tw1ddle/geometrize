@@ -178,6 +178,7 @@ public:
         // and we don't want to mess with the state of the engine on the main thread while these threads are working with it
         const auto geometrizerEngineClone = [this]() {
             auto engine = std::make_shared<geometrize::script::GeometrizerEngine>(m_geometrizer.getEngine()->get_state());
+            engine->installScripts(m_preferences.getScripts());
             return engine;
         }();
 
