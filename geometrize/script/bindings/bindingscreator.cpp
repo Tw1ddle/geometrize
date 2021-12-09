@@ -569,6 +569,8 @@ std::shared_ptr<chaiscript::Module> createGeometrizeLibraryBindings()
 
     ADD_FREE_FUN(shapeToPixels);
 
+    ADD_FREE_FUN(scanlinesContainTransparentPixels);
+
     ADD_TYPE(Model);
     ADD_CONSTRUCTOR(Model, Model(const geometrize::Bitmap&));
     ADD_CONSTRUCTOR(Model, Model(const geometrize::Bitmap& COMMA const geometrize::Bitmap&));
