@@ -141,6 +141,13 @@ public:
                  const geometrize::Bitmap& target) {
                 std::vector<bool> retValues;
                 try {
+                    m_geometrizer.getEngine()->set_global(chaiscript::var(shape), "candidateShape");
+                    m_geometrizer.getEngine()->set_global(chaiscript::var(lines), "candidateScanlines");
+                    m_geometrizer.getEngine()->set_global(chaiscript::var(color), "candidateShapeColor");
+                    m_geometrizer.getEngine()->set_global(chaiscript::var(before), "beforeBitmap");
+                    m_geometrizer.getEngine()->set_global(chaiscript::var(after), "afterBitmap");
+                    m_geometrizer.getEngine()->set_global(chaiscript::var(target), "targetBitmap");
+
                     for(const auto& script : scripts) {
                         retValues.emplace_back(m_geometrizer.getEngine()->eval<bool>(script.second));
                     }
