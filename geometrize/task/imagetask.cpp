@@ -117,6 +117,7 @@ public:
         // Install the scripts that are required for the geometrization process
         m_geometrizer.installScripts(m_preferences.getScripts());
 
+        // Install the additional precondition scripts to decide whether to accept/reject shapes offered back by the library
         std::vector<std::pair<std::string, std::string>> addShapePreconditionScripts;
         for(const auto& script : m_preferences.getScripts()) {
             if(QString::fromStdString(script.first).startsWith("add_shape_precondition_")) { // NOTE prefix is also used by the scripting widgets elsewhere
@@ -124,7 +125,8 @@ public:
             }
         }
 
-        const geometrize::ShapeAcceptancePreconditionFunction addShapePreconditionFunction = [this](const std::vector<std::pair<std::string, std::string>>& scripts)
+        const auto addShapePreconditionFunction =
+                [this](const std::vector<std::pair<std::string, std::string>>& scripts)
                 -> geometrize::ShapeAcceptancePreconditionFunction
         {
             if(scripts.empty()) {
@@ -141,6 +143,8 @@ public:
                  const geometrize::Bitmap& target) {
                 std::vector<bool> retValues;
                 try {
+                    m_geometrizer.getEngine()->set_global(chaiscript::var(shape), "candidateShapeLastScore");
+                    m_geometrizer.getEngine()->set_global(chaiscript::var(shape), "candidateShapeNextScore");
                     m_geometrizer.getEngine()->set_global(chaiscript::var(shape), "candidateShape");
                     m_geometrizer.getEngine()->set_global(chaiscript::var(lines), "candidateScanlines");
                     m_geometrizer.getEngine()->set_global(chaiscript::var(color), "candidateShapeColor");
