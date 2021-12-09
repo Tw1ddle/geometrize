@@ -36,8 +36,12 @@ public:
      * @param options The options to provide the image runner when stepping.
      * @param shapeCreator A function that produces the shapes when stepping.
      * @param energyFunction An optional function to calculate the energy (if unspecified a default implementation is used).
+     * @param addShapePreconditionFunction An optional function to determine whether to accept a shape (if unspecified a default implementation is used).
      */
-    void step(geometrize::ImageRunnerOptions options, std::function<std::shared_ptr<geometrize::Shape>()> shapeCreator, geometrize::core::EnergyFunction energyFunction = nullptr);
+    void step(geometrize::ImageRunnerOptions options,
+              std::function<std::shared_ptr<geometrize::Shape>()> shapeCreator,
+              geometrize::core::EnergyFunction energyFunction = nullptr,
+              geometrize::ShapeAcceptancePreconditionFunction addShapePreconditionFunction = nullptr);
 
     /**
      * @brief isStepping Returns true if the internal model is currently stepping.

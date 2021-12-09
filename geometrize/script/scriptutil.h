@@ -72,6 +72,12 @@ std::map<std::string, std::string> getStopConditionScripts();
 std::map<std::string, std::string> getOnStopConditionMetScripts();
 
 /**
+ * @brief getAddShapePreconditionScripts Gets a map of scripts that are used to decide whether to add a shape to an image or not
+ * @return A map of Chaiscript script function names to function bodies.
+ */
+std::map<std::string, std::string> getAddShapePreconditionScripts();
+
+/**
  * @brief getBeforeAddShapeCallbackScripts Gets a map of scripts that are useful to call before adding a shape to the image task views.
  * @return A map of Chaiscript script function names to function bodies.
  */

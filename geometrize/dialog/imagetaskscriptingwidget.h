@@ -81,6 +81,12 @@ public:
     void evaluateOnStopConditionMetScripts() const;
 
     /**
+     * @brief evaluateAddShapePreconditionScripts Evaluates the scripts set to decide whether to add a shape to the image or not.
+     * @return True if the shape should be added.
+     */
+    bool evaluateAddShapePreconditionScripts() const;
+
+    /**
      * @brief evaluateBeforeAddShapeScripts Evaluates the scripts set to run directly before a shape is added to the image.
      */
     void evaluateBeforeAddShapeScripts() const;

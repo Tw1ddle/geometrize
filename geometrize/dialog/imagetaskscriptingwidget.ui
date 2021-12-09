@@ -90,6 +90,20 @@
          </layout>
         </item>
         <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_18">
+          <item>
+           <widget class="QPushButton" name="addShapePreconditionButton">
+            <property name="text">
+             <string>Add Shape Precondition</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="addShapePreconditionPresetScriptsComboBox"/>
+          </item>
+         </layout>
+        </item>
+        <item>
          <layout class="QHBoxLayout" name="horizontalLayout_4">
           <item>
            <widget class="QPushButton" name="addBeforeAddShapeEvent">

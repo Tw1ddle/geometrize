@@ -32,6 +32,7 @@ namespace
 const std::string beforeStepCallbackPrefix = "before_step_callback_";
 const std::string afterStepCallbackPrefix = "after_step_callback_";
 const std::string stopConditionIdPrefix = "stop_condition_";
+const std::string addShapePreconditionCallbackPrefix = "add_shape_precondition_";
 const std::string onStopConditionMetCallbackPrefix = "on_stop_condition_met_";
 const std::string beforeAddShapeCallbackPrefix = "before_add_shape_callback_";
 const std::string afterAddShapeCallbackPrefix = "after_add_shape_callback_";
@@ -103,6 +104,9 @@ public:
         });
         connect(ui->addStopConditionButton, &QPushButton::clicked, [this]() {
             addCustomStopConditionWidget(getScriptForSelectedComboBoxItem(ui->addStopConditionPresetScriptsComboBox));
+        });
+        connect(ui->addShapePreconditionButton, &QPushButton::clicked, [this]() {
+            addShapePreconditionWidget(getScriptForSelectedComboBoxItem(ui->addShapePreconditionPresetScriptsComboBox));
         });
         connect(ui->onStopConditionMetEvent, &QPushButton::clicked, [this]() {
             addOnStopConditionMetWidget(getScriptForSelectedComboBoxItem(ui->onStopConditionMetEventComboBox));
@@ -200,7 +204,7 @@ public:
         return scripts;
     }
 
-    bool evaluateStopConditionScripts() const
+    bool evaluateScriptsWithBooleanReturnValue(const std::string& scriptPrefix) const
     {
         const auto engine = m_task->getGeometrizer().getEngine();
         if(!engine) {
@@ -208,16 +212,16 @@ public:
         }
 
         const auto scriptWidgets = ui->customScriptsGroupBox->findChildren<geometrize::dialog::ScriptEditorWidget*>();
-        bool scriptStopConditionMet = false;
+        bool returnValue = false;
         for(const auto& widget : scriptWidgets) {
-            if(widget->getFunctionName().substr(0, stopConditionIdPrefix.length()) != stopConditionIdPrefix) {
+            if(widget->getFunctionName().substr(0, scriptPrefix.length()) != scriptPrefix) {
                 continue; // Skip anything other than stop conditions
             }
 
             try {
-                auto stopCondition = engine->eval<bool>(widget->getCurrentCode());
-                if(stopCondition) {
-                    scriptStopConditionMet = true;
+                auto retValue = engine->eval<bool>(widget->getCurrentCode());
+                if(retValue) {
+                    returnValue = true;
                 }
                 widget->onScriptEvaluationSucceeded();
             } catch(const chaiscript::exception::eval_error& e) {
@@ -229,7 +233,7 @@ public:
             }
         }
 
-        return scriptStopConditionMet;
+        return returnValue;
     }
 
     void evaluateScriptsWithNoReturnValue(const std::string& scriptGroupNamePrefix) const
@@ -258,6 +262,11 @@ public:
         }
     }
 
+    bool evaluateStopConditionScripts() const
+    {
+        return evaluateScriptsWithBooleanReturnValue(::stopConditionIdPrefix);
+    }
+
     void evaluateOnStopConditionMetScripts() const
     {
         evaluateScriptsWithNoReturnValue(::onStopConditionMetCallbackPrefix);
@@ -271,6 +280,11 @@ public:
     void evaluateAfterStepScripts() const
     {
         evaluateScriptsWithNoReturnValue(::afterStepCallbackPrefix);
+    }
+
+    bool evaluateAddShapePreconditionScripts() const
+    {
+        return evaluateScriptsWithBooleanReturnValue(::addShapePreconditionCallbackPrefix);
     }
 
     void evaluateBeforeAddShapeScripts() const
@@ -349,6 +363,7 @@ private:
     {
         if(!startsWith(functionName, ::stopConditionIdPrefix) &&
            !startsWith(functionName, ::onStopConditionMetCallbackPrefix) &&
+           !startsWith(functionName, ::addShapePreconditionCallbackPrefix) &&
            !startsWith(functionName, ::beforeAddShapeCallbackPrefix) &&
            !startsWith(functionName, ::afterAddShapeCallbackPrefix) &&
            !startsWith(functionName, ::beforeStepCallbackPrefix) &&
@@ -392,6 +407,11 @@ private:
     void addOnStopConditionMetWidget(const std::string& scriptCode)
     {
         addScriptWidget(tr("On Stop Condition Met Callback").toStdString(), makeUniqueFunctionName(::onStopConditionMetCallbackPrefix), scriptCode);
+    }
+
+    void addShapePreconditionWidget(const std::string& scriptCode)
+    {
+         addScriptWidget(tr("Add Shape Precondition").toStdString(), makeUniqueFunctionName(::addShapePreconditionCallbackPrefix), scriptCode);
     }
 
     void addBeforeAddShapeCallbackWidget(const std::string& scriptCode)
@@ -520,6 +540,7 @@ private:
         presetScriptData.push_back(std::make_pair(ui->addAfterStepPresetScriptsComboBox, geometrize::script::getAfterStepCallbackScripts()));
         presetScriptData.push_back(std::make_pair(ui->addStopConditionPresetScriptsComboBox, geometrize::script::getStopConditionScripts()));
         presetScriptData.push_back(std::make_pair(ui->onStopConditionMetEventComboBox, geometrize::script::getOnStopConditionMetScripts()));
+        presetScriptData.push_back(std::make_pair(ui->addShapePreconditionPresetScriptsComboBox, geometrize::script::getAddShapePreconditionScripts()));
         presetScriptData.push_back(std::make_pair(ui->addBeforeAddShapePresetScriptsComboBox, geometrize::script::getBeforeAddShapeCallbackScripts()));
         presetScriptData.push_back(std::make_pair(ui->addAfterAddShapePresetScriptsComboBox, geometrize::script::getAfterAddShapeCallbackScripts()));
         presetScriptData.push_back(std::make_pair(ui->onScenePenInputEventPresetScriptsComboBox, geometrize::script::getOnPenInputCallbackScripts()));
@@ -595,6 +616,11 @@ bool ImageTaskScriptingWidget::evaluateStopConditionScripts() const
 void ImageTaskScriptingWidget::evaluateOnStopConditionMetScripts() const
 {
     d->evaluateOnStopConditionMetScripts();
+}
+
+bool ImageTaskScriptingWidget::evaluateAddShapePreconditionScripts() const
+{
+    return d->evaluateAddShapePreconditionScripts();
 }
 
 void ImageTaskScriptingWidget::evaluateBeforeAddShapeScripts() const

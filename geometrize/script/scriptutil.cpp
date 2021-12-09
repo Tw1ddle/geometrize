@@ -90,6 +90,11 @@ std::map<std::string, std::string> getOnStopConditionMetScripts()
     return getScriptsFromFolder(":/scripts/scripts/on_stop_condition_met_callbacks/");
 }
 
+std::map<std::string, std::string> getAddShapePreconditionScripts()
+{
+    return getScriptsFromFolder(":/scripts/scripts/add_shape_precondition_callbacks/");
+}
+
 std::map<std::string, std::string> getBeforeAddShapeCallbackScripts()
 {
     return getScriptsFromFolder(":/scripts/scripts/before_add_shape_callbacks/");

@@ -114,24 +114,59 @@ public:
         const bool isScriptModeEnabled = m_preferences.isScriptModeEnabled();
         const auto imageRunnerOptions = m_preferences.getImageRunnerOptions();
 
-        // Early out if the script engine is disabled (use the default/C++ implementations)
+        // Install the scripts that are required for the geometrization process
+        m_geometrizer.installScripts(m_preferences.getScripts());
+
+        std::vector<std::pair<std::string, std::string>> addShapePreconditionScripts;
+        for(const auto& script : m_preferences.getScripts()) {
+            if(QString::fromStdString(script.first).startsWith("add_shape_precondition_")) { // NOTE prefix is also used by the scripting widgets elsewhere
+                addShapePreconditionScripts.push_back(std::make_pair(script.first, script.second));
+            }
+        }
+
+        const geometrize::ShapeAcceptancePreconditionFunction addShapePreconditionFunction = [this](const std::vector<std::pair<std::string, std::string>>& scripts)
+                -> geometrize::ShapeAcceptancePreconditionFunction
+        {
+            if(scripts.empty()) {
+                return nullptr;
+            }
+
+            const geometrize::ShapeAcceptancePreconditionFunction g = [this, scripts](double lastScore,
+                 double newScore,
+                 const geometrize::Shape& shape,
+                 const std::vector<geometrize::Scanline>& lines,
+                 const geometrize::rgba& color,
+                 const geometrize::Bitmap& before,
+                 const geometrize::Bitmap& after,
+                 const geometrize::Bitmap& target) {
+                std::vector<bool> retValues;
+                try {
+                    for(const auto& script : scripts) {
+                        retValues.emplace_back(m_geometrizer.getEngine()->eval<bool>(script.second));
+                    }
+                    return std::all_of(retValues.begin(), retValues.end(), [](const bool b) { return b == true; });
+                } catch(std::exception& e) {
+                    std::cout << e.what() << std::endl;
+                }
+                return false;
+            };
+            return g;
+        }(addShapePreconditionScripts);
+
+        // Opt out of the multithreaded scripts if the engine is disabled (use the default/C++ implementations)
         if(!isScriptModeEnabled) {
-            emit q->signal_step(imageRunnerOptions, nullptr, nullptr);
+            emit q->signal_step(imageRunnerOptions, nullptr, nullptr, addShapePreconditionFunction);
             return;
         }
 
-        const auto scripts = m_preferences.getScripts();
         const std::int32_t targetWidth = m_worker.getTarget().getWidth();
         const std::int32_t targetHeight = m_worker.getTarget().getHeight();
 
         // Scripting is enabled - clone the entire geometrizer engine
         // This is important because many threads will be working with it when geometrizing shapes
         // and we don't want to mess with the state of the engine on the main thread while these threads are working with it
-        const auto geometrizerEngineClone = [this, scripts]() {
+        const auto geometrizerEngineClone = [this]() {
             auto engine = std::make_shared<geometrize::script::GeometrizerEngine>(m_geometrizer.getEngine()->get_state());
-
-            // Install the scripts that are required for the geometrization process
-            engine->installScripts(scripts);
             return engine;
         }();
 
@@ -147,7 +182,7 @@ public:
             return geometrizerEngineClone->makeEnergyFunction();
         }();
 
-        emit q->signal_step(imageRunnerOptions, shapeCreator, energyFunction);
+        emit q->signal_step(imageRunnerOptions, shapeCreator, energyFunction, addShapePreconditionFunction);
     }
 
     void drawShape(const std::shared_ptr<geometrize::Shape> shape, const geometrize::rgba color)
@@ -205,6 +240,7 @@ private:
         qRegisterMetaType<std::shared_ptr<geometrize::Shape>>();
         qRegisterMetaType<geometrize::rgba>();
         qRegisterMetaType<geometrize::core::EnergyFunction>();
+        qRegisterMetaType<geometrize::ShapeAcceptancePreconditionFunction>();
 
         m_worker.moveToThread(&m_workerThread);
 

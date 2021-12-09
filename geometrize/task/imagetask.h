@@ -10,6 +10,7 @@
 #include "geometrize/core.h"
 #include "geometrize/bitmap/bitmap.h"
 #include "geometrize/bitmap/rgba.h"
+#include "geometrize/model.h"
 #include "geometrize/shaperesult.h"
 #include "geometrize/runner/imagerunneroptions.h"
 #include "geometrize/shape/shape.h"
@@ -37,6 +38,7 @@ Q_DECLARE_METATYPE(std::function<std::shared_ptr<geometrize::Shape>()>) ///< Fun
 Q_DECLARE_METATYPE(std::shared_ptr<geometrize::Shape>) ///< Shape passed to the image task worker thread.
 Q_DECLARE_METATYPE(geometrize::rgba) ///< Shape color passed to the image task worker thread.
 Q_DECLARE_METATYPE(geometrize::core::EnergyFunction); ///< Energy function passed to the image task worker thread.
+Q_DECLARE_METATYPE(geometrize::ShapeAcceptancePreconditionFunction); ///< Shape-add precondition function passed to the image task worker thread.
 
 namespace geometrize
 {
@@ -154,7 +156,7 @@ signals:
      /**
       * @brief signal_step Signal that the image task emits to make the internal model step.
       */
-     void signal_step(geometrize::ImageRunnerOptions options, std::function<std::shared_ptr<geometrize::Shape>()> shapeCreator, geometrize::core::EnergyFunction energyFunction);
+     void signal_step(geometrize::ImageRunnerOptions options, std::function<std::shared_ptr<geometrize::Shape>()> shapeCreator, geometrize::core::EnergyFunction energyFunction, geometrize::ShapeAcceptancePreconditionFunction addShapePrecondition);
 
      /**
       * @brief signal_drawShape Signal that the image task emits to draw a shape to the internal model.

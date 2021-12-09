@@ -25,11 +25,14 @@ ImageTaskWorker::~ImageTaskWorker()
 {
 }
 
-void ImageTaskWorker::step(const geometrize::ImageRunnerOptions options, const std::function<std::shared_ptr<geometrize::Shape>()> shapeCreator, const geometrize::core::EnergyFunction energyFunction)
+void ImageTaskWorker::step(const geometrize::ImageRunnerOptions options,
+                           const std::function<std::shared_ptr<geometrize::Shape>()> shapeCreator,
+                           const geometrize::core::EnergyFunction energyFunction,
+                           const geometrize::ShapeAcceptancePreconditionFunction addShapePreconditionFunction)
 {
     emit signal_willStep();
     m_working = true;
-    const std::vector<geometrize::ShapeResult> results{m_runner.step(options, shapeCreator, energyFunction)};
+    const std::vector<geometrize::ShapeResult> results{m_runner.step(options, shapeCreator, energyFunction, addShapePreconditionFunction)};
     m_working = false;
     emit signal_didStep(results);
 }
