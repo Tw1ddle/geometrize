@@ -62,6 +62,7 @@ public:
     void setMaxShapeMutations(std::uint32_t maxMutations);
     void setSeed(std::uint32_t seed);
     void setMaxThreads(std::uint32_t maxThreads);
+    void setShapeBounds(const geometrize::ImageRunnerShapeBoundsOptions& shapeBounds);
 
     bool isScriptModeEnabled() const;
     void setScriptModeEnabled(bool enabled);

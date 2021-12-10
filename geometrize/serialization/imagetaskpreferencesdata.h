@@ -12,6 +12,16 @@
 namespace geometrize
 {
 
+template<typename Archive>
+void serialize(Archive& ar, geometrize::ImageRunnerShapeBoundsOptions& bounds)
+{
+    ar(cereal::make_nvp("enabled", bounds.enabled),
+       cereal::make_nvp("xMin", bounds.xMin),
+       cereal::make_nvp("yMin", bounds.yMin),
+       cereal::make_nvp("xMax", bounds.xMax),
+       cereal::make_nvp("yMax", bounds.yMax));
+}
+
 namespace serialization
 {
 
@@ -30,7 +40,7 @@ public:
         ar(cereal::make_nvp(shapeTypesKey, options.shapeTypes));
         ar(cereal::make_nvp(randomSeedKey, options.seed));
         ar(cereal::make_nvp(maxThreadsKey, options.maxThreads));
-
+        ar(cereal::make_nvp(shapeBounds, options.shapeBounds));
         ar(cereal::make_nvp(scriptsEnabledKey, scriptsEnabled));
         ar(cereal::make_nvp(scriptsKey, scripts));
     }
@@ -42,6 +52,7 @@ private:
     const std::string shapeTypesKey{"shapeTypes"};
     const std::string randomSeedKey{"randomSeed"};
     const std::string maxThreadsKey{"maxThreads"};
+    const std::string shapeBounds{"shapeBounds"};
 
     const std::string scriptsEnabledKey{"scriptModeEnabled"};
     const std::string scriptsKey{"scripts"};

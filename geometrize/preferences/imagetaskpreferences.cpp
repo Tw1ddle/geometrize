@@ -129,6 +129,11 @@ public:
         m_options.maxThreads = maxThreads;
     }
 
+    void setShapeBounds(const geometrize::ImageRunnerShapeBoundsOptions& shapeBounds)
+    {
+        m_options.shapeBounds = shapeBounds;
+    }
+
     void setScriptModeEnabled(const bool enabled)
     {
         m_scriptsEnabled = enabled;
@@ -237,6 +242,11 @@ void ImageTaskPreferences::setSeed(const std::uint32_t seed)
 void ImageTaskPreferences::setMaxThreads(const std::uint32_t maxThreads)
 {
     d->setMaxThreads(maxThreads);
+}
+
+void ImageTaskPreferences::setShapeBounds(const geometrize::ImageRunnerShapeBoundsOptions& shapeBounds)
+{
+    d->setShapeBounds(shapeBounds);
 }
 
 void ImageTaskPreferences::setScriptModeEnabled(const bool enabled)
