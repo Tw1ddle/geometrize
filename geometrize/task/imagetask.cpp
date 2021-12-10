@@ -143,8 +143,8 @@ public:
                  const geometrize::Bitmap& target) {
                 std::vector<bool> retValues;
                 try {
-                    m_geometrizer.getEngine()->set_global(chaiscript::var(shape), "candidateShapeLastScore");
-                    m_geometrizer.getEngine()->set_global(chaiscript::var(shape), "candidateShapeNextScore");
+                    m_geometrizer.getEngine()->set_global(chaiscript::var(lastScore), "candidateShapeLastScore");
+                    m_geometrizer.getEngine()->set_global(chaiscript::var(newScore), "candidateShapeNextScore");
                     m_geometrizer.getEngine()->set_global(chaiscript::var(shape), "candidateShape");
                     m_geometrizer.getEngine()->set_global(chaiscript::var(lines), "candidateScanlines");
                     m_geometrizer.getEngine()->set_global(chaiscript::var(color), "candidateShapeColor");
@@ -170,8 +170,10 @@ public:
             return;
         }
 
-        const std::int32_t targetWidth = m_worker.getTarget().getWidth();
-        const std::int32_t targetHeight = m_worker.getTarget().getHeight();
+        const std::int32_t minX = 0;
+        const std::int32_t minY = 0;
+        const std::int32_t maxX = m_worker.getTarget().getWidth();
+        const std::int32_t maxY = m_worker.getTarget().getHeight();
 
         // Scripting is enabled - clone the entire geometrizer engine
         // This is important because many threads will be working with it when geometrizing shapes
@@ -183,9 +185,9 @@ public:
         }();
 
         // Pick the shape creation function
-        const auto shapeCreator = [geometrizerEngineClone, imageRunnerOptions, targetWidth, targetHeight]() {
+        const auto shapeCreator = [geometrizerEngineClone, imageRunnerOptions, minX, minY, maxX, maxY]() {
             // NOTE - this method uses shared_from_this to keep the engine alive
-            return geometrizerEngineClone->makeShapeCreator(imageRunnerOptions.shapeTypes, targetWidth, targetHeight);
+            return geometrizerEngineClone->makeShapeCreator(imageRunnerOptions.shapeTypes, minX, minY, maxX, maxY);
         }();
 
         // Pick the energy calculation function
@@ -207,7 +209,7 @@ public:
         const std::int32_t w = m_worker.getTarget().getWidth();
         const std::int32_t h = m_worker.getTarget().getHeight();
         const std::shared_ptr<geometrize::Rectangle> rectangle = std::make_shared<geometrize::Rectangle>(0, 0, w, h);
-        rectangle->rasterize = [w, h](const geometrize::Shape& s) { return geometrize::rasterize(static_cast<const geometrize::Rectangle&>(s), w, h); };
+        rectangle->rasterize = [w, h](const geometrize::Shape& s) { return geometrize::rasterize(static_cast<const geometrize::Rectangle&>(s), 0, 0, w, h); };
 
         emit q->signal_drawShape(rectangle, color);
     }
@@ -243,6 +245,8 @@ private:
     void init(const Qt::ConnectionType connectionType)
     {
         m_geometrizer.getEngine()->set_global(chaiscript::var(q), "task");
+        m_geometrizer.getEngine()->set_global(chaiscript::var(static_cast<int>(getWidth())), "xMin");
+        m_geometrizer.getEngine()->set_global(chaiscript::var(static_cast<int>(getHeight())), "yMin");
         m_geometrizer.getEngine()->set_global(chaiscript::var(static_cast<int>(getWidth())), "xMax");
         m_geometrizer.getEngine()->set_global(chaiscript::var(static_cast<int>(getHeight())), "yMax");
 
