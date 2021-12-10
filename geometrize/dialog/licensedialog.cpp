@@ -73,6 +73,7 @@ LicenseDialog::LicenseDialog(QWidget* parent) :
     setLicenseText(ui->elidedLabelLicense, "elidedlabel_license.txt");
     setLicenseText(ui->iconAssetsLicense, "fatcow_icon_license.txt");
     setLicenseText(ui->templateAssetsLicense, "template_assets_license.txt");
+    setLicenseText(ui->rangeSliderLicense, "rangeslider_license.txt");
 }
 
 LicenseDialog::~LicenseDialog()

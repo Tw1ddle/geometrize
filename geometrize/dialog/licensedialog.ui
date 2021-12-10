@@ -181,6 +181,19 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="RangeSlider">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <attribute name="title">
+       <string>RangeSlider</string>
+      </attribute>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QTextBrowser" name="rangeSliderLicense"/>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
    <item>
