@@ -245,8 +245,8 @@ private:
     void init(const Qt::ConnectionType connectionType)
     {
         m_geometrizer.getEngine()->set_global(chaiscript::var(q), "task");
-        m_geometrizer.getEngine()->set_global(chaiscript::var(static_cast<int>(getWidth())), "xMin");
-        m_geometrizer.getEngine()->set_global(chaiscript::var(static_cast<int>(getHeight())), "yMin");
+        m_geometrizer.getEngine()->set_global(chaiscript::var(static_cast<int>(0)), "xMin");
+        m_geometrizer.getEngine()->set_global(chaiscript::var(static_cast<int>(0)), "yMin");
         m_geometrizer.getEngine()->set_global(chaiscript::var(static_cast<int>(getWidth())), "xMax");
         m_geometrizer.getEngine()->set_global(chaiscript::var(static_cast<int>(getHeight())), "yMax");
 
