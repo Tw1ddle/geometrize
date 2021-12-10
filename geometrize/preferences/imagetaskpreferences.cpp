@@ -134,6 +134,31 @@ public:
         m_options.shapeBounds = shapeBounds;
     }
 
+    void setShapeBoundsXMin(const int xMin)
+    {
+        m_options.shapeBounds.xMin = xMin;
+    }
+
+    void setShapeBoundsYMin(const int yMin)
+    {
+        m_options.shapeBounds.yMin = yMin;
+    }
+
+    void setShapeBoundsXMax(const int xMax)
+    {
+        m_options.shapeBounds.xMax = xMax;
+    }
+
+    void setShapeBoundsYMax(const int yMax)
+    {
+        m_options.shapeBounds.yMax = yMax;
+    }
+
+    void setShapeBoundsEnabled(const bool shapeBoundsEnabled)
+    {
+        m_options.shapeBounds.enabled = shapeBoundsEnabled;
+    }
+
     void setScriptModeEnabled(const bool enabled)
     {
         m_scriptsEnabled = enabled;
@@ -247,6 +272,31 @@ void ImageTaskPreferences::setMaxThreads(const std::uint32_t maxThreads)
 void ImageTaskPreferences::setShapeBounds(const geometrize::ImageRunnerShapeBoundsOptions& shapeBounds)
 {
     d->setShapeBounds(shapeBounds);
+}
+
+void ImageTaskPreferences::setShapeBoundsXMin(const int xMin)
+{
+    d->setShapeBoundsXMin(xMin);
+}
+
+void ImageTaskPreferences::setShapeBoundsYMin(const int yMin)
+{
+    d->setShapeBoundsYMin(yMin);
+}
+
+void ImageTaskPreferences::setShapeBoundsXMax(const int xMax)
+{
+    d->setShapeBoundsXMax(xMax);
+}
+
+void ImageTaskPreferences::setShapeBoundsYMax(const int yMax)
+{
+    d->setShapeBoundsYMax(yMax);
+}
+
+void ImageTaskPreferences::setShapeBoundsEnabled(const bool shapeBoundsEnabled)
+{
+    d->setShapeBoundsEnabled(shapeBoundsEnabled);
 }
 
 void ImageTaskPreferences::setScriptModeEnabled(const bool enabled)
