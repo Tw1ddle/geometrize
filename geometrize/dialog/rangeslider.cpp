@@ -166,12 +166,14 @@ void RangeSlider::mousePressEvent(QMouseEvent* aEvent)
             mDelta = posValue - (secondHandleRectPosValue + scHandleSideLength / 2);
         }
 
-        if(posCheck >= 2
-           && posCheck <= posMax - 2)
+        else if(posCheck >= 2
+                && posCheck <= posMax - 2)
         {
             int step = mInterval / 10 < 1 ? 1 : mInterval / 10;
             if(posValue < firstHandleRectPosValue)
                 setLowerValue(mLowerValue - step);
+            else if(posValue > secondHandleRectPosValue + scHandleSideLength)
+                setUpperValue(mUpperValue + step);
             else if(((posValue > firstHandleRectPosValue + scHandleSideLength) || !type.testFlag(LeftHandle))
                     && ((posValue < secondHandleRectPosValue) || !type.testFlag(RightHandle)))
             {
@@ -186,8 +188,6 @@ void RangeSlider::mousePressEvent(QMouseEvent* aEvent)
                 else if(type.testFlag(RightHandle))
                     setUpperValue((mUpperValue - step > mLowerValue) ? mUpperValue - step : mLowerValue);
             }
-            else if(posValue > secondHandleRectPosValue + scHandleSideLength)
-                setUpperValue(mUpperValue + step);
         }
     }
 }
