@@ -52,10 +52,10 @@ public:
 
     QSize minimumSizeHint() const override;
 
-    int GetMinimun() const;
+    int GetMinimum() const;
     void SetMinimum(int aMinimum);
 
-    int GetMaximun() const;
+    int GetMaximum() const;
     void SetMaximum(int aMaximum);
 
     int GetLowerValue() const;
