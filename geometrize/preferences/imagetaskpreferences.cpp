@@ -134,24 +134,32 @@ public:
         m_options.shapeBounds = shapeBounds;
     }
 
-    void setShapeBoundsXMin(const int xMin)
+    void setShapeBounds(const double xMinPercent, const double yMinPercent, const double xMaxPercent, const double yMaxPercent)
     {
-        m_options.shapeBounds.xMin = xMin;
+        m_options.shapeBounds.xMinPercent = xMinPercent;
+        m_options.shapeBounds.yMinPercent = yMinPercent;
+        m_options.shapeBounds.xMaxPercent = xMaxPercent;
+        m_options.shapeBounds.yMaxPercent = yMaxPercent;
     }
 
-    void setShapeBoundsYMin(const int yMin)
+    void setShapeBoundsXMinPercent(const double xMinPercent)
     {
-        m_options.shapeBounds.yMin = yMin;
+        m_options.shapeBounds.xMinPercent = xMinPercent;
     }
 
-    void setShapeBoundsXMax(const int xMax)
+    void setShapeBoundsYMinPercent(const double yMinPercent)
     {
-        m_options.shapeBounds.xMax = xMax;
+        m_options.shapeBounds.yMinPercent = yMinPercent;
     }
 
-    void setShapeBoundsYMax(const int yMax)
+    void setShapeBoundsXMaxPercent(const double xMaxPercent)
     {
-        m_options.shapeBounds.yMax = yMax;
+        m_options.shapeBounds.xMaxPercent = xMaxPercent;
+    }
+
+    void setShapeBoundsYMaxPercent(const double yMaxPercent)
+    {
+        m_options.shapeBounds.yMaxPercent = yMaxPercent;
     }
 
     void setShapeBoundsEnabled(const bool shapeBoundsEnabled)
@@ -274,24 +282,29 @@ void ImageTaskPreferences::setShapeBounds(const geometrize::ImageRunnerShapeBoun
     d->setShapeBounds(shapeBounds);
 }
 
-void ImageTaskPreferences::setShapeBoundsXMin(const int xMin)
+void ImageTaskPreferences::setShapeBounds(double xMinPercent, double yMinPercent, double xMaxPercent, double yMaxPercent)
 {
-    d->setShapeBoundsXMin(xMin);
+    d->setShapeBounds(xMinPercent, yMinPercent, xMaxPercent, yMaxPercent);
 }
 
-void ImageTaskPreferences::setShapeBoundsYMin(const int yMin)
+void ImageTaskPreferences::setShapeBoundsXMinPercent(const double xMinPercent)
 {
-    d->setShapeBoundsYMin(yMin);
+    d->setShapeBoundsXMinPercent(xMinPercent);
 }
 
-void ImageTaskPreferences::setShapeBoundsXMax(const int xMax)
+void ImageTaskPreferences::setShapeBoundsYMinPercent(const double yMinPercent)
 {
-    d->setShapeBoundsXMax(xMax);
+    d->setShapeBoundsYMinPercent(yMinPercent);
 }
 
-void ImageTaskPreferences::setShapeBoundsYMax(const int yMax)
+void ImageTaskPreferences::setShapeBoundsXMaxPercent(const double xMaxPercent)
 {
-    d->setShapeBoundsYMax(yMax);
+    d->setShapeBoundsXMaxPercent(xMaxPercent);
+}
+
+void ImageTaskPreferences::setShapeBoundsYMaxPercent(const double yMaxPercent)
+{
+    d->setShapeBoundsYMaxPercent(yMaxPercent);
 }
 
 void ImageTaskPreferences::setShapeBoundsEnabled(const bool shapeBoundsEnabled)

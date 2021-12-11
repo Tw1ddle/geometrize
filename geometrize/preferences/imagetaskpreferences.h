@@ -63,10 +63,11 @@ public:
     void setSeed(std::uint32_t seed);
     void setMaxThreads(std::uint32_t maxThreads);
     void setShapeBounds(const geometrize::ImageRunnerShapeBoundsOptions& shapeBounds);
-    void setShapeBoundsXMin(int xMin);
-    void setShapeBoundsYMin(int yMin);
-    void setShapeBoundsXMax(int xMax);
-    void setShapeBoundsYMax(int yMax);
+    void setShapeBounds(double xMinPercent, double yMinPercent, double xMaxPercent, double yMaxPercent);
+    void setShapeBoundsXMinPercent(double xMinPercent);
+    void setShapeBoundsYMinPercent(double yMinPercent);
+    void setShapeBoundsXMaxPercent(double xMaxPercent);
+    void setShapeBoundsYMaxPercent(double yMaxPercent);
     void setShapeBoundsEnabled(bool shapeBoundsEnabled);
 
     bool isScriptModeEnabled() const;

@@ -37,24 +37,27 @@ public:
         shapeLayout->addWidget(ui->usesTriangles);
         ui->shapeTypesContainer->setLayout(shapeLayout);
 
+        ui->useBoundsCheckbox->setChecked(false);
         m_hBoundsSlider = new geometrize::dialog::RangeSlider(Qt::Horizontal, RangeSlider::Option::DoubleHandles, nullptr);
+        m_hBoundsSlider->SetRange(0, 100);
         m_vBoundsSlider = new geometrize::dialog::RangeSlider(Qt::Vertical, RangeSlider::Option::DoubleHandles, nullptr);
+        m_vBoundsSlider->SetRange(0, 100);
 
         connect(ui->useBoundsCheckbox, &QCheckBox::stateChanged, [this](const int state) {
             m_task->getPreferences().setShapeBoundsEnabled(state != Qt::Unchecked);
         });
 
         connect(m_hBoundsSlider, &geometrize::dialog::RangeSlider::lowerValueChanged, [this](const int value) {
-            m_task->getPreferences().setShapeBoundsXMin(value);
+            m_task->getPreferences().setShapeBoundsXMinPercent(static_cast<double>(value));
         });
         connect(m_hBoundsSlider, &geometrize::dialog::RangeSlider::upperValueChanged, [this](const int value) {
-            m_task->getPreferences().setShapeBoundsXMax(value);
+            m_task->getPreferences().setShapeBoundsXMaxPercent(static_cast<double>(value));
         });
         connect(m_vBoundsSlider, &geometrize::dialog::RangeSlider::lowerValueChanged, [this](const int value) {
-            m_task->getPreferences().setShapeBoundsYMin(value);
+            m_task->getPreferences().setShapeBoundsYMinPercent(static_cast<double>(value));
         });
         connect(m_vBoundsSlider, &geometrize::dialog::RangeSlider::upperValueChanged, [this](const int value) {
-            m_task->getPreferences().setShapeBoundsYMax(value);
+            m_task->getPreferences().setShapeBoundsYMaxPercent(static_cast<double>(value));
         });
         ui->boundsLayout->addWidget(m_hBoundsSlider);
         ui->boundsLayout->addWidget(m_vBoundsSlider);
@@ -118,10 +121,10 @@ public:
         ui->maxThreadsSpinBox->setValue(opts.maxThreads);
 
         ui->useBoundsCheckbox->setChecked(opts.shapeBounds.enabled);
-        m_hBoundsSlider->setLowerValue(opts.shapeBounds.xMin);
-        m_hBoundsSlider->setUpperValue(opts.shapeBounds.xMax);
-        m_vBoundsSlider->setLowerValue(opts.shapeBounds.yMin);
-        m_vBoundsSlider->setUpperValue(opts.shapeBounds.yMax);
+        m_hBoundsSlider->setLowerValue(opts.shapeBounds.xMinPercent);
+        m_hBoundsSlider->setUpperValue(opts.shapeBounds.xMaxPercent);
+        m_vBoundsSlider->setLowerValue(opts.shapeBounds.yMinPercent);
+        m_vBoundsSlider->setUpperValue(opts.shapeBounds.yMaxPercent);
     }
 
     void toggleRunning()
@@ -193,8 +196,8 @@ private:
 
     geometrize::dialog::RangeSlider* m_hBoundsSlider{ nullptr }; // Horizontal slider for controlling the shape bounds
     geometrize::dialog::RangeSlider* m_vBoundsSlider{ nullptr }; // Vertical slider for controlling the shape bounds
-    geometrize::task::ImageTask* m_task;
-    ImageTaskRunnerWidget* q;
+    geometrize::task::ImageTask* m_task{ nullptr };
+    ImageTaskRunnerWidget* q{ nullptr };
     std::unique_ptr<Ui::ImageTaskRunnerWidget> ui;
 };
 

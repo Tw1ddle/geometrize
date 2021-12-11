@@ -171,9 +171,8 @@ public:
         }
 
         const auto& target = m_worker.getTarget();
-        const geometrize::ImageRunnerShapeBoundsOptions bounds =
-                imageRunnerOptions.shapeBounds.enabled ? imageRunnerOptions.shapeBounds :
-                                                 geometrize::ImageRunnerShapeBoundsOptions{ true, 0, 0, target.getWidth(), target.getHeight() };
+
+        const auto bounds = geometrize::commonutil::mapShapeBoundsToImage(imageRunnerOptions.shapeBounds, target);
 
         // Scripting is enabled - clone the entire geometrizer engine
         // This is important because many threads will be working with it when geometrizing shapes
@@ -187,7 +186,8 @@ public:
         // Pick the shape creation function
         const auto shapeCreator = [geometrizerEngineClone, imageRunnerOptions, bounds]() {
             // NOTE - this method uses shared_from_this to keep the engine alive
-            return geometrizerEngineClone->makeShapeCreator(imageRunnerOptions.shapeTypes, bounds.xMin, bounds.yMin, bounds.xMax, bounds.yMax);
+            const auto [xMin, yMin, xMax, yMax] = bounds;
+            return geometrizerEngineClone->makeShapeCreator(imageRunnerOptions.shapeTypes, xMin, yMin, xMax, yMax);
         }();
 
         // Pick the energy calculation function
@@ -247,10 +247,13 @@ private:
         const auto& shapeBounds = m_preferences.getImageRunnerOptions().shapeBounds;
 
         m_geometrizer.getEngine()->set_global(chaiscript::var(q), "task");
-        m_geometrizer.getEngine()->set_global(chaiscript::var(static_cast<int>(shapeBounds.enabled ? shapeBounds.xMin : 0)), "xMin");
-        m_geometrizer.getEngine()->set_global(chaiscript::var(static_cast<int>(shapeBounds.enabled ? shapeBounds.yMin : 0)), "yMin");
-        m_geometrizer.getEngine()->set_global(chaiscript::var(static_cast<int>(shapeBounds.enabled ? shapeBounds.xMax : getWidth())), "xMax");
-        m_geometrizer.getEngine()->set_global(chaiscript::var(static_cast<int>(shapeBounds.enabled ? shapeBounds.yMax : getHeight())), "yMax");
+
+        const auto [xMin, yMin, xMax, yMax] = geometrize::commonutil::mapShapeBoundsToImage(shapeBounds, getTarget());
+
+        m_geometrizer.getEngine()->set_global(chaiscript::var(xMin), "xMin");
+        m_geometrizer.getEngine()->set_global(chaiscript::var(yMin), "yMin");
+        m_geometrizer.getEngine()->set_global(chaiscript::var(xMax), "xMax");
+        m_geometrizer.getEngine()->set_global(chaiscript::var(yMax), "yMax");
 
         qRegisterMetaType<std::vector<geometrize::ShapeResult>>();
         qRegisterMetaType<geometrize::ImageRunnerOptions>();

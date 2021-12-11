@@ -16,10 +16,10 @@ template<typename Archive>
 void serialize(Archive& ar, geometrize::ImageRunnerShapeBoundsOptions& bounds)
 {
     ar(cereal::make_nvp("enabled", bounds.enabled),
-       cereal::make_nvp("xMin", bounds.xMin),
-       cereal::make_nvp("yMin", bounds.yMin),
-       cereal::make_nvp("xMax", bounds.xMax),
-       cereal::make_nvp("yMax", bounds.yMax));
+       cereal::make_nvp("xMinPercent", bounds.xMinPercent),
+       cereal::make_nvp("yMinPercent", bounds.yMinPercent),
+       cereal::make_nvp("xMaxPercent", bounds.xMaxPercent),
+       cereal::make_nvp("yMaxPercent", bounds.yMaxPercent));
 }
 
 namespace serialization
