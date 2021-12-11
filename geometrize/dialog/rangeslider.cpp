@@ -146,6 +146,18 @@ QRectF RangeSlider::handleRect(int aValue) const
 
 void RangeSlider::mousePressEvent(QMouseEvent* aEvent)
 {
+    if(aEvent->button() & Qt::RightButton)
+    {
+        const int min = GetMinimum();
+        const int max = GetMaximum();
+        const int lower = GetLowerValue();
+        const int upper = GetUpperValue();
+
+        // Flips the space in the slider
+        setLowerValue(min + (max - upper));
+        setUpperValue(max - (lower - min));
+    }
+
     if(aEvent->buttons() & Qt::LeftButton)
     {
         int posCheck, posMax, posValue, firstHandleRectPosValue, secondHandleRectPosValue;
