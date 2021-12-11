@@ -39,9 +39,12 @@ public:
 
         ui->useBoundsCheckbox->setChecked(false);
         m_hBoundsSlider = new geometrize::dialog::RangeSlider(Qt::Horizontal, RangeSlider::Option::DoubleHandles, nullptr);
-        m_hBoundsSlider->SetRange(0, 100);
         m_vBoundsSlider = new geometrize::dialog::RangeSlider(Qt::Vertical, RangeSlider::Option::DoubleHandles, nullptr);
-        m_vBoundsSlider->SetRange(0, 100);
+        for(auto* slider : { m_hBoundsSlider, m_vBoundsSlider}) {
+            slider->SetRange(0, 100);
+            slider->setLowerValue(0);
+            slider->setUpperValue(100);
+        }
 
         connect(ui->useBoundsCheckbox, &QCheckBox::stateChanged, [this](const int state) {
             m_task->getPreferences().setShapeBoundsEnabled(state != Qt::Unchecked);
