@@ -382,6 +382,16 @@ std::shared_ptr<chaiscript::Module> createImageTaskBindings()
     ADD_MEMBER(ImageTaskPreferences, setSeed);
     ADD_MEMBER(ImageTaskPreferences, setMaxThreads);
 
+    module->add(chaiscript::fun(
+                    static_cast<void(ImageTaskPreferences::*)(double, double, double, double)>
+                    (&ImageTaskPreferences::setShapeBounds)), "setShapeBounds");
+
+    ADD_MEMBER(ImageTaskPreferences, setShapeBoundsXMinPercent);
+    ADD_MEMBER(ImageTaskPreferences, setShapeBoundsYMinPercent);
+    ADD_MEMBER(ImageTaskPreferences, setShapeBoundsXMaxPercent);
+    ADD_MEMBER(ImageTaskPreferences, setShapeBoundsYMaxPercent);
+    ADD_MEMBER(ImageTaskPreferences, setShapeBoundsEnabled);
+
     ADD_MEMBER(ImageTaskPreferences, isScriptModeEnabled);
     ADD_MEMBER(ImageTaskPreferences, setScriptModeEnabled);
     ADD_MEMBER(ImageTaskPreferences, setScript);
