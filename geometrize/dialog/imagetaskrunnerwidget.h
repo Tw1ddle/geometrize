@@ -57,6 +57,7 @@ signals:
     void runStopButtonClicked();
     void stepButtonClicked();
     void clearButtonClicked();
+    void shapeBoundsSliderMoved();
 
 protected:
     void changeEvent(QEvent*) override;

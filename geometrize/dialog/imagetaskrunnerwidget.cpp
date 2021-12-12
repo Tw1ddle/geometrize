@@ -52,15 +52,19 @@ public:
 
         connect(m_hBoundsSlider, &geometrize::dialog::RangeSlider::lowerValueChanged, [this](const int value) {
             m_task->getPreferences().setShapeBoundsXMinPercent(static_cast<double>(value));
+            emit q->shapeBoundsSliderMoved();
         });
         connect(m_hBoundsSlider, &geometrize::dialog::RangeSlider::upperValueChanged, [this](const int value) {
             m_task->getPreferences().setShapeBoundsXMaxPercent(static_cast<double>(value));
+            emit q->shapeBoundsSliderMoved();
         });
         connect(m_vBoundsSlider, &geometrize::dialog::RangeSlider::lowerValueChanged, [this](const int value) {
             m_task->getPreferences().setShapeBoundsYMinPercent(static_cast<double>(value));
+            emit q->shapeBoundsSliderMoved();
         });
         connect(m_vBoundsSlider, &geometrize::dialog::RangeSlider::upperValueChanged, [this](const int value) {
             m_task->getPreferences().setShapeBoundsYMaxPercent(static_cast<double>(value));
+            emit q->shapeBoundsSliderMoved();
         });
         ui->boundsLayout->addWidget(m_hBoundsSlider);
         ui->boundsLayout->addWidget(m_vBoundsSlider);
