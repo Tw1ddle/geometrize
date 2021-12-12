@@ -18,9 +18,9 @@ environment:
   matrix:
     - BUILD_NAME: gcc_linux
     - BUILD_NAME: clang_osx
-    - BUILD_NAME: mingw_windows
-      QTDIR: C:\Qt\6.2.2\mingw_64
-      MINGW: C:\Qt\Tools\mingw810_64
+    #- BUILD_NAME: mingw_windows
+    #  QTDIR: C:\Qt\6.2\mingw_64
+    #  MINGW: C:\Qt\Tools\mingw810_64
     - BUILD_NAME: msvc_windows
       QTDIR: C:\Qt\6.2\msvc2019_64
 
@@ -154,26 +154,26 @@ for:
 
 
 
-  # Windows Mingw
-  - matrix:
-      only:
-        - image: Visual Studio 2019
-          BUILD_NAME: mingw_windows
+  # # Windows Mingw
+  # - matrix:
+      # only:
+        # - image: Visual Studio 2019
+          # BUILD_NAME: mingw_windows
 
-    install:
-      - git submodule update --init --recursive
-      - set PATH=%PATH%;%QTDIR%\bin;%MINGW%\bin
-      - call "%QTDIR%\bin\qtenv2.bat"
-      - set make=mingw32-make.exe
+    # install:
+      # - git submodule update --init --recursive
+      # - set PATH=%PATH%;%QTDIR%\bin;%MINGW%\bin
+      # - call "%QTDIR%\bin\qtenv2.bat"
+      # - set make=mingw32-make.exe
 
-    before_build:
-      # Debug prints
-      - cd %QTDIR%
-      - ls -a
+    # before_build:
+      # # Debug prints
+      # - cd %QTDIR%
+      # - ls -a
     
-      - cd %APPVEYOR_BUILD_FOLDER%
-      - qmake geometrize.pro
+      # - cd %APPVEYOR_BUILD_FOLDER%
+      # - qmake geometrize.pro
 
-    build_script:
-      - cd %APPVEYOR_BUILD_FOLDER%
-      - '%make%'
+    # build_script:
+      # - cd %APPVEYOR_BUILD_FOLDER%
+      # - '%make%'
